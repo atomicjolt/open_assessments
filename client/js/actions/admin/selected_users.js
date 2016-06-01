@@ -7,21 +7,22 @@ const actions = [];
 
 // Actions that make an api request
 const requests = [
-  "NAV_CHANGED",
-  "CHANGE_MAIN_TAB"
+  "ADD_USER",
+  "REMOVE_USER"
 ];
 
 export const Constants = wrapper(actions, requests);
 
-export function changeNav(){
+export function addToSelectedUsers(user){
   return {
-    type: Constants.NAV_CHANGED
+    type: Constants.ADD_USER,
+    user
   };
 }
 
-export function changeMainTab(payload){
+export function removeFromSelectedUsers(user){
   return {
-    type: Constants.CHANGE_MAIN_TAB,
-    mainTab: payload.text
+    type: Constants.REMOVE_USER,
+    user
   };
 }

@@ -1,12 +1,15 @@
 "use strict";
 
 import React            from "react";
-import BaseComponent    from "../base_component";
 import { Link }         from "react-router";
-import Validator        from "validator";
-import UserActions      from "../../actions/user";
 import _                from "lodash";
 import assign           from "object-assign";
+import Griddle          from "griddle-react";
+
+import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper, IconButton, Checkbox} from "material-ui";
+
+import Validator        from "validator";
+import UserActions      from "../../actions/user";
 import CreateUserForm   from "./create_user_form";
 import EditUserForm     from "./edit_user_form";
 import AdminActions     from "../../actions/admin";
@@ -15,12 +18,11 @@ import AccountsStore    from "../../stores/accounts";
 import AdminStore       from "../../stores/admin";
 import Defines          from "../defines";
 import Container        from "./container";
-import Griddle          from "griddle-react";
 import UserControls     from "./user_controls";
 import CustomGriddleRow from "./custom_griddle_row";
-import { Toolbar, ToolbarGroup, ToolbarTitle, FontIcon, RaisedButton, Paper, IconButton, Checkbox} from "material-ui";
 
-class Users extends BaseComponent {
+
+class Users extends React.Component {
 
   constructor(props, context){
     super(props);

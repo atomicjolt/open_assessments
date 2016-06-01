@@ -26,41 +26,14 @@ export function loadUsers(accountId, page){
 
 }
 
-export function resetUsersStore(){
+export function updateUser(accountId, userId, user){
   return {
-    type: Constants.RESET_USERS,
-  };
+    type: Constants.UPDATE_USER,
+    method: Network.PUT,
+    url: `api/accounts/${accountId}/users/${userId}`,
+    body: user
+  }
 }
-
-export function getUserData(payload){
-  Dispatcher.dispatch({action: Constants.LOADING_USER_DATA, userList: payload.userList});
-}
-
-export function setCurrentSelectedUser(payload){
-  Dispatcher.dispatch({action: Constants.LOADING_SELECTED_USER_DATA, currentSelectedUser: payload.currentSelectedUser});
-}
-
-export function updateUser(accountID, userID, payload){
-  Dispatcher.dispatch({action: Constants.USER_UPDATING});
-  Api.put(Constants.USER_UPDATED, "api/accounts/"+ accountID + "/users/" + userID, payload);
-}
-
-export function addToSelectedUsers(payload){
-  Dispatcher.dispatch({action: Constants.ADD_USER, payload: payload});
-}
-
-export function removeFromSelectedUsers(payload){
-  Dispatcher.dispatch({action: Constants.REMOVE_USER, payload: payload});
-}
-
-// export function deleteUsers(payload){
-//   for(var i=0; i<payload.length; i++){
-//     var url = "api/accounts/" + payload[i].account_id + "/users/" + payload[i].id;
-//     Dispatcher.dispatch({action: Constants.DELETING_USERS});
-//     Api.del(Constants.DELETE_USERS, url);
-//   }
-//   this.loadUsers(payload[0].account_id, 1);
-// }
 
 export function deleteUser(user){
   var url = "api/accounts/" + user.account_id + "/users/" + user.id;
