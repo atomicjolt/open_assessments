@@ -1,12 +1,11 @@
 "use strict";
 
 import React              from 'react';
+
 import AssessmentStore    from "../../stores/assessment";
 import SettingsStore      from "../../stores/settings";
-import AssessmentActions  from "../../actions/assessment";
-import Loading            from "../assessments/loading";
-import CheckUnderstanding from "../assessments/check_understanding";
 import Item               from "../assessments/item";
+import Loading            from "../assessments/loading";
 import ProgressDropdown   from "../common/progress_dropdown";
 
 // TODO: ADD REDUX

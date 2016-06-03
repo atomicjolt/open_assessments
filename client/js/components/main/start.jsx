@@ -2,14 +2,13 @@
 
 import React              from "react";
 import { connect }        from "react-redux";
+
+import AssessmentActions  from "../../actions/assessment";
 import AssessmentStore    from "../../stores/assessment";
 import SettingsStore      from "../../stores/settings";
-import AssessmentActions  from "../../actions/assessment";
-import Loading            from "../assessments/loading";
-import CheckUnderstanding from "../assessments/check_understanding";
-import Item               from "../assessments/item";
-import ProgressDropdown   from "../common/progress_dropdown";
 import CommHandler        from "../../utils/communication_handler";
+import CheckUnderstanding from "../assessments/check_understanding";
+import ProgressDropdown   from "../common/progress_dropdown";
 import FullPostNav        from "../post_nav/full_post_nav.jsx";
 
 const select = (state) => {
