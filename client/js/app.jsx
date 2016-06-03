@@ -8,7 +8,7 @@ import Immutable               from 'immutable';
 import routes                  from './routes';
 import DevTools                from './dev/dev_tools';
 import configureStore          from './store/configure_store';
-import jwt                     from './loaders/jwt';
+// import jwt                     from './loaders/jwt';
 import $                       from "jquery";
 
 //Needed for onTouchTap
@@ -47,10 +47,10 @@ if(offlineAssessment){
 
 const store = configureStore(initialState);
 
-if (window.DEFAULT_SETTINGS.jwt){
-  // Setup JWT refresh
-  jwt(store.dispatch, window.DEFAULT_SETTINGS.userId);
-}
+// if (window.DEFAULT_SETTINGS.jwt){
+//   // Setup JWT refresh
+//   jwt(store.dispatch, window.DEFAULT_SETTINGS.userId);
+// }
 
 ReactDOM.render(
   <Root store={store} />,
