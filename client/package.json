@@ -33,6 +33,7 @@
     "react-redux": "4.4.5",
     "react-router": "2.3.0",
     "react-tap-event-plugin": "1.0.0",
+    "reactable": "^0.13.2",
     "redux": "3.5.2",
     "superagent": "1.8.3",
     "uuid": "2.0.2"
