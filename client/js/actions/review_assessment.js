@@ -25,4 +25,4 @@ export const loadAssessmentResult = (assessmentId, resultId) => ({
   type: Constants.REVIEW_RESULT_LOAD_PENDING,
   method: Network.GET,
   url: `/api/assessments/${assessmentId}/results/${resultId}`
-}
+});
