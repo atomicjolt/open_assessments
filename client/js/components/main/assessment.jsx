@@ -28,7 +28,7 @@ export default class Assessment extends React.Component{
       isLoaded             : AssessmentStore.isLoaded(),
       isSubmitted          : AssessmentStore.isSubmitted(),
       question             : AssessmentStore.currentQuestion(),
-      currentIndex         : AssessmentStore.currentIndex(),
+      currentItemIndex         : AssessmentStore.currentItemIndex(),
       questionCount        : AssessmentStore.questionCount(),
       assessmentResult     : AssessmentStore.assessmentResult(),
       showStart            : showStart,
@@ -122,7 +122,7 @@ export default class Assessment extends React.Component{
     //     icon            = {this.state.settings.images.QuizIcon_svg}/>;
     //     progressBar     = <div style={styles.progressContainer}>
     //                         {progressText}
-    //                         <ProgressDropdown disabled={true} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
+    //                         <ProgressDropdown disabled={true} questions={this.state.allQuestions} currentQuestion={this.state.currentItemIndex + 1} questionCount={this.state.questionCount} />
     //                       </div>;
 
     // }
@@ -130,7 +130,7 @@ export default class Assessment extends React.Component{
       content = <Item
         question         = {this.state.question}
         assessment       = {this.state.assessment}
-        currentIndex     = {this.state.currentIndex}
+        currentItemIndex     = {this.state.currentItemIndex}
         settings         = {this.state.settings}
         questionCount    = {this.state.questionCount}
         assessmentResult = {this.state.assessmentResult}
@@ -141,19 +141,19 @@ export default class Assessment extends React.Component{
         outcomes         = {this.state.outcomes}/>;
         progressBar      =  <div style={styles.progressContainer}>
                               {progressText}
-                              <ProgressDropdown settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
+                              <ProgressDropdown settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentItemIndex + 1} questionCount={this.state.questionCount} />
                             </div>;
     // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
     }
 
-    var percentCompleted = this.checkProgress(this.state.currentIndex, this.state.questionCount);
+    var percentCompleted = this.checkProgress(this.state.currentItemIndex, this.state.questionCount);
     var progressStyle = {width:percentCompleted+"%"};
     var progressText = "";
     var quizType = this.state.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
     var titleBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>;
     if(this.state.assessment){
-      progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.state.assessment.title + " Progress"}</b>{" - You are on question " + (this.state.currentIndex + 1) + " of " + this.state.questionCount}</div> : "";
+      progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.state.assessment.title + " Progress"}</b>{" - You are on question " + (this.state.currentItemIndex + 1) + " of " + this.state.questionCount}</div> : "";
     }
     progressBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : progressBar;
     return <div className="assessment" style={styles.assessment}>

@@ -25,12 +25,12 @@ export default class Item extends React.Component{
     this.setState({showMessage: false});
   }
 
-  confidenceLevelClicked(e, currentIndex){
+  confidenceLevelClicked(e, currentItemIndex){
     e.preventDefault();
 
     if(AssessmentStore.selectedAnswerId() && AssessmentStore.selectedAnswerId().length > 0){
-      AssessmentActions.selectConfidenceLevel(e.target.value, currentIndex);
-      if(this.props.currentIndex == this.props.questionCount - 1 && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
+      AssessmentActions.selectConfidenceLevel(e.target.value, currentItemIndex);
+      if(this.props.currentItemIndex == this.props.questionCount - 1 && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
         this.submitButtonClicked();
       } else {
         AssessmentActions.nextQuestion();
@@ -44,7 +44,7 @@ export default class Item extends React.Component{
 
   submitButtonClicked(e){
     e && e.preventDefault();
-    AssessmentActions.selectQuestion(this.props.currentIndex);
+    AssessmentActions.selectQuestion(this.props.currentItemIndex);
     var complete = this.checkCompletion();
     if(complete === true){
       window.onbeforeunload = null;
@@ -236,9 +236,9 @@ export default class Item extends React.Component{
       var levelMessage = <div style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
       return    (<div className="confidence_wrapper" style={styles.confidenceWrapper}>
                   {levelMessage}
-                  <input type="button" style={styles.maybeButton}className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentIndex) }}/>
-                  <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentIndex) }}/>
-                  <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentIndex) }}/>
+                  <input type="button" style={styles.maybeButton}className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex) }}/>
+                  <input type="button" style={{...styles.margin, ...styles.probablyButton}} className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex) }}/>
+                  <input type="button" style={{...styles.margin, ...styles.definitelyButton}} className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex) }}/>
                 </div>
                 );
     } /*else {
@@ -258,7 +258,7 @@ export default class Item extends React.Component{
   }
 
   getNextButton(styles) {
-    var disabled = (this.props.currentIndex == this.props.questionCount - 1) ? "disabled" : "";
+    var disabled = (this.props.currentItemIndex == this.props.questionCount - 1) ? "disabled" : "";
     return (
         <button className={"btn btn-next-item " + disabled} style={styles.nextButton} onClick={(e) => { this.nextButtonClicked(e) }}>
           <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
@@ -266,7 +266,7 @@ export default class Item extends React.Component{
   }
 
   getPreviousButton(styles) {
-    var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentIndex > 0) ? "" : "disabled");
+    var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentItemIndex > 0) ? "" : "disabled");
     return (
         <button className={prevButtonClassName} style={styles.previousButton} onClick={(e) => { this.previousButtonClicked(e) }}>
           <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
@@ -299,11 +299,11 @@ export default class Item extends React.Component{
 
   render() {
     var styles = this.getStyles(this.context.theme);
-    var unAnsweredWarning = this.getWarning(this.state,  this.props.questionCount, this.props.currentIndex, styles);
+    var unAnsweredWarning = this.getWarning(this.state,  this.props.questionCount, this.props.currentItemIndex, styles);
     var result = this.getResult(this.props.messageIndex);
     var must_answer_message = this.state && this.state.showMessage ? <div style={styles.warning}>You must select an answer before continuing.</div> : "";
     var confidenceButtons = this.getConfidenceLevels(this.props.confidenceLevels, styles);
-    var submitButton = (this.props.currentIndex == this.props.questionCount - 1) ? <button className="btn btn-check-answer" style={styles.submitButton}  onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
+    var submitButton = (this.props.currentItemIndex == this.props.questionCount - 1) ? <button className="btn btn-check-answer" style={styles.submitButton}  onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
     var footer = this.getFooterNav(this.context.theme, styles);
     var navigationDiv = this.getNavigationButtons(styles);
 
@@ -311,7 +311,7 @@ export default class Item extends React.Component{
     var counter = "";
 
     if(this.context.theme.shouldShowCounter){
-      counter = <span className="counter">{this.props.currentIndex + 1} of {this.props.questionCount}</span>
+      counter = <span className="counter">{this.props.currentItemIndex + 1} of {this.props.questionCount}</span>
     }
     var formativeHeader = "";
     if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
@@ -395,7 +395,7 @@ export default class Item extends React.Component{
 
 Item.propTypes = {
   question         : React.PropTypes.object.isRequired,
-  currentIndex     : React.PropTypes.number.isRequired,
+  currentItemIndex     : React.PropTypes.number.isRequired,
   questionCount    : React.PropTypes.number.isRequired,
   messageIndex     : React.PropTypes.number.isRequired,
   confidenceLevels : React.PropTypes.bool.isRequired,

@@ -107,7 +107,7 @@ export default class Start extends React.Component{
           accountId       = {this.state.settings.accountId}
           icon            = {this.state.settings.images.QuizIcon_svg}/>;
         progressBar = <div style={styles.progressContainer}>
-                            <ProgressDropdown disabled={true} settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
+                            <ProgressDropdown disabled={true} settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentItemIndex + 1} questionCount={this.state.questionCount} />
                           </div>;
 
     }
