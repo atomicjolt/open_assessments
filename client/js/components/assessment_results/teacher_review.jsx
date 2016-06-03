@@ -2,21 +2,15 @@
 
 import React                   from 'react';
 import SettingsStore           from "../../stores/settings";
-import ReviewAssessmentActions from "../../actions/review_assessment";
 import ReviewAssessmentStore   from "../../stores/review_assessment";
 import SummativeResult         from "./summative_result.jsx";
 import ResultStyles            from "./result_styles.js";
-import CommunicationHandler    from "../../utils/communication_handler";
 
 export default class TeacherReview extends React.Component{
 
   constructor(props, context){
     super(props, context);
     this.stores = [ReviewAssessmentStore];
-    if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
-      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS);
-    }
-    ReviewAssessmentActions.loadAssessmentResult(props.params.assessmentId, props.params.attempdId);
     this.state = this.getState();
   }
 
