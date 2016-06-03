@@ -1,6 +1,6 @@
 "use strict";
 
-import wrapper from '../constansts/wrapper';
+import Wrapper from '../constants/wrapper';
 import Constants from '../constants';
 
 const constants = [];
