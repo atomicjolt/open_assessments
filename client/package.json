@@ -37,7 +37,8 @@
     "reactable": "^0.13.2",
     "redux": "3.5.2",
     "superagent": "1.8.3",
-    "uuid": "2.0.2"
+    "uuid": "2.0.2",
+    "validator": "^5.3.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "3.2.0",
