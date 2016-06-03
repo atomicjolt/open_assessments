@@ -2,10 +2,6 @@
 
 import React from 'react';
 import UserAssessmentsStore     from "../../stores/user_assessment";
-import UserAssessmentActions    from "../../actions/user_assessments";
-import ReviewAssessmentActions  from "../../actions/review_assessment";
-import ReviewAssessmentStore    from "../../stores/review_assessment";
-import AssessmentActions        from "../../actions/assessment";
 import {Table, Tr, Td}          from 'reactable';
 import moment                   from 'moment';
 
@@ -15,20 +11,13 @@ export default class Attempts extends React.Component{
     this.stores = [UserAssessmentsStore];
     this.context = context;
     this.state = this.getState();
-    UserAssessmentActions.loadUserAssessments(props.params.contextId, props.params.assessmentId);
-    if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
-      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS);
-    }
+
   }
 
   getState() {
     return {
       userAssessments: UserAssessmentsStore.current()
     };
-  }
-
-  setAttempts(id, count){
-    UserAssessmentActions.updateUserAssessment(id, {attempts: count, context_id: this.props.params.contextId});
   }
 
   reviewAttempt(id){
