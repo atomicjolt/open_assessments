@@ -1,18 +1,24 @@
 "use strict";
 
-import Constants   from   "../constants";
-import Dispatcher  from   "../dispatcher";
-import Api         from   "./api";
-export default {
+import wrapper        from "../constants/wrapper";
+import Network        from "../constants/network";
 
-  loadUserAssessments(contextId, assessmentId){
-    Dispatcher.dispatch({action: Constants.USER_ASSESSMENTS_LOADING, payload: contextId});
-    Api.get(Constants.USER_ASSESSMENTS_LOADED, "api/user_assessments?context_id=" + contextId + "&assessment_id=" + assessmentId);
-  },
+const request = [
+  "USER_ASSESSMENTS_LOADING",
+  "USER_ASSESSMENTS_UPDATING"
+];
 
-  updateUserAssessment(id, payload){
-    Dispatcher.dispatch({action: Constants.USER_ASSESSMENTS_UPDATING});
-    Api.put(Constants.USER_ASSESSMENTS_UPDATED, "api/user_assessments/" + id + "/update_attempts", payload);
-  },
+export const Constants = wrapper([], request);
 
-};
+export const loadUserAssessments = (contextId, assessmentId) => ({
+  type: Constants.USER_ASSESSMENTS_LOADING,
+  method: Network.GET,
+  url: `api/user_assessments?context_id=${contextId}&assessment_id=${assessmentId}`
+});
+
+export const updateUserAssessment = (id, payload) => ({
+  type: Constants.USER_ASSESSMENTS_UPDATING,
+  method: Network.PUT,
+  url: `api/user_assessments/${id}/update_attempts`,
+  payload
+});
