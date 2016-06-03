@@ -1,6 +1,6 @@
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
-import AssessmentResult   from './assessment_result';
+import AssessmentResult   from './_assessment_result';
 import AssessmentActions  from '../../actions/assessment';
 import SettingsActions    from '../../actions/settings';
 import StubContext        from '../../../specs_support/stub_context';

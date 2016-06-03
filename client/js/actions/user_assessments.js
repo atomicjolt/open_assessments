@@ -22,3 +22,15 @@ export const updateUserAssessment = (id, payload) => ({
   url: `api/user_assessments/${id}/update_attempts`,
   payload
 });
+
+//.............................
+//                            .
+//                            .
+//                            .
+//                            .
+//                            .
+//            .               .
+//                            .
+//                            .
+//.............................
+//  Polar Bear in a Snow Storm

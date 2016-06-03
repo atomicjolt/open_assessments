@@ -6,7 +6,7 @@ import StubContext        from '../../../specs_support/stub_context';
 describe('item', function() {
 
   var question = {};
-  var currentIndex = 0;
+  var currentItemIndex = 0;
   
   var settings = {
     assessmentKind: "formative"
@@ -14,7 +14,7 @@ describe('item', function() {
   
   var assessment = {}
   var questionCount = 10;
-  var Content = StubContext(Item, {question: question, currentIndex: currentIndex, settings: settings, questionCount: questionCount, assessment: assessment})
+  var Content = StubContext(Item, {question: question, currentItemIndex: currentItemIndex, settings: settings, questionCount: questionCount, assessment: assessment})
   var result = TestUtils.renderIntoDocument(<Content />);
 
   it('renders an item', function() {

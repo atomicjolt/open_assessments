@@ -8,7 +8,7 @@ import Index              from './components/index';
 import Assessment         from './components/main/assessment';
 import Start              from './components/main/start';
 import Attempts           from './components/main/attempts';
-import AssessmentResult   from './components/assessment_results/assessment_result';
+import AssessmentResult   from './components/assessment_results/_assessment_result';
 import TeacherReview      from './components/assessment_results/teacher_review';
 import TeacherPreview     from './components/assessment_results/teacher_preview';
 import NotFound           from './components/not_found';
