@@ -15,7 +15,7 @@ const select = (state) => {
     questions        : state.assessment.allQuestions(),
     outcomes         : state.assessment.outcomes(),
     assessment       : state.assessment.current(),
-    settings         : state.settings.current()
+    settings         : state.settings
   }
 };
 
@@ -29,13 +29,13 @@ export default class AssessmentResult extends React.Component{
   }
 
   sendAnalytics(){
-    if(this.state.assessmentResult && this.state.assessmentResult.assessment_results_id) {
-      this.props.assessmentPostAnalytics(this.state.assessmentResult.assessment_results_id, this.state.settings.externalUserId, this.state.settings.externalContextId);
+    if(this.props.assessmentResult && this.props.assessmentResult.assessment_results_id) {
+      this.props.assessmentPostAnalytics(this.props.assessmentResult.assessment_results_id, this.props.settings.externalUserId, this.props.settings.externalContextId);
     }
   }
   sendLtiOutcome(){
-    if(this.isSummative() && this.state.assessmentResult.assessment_results_id){
-      this.props.assessmentPostLtiOutcome(this.state.assessmentResult.assessment_results_id);
+    if(this.isSummative() && this.props.assessmentResult.assessment_results_id){
+      this.props.assessmentPostLtiOutcome(this.props.assessmentResult.assessment_results_id);
     }
   }
 
@@ -45,11 +45,11 @@ export default class AssessmentResult extends React.Component{
   }
 
   isSummative(){
-    return this.state.settings.assessmentKind.toUpperCase() == "SUMMATIVE";
+    return this.props.settings.assessmentKind.toUpperCase() == "SUMMATIVE";
   }
 
   isFormative(){
-    return this.state.settings.assessmentKind.toUpperCase() == "FORMATIVE";
+    return this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE";
   }
 
   getStyles(theme){
@@ -59,23 +59,23 @@ export default class AssessmentResult extends React.Component{
   render(){
     var styles = this.getStyles(this.context.theme);
 
-    if(this.state.assessmentResult == null){
+    if(this.props.assessmentResult == null){
       return <div />;
     }
 
     if(this.isFormative()){
       return <FormativeResult
-          assessmentResult={this.state.assessmentResult}
-          settings={this.state.settings}
-          questions={this.state.questions}
-          assessment={this.state.assessment}
+          assessmentResult={this.props.assessmentResult}
+          settings={this.props.settings}
+          questions={this.props.questions}
+          assessment={this.props.assessment}
           styles={styles}
           context={this.context}
           />;
     } else {
       return <SummativeResult
           styles={styles}
-          timeSpent={this.state.timeSpent}
+          timeSpent={this.props.timeSpent}
           isSummative={this.isSummative()}
         />;
     }
