@@ -1,7 +1,6 @@
 "use strict";
 
 import React from 'react';
-import BaseComponent            from "../base_component";
 import UserAssessmentsStore     from "../../stores/user_assessment";
 import UserAssessmentActions    from "../../actions/user_assessments";
 import ReviewAssessmentActions  from "../../actions/review_assessment";
@@ -10,7 +9,7 @@ import AssessmentActions        from "../../actions/assessment";
 import {Table, Tr, Td}          from 'reactable';
 import moment                   from 'moment';
 
-export default class Attempts extends BaseComponent{
+export default class Attempts extends React.Component{
   constructor(props, context){
     super(props, context);
     this.stores = [UserAssessmentsStore];

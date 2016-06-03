@@ -1,11 +1,10 @@
 "use strict";
 
-import React from 'react';
-import BaseComponent      from "../base_component";
-import CommHandler from "../../utils/communication_handler";
-import SettingsStore      from "../../stores/settings";
+import React          from 'react';
+import CommHandler    from "../../utils/communication_handler";
+import SettingsStore  from "../../stores/settings";
 
-export default class StudyPlanButton extends BaseComponent {
+export default class StudyPlanButton extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.stores = [SettingsStore];

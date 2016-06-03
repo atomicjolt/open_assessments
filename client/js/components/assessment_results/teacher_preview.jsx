@@ -1,7 +1,6 @@
 "use strict";
 
 import React                   from 'react';
-import BaseComponent           from "../base_component";
 import SettingsStore           from "../../stores/settings";
 import ReviewAssessmentActions from "../../actions/review_assessment";
 import ReviewAssessmentStore   from "../../stores/review_assessment";
@@ -9,7 +8,7 @@ import ResultStyles            from "./result_styles.js";
 import CommunicationHandler    from "../../utils/communication_handler";
 import ItemResult           from "./item_result";
 
-export default class TeacherPreview extends BaseComponent{
+export default class TeacherPreview extends React.Component{
 
   constructor(props, context){
     super(props, context);

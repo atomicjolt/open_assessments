@@ -1,14 +1,13 @@
 "use strict";
 
-import React from 'react';
-import BaseComponent      from "../base_component";
+import React                from 'react';
 import CommunicationHandler from "../../utils/communication_handler";
-import SettingsStore      from "../../stores/settings";
+import SettingsStore        from "../../stores/settings";
 
-export default class FullPostNav extends BaseComponent {
+export default class FullPostNav extends React.Component {
+
   constructor(props, context) {
     super(props, context);
-    this.stores = [SettingsStore];
     this.state = {
       display: SettingsStore.current().showPostMessageNav
     };

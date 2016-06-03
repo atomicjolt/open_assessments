@@ -3,19 +3,18 @@
 import React              from 'react';
 import AssessmentStore    from "../../stores/assessment";
 import SettingsStore      from "../../stores/settings";
-import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import Loading            from "../assessments/loading";
 import CheckUnderstanding from "../assessments/check_understanding";
 import Item               from "../assessments/item";
 import ProgressDropdown   from "../common/progress_dropdown";
 
-export default class Assessment extends BaseComponent{
+// TODO: ADD REDUX
+export default class Assessment extends React.Component{
 
   constructor(props, context){
     super(props, context);
     this.stores = [AssessmentStore, SettingsStore];
-    this._bind["checkCompletion", "getStyles"];
     this.state = this.getState(context);
     this.context = context;
   }
@@ -127,7 +126,7 @@ export default class Assessment extends BaseComponent{
     //                         <ProgressDropdown disabled={true} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
     //                       </div>;
 
-    // } 
+    // }
      }else {
       content = <Item
         question         = {this.state.question}

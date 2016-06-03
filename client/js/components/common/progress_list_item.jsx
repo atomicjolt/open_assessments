@@ -3,13 +3,11 @@
 import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
 import AssessmentStore    from "../../stores/assessment";
-import BaseComponent      from "../base_component";
 
-export default class ProgressListItem extends BaseComponent{
+export default class ProgressListItem extends React.Component{
 
   constructor(props, context){
     super(props, context);
-    this._bind("mouseOver", "mouseOut", "selectQuestion");
   }
 
   mouseOver(e){

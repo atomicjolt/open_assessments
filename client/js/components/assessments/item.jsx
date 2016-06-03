@@ -1,13 +1,11 @@
 "use strict";
 
 import React              from 'react';
-import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import UniversalInput     from "./universal_input";
 import AssessmentStore    from "../../stores/assessment";
 
-
-export default class Item extends BaseComponent{
+export default class Item extends React.Component{
   constructor(){
     super();
     this._bind("getConfidenceLevels", "confidenceLevelClicked", "nextButtonClicked", "previousButtonClicked", "getPreviousButton", "getNextButton", "getStyles");

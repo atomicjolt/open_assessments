@@ -3,15 +3,12 @@
 import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
 import AssessmentStore    from "../../stores/assessment";
-import BaseComponent      from "../base_component";
 import ProgressListItem   from "./progress_list_item";
 
-export default class ProgressDropdown extends BaseComponent{
-  
+export default class ProgressDropdown extends React.Component{
+
   constructor(props, context){
     super(props, context);
-    this._bind("navButtonClicked", "getStyles");
-
   }
 
   navButtonClicked(){
@@ -19,7 +16,7 @@ export default class ProgressDropdown extends BaseComponent{
       this.setState({expanded: !this.state.expanded})
     } else {
       this.setState({expanded: true});
-    } 
+    }
   }
 
   selectQuestion(e,index){
@@ -70,7 +67,7 @@ export default class ProgressDropdown extends BaseComponent{
       },
       container: {
         display: "inline-block",
-      },    
+      },
       icon: {
         height: "52px",
         width: "52px",
@@ -112,7 +109,7 @@ export default class ProgressDropdown extends BaseComponent{
   }
 }
 
-ProgressDropdown.propTypes = { 
+ProgressDropdown.propTypes = {
 
 };
 
