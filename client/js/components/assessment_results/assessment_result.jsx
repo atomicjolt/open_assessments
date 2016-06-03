@@ -3,14 +3,13 @@
 import React                from 'react';
 import AssessmentStore      from "../../stores/assessment";
 import SettingsStore        from "../../stores/settings";
-import BaseComponent        from "../base_component";
 import AssessmentActions    from "../../actions/assessment";
 import FormativeResult      from "./formative_result.jsx";
 import SummativeResult      from "./summative_result.jsx";
 import ResultStyles         from "./result_styles.js";
 import CommunicationHandler from "../../utils/communication_handler";
 
-export default class AssessmentResult extends BaseComponent{
+export default class AssessmentResult extends React.Component{
 
   constructor(props, context){
     super(props, context);
@@ -54,18 +53,18 @@ export default class AssessmentResult extends BaseComponent{
   }
 
   isFormative(){
-    return this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE";
+    return this.state.settings.assessmentKind.toUpperCase() == "FORMATIVE";
   }
 
   getStyles(theme){
-    return ResultStyles.getStyles(theme, this.isFormative())
+    return ResultStyles.getStyles(theme, this.isFormative());
   }
 
   render(){
     var styles = this.getStyles(this.context.theme);
 
     if(this.state.assessmentResult == null){
-      return <div />
+      return <div />;
     }
 
     if(this.isFormative()){
@@ -76,20 +75,14 @@ export default class AssessmentResult extends BaseComponent{
           assessment={this.state.assessment}
           styles={styles}
           context={this.context}
-          />
+          />;
     } else {
       return <SummativeResult
           styles={styles}
           timeSpent={this.state.timeSpent}
-          context={this.context}
           isSummative={this.isSummative()}
-        />
+        />;
     }
   }
 }
-
-AssessmentResult.contextTypes = {
-  theme: React.PropTypes.object,
-  router: React.PropTypes.func
-};
 

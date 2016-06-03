@@ -1,8 +1,8 @@
 "use strict";
 
-import Immutable  from "immutable";
+import Immutable  from 'immutable';
 
-const initialState = Immutable.fromJS({assessmentIsStarted: false});
+const initialState = Immutable.fromJS([]);
 
 export default (state = initialState, action) => {
 
@@ -11,4 +11,5 @@ export default (state = initialState, action) => {
     default:
       return state;
   }
+
 }

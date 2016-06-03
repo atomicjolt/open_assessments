@@ -1,86 +1,22 @@
 "use strict";
 
-import React                from "react";
-import Messages             from "./common/messages";
-import {RouteHandler}       from "react-router";
-import BaseComponent        from "./base_component";
-import SettingsStore        from "../stores/settings";
-import ThemeManager         from "../utils/theme_manager";
-import PonyTheme            from "../themes/pony";
-import LumenTheme           from "../themes/lumen_learning";
+import React                    from "react";
+import { connect }              from "react-redux";
 
-var StyleManager = new ThemeManager();
-
-const select = (state) => {
-  return {
-    settings: state.settings
-  };
-};
-
-@connect(select, {}, null, {withRef: true})
+@connect((state) => (state), null, null, {withRef: true})
 class Index extends React.Component {
 
   constructor(){
     super();
-    this.stores = [SettingsStore];
-    this.state = this.getState();
-  }
-
-  getChildContext() {
-    var themeName = this.state.settings.style;
-    if(themeName == "lumen_learning")
-      StyleManager.mergeTheme(LumenTheme);
-    return {
-      theme: StyleManager.current()
-    }
-  }
-
-  getStyles() {
-    var darkWhite = Colors.darkWhite;
-    return {
-      footer: {
-        backgroundColor: Colors.grey900,
-        textAlign: 'center'
-      },
-      a: {
-        color: darkWhite
-      },
-      p: {
-        margin: '0 auto',
-        padding: '0',
-        color: Colors.lightWhite,
-        maxWidth: '335px'
-      },
-      iconButton: {
-        color: darkWhite
-      }
-    };
-  }
-
-  componentDidMount(){
-    super.componentDidMount();
-    // var style = this.state.settings.style;
-    // if(style && style.indexOf('.css') < 0){
-    //   style = '/assets/themes/' + style + '.css?body=1';
-    //   $('head').append('<link href="' + style + '" media="all" rel="stylesheet">');
-    // }
+    this.state = {};
   }
 
   render(){
-
-    return (
-      <RouteHandler {...this.props} />
-    );
+    return <div>
+      {this.props.children}
+    </div>;
   }
 
 }
 
-Index.contextTypes = {
-  router: React.PropTypes.func
-};
-
-Index.childContextTypes = {
-  theme: React.PropTypes.object
-};
-
-module.exports = Index;
+export default Index;

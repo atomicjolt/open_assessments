@@ -1,33 +1,35 @@
 "use strict";
 
-import React              from 'react';
+import React              from "react";
+import { connect }        from "react-redux";
 import AssessmentStore    from "../../stores/assessment";
 import SettingsStore      from "../../stores/settings";
-import BaseComponent      from "../base_component";
 import AssessmentActions  from "../../actions/assessment";
 import Loading            from "../assessments/loading";
 import CheckUnderstanding from "../assessments/check_understanding";
 import Item               from "../assessments/item";
 import ProgressDropdown   from "../common/progress_dropdown";
-import $                  from "jquery";
 import CommHandler        from "../../utils/communication_handler";
 import FullPostNav        from "../post_nav/full_post_nav.jsx";
 
-export default class Start extends BaseComponent{
+const select = (state) => {
+  return {
+    enableStart: state.settings.enableStart
+  };
+};
+
+@connect(select, {}, null, {withRef: true})
+export default class Start extends React.Component{
 
   constructor(props, context){
-    super(props, context);
-    this.stores = [AssessmentStore, SettingsStore];
+    super(props);
     this._bind["checkCompletion", "getStyles"];
-    this.state = this.getState(context);
-    this.context = context;
   }
 
-  getState(context){
+  componentWillMount(){
     var showStart = SettingsStore.current().enableStart && !AssessmentStore.isStarted();
-    if(!showStart){
+    if(!this.props.showStart){
           AssessmentActions.start(SettingsStore.current().eId, SettingsStore.current().assessmentId, SettingsStore.current().externalContextId);
-          AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $('#srcData').text());
           context.router.transitionTo("assessment");
     }
     return {
@@ -82,7 +84,7 @@ export default class Start extends BaseComponent{
         minWidth: minWidth,
         //fontWeight: "bold"
       }
-    }
+    };
   }
 
   render(){
@@ -92,20 +94,20 @@ export default class Start extends BaseComponent{
     var titleBar;
 
     if(this.state.showStart){
-        content         = <CheckUnderstanding
-        title           = {this.state.settings.assessmentTitle}
-        maxAttempts     = {this.state.settings.allowedAttempts}
-        userAttempts    = {this.state.settings.userAttempts}
-        eid             = {this.state.settings.lisUserId}
-        userId          = {this.state.settings.userId}
-        isLti           = {this.state.settings.isLti}
-        assessmentId    = {this.state.settings.assessmentId}
-        assessmentKind  = {this.state.settings.assessmentKind}
-        ltiRole         = {this.state.settings.ltiRole}
-        externalContextId = {this.state.settings.externalContextId}
-        accountId       = {this.state.settings.accountId}
-        icon            = {this.state.settings.images.QuizIcon_svg}/>;
-        progressBar     = <div style={styles.progressContainer}>
+        content = <CheckUnderstanding
+          title           = {this.state.settings.assessmentTitle}
+          maxAttempts     = {this.state.settings.allowedAttempts}
+          userAttempts    = {this.state.settings.userAttempts}
+          eid             = {this.state.settings.lisUserId}
+          userId          = {this.state.settings.userId}
+          isLti           = {this.state.settings.isLti}
+          assessmentId    = {this.state.settings.assessmentId}
+          assessmentKind  = {this.state.settings.assessmentKind}
+          ltiRole         = {this.state.settings.ltiRole}
+          externalContextId = {this.state.settings.externalContextId}
+          accountId       = {this.state.settings.accountId}
+          icon            = {this.state.settings.images.QuizIcon_svg}/>;
+        progressBar = <div style={styles.progressContainer}>
                             <ProgressDropdown disabled={true} settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
                           </div>;
 
@@ -127,8 +129,3 @@ export default class Start extends BaseComponent{
   }
 
 }
-
-Start.contextTypes = {
-  router: React.PropTypes.func,
-  theme: React.PropTypes.object,
-};

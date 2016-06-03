@@ -2,8 +2,8 @@
 
 import React                          from 'react'; // if you use jsx, you have to have React imported
 import { Router, Route, IndexRoute }  from 'react-router';
-import { hashHistory }                from 'react-router';
 
+import history            from './history';
 import Index              from './components/index';
 import Assessment         from './components/main/assessment';
 import Start              from './components/main/start';
@@ -19,7 +19,7 @@ import About              from './components/main/about';
 
 
 export default (
-  <Router history={hashHistory}>
+  <Router history={history}>
     <Route path="/" component={Index}>
       <IndexRoute component={Start} />
       <Route path="assessment" handler={Assessment}/>
@@ -31,7 +31,7 @@ export default (
       <Route path="logout" handler={Logout}/>
       <Route path="about" handler={About}/>
       <Route path="attempts/:assessmentId/:contextId" handler={Attempts} /> //path="attempts"
-      <NotFoundRoute handler={NotFound}/>
+      <Route path="*" component={NotFound}/>
     </Route>
   </Router>
 );

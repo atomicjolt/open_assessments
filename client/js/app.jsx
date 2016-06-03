@@ -4,13 +4,12 @@ import 'babel-polyfill';
 import React                   from 'react';
 import ReactDOM                from 'react-dom';
 import { Provider }            from 'react-redux';
-import getMuiTheme             from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider        from 'material-ui/styles/MuiThemeProvider';
 import Immutable               from 'immutable';
 import routes                  from './routes';
 import DevTools                from './dev/dev_tools';
 import configureStore          from './store/configure_store';
 import jwt                     from './loaders/jwt';
+import $                       from "jquery";
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -26,18 +25,27 @@ class Root extends React.Component {
     const { store } = this.props;
     return (
       <Provider store={store}>
-        <MuiThemeProvider muiTheme={getMuiTheme()}>
-          <div>
-            {routes}
-            {devTools}
-          </div>
-        </MuiThemeProvider>
+        <div>
+          {routes}
+          {devTools}
+        </div>
       </Provider>
     );
   }
 }
 
-const store = configureStore({settings: Immutable.fromJS(window.DEFAULT_SETTINGS)});
+var settings = _.merge(window.DEFAULT_SETTINGS, {}); // TODO fill the empty hash with allowed params from the current url
+
+var initialState = {
+  settings: Immutable.fromJS(settings)
+};
+
+const offlineAssessment = $('#srcData').text();
+if(offlineAssessment){
+  initialState.assessment = offlineAssessment;
+}
+
+const store = configureStore(initialState);
 
 if (window.DEFAULT_SETTINGS.jwt){
   // Setup JWT refresh
