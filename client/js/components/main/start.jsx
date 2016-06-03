@@ -3,9 +3,8 @@
 import React              from "react";
 import { connect }        from "react-redux";
 
+import appHistory         from "../history";
 import AssessmentActions  from "../../actions/assessment";
-import AssessmentStore    from "../../stores/assessment";
-import SettingsStore      from "../../stores/settings";
 import CommHandler        from "../../utils/communication_handler";
 import CheckUnderstanding from "../assessments/check_understanding";
 import ProgressDropdown   from "../common/progress_dropdown";
@@ -13,6 +12,7 @@ import FullPostNav        from "../post_nav/full_post_nav.jsx";
 
 const select = (state) => {
   return {
+    enableStart   : state.settings.enableStart,
     settings      : state.settings,
     assessment    : state.assessment
   };
@@ -20,17 +20,11 @@ const select = (state) => {
 
 @connect(select, {...AssessmentActions}, null, {withRef: true})
 export default class Start extends React.Component{
-  
-  constructor(){
-    super();
-    this.state = {}
-  }
 
   componentWillMount(){
-    var showStart = this.props.settings.enableStart && !AssessmentStore.isStarted();
-    if(!this.props.settings.showStart){
-          // this.props.start(this.props.settings.eId, this.props.settings.assessmentId, this.props.settings.externalContextId);
-          // context.router.transitionTo("assessment");
+
+    if(!this.props.settings.enableStart){
+      appHistory.push("assessment");
     }
   }
 
@@ -87,7 +81,7 @@ export default class Start extends React.Component{
     var progressBar;
     var titleBar;
 
-    if(this.state.showStart){
+    if(this.props.enableStart){
         content = <CheckUnderstanding
           title             = {this.props.settings && this.props.settings.assessmentTitle}
           maxAttempts       = {this.props.settings && this.props.settings.allowedAttempts}

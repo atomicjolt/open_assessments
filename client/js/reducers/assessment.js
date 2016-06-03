@@ -2,20 +2,18 @@
 
 import Immutable                             from 'immutable';
 import _                                     from "lodash";
-import { DONE }                              from "../constants/wrapper";
 import { Constants as AssessmentConstants }  from "../actions/assessment";
 
-const initialState = Immutable.fromJS([]);
+const initialState = Immutable.fromJS({});
 
 export default (state = initialState, action) => {
 
- switch(action.type){
+  switch(action.type){
 
-    case AssessmentConstants.LOAD_ASSESSMENT + AssessmentConstants.DONE:
+    case AssessmentConstants.LOAD_ASSESSMENT_DONE:
       var assessment_data = action.payload.assessment_data;
 
       if(assessment_data){
-
         return Immutable.fromJS(assessment_data);
       } else {
         return state;

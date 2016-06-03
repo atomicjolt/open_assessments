@@ -11,16 +11,16 @@ export default (state = initialState, action) => {
 
   switch(action.type){
     case AssessmentConstants.NEXT_ITEM:
-    var currentQuestion = state.get("currentQuestion");
-    state = state.set("currentQuestion", currentQuestion + 1);
-    break;
+      var currentQuestion = state.get("currentQuestion");
+      state = state.set("currentQuestion", currentQuestion + 1);
+      break;
 
     case AssessmentConstants.PREVIOUS_ITEM:
-    var currentQuestion = state.get("currentQuestion");
-    state = state.set("currentQuestion", currentQuestion - 1);
-    break;
+      var currentQuestion = state.get("currentQuestion");
+      state = state.set("currentQuestion", currentQuestion - 1);
+      break;
     default:
 
   }
   return state;
-}
+};
