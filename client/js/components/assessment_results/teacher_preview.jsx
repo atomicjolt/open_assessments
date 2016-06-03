@@ -2,10 +2,8 @@
 
 import React                   from 'react';
 import SettingsStore           from "../../stores/settings";
-import ReviewAssessmentActions from "../../actions/review_assessment";
 import ReviewAssessmentStore   from "../../stores/review_assessment";
 import ResultStyles            from "./result_styles.js";
-import CommunicationHandler    from "../../utils/communication_handler";
 import ItemResult           from "./item_result";
 
 export default class TeacherPreview extends React.Component{
@@ -13,9 +11,7 @@ export default class TeacherPreview extends React.Component{
   constructor(props, context){
     super(props, context);
     this.stores = [ReviewAssessmentStore];
-    if(!ReviewAssessmentStore.isLoaded() && !ReviewAssessmentStore.isLoading()){
-      ReviewAssessmentActions.loadAssessment(window.DEFAULT_SETTINGS);
-    }
+
     this.state = this.getState();
   }
 
