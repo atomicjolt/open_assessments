@@ -1,7 +1,6 @@
 "use strict";
 
 import Wrapper from '../constants/wrapper';
-import Constants from '../constants';
 
 const constants = [];
 
@@ -11,6 +10,7 @@ const requests = [
   "ASSESSMENT_POST_LTI_OUTCOME"
 ];
 
+export const Constants = Wrapper(constants, requests);
 
 export const loadAssessment = (assessmentId) => ({
   type: Constants.LOAD_ASSESSMENT,

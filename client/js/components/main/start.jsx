@@ -29,10 +29,10 @@ export default class Start extends React.Component{
   }
 
   componentDidMount(){
-    if(this.state.isLoaded){
-      // Trigger action to indicate the assessment was viewed
-      // AssessmentActions.assessmentViewed(this.props.settings, this.props.assessment);
-    }
+    // if(this.state.isLoaded){
+    //   // Trigger action to indicate the assessment was viewed
+    //   // AssessmentActions.assessmentViewed(this.props.settings, this.props.assessment);
+    // }
     CommHandler.sendSize();
   }
 
