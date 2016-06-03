@@ -13,28 +13,18 @@ import FullPostNav        from "../post_nav/full_post_nav.jsx";
 
 const select = (state) => {
   return {
-    enableStart: state.settings.enableStart
+    settings: state.settings
   };
 };
 
 @connect(select, {}, null, {withRef: true})
 export default class Start extends React.Component{
 
-  constructor(props, context){
-    super(props);
-    this._bind["checkCompletion", "getStyles"];
-  }
-
   componentWillMount(){
-    var showStart = SettingsStore.current().enableStart && !AssessmentStore.isStarted();
-    if(!this.props.showStart){
-          AssessmentActions.start(SettingsStore.current().eId, SettingsStore.current().assessmentId, SettingsStore.current().externalContextId);
+    var showStart = this.props.settings.enableStart && !AssessmentStore.isStarted();
+    if(!this.props.settings.showStart){
+          AssessmentActions.start(this.props.settings.eId, this.props.settings.assessmentId, this.props.settings.externalContextId);
           context.router.transitionTo("assessment");
-    }
-    return {
-      showStart            : showStart,
-      questionCount        : AssessmentStore.questionCount(),
-      settings             : SettingsStore.current(),
     }
   }
 
@@ -94,18 +84,18 @@ export default class Start extends React.Component{
 
     if(this.state.showStart){
         content = <CheckUnderstanding
-          title           = {this.state.settings.assessmentTitle}
-          maxAttempts     = {this.state.settings.allowedAttempts}
-          userAttempts    = {this.state.settings.userAttempts}
-          eid             = {this.state.settings.lisUserId}
-          userId          = {this.state.settings.userId}
-          isLti           = {this.state.settings.isLti}
-          assessmentId    = {this.state.settings.assessmentId}
-          assessmentKind  = {this.state.settings.assessmentKind}
-          ltiRole         = {this.state.settings.ltiRole}
-          externalContextId = {this.state.settings.externalContextId}
-          accountId       = {this.state.settings.accountId}
-          icon            = {this.state.settings.images.QuizIcon_svg}/>;
+          title           = {this.props.settings.assessmentTitle}
+          maxAttempts     = {this.props.settings.allowedAttempts}
+          userAttempts    = {this.props.settings.userAttempts}
+          eid             = {this.props.settings.lisUserId}
+          userId          = {this.props.settings.userId}
+          isLti           = {this.props.settings.isLti}
+          assessmentId    = {this.props.settings.assessmentId}
+          assessmentKind  = {this.props.settings.assessmentKind}
+          ltiRole         = {this.props.settings.ltiRole}
+          externalContextId = {this.props.settings.externalContextId}
+          accountId       = {this.props.settings.accountId}
+          icon            = {this.props.settings.images.QuizIcon_svg}/>;
         progressBar = <div style={styles.progressContainer}>
                             <ProgressDropdown disabled={true} settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentItemIndex + 1} questionCount={this.state.questionCount} />
                           </div>;

@@ -6,10 +6,6 @@ import UniversalInput     from "./universal_input";
 import AssessmentStore    from "../../stores/assessment";
 
 export default class Item extends React.Component{
-  constructor(){
-    super();
-    this._bind("getConfidenceLevels", "confidenceLevelClicked", "nextButtonClicked", "previousButtonClicked", "getPreviousButton", "getNextButton", "getStyles");
-  }
 
   nextButtonClicked(e){
     e.preventDefault();
