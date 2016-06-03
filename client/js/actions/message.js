@@ -14,22 +14,14 @@ const requests = [
 
 export const Constants = wrapper(actions, requests);
 
-export function addMessage(message){
-  return { 
+export const addMessage = (message) => ({
     type: Constants.ADD_MESSAGE,
     data: message
-  };
-}
+})
 
-export function removeMessage(message){
-  return { 
-    type: Constants.REMOVE_MESSAGE,
-    data: message
-  };
-}
+export const removeMessage = (message) => ({
+  type: Constants.REMOVE_MESSAGE,
+  data: message
+});
 
-export function clearMessages(){
-  return { 
-    type: Constants.CLEAR_MESSAGES
-  };
-}
+export const clearMessages = () => ({type:Constants.CLEAR_MESSAGES})
