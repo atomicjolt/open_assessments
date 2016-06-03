@@ -1,14 +1,16 @@
 "use strict";
 
 import 'babel-polyfill';
-import React                  from 'react';
-import ReactDOM               from 'react-dom';
-import { Provider }           from 'react-redux';
-import Immutable              from 'immutable';
-import routes                 from './routes';
-import DevTools               from './dev/dev_tools';
-import configureStore         from './store/configure_store';
-import jwt                    from './loaders/jwt';
+import React                   from 'react';
+import ReactDOM                from 'react-dom';
+import { Provider }            from 'react-redux';
+import getMuiTheme             from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider        from 'material-ui/styles/MuiThemeProvider';
+import Immutable               from 'immutable';
+import routes                  from './routes';
+import DevTools                from './dev/dev_tools';
+import configureStore          from './store/configure_store';
+import jwt                     from './loaders/jwt';
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -24,10 +26,12 @@ class Root extends React.Component {
     const { store } = this.props;
     return (
       <Provider store={store}>
-        <div>
-          {routes}
-          {devTools}
-        </div>
+        <MuiThemeProvider muiTheme={getMuiTheme()}>
+          <div>
+            {routes}
+            {devTools}
+          </div>
+        </MuiThemeProvider>
       </Provider>
     );
   }

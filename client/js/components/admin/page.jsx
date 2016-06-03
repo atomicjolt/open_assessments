@@ -1,33 +1,37 @@
 "use strict";
 
 import React                from "react";
+import _                    from "lodash";
+import { connect }          from "react-redux";
+import { AppCanvas, AppBar, IconButton, FullWidthSection, Styles } from "material-ui";
+
 import Messages             from "../common/messages";
 import LeftNav              from "./left_nav";
-import {RouteHandler}       from "react-router";
 import AdminTheme           from "./admin_theme";
 import Defines              from "../defines";
-import BaseComponent        from "../base_component";
 import AdminStore           from "../../stores/admin";
-import AdminActions         from "../../actions/admin";
-import _                    from "lodash";
+import { changeNav }        from "../../actions/admin/navigation";
 
 
-var mui = require('material-ui');
-var Typography = mui.Styles.Typography;
-var ThemeManager = new mui.Styles.ThemeManager();
-var { AppCanvas, AppBar, IconButton, FullWidthSection } = mui;
+var Typography = Styles.Typography;
+var ThemeManager = new Styles.ThemeManager();
 
 var { Spacing } = mui.Styles;
 var { StyleResizable } = mui.Mixins;
 
-class Page extends BaseComponent {
+const select = (state) => {
+  return {
+    navStatus: state.adminNavigation.navStatus
+  };
+};
+
+@connect(select, { changeNav }, null, {withRef: true})
+class Page extends React.Component {
 
   constructor() {
     super();
-    this.state = this.getState();
     ThemeManager.setTheme(AdminTheme);
     this._onMenuIconButtonTouchTap = this._onMenuIconButtonTouchTap.bind(this);
-    this.stores = [AdminStore];
   }
 
   getChildContext() {
@@ -37,14 +41,8 @@ class Page extends BaseComponent {
   }
 
   _onMenuIconButtonTouchTap() {
-    AdminActions.changeNav();
+    this.props.changeNav();
     this.refs.leftNav.toggle();
-  }
-
-  getState(){
-    return {
-      navStatus: AdminStore.navStatus()
-    };
   }
 
   getStyles(status){
@@ -85,7 +83,7 @@ class Page extends BaseComponent {
 
   render(){
 
-    var styles = this.getStyles(this.state.navStatus);
+    var styles = this.getStyles(this.props.navStatus);
     var title = "Admin";
     var leftNav;
     var showMenuIconButton = false;
@@ -119,19 +117,11 @@ class Page extends BaseComponent {
         <div style={styles.root}>
           <Messages />
           <div style={styles.content}>
-            <RouteHandler />
+            { this.props.children }
           </div>
         </div>
       </AppCanvas>;
   }
 }
-
-Page.contextTypes = {
-  router: React.PropTypes.func
-};
-
-Page.childContextTypes = {
-  muiTheme: React.PropTypes.object
-};
 
 module.exports = Page;

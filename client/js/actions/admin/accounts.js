@@ -15,7 +15,6 @@ export const Constants = wrapper(actions, requests);
 export function loadAccounts(){
   return {
     type: Constants.LOAD_ACCOUNTS,
-    method: Network.GET,
-    url: `api/accounts`
+    apiCall: true
   };
 }

@@ -1,18 +1,18 @@
 "use strict";
 
-import React                                                                  from "react";
-import User                                                                   from "../../stores/user";
-import StoreKeeper                                                            from "../mixins/store_keeper";
-import Router                                                                 from "react-router";
-import { Toolbar, ToolbarGroup, DropDownMenu, RaisedButton, TextField, Paper, IconButton} from "material-ui";
-import AdminActions                                                           from "../../actions/admin";
-import Defines          from "../defines";
+import React                                              from "react";
+import { connect }                                        from "react-redux";
+import { Toolbar, ToolbarGroup, DropDownMenu, IconButton} from "material-ui";
 
+import { changeMainTab }                                  from "../../actions/admin/navigation";
+import Defines                                            from "../defines";
+
+const select = (state) => { return {}; };
+@connect(select, {changeMainTab}, null, {withRef: true})
 class ToolBar extends React.Component {
 
   onToolbarChange(e, index, payload){
-    // Generate an action
-    AdminActions.changeMainTab(payload);
+    this.props.changeMainTab(payload.text);
   }
 
   render() {

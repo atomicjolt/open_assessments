@@ -97,26 +97,6 @@ Dispatcher.register(function(payload) {
 
   switch(action){
 
-    case Constants.ACCOUNTS_LOADED:
-      loadAccounts(payload.data.text);
-
-      break;
-    case Constants.CREATED_USER:
-      addUser(payload.data.text);
-
-      break;
-    case Constants.USERS_LOADED:
-      loadUsers(payload.data.text);
-
-      break;
-    case Constants.USER_UPDATED:
-      // UPDATE THE USERS LIST AND SUCH
-      updateUsers(payload.data.text)
-      break;
-    case Constants.RESET_USERS:
-      // reset the users list to prepare for a different account
-      _users = [];
-      break;
     case Constants.ADD_USER:
       addToSelectedUsers(payload.payload);
       break; 
@@ -125,15 +105,6 @@ Dispatcher.register(function(payload) {
       removeFromSelectedUsers(payload.payload);
       break;
 
-    case Constants.DELETE_USERS:
-      _selectedUsers = [];
-      var userToRemove = JSON.parse(payload.data.text);
-      _.remove(_users,(user)=>{
-        return user.id == userToRemove.id;
-      })
-      //_users.find(payload.data.user)
-      break;
-      
     case Constants.USERS_LOADING:
 
       _currentAccountId = payload.payload;

@@ -1,158 +1,38 @@
 import Immutable                            from 'immutable';
 import _                                    from 'lodash';
-import { Constants as UserConstants }       from '../actions/admin/users';
+import { Constants as UserConstants }       from '../../actions/admin/users';
+import { DONE }                             from "../../constants/wrapper";
 
 const initialState = Immutable.fromJS({});
 
 export default function(state = initialState, action) {
   switch (action.type) {
     case UserConstants.LOAD_USERS:
-      return Immutable.fromJS(action.payload);
+      const users = _.reduce(action.payload, (user, users) => {
+        return users[user.id] = user;
+      }, {});
+      return Immutable.fromJS(users);
       break;
+
+    case UserConstants.CREATED_USER:
+    case UserConstants.UPDATE_USER:
+      const user = action.payload;
+      return state.set(`${user.id}`, user);
+      break;
+
+    case UserConstants.RESET_USERS:
+      return Immutable.fromJS({});
+
+    case UserConstants.DELETE_USER:
+      return state.delete(`${action.userId}`);
+
+    case UserConstants.DELETE_USER + DONE:
+      // Check for failure. If user couldn't be deleted put the user back and inform the browser.
+      const user = action.payload;
+      return state.delete(user.id);
+
     default:
       return state;
   }
 
 };
-
-
-function loadAccounts(data){
-  _accounts = JSON.parse(data);
-}
-
-function loadUsers(data){
-  _users = JSON.parse(data);
-}
-function addUser(data){
-  _users.push(JSON.parse(data));
-}
-
-function addToSelectedUsers(payload){
-  if(checkUniquness(payload))
-    _selectedUsers.push(payload);
-}
-
-function updateUsers(data){
-  var user = JSON.parse(data);
-  for(var i=0; i<_users.length; i++){
-    if(_users[i].id == user.id){
-      _users[i] = user;
-      break;
-    }
-  }
-}
-
-function removeFromSelectedUsers(payload){
-  for(var i=0; i<_selectedUsers.length; i++){
-    if(_selectedUsers[i].id == payload.id){
-      _selectedUsers.splice(i, 1);
-    }
-  }
-}
-
-function checkUniquness(payload){
-  for(var i=0; i< _selectedUsers.length; i++){
-    if(payload.id == _selectedUsers[i].id)
-      return false;
-  }
-  return true;
-}
-
-// Extend User Store with EventEmitter to add eventing capabilities
-var AccountsStore = assign({}, StoreCommon, {
-
-  // Return the accounts
-  current(){
-    return _accounts;
-  },
-
-  currentId(){
-    return _currentAccountId;
-  },
-
-  // Return current users
-  currentUsers(){
-    return _users;
-  },
-  
-  accountById(id){
-    var account =  _.find(_accounts, function(account){
-      return account.id == id;
-    });
-  return account;
-  },
-
-  userById(id){
-    var user =  _.find(_users, function(user){
-      return user.id == id;
-    });
-
-  return user;
-  },
-
-  getSelectedUsers(){
-    return _selectedUsers;
-  }
-
-});
- 
-// Register callback with Dispatcher
-Dispatcher.register(function(payload) {
-  var action = payload.action;
-
-  switch(action){
-
-    case Constants.ACCOUNTS_LOADED:
-      loadAccounts(payload.data.text);
-
-      break;
-    case Constants.CREATED_USER:
-      addUser(payload.data.text);
-
-      break;
-    case Constants.USERS_LOADED:
-      loadUsers(payload.data.text);
-
-      break;
-    case Constants.USER_UPDATED:
-      // UPDATE THE USERS LIST AND SUCH
-      updateUsers(payload.data.text)
-      break;
-    case Constants.RESET_USERS:
-      // reset the users list to prepare for a different account
-      _users = [];
-      break;
-    case Constants.ADD_USER:
-      addToSelectedUsers(payload.payload);
-      break; 
-
-    case Constants.REMOVE_USER:
-      removeFromSelectedUsers(payload.payload);
-      break;
-
-    case Constants.DELETE_USERS:
-      _selectedUsers = [];
-      var userToRemove = JSON.parse(payload.data.text);
-      _.remove(_users,(user)=>{
-        return user.id == userToRemove.id;
-      })
-      //_users.find(payload.data.user)
-      break;
-      
-    case Constants.USERS_LOADING:
-
-      _currentAccountId = payload.payload;
-      break;
-
-    default:
-      return true;
-  }
-  // If action was responded to, emit change event
-  AccountsStore.emitChange();
-  
-  return true;
-
-});
-
-export default AccountsStore;
-

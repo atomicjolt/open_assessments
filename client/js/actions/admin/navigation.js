@@ -19,9 +19,9 @@ export function changeNav(){
   };
 }
 
-export function changeMainTab(payload){
+export function changeMainTab(mainTab){
   return {
     type: Constants.CHANGE_MAIN_TAB,
-    mainTab: payload.text
+    mainTab
   };
 }

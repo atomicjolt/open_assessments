@@ -8,14 +8,14 @@ describe('api', function() {
   var apiUrl;
   var csrf;
   var params;
-  var body
+  var body;
 
   Helper.stubAjax();
-  
+
   it('calls Get', () => {
     var url = "http://www.example.com";
     var promise = api.get(url);
-    
+
   });
 
 });
