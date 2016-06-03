@@ -32,7 +32,7 @@
     "react-dom": "15.1.0",
     "react-proxy-loader": "0.3.4",
     "react-redux": "4.4.5",
-    "react-router": "2.3.0",
+    "react-router": "2.4.1",
     "react-tap-event-plugin": "1.0.0",
     "reactable": "^0.13.2",
     "redux": "3.5.2",
