@@ -1,6 +1,6 @@
 "use strict";
 
-import Wrapper from '../constants/wrapper';
+import wrapper from '../constants/wrapper';
 
 const constants = [];
 
@@ -10,12 +10,13 @@ const requests = [
   "ASSESSMENT_POST_LTI_OUTCOME"
 ];
 
-export const Constants = Wrapper(constants, requests);
+export const Constants = wrapper(constants, requests);
 
-export const loadAssessment = (assessmentId) => ({
+export const loadAssessment = (url, id) => ({
   type: Constants.LOAD_ASSESSMENT,
   apiCall:true,
-  assessmentId
+  url,
+  id
 });
 
 export const assessmentPostAnalytics = (results_id, user_id='') => ({
