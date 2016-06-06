@@ -1,11 +1,13 @@
 import api                from "./api";
 import Network            from "../constants/network";
 import Helper             from '../../specs_support/helper';
+import * as AdminUserActions          from "../actions/admin/users";
+import * as AdminAccountActions       from "../actions/admin/users";
 
 describe('api middleware', function() {
 
   Helper.stubAjax();
-  
+
   it('implements Redux middleware interface', () => {
     const store = { getState: () => {} };
     const middleware = api(store);
@@ -42,6 +44,32 @@ describe('api middleware', function() {
     const nextHandler = () => {};
     const actionHandler = middleware(nextHandler);
     actionHandler(action);
+  });
+
+  it("throws an exception if the constant isn't handled", () => {
+    const middleware = api(Helper.makeStore());
+    const nextHandler = () => {};
+    const actionHandler = middleware(nextHandler);
+    const actionType = "NOT_HANDLED";
+    const action = {
+      type: actionType,
+      apiCall: true
+    };
+    expect(actionHandler(action)).toThrow(new Error(`No handler implemented for ${actionType}`));
+  });
+
+  it("handles known actions", () => {
+    const middleware = api(Helper.makeStore());
+    const nextHandler = () => {};
+    const actionHandler = middleware(nextHandler);
+    const actions = _.merge(AdminUserActions, AdminAccountActions);
+    const apiActions = _.filter(actions, _.isFunction);
+    _.each(apiActions, (func) => {
+      const action = func();
+      if(action.apiCall){
+        actionHandler(action);
+      }
+    });
   });
 
 });
