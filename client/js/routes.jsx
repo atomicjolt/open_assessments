@@ -3,7 +3,7 @@
 import React                          from 'react'; // if you use jsx, you have to have React imported
 import { Router, Route, IndexRoute }  from 'react-router';
 
-import history            from './history';
+import appHistory         from './history';
 import Index              from './components/index';
 import Assessment         from './components/main/assessment';
 import Start              from './components/main/start';
@@ -16,7 +16,7 @@ import About              from './components/main/about';
 
 
 export default (
-  <Router history={history}>
+  <Router history={appHistory}>
     <Route path="/" component={Index}>
       <IndexRoute component={Start} />
       <Route path="assessment" handler={Assessment}/>

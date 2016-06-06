@@ -1,6 +1,7 @@
 "use strict";
 
 import 'babel-polyfill';
+import es6Promise              from 'es6-promise';
 import React                   from 'react';
 import ReactDOM                from 'react-dom';
 import { Provider }            from 'react-redux';
@@ -14,6 +15,9 @@ import configureStore          from './store/configure_store';
 import jwt                     from './loaders/jwt';
 import QueryString             from './utils/query_string';
 import { loadAssessment }      from './actions/assessment';
+
+// Polyfill es6 promises for IE
+es6Promise.polyfill();
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
