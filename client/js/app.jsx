@@ -5,11 +5,15 @@ import React                   from 'react';
 import ReactDOM                from 'react-dom';
 import { Provider }            from 'react-redux';
 import Immutable               from 'immutable';
+import _                       from 'lodash';
+import $                       from 'jquery';
+
 import routes                  from './routes';
 import DevTools                from './dev/dev_tools';
 import configureStore          from './store/configure_store';
-// import jwt                     from './loaders/jwt';
-import $                       from "jquery";
+import jwt                     from './loaders/jwt';
+import QueryString             from './utils/query_string';
+import { loadAssessment }      from './actions/assessment';
 
 //Needed for onTouchTap
 //Can go away when react 1.0 release
@@ -34,23 +38,17 @@ class Root extends React.Component {
   }
 }
 
-var settings = _.merge(window.DEFAULT_SETTINGS, {}); // TODO fill the empty hash with allowed params from the current url
+var settings = Immutable.fromJS(_.merge(window.DEFAULT_SETTINGS, QueryString.params()));
 
-var initialState = {
-  settings: Immutable.fromJS(settings)
-};
+// Load the assessment
+loadAssessment(settings, $('#srcData').text());
 
-const offlineAssessment = $('#srcData').text();
-if(offlineAssessment){
-  initialState.assessment = offlineAssessment;
+const store = configureStore({settings});
+
+if (window.DEFAULT_SETTINGS.jwt){
+  // Setup JWT refresh
+  jwt(store.dispatch, window.DEFAULT_SETTINGS.userId);
 }
-
-const store = configureStore(initialState);
-
-// if (window.DEFAULT_SETTINGS.jwt){
-//   // Setup JWT refresh
-//   jwt(store.dispatch, window.DEFAULT_SETTINGS.userId);
-// }
 
 ReactDOM.render(
   <Root store={store} />,
