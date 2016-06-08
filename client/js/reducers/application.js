@@ -2,7 +2,7 @@
 
 import Immutable  from "immutable";
 
-const initialState = Immutable.fromJS({assessmentIsStarted: false});
+const initialState = Immutable.fromJS({ assessmentIsStarted: false, theme: {} });
 
 export default (state = initialState, action) => {
 
@@ -11,4 +11,5 @@ export default (state = initialState, action) => {
     default:
       return state;
   }
-}
+
+};

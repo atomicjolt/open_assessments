@@ -1,15 +1,15 @@
 "use strict";
 
-import React              from 'react';
-import { connect }        from 'react-redux';
-import appHistory         from '../../history.js'
+import React              from "react";
+import { connect }        from "react-redux";
+import appHistory         from "../../history.js";
 import Item               from "../assessments/item";
 import Loading            from "../assessments/loading";
 import ProgressDropdown   from "../common/progress_dropdown";
 
 const select = (state) => {
   return {
-    assessment           : state.assessment.current(),
+    assessment           : state.assessment,
     isLoaded             : state.assessment.isLoaded(),
     isSubmitted          : state.assessment.isSubmitted(),
     question             : state.assessment.currentQuestion(),
@@ -22,10 +22,9 @@ const select = (state) => {
     studentAnswers       : state.assessment.allStudentAnswers(),
     allQuestions         : state.assessment.allQuestions(),
     outcomes             : state.assessment.outcomes()
-  }
-}
+  };
+};
 
-// TODO: ADD REDUX
 @connect(select, {}, null, {withRef: true})
 export default class Assessment extends React.Component{
 
@@ -38,7 +37,6 @@ export default class Assessment extends React.Component{
   popup(){
     return "Don’t leave!\n If you leave now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this quiz and then use the \"Progress\" drop-down menu";
   }
-
 
   checkProgress(current, total){
     return Math.floor(current/total * 100);

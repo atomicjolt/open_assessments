@@ -1,14 +1,13 @@
 "use strict";
 
-import React                    from "react";
-import { connect }              from "react-redux";
+import React               from "react";
+import { loadAssessment }  from "../actions/assessment";
 
-@connect((state) => (state), null, null, {withRef: true})
 class Index extends React.Component {
 
-  constructor(){
-    super();
-    this.state = {};
+  componentWillMount(){
+    // Load the assessment
+    loadAssessment();
   }
 
   render(){

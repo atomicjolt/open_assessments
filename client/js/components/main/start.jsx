@@ -12,9 +12,9 @@ import FullPostNav        from "../post_nav/full_post_nav.jsx";
 
 const select = (state) => {
   return {
-    enableStart   : state.settings.enableStart,
-    settings      : state.settings,
-    assessment    : state.assessment
+    settings      : state.settings.toJS(),
+    assessment    : state.assessment,
+    theme         : state.application.get('theme').toJS()
   };
 };
 
@@ -36,8 +36,9 @@ export default class Start extends React.Component{
     CommHandler.sendSize();
   }
 
-  getStyles(theme){
-    var minWidth = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "480px" : "635px";
+  getStyles(){
+    const theme = this.props.theme;
+    var minWidth = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? "480px" : "635px";
     return {
       progressBar: {
         backgroundColor: theme.progressBarColor,
@@ -47,7 +48,7 @@ export default class Start extends React.Component{
         height: theme.progressBarHeight
       },
       assessment: {
-        padding: this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "" : theme.assessmentPadding,
+        padding: this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? "" : theme.assessmentPadding,
         backgroundColor: theme.assessmentBackground,
         minWidth: minWidth
       },
@@ -79,30 +80,17 @@ export default class Start extends React.Component{
     var styles = this.getStyles({});
     var content;
     var progressBar;
-    var titleBar;
 
-    if(this.props.enableStart){
-        content = <CheckUnderstanding
-          title             = {this.props.settings && this.props.settings.assessmentTitle}
-          maxAttempts       = {this.props.settings && this.props.settings.allowedAttempts}
-          userAttempts      = {this.props.settings && this.props.settings.userAttempts}
-          eid               = {this.props.settings && this.props.settings.lisUserId}
-          userId            = {this.props.settings && this.props.settings.userId}
-          isLti             = {this.props.settings && this.props.settings.isLti}
-          assessmentId      = {this.props.settings && this.props.settings.assessmentId}
-          assessmentKind    = {this.props.settings && this.props.settings.assessmentKind}
-          ltiRole           = {this.props.settings && this.props.settings.ltiRole}
-          externalContextId = {this.props.settings && this.props.settings.externalContextId}
-          accountId         = {this.props.settings && this.props.settings.accountId}
-          icon              = {this.props.settings && this.props.settings.images.QuizIcon_svg}/>;
-        progressBar = <div style={styles.progressContainer}>
-                            <ProgressDropdown disabled={true} settings={this.props.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentItemIndex + 1} questionCount={this.state.questionCount} />
-                          </div>;
+    // if(this.props.settings.enableStart){
+    //   content = <CheckUnderstanding />
+    //   progressBar = <div style={styles.progressContainer}>
+    //                   <ProgressDropdown disabled={true} settings={this.props.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentItemIndex + 1} questionCount={this.state.questionCount} />
+    //                 </div>;
 
-    }
-    var quizType = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
-    var titleBar = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{this.props.settings ? this.props.settings.assessmentTitle : ""}</div>;
-    progressBar = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : progressBar;
+    // }
+    const quizType = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
+    const titleBar = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : <div style={styles.titleBar}>{this.props.settings ? this.props.settings.assessmentTitle : ""}</div>;
+    progressBar    = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : progressBar;
 
     return <div className="assessment" style={styles.assessment}>
       {titleBar}

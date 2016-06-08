@@ -39,6 +39,23 @@ Just specify a src_url. CORS must be enabled on the server specified by src_url.
 
 http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest&src_url=https%253A%252F%252Fdl.dropboxusercontent.com%252Fu%252F7594429%252FedXCourse%252Fsequential%252F97cc2d1812204294b5fcbb91a1157368.xml
 
+####Settings - can be passed via window.DEFAULT_SETTINGS or url params
+-----------------------
+    title             : state.settings.assessmentTitle,
+    maxAttempts       : state.settings.allowedAttempts,
+    userAttempts      : state.settings.userAttempts,
+    eid               : state.settings.lisUserId,
+    userId            : state.settings.userId,
+    isLti             : state.settings.isLti,
+    assessmentId      : state.settings.assessmentId,
+    assessmentKind    : state.settings.assessmentKind,
+    ltiRole           : state.settings.ltiRole,
+    externalContextId : state.settings.externalContextId,
+    accountId         : state.settings.accountId,
+    icon              : state.settings.images.QuizIcon_svg,
+    theme             : state.application.theme
+
+
 ####Stats
 -----------------------
 For assessments loaded into http://www.openassessments.com you simply need to browse to the assessment and click on the bar graph.

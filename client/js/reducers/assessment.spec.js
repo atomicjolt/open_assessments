@@ -1,8 +1,8 @@
-import Immutable                     from 'immutable';
-import { Constants as JwtConstants } from "../actions/jwt";
-import settings                      from "./settings";
+import Immutable                            from "immutable";
+import { Constants as AssessmentConstants } from "../actions/assessment";
+import settings                             from "./settings";
 
-describe('settings reducer', () => {
+describe('assessment reducer', () => {
 
   describe("initial state", () => {
 

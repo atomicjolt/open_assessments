@@ -3,8 +3,9 @@ import { persistState }                          from 'redux-devtools';
 import rootReducer                               from '../reducers';
 import DevTools                                  from '../dev/dev_tools.jsx';
 import API                                       from '../middleware/api';
+import AssessmentLoader                          from '../middleware/assessment_loader';
 
-let middleware = [ API ];
+let middleware = [ API, AssessmentLoader ];
 
 let enhancers = [
   applyMiddleware(...middleware)
@@ -26,7 +27,7 @@ export default function(initialState){
 
   if (__DEV__ && module.hot) {
     module.hot.accept(
-      '../reducers', 
+      '../reducers',
       () => store.replaceReducer(require('../reducers'))
     );
   }

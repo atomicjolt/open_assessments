@@ -12,20 +12,21 @@ const requests = [
 
 export const Constants = wrapper(constants, requests);
 
-export const loadAssessment = (url, id) => ({
-  type: Constants.LOAD_ASSESSMENT,
-  apiCall:true,
-  url,
-  id
-});
+export const loadAssessment = (payload) => {
+  return {
+    type: Constants.LOAD_ASSESSMENT,
+    payload
+  };
+};
 
-export const assessmentPostAnalytics = (results_id, user_id='') => ({
+export const assessmentPostAnalytics = (resultsId, userId='', contextId='') => ({
   type:Constants.ASSESSMENT_POST_ANALYTICS,
-  results_id,
-  user_id
+  resultsId,
+  userId,
+  contextId
 });
 
-export const assessmentPostLtiOutcome = (results_id) => ({
+export const assessmentPostLtiOutcome = (resultsId) => ({
   type:Constants.ASSESSMENT_POST_LTI_OUTCOME,
-  results_id,
+  resultsId,
 });

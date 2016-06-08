@@ -1,5 +1,4 @@
-import Wrapper from '../constants/wrapper';
-import Constants from '../constants';
+import wrapper from '../constants/wrapper';
 
 const constants = [
   "ASSESSMENT_START",
@@ -15,31 +14,37 @@ const constants = [
 
 const requests = ["ASSESSMENT_SUBMITTED"];
 
+export const Constants = wrapper(constants, requests);
+
 export const start = (assessmentId) => ({
-  type:Constants.ASSESSMENT_START,
+  type: Constants.ASSESSMENT_START,
   assessmentId
 });
 
 export const answerSelected = (item) => ({
   type: Constants.ANSWER_SELECTED,
   item
-})
+});
 
-export const selectQuestion = (index)=>({type: Constants.QUESTION_SELECTED, index});
+export const selectQuestion = (index) => ({
+  type: Constants.QUESTION_SELECTED, index
+});
 
-export const checkAnswer = () => ({ type: Constants.ASSESSMENT_CHECK_ANSWER });
+export const checkAnswer = () => ({
+  type: Constants.ASSESSMENT_CHECK_ANSWER
+});
 
 export const selectConfidenceLevel = (level, index) => ({
   type: Constants.LEVEL_SELECTED,
   level,
   index
-})
-
+});
 
 export const submitAssessment = (body) => ({
   type:Constants.ASSESSMENT_GRADED,
   body
-})
+});
+
 // TODO refactor logic to component
 // (identifier, assessmentId, questions, studentAnswers, settings, outcomes){
 //     Dispatcher.dispatch({action: Constants.ASSESSMENT_SUBMITTED});
@@ -83,21 +88,21 @@ export const submitAssessment = (body) => ({
 
 export const nextQuestion = () => ({
   type: Constants.ASSESSMENT_NEXT_QUESTION
-})
+});
 
 export const previousQuestion = () => ({
   type: Constants.ASSESSMENT_PREVIOUS_QUESTION
-})
+});
 
 export const retakeAssessment = () => ({
   type: Constants.RETAKE_ASSESSMENT
-})
+});
 
 export const assessmentViewed = (settings, assessment) => ({
-  type:Constants.ASSESSMENT_VIEWED,
+  type: Constants.ASSESSMENT_VIEWED,
   settings,
   assessment
-})
+});
 
 // { TODO andd functionality to component
 //     var body = {
@@ -120,9 +125,9 @@ export const assessmentViewed = (settings, assessment) => ({
 
 
 export const itemViewed = (body) => ({
-  type:Constants.ASSESSMENT_VIEWED, //Two actions have the same type?
+  type: Constants.ASSESSMENT_VIEWED, //Two actions have the same type?
   body
-})
+});
 
 // { TODO add functionality in component
 //     var body = {

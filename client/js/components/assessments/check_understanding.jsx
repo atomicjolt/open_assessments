@@ -1,15 +1,34 @@
 "use strict";
 
 import React              from "react";
-import AssessmentActions  from "../../actions/assessment";
-import $                  from "jquery";
+import { connect }        from "react-redux";
+
+import { start }          from "../../actions/assessment_progress";
 import history            from "../../history";
 
+const select = (state) => {
+  return {
+    title             : state.settings.assessmentTitle,
+    maxAttempts       : state.settings.allowedAttempts,
+    userAttempts      : state.settings.userAttempts,
+    eid               : state.settings.lisUserId,
+    userId            : state.settings.userId,
+    isLti             : state.settings.isLti,
+    assessmentId      : state.settings.assessmentId,
+    assessmentKind    : state.settings.assessmentKind,
+    ltiRole           : state.settings.ltiRole,
+    externalContextId : state.settings.externalContextId,
+    accountId         : state.settings.accountId,
+    icon              : state.settings.images.QuizIcon_svg,
+    theme             : state.application.theme
+  };
+};
+
+@connect(select, { start }, null, {withRef: true})
 export default class CheckUnderstanding extends React.Component{
 
   start(eid, assessmentId, context){
-    AssessmentActions.start(eid, assessmentId, this.props.externalContextId);
-    AssessmentActions.loadAssessment(window.DEFAULT_SETTINGS, $('#srcData').text());
+    this.props.start(eid, assessmentId, this.props.externalContextId);
     history.push(`assessment`);
   }
 
@@ -21,36 +40,36 @@ export default class CheckUnderstanding extends React.Component{
     history.push(`preview/${this.props.assessmentId}`);
   }
 
-  getStyles(props, theme){
+  getStyles(){
     return {
       assessmentContainer:{
-        marginTop: props.assessmentKind.toUpperCase() == "FORMATIVE" ? "0px":"100px",
-        boxShadow: props.assessmentKind.toUpperCase() == "FORMATIVE" ?  "" : theme.assessmentContainerBoxShadow,
-        borderRadius: theme.assessmentContainerBorderRadius
+        marginTop: this.props.assessmentKind.toUpperCase() == "FORMATIVE" ? "0px":"100px",
+        boxShadow: this.props.assessmentKind.toUpperCase() == "FORMATIVE" ?  "" : this.props.theme.assessmentContainerBoxShadow,
+        borderRadius: this.props.theme.assessmentContainerBorderRadius
       },
       header: {
-        backgroundColor: theme.headerBackgroundColor
+        backgroundColor: this.props.theme.headerBackgroundColor
       },
       startButton: {
         margin: "5px 5px 5px -5px",
-        width: theme.definitelyWidth,
-        backgroundColor: theme.definitelyBackgroundColor,
+        width: this.props.theme.definitelyWidth,
+        backgroundColor: this.props.theme.definitelyBackgroundColor,
         border: "transparent"
       },
       checkUnderstandingButton: {
-        backgroundColor: theme.maybeBackgroundColor
+        backgroundColor: this.props.theme.maybeBackgroundColor
       },
       fullQuestion:{
-        backgroundColor: theme.fullQuestionBackgroundColor,
+        backgroundColor: this.props.theme.fullQuestionBackgroundColor,
         padding: "20px"
       },
       buttonGroup: {
-        textAlign: props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center",
+        textAlign: this.props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center",
         background: "#e9e9e9",
         borderBottom: "2px solid #e3e3e3"
       },
       buttonWrapper: {
-        textAlign: props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center"
+        textAlign: this.props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center"
       },
       teacherButton: {
         border:"transparent",
@@ -85,7 +104,7 @@ export default class CheckUnderstanding extends React.Component{
       icon: {
         height: "62px",
         width: "62px",
-        fontColor: theme.primaryBackgroundColor
+        fontColor: this.props.theme.primaryBackgroundColor
       },
       formative: {
         padding: "0px",
@@ -95,7 +114,7 @@ export default class CheckUnderstanding extends React.Component{
         marginTop: "-5px"
       },
       checkDiv: {
-        backgroundColor: theme.primaryBackgroundColor,
+        backgroundColor: this.props.theme.primaryBackgroundColor,
         margin: "20px 0px 0px 0px"
       },
       selfCheck: {
@@ -110,8 +129,8 @@ export default class CheckUnderstanding extends React.Component{
     }
   }
 
-  getAttempts(theme, styles, props){
-    if(!theme.shouldShowAttempts){
+  getAttempts(styles){
+    if(!this.props.theme.shouldShowAttempts){
       return "";
     }
 
@@ -139,7 +158,7 @@ export default class CheckUnderstanding extends React.Component{
       case 2: attempt = "2nd"; break;
       default: "1st";
     }
-    var attemptStructure =       <div style={styles.attemptsContainer}>
+    var attemptStructure = <div style={styles.attemptsContainer}>
         <div> You can take this quiz twice. Your highest score will count as your grade. Don't wait until the last minute to take the quiz - take the quiz early so you'll have plenty of time to study and improve your grade on your second attempt.</div>
           <div style={styles.attempts}>
           <h4>Attempt</h4>
@@ -195,12 +214,12 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   render() {
-    var styles = this.getStyles(this.props, this.context.theme);
+    var styles = this.getStyles();
     var buttonText = "Start Quiz";
     var content = "There was an error, contact your teacher.";
 
     if(this.props.assessmentKind.toUpperCase() == "SUMMATIVE"){
-      content = this.getAttempts(this.context.theme, styles, this.props);
+      content = this.getAttempts(styles);
     } else if(this.props.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
       content = this.getSWYK(styles);
       buttonText = "Start Pre-test";
@@ -246,12 +265,3 @@ export default class CheckUnderstanding extends React.Component{
   }
 
 }
-
-CheckUnderstanding.propTypes = {
-  name: React.PropTypes.string.isRequired
-};
-
-CheckUnderstanding.contextTypes = {
-  theme: React.PropTypes.object,
-  router: React.PropTypes.func,
-};

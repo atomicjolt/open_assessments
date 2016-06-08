@@ -7,14 +7,12 @@ import ReactDOM                from 'react-dom';
 import { Provider }            from 'react-redux';
 import Immutable               from 'immutable';
 import _                       from 'lodash';
-import $                       from 'jquery';
 
 import routes                  from './routes';
 import DevTools                from './dev/dev_tools';
 import configureStore          from './store/configure_store';
 import jwt                     from './loaders/jwt';
 import QueryString             from './utils/query_string';
-import { loadAssessment }      from './actions/assessment';
 
 // Polyfill es6 promises for IE
 es6Promise.polyfill();
@@ -43,9 +41,6 @@ class Root extends React.Component {
 }
 
 var settings = Immutable.fromJS(_.merge(window.DEFAULT_SETTINGS, QueryString.params()));
-
-// Load the assessment
-loadAssessment(settings, $('#srcData').text());
 
 const store = configureStore({settings});
 

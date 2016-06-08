@@ -41,7 +41,8 @@ export default class Qti{
       shortOutcome: "",
       longOutcome: "",
       outcomeGuid: "",
-    }
+    };
+    
     for (var i = fields.length - 1; i >= 0; i--) {
       if($(fields[i]).find("fieldlabel").text() == "outcome_guid"){
         outcome.outcomeGuid = $(fields[i]).find("fieldentry").text()
@@ -61,8 +62,8 @@ export default class Qti{
     var fromXml = (xml) => {
       xml = $(xml);
 
-      var objectives = xml.find('objectives matref').map((index, item) => { 
-        return $(item).attr('linkrefid'); 
+      var objectives = xml.find('objectives matref').map((index, item) => {
+        return $(item).attr('linkrefid');
       });
       var outcomes = {
         shortOutcome: "",
@@ -107,7 +108,7 @@ export default class Qti{
 
     // Only grab the items at the current level of the tree
     return this.listFromXml(xml, '> item', fromXml);
-  
+
   }
 
   static parseCorrect(xml){
@@ -141,7 +142,7 @@ export default class Qti{
       var answer = {
         id       : xml.attr('ident'),
         material : this.buildMaterial(xml.find('material').children()),
-        matchMaterial: matchMaterial, 
+        matchMaterial: matchMaterial,
         xml      : xml
       };
       return answer;
@@ -204,7 +205,7 @@ export default class Qti{
   }
 
   static material(xml){
-    
+
     var material = xml.find('presentation > material').children();
     if(material.length > 0){
       return Qti.buildMaterial(material);
