@@ -1,8 +1,8 @@
 import api                from "./api";
 import Network            from "../constants/network";
 import Helper             from '../../specs_support/helper';
-import * as AdminUserActions          from "../actions/admin/users";
-import * as AdminAccountActions       from "../actions/admin/users";
+// import * as AdminUserActions          from "../actions/admin/users";
+// import * as AdminAccountActions       from "../actions/admin/users";
 
 describe('api middleware', function() {
 

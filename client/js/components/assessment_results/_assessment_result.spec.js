@@ -2,8 +2,8 @@ import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import AssessmentResult   from './_assessment_result';
 import AssessmentActions  from '../../actions/assessment';
-import SettingsActions    from '../../actions/settings';
-import StubContext        from '../../../specs_support/stub_context';
+// import SettingsActions    from '../../actions/settings';
+// import StubContext        from '../../../specs_support/stub_context';
 
 describe('assessment result', function() {
   var srcData;
@@ -31,11 +31,11 @@ describe('assessment result', function() {
     jasmine.Ajax.requests.mostRecent().respondWith({
       "status"        : 200,
       "contentType"     : "text/plain",
-      "responseText" : JSON.stringify({score: "100", feedback: "you did good", correct_list: [true], confidence_level_list: ["maybe"]})     
+      "responseText" : JSON.stringify({score: "100", feedback: "you did good", correct_list: [true], confidence_level_list: ["maybe"]})
     });
     jasmine.clock().tick(); // Advance the clock to the next tick
   });
-  
+
   afterEach(() => {
       jasmine.clock().uninstall();
       jasmine.Ajax.uninstall();

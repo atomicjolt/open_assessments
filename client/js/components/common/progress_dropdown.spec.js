@@ -1,7 +1,7 @@
 import React              from 'react';
 import TestUtils          from '../../../node_modules/react/lib/ReactTestUtils';
 import ProgressDropdown        from './progress_dropdown';
-import StubContext        from "../../../specs_support/stub_context";
+//import StubContext        from "../../../specs_support/stub_context";
 
 describe('progress dropdown', function() {
   var questions=[{material: "question 1"},{material: "question 2"}, {material: "question 3"}]

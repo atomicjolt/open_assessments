@@ -1,8 +1,8 @@
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import Start              from './start';
-import StubContext        from '../../../specs_support/stub_context';
-import SettingsActions    from '../../actions/settings';
+// import StubContext        from '../../../specs_support/stub_context';
+// import SettingsActions    from '../../actions/settings';
 
 describe('start', function() {
   var result;
@@ -19,14 +19,14 @@ describe('start', function() {
     // jasmine.Ajax.requests.mostRecent().respondWith({
     //   "status"        : 200,
     //   "contentType"     : "text/plain",
-    //   "responseText" : "{}"     
+    //   "responseText" : "{}"
     // });
     jasmine.clock().tick();
     jasmine.clock().tick();
     var subject = StubContext(<Start />, null, null);
     result = TestUtils.renderIntoDocument(<subject />);
   });
-  
+
   afterEach(() => {
 
     jasmine.clock().uninstall();

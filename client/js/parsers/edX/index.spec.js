@@ -1,5 +1,5 @@
 import Assessment         from './index';
-import AssessmentActions  from "../actions/assessment";
+// import AssessmentActions  from "../actions/assessment";
 import $                  from 'jquery';
 
 describe('assessment', () => {

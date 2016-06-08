@@ -1,17 +1,17 @@
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import Item               from './item';
-import StubContext        from '../../../specs_support/stub_context';
+// import StubContext        from '../../../specs_support/stub_context';
 
 describe('item', function() {
 
   var question = {};
   var currentItemIndex = 0;
-  
+
   var settings = {
     assessmentKind: "formative"
   };
-  
+
   var assessment = {}
   var questionCount = 10;
   var Content = StubContext(Item, {question: question, currentItemIndex: currentItemIndex, settings: settings, questionCount: questionCount, assessment: assessment})
@@ -20,5 +20,5 @@ describe('item', function() {
   it('renders an item', function() {
     expect(React.findDOMNode(result).textContent).toContain("Choose ALL that apply");
   });
-  
+
 });

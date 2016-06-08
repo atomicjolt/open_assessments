@@ -1,7 +1,7 @@
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import CheckUnderstanding from './check_understanding';
-import StubContext        from "../../../specs_support/stub_context";
+// import StubContext        from "../../../specs_support/stub_context";
 
 describe('check understanding', function() {
   describe('formative start screen', ()=>{
@@ -75,5 +75,5 @@ describe('check understanding', function() {
     });
 
   });
-  
+
 });

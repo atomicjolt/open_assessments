@@ -1,7 +1,9 @@
-import React              from 'react';
-import TestUtils          from 'react/lib/ReactTestUtils';
+import React     from "react";
+import ReactDOM  from "react-dom";
+import TestUtils from "react/lib/ReactTestUtils";
+import Helper    from "../../../specs_support/helper";
+
 import Assessment         from './assessment';
-import StubContext        from '../../../specs_support/stub_context';
 import AssessmentActions from '../../actions/assessment';
 
 describe('assessment', function() {
@@ -14,13 +16,13 @@ describe('assessment', function() {
     // jasmine.Ajax.requests.mostRecent().respondWith({
     //   "status"        : 200,
     //   "contentType"     : "text/plain",
-    //   "responseText" : "{}"     
+    //   "responseText" : "{}"
     // });
     jasmine.clock().tick();
     var subject = StubContext(<Assessment />, null, null);
     result = TestUtils.renderIntoDocument(<subject />);
   });
-  
+
   afterEach(() => {
 
     jasmine.clock().uninstall();

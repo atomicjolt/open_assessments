@@ -1,7 +1,7 @@
 import React              from 'react';
 import TestUtils          from '../../../node_modules/react/lib/ReactTestUtils';
 import Checkbox           from './checkbox';
-import StubContext        from '../../../specs_support/stub_context';
+// import StubContext        from '../../../specs_support/stub_context';
 
 describe('checkbox', function() {
 

@@ -3,7 +3,7 @@
 import React              from 'react';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import UniversalInput      from './universal_input';
-import StubContext        from "../../../specs_support/stub_context";
+// import StubContext        from "../../../specs_support/stub_context";
 
 describe('Assessment Questions', ()=> {
   var result;

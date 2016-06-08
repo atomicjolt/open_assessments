@@ -1,7 +1,7 @@
 import React              from 'react';
 import TestUtils          from '../../../node_modules/react/lib/ReactTestUtils';
 import ProgressListItem   from './progress_list_item';
-import StubContext        from "../../../specs_support/stub_context";
+// import StubContext        from "../../../specs_support/stub_context";
 
 describe('Progress list item', function() {
   var question = {

@@ -1,7 +1,7 @@
-import EdX                from './edX/edx';
-import EdXSection         from './edX/edx_section';
-import EdXItem            from './edX/edx_item';
-import AssessmentActions  from "../actions/assessment";
+// import EdX                from './edX/edx';
+// import EdXSection         from './edX/edx_section';
+// import EdXItem            from './edX/edx_item';
+// import AssessmentActions  from "../actions/assessment";
 
 export default class Assessment{
 

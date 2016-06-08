@@ -1,5 +1,5 @@
 import $            from 'jquery';
-import Utils        from '../utils/utils';
+// import Utils        from '../utils/utils';
 import Request      from "superagent";
 
 export default class Edx {
@@ -74,7 +74,7 @@ export default class Edx {
     }.bind(this));
   }
 
-  // Not all edX nodes will have a url_name or a valid id in which case we have 
+  // Not all edX nodes will have a url_name or a valid id in which case we have
   // no way to identify them in the idPlaceholders method. This method can be called to
   // ensure the child nodes have a valid id that can be used to identify them later on.
   static ensureIds(prefix, children){

@@ -1,7 +1,7 @@
 import React              from 'react';
 import TestUtils          from '../../../node_modules/react/lib/ReactTestUtils';
 import ItemResult         from './item_result';
-import StubContext        from "../../../specs_support/stub_context";
+// import StubContext        from "../../../specs_support/stub_context";
 
 describe('item result', function() {
   var question = {
@@ -19,7 +19,7 @@ describe('item result', function() {
     expect(React.findDOMNode(result).textContent).toContain("Hello World");
     expect(React.findDOMNode(result).textContent).toContain("You were correct");
   });
-  
+
   it('renders the Item result with incorrect answer', function() {
     Subject = new StubContext(ItemResult, {question: question, isCorrect: false, confidence: "Just A Guess"});
     result = TestUtils.renderIntoDocument(<Subject />);
