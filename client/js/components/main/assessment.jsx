@@ -1,17 +1,17 @@
 "use strict";
 
 import React              from 'react';
+import { connect }        from "react-redux";
 
-import AssessmentStore    from "../../stores/assessment";
-import SettingsStore      from "../../stores/settings";
+import AssessmentActions  from "../../actions/assessment";
+import appHistory         from "../../history";
 import Item               from "../assessments/item";
 import Loading            from "../assessments/loading";
 import ProgressDropdown   from "../common/progress_dropdown";
 
-// TODO: ADD REDUX
-
 const select = (state) => {
   return {
+      settings             : state.settings,
       assessment           : state.assessment.current,
       isLoaded             : state.assessment.isLoaded,
       isSubmitted          : state.assessment.isSubmitted,
@@ -28,28 +28,29 @@ const select = (state) => {
   };
 }
 
+@connect(select, {...AssessmentActions}, null, {withRef: true})
 export default class Assessment extends React.Component{
 
-  constructor(props, context){
-    super(props, context);
-    this.state = {};
-    // this._bind["checkCompletion", "getStyles"];
-    this.context = context;
-  }
+  // constructor(props, context){
+  //   super(props, context);
+  //   this.state = {};
+  //   // this._bind["checkCompletion", "getStyles"];
+  //   this.context = context;
+  // }
 
-  //   if(AssessmentStore.assessmentResult() != null){ TODO find reduxy alternative
-  //     context.router.transitionTo("assessment-result");
-  //   }
-
-  // var showStart = SettingsStore.current().enableStart && !AssessmentStore.isStarted(); TODO find reduxy alternative
-
-  componentDidMount(){
-    if(this.state.isLoaded){
-      // Trigger action to indicate the assessment was viewed
-      //AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);
+  componentWillMount(){
+    if(this.props.assessmentResult != null){
+      appHistory.push("assessment-result");
     }
   }
 
+  // componentDidMount(){
+  //   if(this.state.isLoaded){
+  //     // Trigger action to indicate the assessment was viewed
+  //     //AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);
+  //   }
+  // }
+  //
   popup(){
     return "Don’t leave!\n If you leave now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this quiz and then use the \"Progress\" drop-down menu";
   }
@@ -59,8 +60,10 @@ export default class Assessment extends React.Component{
     return Math.floor(current/total * 100);
   }
 
-  getStyles(theme){
-    var minWidth = this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "480px" : "635px";
+  getStyles(){
+    const theme = this.props.theme;
+    var minWidth = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? "480px" : "635px";
+
     return {
       progressBar: {
         backgroundColor: theme.progressBarColor,
@@ -100,14 +103,16 @@ export default class Assessment extends React.Component{
 
   render(){
     window.onbeforeunload = this.popup;
-    if(AssessmentStore.assessmentResult() != null || this.state.settings.assessmentKind.toUpperCase() != "SUMMATIVE"){
-      window.onbeforeunload = null;
-    }
-    var styles = this.getStyles(this.context.theme)
+    // // if(AssessmentStore.assessmentResult() != null || this.state.settings.assessmentKind.toUpperCase() != "SUMMATIVE"){
+    //   // window.onbeforeunload = null;
+    // // }
+
+    var showStart = this.props.settings.enableStart && !this.props.assessment.isStarted();
+    var styles = this.getStyles()
     var content;
     var progressBar;
     var titleBar;
-    if(!this.state.isLoaded || this.state.isSubmitted){
+    if(!this.state.props.ed || this.state.isSubmitted){
       content = <Loading />;
     // } else if(this.state.showStart){
     //     content         = <CheckUnderstanding
@@ -130,44 +135,43 @@ export default class Assessment extends React.Component{
     // }
      }else {
       content = <Item
-        question         = {this.state.question}
-        assessment       = {this.state.assessment}
-        currentItemIndex     = {this.state.currentItemIndex}
-        settings         = {this.state.settings}
-        questionCount    = {this.state.questionCount}
-        assessmentResult = {this.state.assessmentResult}
-        messageIndex     = {this.state.messageIndex}
-        allQuestions     = {this.state.allQuestions}
-        studentAnswers   = {this.state.studentAnswers}
-        confidenceLevels = {this.state.settings.confidenceLevels}
-        outcomes         = {this.state.outcomes}/>;
+        question         = {this.props.question}
+        assessment       = {this.props.assessment}
+        currentItemIndex = {this.props.currentItemIndex}
+        settings         = {this.props.settings}
+        questionCount    = {this.props.questionCount}
+        assessmentResult = {this.props.assessmentResult}
+        messageIndex     = {this.props.messageIndex}
+        allQuestions     = {this.props.allQuestions}
+        studentAnswers   = {this.props.studentAnswers}
+        confidenceLevels = {this.props.settings.confidenceLevels}
+        outcomes         = {this.props.outcomes}/>;
         progressBar      =  <div style={styles.progressContainer}>
                               {progressText}
                               <ProgressDropdown settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentItemIndex + 1} questionCount={this.state.questionCount} />
                             </div>;
-    // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
-      // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
+    // // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
+    //   // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);
     }
 
-    var percentCompleted = this.checkProgress(this.state.currentItemIndex, this.state.questionCount);
+    var percentCompleted = this.checkProgress(this.props.currentItemIndex, this.props.questionCount);
     var progressStyle = {width:percentCompleted+"%"};
     var progressText = "";
-    var quizType = this.state.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
-    var titleBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>;
-    if(this.state.assessment){
-      progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.state.assessment.title + " Progress"}</b>{" - You are on question " + (this.state.currentItemIndex + 1) + " of " + this.state.questionCount}</div> : "";
+    var quizType = this.props.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
+    var titleBar = this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{this.props.assessment ? this.props.assessment.title : ""}</div>;
+    if(this.props.assessment){
+      progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.props.assessment.title + " Progress"}</b>{" - You are on question " + (this.props.currentItemIndex + 1) + " of " + this.props.questionCount}</div> : "";
     }
-    progressBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : progressBar;
-    // return <div className="assessment" style={styles.assessment}>
-    //   {titleBar}
-    //   {progressBar}
-    //   <div className="section_list">
-    //     <div className="section_container">
-    //       {content}
-    //     </div>
-    //   </div>
-    // </div>;
-    return <div>Howdy</div>;
+    progressBar = this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : progressBar;
+    return<div className="assessment" style={styles.assessment}>
+      {titleBar}
+      {progressBar}
+      <div className="section_list">
+        <div className="section_container">
+          {content}
+        </div>
+      </div>
+    </div>;
   }
 
 }
