@@ -9,7 +9,7 @@ describe('assessment result', function() {
   var srcData;
   var settings;
   beforeAll(function(){
-    jasmine.getFixtures().fixturesPath = "base/fixtures/";
+    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
     srcData = readFixtures("text.xml");
     settings = {
       assessmentKind: "formative",

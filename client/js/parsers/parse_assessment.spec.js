@@ -5,7 +5,7 @@ describe('assessment', () => {
   var settings;
 
   beforeAll(() => {
-    jasmine.getFixtures().fixturesPath = "base/fixtures/";
+    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
     settings = {};
   });
 

@@ -2,15 +2,15 @@ import Qti           from './qti';
 import $             from 'jquery';
 
 describe('Qti', () => {
-  
+
   var settings;
 
   beforeAll(() => {
-    jasmine.getFixtures().fixturesPath = "base/fixtures/";
+    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
   });
 
   describe('parseSections', () => {
-    
+
     it('find sections in the given qti', () => {
       var data = readFixtures("cells.xml");
       var sections = Qti.parseSections($(data));

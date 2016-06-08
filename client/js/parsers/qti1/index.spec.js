@@ -6,7 +6,7 @@ describe('assessment', () => {
   var settings;
 
   beforeAll(() => {
-    jasmine.getFixtures().fixturesPath = "base/fixtures/";
+    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
     settings = {};
   });
 
@@ -29,13 +29,13 @@ describe('assessment', () => {
     });
   });
 
-  describe('parseQti', () => {
+  describe('parse', () => {
 
     it('parses assessment xml from QTI into an object', () => {
       var data          = readFixtures("text.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
-      var assessment = Assessment.parseQti(1, assessmentXml, xml);
+      var assessment = Assessment.parseAssessment(1, assessmentXml, xml);
 
       expect(assessment).toBeDefined();
       expect(assessment.id).toEqual("i0886cfce85384de6a5b5394edca8282f_summative");
@@ -54,7 +54,7 @@ describe('assessment', () => {
       var data          = readFixtures("assessment.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
-      var assessment = Assessment.parseQti(1, assessmentXml, xml);
+      var assessment = Assessment.parse(1, assessmentXml, xml);
       var items = Assessment.getItems(assessment.sections, null);
       expect(items.length).toEqual(10);
     });
@@ -63,7 +63,7 @@ describe('assessment', () => {
       var data          = readFixtures("assessment.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
-      var assessment = Assessment.parseQti(1, assessmentXml, xml);
+      var assessment = Assessment.parse(1, assessmentXml, xml);
       var items = Assessment.getItems(assessment.sections, 5);
       expect(items.length).toEqual(5);
     });
@@ -72,7 +72,7 @@ describe('assessment', () => {
       var data          = readFixtures("dna.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
-      var assessment = Assessment.parseQti(1, assessmentXml, xml);
+      var assessment = Assessment.parse(1, assessmentXml, xml);
       var items = Assessment.getItems(assessment.sections, null);
       expect(items.length).toEqual(9);
     });
@@ -81,7 +81,7 @@ describe('assessment', () => {
       var data          = readFixtures("dna.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
-      var assessment = Assessment.parseQti(1, assessmentXml, xml);
+      var assessment = Assessment.parse(1, assessmentXml, xml);
       var items = Assessment.getItems(assessment.sections, 5);
       expect(items.length).toEqual(4);
     });

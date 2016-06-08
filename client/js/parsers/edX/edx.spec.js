@@ -6,7 +6,7 @@ describe('EdX', () => {
   var settings;
 
   beforeAll(function(){
-    jasmine.getFixtures().fixturesPath = "base/fixtures/";
+    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
 
   });
 

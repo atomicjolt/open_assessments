@@ -10,7 +10,7 @@
 //   var srcData;
 //
 //   beforeAll(function(){
-//     jasmine.getFixtures().fixturesPath = "base/fixtures/";
+//     jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
 //     srcData = readFixtures("text.xml");
 //     settings = {
 //       srcUrl: "asdf"

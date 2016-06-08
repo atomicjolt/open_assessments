@@ -1,4 +1,5 @@
 import Immutable                            from "immutable";
+import { Constants as JwtConstants } from "../actions/jwt";
 import { Constants as AssessmentConstants } from "../actions/assessment";
 import settings                             from "./settings";
 
@@ -17,7 +18,6 @@ describe('assessment reducer', () => {
       const initialState = Immutable.fromJS(initial);
       const state = settings(initialState, {});
       expect(state.toJS()).toEqual(initial);
-
       const newJwt = '1234';
       const newState = settings(state, {
         type: JwtConstants.REFRESH_JWT,

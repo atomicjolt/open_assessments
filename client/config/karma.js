@@ -32,7 +32,8 @@ module.exports = function(){
     files: [
       './specs_support/mocks/*.js',
       './specs_support/spec_helper.js',
-      // './js/**/*.spec.js',         // Use webpack to build each test individually. If changed here, match the change in preprocessors
+      {pattern:'./specs_support/fixtures/**/*', included:false, served:true},
+      // './js/**/*.spec.js'         // Use webpack to build each test individually. If changed here, match the change in preprocessors
       './webpack.tests.js'          // More performant but tests cannot be run individually
     ],
 
@@ -59,7 +60,7 @@ module.exports = function(){
     autoWatch: true,
 
     // Use jasmine as the test framework
-    frameworks: ['jasmine-ajax', 'jasmine'],
+    frameworks: ['jasmine-ajax', 'jasmine-jquery', 'jasmine'],
 
     reporters: reporters,
 

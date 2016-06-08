@@ -10,7 +10,7 @@ describe('Parses edX Sequential', function(){
 	var id = "97cc2d1812204294b5fcbb91a1157368";
 
 	beforeAll(function(){
-    jasmine.getFixtures().fixturesPath = "base/fixtures/";
+    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
 		url = `https://dl.dropboxusercontent.com/u/7594429/edXCourse/sequential/${id}.xml`;
 		xml = readFixtures(`edXCourse/sequential/${id}.xml`);
 
