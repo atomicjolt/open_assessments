@@ -1,19 +1,19 @@
-import api                                  from "../libs/api";
+import Request                              from "superagent";
 import { DONE }                             from "../constants/wrapper";
 import { Constants as AssessmentConstants } from "../actions/assessment";
 import parseAssessment                      from "../parsers/parse_assessment";
 
 const AssessmentLoad = store => next => action => {
 
-  const loadAssessment = (data) => {
-    const assessment = parseAssessment(data);
+  const loadAssessment = (qtiXml) => {
+    const assessment = parseAssessment(qtiXml);
     store.dispatch({
       type:     action.type + DONE,
       payload:  assessment,
     });
   };
 
-  if(action.type == AssessmentConstants.LOAD_ASSESSMENT_DONE){
+  if(action.type == AssessmentConstants.LOAD_ASSESSMENT){
 
     const el = document.getElementById('srcData');
     const data = el ? el.innerText : null;
@@ -21,13 +21,11 @@ const AssessmentLoad = store => next => action => {
     if(data){
       loadAssessment(data);
     } else {
+      const state = store.getState();
       // Make an api call to load the assessment
-      const promise = api.get(url, state.settings.get("apiUrl"), state.settings.get("jwt"), state.settings.get("csrfToken"), params);
-      if(promise){
-        promise.then((response, error) => {
-          loadAssessment(response.body);
-        });
-      }
+      Request.get(state.settings.get("src_url")).then((response, error) => {
+        loadAssessment(response.text);
+      });
     }
   }
 

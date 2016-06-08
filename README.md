@@ -55,6 +55,14 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     icon              : state.settings.images.QuizIcon_svg,
     theme             : state.application.theme
 
+    confidence_levels : true
+    src_url           : http://www.openassessments.com/api/assessments/55.xml
+    results_end_point : http://www.openassessments.com/api&assessment_id=55
+    eid               : ch15
+
+####Embed
+Open Assessments is embedded into the page via an iframe. Example:
+    `<iframe id="openassessments_container" src="//www.openassessments.com/assessments/load?confidence_levels=true&src_url=http://www.openassessments.com/api/assessments/55.xml&results_end_point=http://www.openassessments.com/api&assessment_id=55&eid=ch15" frameborder="0" style="border:none;width:100%;height:100%;min-height:400px;"></iframe><script src="http://www.openassessments.com/assets/openassessments.js" type="text/javascript"></script>`
 
 ####Stats
 -----------------------

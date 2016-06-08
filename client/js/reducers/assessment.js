@@ -1,6 +1,5 @@
 "use strict";
 
-import _                                     from "lodash";
 import { Constants as AssessmentConstants }  from "../actions/assessment";
 
 const initialState = null;
