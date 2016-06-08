@@ -9,39 +9,41 @@ import Loading            from "../assessments/loading";
 import ProgressDropdown   from "../common/progress_dropdown";
 
 // TODO: ADD REDUX
+
+const select = (state) => {
+  return {
+      assessment           : state.assessment.current,
+      isLoaded             : state.assessment.isLoaded,
+      isSubmitted          : state.assessment.isSubmitted,
+      question             : state.assessment.currentQuestion,
+      currentItemIndex     : state.assessment.currentItemIndex,
+      questionCount        : state.assessment.questionCount,
+      assessmentResult     : state.assessment.assessmentResult,
+      // showStart            : showStart, TODO calculate elsewhere
+      settings             : state.assessment.current,
+      messageIndex         : state.assessment.answerMessageIndex,
+      studentAnswers       : state.assessment.allStudentAnswers,
+      allQuestions         : state.assessment.allQuestions,
+      outcomes             : state.assessment.outcomes
+  };
+}
+
 export default class Assessment extends React.Component{
 
   constructor(props, context){
     super(props, context);
-    this.stores = [AssessmentStore, SettingsStore];
-    this.state = this.getState(context);
+    this.state = {};
+    // this._bind["checkCompletion", "getStyles"];
     this.context = context;
   }
 
-  getState(props, context){
-    var showStart = SettingsStore.current().enableStart && !AssessmentStore.isStarted();
-    if(AssessmentStore.assessmentResult() != null){
-      context.router.transitionTo("assessment-result");
-    }
-    return {
-      assessment           : AssessmentStore.current(),
-      isLoaded             : AssessmentStore.isLoaded(),
-      isSubmitted          : AssessmentStore.isSubmitted(),
-      question             : AssessmentStore.currentQuestion(),
-      currentItemIndex         : AssessmentStore.currentItemIndex(),
-      questionCount        : AssessmentStore.questionCount(),
-      assessmentResult     : AssessmentStore.assessmentResult(),
-      showStart            : showStart,
-      settings             : SettingsStore.current(),
-      messageIndex         : AssessmentStore.answerMessageIndex(),
-      studentAnswers       : AssessmentStore.allStudentAnswers(),
-      allQuestions         : AssessmentStore.allQuestions(),
-      outcomes             : AssessmentStore.outcomes()
-    }
-  }
+  //   if(AssessmentStore.assessmentResult() != null){ TODO find reduxy alternative
+  //     context.router.transitionTo("assessment-result");
+  //   }
+
+  // var showStart = SettingsStore.current().enableStart && !AssessmentStore.isStarted(); TODO find reduxy alternative
 
   componentDidMount(){
-    super.componentDidMount();
     if(this.state.isLoaded){
       // Trigger action to indicate the assessment was viewed
       //AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);
@@ -156,15 +158,16 @@ export default class Assessment extends React.Component{
       progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.state.assessment.title + " Progress"}</b>{" - You are on question " + (this.state.currentItemIndex + 1) + " of " + this.state.questionCount}</div> : "";
     }
     progressBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : progressBar;
-    return <div className="assessment" style={styles.assessment}>
-      {titleBar}
-      {progressBar}
-      <div className="section_list">
-        <div className="section_container">
-          {content}
-        </div>
-      </div>
-    </div>;
+    // return <div className="assessment" style={styles.assessment}>
+    //   {titleBar}
+    //   {progressBar}
+    //   <div className="section_list">
+    //     <div className="section_container">
+    //       {content}
+    //     </div>
+    //   </div>
+    // </div>;
+    return <div>Howdy</div>;
   }
 
 }
