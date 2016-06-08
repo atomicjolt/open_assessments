@@ -19,7 +19,6 @@ const select = (state) => {
       currentItemIndex     : state.assessment.currentItemIndex,
       questionCount        : state.assessment.questionCount,
       assessmentResult     : state.assessment.assessmentResult,
-      // showStart            : showStart, TODO calculate elsewhere
       settings             : state.assessment.current,
       messageIndex         : state.assessment.answerMessageIndex,
       studentAnswers       : state.assessment.allStudentAnswers,
