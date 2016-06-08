@@ -6,8 +6,11 @@ import ResultConfidence from './result_confidence';
 import ResultOutcome    from "./result_outcome";
 
 export default class ItemResult extends React.Component{
-  
-  getStyles(props, theme){
+
+  getStyles(props){
+    const theme = props.settings.theme;
+    if(!theme){ return {}; }
+
     var color;
     var border;
     var labelColor;
@@ -70,8 +73,8 @@ export default class ItemResult extends React.Component{
   }
 
   render() {
-    var styles = this.getStyles(this.props, this.context.theme);
-    var correctMessage = "You were incorrect."; 
+    var styles = this.getStyles(this.props);
+    var correctMessage = "You were incorrect.";
     if(this.props.isCorrect == "partial"){
       correctMessage = "You were partially correct."
     } else if(this.props.isCorrect === true){
@@ -102,7 +105,7 @@ export default class ItemResult extends React.Component{
           <div className="col-md-3 col-sm-3 col-xs-3">
             <ResultOutcome outcomes={this.props.question.outcomes} correct={this.props.isCorrect} level={this.props.confidence}/>
           </div>
-        </div> 
+        </div>
         <div className="row">
         </div>
         <hr />

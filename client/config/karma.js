@@ -39,7 +39,7 @@ module.exports = function(){
 
     // Transpile tests with the karma-webpack plugin
     preprocessors: {
-      //'./js/**/*.spec.js': ['webpack', 'sourcemap']      // Use webpack to build each test individually. If changed here, match the change in files
+      // './js/**/*.spec.js': ['webpack', 'sourcemap']      // Use webpack to build each test individually. If changed here, match the change in files
       './webpack.tests.js': ['webpack', 'sourcemap'],      // More performant but tests cannot be run individually
     },
 

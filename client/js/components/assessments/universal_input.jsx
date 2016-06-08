@@ -29,7 +29,11 @@ export default class UniversalInput extends React.Component{
     CommunicationHandler.scrollParentToTop();
   }
 
-  getStyles(props, theme){
+  getStyles(props){
+    const theme = props.settings.theme;
+
+    if(!theme){return {};}
+
     return {
       panel: {
         position: theme.panelPosition,
@@ -72,7 +76,7 @@ export default class UniversalInput extends React.Component{
   }
 
   render(){
-    var styles = this.getStyles(this.props, this.context.theme)
+    var styles = this.getStyles(this.props);
     var item = this.props.item;
     var messages = '';
     var solution = '';
@@ -134,8 +138,8 @@ export default class UniversalInput extends React.Component{
           return <MappedImage key={item.id + "_" + answer.id} item={answer} />;
         });
         break;
-      case"edx_drag_and_drop":
-        items = item.answers.map((answer)=>{
+      case "edx_drag_and_drop":
+      items = item.answers.map((answer)=>{
           return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />
         });
         break;

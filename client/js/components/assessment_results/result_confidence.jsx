@@ -3,8 +3,11 @@
 import React          from 'react';
 
 export default class ResultConfidence extends React.Component{
-  
-  getStyles(props, theme){
+
+  getStyles(props){
+    const theme = props.settings.theme;
+
+    if(!theme){ return {}; }
 
     return {
       maybe: {
@@ -40,7 +43,7 @@ export default class ResultConfidence extends React.Component{
     };
   }
   render() {
-    var styles = this.getStyles(this.props, this.context.theme);
+    var styles = this.getStyles(this.props);
 
     return (
       <div >
