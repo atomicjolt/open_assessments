@@ -12,10 +12,9 @@ const requests = [
 
 export const Constants = wrapper(constants, requests);
 
-export const loadAssessment = (payload) => {
+export const loadAssessment = () => {
   return {
-    type: Constants.LOAD_ASSESSMENT,
-    payload
+    type: Constants.LOAD_ASSESSMENT
   };
 };
 

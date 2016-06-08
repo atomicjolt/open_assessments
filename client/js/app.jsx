@@ -40,7 +40,13 @@ class Root extends React.Component {
   }
 }
 
-var settings = Immutable.fromJS(_.merge(window.DEFAULT_SETTINGS, QueryString.params()));
+// Build settings from DEFAULT_SETTINGS, the url, and data embedded in the page
+var settings = _.merge(window.DEFAULT_SETTINGS, QueryString.params());
+const el = document.getElementById('assessment_data');
+if(el && el.innerText.length > 0){
+  settings.assessment_data = el.innerText;
+}
+settings = Immutable.fromJS(settings);
 
 const store = configureStore({settings});
 
