@@ -1,8 +1,9 @@
 "use strict";
 
 import React              from 'react';
+import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
-import UniversalInput      from './universal_input';
+import UniversalInput     from './universal_input';
 
 describe('Assessment Questions', ()=> {
   var result;
@@ -27,16 +28,16 @@ describe('Assessment Questions', ()=> {
   });
 
   it('It Renders the page', ()=>{
-    expect(React.findDOMNode(result)).toBeDefined();
+    expect(ReactDOM.findDOMNode(result)).toBeDefined();
   });
 
   it('It renders the title', ()=>{
-    expect(React.findDOMNode(result).textContent).toContain('title');
+    expect(ReactDOM.findDOMNode(result).textContent).toContain('title');
   });
 
   it('It renders the question text', ()=>{
-    expect(React.findDOMNode(result).textContent).toContain(item.messages[0]);
-    expect(React.findDOMNode(result).textContent).toContain(item.messages[1]);
+    expect(ReactDOM.findDOMNode(result).textContent).toContain(item.messages[0]);
+    expect(ReactDOM.findDOMNode(result).textContent).toContain(item.messages[1]);
   });
 
   xdescribe('Drag and Drop', ()=>{
@@ -77,8 +78,8 @@ describe('Assessment Questions', ()=> {
     });
 
     it('It Renders the option text', ()=>{
-      expect(React.findDOMNode(result).textContent).toContain(item.answers[0].material);
-      expect(React.findDOMNode(result).textContent).toContain(item.answers[1].material);
+      expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers[0].material);
+      expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers[1].material);
     });
   });
 
@@ -92,8 +93,8 @@ describe('Assessment Questions', ()=> {
     });
 
     it('Renders the sub-question text', ()=>{
-      expect(React.findDOMNode(result).textContent).toContain(item.answers[0].material);
-      expect(React.findDOMNode(result).textContent).toContain(item.answers[1].material);
+      expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers[0].material);
+      expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers[1].material);
     });
 
     it('Renders the text input', ()=>{
@@ -109,8 +110,8 @@ describe('Assessment Questions', ()=> {
     });
 
     it('Renders the sub-question text', ()=>{
-      expect(React.findDOMNode(result).textContent).toContain(item.answers[0].material);
-      expect(React.findDOMNode(result).textContent).toContain(item.answers[1].material);
+      expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers[0].material);
+      expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers[1].material);
     });
 
     it('Renders the text input', ()=>{
@@ -169,17 +170,17 @@ describe('Assessment Questions', ()=> {
     });
 
     it('Checkbox text is rendered', ()=>{
-      expect(React.findDOMNode(result).textContent).toContain(item.answers[0].material);
-      expect(React.findDOMNode(result).textContent).toContain(item.answers[1].material);
+      expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers[0].material);
+      expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers[1].material);
     });
   });
 
   it('Renders the solution', ()=>{
-    expect(React.findDOMNode(result).textContent).toContain('solution text');
+    expect(ReactDOM.findDOMNode(result).textContent).toContain('solution text');
   });
 
   xit('Does not render the solution if the question is not answered', ()=>{
-    expect(React.findDOMNode(result).textContent).toContain(item.answers);
+    expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers);
   });
 
 });

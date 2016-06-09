@@ -19,8 +19,7 @@ describe('assessment', function() {
     //   "responseText" : "{}"
     // });
     jasmine.clock().tick();
-    var subject = StubContext(<Assessment />, null, null);
-    result = TestUtils.renderIntoDocument(<subject />);
+    result = TestUtils.renderIntoDocument(<Assessment />);
   });
 
   afterEach(() => {

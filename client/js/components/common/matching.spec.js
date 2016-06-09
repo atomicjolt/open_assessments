@@ -1,4 +1,5 @@
 import React              from 'react';
+import ReactDOM           from 'react-dom';
 import TestUtils          from '../../../node_modules/react/lib/ReactTestUtils';
 import Matching           from './matching';
 
@@ -24,10 +25,9 @@ describe('matching', function() {
   var result = TestUtils.renderIntoDocument(<Matching item={item} name="answer-option" />);
 
   it('renders the dropdown items', function() {
-    expect(React.findDOMNode(result).textContent).toContain("test");
-    expect(React.findDOMNode(result).textContent).toContain("match this");
-    expect(React.findDOMNode(result).textContent).toContain("match this also");
-  
+    expect(ReactDOM.findDOMNode(result).textContent).toContain("test");
+    expect(ReactDOM.findDOMNode(result).textContent).toContain("match this");
+    expect(ReactDOM.findDOMNode(result).textContent).toContain("match this also");
   });
 
   it('calls the answerSelected function when change', () => {

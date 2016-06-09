@@ -1,6 +1,7 @@
 "use strict";
 
 import React				from 'react';
+import ReactDOM     from 'react-dom';
 import TestUtils    from 'react/lib/ReactTestUtils';
 import Draggable		from './draggable';
 
@@ -22,7 +23,7 @@ describe('Draggable Object', ()=>{
 
 	it('Renders', ()=>{
 		expect(instance).toBeDefined();
-		expect(React.findDOMNode(instance).textContent).toContain('A Label');
+		expect(ReactDOM.findDOMNode(instance).textContent).toContain('A Label');
 		expect(zone).toBeDefined();
 	});
 	it('Is draggable', ()=>{

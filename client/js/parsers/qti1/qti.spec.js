@@ -12,7 +12,7 @@ describe('Qti', () => {
   describe('parseSections', () => {
 
     it('find sections in the given qti', () => {
-      var data = readFixtures("cells.xml");
+      var data = readFixtures("qti1/cells.xml");
       var sections = Qti.parseSections($(data));
       expect(sections.length).toEqual(1);
       var section = sections[0];

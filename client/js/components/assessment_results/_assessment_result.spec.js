@@ -1,9 +1,9 @@
 import React              from 'react';
+import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import AssessmentResult   from './_assessment_result';
 import AssessmentActions  from '../../actions/assessment';
 // import SettingsActions    from '../../actions/settings';
-// import StubContext        from '../../../specs_support/stub_context';
 
 describe('assessment result', function() {
   var srcData;
@@ -37,14 +37,13 @@ describe('assessment result', function() {
   });
 
   afterEach(() => {
-      jasmine.clock().uninstall();
-      jasmine.Ajax.uninstall();
+    jasmine.clock().uninstall();
+    jasmine.Ajax.uninstall();
   });
 
   it('renders the assessment result', function(){
-    var Content = StubContext(AssessmentResult);
-    var result = TestUtils.renderIntoDocument(<Content />);
-    var content = React.findDOMNode(result).textContent;
-    expect(content.length > 0).toBe(true)
+    var result = TestUtils.renderIntoDocument(<AssessmentResult />);
+    var content = ReactDOM.findDOMNode(result).textContent;
+    expect(content.length > 0).toBe(true);
   });
 });
