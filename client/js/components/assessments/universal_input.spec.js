@@ -6,6 +6,7 @@ import TestUtils          from 'react/lib/ReactTestUtils';
 import UniversalInput     from './universal_input';
 
 describe('Assessment Questions', ()=> {
+
   var result;
   var item;
   var Content;
@@ -182,5 +183,6 @@ describe('Assessment Questions', ()=> {
   xit('Does not render the solution if the question is not answered', ()=>{
     expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers);
   });
+
 
 });

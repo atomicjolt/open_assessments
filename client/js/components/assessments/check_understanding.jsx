@@ -20,7 +20,7 @@ const select = (state) => {
     externalContextId : state.settings.externalContextId,
     accountId         : state.settings.accountId,
     icon              : state.settings.images.QuizIcon_svg,
-    theme             : state.application.theme
+    theme             : state.settings.theme
   };
 };
 
@@ -40,36 +40,39 @@ export default class CheckUnderstanding extends React.Component{
     history.push(`preview/${this.props.assessmentId}`);
   }
 
-  getStyles(){
+  getStyles(props){
+    const theme = props.theme;
+    if(!theme){return {};}
+
     return {
       assessmentContainer:{
-        marginTop: this.props.assessmentKind.toUpperCase() == "FORMATIVE" ? "0px":"100px",
-        boxShadow: this.props.assessmentKind.toUpperCase() == "FORMATIVE" ?  "" : this.props.theme.assessmentContainerBoxShadow,
-        borderRadius: this.props.theme.assessmentContainerBorderRadius
+        marginTop: props.assessmentKind.toUpperCase() == "FORMATIVE" ? "0px":"100px",
+        boxShadow: props.assessmentKind.toUpperCase() == "FORMATIVE" ?  "" : props.theme.assessmentContainerBoxShadow,
+        borderRadius: theme.assessmentContainerBorderRadius
       },
       header: {
-        backgroundColor: this.props.theme.headerBackgroundColor
+        backgroundColor: theme.headerBackgroundColor
       },
       startButton: {
         margin: "5px 5px 5px -5px",
-        width: this.props.theme.definitelyWidth,
-        backgroundColor: this.props.theme.definitelyBackgroundColor,
+        width: theme.definitelyWidth,
+        backgroundColor: theme.definitelyBackgroundColor,
         border: "transparent"
       },
       checkUnderstandingButton: {
-        backgroundColor: this.props.theme.maybeBackgroundColor
+        backgroundColor: theme.maybeBackgroundColor
       },
       fullQuestion:{
-        backgroundColor: this.props.theme.fullQuestionBackgroundColor,
+        backgroundColor: theme.fullQuestionBackgroundColor,
         padding: "20px"
       },
       buttonGroup: {
-        textAlign: this.props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center",
+        textAlign: props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center",
         background: "#e9e9e9",
         borderBottom: "2px solid #e3e3e3"
       },
       buttonWrapper: {
-        textAlign: this.props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center"
+        textAlign: props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center"
       },
       teacherButton: {
         border:"transparent",
@@ -104,7 +107,7 @@ export default class CheckUnderstanding extends React.Component{
       icon: {
         height: "62px",
         width: "62px",
-        fontColor: this.props.theme.primaryBackgroundColor
+        fontColor: theme.primaryBackgroundColor
       },
       formative: {
         padding: "0px",
@@ -114,7 +117,7 @@ export default class CheckUnderstanding extends React.Component{
         marginTop: "-5px"
       },
       checkDiv: {
-        backgroundColor: this.props.theme.primaryBackgroundColor,
+        backgroundColor: theme.primaryBackgroundColor,
         margin: "20px 0px 0px 0px"
       },
       selfCheck: {
@@ -129,8 +132,8 @@ export default class CheckUnderstanding extends React.Component{
     }
   }
 
-  getAttempts(styles){
-    if(!this.props.theme.shouldShowAttempts){
+  getAttempts(styles, theme){
+    if(!theme.shouldShowAttempts){
       return "";
     }
 
@@ -214,12 +217,12 @@ export default class CheckUnderstanding extends React.Component{
   }
 
   render() {
-    var styles = this.getStyles();
+    var styles = this.getStyles(this.props);
     var buttonText = "Start Quiz";
     var content = "There was an error, contact your teacher.";
 
     if(this.props.assessmentKind.toUpperCase() == "SUMMATIVE"){
-      content = this.getAttempts(styles);
+      content = this.getAttempts(styles, this.props.theme);
     } else if(this.props.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
       content = this.getSWYK(styles);
       buttonText = "Start Pre-test";
