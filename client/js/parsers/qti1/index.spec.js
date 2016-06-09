@@ -13,7 +13,7 @@ describe('assessment', () => {
   describe('parseAssessment', () => {
 
     it('parses assessment xml from QTI into an object', () => {
-      var data       = readFixtures("assessment.xml");
+      var data       = readFixtures("qti1/assessment.xml");
       var assessment = Assessment.parseAssessment(settings, data);
 
       expect(assessment).toBeDefined();
@@ -32,7 +32,7 @@ describe('assessment', () => {
   describe('parse', () => {
 
     it('parses assessment xml from QTI into an object', () => {
-      var data          = readFixtures("text.xml");
+      var data          = readFixtures("qti1/text.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
       var assessment = Assessment.parseAssessment(1, assessmentXml, xml);
@@ -51,7 +51,7 @@ describe('assessment', () => {
 
   describe('GetItems', () => {
     it('retrieves all items from assessment.xml', () => {
-      var data          = readFixtures("assessment.xml");
+      var data          = readFixtures("qti1/assessment.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
       var assessment = Assessment.parse(1, assessmentXml, xml);
@@ -60,7 +60,7 @@ describe('assessment', () => {
     });
 
     it('retrieves 5 items from assessment.xml', () => {
-      var data          = readFixtures("assessment.xml");
+      var data          = readFixtures("qti1/assessment.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
       var assessment = Assessment.parse(1, assessmentXml, xml);
@@ -69,7 +69,7 @@ describe('assessment', () => {
     });
 
     it('retrieves all items from dna.xml', () => {
-      var data          = readFixtures("dna.xml");
+      var data          = readFixtures("qti1/dna.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
       var assessment = Assessment.parse(1, assessmentXml, xml);
@@ -78,7 +78,7 @@ describe('assessment', () => {
     });
 
     it('retrieves 2 items from each section dna.xml', () => {
-      var data          = readFixtures("dna.xml");
+      var data          = readFixtures("qti1/dna.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
       var assessment = Assessment.parse(1, assessmentXml, xml);

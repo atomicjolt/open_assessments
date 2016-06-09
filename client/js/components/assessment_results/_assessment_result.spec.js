@@ -10,7 +10,7 @@ describe('assessment result', function() {
   var settings;
   beforeAll(function(){
     jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
-    srcData = readFixtures("text.xml");
+    srcData = readFixtures("qti1/text.xml");
     settings = {
       assessmentKind: "formative",
       srcUrl: "asdf",
