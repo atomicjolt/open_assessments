@@ -3,7 +3,6 @@
 import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
 import UniversalInput     from "./universal_input";
-import AssessmentStore    from "../../stores/assessment";
 
 export default class Item extends React.Component{
 
@@ -24,7 +23,7 @@ export default class Item extends React.Component{
   confidenceLevelClicked(e, currentItemIndex){
     e.preventDefault();
 
-    if(AssessmentStore.selectedAnswerId() && AssessmentStore.selectedAnswerId().length > 0){
+    if(this.props.selectedAnswerId && this.props.selectedAnswerId.length > 0){
       AssessmentActions.selectConfidenceLevel(e.target.value, currentItemIndex);
       if(this.props.currentItemIndex == this.props.questionCount - 1 && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
         this.submitButtonClicked();
@@ -44,7 +43,7 @@ export default class Item extends React.Component{
     var complete = this.checkCompletion();
     if(complete === true){
       window.onbeforeunload = null;
-      AssessmentActions.submitAssessment(this.props.assessment.id, this.props.assessment.assessmentId, this.props.allQuestions, AssessmentStore.allStudentAnswers(), this.props.settings, this.props.outcomes);
+      AssessmentActions.submitAssessment(this.props.assessment.id, this.props.assessment.assessmentId, this.props.allQuestions, this.props.allStudentAnswers, this.props.settings, this.props.outcomes);
     }
     else {
       this.setState({unAnsweredQuestions: complete});
@@ -53,7 +52,7 @@ export default class Item extends React.Component{
 
   checkCompletion(){
     var questionsNotAnswered = [];
-    var answers = AssessmentStore.allStudentAnswers();
+    var answers = this.props.allStudentAnswers;
     for (var i = 0; i < answers.length; i++) {
       if(answers[i] == null || answers[i].length == 0){
 
@@ -294,7 +293,7 @@ export default class Item extends React.Component{
 
 
   render() {
-    var styles = this.getStyles(this.context.theme);
+    var styles = this.getStyles(this.props.theme);
     var unAnsweredWarning = this.getWarning(this.state,  this.props.questionCount, this.props.currentItemIndex, styles);
     var result = this.getResult(this.props.messageIndex);
     var must_answer_message = this.state && this.state.showMessage ? <div style={styles.warning}>You must select an answer before continuing.</div> : "";

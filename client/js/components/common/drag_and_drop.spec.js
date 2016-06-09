@@ -30,12 +30,15 @@ describe('Drag and Drop', ()=>{
 			expect(TestUtils.findRenderedDOMComponentWithTag(instance, 'img')).toBeDefined();
 			expect(TestUtils.findRenderedDOMComponentWithTag(instance, 'img').props.src).toEqual('http://www.bealecorner.com/trv900/respat/eia1956-small.jpg');
 		});
+
 		it('Renders the draggable objects', ()=>{
 			expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'Draggable')).toBeDefined();
 		});
+
 		it('renders the dropzones', ()=>{
 			expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'DropZone')).toBeDefined();
 		});
+		
 	});
 
 	describe('Index Type', ()=>{

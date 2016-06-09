@@ -24,8 +24,8 @@ describe('Assessment Questions', ()=> {
       messages : ["My Message1", "My Message2"],
       solution : "<p>solution text</p>"
     };
-    Content = (<UniversalInput settings={ {} } item={item} />);
-    result = TestUtils.renderIntoDocument(Content);
+
+    result = TestUtils.renderIntoDocument(<UniversalInput settings={ {} } item={item} />);
   });
 
   it('It Renders the page', ()=>{
@@ -35,7 +35,7 @@ describe('Assessment Questions', ()=> {
   it('It renders the title', ()=>{
     expect(ReactDOM.findDOMNode(result).textContent).toContain('title');
   });
-
+  //
   it('It renders the question text', ()=>{
     expect(ReactDOM.findDOMNode(result).textContent).toContain(item.messages[0]);
     expect(ReactDOM.findDOMNode(result).textContent).toContain(item.messages[1]);

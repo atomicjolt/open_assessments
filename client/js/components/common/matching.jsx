@@ -2,7 +2,6 @@
 
 import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
-import AssessmentStore    from "../../stores/assessment";
 import _                  from "lodash";
 import Utils              from "../../utils/utils";
 export default class Matching extends React.Component{
@@ -52,12 +51,12 @@ export default class Matching extends React.Component{
   render(){
     var responses = this.getResponses(this.props.item);
     var materialNames = this.getMaterialNames();
-    
+
     var materialItems = responses.map((item, index)=>{
       var name = "answer-" + index;
       var ref = "answer-" + item.id;
-      
-      var answers = (AssessmentStore.studentAnswers()) ? AssessmentStore.studentAnswers()[index] : {selectedAnswer: ""};
+
+      var answers = (props.studentAnswers) ? props.studentAnswers[index] : {selectedAnswer: ""};
       var selectedAnswer;
       var options = item.answers.map((answer, i)=>{
         if(answers && (answers.selectedAnswer.trim() == answer.material.trim())){

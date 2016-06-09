@@ -2,7 +2,6 @@
 
 import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
-import AssessmentStore    from "../../stores/assessment";
 import Styles             from "../../themes/selection.js";
 
 const styles = Styles;
@@ -22,7 +21,7 @@ export default class CheckBox extends React.Component{
     } else if ( this.props.checked === false ){
       checked = false;
     } else if ( !this.props.isDisabled ) {
-      checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null;
+      checked = (this.props.studentAnswers && this.props.studentAnswers.indexOf(this.props.item.id) > -1) ? "true" : null;
     }
     return checked;
   }

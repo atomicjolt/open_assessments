@@ -8,7 +8,7 @@ import CheckUnderstanding from './check_understanding';
 describe('check understanding', function() {
 
   describe('formative start screen', ()=>{
-    let store = createStore({
+    let store = createStore(() => ({
       settings:{
         title : "Test Title",
         maxAttempts : 2,
@@ -18,15 +18,17 @@ describe('check understanding', function() {
         assessmentId : 24,
         assessmentKind : "formative",
         ltiRole : "User",
-        icon : "test.svg"
+        icon : "test.svg",
+        images : {},
+        theme : {}
       }
-    });
+    }));
 
     var Subject = <CheckUnderstanding store={store} />
     var result = TestUtils.renderIntoDocument(Subject);
     it('renders the formative start Screen', function() {
-      expect(React.findDOMNode(result).textContent).toContain("Test Title");
-      expect(React.findDOMNode(result).textContent).toContain("Start Quiz");
+      expect(ReactDOM.findDOMNode(result).textContent).toContain("Test Title");
+      expect(ReactDOM.findDOMNode(result).textContent).toContain("Start Quiz");
     });
   });
 
@@ -57,7 +59,7 @@ describe('check understanding', function() {
   });
 
   describe('summative start screen', ()=>{
-    let store = createStore({
+    let store = createStore(() => ({
       settings:{
         title : "Test Title",
         maxAttempts : 2,
@@ -68,8 +70,10 @@ describe('check understanding', function() {
         assessmentKind : "summative",
         ltiRole : "User",
         icon : "test.svg",
+        images : {},
+        theme : {}
       }
-    })
+    }));
 
     var result = TestUtils.renderIntoDocument(<CheckUnderstanding store={store} />);
     it('renders the summative start screen', function() {
@@ -79,7 +83,9 @@ describe('check understanding', function() {
     });
 
     it('renders a message if user has hit max attempts', function() {
-      props.userAttempts = 2;
+      let props = {
+        userAttempts: 2
+      };
       result = TestUtils.renderIntoDocument(<CheckUnderstanding {...props} />);
       expect(ReactDOM.findDOMNode(result).textContent).toContain("Oops!You have already taken this quiz the maximum number of times");
     });

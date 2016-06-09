@@ -2,7 +2,6 @@
 
 import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
-import AssessmentStore    from "../../stores/assessment";
 import Styles             from "../../themes/selection.js";
 
 const styles = Styles;
@@ -10,7 +9,7 @@ const styles = Styles;
 export default class RadioButton extends React.Component{
 
   answerSelected(){
-    AssessmentActions.answerSelected(this.props.item);
+    // AssessmentActions.answerSelected(this.props.item); TODO
   }
 
   checkedStatus(){
@@ -21,7 +20,7 @@ export default class RadioButton extends React.Component{
     } else if ( this.props.checked === false ){
       checked = false;
     } else if ( !this.props.isDisabled ) {
-      checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null;
+      // checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null; TODO
     }
     return checked;
   }
@@ -43,13 +42,7 @@ export default class RadioButton extends React.Component{
     var checked = null;
     var optionFlag = null;
 
-    if( this.props.checked === true ) {
-      checked = "true";
-    } else if ( this.props.checked === false ){
-      checked = false;
-    } else if ( !this.props.isDisabled ) {
-      checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null;
-    }
+    var checked = this.checkedStatus();
 
     var radio = <input type="radio" defaultChecked={checked} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>;
 
