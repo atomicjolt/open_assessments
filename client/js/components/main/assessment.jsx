@@ -11,31 +11,28 @@ import ProgressDropdown   from "../common/progress_dropdown";
 
 const select = (state) => {
   return {
-      settings             : state.settings,
-      assessment           : state.assessment.current,
-      isLoaded             : state.assessment.isLoaded,
-      isSubmitted          : state.assessment.isSubmitted,
-      question             : state.assessment.currentQuestion,
-      currentItemIndex     : state.assessment.currentItemIndex,
-      questionCount        : state.assessment.questionCount,
-      assessmentResult     : state.assessment.assessmentResult,
-      settings             : state.assessment.current,
-      messageIndex         : state.assessment.answerMessageIndex,
-      studentAnswers       : state.assessment.allStudentAnswers,
-      allQuestions         : state.assessment.allQuestions,
-      outcomes             : state.assessment.outcomes
+    settings             : state.settings,
+    assessment           : state.assessment,
+    assessmentProgress   :state.assessment_progress,
+    
+    // TODO all these come from assessment progress
+    // isLoaded             : 
+    // isSubmitted          : state.assessment.isSubmitted,
+    // question             : state.assessment.currentQuestion,
+    // currentItemIndex     : state.assessment.currentItemIndex,
+    // questionCount        : state.assessment.questionCount,
+    // assessmentResult     : state.assessment.assessmentResult,
+    // messageIndex         : state.assessment.answerMessageIndex,
+    // studentAnswers       : state.assessment.allStudentAnswers,
+
+    // TODO need to figure out what these are
+    // allQuestions         : state.assessment.allQuestions,
+    // outcomes             : state.assessment.outcomes
   };
-}
+};
 
 @connect(select, {...AssessmentActions}, null, {withRef: true})
 export default class Assessment extends React.Component{
-
-  // constructor(props, context){
-  //   super(props, context);
-  //   this.state = {};
-  //   // this._bind["checkCompletion", "getStyles"];
-  //   this.context = context;
-  // }
 
   componentWillMount(){
     if(this.props.assessmentResult != null){
@@ -43,17 +40,14 @@ export default class Assessment extends React.Component{
     }
   }
 
-  // componentDidMount(){
-  //   if(this.state.isLoaded){
-  //     // Trigger action to indicate the assessment was viewed
-  //     //AssessmentActions.assessmentViewed(this.state.settings, this.state.assessment);
-  //   }
-  // }
-  //
+  componentDidMount(){
+    // Trigger action to indicate the assessment was viewed
+    this.props.assessmentViewed(this.state.settings, this.state.assessment);
+  }
+
   popup(){
     return "Don’t leave!\n If you leave now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this quiz and then use the \"Progress\" drop-down menu";
   }
-
 
   checkProgress(current, total){
     return Math.floor(current/total * 100);
@@ -132,7 +126,7 @@ export default class Assessment extends React.Component{
     //                       </div>;
 
     // }
-     }else {
+    } else {
       content = <Item
         question         = {this.props.question}
         assessment       = {this.props.assessment}
@@ -145,7 +139,8 @@ export default class Assessment extends React.Component{
         studentAnswers   = {this.props.studentAnswers}
         confidenceLevels = {this.props.settings.confidenceLevels}
         outcomes         = {this.props.outcomes}/>;
-        progressBar      =  <div style={styles.progressContainer}>
+
+      progressBar = <div style={styles.progressContainer}>
                               {progressText}
                               <ProgressDropdown settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentItemIndex + 1} questionCount={this.state.questionCount} />
                             </div>;
@@ -157,7 +152,7 @@ export default class Assessment extends React.Component{
     var progressStyle = {width:percentCompleted+"%"};
     var progressText = "";
     var quizType = this.props.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
-    var titleBar = this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{this.props.assessment ? this.props.assessment.title : ""}</div>;
+    var titleBar = this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : <div style={styles.titleBar}>{this.props.assessment ? this.props.assessment.title : ""}</div>;
     if(this.props.assessment){
       progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.props.assessment.title + " Progress"}</b>{" - You are on question " + (this.props.currentItemIndex + 1) + " of " + this.props.questionCount}</div> : "";
     }
@@ -174,8 +169,3 @@ export default class Assessment extends React.Component{
   }
 
 }
-
-Assessment.contextTypes = {
-  router: React.PropTypes.func,
-  theme: React.PropTypes.object,
-};
