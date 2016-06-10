@@ -16,7 +16,7 @@ const select = (state) => {
     outcomes         : state.assessment.outcomes(),
     assessment       : state.assessment.current(),
     settings         : state.settings
-  }
+  };
 };
 
 @connect(select, {...AssessmentActions}, null, {withRef: true})
