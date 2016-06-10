@@ -6,22 +6,23 @@ import appHistory         from "../../history.js";
 import Item               from "../assessments/item";
 import Loading            from "../assessments/loading";
 import ProgressDropdown   from "../common/progress_dropdown";
+import { items }          from "../../selectors/assessment";
 
 const select = (state) => {
   return {
     assessment           : state.assessment,
-    isLoaded             : state.assessment.isLoaded(),
-    isSubmitted          : state.assessment.isSubmitted(),
-    question             : state.assessment.currentQuestion(),
-    currentIndex         : state.assessment.currentIndex(),
-    questionCount        : state.assessment.questionCount(),
-    assessmentResult     : state.assessment.assessmentResult(),
-    showStart            : state.assessment.current().enableStart && !state.assessment.isStarted(),
+    isLoaded             : state.assessmentProgress.isLoaded,
+    isSubmitted          : state.assessmentProgress.isSubmitted,
+    question             : state.assessmentProgress.currentQuestion,
+    currentIndex         : state.assessmentProgress.currentIndex,
+    questionCount        : state.assessmentProgress.questionCount,
+    assessmentResult     : state.assessmentProgress.assessmentResult,
+    showStart            : state.assessmentProgress.current.enableStart && !state.assessment.isStarted,
     settings             : state.setting,
-    messageIndex         : state.assessment.answerMessageIndex(),
-    studentAnswers       : state.assessment.allStudentAnswers(),
-    allQuestions         : state.assessment.allQuestions(),
-    outcomes             : state.assessment.outcomes()
+    messageIndex         : state.assessmentProgress.answerMessageIndex,
+    studentAnswers       : state.assessmentProgress.allStudentAnswers,
+    allQuestions         : items(state),
+    outcomes             : state.assessmentProgress.outcomes
   };
 };
 
@@ -113,20 +114,25 @@ export default class Assessment extends React.Component{
     // }
      }else {
       content = <Item
-        question         = {this.state.question}
-        assessment       = {this.state.assessment}
-        currentIndex     = {this.state.currentIndex}
-        settings         = {this.state.settings}
-        questionCount    = {this.state.questionCount}
-        assessmentResult = {this.state.assessmentResult}
-        messageIndex     = {this.state.messageIndex}
-        allQuestions     = {this.state.allQuestions}
-        studentAnswers   = {this.state.studentAnswers}
-        confidenceLevels = {this.state.settings.confidenceLevels}
-        outcomes         = {this.state.outcomes}/>;
+        question         = {this.props.question}
+        assessment       = {this.props.assessment}
+        currentIndex     = {this.props.currentIndex}
+        settings         = {this.props.settings}
+        questionCount    = {this.props.questionCount}
+        assessmentResult = {this.props.assessmentResult}
+        messageIndex     = {this.props.messageIndex}
+        allQuestions     = {this.props.allQuestions}
+        studentAnswers   = {this.props.studentAnswers}
+        confidenceLevels = {this.props.settings.confidenceLevels}
+        outcomes         = {this.props.outcomes}/>;
         progressBar      =  <div style={styles.progressContainer}>
                               {progressText}
-                              <ProgressDropdown settings={this.state.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentIndex + 1} questionCount={this.state.questionCount} />
+                              <ProgressDropdown
+                                settings={this.props.settings}
+                                questions={this.props.allQuestions}
+                                currentQuestion={this.state.currentIndex + 1}
+                                questionCount={this.state.questionCount}
+                              />
                             </div>;
     // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
       // AssessmentActions.itemViewed(this.state.settings, this.state.assessment, this.state.assessmentResult);

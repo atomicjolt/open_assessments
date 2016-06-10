@@ -8,22 +8,22 @@ import SettingsStore        from "../../stores/settings";
 import ItemResult           from "./item_result";
 import ResultSummary        from "./result_summary.jsx";
 import StudyPlanButton      from "../post_nav/study_plan_button.jsx";
+import { items }                  from "../../selectors/assessment";
+
+
+const select = (state) => {
+  return {
+    assessmentResult : state.assessment.assessmentResult,
+    questions        : item(state),
+    settings         : state.settings,
+    assessment       : state.assessment.current
+  };
+};
 
 export default class SummativeResult extends React.Component{
 
   constructor(props, context){
     super(props, context);
-    this.stores = [AssessmentStore, SettingsStore];
-    this.state = this.getState();
-  }
-
-  getState(props, context){
-    return {
-      assessmentResult : this.props.assessmentResult || AssessmentStore.assessmentResult(),
-      questions        : this.props.questions || AssessmentStore.allQuestions(),
-      settings         : SettingsStore.current(),
-      assessment       : this.props.assessment || AssessmentStore.current()
-    }
   }
 
   getItemResults(){

@@ -8,7 +8,7 @@ import appHistory         from "../../history";
 import Item               from "../assessments/item";
 import Loading            from "../assessments/loading";
 import ProgressDropdown   from "../common/progress_dropdown";
-import { questionCount, allQuestions, outcomes } from "../../reducers/assessment";
+import { questionCount, items, outcomes } from "../../reducers/assessment";
 
 
 const select = (state) => {
@@ -22,7 +22,7 @@ const select = (state) => {
     assessmentResult     : state.assessmentProgress.assessmentResult,
     messageIndex         : state.assessmentProgress.answerMessageIndex,
     studentAnswers       : state.assessmentProgress.allStudentAnswers,
-    allQuestions         : allQuestions(),
+    allQuestions         : items(state),
     outcomes             : outcomes()
   };
 };
@@ -49,46 +49,46 @@ export default class Assessment extends React.Component{
     return Math.floor(current/total * 100);
   }
 
-  getStyles(){
-    const theme = this.props.theme;
-    var minWidth = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? "480px" : "635px";
-
-    return {
-      progressBar: {
-        backgroundColor: theme.progressBarColor,
-        height: theme.progressBarHeight,
-      },
-      progressDiv: {
-        height: theme.progressBarHeight
-      },
-      assessment: {
-        padding: this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "" : theme.assessmentPadding,
-        backgroundColor: theme.assessmentBackground,
-        minWidth: minWidth
-      },
-      progressContainer: {
-        padding: "10px 20px 10px 20px",
-        position: "absolute",
-        left: "0px",
-        top: "44px",
-        width: "100%",
-        minWidth: minWidth,
-        backgroundColor: theme.titleBarBackgroundColor,
-      },
-      titleBar: {
-        position: "absolute",
-        top: "0px",
-        left: "0px",
-        width: "100%",
-        padding: "10px 20px 10px 20px",
-        backgroundColor: theme.primaryBackgroundColor,
-        color: "white",
-        fontSize: "130%",
-        minWidth: minWidth,
-        //fontWeight: "bold"
-      }
-    }
-  }
+  // getStyles(){
+  //   const theme = this.props.theme;
+  //   var minWidth = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? "480px" : "635px";
+  //
+  //   return {
+  //     progressBar: {
+  //       backgroundColor: theme.progressBarColor,
+  //       height: theme.progressBarHeight,
+  //     },
+  //     progressDiv: {
+  //       height: theme.progressBarHeight
+  //     },
+  //     assessment: {
+  //       padding: this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "" : theme.assessmentPadding,
+  //       backgroundColor: theme.assessmentBackground,
+  //       minWidth: minWidth
+  //     },
+  //     progressContainer: {
+  //       padding: "10px 20px 10px 20px",
+  //       position: "absolute",
+  //       left: "0px",
+  //       top: "44px",
+  //       width: "100%",
+  //       minWidth: minWidth,
+  //       backgroundColor: theme.titleBarBackgroundColor,
+  //     },
+  //     titleBar: {
+  //       position: "absolute",
+  //       top: "0px",
+  //       left: "0px",
+  //       width: "100%",
+  //       padding: "10px 20px 10px 20px",
+  //       backgroundColor: theme.primaryBackgroundColor,
+  //       color: "white",
+  //       fontSize: "130%",
+  //       minWidth: minWidth,
+  //       //fontWeight: "bold"
+  //     }
+  //   }
+  // }
 
   render(){
     window.onbeforeunload = this.popup;

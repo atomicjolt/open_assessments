@@ -22,10 +22,6 @@ export const questionCount = (state) => {
   return state.assessment ;
 };
 
-export const allQuestions = (state) => {
-  return state.assessment ;
-};
-
 export const outcomes = (state) => {
   return state.assessment ;
 };

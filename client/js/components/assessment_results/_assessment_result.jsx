@@ -7,12 +7,13 @@ import FormativeResult            from "./formative_result.jsx";
 import SummativeResult            from "./summative_result.jsx";
 import ResultStyles               from "./result_styles.js";
 import CommunicationHandler       from "../../utils/communication_handler";
+import { items }                  from "../../selectors/assessment";
 
 const select = (state) => {
   return {
     assessmentResult : state.assessment.assessmentResult(),
     timeSpent        : state.assessment.timeSpent(),
-    questions        : state.assessment.allQuestions(),
+    questions        : item(state),
     outcomes         : state.assessment.outcomes(),
     assessment       : state.assessment.current(),
     settings         : state.settings
@@ -81,4 +82,3 @@ export default class AssessmentResult extends React.Component{
     }
   }
 }
-
