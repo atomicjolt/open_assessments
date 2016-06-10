@@ -2,35 +2,34 @@ import React              from 'react';
 import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import Start              from './start';
+import Rapper             from '../../../specs_support/rapper';
+import configureStore     from '../../store/configure_store';
 
 describe('start', function() {
   var result;
 
-  beforeEach(() => {
-    var settings = {
-      assessmentKind: "summative",
-      srcUrl: "asdf",
-      images: {}
+  beforeEach(()=>{
+    settings = Immutable.fromJS({
+      assessment_kind: "summative",
+      src_url: "asdf",
+      jwt: "asdfasdf",
+      csrf: "asdfasfd",
+      api_url: "www.example.com"
+    });
+
+    assessment = Immutable.fromJS({});
+
+    var state = {
+      settings,
+      assessment
     };
-    jasmine.clock().install();
-    jasmine.Ajax.install();
-    // jasmine.Ajax.requests.mostRecent().respondWith({
-    //   "status"        : 200,
-    //   "contentType"     : "text/plain",
-    //   "responseText" : "{}"
-    // });
-    jasmine.clock().tick();
-    jasmine.clock().tick();
-    result = TestUtils.renderIntoDocument(<Start />);
-  });
-
-  afterEach(() => {
-
-    jasmine.clock().uninstall();
-    jasmine.Ajax.uninstall();
+    var store = configureStore(state);
+    result = TestUtils.renderIntoDocument(<Rapper childProps={{store, params}} child={Start}/>);
   });
 
   it('renders the start page', function(){
-    expect(ReactDOM.findDOMNode(result)).toBeDefined();
+    instance = result.refs.original.getWrappedInstance();
+    expect(ReactDOM.findDOMNode(instance)).toBeDefined();
   });
+
 });
