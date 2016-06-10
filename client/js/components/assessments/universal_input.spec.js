@@ -134,12 +134,11 @@ describe('Assessment Questions', ()=> {
     });
 
     it('All the options are in the dropdown', ()=>{
-        var options = TestUtils.scryRenderedDOMComponentsWithTag(result, 'option');
-        expect(options[0].getDOMNode().textContent).toContain('option1');
-        expect(options[1].getDOMNode().textContent).toEqual('option2');
-        expect(options[2].getDOMNode().textContent).toEqual('option3');
-      }
-    );
+      var options = TestUtils.scryRenderedDOMComponentsWithTag(result, 'option');
+      expect(options[0].getDOMNode().textContent).toContain('option1');
+      expect(options[1].getDOMNode().textContent).toEqual('option2');
+      expect(options[2].getDOMNode().textContent).toEqual('option3');
+    });
   });
 
   describe('Image Mapped Input', ()=>{
