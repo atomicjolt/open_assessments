@@ -8,6 +8,10 @@ const styles = Styles;
 
 export default class CheckBox extends React.Component{
 
+  static propTypes = {
+    item: React.PropTypes.object.isRequired,
+    name: React.PropTypes.string.isRequired
+  }
 
   answerSelected(){
     AssessmentActions.answerSelected(this.props.item);
@@ -45,7 +49,7 @@ export default class CheckBox extends React.Component{
         {this.optionFlagStatus()}
         <div className="btn btn-block btn-question" style={styles.btnQuestion}>
           <label>
-            <input type="checkbox" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>
+            <input type="checkbox" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected(); }}/>
             <span style={styles.span}>{this.props.item.material}</span>
           </label>
         </div>
@@ -53,12 +57,3 @@ export default class CheckBox extends React.Component{
     );
   }
 }
-
-CheckBox.propTypes = {
-  item: React.PropTypes.object.isRequired,
-  name: React.PropTypes.string.isRequired
-};
-
-CheckBox.contextTypes = {
-  theme: React.PropTypes.object
-};
