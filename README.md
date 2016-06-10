@@ -53,7 +53,7 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     assessment_data   // The assessment data in QTI format.
 
     assessment_id     // The id of the assessment
-    assessmentKind    : state.settings.assessmentKind,
+    assessmentKind    // FORMATIVE or SUMMATIVE
     max_attempts      // The maximum number of attempts the assessment can be taken
 
     userAttempts      // The number of time the user has attempted the assessment
