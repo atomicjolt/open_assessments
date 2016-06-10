@@ -1,6 +1,7 @@
 "use strict";
 
 import React                from "react";
+
 import RadioButton          from "../common/radio_button";
 import Option               from "../common/option";
 import TextField            from "../common/text_field";
@@ -56,21 +57,21 @@ export default class UniversalInput extends React.Component{
         padding: theme.panelBodyPadding,
         marginTop: "-20px",
       }
-    }
+    };
   }
 
   wasChosen(id){
     if( this.props.chosen ){
-      return this.props.chosen.indexOf(id) > -1
+      return this.props.chosen.indexOf(id) > -1;
     }else{
       return null;
     }
   }
 
   showAsCorrect(id){
-    if( this.props.correctAnswers && this.props.correctAnswers[0] && this.props.correctAnswers[0].id){
-      return this.props.correctAnswers[0].id.indexOf(id) > -1
-    }else{
+    if(this.props.correctAnswers && this.props.correctAnswers[0] && this.props.correctAnswers[0].id){
+      return this.props.correctAnswers[0].id.indexOf(id) > -1;
+    } else {
       return null;
     }
   }
@@ -84,7 +85,7 @@ export default class UniversalInput extends React.Component{
 
     if(item.messages){
       var renderedMessages = item.messages.map(function(message){
-       return (<li>{message}</li>);
+        return (<li>{message}</li>);
       });
       messages = (<div className="panel-messages alert alert-danger" role="alert">
                    <ul>
