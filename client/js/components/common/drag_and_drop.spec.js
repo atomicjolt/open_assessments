@@ -1,9 +1,9 @@
 "use strict";
 
-import React			from 'react';
-import TestUtils	from '../../../node_modules/react/lib/ReactTestUtils';
-import $					from 'jquery';
-import DragAndDrop		from './drag_and_drop';
+import React       from 'react';
+import TestUtils   from 'react/lib/ReactTestUtils';
+import $           from 'jquery';
+import DragAndDrop from './drag_and_drop';
 
 describe('Drag and Drop', ()=>{
 	var instance;

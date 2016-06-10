@@ -1,8 +1,8 @@
 "use strict";
 
 import React				from 'react';
-import TestUtils		from '../../../node_modules/react/lib/ReactTestUtils';
-import TextField			from './text_field';
+import TestUtils		from 'react/lib/ReactTestUtils';
+import TextField		from './text_field';
 
 describe('TextField', function(){
 

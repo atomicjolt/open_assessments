@@ -1,6 +1,6 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
-import TestUtils          from 'ReactTestUtils';
+import TestUtils          from 'react/lib/ReactTestUtils';
 import Checkbox           from './checkbox';
 
 describe('checkbox', function() {

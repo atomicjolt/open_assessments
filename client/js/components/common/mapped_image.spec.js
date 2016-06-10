@@ -1,7 +1,7 @@
 "use strict";
 
 import React					from 'react';
-import TestUtils			from '../../../node_modules/react/lib/ReactTestUtils';
+import TestUtils			from 'react/lib/ReactTestUtils';
 import MappedImage		from './mapped_image';
 
 describe ('Mapped Image', ()=>{
