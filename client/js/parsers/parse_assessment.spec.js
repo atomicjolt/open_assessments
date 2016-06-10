@@ -1,4 +1,4 @@
-import parseAssessment from './parse_assessment';
+import { parse, assessmentType, AssessmentTypes } from './parse_assessment';
 
 describe('assessment', () => {
 

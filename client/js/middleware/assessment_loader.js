@@ -1,12 +1,12 @@
 import Request                              from "superagent";
 import { DONE }                             from "../constants/wrapper";
 import { Constants as AssessmentConstants } from "../actions/assessment";
-import parseAssessment                      from "../parsers/parse_assessment";
+import { parse }                            from "../parsers/parse_assessment";
 
 const AssessmentLoad = store => next => action => {
 
   const loadAssessment = (settings, qtiXml) => {
-    const assessment = parseAssessment(settings, qtiXml);
+    const assessment = parse(settings, qtiXml);
     store.dispatch({
       type:     action.type + DONE,
       payload:  assessment,

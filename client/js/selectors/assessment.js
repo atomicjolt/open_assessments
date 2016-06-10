@@ -1,27 +1,19 @@
 import { createSelector } from 'reselect';
+import { Assessment as Qti1Assessment } from '../parsers/qti1';
 
-export const items = (state) => {
-  if(state.assessment.standard == "qti"){
-    return Assessment.getItems(state.assessment.sections);
-  } else {
-    return state.assessment.sections[_sectionIndex].items;
-  }
-};
+function getObject(metaData){
+  return {
+    "QTI1": Qti1Assessment,
+    "QTI2": Qti2Assessment,
+    "EDX": EdxAssessment
+  }[metaData.type];
+}
 
-export const perSecItems = (state) => {
-  const allItems = items(state);
-  //state.settings.perSec
-};
+function makeSelector(name){
+  return getObject(state.assessmentMetaData)[name];
+}
 
-export const questionCount = (state) => {
-  const allItems = items(state);
-  if(_items && _items.length > 0){
-    return _items.length;
-  }
-  return SettingsStore.current().sectionCount * SettingsStore.current().perSec;
-  return state.assessment ;
-};
-
-export const outcomes = (state) => {
-  return state.assessment ;
-};
+export const getItems = makeSelector("getItems");
+export const perSecItems = makeSelector("perSecItems");
+export const questionCount = makeSelector("questionCount");
+export const outcomes = makeSelector("outcomes");
