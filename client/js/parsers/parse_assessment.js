@@ -3,6 +3,10 @@ import Qti1 from './qti1';
 import Qti2 from './qti2';
 //import EdX  from './edX'; // For now we don't need edX
 
+/**
+ * Determines what type of assessment has been passed and parses it correctly,
+ * whatever type it is.
+ */
 export default function(settings, qtiXml){
 
   const xml             = $($.parseXML(qtiXml));
