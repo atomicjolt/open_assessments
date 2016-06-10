@@ -4,7 +4,14 @@ import Immutable  from 'immutable';
 import { Constants as AssessmentConstants }   from '../actions/assessment';
 
 const initialState = Immutable.fromJS({
-  isSubmitted: false, isStarted: false, currentItemIndex: 0, selectedAnswerId: '', answerMessageIndex: '', responses: [], startedAt: 0, finishedAt: 0
+  isSubmitted: false,
+  isStarted: false,
+  currentItemIndex: 0,
+  selectedAnswerId: '',
+  answerMessageIndex: '',
+  responses: [],
+  startedAt: 0,
+  finishedAt: 0
 });
 
 export default (state = initialState, action) => {
