@@ -2,7 +2,7 @@
 
 import Immutable  from "immutable";
 
-const initialState = Immutable.fromJS({ assessmentIsStarted: false, theme: {} });
+const initialState = Immutable.fromJS({});
 
 export default (state = initialState, action) => {
 
