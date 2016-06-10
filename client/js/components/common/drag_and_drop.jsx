@@ -1,12 +1,15 @@
 "use strict";
 
 import React							from 'react';
-import AssessmentActions	from '../../actions/assessment';
 import DropZone						from './drop_zone';
 import Draggable					from './draggable';
 import DropZoneIndex			from './drop_zone_index';
 
 export default class DragAndDrop extends React.Component{
+
+	static propTypes = {
+    item: React.PropTypes.object.isRequired
+  }
 
 	render(){
 		var id = "dragDrop" + this.props.item.id;
@@ -55,8 +58,4 @@ export default class DragAndDrop extends React.Component{
 			return <p>Error: Type undefined</p>
 		}
 	}
-};
-
-DragAndDrop.propTypes = {
-	item: React.PropTypes.object.isRequired
 };
