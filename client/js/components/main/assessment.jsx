@@ -8,26 +8,22 @@ import appHistory         from "../../history";
 import Item               from "../assessments/item";
 import Loading            from "../assessments/loading";
 import ProgressDropdown   from "../common/progress_dropdown";
+import { questionCount, allQuestions, outcomes } from "../../reducers/assessment";
+
 
 const select = (state) => {
   return {
     settings             : state.settings,
     assessment           : state.assessment,
-    assessmentProgress   :state.assessment_progress,
-    
-    // TODO all these come from assessment progress
-    // isLoaded             : 
-    // isSubmitted          : state.assessment.isSubmitted,
-    // question             : state.assessment.currentQuestion,
-    // currentItemIndex     : state.assessment.currentItemIndex,
-    // questionCount        : state.assessment.questionCount,
-    // assessmentResult     : state.assessment.assessmentResult,
-    // messageIndex         : state.assessment.answerMessageIndex,
-    // studentAnswers       : state.assessment.allStudentAnswers,
-
-    // TODO need to figure out what these are
-    // allQuestions         : state.assessment.allQuestions,
-    // outcomes             : state.assessment.outcomes
+    questionCount        : questionCount(),
+    isSubmitted          : state.assessmentProgress.isSubmitted,
+    question             : state.assessmentProgress.currentQuestion,
+    currentItemIndex     : state.assessmentProgress.currentItemIndex,
+    assessmentResult     : state.assessmentProgress.assessmentResult,
+    messageIndex         : state.assessmentProgress.answerMessageIndex,
+    studentAnswers       : state.assessmentProgress.allStudentAnswers,
+    allQuestions         : allQuestions(),
+    outcomes             : outcomes()
   };
 };
 
@@ -42,7 +38,7 @@ export default class Assessment extends React.Component{
 
   componentDidMount(){
     // Trigger action to indicate the assessment was viewed
-    this.props.assessmentViewed(this.state.settings, this.state.assessment);
+    this.props.assessmentViewed(this.props.settings, this.props.assessment);
   }
 
   popup(){

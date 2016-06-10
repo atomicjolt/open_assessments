@@ -1,30 +1,41 @@
 import Immutable                            from "immutable";
-import { Constants as JwtConstants } from "../actions/jwt";
+import { Constants as JwtConstants }        from "../actions/jwt";
 import { Constants as AssessmentConstants } from "../actions/assessment";
-import settings                             from "./settings";
+import parseAssessment                      from '../parsers/parse_assessment';
+import assessment                           from "./assessment";
+import { questionCount }                    from "./assessment";
 
 describe('assessment reducer', () => {
+  var initialState;
 
-  describe("initial state", () => {
-
+  describe("initial reducer state", () => {
     it("returns empty state", () => {
-      const initialState = Immutable.fromJS({});
-      const state = settings(initialState, {});
-      expect(state.toJS()).toEqual({});
+      const state = assessment(initialState, {});
+      expect(state).toEqual(null);
+    });
+  });
+
+  describe("initial state for qti 1", () => {
+
+    beforeAll(() => {
+      jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
+      var data = readFixtures("qti1/assessment.xml");
+      initialState = parseAssessment(data);
     });
 
-    it("has a jwt token", () => {
-      const initial = {jwt: 'asdf'};
-      const initialState = Immutable.fromJS(initial);
-      const state = settings(initialState, {});
-      expect(state.toJS()).toEqual(initial);
-      const newJwt = '1234';
-      const newState = settings(state, {
-        type: JwtConstants.REFRESH_JWT,
-        payload: newJwt
-      });
+    // it("", () => {
+    //   const newState = assessment(state, {
+    //     type: JwtConstants.REFRESH_JWT,
+    //     payload: newJwt
+    //   });
 
-      expect(newState.toJS().jwt).toEqual(newJwt);
+    //   expect(newState.toJS().jwt).toEqual(newJwt);
+    // });
+
+    describe("questionCount", () => {
+      const state = assessment(initialState, {});
+      const count = questionCount(state);
+      expect(count).toEqual();
     });
 
   });

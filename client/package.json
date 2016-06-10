@@ -37,6 +37,7 @@
     "react-tap-event-plugin": "1.0.0",
     "reactable": "^0.13.2",
     "redux": "3.5.2",
+    "reselect": "^2.5.1",
     "superagent": "2.0.0",
     "uuid": "2.0.2"
   },
