@@ -41,24 +41,69 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
 
 ####Settings - can be passed via window.DEFAULT_SETTINGS or url params
 -----------------------
-    title             : state.settings.assessmentTitle,
-    maxAttempts       : state.settings.allowedAttempts,
-    userAttempts      : state.settings.userAttempts,
-    eid               : state.settings.lisUserId,
-    userId            : state.settings.userId,
-    isLti             : state.settings.isLti,
-    assessmentId      : state.settings.assessmentId,
+    title             // The title of the assessment
+
+    ##### API endpoints
+    api_url           // Url endpoint that will be used when making API calls
+    results_end_point // Endpoint where results will be written. Might be the same as api_url but doesn't have to be
+
+    ##### Assessment settings
+    // Specify either a src_url or assessment_data. Both are not required.
+    src_url           // A url where the assessment can be downloaded. ie http://www.openassessments.com/api/assessments/55.xml
+    assessment_data   // The assessment data in QTI format.
+
+    assessment_id     // The id of the assessment
     assessmentKind    : state.settings.assessmentKind,
-    ltiRole           : state.settings.ltiRole,
+    max_attempts      // The maximum number of attempts the assessment can be taken
+
+    userAttempts      // The number of time the user has attempted the assessment
+    eid               // External identifier. A value that can be used to uniquely identifier the user in another system. Might by a system id, student number, etc
     externalContextId : state.settings.externalContextId,
+    user_id           // A user identifier
+
+    is_lti            // Indicates if the Open Assessments was launched via LTI
+    lti_role           : state.settings.ltiRole,
+    
+
     accountId         : state.settings.accountId,
     icon              : state.settings.images.QuizIcon_svg,
     theme             : state.application.theme
 
+    // Flags
     confidence_levels : true
-    src_url           : http://www.openassessments.com/api/assessments/55.xml
-    results_end_point : http://www.openassessments.com/api&assessment_id=55
+    
     eid               : ch15
+
+
+//     srcData            : srcData(),
+//     offline            : bestValue('offline', 'offline', false),
+//     assessmentId       : bestValue('assessmentId', 'assessment_id'),
+//     eId                : bestValue('eId', 'eid'),
+//     kind               : bestValue('kind', 'kind', 'formative'),
+//     externalUserId     : bestValue('externalUserId', 'external_user_id'),
+//     externalContextId  : bestValue('externalContextId', 'external_context_id'),
+//     accountId          : bestValue('accountId', 'account_id'),
+//     ltiLaunchId        : defaultSettings.lti_launch_id,
+//     keywords           : bestValue('keywords', 'keywords'),
+//     resultsEndPoint    : bestValue('resultsEndPoint', 'results_end_point', 'http  ://localhost  :4200/api'),
+//     confidenceLevels   : bestValue('confidenceLevels', 'confidence_levels', false),
+//     enableStart        : enableStart,
+//     style              : bestValue('style', 'style', null),
+//     perSec             : parseInt(defaultSettings.per_sec),
+//     csrfToken          : defaultSettings.csrfToken || null,
+//     allowedAttempts    : defaultSettings.allowed_attempts,
+//     userAttempts       : bestValue("user_attempts","userAttempts", 0),
+//     lisUserId          : defaultSettings.lis_user_id,
+//     lisResultSourceDid : defaultSettings.lis_result_sourcedid,
+//     lisOutcomeServiceUrl: defaultSettings.lis_outcome_service_url,
+//     isLti              : defaultSettings.isLti,
+//     assessmentKind     : defaultSettings.assessmentKind,
+//     images             : defaultSettings.images,
+//     ltiRole            : defaultSettings.lti_role,
+//     assessmentTitle    : defaultSettings.assessmentTitle,
+//     showPostMessageNav : defaultSettings.show_post_message_navigation,
+//     sectionCount       : parseInt(defaultSettings.sectionCount),
+//     userAssessmentId   : bestValue('user_assessment_id', 'UserAssessmentId')
 
 ####Embed
 Open Assessments is embedded into the page via an iframe. Example:
