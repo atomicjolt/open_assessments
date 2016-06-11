@@ -103,6 +103,7 @@ module.exports = function(stage){
   var loaders = [
     { test: /\.js$/,              loaders: jsLoaders, exclude: /node_modules/ },
     { test: /\.jsx?$/,            loaders: jsLoaders, exclude: /node_modules/ },
+    { test: /\.json$/,            loaders: ['json'], exclude: /node_modules/ },
     { test: /\.scss$/i,           loader: extractCSS.extract(scssLoaders) },
     { test: /\.css$/i ,           loader: extractCSS.extract(cssLoaders) },
     { test: /\.less$/i ,          loader: extractCSS.extract(lessLoaders) },
