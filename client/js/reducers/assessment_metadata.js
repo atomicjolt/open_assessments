@@ -1,7 +1,6 @@
 "use strict";
 
 import { Constants as AssessmentConstants }  from "../actions/assessment";
-import { assessmentFormat }                  from "../parsers/parse_assessment";
 import Immutable                             from "immutable";
 
 const initialState = Immutable.fromJS({
@@ -13,7 +12,7 @@ export default (state = initialState, action) => {
   switch(action.type){
 
     case AssessmentConstants.LOAD_ASSESSMENT_DONE:
-      return state.set('assessmentFormat', assessmentFormat(state.assessment));
+      return state.set('assessmentFormat', action.payload.format);
       break;
 
     default:

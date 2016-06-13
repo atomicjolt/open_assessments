@@ -1,7 +1,7 @@
 import Immutable                            from "immutable";
 import { Constants as JwtConstants }        from "../actions/jwt";
 import { Constants as AssessmentConstants } from "../actions/assessment";
-import parseAssessment                      from '../parsers/parse_assessment';
+import parseAssessment                      from '../parsers/assessment';
 import assessment                           from "./assessment";
 import { questionCount }                    from "./assessment";
 

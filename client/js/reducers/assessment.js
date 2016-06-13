@@ -9,7 +9,7 @@ export default (state = initialState, action) => {
   switch(action.type){
 
     case AssessmentConstants.LOAD_ASSESSMENT_DONE:
-      return action.payload;
+      return action.payload.assessment;
       break;
 
     default:
