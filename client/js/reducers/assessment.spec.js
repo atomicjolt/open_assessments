@@ -1,12 +1,19 @@
 import Immutable                            from "immutable";
-import { Constants as JwtConstants }        from "../actions/jwt";
 import { Constants as AssessmentConstants } from "../actions/assessment";
-import parseAssessment                      from '../parsers/assessment';
+import { parse }                            from '../parsers/assessment';
 import assessment                           from "./assessment";
-import { questionCount }                    from "./assessment";
 
 describe('assessment reducer', () => {
+
   var initialState;
+  var parsedAssessment;
+  var data;
+
+  beforeAll(() => {
+    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
+    data = readFixtures("qti1/assessment.xml");
+    parsedAssessment = parse(data);
+  });
 
   describe("initial reducer state", () => {
     it("returns empty state", () => {
@@ -15,29 +22,17 @@ describe('assessment reducer', () => {
     });
   });
 
-  describe("initial state for qti 1", () => {
-
-    beforeAll(() => {
-      jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
-      var data = readFixtures("qti1/assessment.xml");
-      initialState = parseAssessment(data);
+  describe("assessment loaded", () => {
+    it("sets the state to the loaded assessment", () => {
+      const action = {
+        type: AssessmentConstants.LOAD_ASSESSMENT_DONE,
+        payload: {
+          assessment: parsedAssessment
+        }
+      };
+      const state = assessment(initialState, action);
+      expect(state).toEqual(parsedAssessment);
     });
-
-    // it("", () => {
-    //   const newState = assessment(state, {
-    //     type: JwtConstants.REFRESH_JWT,
-    //     payload: newJwt
-    //   });
-
-    //   expect(newState.toJS().jwt).toEqual(newJwt);
-    // });
-
-    describe("questionCount", () => {
-      const state = assessment(initialState, {});
-      const count = questionCount(state);
-      expect(count).toEqual();
-    });
-
   });
 
 });
