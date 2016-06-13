@@ -1,20 +1,21 @@
-import { parse, getAssessmentFormat, AssessmentTypes } from './assessment';
+import $                                                 from 'jquery';
+import Immutable                                         from 'immutable';
+import { parse, getAssessmentFormat, AssessmentFormats } from './assessment';
+
+const settings = Immutable.fromJS({});
 
 describe('assessment parser', () => {
 
-  var settings;
-
   beforeAll(() => {
     jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
-    settings = {};
   });
 
   describe('getAssessmentFormat', () => {
 
     it('returns "QTI1" for Qti 1.x assessment', () => {
-      const qtiXml = readFixtures("qti1/assessment.xml");
-      const xml    = $($.parseXML(qtiXml));
-      expect(getAssessmentFormat(xml)).toEqual(AssessmentTypes.Qti1);
+      const data = readFixtures("qti1/assessment.xml");
+      const xml    = $($.parseXML(data));
+      expect(getAssessmentFormat(xml)).toEqual(AssessmentFormats.Qti1);
     });
 
     it('returns "QTI2" for Qti 2.x assessment', () => {
