@@ -1,5 +1,6 @@
-import Qti           from './qti';
-import $             from 'jquery';
+import Qti1Parser                              from './parser';
+import { getItems, loadOutcomes, checkAnswer } from './qti';
+import $                                       from 'jquery';
 
 describe('QTI 1 Functions', () => {
 
@@ -15,8 +16,8 @@ describe('QTI 1 Functions', () => {
       var data          = readFixtures("qti1/assessment.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
-      var assessment = Assessment.parse(1, assessmentXml, xml);
-      var items = Assessment.getItems(assessment.sections, null);
+      var assessment = Qti1Parser.parse(1, assessmentXml, xml);
+      var items = getItems(assessment.sections, null);
       expect(items.length).toEqual(10);
     });
 
@@ -24,8 +25,8 @@ describe('QTI 1 Functions', () => {
       var data          = readFixtures("qti1/assessment.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
-      var assessment = Assessment.parse(1, assessmentXml, xml);
-      var items = Assessment.getItems(assessment.sections, 5);
+      var assessment = Qti1Parser.parse(1, assessmentXml, xml);
+      var items = getItems(assessment.sections, 5);
       expect(items.length).toEqual(5);
     });
 
@@ -33,8 +34,8 @@ describe('QTI 1 Functions', () => {
       var data          = readFixtures("qti1/dna.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
-      var assessment = Assessment.parse(1, assessmentXml, xml);
-      var items = Assessment.getItems(assessment.sections, null);
+      var assessment = Qti1Parser.parse(1, assessmentXml, xml);
+      var items = getItems(assessment.sections, null);
       expect(items.length).toEqual(9);
     });
 
@@ -42,8 +43,8 @@ describe('QTI 1 Functions', () => {
       var data          = readFixtures("qti1/dna.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
-      var assessment = Assessment.parse(1, assessmentXml, xml);
-      var items = Assessment.getItems(assessment.sections, 5);
+      var assessment = Qti1Parser.parse(1, assessmentXml, xml);
+      var items = getItems(assessment.sections, 5);
       expect(items.length).toEqual(4);
     });
   });
