@@ -3,6 +3,8 @@
 import React               from "react";
 import { connect }         from "react-redux";
 import { loadAssessment }  from "../actions/assessment";
+import LocalizedStrings    from 'react-localization';
+import locales             from '../locales/locales';
 
 @connect(null, { loadAssessment }, null, { withRefs: true })
 class Index extends React.Component {
@@ -13,7 +15,9 @@ class Index extends React.Component {
   }
 
   render(){
+    let strings = new LocalizedStrings(locales());
     return <div>
+      <p>{strings.assessments.new}</p>
       {this.props.children}
     </div>;
   }
