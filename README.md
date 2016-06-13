@@ -1,5 +1,5 @@
 #Open Assessments
-Open Assessmetns is a QTI client.
+Open Assessments is a QTI client.
 
 #Getting Started:
 -----------------------
