@@ -50,7 +50,7 @@ describe('assessment', () => {
 
     it('find sections in the given qti', () => {
       var data = readFixtures("qti1/cells.xml");
-      var sections = Qti.parseSections($(data));
+      var sections = Assessment.parseSections($(data));
       expect(sections.length).toEqual(1);
       var section = sections[0];
       expect(section.id).toEqual("root_section");
