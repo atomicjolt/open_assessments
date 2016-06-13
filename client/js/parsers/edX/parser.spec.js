@@ -1,4 +1,4 @@
-import Assessment         from './index';
+import Assessment         from './parser';
 // import AssessmentActions  from "../actions/assessment";
 import $                  from 'jquery';
 

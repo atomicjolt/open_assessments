@@ -1,20 +1,19 @@
 "use strict";
 
-import React              from 'react';
-import { connect }        from "react-redux";
+import React                                  from "react";
+import { connect }                            from "react-redux";
 
-import AssessmentActions  from "../../actions/assessment";
-import appHistory         from "../../history";
-import Item               from "../assessments/item";
-import Loading            from "../assessments/loading";
-import ProgressDropdown   from "../common/progress_dropdown";
-import { questionCount, allQuestions, outcomes } from "../../selectors/assessment";
+import AssessmentActions                      from "../../actions/assessment";
+import appHistory                             from "../../history";
+import Item                                   from "../assessments/item";
+import Loading                                from "../assessments/loading";
+import ProgressDropdown                       from "../common/progress_dropdown";
+import { questionCount, questions, outcomes } from "../../selectors/assessment";
 
-const select = (state) => {
+const select = (state, props) => {
   return {
     settings             : state.settings,
     assessment           : state.assessment,
-    questionCount        : questionCount(),
     isStarted            : state.progress.istarted,
     isSubmitted          : state.progress.isSubmitted,
     question             : state.progress.currentQuestion,
@@ -22,8 +21,9 @@ const select = (state) => {
     assessmentResult     : state.progress.assessmentResult,
     messageIndex         : state.progress.answerMessageIndex,
     studentAnswers       : state.progress.allStudentAnswers,
-    allQuestions         : getItems(state.sections),
-    outcomes             : outcomes()
+    questionCount        : questionCount(state, props),
+    allQuestions         : questions(state, props),
+    outcomes             : outcomes(state, props)
   };
 };
 

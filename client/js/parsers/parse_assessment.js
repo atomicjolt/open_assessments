@@ -1,7 +1,7 @@
 import $    from 'jquery';
-import Qti1 from './qti1';
-import Qti2 from './qti2';
-//import EdX  from './edX'; // For now we don't need edX
+import Qti1 from './qti1/parser';
+import Qti2 from './qti2/parser';
+//import EdX  from './edX/parser'; // For now we don't need edX
 
 export const AssessmentFormat = {
   Qti1: "QTI1",

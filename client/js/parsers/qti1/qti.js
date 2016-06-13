@@ -1,233 +1,150 @@
-import $   from 'jquery';
 import _   from 'lodash';
 
-export default class Qti{
+export function getItems(sections, perSec) {
 
-  static parseSections(xml){
+  var items = [];
+  if (!perSec || perSec <= 0) {
+    for (var i = 1; i < sections.length; i++) {
+      for (var j = 0; j < sections[i].items.length; j++) {
+        var item = sections[i].items[j];
 
-    var fromXml = (xml) => {
-      xml = $(xml);
-      return {
-        id       : xml.attr('ident'),
-        standard : 'qti',
-        xml      : xml,
-        outcome  : this.parseOutcome(xml),
-        items    : this.parseItems(xml)
-      };
-    };
-
-    // Not all QTI files have sections. If we don't find one we build a default one to contain the items from the QTI file.
-    var buildDefault = (xml) => {
-      return {
-        id       : 'default',
-        standard : 'qti',
-        xml      : xml,
-        items    : this.parseItems(xml)
-      };
-    };
-
-    return this.listFromXml(xml, 'section', fromXml, buildDefault);
-
-  }
-
-  static parseOutcome(xml){
-    xml = $(xml);
-    if(xml.attr("ident") == "root_section"){
-      return "root section";
-    }
-    var item = xml.find("item")[0];
-    var fields = $(item).find("qtimetadatafield");
-    var outcome = {
-      shortOutcome: "",
-      longOutcome: "",
-      outcomeGuid: "",
-    };
-    
-    for (var i = fields.length - 1; i >= 0; i--) {
-      if($(fields[i]).find("fieldlabel").text() == "outcome_guid"){
-        outcome.outcomeGuid = $(fields[i]).find("fieldentry").text()
-      }
-      if($(fields[i]).find("fieldlabel").text() == "outcome_long_title"){
-        outcome.longOutcome = $(fields[i]).find("fieldentry").text()
-      }
-      if($(fields[i]).find("fieldlabel").text() == "outcome_short_title"){
-        outcome.shortOutcome = $(fields[i]).find("fieldentry").text()
-      }
-    };
-    return outcome;
-  }
-
-  static parseItems(xml){
-
-    var fromXml = (xml) => {
-      xml = $(xml);
-
-      var objectives = xml.find('objectives matref').map((index, item) => {
-        return $(item).attr('linkrefid');
-      });
-      var outcomes = {
-        shortOutcome: "",
-        longOutcome: ""
-      }
-      xml.find("fieldentry").map((index, outcome)=>{
-        if(index == 2){
-          outcomes.shortOutcome = outcome.textContent
-        }
-        if(index == 3){
-          outcomes.longOutcome = outcome.textContent
-        }
-      });
-      var item = {
-        id         : xml.attr('ident'),
-        title      : xml.attr('title'),
-        objectives : objectives,
-        outcomes   : outcomes,
-        xml        : xml,
-        material   : this.material(xml),
-        answers    : this.parseAnswers(xml),
-        correct    : this.parseCorrect(xml),
-        timeSpent  : 0
-      };
-      $.each(xml.find('itemmetadata > qtimetadata > qtimetadatafield'), function(i, x){
-        item[$(x).find('fieldlabel').text()] = $(x).find('fieldentry').text();
-      });
-
-      if(xml.find('itemmetadata > qmd_itemtype').text() === 'Multiple Choice'){
-        item.question_type = 'multiple_choice_question';
-      }
-
-      var response_grp = xml.find('response_grp');
-      if(response_grp){
-        if(response_grp.attr('rcardinality') === 'Multiple'){
-          item.question_type = 'drag_and_drop';
-        }
-      }
-
-      return item;
-    };
-
-    // Only grab the items at the current level of the tree
-    return this.listFromXml(xml, '> item', fromXml);
-
-  }
-
-  static parseCorrect(xml){
-    var respconditions = xml.find("respcondition");
-    var correctAnswers = []
-    for (var i=0; i<respconditions.length; i++){
-      var condition = $(respconditions[i]);
-      if(condition.find('setvar').text() != '0'){
-        var answer = {
-          id: condition.find('conditionvar > varequal').text(),
-          value: condition.find('setvar').text()
-        }
-        if(answer.id == ""){
-          answer.id = condition.find('conditionvar > and > varequal').map((index, condition) => {
-            condition = $(condition);
-            return condition.text();
-          });
-          answer.id = answer.id.toArray();
-        }
-        correctAnswers.push(answer);
+        //TODO: do this based on assessment setting
+        item.answers = _.shuffle(item.answers);
+        items.push(item);
       }
     }
-    return correctAnswers;
+  } else {
+    for (var i = 1; i < sections.length; i++) {
+      var count = perSec > sections[i].items.length ? sections[i].items.length : perSec;
+      for (var j = 0; j < count; j++) {
+        var item = sections[i].items[j];
+        for (var k = 0; k < items.length; k++) {
+          if (item.id == items[k].id) {
+            console.error("two items have the same id.");
+          }
+        }
+        //TODO: do this based on assessment setting
+        item.answers = _.shuffle(item.answers);
+        items.push(item);
+      }
+    }
   }
+  return items;
+}
 
-  static parseAnswers(xml){
+export function loadOutcomes(assessment) {
+  var outcomes = assessment.sections.map((section)=> {
+    if (section.outcome != "root section") {
+      return section.outcome;
+    }
+  });
+  outcomes = _.drop(outcomes);
+  return outcomes;
+}
 
-    var fromXml = (xml) => {
-      xml = $(xml);
-      var matchMaterial = xml.parent().parent().find('material')[0].textContent.trim();
-      var answer = {
-        id       : xml.attr('ident'),
-        material : this.buildMaterial(xml.find('material').children()),
-        matchMaterial: matchMaterial,
-        xml      : xml
-      };
-      return answer;
+export function checkAnswer(item, selectedAnswers){
+  // TODO implement checkAnswer, checkMultipleChoiceAnswer, and all other answer related methods.
+  // There's still quite a bit of the ember code left. We'll need to pass values to this
+  // method rather than call things like settings.get. ItemResult.create should be moved to an action and use api.js
+  var results;
+  switch(item.question_type){
+    case 'multiple_choice_question':
+      results = checkMultipleChoiceAnswer(item, selectedAnswers);
+      break;
+    case 'multiple_answers_question':
+      results = checkMultipleAnswerAnswer(item, selectedAnswers);
+      break;
+    case 'matching_question':
+      results = checkMatchingAnswer(item, selectedAnswers);
+      break;
+  }
+  return results;
+}
+
+function checkMultipleChoiceAnswer(item, selectedAnswerId){
+  var feedbacks = "";
+  var score = "0";
+  var correct = false;
+  if(selectedAnswerId == item.correct[0].id){
+    correct = true;
+    score = item.correct[0].score;
+  }
+  return {
+    feedbacks: feedbacks,
+    score: score,
+    correct: correct
+  };
+}
+
+function checkMultipleAnswerAnswer(item, selectedAnswerId){
+  var feedbacks = ""; // implement feedbacks
+  var score = "0";
+  var numOfAnswers = item.correct[0].id.length;
+  var numOfCorrectAnswers = 0;
+  var correct = false;
+
+  // if they selected the right amount of answers then check if they are the right answers
+  if(selectedAnswerId.length == numOfAnswers){
+    for(var i = 0; i < selectedAnswerId.length; i++){
+      for(var j = 0; j < numOfAnswers; j++){
+        if(selectedAnswerId[i] == item.correct[0].id[j]){
+          numOfCorrectAnswers++;
+        }
+      }
+    }
+    if(numOfAnswers == numOfCorrectAnswers){
+      correct = true;
+      score = "100";
+    }
+    return {
+      feedbacks: feedbacks,
+      score: score,
+      correct: correct
     };
-
-    return this.listFromXml(xml, 'response_lid > render_choice > response_label', fromXml);
-
   }
 
-  // Process nodes based on QTI spec here:
-  // http://www.imsglobal.org/question/qtiv1p2/imsqti_litev1p2.html#1404782
-  static buildMaterial(nodes){
-    var result = '';
-    $.each(nodes, function(i, item){
-      var parsedItem = $(item);
-      switch(item.nodeName.toLowerCase()){
-        case 'mattext':
-          // TODO both mattext and matemtext have a number of attributes that can be used to display the contents
-          result += parsedItem.text();
-          break;
-        case 'matemtext':
-          // TODO figure out how to 'emphasize' text
-          result += parsedItem.text();
-          break;
-        case 'matimage':
-          result += '<img src="' + parsedItem.attr('uri') + '"';
-          if(parsedItem.attr('label')) { result += 'alt="' + parsedItem.attr('label') + '"';   }
-          if(parsedItem.attr('width')) { result += 'width="' + parsedItem.attr('width') + '"'; }
-          if(parsedItem.attr('height')){ result += 'height="' + parsedItem.attr('height') + '"'; }
-          result += ' />';
-          break;
-        case 'matref':
-          var linkrefid = $(item).attr('linkrefid');
-          // TODO figure out how to look up material based on linkrefid
-          break;
+  // if they selected to few or to many then return incorrect
+  return {
+    feedbacks,
+    score,
+    correct
+  };
+}
+
+function checkMatchingAnswer(item, selectedAnswerId){
+  var feedbacks = ""; // implement feedbacks
+  var score = "0";
+  var numOfAnswers = item.correct.length;
+  var numOfCorrectAnswers = 0;
+  var correct = false;
+  // if they didnt match all of the answers then return false.
+  if(item.correct.length > selectedAnswerId.length){
+    return false;
+  }
+
+  for(var i = 0; i < numOfAnswers; i++){
+    for (var j = 0; j < item.answers.length; j++){
+      if(item.correct[i].id == item.answers[j].id){
+        for(var k = 0; k < selectedAnswerId.length; k++){
+          if(selectedAnswerId[k].answerNumber == "answer-" + i){
+            if(selectedAnswerId[k].selectedAnswer.trim() == item.answers[j].material.trim()){
+              numOfCorrectAnswers++;
+            }
+          }
+        }
+        break;
       }
-    });
-
-    return result;
-  }
-
-  static listFromXml(xml, selector, fromXml, buildDefault){
-    xml = $(xml);
-    var list = xml.find(selector).map((i, x) => {
-      return fromXml(x);
-    }).toArray(); // Make sure we have a normal javascript array not a jquery array.
-    if(list.length <= 0 && buildDefault){
-      list = [buildDefault(xml)];
     }
-    return list;
+  }
+  if(numOfCorrectAnswers == numOfAnswers){
+    correct = true;
+    score = "100";
   }
 
-  // //////////////////////////////////////////////////////////
-  // Item related functionality
-  //
-  static buildResponseGroup(node){
-    // TODO this is an incomplete attempt to build a drag and drop
-    // question type based on the drag_and_drop.xml in seeds/qti
-    return this.buildMaterial($(node).find('material').children());
-  }
-
-  static material(xml){
-
-    var material = xml.find('presentation > material').children();
-    if(material.length > 0){
-      return Qti.buildMaterial(material);
-    }
-
-    var flow = xml.find('presentation > flow');
-    if(flow.length > 0){
-      return Qti.reduceFlow(flow);
-    }
-
-  }
-
-  static reduceFlow(flow){
-    var result = '';
-    $.each(flow.children(), function(i, node){
-      if(node.nodeName.toLowerCase() === 'flow'){
-        result += Qti.buildMaterial($(node).find('material').children());
-      } else if(node.nodeName.toLowerCase() === 'response_grp'){
-        result += Qti.buildResponseGroup(node);
-      }
-    });
-    return result;
-  }
+  return {
+    feedbacks: feedbacks,
+    score: score,
+    correct: correct
+  };
 
 }

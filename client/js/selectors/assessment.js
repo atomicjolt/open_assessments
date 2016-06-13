@@ -1,19 +1,25 @@
-import { createSelector } from 'reselect';
-import { Assessment as Qti1Assessment } from '../parsers/qti1';
+import * as Qti1Selectors  from "../parsers/qti1/selectors";
+import * as Qti2Assessment from "../parsers/qti2/selectors";
+import * as EdxAssessment  from "../parsers/edX/selectors";
 
-function getObject(metaData){
+function getParser(metaData){
   return {
-    "QTI1": Qti1Assessment,
+    "QTI1": Qti1Selectors,
     "QTI2": Qti2Assessment,
     "EDX": EdxAssessment
   }[metaData.type];
 }
 
 function makeSelector(name){
-  return getObject(state.assessmentMetaData)[name];
+  return (state, props) => {
+    var func = getParser(state.assessmentMetaData)[name];
+    return func(state, props);
+  };
 }
 
-export const getItems = makeSelector("getItems");
-export const perSecItems = makeSelector("perSecItems");
-export const questionCount = makeSelector("questionCount");
+// Selectors that will interact with the assessment data.
+// All of these take state and props as parameters and just
+// wrap a call to the selectors native to the assessment.
+export const questions = makeSelector("questions");
 export const outcomes = makeSelector("outcomes");
+export const questionCount = makeSelector("questionCount");
