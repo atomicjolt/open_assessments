@@ -4,7 +4,7 @@ export function getItems(sections, perSec) {
 
   var items = [];
   if (!perSec || perSec <= 0) {
-    for (var i = 1; i < sections.length; i++) {
+    for (var i = 0; i < sections.length; i++) {
       for (var j = 0; j < sections[i].items.length; j++) {
         var item = sections[i].items[j];
 
@@ -14,7 +14,7 @@ export function getItems(sections, perSec) {
       }
     }
   } else {
-    for (var i = 1; i < sections.length; i++) {
+    for (var i = 0; i < sections.length; i++) {
       var count = perSec > sections[i].items.length ? sections[i].items.length : perSec;
       for (var j = 0; j < count; j++) {
         var item = sections[i].items[j];
