@@ -44,7 +44,7 @@ describe('QTI 1 Functions', () => {
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
       var assessment = Qti1Parser.parse(1, assessmentXml, xml);
-      var items = getItems(assessment.sections, 5);
+      var items = getItems(assessment.sections, 2);
       expect(items.length).toEqual(4);
     });
   });
