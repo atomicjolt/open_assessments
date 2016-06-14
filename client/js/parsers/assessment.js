@@ -53,3 +53,6 @@ export const parse = (settings, data) => {
 // TODO have to figure out how to handle assessment parsing. We could just
 // Store the raw data in the state and let the selectors figure out the real details
 // by parsing the data on demand.
+// OR we can let the load_assessment middlware use whatever parser it needs to use and then store
+// the resulting object in the state in that form - even if the assessment objects are dramatically different
+// Then we leave it up to the selectors to pull the data out as needed.
