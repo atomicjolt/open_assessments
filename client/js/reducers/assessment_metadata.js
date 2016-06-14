@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
   switch(action.type){
 
     case AssessmentConstants.LOAD_ASSESSMENT_DONE:
-      return state.set('assessmentFormat', action.payload.format);
+      return state.set('assessmentFormat', action.payload.standard);
       break;
 
     default:
