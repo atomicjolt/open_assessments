@@ -14,7 +14,4 @@ describe('not_found', function() {
     expect(ReactDOM.findDOMNode(result).textContent).toEqual('Not Found');
   });
 
-  afterEach(()=>{
-    React.unmountComponentAtNode(ReactDOM.findDOMNode(result).parentNode);
-  });
 });
