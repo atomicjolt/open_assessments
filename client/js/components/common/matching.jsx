@@ -7,11 +7,15 @@ import { makeId }          from "../../utils/utils";
 
 export default class Matching extends React.Component{
 
+  static propTypes = {
+    item: React.PropTypes.object.isRequired
+  }
+
   answerSelected(e, key){
     var target = e.target.parentNode.firstChild.textContent;
     var selectedAnswer = e.currentTarget.value;
     var answerNumber = e.currentTarget.name;
-    var answerId = e.currentTarget.children[e.currentTarget.selectedIndex].id
+    var answerId = e.currentTarget.children[e.currentTarget.selectedIndex].id;
     var item = {
       id: target,
       selectedAnswer: selectedAnswer,
@@ -63,12 +67,12 @@ export default class Matching extends React.Component{
         if(answers && (answers.selectedAnswer.trim() == answer.material.trim())){
           selectedAnswer = answers.selectedAnswer.trim();
         }
-        return <option key={makeId()} value={answer.material.trim()} id={answer.id}>{answer.material.trim()}</option>
+        return <option key={makeId()} value={answer.material.trim()} id={answer.id}>{answer.material.trim()}</option>;
       });
-      var select = !this.props.isDisabled ? <select key={ref} name={name} value={selectedAnswer} onChange={(e, key) => {this.answerSelected(e, key)}}>
+      var select = !this.props.isDisabled ? <select key={ref} name={name} value={selectedAnswer} onChange={(e, key) => {this.answerSelected(e, key); }}>
                                               <option key={"default-option-key" + makeId()} selected={null} id="0000">[Select Answer]</option>
                                               { options }
-                                            </select> : <select disabled="true" key={ref} name={name} onChange={(e, key) => {this.answerSelected(e, key)}}>
+                                            </select> : <select disabled="true" key={ref} name={name} onChange={(e, key) => {this.answerSelected(e, key); }}>
                                                           <option key={"default-option-key" + makeId()} selected={null} id="0000"></option>
                                                           <option key={"default-option-key" + makeId()} selected={null} id="0000">--------------------------------------</option>
                                                         </select>;
@@ -85,6 +89,3 @@ export default class Matching extends React.Component{
     );
   }
 }
-Matching.propTypes = {
-  item: React.PropTypes.object.isRequired
-};
