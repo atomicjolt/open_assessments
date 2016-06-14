@@ -2,7 +2,7 @@
 
 import React                from 'react';
 import CommunicationHandler from "../../utils/communication_handler";
-import SettingsStore        from "../../stores/settings";
+// import SettingsStore        from "../../stores/settings";
 
 export default class FullPostNav extends React.Component {
 
