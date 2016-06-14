@@ -2,7 +2,7 @@ import Assessment            from './parser';
 import $                     from 'jquery';
 import { AssessmentFormats } from '../assessment';
 
-describe('assessment', () => {
+describe('QTI1 assessment parser', () => {
 
   var settings;
 

@@ -2,7 +2,7 @@
 
 import EdxItem       from './edx_item.js';
 
-describe('Parses edX Problem', function(){
+xdescribe('Parses edX Problem', function(){
   var url;
   var xml;
   var res;

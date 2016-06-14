@@ -2,7 +2,7 @@
 
 import EdxSection				from './edx_section.js';
 
-describe('Parses edX Sequential', function(){
+xdescribe('Parses edX Sequential', function(){
 	var url;
 	var xml;
 	var res;
