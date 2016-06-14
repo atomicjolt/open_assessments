@@ -14,6 +14,11 @@ import CommunicationHandler from "../../utils/communication_handler";
 
 export default class UniversalInput extends React.Component{
 
+  static propTypes = {
+    item: React.PropTypes.object.isRequired,
+    isResult: React.PropTypes.bool
+  }
+
   constructor(){
     super();
     CommunicationHandler.init();
@@ -28,36 +33,6 @@ export default class UniversalInput extends React.Component{
   componentDidUpdate(){
     CommunicationHandler.sendSize();
     CommunicationHandler.scrollParentToTop();
-  }
-
-  getStyles(props){
-    const theme = props.settings.theme;
-
-    if(!theme){return {};}
-
-    return {
-      panel: {
-        position: theme.panelPosition,
-        marginBottom: theme.panelMarginBottom,
-        backgroundColor: "transparent",//props.isResult ? "transparent" : theme.panelBackgroundColor,
-        border: theme.panelBorder,
-        borderRadius: theme.panelBorderRadius,
-        boxShadow: theme.panelBoxShadow,
-        borderColor: theme.panelBorderColor,
-      },
-      panelHeading: {
-        padding: theme.panelHeadingPadding,
-        borderBottom: theme.panelHeadingBorderBottom,
-        borderTopRightRadius: theme.panelHeadingBorderTopRightRadius,
-        borderTopLeftRadius: theme.panelHeadingBorderTopLeftRadius,
-        textAlign: theme.panelHeadingTextAlign,
-        backgroundColor: "transparent" //props.isResult ? "transparent" : theme.panelHeadingBackgroundColor,
-      },
-      panelBody: {
-        padding: theme.panelBodyPadding,
-        marginTop: "-20px",
-      }
-    };
   }
 
   wasChosen(id){
@@ -77,7 +52,6 @@ export default class UniversalInput extends React.Component{
   }
 
   render(){
-    var styles = this.getStyles(this.props);
     var item = this.props.item;
     var messages = '';
     var solution = '';
@@ -109,7 +83,7 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         items = item.answers.map((answer) => {
-          return <RadioButton isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-radio" checked={this.wasChosen(answer.id)}  showAsCorrect={this.showAsCorrect(answer.id)}/>;
+          return <RadioButton isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-radio" checked={this.wasChosen(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)}/>;
         });
         break;
       case "edx_dropdown":
@@ -118,12 +92,12 @@ export default class UniversalInput extends React.Component{
         });
         break;
       case "matching_question":
-        items = <Matching isDisabled={this.props.isResult}  item={item} name="answer-option"/>;
+        items = <Matching isDisabled={this.props.isResult} item={item} name="answer-option"/>;
         break;
       case "edx_numerical_input":
       case "edx_text_input":
         items = item.answers.map((answer) => {
-          return <TextField isDisabled={this.props.isResult}  key={item.id + "_" + answer.id} item={answer} name="answer-text"/>;
+          return <TextField isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-text"/>;
         });
         break;
       case "text_only_question":
@@ -140,8 +114,8 @@ export default class UniversalInput extends React.Component{
         });
         break;
       case "edx_drag_and_drop":
-      items = item.answers.map((answer)=>{
-          return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />
+        items = item.answers.map((answer)=>{
+          return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />;
         });
         break;
     }
@@ -149,18 +123,18 @@ export default class UniversalInput extends React.Component{
 
     var material = '';
     if(item.edXMaterial){
-      material = ( <div
-                    dangerouslySetInnerHTML={{
-                      __html: item.edXMaterial
-                    }}>
-                  </div> )
+      material = <div
+                  dangerouslySetInnerHTML={{
+                    __html: item.edXMaterial
+                  }}>
+                </div>;
     }
-    return (<div className="panel-messages-container panel panel-default" style={styles.panel}>
-              <div className="panel-heading text-center" style={styles.panelHeading}>
+    return (<div className="panel-messages-container panel panel-default">
+              <div className="panel-heading text-center">
                 {/*{item.title}*/}
                 {messages}
               </div>
-              <div className="panel-body" style={styles.panelBody}>
+              <div className="panel-body">
                 {material}
                 {items}
               </div>
@@ -170,11 +144,3 @@ export default class UniversalInput extends React.Component{
            );
   }
 }
-UniversalInput.propTypes = {
-  item: React.PropTypes.object.isRequired,
-  isResult: React.PropTypes.bool
-};
-
-UniversalInput.contextTypes = {
-  theme: React.PropTypes.object
-};
