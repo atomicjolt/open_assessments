@@ -1,5 +1,5 @@
-import Assessment         from './parser';
-import $                  from 'jquery';
+import Assessment            from './parser';
+import $                     from 'jquery';
 import { AssessmentFormats } from '../assessment';
 
 describe('assessment', () => {
@@ -14,8 +14,10 @@ describe('assessment', () => {
   describe('parse', () => {
 
     it('parses "MIT" assessment xml from QTI into an object', () => {
-      var data       = readFixtures("qti1/assessment.xml");
-      var assessment = Assessment.parse(settings, data);
+      const data          = readFixtures("qti1/assessment.xml");
+      const xml           = $($.parseXML(data));
+      const assessmentXml = xml.find('assessment').addBack('assessment');
+      const assessment    = Assessment.parse(settings, assessmentXml);
 
       expect(assessment).toBeDefined();
       expect(assessment.id).toEqual("ib8d9c142765b2287684aad0b5387e45b");
