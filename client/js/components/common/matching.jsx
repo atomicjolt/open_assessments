@@ -1,10 +1,13 @@
 "use strict";
 
-import React              from 'react';
-import AssessmentActions  from "../../actions/assessment";
+import React              from "react";
+import { connect }        from "react-redux";
 import _                  from "lodash";
-import { makeId }          from "../../utils/utils";
 
+import { answerSelected } from "../../actions/assessment";
+import { makeId }         from "../../utils/utils";
+
+@connect(null, { answerSelected }, null, { withRefs: true } )
 export default class Matching extends React.Component{
 
   static propTypes = {
@@ -24,7 +27,7 @@ export default class Matching extends React.Component{
       answerId: answerId
     };
 
-    AssessmentActions.answerSelected(item);
+    this.props.answerSelected(item);
   }
 
   getResponses(item){

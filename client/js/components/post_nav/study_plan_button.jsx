@@ -1,29 +1,28 @@
 "use strict";
 
-import React          from 'react';
-import CommHandler    from "../../utils/communication_handler";
-import SettingsStore  from "../../stores/settings";
+import React          from "react";
+import { connect }    from "react-redux";
 
+import CommHandler    from "../../utils/communication_handler";
+
+const select = (state, props) => {
+  return {
+    display: state.settings.show_post_message_navigation
+  };
+};
+
+@connect(select, null, null, { withRefs: true })
 export default class StudyPlanButton extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-    this.stores = [SettingsStore];
-    this.state = {
-      display: SettingsStore.current().showPostMessageNav
-    };
-  }
 
   render() {
-    if (!this.state.display || self == top) {
+    if (!this.props.display || self == top) {
       return <div></div>;
     }
 
     return <div style={{marginTop : '10px'}}>
-      <button className="lti-nav-btn" id="study-plan" style={{width : 'initial'}} onClick={()=>{CommHandler.navigateHome()}}>
+      <button className="lti-nav-btn" id="study-plan" style={{width : 'initial'}} onClick={()=>{CommHandler.navigateHome();}}>
         View updated study plan
       </button>
-    </div>
+    </div>;
   }
 };
-
-module.export = StudyPlanButton;

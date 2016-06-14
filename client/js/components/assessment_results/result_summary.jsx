@@ -1,29 +1,26 @@
 "use strict";
 
-import React            from 'react';
-import AssessmentActions    from "../../actions/assessment";
-import AssessmentStore      from "../../stores/assessment";
+import React                 from "react";
+import { connect }           from "react-redux";
+import _                     from "lodash";
+
+import AssessmentStore       from "../../stores/assessment";
 import ReviewAssessmentStore from "../../stores/review_assessment";
-import SettingsStore        from "../../stores/settings";
-import ItemResult           from "./item_result";
-import _                    from "lodash";
+import ItemResult            from "./item_result";
 
+import { outcomes }          from "../../selectors/assessment";
+
+const select = (state, props) => {
+  return {
+    assessmentResult : AssessmentStore.assessmentResult(), // TODO this won't work. have to figure out where to get assessmentResult from
+    outcomes         : outcomes(),
+    settings         : state.settings,
+    assessment       : state.assessment
+  };
+};
+
+@connect(select, {}, null, { withRefs: true })
 export default class ResultSummary extends React.Component{
-
-  constructor(props, context){
-    super(props, context);
-    this.stores = [AssessmentStore, SettingsStore];
-    this.state = this.getState();
-  }
-
-  getState(props, context){
-    return {
-      assessmentResult : this.props.assessmentResult || AssessmentStore.assessmentResult(),
-      outcomes         : this.props.outcomes || AssessmentStore.outcomes(),
-      settings         : SettingsStore.current(),
-      assessment       : this.props.assessment || AssessmentStore.current()
-    }
-  }
 
   getOutcomeLists(){
     var lists = {
