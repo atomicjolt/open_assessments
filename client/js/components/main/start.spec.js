@@ -1,6 +1,8 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
+import Immutable          from 'immutable';
 import TestUtils          from 'react/lib/ReactTestUtils';
+
 import Start              from './start';
 import Rapper             from '../../../specs_support/rapper';
 import configureStore     from '../../store/configure_store';
