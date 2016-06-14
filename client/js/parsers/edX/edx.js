@@ -1,6 +1,7 @@
 import $            from 'jquery';
-// import Utils        from '../utils/utils';
 import Request      from "superagent";
+
+import { makeId, htmlDecodeWithRoot, getLocation }   from '../../utils/utils';
 
 export default class Edx {
 
@@ -29,10 +30,10 @@ export default class Edx {
     var responses = xml.find('customresponse');
     if(responses.length > 0){
       $.each(xml.find('customresponse'), function(i, x){
-        list.push(klass.fromEdX(Utils.makeId(), x, question_type));
+        list.push(klass.fromEdX(makeId(), x, question_type));
       });
     } else {
-      list.push(klass.fromEdX(Utils.makeId(), xml, question_type));
+      list.push(klass.fromEdX(makeId(), xml, question_type));
     }
     return list;
   }
@@ -59,12 +60,12 @@ export default class Edx {
     $.each(children, function(i, child){
       var id = $(child).attr('url_name');
       if(id === undefined){ // Data is embedded in the document
-        id = $(child).attr('id') || Utils.makeId();
+        id = $(child).attr('id') || makeId();
         return callback(id, null, child);
       }
       var url = baseUrl + id + '.xml';
       if(settings.offline){
-        var data = Utils.htmlDecodeWithRoot($('#' + id).html());
+        var data = htmlDecodeWithRoot($('#' + id).html());
         callback(id, url, data);
       } else {
         this.makeAjax(url, function(data){
@@ -118,7 +119,7 @@ export default class Edx {
     .end(function(err, res){
       callback(res);
     }.bind(this), function(result){
-      if(!retried && Utils.getLocation(url).hostname != Utils.getLocation(location.href).hostname){
+      if(!retried && getLocation(url).hostname != getLocation(location.href).hostname){
         this.makeAjax('/proxy?url=' + encodeURI(url), callback, true)
       } else {
         console.log(result.statusText);

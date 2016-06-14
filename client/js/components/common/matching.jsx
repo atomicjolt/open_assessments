@@ -3,7 +3,8 @@
 import React              from 'react';
 import AssessmentActions  from "../../actions/assessment";
 import _                  from "lodash";
-import Utils              from "../../utils/utils";
+import { makeId }          from "../../utils/utils";
+
 export default class Matching extends React.Component{
 
   answerSelected(e, key){
@@ -17,7 +18,7 @@ export default class Matching extends React.Component{
       answerNumber: answerNumber,
       item: this.props.item,
       answerId: answerId
-    }
+    };
 
     AssessmentActions.answerSelected(item);
   }
@@ -29,7 +30,7 @@ export default class Matching extends React.Component{
         id: item.correct[i].id,
         material: '',
         answers: []
-      }
+      };
       for(var j =0; j < item.answers.length/item.correct.length; j++){
         response.material = item.answers[j].matchMaterial;
         response.answers.push(item.answers[j]);
@@ -62,14 +63,14 @@ export default class Matching extends React.Component{
         if(answers && (answers.selectedAnswer.trim() == answer.material.trim())){
           selectedAnswer = answers.selectedAnswer.trim();
         }
-        return <option key={Utils.makeId()} value={answer.material.trim()} id={answer.id}>{answer.material.trim()}</option>
+        return <option key={makeId()} value={answer.material.trim()} id={answer.id}>{answer.material.trim()}</option>
       });
       var select = !this.props.isDisabled ? <select key={ref} name={name} value={selectedAnswer} onChange={(e, key) => {this.answerSelected(e, key)}}>
-                                              <option key={"default-option-key" + Utils.makeId()} selected={null} id="0000">[Select Answer]</option>
+                                              <option key={"default-option-key" + makeId()} selected={null} id="0000">[Select Answer]</option>
                                               { options }
                                             </select> : <select disabled="true" key={ref} name={name} onChange={(e, key) => {this.answerSelected(e, key)}}>
-                                                          <option key={"default-option-key" + Utils.makeId()} selected={null} id="0000"></option>
-                                                          <option key={"default-option-key" + Utils.makeId()} selected={null} id="0000">--------------------------------------</option>
+                                                          <option key={"default-option-key" + makeId()} selected={null} id="0000"></option>
+                                                          <option key={"default-option-key" + makeId()} selected={null} id="0000">--------------------------------------</option>
                                                         </select>;
       return <div>
         {materialNames[index]}
