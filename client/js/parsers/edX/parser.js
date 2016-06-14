@@ -1,7 +1,6 @@
 import EdX                from './edx';
 import EdXSection         from './edx_section';
 import EdXItem            from './edx_item';
-//import AssessmentActions  from "../actions/assessment"; // TODO get rid of this and have edX load it's own data
 
 export default class Assessment{
 
@@ -26,14 +25,22 @@ export default class Assessment{
       section.items = EdX.idPlaceholders(
         EdX.ensureIds('edx_item_', children) // Ensure every child has an id
       );
-      AssessmentActions.edXLoadSection(section);
+      this.edXLoadSection(section);
       EdX.crawlEdX(children, baseUrl + 'problem/', settings, function(id, url, res){
         var item = EdXItem.fromEdX(id, url, res);
-        AssessmentActions.edXLoadItem(item);
+        this.edXLoadItem(item);
       }.bind(this));
 
     }.bind(this));
     return assessment;
+  }
+
+  static edXLoadSection(section){
+    // TODO
+  }
+
+  static edXLoadItem(item){
+    // TODO
   }
 
 }
