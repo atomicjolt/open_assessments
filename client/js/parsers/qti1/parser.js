@@ -1,5 +1,6 @@
-import $                  from 'jquery';
-import Qti                from './qti';
+import $                     from 'jquery';
+import Qti                   from './qti';
+import { AssessmentFormats } from '../assessment';
 
 export default class Parser{
 
@@ -7,7 +8,7 @@ export default class Parser{
     var assessment = {
       id           : assessmentXml.attr('ident'),
       title        : assessmentXml.attr('title'),
-      standard     : 'qti',
+      standard     : AssessmentFormats.Qti1,
       assessmentId : assessmentId,
     };
     assessment.objectives = xml.find('assessment > objectives matref').map((index, item) => {
@@ -23,7 +24,7 @@ export default class Parser{
       xml = $(xml);
       return {
         id       : xml.attr('ident'),
-        standard : 'qti',
+        standard : AssessmentFormats.Qti1,
         xml      : xml,
         outcome  : this.parseOutcome(xml),
         items    : this.parseItems(xml)
@@ -34,7 +35,7 @@ export default class Parser{
     var buildDefault = (xml) => {
       return {
         id       : 'default',
-        standard : 'qti',
+        standard : AssessmentFormats.Qti1,
         xml      : xml,
         items    : this.parseItems(xml)
       };

@@ -1,5 +1,6 @@
 import Assessment         from './parser';
 import $                  from 'jquery';
+import { AssessmentFormats } from '../assessment';
 
 describe('assessment', () => {
 
@@ -19,7 +20,7 @@ describe('assessment', () => {
       expect(assessment).toBeDefined();
       expect(assessment.id).toEqual("ib8d9c142765b2287684aad0b5387e45b");
       expect(assessment.title).toEqual("MIT Questions 1");
-      expect(assessment.standard).toEqual("qti");
+      expect(assessment.standard).toEqual(AssessmentFormats.Qti1);
       expect(assessment.sections.length).toEqual(1);
       expect(assessment.sections[0].items.length).toEqual(10);
       var item = assessment.sections[0].items[0];
@@ -37,7 +38,7 @@ describe('assessment', () => {
       expect(assessment).toBeDefined();
       expect(assessment.id).toEqual("i0886cfce85384de6a5b5394edca8282f_summative");
       expect(assessment.title).toEqual("Financial Markets and System");
-      expect(assessment.standard).toEqual("qti");
+      expect(assessment.standard).toEqual(AssessmentFormats.Qti1);
       expect(assessment.sections.length).toEqual(7);
       expect(assessment.sections[0].items.length).toEqual(44);
       var item = assessment.sections[0].items[0];
@@ -54,7 +55,7 @@ describe('assessment', () => {
       expect(sections.length).toEqual(1);
       var section = sections[0];
       expect(section.id).toEqual("root_section");
-      expect(section.standard).toEqual("qti");
+      expect(section.standard).toEqual(AssessmentFormats.Qti1);
       expect(section.items.length).toEqual(3);
     });
 

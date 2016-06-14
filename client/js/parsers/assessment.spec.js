@@ -37,7 +37,7 @@ describe('assessment parser', () => {
       expect(assessment).toBeDefined();
       expect(assessment.id).toEqual("ib8d9c142765b2287684aad0b5387e45b");
       expect(assessment.title).toEqual("MIT Questions 1");
-      expect(assessment.standard).toEqual("qti");
+      expect(assessment.standard).toEqual(AssessmentFormats.Qti1);
       expect(assessment.sections.length).toEqual(1);
       expect(assessment.sections[0].items.length).toEqual(10);
       var item = assessment.sections[0].items[0];
