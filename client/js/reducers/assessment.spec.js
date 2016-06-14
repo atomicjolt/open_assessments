@@ -10,9 +10,10 @@ describe('assessment reducer', () => {
   var data;
 
   beforeAll(() => {
+    const settings = Immutable.fromJS({assessmentId:1});
     jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
     data = readFixtures("qti1/assessment.xml");
-    parsedAssessment = parse(data);
+    parsedAssessment = parse(settings, data);
   });
 
   describe("initial reducer state", () => {
@@ -31,7 +32,7 @@ describe('assessment reducer', () => {
         }
       };
       const state = assessment(initialState, action);
-      expect(state).toEqual(parsedAssessment);
+      expect(state.assessment).toEqual(parsedAssessment);
     });
   });
 
