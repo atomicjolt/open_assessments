@@ -38,20 +38,18 @@ export const parse = (settings, data) => {
 
   switch(format){
     case AssessmentFormats.Qti1:
-      return {
-        assessment: Qti1.parse(settings.get("assessmentId"), assessmentXml, xml),
-        format: format
-      };
+      return Qti1.parse(settings.get("assessmentId"), assessmentXml, xml);
     case AssessmentFormats.Qti2:
-      return {
-        assessment: null,
-        format: format
-      };
+      return null;
     case AssessmentFormats.EdX:
-      return {
-        assessment: EdX.parse(settings, sequential),
-        format: format
-      };
+      return EdX.parse(settings, sequential);
   }
 
 };
+
+
+
+
+// TODO have to figure out how to handle assessment parsing. We could just
+// Store the raw data in the state and let the selectors figure out the real details
+// by parsing the data on demand.
