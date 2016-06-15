@@ -1,14 +1,11 @@
-import Assessment            from './parser';
+import Parser                from './parser';
 import $                     from 'jquery';
 import { AssessmentFormats } from '../assessment';
 
 describe('QTI1 assessment parser', () => {
 
-  var settings;
-
   beforeAll(() => {
     jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
-    settings = {};
   });
 
   describe('parse', () => {
@@ -35,7 +32,7 @@ describe('QTI1 assessment parser', () => {
       var data          = readFixtures("qti1/text.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
-      var assessment = Assessment.parse(1, assessmentXml, xml);
+      var assessment = Parser.parse(1, assessmentXml, xml);
 
       expect(assessment).toBeDefined();
       expect(assessment.id).toEqual("i0886cfce85384de6a5b5394edca8282f_summative");
@@ -60,7 +57,7 @@ describe('QTI1 assessment parser', () => {
 
     it('find sections in the given qti', () => {
       var data = readFixtures("qti1/cells.xml");
-      var sections = Assessment.parseSections($(data));
+      var sections = Parser.parseSections($(data));
       expect(sections.length).toEqual(1);
       var section = sections[0];
       expect(section.id).toEqual("root_section");
