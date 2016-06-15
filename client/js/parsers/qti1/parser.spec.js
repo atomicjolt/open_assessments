@@ -1,6 +1,7 @@
 import Parser                from './parser';
+import Immutable             from 'immutable';
 import $                     from 'jquery';
-import { AssessmentFormats } from '../assessment';
+import { AssessmentFormats, parse } from '../assessment';
 
 describe('QTI1 assessment parser', () => {
 
@@ -14,7 +15,10 @@ describe('QTI1 assessment parser', () => {
       const data          = readFixtures("qti1/assessment.xml");
       const xml           = $($.parseXML(data));
       const assessmentXml = xml.find('assessment').addBack('assessment');
-      const assessment    = Assessment.parse(settings, assessmentXml, xml);
+      const settings = Immutable.fromJS({
+        assessmentId:1
+      });
+      const assessment    = parse(settings, data);
 
       expect(assessment).toBeDefined();
       expect(assessment.id).toEqual("ib8d9c142765b2287684aad0b5387e45b");
