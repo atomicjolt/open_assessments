@@ -23,10 +23,10 @@ describe('Drop Zone', ()=>{
 
 	it('Renders', ()=>{
 		expect(zone).toBeDefined();
-		expect(zone.props.style.top).toEqual('20');
-		expect(zone.props.style.left).toEqual('10');
-		expect(zone.props.style.height).toEqual('64');
-		expect(zone.props.style.width).toEqual('128');
+		expect(zone.style.top).toEqual('20px');
+		expect(zone.style.left).toEqual('10px');
+		expect(zone.style.height).toEqual('64px');
+		expect(zone.style.width).toEqual('128px');
 	});
 	it('Is droppable', ()=>{
 		spyOn(instance, 'drop');

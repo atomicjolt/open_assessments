@@ -12,6 +12,7 @@ describe('assessment reducer', () => {
   var parsedAssessment;
 
   beforeAll(() => {
+    const settings = Immutable.fromJS({assessmentId:1});
     jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
     const data = readFixtures("qti1/assessment.xml");
     parsedAssessment = parse(settings, data);

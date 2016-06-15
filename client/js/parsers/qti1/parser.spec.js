@@ -1,6 +1,7 @@
 import Parser                from './parser';
+import Immutable             from 'immutable';
 import $                     from 'jquery';
-import { AssessmentFormats } from '../assessment';
+import { AssessmentFormats, parse } from '../assessment';
 
 describe('QTI1 assessment parser', () => {
 
@@ -14,7 +15,10 @@ describe('QTI1 assessment parser', () => {
       const data          = readFixtures("qti1/assessment.xml");
       const xml           = $($.parseXML(data));
       const assessmentXml = xml.find('assessment').addBack('assessment');
-      const assessment    = Parser.parse(1, assessmentXml, xml);
+      const settings = Immutable.fromJS({
+        assessmentId:1
+      });
+      const assessment    = parse(settings, data);
 
       expect(assessment).toBeDefined();
       expect(assessment.id).toEqual("ib8d9c142765b2287684aad0b5387e45b");
@@ -39,8 +43,15 @@ describe('QTI1 assessment parser', () => {
       expect(assessment.title).toEqual("Financial Markets and System");
       expect(assessment.standard).toEqual(AssessmentFormats.Qti1);
       expect(assessment.sections.length).toEqual(7);
-      expect(assessment.sections[0].items.length).toEqual(44);
-      var item = assessment.sections[0].items[0];
+      expect(assessment.sections[0].items.length).toEqual(0);
+      expect(assessment.sections[1].items.length).toEqual(7);
+      expect(assessment.sections[2].items.length).toEqual(6);
+      expect(assessment.sections[3].items.length).toEqual(5);
+      expect(assessment.sections[4].items.length).toEqual(4);
+      expect(assessment.sections[5].items.length).toEqual(17);
+      expect(assessment.sections[6].items.length).toEqual(5);
+
+      var item = assessment.sections[1].items[0];
       expect(item.id).toEqual("3567");
     });
 

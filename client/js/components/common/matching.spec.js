@@ -1,8 +1,7 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
-import Matching           from './matching';
-import Rapper             from '../../../specs_support/rapper';
+import { Matching }           from './matching';
 
 describe('matching', function() {
 
@@ -24,11 +23,11 @@ describe('matching', function() {
   };
 
   const settings = {};
-  var state = {
-    settings
+  const props = {
+    settings,
+    item
   };
-  var store = configureStore(state);
-  result = TestUtils.renderIntoDocument(<Rapper childProps={{store, item}} child={Matching}/>);
+  const result = TestUtils.renderIntoDocument(<Matching {...props} />);
 
   it('renders the dropdown items', function() {
     expect(ReactDOM.findDOMNode(result).textContent).toContain("test");

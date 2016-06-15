@@ -3,14 +3,17 @@
 import React       from 'react';
 import ReactDOM    from 'react-dom';
 import TestUtils   from 'react/lib/ReactTestUtils';
-import Index       from './index';
+import { Index }       from './index';
 
 describe('index', function() {
   var Subject;
   var result;
 
   beforeEach(()=>{
-    result = TestUtils.renderIntoDocument(<Index />);
+    var props = {
+      loadAssessment:() => {}
+    };
+    result = TestUtils.renderIntoDocument(<Index {...props} />);
   });
 
   it('renders the index', function() {
@@ -18,6 +21,6 @@ describe('index', function() {
   });
 
   afterEach(()=>{
-    React.unmountComponentAtNode(ReactDOM.findDOMNode(result).parentNode)
+    ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(result).parentNode);
   });
 });

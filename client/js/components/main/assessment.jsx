@@ -27,8 +27,7 @@ const select = (state, props) => {
   };
 };
 
-@connect(select, {...AssessmentActions}, null, {withRef: true})
-export default class Assessment extends React.Component{
+export class Assessment extends React.Component{
 
   componentWillMount(){
     if(this.props.assessmentResult != null){
@@ -49,55 +48,13 @@ export default class Assessment extends React.Component{
     return Math.floor(current/total * 100);
   }
 
-  getStyles(){
-    const theme = this.props.theme;
-    var minWidth = this.props.settings.assessment_type && this.props.settings.assessment_type.toUpperCase() == "FORMATIVE" ? "480px" : "635px";
-
-    return {
-      progressBar: {
-        backgroundColor: theme.progressBarColor,
-        height: theme.progressBarHeight,
-      },
-      progressDiv: {
-        height: theme.progressBarHeight
-      },
-      assessment: {
-        padding: this.props.settings.assessment_type.toUpperCase() == "FORMATIVE" ? "" : theme.assessmentPadding,
-        backgroundColor: theme.assessmentBackground,
-        minWidth: minWidth
-      },
-      progressContainer: {
-        padding: "10px 20px 10px 20px",
-        position: "absolute",
-        left: "0px",
-        top: "44px",
-        width: "100%",
-        minWidth: minWidth,
-        backgroundColor: theme.titleBarBackgroundColor,
-      },
-      titleBar: {
-        position: "absolute",
-        top: "0px",
-        left: "0px",
-        width: "100%",
-        padding: "10px 20px 10px 20px",
-        backgroundColor: theme.primaryBackgroundColor,
-        color: "white",
-        fontSize: "130%",
-        minWidth: minWidth,
-        //fontWeight: "bold"
-      }
-    };
-  }
-
   render(){
     window.onbeforeunload = this.popup;
     // // if(AssessmentStore.assessmentResult() != null || this.props.settings.assessment_type.toUpperCase() != "SUMMATIVE"){
     //   // window.onbeforeunload = null;
     // // }
 
-    var showStart = this.props.settings.enable_start && !this.props.assessment.isStarted();
-    var styles = this.getStyles();
+    var showStart = this.props.settings.enable_start && !this.props.assessment.isStarted;
     var content;
     var progressBar;
     var titleBar;
@@ -119,7 +76,8 @@ export default class Assessment extends React.Component{
         ltiRole         = {this.props.settings.lti_role}
         icon            = {this.props.settings.images.quiz_icon_svg}/>;
 
-      progressBar = <div style={styles.progressContainer}>
+      //TODO progress bar sytles
+      progressBar = <div>
                       {progressText}
                       <ProgressDropdown disabled={true} questions={this.props.allQuestions} currentQuestion={this.props.currentItemIndex + 1} questionCount={this.props.questionCount} />
                     </div>;
@@ -138,10 +96,11 @@ export default class Assessment extends React.Component{
         confidenceLevels = {this.props.settings.confidence_levels}
         outcomes         = {this.props.outcomes}/>;
 
-      progressBar = <div style={styles.progressContainer}>
-                              {progressText}
-                              <ProgressDropdown settings={this.props.settings} questions={this.props.allQuestions} currentQuestion={this.props.currentItemIndex + 1} questionCount={this.props.questionCount} />
-                            </div>;
+      //TODO progress bar styles
+      progressBar = <div>
+                      {progressText}
+                      <ProgressDropdown settings={this.props.settings} questions={this.props.allQuestions} currentQuestion={this.props.currentItemIndex + 1} questionCount={this.props.questionCount} />
+                    </div>;
     // // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
     //   // AssessmentActions.itemViewed(this.props.settings, this.props.assessment, this.props.assessmentResult);
     }
@@ -150,12 +109,12 @@ export default class Assessment extends React.Component{
     var progressStyle = {width:percentCompleted+"%"};
     var progressText = "";
     var quizType = this.props.settings.assessment_type.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
-    var titleBar = this.props.settings.assessment_type.toUpperCase() === "FORMATIVE" ? "" : <div style={styles.titleBar}>{this.props.assessment ? this.props.assessment.title : ""}</div>;
+    var titleBar = this.props.settings.assessment_type.toUpperCase() === "FORMATIVE" ? "" : <div>{this.props.assessment ? this.props.assessment.title : ""}</div>;
     if(this.props.assessment){
-      progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.props.assessment.title + " Progress"}</b>{" - You are on question " + (this.props.currentItemIndex + 1) + " of " + this.props.questionCount}</div> : "";
+      progressText = this.props.settings.shouldShowProgressText ? <div><b>{this.props.assessment.title + " Progress"}</b>{" - You are on question " + (this.props.currentItemIndex + 1) + " of " + this.props.questionCount}</div> : "";
     }
     progressBar = this.props.settings.assessment_type.toUpperCase() === "FORMATIVE" ? "" : progressBar;
-    return<div className="assessment" style={styles.assessment}>
+    return<div className="assessment">
       {titleBar}
       {progressBar}
       <div className="section_list">
@@ -167,3 +126,5 @@ export default class Assessment extends React.Component{
   }
 
 }
+
+export default connect(select, {...AssessmentActions}, null, {withRef: true})(Assessment);

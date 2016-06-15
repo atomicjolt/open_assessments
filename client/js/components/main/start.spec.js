@@ -13,7 +13,7 @@ describe('start', function() {
   var settings;
 
   beforeEach(()=>{
-    settings = Immutable.fromJS({
+    var settings = Immutable.fromJS({
       assessment_kind : "summative",
       src_url         : "asdf",
       jwt             : "asdfasdf",
@@ -21,18 +21,19 @@ describe('start', function() {
       api_url         : "www.example.com"
     });
 
-    assessment = Immutable.fromJS({});
+    var assessment = Immutable.fromJS({});
 
     const state = {
       settings,
       assessment
     };
+
     const store = configureStore(state);
-    result = TestUtils.renderIntoDocument(<Rapper childProps={{store, params}} child={Start}/>);
+    result = TestUtils.renderIntoDocument(<Rapper childProps={{store}} child={Start}/>);
   });
 
   it('renders the start page', function(){
-    instance = result.refs.original.getWrappedInstance();
+    var instance = result.refs.original.getWrappedInstance();
     expect(ReactDOM.findDOMNode(instance)).toBeDefined();
   });
 

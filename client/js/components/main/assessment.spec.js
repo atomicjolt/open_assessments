@@ -3,7 +3,7 @@ import ReactDOM  from "react-dom";
 import TestUtils from "react/lib/ReactTestUtils";
 import Helper    from "../../../specs_support/helper";
 
-import Assessment         from './assessment';
+import { Assessment }         from './assessment';
 import AssessmentActions from '../../actions/assessment';
 
 describe('assessment', function() {
@@ -19,7 +19,22 @@ describe('assessment', function() {
     //   "responseText" : "{}"
     // });
     jasmine.clock().tick();
-    result = TestUtils.renderIntoDocument(<Assessment />);
+
+    var settings ={
+      enable_start:true,
+      assessment_type:"SUMMATIVE"
+    };
+    var assessment = {
+      isStarted:false
+    };
+
+    var props = {
+      assessmentViewed:() => {},
+      settings,
+      assessment
+    };
+
+    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
   });
 
   afterEach(() => {

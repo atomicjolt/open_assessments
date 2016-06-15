@@ -20,7 +20,7 @@ describe('Drop zone for index type', ()=>{
 
 	it('Renders', ()=>{
 		expect(instance).toBeDefined();
-		expect(TestUtils.findRenderedDOMComponentWithTag(instance, 'img').props.src).toEqual('http://www.bealecorner.com/trv900/respat/eia1956-small.jpg');
+		expect(zone.childNodes[0].src).toEqual('http://www.bealecorner.com/trv900/respat/eia1956-small.jpg');
 	});
 	it('Is droppable', ()=>{
 		spyOn(instance, 'drop');
