@@ -55,7 +55,6 @@ export class Assessment extends React.Component{
     // // }
 
     var showStart = this.props.settings.enable_start && !this.props.assessment.isStarted;
-    // var styles = this.getStyles();
     var content;
     var progressBar;
     var titleBar;
@@ -79,7 +78,6 @@ export class Assessment extends React.Component{
 
       //TODO progress bar sytles
       progressBar = <div>
-                    {/*<div style={ styles.progressContainer}>*/}
                       {progressText}
                       <ProgressDropdown disabled={true} questions={this.props.allQuestions} currentQuestion={this.props.currentItemIndex + 1} questionCount={this.props.questionCount} />
                     </div>;
@@ -111,12 +109,12 @@ export class Assessment extends React.Component{
     var progressStyle = {width:percentCompleted+"%"};
     var progressText = "";
     var quizType = this.props.settings.assessment_type.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
-    var titleBar = this.props.settings.assessment_type.toUpperCase() === "FORMATIVE" ? "" : <div>{/*<div style={styles.titleBar}>*/}{this.props.assessment ? this.props.assessment.title : ""}</div>;
+    var titleBar = this.props.settings.assessment_type.toUpperCase() === "FORMATIVE" ? "" : <div>{this.props.assessment ? this.props.assessment.title : ""}</div>;
     if(this.props.assessment){
       progressText = this.props.settings.shouldShowProgressText ? <div><b>{this.props.assessment.title + " Progress"}</b>{" - You are on question " + (this.props.currentItemIndex + 1) + " of " + this.props.questionCount}</div> : "";
     }
     progressBar = this.props.settings.assessment_type.toUpperCase() === "FORMATIVE" ? "" : progressBar;
-    return<div className="assessment" style={{ /*styles.assessment */}}>
+    return<div className="assessment">
       {titleBar}
       {progressBar}
       <div className="section_list">
