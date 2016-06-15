@@ -19,8 +19,8 @@ export default class StudyPlanButton extends React.Component {
       return <div></div>;
     }
 
-    return <div style={{marginTop : '10px'}}>
-      <button className="lti-nav-btn" id="study-plan" style={{width : 'initial'}} onClick={()=>{CommHandler.navigateHome();}}>
+    return <div>
+      <button className="lti-nav-btn" id="study-plan" onClick={()=>{CommHandler.navigateHome();}}>
         View updated study plan
       </button>
     </div>;
