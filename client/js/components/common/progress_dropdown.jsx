@@ -7,8 +7,8 @@ import ProgressListItem   from "./progress_list_item";
 
 export default class ProgressDropdown extends React.Component{
 
-  constructor(props, context){
-    super(props, context);
+  constructor(props){
+    super(props);
   }
 
   navButtonClicked(){
@@ -36,72 +36,72 @@ export default class ProgressDropdown extends React.Component{
     e.target.style.color = "black";
   }
 
-  getStyles(theme, expanded){
-    var expHeight = this.props.questions && this.props.questions.length < 3 ? "" + (this.props.questions.length * (228 / 3)) + "px" : "228px"
-    return {
-      dropdownStyle: {
-        overflow: expanded ? "scroll" : "hidden",
-        height: expanded ? expHeight : "0px",
-        backgroundColor: "white",
-        transition: "all 0.4s",
-        boxShadow: expanded ? theme.progressDropdownBoxShadow : "",
-        position: "absolute",
-        top: "63px",
-        left: "82px",
-        width: "calc(100% - 102px)",
-        zIndex: "10",
-        listStyleType: "none"
-      },
-      dropdownButton: {
-        width: "calc(100% - 62px)",
-        textAlign: "start",
-        padding: "5px",
-        dislpay: "inline-block",
-        marginLeft: "10px",
-        backgroundColor: "white !important",
-        borderRadius: "0px",
-        boxShadow: theme.progressDropdownBoxShadow,
-      },
-      caret: {
-        float: "right"
-      },
-      container: {
-        display: "inline-block",
-      },
-      icon: {
-        height: "52px",
-        width: "52px",
-        dislay: "inline-block"
-      },
-      li: {
-        borderBottom: "1px solid grey",
-        padding: "10px",
-        cursor: "pointer",
-        zIndex: "10"
-      },
-      h5: {
-        backgroundColor: "transparent",
-        color: "inherit"
-      }
-
-    }
-  }
+  // getStyles(theme, expanded){
+  //   var expHeight = this.props.questions && this.props.questions.length < 3 ? "" + (this.props.questions.length * (228 / 3)) + "px" : "228px"
+  //   return {
+  //     dropdownStyle: {
+  //       overflow: expanded ? "scroll" : "hidden",
+  //       height: expanded ? expHeight : "0px",
+  //       backgroundColor: "white",
+  //       transition: "all 0.4s",
+  //       boxShadow: expanded ? theme.progressDropdownBoxShadow : "",
+  //       position: "absolute",
+  //       top: "63px",
+  //       left: "82px",
+  //       width: "calc(100% - 102px)",
+  //       zIndex: "10",
+  //       listStyleType: "none"
+  //     },
+  //     dropdownButton: {
+  //       width: "calc(100% - 62px)",
+  //       textAlign: "start",
+  //       padding: "5px",
+  //       dislpay: "inline-block",
+  //       marginLeft: "10px",
+  //       backgroundColor: "white !important",
+  //       borderRadius: "0px",
+  //       boxShadow: theme.progressDropdownBoxShadow,
+  //     },
+  //     caret: {
+  //       float: "right"
+  //     },
+  //     container: {
+  //       display: "inline-block",
+  //     },
+  //     icon: {
+  //       height: "52px",
+  //       width: "52px",
+  //       dislay: "inline-block"
+  //     },
+  //     li: {
+  //       borderBottom: "1px solid grey",
+  //       padding: "10px",
+  //       cursor: "pointer",
+  //       zIndex: "10"
+  //     },
+  //     h5: {
+  //       backgroundColor: "transparent",
+  //       color: "inherit"
+  //     }
+  //
+  //   }
+  // }
   render(){
     var expanded = (this.state && this.state.expanded);
-    var styles = this.getStyles(this.context.theme, expanded);
+    // var styles = this.getStyles(this.context.theme, expanded); TODO add stylesheets
     var questions = this.props.questions && this.props.questions.map((question, index)=>{
       return <ProgressListItem key={"list-item"+index} question={question} expanded={this.state && this.state.expanded} index={index} toggle={this.navButtonClicked}/>
     });
     var text = this.props.disabled ? <b>There are {this.props.questionCount} questions</b> : <b>You are on question {this.props.currentQuestion} of {this.props.questionCount}</b>
     return (
       <span>
-        <img style={styles.icon}src={this.props.settings.images.ProgressIcon_svg} />
-        <button id="focus" style={styles.dropdownButton} className="btn" type="button" aria-haspopup="true" aria-expanded="true" onClick={()=>{if(!this.props.disabled)this.navButtonClicked()}}>
+        <img style={{/* styles.icon */}}src={this.props.settings.images.ProgressIcon_svg} />
+        <button id="focus" style={{ /*styles.dropdownButton */ }} className="btn" type="button" aria-haspopup="true" aria-expanded="true" onClick={()=>{if(!this.props.disabled)this.navButtonClicked()}}>
           <div>Progress</div>
           <span>{text}</span>
-          <span style={styles.caret} className="caret"></span>
+          <span style={{ /*styles.caret*/ }} className="caret"></span>
         </button>
-        <div style={styles.dropdownStyle} aria-labelledby="dropdownMenu1">
+        <div style={{ /*styles.dropdownStyle*/}} aria-labelledby="dropdownMenu1">
           {questions}
         </div>
       </span>
@@ -115,4 +115,4 @@ ProgressDropdown.propTypes = {
 
 ProgressDropdown.contextTypes = {
   theme: React.PropTypes.object
-}
+};
