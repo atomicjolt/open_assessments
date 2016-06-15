@@ -32,7 +32,7 @@ describe('assessment reducer', () => {
         payload: parsedAssessment
       };
       const state = assessment(initialState, action);
-      expect(state.assessment).toEqual(parsedAssessment);
+      expect(state).toEqual(parsedAssessment);
     });
   });
 
