@@ -7,8 +7,7 @@ import _                  from "lodash";
 import { answerSelected } from "../../actions/assessment";
 import { makeId }         from "../../utils/utils";
 
-@connect(null, { answerSelected }, null, { withRefs: true } )
-export default class Matching extends React.Component{
+export class Matching extends React.Component{
 
   static propTypes = {
     item: React.PropTypes.object.isRequired
@@ -64,7 +63,7 @@ export default class Matching extends React.Component{
       var name = "answer-" + index;
       var ref = "answer-" + item.id;
 
-      var answers = (props.studentAnswers) ? props.studentAnswers[index] : {selectedAnswer: ""};
+      var answers = (this.props.studentAnswers) ? this.props.studentAnswers[index] : {selectedAnswer: ""};
       var selectedAnswer;
       var options = item.answers.map((answer, i)=>{
         if(answers && (answers.selectedAnswer.trim() == answer.material.trim())){
@@ -92,3 +91,5 @@ export default class Matching extends React.Component{
     );
   }
 }
+
+export default connect(null, { answerSelected }, null, { withRefs: true })(Matching);
