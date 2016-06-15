@@ -8,24 +8,26 @@ import Rapper             from '../../../specs_support/rapper';
 import configureStore     from '../../store/configure_store';
 
 describe('start', function() {
+
   var result;
+  var settings;
 
   beforeEach(()=>{
     settings = Immutable.fromJS({
-      assessment_kind: "summative",
-      src_url: "asdf",
-      jwt: "asdfasdf",
-      csrf: "asdfasfd",
-      api_url: "www.example.com"
+      assessment_kind : "summative",
+      src_url         : "asdf",
+      jwt             : "asdfasdf",
+      csrf            : "asdfasfd",
+      api_url         : "www.example.com"
     });
 
     assessment = Immutable.fromJS({});
 
-    var state = {
+    const state = {
       settings,
       assessment
     };
-    var store = configureStore(state);
+    const store = configureStore(state);
     result = TestUtils.renderIntoDocument(<Rapper childProps={{store, params}} child={Start}/>);
   });
 
