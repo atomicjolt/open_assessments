@@ -5,7 +5,7 @@ import AssessmentActions	from '../../actions/assessment';
 
 export default class MappedImage extends React.Component{
 
-	render(){
+  render(){
 		var str = "mappedImg" + this.props.item.id;
 		var mapName = "#" + str;
 		var coordStr = this.props.item.coordinates.toString();
@@ -22,5 +22,5 @@ export default class MappedImage extends React.Component{
 	}
 };
 MappedImage.propTypes = {
-	item: React.PropTypes.object.isRequired
+  item: React.PropTypes.object.isRequired
 };

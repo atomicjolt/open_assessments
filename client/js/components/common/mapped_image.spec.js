@@ -17,20 +17,23 @@ describe ('Mapped Image', ()=>{
 			height: 480
 		};
 
-		result = TestUtils.renderIntoDocument(<MappedImage item={item} />);
+   result = TestUtils.renderIntoDocument(<MappedImage item={item} />);
 	});
 
 	it('Renders the img', ()=>{
-		expect(TestUtils.findRenderedDOMComponentWithTag(result, 'img').props.src).toEqual('http://www.bealecorner.com/trv900/respat/eia1956-small.jpg');
-		expect(TestUtils.findRenderedDOMComponentWithTag(result, 'img').props.width).toEqual(640);
-		expect(TestUtils.findRenderedDOMComponentWithTag(result, 'img').props.height).toEqual(480);
+		const subject = TestUtils.findRenderedDOMComponentWithTag(result, 'img');
+		expect(subject.src).toEqual('http://www.bealecorner.com/trv900/respat/eia1956-small.jpg');
+		expect(subject.width).toEqual(640);
+		expect(subject.height).toEqual(480);
 	});
 
 	it('Renders the Map', ()=>{
-		var coords = item.coordinates.toString();
-		expect(TestUtils.findRenderedDOMComponentWithTag(result, 'map')).toBeDefined();
-		expect(TestUtils.findRenderedDOMComponentWithTag(result, 'area')).toBeDefined();
-		expect(TestUtils.findRenderedDOMComponentWithTag(result, 'area').props.coords).toEqual(coords);
+    var coords = item.coordinates.toString();
+		const map = TestUtils.findRenderedDOMComponentWithTag(result, 'map');
+		const area = TestUtils.findRenderedDOMComponentWithTag(result, 'area');
+		expect(map).toBeDefined();
+		expect(area).toBeDefined();
+		expect(area.coords).toEqual(coords);
 	});
 
 	xit('Calls the onClick', ()=>{
