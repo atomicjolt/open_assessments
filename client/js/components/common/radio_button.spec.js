@@ -21,7 +21,6 @@ describe('radio button', function() {
   });
 
   it('calls the answerSelected function on click', () => {
-
     spyOn(result, "answerSelected");
     var radio = TestUtils.findRenderedDOMComponentWithTag(result, 'input');
     TestUtils.Simulate.click(radio);
