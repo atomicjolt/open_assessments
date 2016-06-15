@@ -1,9 +1,7 @@
 import React     from "react";
 import ReactDOM  from "react-dom";
-import Immutable          from 'immutable';
 import TestUtils from "react/lib/ReactTestUtils";
 import Helper    from "../../../specs_support/helper";
-import configureStore     from '../../store/configure_store';
 
 import { Assessment }         from './assessment';
 import AssessmentActions from '../../actions/assessment';
@@ -25,7 +23,6 @@ describe('assessment', function() {
     var settings ={
       enable_start:true,
       assessment_type:"SUMMATIVE"
-
     };
     var assessment = {
       isStarted:false
