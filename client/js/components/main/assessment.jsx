@@ -10,7 +10,7 @@ import Loading                                from "../assessments/loading";
 import ProgressDropdown                       from "../common/progress_dropdown";
 import { questionCount, questions, outcomes } from "../../selectors/assessment";
 
-export const select = (state, props) => {
+const select = (state, props) => {
   return {
     settings             : state.settings,
     assessment           : state.assessment,
