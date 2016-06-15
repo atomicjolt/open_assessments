@@ -6,8 +6,8 @@ import { loadAssessment }  from "../actions/assessment";
 import LocalizedStrings    from 'react-localization';
 import locales             from '../locales/locales';
 
-@connect(null, { loadAssessment }, null, { withRefs: true })
-class Index extends React.Component {
+// @connect(null, { loadAssessment }, null, { withRefs: true })
+export class Index extends React.Component {
 
   componentWillMount(){
     // Load the assessment
@@ -24,4 +24,4 @@ class Index extends React.Component {
 
 }
 
-export default Index;
+export default connect(null, { loadAssessment }, null, { withRefs: true })(Index);
