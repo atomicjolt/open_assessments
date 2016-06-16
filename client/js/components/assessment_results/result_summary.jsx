@@ -1,25 +1,12 @@
 "use strict";
 
 import React                 from "react";
-import { connect }           from "react-redux";
 import _                     from "lodash";
 
 import AssessmentStore       from "../../stores/assessment";
 import ReviewAssessmentStore from "../../stores/review_assessment";
 import ItemResult            from "./item_result";
 
-// import { outcomes }          from "../../selectors/assessment";
-
-// const select = (state, props) => {
-//   return {
-//     assessmentResult : AssessmentStore.assessmentResult(), // TODO this won't work. have to figure out where to get assessmentResult from
-//     outcomes         : outcomes(),
-//     settings         : state.settings,
-//     assessment       : state.assessment
-//   };
-// };
-
-// @connect(select, {}, null, { withRefs: true })
 export default class ResultSummary extends React.Component{
 
   getOutcomeLists(){
@@ -30,27 +17,27 @@ export default class ResultSummary extends React.Component{
     var sectionIndex = 0;
     var perSecCount = 0;
     var correctCount = 0;
-    var correctList = this.state.assessmentResult.correct_list;
+    var correctList = this.props.assessmentResult.correct_list;
     for(var i = 0; i < correctList.length; i++){
       //make sure to check to see if the amount of questions per section is less the ammount chosen per section
       var correct = correctList[i];
       perSecCount++;
 
       if(!correct || correct == "partial"){
-        lists.negativeList.push(this.state.outcomes[sectionIndex]);
-        i += (this.state.settings.perSec - perSecCount);
+        lists.negativeList.push(this.props.outcomes[sectionIndex]);
+        i += (this.props.settings.perSec - perSecCount);
         sectionIndex++;
         perSecCount = 0;
         continue;
       } else {
         correctCount++;
-        if(correctCount == this.state.settings.perSec || correctCount == this.state.assessment.sections[sectionIndex].items.length){
-          lists.positiveList.push(this.state.outcomes[sectionIndex]);
+        if(correctCount == this.props.settings.perSec || correctCount == this.props.assessment.sections[sectionIndex].items.length){
+          lists.positiveList.push(this.props.outcomes[sectionIndex]);
           correctCount = 0;
         }
       }
 
-      if(perSecCount == this.state.settings.perSec || perSecCount == this.state.assessment.sections[sectionIndex].items.length){
+      if(perSecCount == this.props.settings.perSec || perSecCount == this.props.assessment.sections[sectionIndex].items.length){
         sectionIndex++;
         correctCount = 0;
         perSecCount = 0;
@@ -61,7 +48,7 @@ export default class ResultSummary extends React.Component{
   }
 
   getReviewOutcomeList() {
-    var positiveList = _.clone(this.state.outcomes);
+    var positiveList = _.clone(this.props.outcomes);
     var negativeList = [];
 
     this.props.questionResponses.map((qr, index)=> {
@@ -75,8 +62,8 @@ export default class ResultSummary extends React.Component{
     });
 
     return {
-      positiveList: positiveList,
-      negativeList: negativeList
+      positiveList,
+      negativeList
     };
   }
 
@@ -115,7 +102,7 @@ export default class ResultSummary extends React.Component{
           focusStudy:"Review these concepts before your last quiz attempt or to prepare for your next performance assessment."
         };
 
-    if(this.state.settings.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
+    if(this.props.settings.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
       contentData = {
         goodWork: "What You Already Know",
         moreToLearn: "What You Need to Learn",
@@ -128,7 +115,7 @@ export default class ResultSummary extends React.Component{
           <div className="col-md-4 col-sm-4 col-xs-4" >
             <h3><strong>{name}</strong></h3>
             <div>
-              <h1>{Math.floor(this.state.assessmentResult.score)}%</h1>
+              <h1>{Math.floor(this.props.assessmentResult.score)}%</h1>
             </div>
             {timeSpent}
             <br />
