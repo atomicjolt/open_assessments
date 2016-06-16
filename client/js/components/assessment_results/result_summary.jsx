@@ -8,18 +8,18 @@ import AssessmentStore       from "../../stores/assessment";
 import ReviewAssessmentStore from "../../stores/review_assessment";
 import ItemResult            from "./item_result";
 
-import { outcomes }          from "../../selectors/assessment";
+// import { outcomes }          from "../../selectors/assessment";
 
-const select = (state, props) => {
-  return {
-    assessmentResult : AssessmentStore.assessmentResult(), // TODO this won't work. have to figure out where to get assessmentResult from
-    outcomes         : outcomes(),
-    settings         : state.settings,
-    assessment       : state.assessment
-  };
-};
+// const select = (state, props) => {
+//   return {
+//     assessmentResult : AssessmentStore.assessmentResult(), // TODO this won't work. have to figure out where to get assessmentResult from
+//     outcomes         : outcomes(),
+//     settings         : state.settings,
+//     assessment       : state.assessment
+//   };
+// };
 
-@connect(select, {}, null, { withRefs: true })
+// @connect(select, {}, null, { withRefs: true })
 export default class ResultSummary extends React.Component{
 
   getOutcomeLists(){
@@ -80,16 +80,16 @@ export default class ResultSummary extends React.Component{
     };
   }
 
-  generateOutcomeLists(styles){
+  generateOutcomeLists(){
     var lists;
     if(this.props.questionResponses){
-      lists = this.getReviewOutcomeList(styles);
+      lists = this.getReviewOutcomeList();
     } else {
-      lists = this.getOutcomeLists(styles);
+      lists = this.getOutcomeLists();
     }
 
     lists.positiveList = lists.positiveList.map((item, index)=>{
-      return <div key={"positive " + index} title={item.longOutcome}><p style={styles.green}><i className="glyphicon glyphicon-ok" style={styles.green}></i>{" " + item.shortOutcome + " "}<i className="glyphicon glyphicon-info-sign"></i></p></div>;
+      return <div key={"positive " + index} title={item.longOutcome}><p><i className="glyphicon glyphicon-ok"></i>{" " + item.shortOutcome + " "}<i className="glyphicon glyphicon-info-sign"></i></p></div>;
     });
 
     lists.negativeList = lists.negativeList.map((item, index)=>{
@@ -100,8 +100,7 @@ export default class ResultSummary extends React.Component{
   }
 
   render() {
-    var styles = this.props.styles;
-    var outcomeLists = this.generateOutcomeLists(styles);
+    var outcomeLists = this.generateOutcomeLists();
     var name = "Your Score";
     if( this.props.user && this.props.user.name ){
       name = "Score for " + this.props.user.name;
@@ -124,12 +123,12 @@ export default class ResultSummary extends React.Component{
       };
     }
 
-    return (<div className="row" tabIndex="0" style={styles.wrapperStyle}>
+    return (<div className="row" tabIndex="0">
 
           <div className="col-md-4 col-sm-4 col-xs-4" >
             <h3><strong>{name}</strong></h3>
-            <div style={styles.yourScoreStyle}>
-              <h1 style={styles.center}>{Math.floor(this.state.assessmentResult.score)}%</h1>
+            <div>
+              <h1>{Math.floor(this.state.assessmentResult.score)}%</h1>
             </div>
             {timeSpent}
             <br />
@@ -139,11 +138,11 @@ export default class ResultSummary extends React.Component{
             <h3><strong>{contentData.goodWork}</strong></h3>
             <p>You answered questions that covered these concepts correctly.</p>
             {outcomeLists.positiveList}
-            <div style={{clear: 'both'}}></div>
+            <div></div>
           </div>
 
           <div className="col-md-4 col-sm-4 col-xs-4" >
-            <h3 style={styles.improveScoreStyle}><strong>{contentData.moreToLearn}<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
+            <h3><strong>{contentData.moreToLearn}<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
             <p>{contentData.focusStudy}</p>
             {outcomeLists.negativeList}
           </div>
