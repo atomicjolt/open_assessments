@@ -1,10 +1,13 @@
 "use strict";
 
 import React								from 'react';
+import ReactDOM							from 'react-dom';
 import AssessmentActions		from '../../actions/assessment';
 
 export default class Draggable extends React.Component{
-
+	static propTypes = {
+		item: React.PropTypes.object.isRequired
+	};
 	allowDrop(ev) {
 		ev.preventDefault();
 	}
@@ -24,7 +27,6 @@ export default class Draggable extends React.Component{
 	}
 
 	render(){
-		//TODO move style out of here, maybe
 		var draggableStyle = {
 			float: 'left',
 			margin: '10px',
@@ -34,7 +36,6 @@ export default class Draggable extends React.Component{
 			zIndex: '2'
 		};
 		var id = "zone" + this.props.item.id;
-
 
 		return (
 			<div className="dropZone" id={id} onDrop={(e)=>{this.drop(e)}} onDragOver={(e)=>{document.getElementById(id).hasChildNodes() ? e.stopPropagation() : this.allowDrop(e)}} style={draggableStyle}>
@@ -46,6 +47,3 @@ export default class Draggable extends React.Component{
 		)
 	}
 }
-Draggable.propTypes={
-	item: React.PropTypes.object.isRequired
-};

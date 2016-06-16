@@ -27,7 +27,7 @@ describe('Draggable Object', ()=>{
 		expect(zone).toBeDefined();
 	});
 	it('Is draggable', ()=>{
-		expect(object.props.draggable).toBeTruthy();
+		expect(object.attributes.draggable).toBeTruthy();
 		spyOn(instance, 'drag');
 		TestUtils.Simulate.dragStart(object);
 		expect(instance.drag).toHaveBeenCalled();
@@ -38,6 +38,8 @@ describe('Draggable Object', ()=>{
 		expect(instance.drop).toHaveBeenCalled();
 	});
 	it('Has drag over', ()=>{
-		expect(object.props.onDragOver).toBeDefined();
+		console.log(instance);
+  	const thing = ReactDOM.findDOMNode(instance);
+		expect(object.onDragOver).toBeDefined();
 	});
 });
