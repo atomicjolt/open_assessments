@@ -5,7 +5,7 @@ import TestUtils   from 'react/lib/ReactTestUtils';
 import $           from 'jquery';
 import DragAndDrop from './drag_and_drop';
 
-fdescribe('Drag and Drop', ()=>{
+describe('Drag and Drop', ()=>{
 	var instance;
 	var item;
 
