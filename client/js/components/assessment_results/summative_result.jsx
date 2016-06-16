@@ -7,22 +7,22 @@ import ReviewAssessmentStore from "../../stores/review_assessment";
 import ItemResult            from "./item_result";
 import ResultSummary         from "./result_summary.jsx";
 import StudyPlanButton       from "../post_nav/study_plan_button.jsx";
-import { items }             from "../../selectors/assessment";
+// import { items }             from "../../selectors/assessment";
 
 
-const select = (state) => {
-  return {
-    assessmentResult  : state.assessment.assessmentResult,
-    questionResponses : [], // TODO figure out where these come from
-    questions         : item(state),
-    assessment        : state.assessment.current
-  };
-};
+// const select = (state) => {
+//   return {
+//     assessmentResult  : state.assessment.assessmentResult,
+//     questionResponses : [], // TODO figure out where these come from
+//     questions         : item(state),
+//     assessment        : state.assessment.current
+//   };
+// };
 
 export default class SummativeResult extends React.Component{
 
-  constructor(props, context){
-    super(props, context);
+  constructor(props){
+    super(props);
   }
 
   getItemResults(){
@@ -53,13 +53,12 @@ export default class SummativeResult extends React.Component{
   render() {
 
     var errors = "";
-    var styles = this.props.styles;
     var itemResults = this.getItemResults();
 
     if(this.props.assessmentResult.errors && this.props.assessmentResult.errors.length > 0){
       errors = <div className="row">
                   <div className="col-md-12">
-                    <div style={styles.warningStyle}>
+                    <div>
                       This quiz was not setup correctly. Contact your instructor.
                     </div>
                   </div>
@@ -68,25 +67,26 @@ export default class SummativeResult extends React.Component{
 
     var quizType = this.props.isSummative ? "Quiz" : "Show What You Know";
 
-    return (<div style={styles.assessment}>
-      <div style={styles.assessmentContainer}>
-        <div style={styles.titleBar}>{quizType}: {this.props.assessment ? this.props.assessment.title : ""}</div>
+    return (<div>
+      <div>
+        <div>{quizType}: {this.props.assessment ? this.props.assessment.title : ""}</div>
         {errors}
-
         <ResultSummary
-            styles={styles}
+            settings={this.props.settings}
             timeSpent={this.props.timeSpent}
             assessmentResult={this.props.assessmentResult}
             assessment={this.props.assessment}
-            outcomes={this.props.outcomes}
+            outcomes={this.props.outcomes()}
             user={this.props.user}
-            questionResponses={this.props.questionResponses}/>
+            questions={this.props.questions}
+        />
+
 
         <StudyPlanButton/>
 
         <hr />
 
-        <div id="questionsStart" style={styles.resultsStyle}>
+        <div id="questionsStart">
           {itemResults}
         </div>
 
