@@ -3,7 +3,7 @@ import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import Checkbox           from './checkbox';
 
-fdescribe('checkbox', function() {
+describe('checkbox', function() {
 
   var item = {
     id: 1,
