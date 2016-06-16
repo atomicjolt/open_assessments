@@ -7,64 +7,17 @@ import ResultOutcome    from "./result_outcome";
 
 export default class ItemResult extends React.Component{
 
-  getStyles(props){
-    const theme = props.settings.theme;
-    if(!theme){ return {}; }
-
-    var color;
-    var border;
-    var labelColor;
-    var display = "block";
-    if(props.isCorrect == "partial"){
-      color = theme.partialBackgroundColor;
-      border = theme.partialBorder;
-      labelColor = theme.partialColor;
-    } else if (props.isCorrect == false){
-      border = theme.incorrectBorder;
-      color = theme.incorrectBackgroundColor;
-      labelColor = theme.incorrectColor;
-    } else if(props.isCorrect == "teacher_preview"){
-      labelColor = "transparent";
-      color = theme.correctBackgroundColor;
-      border = theme.correctBorder;
-    } else if (props.isCorrect){
-      color = theme.correctBackgroundColor;
-      border = theme.correctBorder;
-      labelColor = theme.correctColor;
-    }
-    if(props.confidence == "teacher_preview"){
-      display = "none";
-    }
-    return {
-      resultContainer: {
-        backgroundColor: color,
-        border: border,
-        borderRadius : "4px",
-        padding: "20px",
-        overflow: "auto"
-      },
-      confidenceWrapper: {
-        width: "440px",
-        height: theme.confidenceWrapperHeight,
-        padding: theme.confidenceWrapperPadding,
-        marginTop: "10px",
-        backgroundColor: theme.confidenceWrapperBackgroundColor,
-        display: display
-      },
-      correctLabel: {
-        backgroundColor: labelColor,
-        textAlign: "center",
-        padding: "10px",
-        color: "white",
-        fontWeight: "bold",
-        borderRadius: "4px"
-      }
-    };
-  }
-
-  confidenceResult(styles) {
+  static propTypes = {
+    question: React.PropTypes.object.isRequired,
+    confidence: React.PropTypes.string.isRequired,
+    isCorrect: React.PropTypes.oneOfType([
+      React.PropTypes.string,
+      React.PropTypes.bool]).isRequired
+  };
+  
+  confidenceResult() {
     if (this.props.confidence !== null) {
-      return <div style={styles.confidenceWrapper}>
+      return <div>
         <ResultConfidence level={this.props.confidence}/>
       </div>
     } else {
@@ -73,7 +26,6 @@ export default class ItemResult extends React.Component{
   }
 
   render() {
-    var styles = this.getStyles(this.props);
     var correctMessage = "You were incorrect.";
     if(this.props.isCorrect == "partial"){
       correctMessage = "You were partially correct."
@@ -85,7 +37,7 @@ export default class ItemResult extends React.Component{
     return (
       <div tabIndex="0" aria-label={"Question " + (this.props.index+1)}>
         <div className="row" tabIndex="0">
-          <div className="col-md-9 col-sm-9 col-xs-9" style={styles.resultContainer}>
+          <div className="col-md-9 col-sm-9 col-xs-9">
             <div className="row">
               <div className="col-md-9 col-sm-9 col-xs-9">
               <div
@@ -94,13 +46,13 @@ export default class ItemResult extends React.Component{
               }}></div>
               </div>
               <div className="col-md-3 col-sm-3 col-xs-3" tabIndex="0">
-                <div style={styles.correctLabel}>{correctMessage}</div>
+                <div>{correctMessage}</div>
               </div>
             </div>
             <div>
               <UniversalInput item={this.props.question} isResult={true} chosen={this.props.chosen} correctAnswers={this.props.correctAnswers}/>
             </div>
-            {this.confidenceResult(styles)}
+            {this.confidenceResult()}
           </div>
           <div className="col-md-3 col-sm-3 col-xs-3">
             <ResultOutcome outcomes={this.props.question.outcomes} correct={this.props.isCorrect} level={this.props.confidence}/>
@@ -113,10 +65,6 @@ export default class ItemResult extends React.Component{
     );
   }
 
-}
-
-ItemResult.contextTypes = {
-  theme: React.PropTypes.object
 }
 
 ItemResult.propTypes = {
