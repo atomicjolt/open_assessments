@@ -5,7 +5,7 @@ import TestUtils   from 'react/lib/ReactTestUtils';
 import $           from 'jquery';
 import DragAndDrop from './drag_and_drop';
 
-describe('Drag and Drop', ()=>{
+fdescribe('Drag and Drop', ()=>{
 	var instance;
 	var item;
 
@@ -26,9 +26,10 @@ describe('Drag and Drop', ()=>{
 		});
 
 		it('Renders the image', ()=>{
+			const img = TestUtils.findRenderedDOMComponentWithTag(instance, 'img');
 			expect(instance).toBeDefined();
-			expect(TestUtils.findRenderedDOMComponentWithTag(instance, 'img')).toBeDefined();
-			expect(TestUtils.findRenderedDOMComponentWithTag(instance, 'img').props.src).toEqual('http://www.bealecorner.com/trv900/respat/eia1956-small.jpg');
+			expect(img).toBeDefined();
+			expect(img.src).toEqual('http://www.bealecorner.com/trv900/respat/eia1956-small.jpg');
 		});
 
 		it('Renders the draggable objects', ()=>{
@@ -38,7 +39,7 @@ describe('Drag and Drop', ()=>{
 		it('renders the dropzones', ()=>{
 			expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'DropZone')).toBeDefined();
 		});
-		
+
 	});
 
 	describe('Index Type', ()=>{
@@ -47,9 +48,10 @@ describe('Drag and Drop', ()=>{
 			instance = TestUtils.renderIntoDocument(<DragAndDrop item={item} />);
 		});
 		it('Renders the image', ()=>{
+			const img = TestUtils.findRenderedDOMComponentWithTag(instance, 'img');
 			expect(instance).toBeDefined();
-			expect(TestUtils.findRenderedDOMComponentWithTag(instance, 'img')).toBeDefined();
-			expect(TestUtils.findRenderedDOMComponentWithTag(instance, 'img').props.src).toEqual('http://www.bealecorner.com/trv900/respat/eia1956-small.jpg');
+			expect(img).toBeDefined();
+			expect(img.src).toEqual('http://www.bealecorner.com/trv900/respat/eia1956-small.jpg');
 		});
 		it('Renders the draggable objects', ()=>{
 			expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'Draggable')).toBeDefined();
