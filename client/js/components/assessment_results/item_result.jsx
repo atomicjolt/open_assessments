@@ -14,7 +14,7 @@ export default class ItemResult extends React.Component{
       React.PropTypes.string,
       React.PropTypes.bool]).isRequired
   };
-  
+
   confidenceResult() {
     if (this.props.confidence !== null) {
       return <div>
@@ -42,7 +42,7 @@ export default class ItemResult extends React.Component{
               <div className="col-md-9 col-sm-9 col-xs-9">
               <div
                 dangerouslySetInnerHTML={{
-              __html: this.props.question.material
+                  __html: this.props.question.material
               }}></div>
               </div>
               <div className="col-md-3 col-sm-3 col-xs-3" tabIndex="0">
