@@ -105,15 +105,17 @@ export class Assessment extends React.Component{
     //   // AssessmentActions.itemViewed(this.props.settings, this.props.assessment, this.props.assessmentResult);
     }
 
+    var isSummative = false; // this.props.settings.assessment_type.toUpperCase() === "SUMMATIVE";
+
     var percentCompleted = this.checkProgress(this.props.currentItemIndex, this.props.questionCount);
     var progressStyle = {width:percentCompleted+"%"};
     var progressText = "";
-    var quizType = this.props.settings.assessment_type.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
-    var titleBar = this.props.settings.assessment_type.toUpperCase() === "FORMATIVE" ? "" : <div>{this.props.assessment ? this.props.assessment.title : ""}</div>;
+    var quizType = isSummative ? "Quiz" : "Show What You Know";
+    var titleBar = isSummative ? <div>{this.props.assessment ? this.props.assessment.title : ""}</div> : "";
     if(this.props.assessment){
       progressText = this.props.settings.shouldShowProgressText ? <div><b>{this.props.assessment.title + " Progress"}</b>{" - You are on question " + (this.props.currentItemIndex + 1) + " of " + this.props.questionCount}</div> : "";
     }
-    progressBar = this.props.settings.assessment_type.toUpperCase() === "FORMATIVE" ? "" : progressBar;
+    progressBar = isSummative ? progressBar : "";
     return<div className="assessment">
       {titleBar}
       {progressBar}

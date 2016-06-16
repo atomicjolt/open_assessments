@@ -16,9 +16,9 @@ export default (
   <Router history={appHistory}>
     <Route path="/" component={Index}>
       <IndexRoute component={Start} />
-      <Route path="assessment" handler={Assessment}/>
-      <Route path="assessment-result" handler={AssessmentResult}/>
-      <Route path="about" handler={About}/>
+      <Route path="assessment" component={Assessment}/>
+      <Route path="assessment-result" component={AssessmentResult}/>
+      <Route path="about" component={About}/>
       <Route path="*" component={NotFound}/>
     </Route>
   </Router>
