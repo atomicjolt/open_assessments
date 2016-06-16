@@ -33,12 +33,13 @@ describe('Assessment Questions', ()=> {
   });
 
   it('It renders the title', ()=>{
-    expect(ReactDOM.findDOMNode(result).textContent).toContain('title');
+    expect(ReactDOM.findDOMNode(result).innerText).toContain('title');
   });
-  //
+
   it('It renders the question text', ()=>{
-    expect(ReactDOM.findDOMNode(result).textContent).toContain(item.messages[0]);
-    expect(ReactDOM.findDOMNode(result).textContent).toContain(item.messages[1]);
+    const subject = ReactDOM.findDOMNode(result);
+    expect(subject.innerText).toContain(item.messages[0]);
+    expect(subject.innerText).toContain(item.messages[1]);
   });
 
   xdescribe('Drag and Drop', ()=>{

@@ -131,7 +131,7 @@ export default class UniversalInput extends React.Component{
     }
     return (<div className="panel-messages-container panel panel-default">
               <div className="panel-heading text-center">
-                {/*{item.title}*/}
+                {item.title}
                 {messages}
               </div>
               <div className="panel-body">
