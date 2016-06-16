@@ -3,7 +3,7 @@ import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import Checkbox           from './checkbox';
 
-describe('checkbox', function() {
+fdescribe('checkbox', function() {
 
   var item = {
     id: 1,
@@ -20,10 +20,10 @@ describe('checkbox', function() {
   });
 
   it('calls the answerSelected function when clicked', () => {
-    spyOn(result.originalComponent(), "answerSelected");
+    spyOn(result, "answerSelected");
     var checkbox = TestUtils.findRenderedDOMComponentWithTag(result, 'input');
     TestUtils.Simulate.click(checkbox);
-    expect(result.originalComponent().answerSelected).toHaveBeenCalled();
+    expect(result.answerSelected).toHaveBeenCalled();
   });
 
 });
