@@ -24,7 +24,8 @@ describe('item', function() {
   />);
 
   it('renders an item', function() {
-    expect(ReactDOM.findDOMNode(result).textContent).toContain("Choose ALL that apply");
+    const subject = ReactDOM.findDOMNode(result);
+    expect(subject.textContent).toContain("Choose the BEST answer.");
   });
 
 });
