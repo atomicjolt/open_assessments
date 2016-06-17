@@ -12,7 +12,7 @@ export const questionsPerSection = (state, props) => state.settings.questions_pe
 // input selectors change.
 export const questions = createSelector(
   [ sections, questionsPerSection ],
-  (sections, questionsPerSection) => getItems(sections, questionsPerSec)
+  (sections, questionsPerSection) => getItems(sections, questionsPerSection)
 );
 
 export const outcomes = createSelector(

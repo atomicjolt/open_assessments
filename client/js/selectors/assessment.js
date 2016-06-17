@@ -12,7 +12,7 @@ function getParser(metaData){
 
 function makeSelector(name){
   return (state, props) => {
-    var func = getParser(state.assessmentMetaData)[name];
+    var func = getParser(state.assessment.standard)[name];
     return func(state, props);
   };
 }

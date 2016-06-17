@@ -130,4 +130,4 @@ export class Assessment extends React.Component{
 
 }
 
-export default connect(select, {...AssessmentActions}, null, {withRef: true})(Assessment);
+export default connect(select, {...AssessmentActions})(Assessment);
