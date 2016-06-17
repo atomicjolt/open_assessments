@@ -12,17 +12,13 @@ import FullPostNav        from "../post_nav/full_post_nav.jsx";
 
 const select = (state) => {
   return {
-    settings      : state.settings.toJS(),
+    settings      : state.settings,
     assessment    : state.assessment,
-    theme         : state.application.get('theme')
+    theme         : state.application
   };
 };
 
 export class Start extends React.Component{
-
-  componentWillMount(){}
-
-  componentDidMount(){}
 
   render(){
     var content;
