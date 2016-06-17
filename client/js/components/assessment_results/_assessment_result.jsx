@@ -6,14 +6,14 @@ import * as AssessmentActions     from "../../actions/assessment";
 import FormativeResult            from "./formative_result.jsx";
 import SummativeResult            from "./summative_result.jsx";
 import CommunicationHandler       from "../../utils/communication_handler";
-import { questions }                  from "../../selectors/assessment";
+import { questions, outcomes }    from "../../selectors/assessment";
 
 const select = (state) => {
   return {
     assessmentResult : state.assessmentResult,
     timeSpent        : state.timeSpent,
     questions        : questions(state),
-    outcomes         : state.outcomes,
+    outcomes         : outcomes(state),
     assessment       : state.assessment,
     settings         : state.settings
   };
