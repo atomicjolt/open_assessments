@@ -21,6 +21,7 @@ const select = (state) => {
 export class Start extends React.Component{
 
   render(){
+    const startButtonText = "Start Quiz"; 
     var content;
     var progressBar;
 
@@ -41,6 +42,11 @@ export class Start extends React.Component{
       <div className="section_list">
         <div className="section_container">
           {/* content */}
+        <div>
+          <button onClick={()=>{history.push('assessment');}}>
+            {startButtonText}
+          </button>
+        </div>);
         </div>
       </div>
       {/*<FullPostNav/>*/}
