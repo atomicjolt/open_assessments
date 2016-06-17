@@ -20,8 +20,26 @@ const select = (state) => {
 
 export class Start extends React.Component{
 
+  instructions(){
+    const kind = this.props.kind.get('assessmentKind', '').toUpperCase();
+
+    switch (kind) {
+      case "SUMMATIVE":
+        // Get summative instructions
+        break;
+      case "FORMATIVE":
+        // Get formative instructions
+        break;
+      case "SHOW_WHAT_YOU_KNOW":
+        // Get show what you know instructions
+        break;
+      default:
+        return "";
+    }
+  }
+
   render(){
-    const startButtonText = "Start Quiz"; 
+    const startButtonText = "Start Quiz";
     var content;
     var progressBar;
 
