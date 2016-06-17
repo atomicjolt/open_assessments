@@ -1,25 +1,12 @@
 "use strict";
 
 import React                 from "react";
-import { connect }           from "react-redux";
 import _                     from "lodash";
 
 import AssessmentStore       from "../../stores/assessment";
 import ReviewAssessmentStore from "../../stores/review_assessment";
 import ItemResult            from "./item_result";
 
-import { outcomes }          from "../../selectors/assessment";
-
-const select = (state, props) => {
-  return {
-    assessmentResult : AssessmentStore.assessmentResult(), // TODO this won't work. have to figure out where to get assessmentResult from
-    outcomes         : outcomes(),
-    settings         : state.settings,
-    assessment       : state.assessment
-  };
-};
-
-@connect(select, {}, null, { withRefs: true })
 export default class ResultSummary extends React.Component{
 
   getOutcomeLists(){
@@ -30,27 +17,27 @@ export default class ResultSummary extends React.Component{
     var sectionIndex = 0;
     var perSecCount = 0;
     var correctCount = 0;
-    var correctList = this.state.assessmentResult.correct_list;
+    var correctList = this.props.assessmentResult.correct_list;
     for(var i = 0; i < correctList.length; i++){
       //make sure to check to see if the amount of questions per section is less the ammount chosen per section
       var correct = correctList[i];
       perSecCount++;
 
       if(!correct || correct == "partial"){
-        lists.negativeList.push(this.state.outcomes[sectionIndex]);
-        i += (this.state.settings.perSec - perSecCount);
+        lists.negativeList.push(this.props.outcomes[sectionIndex]);
+        i += (this.props.settings.perSec - perSecCount);
         sectionIndex++;
         perSecCount = 0;
         continue;
       } else {
         correctCount++;
-        if(correctCount == this.state.settings.perSec || correctCount == this.state.assessment.sections[sectionIndex].items.length){
-          lists.positiveList.push(this.state.outcomes[sectionIndex]);
+        if(correctCount == this.props.settings.perSec || correctCount == this.props.assessment.sections[sectionIndex].items.length){
+          lists.positiveList.push(this.props.outcomes[sectionIndex]);
           correctCount = 0;
         }
       }
 
-      if(perSecCount == this.state.settings.perSec || perSecCount == this.state.assessment.sections[sectionIndex].items.length){
+      if(perSecCount == this.props.settings.perSec || perSecCount == this.props.assessment.sections[sectionIndex].items.length){
         sectionIndex++;
         correctCount = 0;
         perSecCount = 0;
@@ -61,7 +48,7 @@ export default class ResultSummary extends React.Component{
   }
 
   getReviewOutcomeList() {
-    var positiveList = _.clone(this.state.outcomes);
+    var positiveList = _.clone(this.props.outcomes);
     var negativeList = [];
 
     this.props.questionResponses.map((qr, index)=> {
@@ -75,21 +62,21 @@ export default class ResultSummary extends React.Component{
     });
 
     return {
-      positiveList: positiveList,
-      negativeList: negativeList
+      positiveList,
+      negativeList
     };
   }
 
-  generateOutcomeLists(styles){
+  generateOutcomeLists(){
     var lists;
     if(this.props.questionResponses){
-      lists = this.getReviewOutcomeList(styles);
+      lists = this.getReviewOutcomeList();
     } else {
-      lists = this.getOutcomeLists(styles);
+      lists = this.getOutcomeLists();
     }
 
     lists.positiveList = lists.positiveList.map((item, index)=>{
-      return <div key={"positive " + index} title={item.longOutcome}><p style={styles.green}><i className="glyphicon glyphicon-ok" style={styles.green}></i>{" " + item.shortOutcome + " "}<i className="glyphicon glyphicon-info-sign"></i></p></div>;
+      return <div key={"positive " + index} title={item.longOutcome}><p><i className="glyphicon glyphicon-ok"></i>{" " + item.shortOutcome + " "}<i className="glyphicon glyphicon-info-sign"></i></p></div>;
     });
 
     lists.negativeList = lists.negativeList.map((item, index)=>{
@@ -100,8 +87,7 @@ export default class ResultSummary extends React.Component{
   }
 
   render() {
-    var styles = this.props.styles;
-    var outcomeLists = this.generateOutcomeLists(styles);
+    var outcomeLists = this.generateOutcomeLists();
     var name = "Your Score";
     if( this.props.user && this.props.user.name ){
       name = "Score for " + this.props.user.name;
@@ -116,7 +102,7 @@ export default class ResultSummary extends React.Component{
           focusStudy:"Review these concepts before your last quiz attempt or to prepare for your next performance assessment."
         };
 
-    if(this.state.settings.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
+    if(this.props.settings.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
       contentData = {
         goodWork: "What You Already Know",
         moreToLearn: "What You Need to Learn",
@@ -124,12 +110,12 @@ export default class ResultSummary extends React.Component{
       };
     }
 
-    return (<div className="row" tabIndex="0" style={styles.wrapperStyle}>
+    return (<div className="row" tabIndex="0">
 
           <div className="col-md-4 col-sm-4 col-xs-4" >
             <h3><strong>{name}</strong></h3>
-            <div style={styles.yourScoreStyle}>
-              <h1 style={styles.center}>{Math.floor(this.state.assessmentResult.score)}%</h1>
+            <div>
+              <h1>{Math.floor(this.props.assessmentResult.score)}%</h1>
             </div>
             {timeSpent}
             <br />
@@ -139,11 +125,11 @@ export default class ResultSummary extends React.Component{
             <h3><strong>{contentData.goodWork}</strong></h3>
             <p>You answered questions that covered these concepts correctly.</p>
             {outcomeLists.positiveList}
-            <div style={{clear: 'both'}}></div>
+            <div></div>
           </div>
 
           <div className="col-md-4 col-sm-4 col-xs-4" >
-            <h3 style={styles.improveScoreStyle}><strong>{contentData.moreToLearn}<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
+            <h3><strong>{contentData.moreToLearn}<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
             <p>{contentData.focusStudy}</p>
             {outcomeLists.negativeList}
           </div>
