@@ -18,8 +18,7 @@ const select = (state) => {
   };
 };
 
-@connect(select, {...AssessmentActions}, null, {withRef: true})
-export default class Start extends React.Component{
+export class Start extends React.Component{
 
   componentWillMount(){}
 
@@ -42,21 +41,19 @@ export default class Start extends React.Component{
     //                 </div>;
 
     // }
-    const quizType = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
-    const titleBar = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : <div>{this.props.settings ? this.props.settings.assessmentTitle : ""}</div>;
-    progressBar    = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : progressBar;
+    // const quizType = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
+    // const titleBar = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : <div>{this.props.settings ? this.props.settings.assessmentTitle : ""}</div>;
+    // progressBar    = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : progressBar;
 
     return <div className="assessment">
-      {titleBar}
-      {progressBar}
+      {/*titleBar*/}
+      {/*progressBar*/}
       <div className="section_list">
         <div className="section_container">
           {/* content */}
         </div>
       </div>
-      {
-        //<FullPostNav/>
-      }
+      {/*<FullPostNav/>*/}
     </div>;
   }
 
@@ -65,3 +62,5 @@ export default class Start extends React.Component{
 // NOTE case 1 - Only start button
 // NOTE case 2 - Instructions and start button
 // NOTE Skip to questions moved to index
+
+export default connect(select, {...AssessmentActions})(Start);
