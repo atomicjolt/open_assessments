@@ -5,13 +5,26 @@ import { connect }         from "react-redux";
 import { loadAssessment }  from "../actions/assessment";
 import LocalizedStrings    from 'react-localization';
 import locales             from '../locales/locales';
+import appHistory          from "../history.js";
 
-// @connect(null, { loadAssessment }, null, { withRefs: true })
+const select = (state) => {
+  return {
+    maxAttempts: state.settings.get("max_attempts"),
+    userAttempts: state.settings.get("userAttempts"),
+    enableStart: state.settings.get("enableStart")
+  }
+}
+
 export class Index extends React.Component {
-
   componentWillMount(){
     // Load the assessment
     this.props.loadAssessment();
+    if(this.props.userAttempts &&
+      this.props.userAttempts >= this.props.maxAttempts) {
+      appHistory.push("retries-exceeded");
+    } else if(!this.props.enableStart) {
+      appHistory.push("assessment");
+    }
   }
 
   render(){
@@ -24,4 +37,4 @@ export class Index extends React.Component {
 
 }
 
-export default connect(null, { loadAssessment }, null, { withRefs: true })(Index);
+export default connect(select, { loadAssessment }, null, { withRefs: true })(Index);
