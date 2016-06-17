@@ -5,13 +5,6 @@ import { connect }    from "react-redux";
 
 import CommHandler    from "../../utils/communication_handler";
 
-// const select = (state, props) => {
-//   return {
-//     display: state.settings.show_post_message_navigation
-//   };
-// };
-
-// @connect(select, null, null, { withRefs: true }) TODO pass settings as props
 export default class StudyPlanButton extends React.Component {
 
   render() {

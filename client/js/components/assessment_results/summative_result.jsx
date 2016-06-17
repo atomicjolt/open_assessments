@@ -7,17 +7,6 @@ import ReviewAssessmentStore from "../../stores/review_assessment";
 import ItemResult            from "./item_result";
 import ResultSummary         from "./result_summary.jsx";
 import StudyPlanButton       from "../post_nav/study_plan_button.jsx";
-// import { items }             from "../../selectors/assessment";
-
-
-// const select = (state) => {
-//   return {
-//     assessmentResult  : state.assessment.assessmentResult,
-//     questionResponses : [], // TODO figure out where these come from
-//     questions         : item(state),
-//     assessment        : state.assessment.current
-//   };
-// };
 
 export default class SummativeResult extends React.Component{
 
