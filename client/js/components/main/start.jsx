@@ -21,12 +21,7 @@ const select = (state) => {
 @connect(select, {...AssessmentActions}, null, {withRef: true})
 export default class Start extends React.Component{
 
-  componentWillMount(){
-
-    if(!this.props.settings.enableStart){
-      appHistory.push("assessment");
-    }
-  }
+  componentWillMount(){}
 
   componentDidMount(){
     // if(this.state.isLoaded){
@@ -56,7 +51,7 @@ export default class Start extends React.Component{
       {progressBar}
       <div className="section_list">
         <div className="section_container">
-          {content}
+          {/* content */}
         </div>
       </div>
       {
@@ -66,3 +61,7 @@ export default class Start extends React.Component{
   }
 
 }
+
+// NOTE case 1 - Only start button
+// NOTE case 2 - Instructions and start button
+// NOTE Skip to questions moved to index
