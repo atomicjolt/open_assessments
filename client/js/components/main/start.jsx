@@ -22,13 +22,7 @@ export class Start extends React.Component{
 
   componentWillMount(){}
 
-  componentDidMount(){
-    // if(this.state.isLoaded){
-    //   // Trigger action to indicate the assessment was viewed
-    //   // AssessmentActions.assessmentViewed(this.props.settings, this.props.assessment);
-    // }
-    CommHandler.sendSize();
-  }
+  componentDidMount(){}
 
   render(){
     var content;
@@ -62,5 +56,7 @@ export class Start extends React.Component{
 // NOTE case 1 - Only start button
 // NOTE case 2 - Instructions and start button
 // NOTE Skip to questions moved to index
+// NOTE Move send size to index
+// NOTE Moved assessment viewed to assessment
 
 export default connect(select, {...AssessmentActions})(Start);
