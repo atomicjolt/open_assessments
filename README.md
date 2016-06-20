@@ -75,6 +75,13 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     eid               : ch15
 
 
+    // LTI Launch values
+    ltiLaunchId         // Provided during and LTI launch
+    lisUserId           // defaultSettings.lis_user_id,
+    lisResultSourceDid  // defaultSettings.lis_result_sourcedid,
+    lisOutcomeServiceUrl // defaultSettings.lis_outcome_service_url,
+    isLti               // defaultSettings.isLti,
+
 //     srcData            : srcData(),
 //     offline            : bestValue('offline', 'offline', false),
 //     assessmentId       : bestValue('assessmentId', 'assessment_id'),
@@ -83,7 +90,6 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
 //     externalUserId     : bestValue('externalUserId', 'external_user_id'),
 //     externalContextId  : bestValue('externalContextId', 'external_context_id'),
 //     accountId          : bestValue('accountId', 'account_id'),
-//     ltiLaunchId        : defaultSettings.lti_launch_id,
 //     keywords           : bestValue('keywords', 'keywords'),
 //     resultsEndPoint    : bestValue('resultsEndPoint', 'results_end_point', 'http  ://localhost  :4200/api'),
 //     confidenceLevels   : bestValue('confidenceLevels', 'confidence_levels', false),
@@ -93,10 +99,7 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
 //     csrfToken          : defaultSettings.csrfToken || null,
 //     allowedAttempts    : defaultSettings.allowed_attempts,
 //     userAttempts       : bestValue("user_attempts","userAttempts", 0),
-//     lisUserId          : defaultSettings.lis_user_id,
-//     lisResultSourceDid : defaultSettings.lis_result_sourcedid,
-//     lisOutcomeServiceUrl: defaultSettings.lis_outcome_service_url,
-//     isLti              : defaultSettings.isLti,
+
 //     assessmentKind     : defaultSettings.assessmentKind,
 //     images             : defaultSettings.images,
 //     ltiRole            : defaultSettings.lti_role,
