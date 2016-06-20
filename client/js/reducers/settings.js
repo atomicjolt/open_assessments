@@ -1,7 +1,9 @@
 import Immutable                     from 'immutable';
 import { Constants as JwtConstants } from "../actions/jwt";
 
-const initialState = Immutable.fromJS({});
+const initialState = Immutable.fromJS({
+  view:"SHOW_ONE"
+});
 
 export default (state = initialState, action) => {
 
@@ -16,4 +18,4 @@ export default (state = initialState, action) => {
 
   }
 
-}
+};
