@@ -13,7 +13,7 @@ function getParser(standard){
 function makeSelector(name){
   return (state, props) => {
     var parser = getParser(state.assessment.get('standard'));
-    if(parser === "undefined"){return;} // Handle no assessment loaded
+    if(parser === undefined){return;} // Handle no assessment loaded
     var func = parser[name];
     return func(state, props);
   };
