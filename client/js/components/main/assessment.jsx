@@ -14,13 +14,13 @@ const select = (state, props) => {
   return {
     settings             : state.settings,
     assessment           : state.assessment,
-    isStarted            : state.progress.istarted,
-    isSubmitted          : state.progress.isSubmitted,
-    question             : state.progress.currentQuestion,
-    currentItemIndex     : state.progress.currentItemIndex,
-    assessmentResult     : state.progress.assessmentResult,
-    messageIndex         : state.progress.answerMessageIndex,
-    studentAnswers       : state.progress.allStudentAnswers,
+    isStarted            : state.progress.get('isStarted', ''),
+    isSubmitted          : state.progress.get('isSubmitted', ''),
+    question             : state.progress.get('currentQuestion', ''),
+    currentItemIndex     : state.progress.get('currentItemIndex', ''),
+    assessmentResult     : state.progress.get('assessmentResult', ''),
+    messageIndex         : state.progress.get('answerMessageIndex', ''),
+    studentAnswers       : state.progress.get('allStudentAnswers', ''),
     questionCount        : questionCount(state, props),
     allQuestions         : questions(state, props),
     outcomes             : outcomes(state, props)
@@ -37,7 +37,7 @@ export class Assessment extends React.Component{
 
   componentDidMount(){
     // Trigger action to indicate the assessment was viewed
-    this.props.assessmentViewed(this.props.settings, this.props.assessment);
+    // this.props.assessmentViewed(this.props.settings, this.props.assessment); TODO
   }
 
   popup(){
@@ -49,6 +49,8 @@ export class Assessment extends React.Component{
   }
 
   render(){
+    console.log(this.props);
+    debugger;
     window.onbeforeunload = this.popup;
     // // if(AssessmentStore.assessmentResult() != null || this.props.settings.assessment_type.toUpperCase() != "SUMMATIVE"){
     //   // window.onbeforeunload = null;
@@ -59,30 +61,32 @@ export class Assessment extends React.Component{
     var progressBar;
     var titleBar;
 
-    if(!this.props.ed || this.props.isSubmitted){
+    if(this.props.isSubmitted){
       content = <Loading />;
-    } else if(showStart){
-
-      content = <CheckUnderstanding
-        title           = {this.props.assessment.title}
-        name            = {this.props.question.name}
-        maxAttempts     = {this.props.settings.allowed_attempts}
-        userAttempts    = {this.props.settings.user_attempts}
-        eid             = {this.props.settings.lis_user_id}
-        isLti           = {this.props.settings.is_lti}
-        assessmentId    = {this.props.assessment.assessment_id}
-        assessmentKind  = {this.props.settings.assessment_type}
-        primaryOutcome  = {this.props.outcomes[0]}
-        ltiRole         = {this.props.settings.lti_role}
-        icon            = {this.props.settings.images.quiz_icon_svg}/>;
-
-      //TODO progress bar sytles
-      progressBar = <div>
-                      {progressText}
-                      <ProgressDropdown disabled={true} questions={this.props.allQuestions} currentQuestion={this.props.currentItemIndex + 1} questionCount={this.props.questionCount} />
-                    </div>;
-
-    } else {
+    }
+    // else if(showStart){
+    //
+    //   content = <CheckUnderstanding
+    //     title           = {this.props.assessment.title}
+    //     name            = {this.props.question.name}
+    //     maxAttempts     = {this.props.settings.allowed_attempts}
+    //     userAttempts    = {this.props.settings.user_attempts}
+    //     eid             = {this.props.settings.lis_user_id}
+    //     isLti           = {this.props.settings.is_lti}
+    //     assessmentId    = {this.props.assessment.assessment_id}
+    //     assessmentKind  = {this.props.settings.assessment_type}
+    //     primaryOutcome  = {this.props.outcomes[0]}
+    //     ltiRole         = {this.props.settings.lti_role}
+    //     icon            = {this.props.settings.images.quiz_icon_svg}/>;
+    //
+    //   //TODO progress bar sytles
+    //   progressBar = <div>
+    //                   {progressText}
+    //                   <ProgressDropdown disabled={true} questions={this.props.allQuestions} currentQuestion={this.props.currentItemIndex + 1} questionCount={this.props.questionCount} />
+    //                 </div>;
+    //
+    // }
+    // else {
       content = <Item
         question         = {this.props.question}
         assessment       = {this.props.assessment}
@@ -121,7 +125,6 @@ export class Assessment extends React.Component{
       {progressBar}
       <div className="section_list">
         <div className="section_container">
-        easdfasdfasdf
           {content}
         </div>
       </div>
