@@ -55,6 +55,7 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     assessment_id     // The id of the assessment
     assessmentKind    // FORMATIVE or SUMMATIVE
     max_attempts      // The maximum number of attempts the assessment can be taken
+    enableStart       // Whether to show the assessment start screen
 
     userAttempts      // The number of time the user has attempted the assessment
     eid               // External identifier. A value that can be used to uniquely identifier the user in another system. Might by a system id, student number, etc
@@ -63,7 +64,7 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
 
     is_lti            // Indicates if the Open Assessments was launched via LTI
     lti_role           : state.settings.ltiRole,
-    
+
 
     accountId         : state.settings.accountId,
     icon              : state.settings.images.QuizIcon_svg,
@@ -71,7 +72,7 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
 
     // Flags
     confidence_levels : true
-    
+
     eid               : ch15
 
 
@@ -93,7 +94,6 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
 //     keywords           : bestValue('keywords', 'keywords'),
 //     resultsEndPoint    : bestValue('resultsEndPoint', 'results_end_point', 'http  ://localhost  :4200/api'),
 //     confidenceLevels   : bestValue('confidenceLevels', 'confidence_levels', false),
-//     enableStart        : enableStart,
 //     style              : bestValue('style', 'style', null),
 //     perSec             : parseInt(defaultSettings.per_sec),
 //     csrfToken          : defaultSettings.csrfToken || null,
