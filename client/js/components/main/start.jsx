@@ -24,6 +24,7 @@ export class Start extends React.Component{
       case "SUMMATIVE":
         // Get summative instructions
         instruction = (<div>Summative Quiz</div>);
+        // TODO display student progress
         break;
       case "FORMATIVE":
         // Get formative instructions
@@ -31,6 +32,7 @@ export class Start extends React.Component{
         break;
       case "SHOW_WHAT_YOU_KNOW":
         // Get show what you know instructions
+        // TODO display student progress student progress
         instruction = (
           <div>
             <h2>Show What You Know</h2>
@@ -66,12 +68,5 @@ export class Start extends React.Component{
   }
 
 }
-
-// NOTE case 1 - Only start button
-// NOTE case 2 - Instructions and start button
-// NOTE Skip to questions moved to index
-// NOTE Moved check attempts to index
-// NOTE Move send size to index
-// NOTE Moved assessment viewed to assessment
 
 export default connect(select, {...AssessmentActions})(Start);
