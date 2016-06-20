@@ -27,17 +27,14 @@ export class Start extends React.Component{
     switch (kind) {
       case "SUMMATIVE":
         // Get summative instructions
-        // NOTE progress bar
         instruction = (<div>Summative Quiz</div>);
         break;
       case "FORMATIVE":
         // Get formative instructions
-        // NOTE no progress bar
         instruction = (<div>Formative Quiz</div>);
         break;
       case "SHOW_WHAT_YOU_KNOW":
         // Get show what you know instructions
-        // NOTE progress bar
         instruction = (
           <div>
             <h2>Show What You Know</h2>
@@ -74,7 +71,7 @@ export class Start extends React.Component{
       {/*progressBar*/}
       <div className="section_list">
         <div className="section_container">
-          {/* content */}
+          {instructions()}
         <div>
           <button onClick={()=>{history.push('assessment');}}>
             {startButtonText}
