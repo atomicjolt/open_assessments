@@ -30,20 +30,20 @@ export default class Item extends React.Component{
   }
 
   confidenceLevelClicked(e, currentItemIndex){
-    e.preventDefault();
-
-    if(this.props.selectedAnswerId && this.props.selectedAnswerId.length > 0){
-      AssessmentActions.selectConfidenceLevel(e.target.value, currentItemIndex);
-      if(this.props.currentItemIndex == this.props.questionCount - 1 && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-        this.submitButtonClicked();
-      } else {
-        AssessmentActions.nextQuestion();
-        this.setState({showMessage: false});
-      }
-    } else {
-      this.setState({showMessage: true});
-    }
-    if(document.getElementById("focus")){document.getElementById("focus").focus();}
+    // e.preventDefault();
+    //
+    // if(this.props.selectedAnswerId && this.props.selectedAnswerId.length > 0){
+    //   AssessmentActions.selectConfidenceLevel(e.target.value, currentItemIndex);
+    //   if(this.props.currentItemIndex == this.props.questionCount - 1 && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
+    //     this.submitButtonClicked();
+    //   } else {
+    //     AssessmentActions.nextQuestion();
+    //     this.setState({showMessage: false});
+    //   }
+    // } else {
+    //   this.setState({showMessage: true});
+    // }
+    // if(document.getElementById("focus")){document.getElementById("focus").focus();}
   }
 
   submitButtonClicked(e){
@@ -101,7 +101,7 @@ export default class Item extends React.Component{
 
   getConfidenceLevels(level){
     if(level){
-      var levelMessage = <div style={{marginBottom: "10px"}}><b>How sure are you of your answer? Click below to move forward.</b></div>;
+      var levelMessage = <div><b>How sure are you of your answer? Click below to move forward.</b></div>;
       return    (<div className="confidence_wrapper">
                   {levelMessage}
                   <input type="button" className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex) }}/>
@@ -181,29 +181,28 @@ export default class Item extends React.Component{
       counter = <span className="counter">{this.props.currentItemIndex + 1} of {this.props.questionCount}</span>
     }
     var formativeHeader = "";
-    if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-      formativeHeader =
-          <div>
-            <div className="row">
-            </div>
-            <div className="row">
-              <div className="col-md-10">
-                <h4>{this.props.assessment.title}</h4>
-              </div>
-              <div className="col-md-2">
-              </div>
-            </div>
-          </div>
-    }
+    // if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
+    //   formativeHeader =
+    //       <div>
+    //         <div className="row">
+    //         </div>
+    //         <div className="row">
+    //           <div className="col-md-10">
+    //             <h4>{this.props.assessment.title}</h4>
+    //           </div>
+    //           <div className="col-md-2">
+    //           </div>
+    //         </div>
+    //       </div>
+    // }
 
-    var formativeStyle = this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE" ? {padding: "20px"} : {};
     var submitButtonDiv =  <div>
                           {submitButton}
                         </div>;
 
-    if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-      submitButtonDiv = ""
-    }
+    // if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
+    //   submitButtonDiv = ""
+    // }
 
     var questionDirections = "";
     if(this.props.question.question_type == "multiple_answers_question"){
@@ -222,7 +221,7 @@ export default class Item extends React.Component{
                 {counter}
             <p>{this.props.question.title}</p>
           </div>
-          <div style={formativeStyle}>
+          <div>
             {formativeHeader}
             <form className="edit_item">
               <div className="full_question" tabIndex="0">
