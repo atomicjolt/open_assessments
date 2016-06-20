@@ -11,7 +11,8 @@ const initialState = Immutable.fromJS({
   answerMessageIndex: '',
   responses: [],
   startedAt: 0,
-  finishedAt: 0
+  finishedAt: 0,
+  assessmentResult:null
 });
 
 export default (state = initialState, action) => {
