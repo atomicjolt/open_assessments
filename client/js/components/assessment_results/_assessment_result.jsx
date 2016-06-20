@@ -5,7 +5,6 @@ import { connect }                from "react-redux";
 import * as AssessmentActions     from "../../actions/assessment";
 import FormativeResult            from "./formative_result.jsx";
 import SummativeResult            from "./summative_result.jsx";
-import CommunicationHandler       from "../../utils/communication_handler";
 import { questions, outcomes }    from "../../selectors/assessment";
 
 const select = (state) => {
@@ -36,11 +35,6 @@ export class AssessmentResult extends React.Component{
     if(this.isSummative() && this.props.assessmentResult.assessment_results_id){
       this.props.assessmentPostLtiOutcome(this.props.assessmentResult.assessment_results_id);
     }
-  }
-
-  componentDidMount(){
-    CommunicationHandler.sendSize();
-    CommunicationHandler.showLMSNavigation();
   }
 
   isSummative(){

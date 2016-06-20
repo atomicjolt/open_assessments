@@ -1,20 +1,28 @@
 "use strict";
 
-import React       from 'react';
-import ReactDOM    from 'react-dom';
-import TestUtils   from 'react/lib/ReactTestUtils';
-import { Index }   from './index';
-import appHistory  from "../history";
+import React                from 'react';
+import ReactDOM             from 'react-dom';
+import TestUtils            from 'react/lib/ReactTestUtils';
+import { Index }            from './index';
+import appHistory           from "../history";
+import * as CommActions     from "../actions/communications";
 
 describe('index', function() {
-  var Subject;
-  var result;
-  var props;
+  var result, props, initCommCalled, scrollParentToTopCalled, postSizeCalled;
+
 
   beforeEach(()=>{
+    initCommCalled = false;
+    scrollParentToTopCalled = false;
+    postSizeCalled = false;
+
     props = {
-      loadAssessment:() => {}
+      loadAssessment: () => {},
+      initCommHandler: () => { initCommCalled = true },
+      scrollParentToTop: () => { scrollParentToTopCalled = true },
+      postSize: () => { postSizeCalled = true }
     };
+
     result = TestUtils.renderIntoDocument(<Index {...props} />);
     spyOn(appHistory, 'push')
   });
@@ -36,6 +44,18 @@ describe('index', function() {
     result = TestUtils.renderIntoDocument(<Index {...props} />);
 
     expect(appHistory.push).toHaveBeenCalledWith("retries-exceeded");
+  });
+
+  it('calls the initialize comm handler action', () => {
+    expect(initCommCalled).toBe(true)
+  });
+
+  it('calls the post size comm handler action', () => {
+    expect(postSizeCalled).toBe(true)
+  });
+
+  it('calls the scroll parent to top comm handler action', () => {
+    expect(scrollParentToTopCalled).toBe(true)
   });
 
   afterEach(()=>{
