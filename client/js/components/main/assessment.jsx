@@ -14,18 +14,23 @@ const select = (state, props) => {
   return {
     settings             : state.settings,
     assessment           : state.assessment,
-    isStarted            : state.progress.get('isStarted', ''),
-    isSubmitted          : state.progress.get('isSubmitted', ''),
-    question             : state.progress.get('currentQuestion', ''),
-    currentItemIndex     : state.progress.get('currentItemIndex', ''),
-    assessmentResult     : state.progress.get('assessmentResult', ''),
-    messageIndex         : state.progress.get('answerMessageIndex', ''),
-    studentAnswers       : state.progress.get('allStudentAnswers', ''),
+    progress             : state.progress,
+    // isStarted            : state.progress.get('isStarted'),
+    // isSubmitted          : state.progress.get('isSubmitted'),
+    // question             : state.progress.get('currentQuestion'),
+    // currentItemIndex     : state.progress.get('currentItemIndex'),
+    // assessmentResult     : state.progress.get('assessmentResult'),
+    // messageIndex         : state.progress.get('answerMessageIndex'),
+    // studentAnswers       : state.progress.get('allStudentAnswers'),
     questionCount        : questionCount(state, props),
     allQuestions         : questions(state, props),
     outcomes             : outcomes(state, props)
   };
 };
+
+// NOTE Multiple question views --> show 1, show all, show sections
+// NOTE Start progress timer
+// NOTE Progress bar
 
 export class Assessment extends React.Component{
 
@@ -38,6 +43,20 @@ export class Assessment extends React.Component{
   componentDidMount(){
     // Trigger action to indicate the assessment was viewed
     // this.props.assessmentViewed(this.props.settings, this.props.assessment); TODO
+  }
+
+  items(){
+    let view = this.props.settings.get('view');
+    let cont = <div></div>;
+    switch(view){
+      case "SHOW_ONE":
+        break;
+      case "SHOW_THREE":
+        break;
+      case "SHOW_SECTION":
+        break;
+    };
+    return cont;
   }
 
   popup(){
@@ -87,27 +106,27 @@ export class Assessment extends React.Component{
     //
     // }
     // else {
-      content = <Item
-        question         = {this.props.question}
-        assessment       = {this.props.assessment}
-        currentItemIndex = {this.props.currentItemIndex}
-        settings         = {this.props.settings}
-        questionCount    = {this.props.questionCount}
-        assessmentResult = {this.props.assessmentResult}
-        messageIndex     = {this.props.messageIndex}
-        allQuestions     = {this.props.allQuestions}
-        studentAnswers   = {this.props.studentAnswers}
-        confidenceLevels = {this.props.settings.confidence_levels}
-        outcomes         = {this.props.outcomes}/>;
+    content = <Item
+      question         = {this.props.question}
+      assessment       = {this.props.assessment}
+      currentItemIndex = {this.props.currentItemIndex}
+      settings         = {this.props.settings}
+      questionCount    = {this.props.questionCount}
+      assessmentResult = {this.props.assessmentResult}
+      messageIndex     = {this.props.messageIndex}
+      allQuestions     = {this.props.allQuestions}
+      studentAnswers   = {this.props.studentAnswers}
+      confidenceLevels = {this.props.settings.confidence_levels}
+      outcomes         = {this.props.outcomes}/>;
 
       //TODO progress bar styles
-      progressBar = <div>
-                      {progressText}
-                      <ProgressDropdown settings={this.props.settings} questions={this.props.allQuestions} currentQuestion={this.props.currentItemIndex + 1} questionCount={this.props.questionCount} />
-                    </div>;
+    // progressBar = <div>
+    //                 {progressText}
+    //                 <ProgressDropdown settings={this.props.settings} questions={this.props.allQuestions} currentQuestion={this.props.currentItemIndex + 1} questionCount={this.props.questionCount} />
+    //               </div>;
     // // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
     //   // AssessmentActions.itemViewed(this.props.settings, this.props.assessment, this.props.assessmentResult);
-    }
+    // }
 
     var isSummative = false; // this.props.settings.assessment_type.toUpperCase() === "SUMMATIVE";
 
