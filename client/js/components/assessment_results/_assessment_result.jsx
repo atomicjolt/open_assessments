@@ -26,6 +26,11 @@ export class AssessmentResult extends React.Component{
     this.sendAnalytics();
   }
 
+  componentDidMount(){
+    this.props.sendSize();
+    this.props.showLMSNavigation();
+  }
+
   sendAnalytics(){
     if(this.props.assessmentResult && this.props.assessmentResult.assessment_results_id) {
       this.props.assessmentPostAnalytics(this.props.assessmentResult.assessment_results_id, this.props.settings.externalUserId, this.props.settings.externalContextId);

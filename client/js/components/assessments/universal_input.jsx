@@ -1,7 +1,9 @@
 "use strict";
 
 import React                from "react";
+import { connect }          from "react-redux";
 
+import CommunicationActions from "../../actions/communications";
 import RadioButton          from "../common/radio_button";
 import Option               from "../common/option";
 import TextField            from "../common/text_field";
@@ -11,11 +13,22 @@ import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
 
-export default class UniversalInput extends React.Component{
+export class UniversalInput extends React.Component{
 
   static propTypes = {
     item: React.PropTypes.object.isRequired,
     isResult: React.PropTypes.bool
+  }
+
+  componentDidMount(){
+    this.props.sendSize();
+    this.props.scrollParentToTop();
+    this.props.hideLMSNavigation();
+  }
+
+  componentDidUpdate(){
+    this.props.sendSize();
+    this.props.scrollParentToTop();
   }
 
   wasChosen(id){
@@ -127,3 +140,5 @@ export default class UniversalInput extends React.Component{
            );
   }
 }
+
+export default connect(null, { ...CommunicationActions })(UniversalInput)

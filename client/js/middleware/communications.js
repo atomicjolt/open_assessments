@@ -16,8 +16,24 @@ const Communications = store => next => action => {
       communicationHandler.scrollParentToTop();
       break;
 
-    case AssessmentProgressConstants.ASSESSMENT_NEXT_QUESTION:
+    case CommunicationConstants.LTI_NAVIGATE_NEXT:
       communicationHandler.broadcast({subject: "lti.navigation", location: "next"});
+      break;
+
+    case CommunicationConstants.LTI_NAVIGATE_PREVIOUS:
+      communicationHandler.broadcast({subject: "lti.navigation", location: "previous"});
+      break;
+
+    case CommunicationConstants.LTI_NAVIGATE_HOME:
+      communicationHandler.broadcast({subject: "lti.navigation", location: "home"});
+      break;
+
+    case CommunicationConstants.SHOW_LMS_NAVIGATION:
+      communicationHandler.broadcast({subject: "lti.showModuleNavigation", show: true});
+      break;
+
+    case CommunicationConstants.HIDE_LMS_NAVIGATION:
+      communicationHandler.broadcast({subject: "lti.showModuleNavigation", show: false});
       break;
   }
 

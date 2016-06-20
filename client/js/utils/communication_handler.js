@@ -40,6 +40,22 @@ export default class {
 
   }
 
+  // get rid of LMS module navigation
+  hideLMSNavigation() {
+    Communicator.broadcastMsg({
+      subject: "lti.showModuleNavigation",
+      show: false
+    });
+  }
+
+  // show LMS module navigation
+  showLMSNavigation() {
+    Communicator.broadcastMsg({
+      subject: "lti.showModuleNavigation",
+      show: true
+    });
+  }
+
   // Tell the parent iFrame to scroll to top
   scrollParentToTop() {
     Communicator.broadcastMsg({
