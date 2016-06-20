@@ -5,7 +5,7 @@ import { connect }         from "react-redux";
 import { loadAssessment }  from "../actions/assessment";
 import LocalizedStrings    from 'react-localization';
 import locales             from '../locales/locales';
-import appHistory          from "../history.js";
+import appHistory          from "../history";
 
 const select = (state) => {
   return {
@@ -19,6 +19,7 @@ export class Index extends React.Component {
   componentWillMount(){
     // Load the assessment
     this.props.loadAssessment();
+    
     if(this.props.userAttempts &&
       this.props.userAttempts >= this.props.maxAttempts) {
       appHistory.push("retries-exceeded");
