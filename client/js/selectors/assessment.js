@@ -7,12 +7,14 @@ function getParser(metaData){
     "QTI1": Qti1Selectors,
     "QTI2": Qti2Assessment,
     "EDX": EdxAssessment
-  }[metaData.type];
+  }[metaData.get('type')];
 }
 
 function makeSelector(name){
   return (state, props) => {
-    var func = getParser(state.assessment.standard)[name];
+    var parser = getParser(state.assessment);
+    if(!parser){return parser;} // Handle no assessment loaded 
+    var func = parser[name];
     return func(state, props);
   };
 }
