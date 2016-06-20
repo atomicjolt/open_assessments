@@ -10,7 +10,6 @@ const select = (state) => {
   return {
     settings      : state.settings,
     assessment    : state.assessment,
-    theme         : state.application
   };
 };
 
@@ -23,27 +22,26 @@ export class Start extends React.Component{
     switch (kind) {
       case "SUMMATIVE":
         // Get summative instructions
-        instruction = (<div>Summative Quiz</div>);
+        instruction = <div>Summative Quiz</div>;
         // TODO display student progress
         break;
       case "FORMATIVE":
         // Get formative instructions
-        instruction = (<div>Formative Quiz</div>);
+        instruction = <div>Formative Quiz</div>;
         break;
       case "SHOW_WHAT_YOU_KNOW":
         // Get show what you know instructions
         // TODO display student progress student progress
-        instruction = (
-          <div>
+        instruction = <div>
             <h2>Show What You Know</h2>
             <div>Take this pre-test to see what you already know about the concepts in this section.</div>
             <div>The pre-test does not count toward your grade, but will help you plan where to focus</div>
             <div>your time and effort as you study. The pre-test is optional.</div>
-          </div>
-        );
+          </div>;
+          
         break;
       default:
-        instruction = (<div></div>);
+        instruction = <div></div>;
     }
     return instruction;
   }
