@@ -17,7 +17,7 @@ const select = (state) => {
 export class Start extends React.Component{
 
   instructions(){
-    const kind = this.props.assessment.get('assessmentKind', '').toUpperCase();
+    const kind = this.props.assessment.get('assessment_kind', '').toUpperCase();
     let instruction;
 
     switch (kind) {
