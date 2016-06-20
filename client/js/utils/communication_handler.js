@@ -32,7 +32,7 @@ export default class {
       height
     };
 
-    // OEA specific message indicate the need for a resize
+    // OEA specific message indicating the need for a resize
     Communicator.commMsg(CommunicatorResizeMsg, payload);
 
     // Let the LMS (Canvas) know about a resize
@@ -40,7 +40,7 @@ export default class {
 
   }
 
-  // tell the parent iFrame to scroll to top
+  // Tell the parent iFrame to scroll to top
   scrollParentToTop() {
     Communicator.broadcastMsg({
       subject: "lti.scrollToTop"
