@@ -18,13 +18,12 @@ describe('index', function() {
 
     props = {
       loadAssessment: () => {},
-      initCommHandler: () => { initCommCalled = true },
-      scrollParentToTop: () => { scrollParentToTopCalled = true },
-      postSize: () => { postSizeCalled = true }
+      scrollParentToTop: () => { scrollParentToTopCalled = true; },
+      postSize: () => { postSizeCalled = true; }
     };
 
     result = TestUtils.renderIntoDocument(<Index {...props} />);
-    spyOn(appHistory, 'push')
+    spyOn(appHistory, 'push');
   });
 
   it('renders the index', function() {
@@ -47,15 +46,15 @@ describe('index', function() {
   });
 
   it('calls the initialize comm handler action', () => {
-    expect(initCommCalled).toBe(true)
+    expect(initCommCalled).toBe(true);
   });
 
   it('calls the post size comm handler action', () => {
-    expect(postSizeCalled).toBe(true)
+    expect(postSizeCalled).toBe(true);
   });
 
   it('calls the scroll parent to top comm handler action', () => {
-    expect(scrollParentToTopCalled).toBe(true)
+    expect(scrollParentToTopCalled).toBe(true);
   });
 
   afterEach(()=>{

@@ -13,14 +13,14 @@ const select = (state) => {
     maxAttempts: state.settings.get("max_attempts"),
     userAttempts: state.settings.get("userAttempts"),
     enableStart: state.settings.get("enableStart")
-  }
-}
+  };
+};
 
 export class Index extends React.Component {
+
   componentWillMount(){
     // Load the assessment
     this.props.loadAssessment();
-    this.props.initCommHandler();
 
     if(this.props.userAttempts &&
       this.props.userAttempts >= this.props.maxAttempts) {
@@ -28,15 +28,19 @@ export class Index extends React.Component {
     } else if(!this.props.enableStart) {
       appHistory.push("assessment");
     }
+
+    // Generate an action anytime the window is resized
+    window.onresize = (e) => {
+      this.props.postSize();
+    };
+
   }
 
   componentDidMount(){
-    this.props.postSize();
     this.props.scrollParentToTop();
   }
 
   componentDidUpdate(){
-    this.props.postSize();
     this.props.scrollParentToTop();
   }
 

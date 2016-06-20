@@ -1,69 +1,78 @@
-import $            from 'jquery';
-import Communicator from './communicator';
+import Communicator                                       from './communicator';
+import { CommunicatorResizeMsg, CommunicatorSizeRequest } from './communicator';
 
-export default {
+export default class {
 
-  init: function(){
+  constructor(){
     Communicator.enableListener(this);
-  },
+  }
 
-  sendSize: function(){
+  sendSize(){
 
-    // TODO if we are calculating height this
-    // way we might not need to use jquery at all.
-    var height = Math.max(
-            $(document).height(),
+    const height = Math.max(
+            document.body.clientHeight,
             document.body.scrollHeight,
             document.body.offsetHeight,
             document.documentElement.clientHeight,
             document.documentElement.scrollHeight,
             document.documentElement.offsetHeight);
 
-    var payload = {
-      height: height,
-      width: $(document).width()
+    const width = Math.max(
+      document.body.clientWidth,              /* width of <body> */
+      document.documentElement.clientWidth,   /* width of <html> */
+      window.innerWidth);
+
+    const payload = {
+      height,
+      width
     };
 
-    var ltiPayload = {
+    const ltiPayload = {
       subject: "lti.frameResize",
-      height: height
+      height
     };
 
     // OEA specific message indicate the need for a resize
-    Communicator.commMsg('open_assessments_resize', payload);
+    Communicator.commMsg(CommunicatorResizeMsg, payload);
+
     // Let the LMS (Canvas) know about a resize
     Communicator.broadcastMsg(ltiPayload);
-  },
+
+  }
 
   // tell the parent iFrame to scroll to top
-  scrollParentToTop: function () {
+  scrollParentToTop() {
     Communicator.broadcastMsg({
       subject: "lti.scrollToTop"
     });
-  },
+  }
 
-  navigateHome: function(){
+  navigateHome(){
     this.navigate("home");
-  },
+  }
 
-  navigateNext: function(){
+  navigateNext(){
     this.navigate("next");
-  },
+  }
 
-  navigatePrevious: function(){
+  navigatePrevious(){
     this.navigate("previous");
-  },
+  }
 
-  navigate: function(location){
+  navigate(location){
     Communicator.broadcastMsg({
       subject: "lti.navigation",
-      location: location
+      location
     });
-  },
+  }
 
-  handleComm: function(e){
+  broadcast(payload){
+    Communicator.broadcastMsg(payload);
+  }
+
+  handleComm(e){
     switch(e.data.open_assessments_msg){
-      case 'open_assessments_size_request':
+      case CommunicatorSizeRequest:
         this.sendSize();
         break;
     }

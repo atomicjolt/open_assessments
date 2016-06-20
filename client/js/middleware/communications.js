@@ -1,18 +1,24 @@
-import { Constants as CommunicationConstants }  from "../actions/communications";
-import CommHandler                              from "../utils/communication_handler.js"
+import { Constants as CommunicationConstants }      from "../actions/communications";
+import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
+import CommunicationHandler                         from "../utils/communication_handler.js";
 
-const Comm = store => next => action => {
+const communicationHandler = new CommunicationHandler();
+
+const Communications = store => next => action => {
 
   switch(action.type) {
-  case CommunicationConstants.INIT_HANDLER:
-    CommHandler.init();
-    break;
-  case CommunicationConstants.POST_SIZE:
-    CommHandler.sendSize();
-    break;
-  case CommunicationConstants.SCROLL_PARENT_TO_TOP:
-    CommHandler.scrollParentToTop();
-    break;
+
+    case CommunicationConstants.POST_SIZE:
+      communicationHandler.sendSize();
+      break;
+
+    case CommunicationConstants.SCROLL_PARENT_TO_TOP:
+      communicationHandler.scrollParentToTop();
+      break;
+
+    case AssessmentProgressConstants.ASSESSMENT_NEXT_QUESTION:
+      communicationHandler.broadcast({subject: "lti.navigation", location: "next"});
+      break;
   }
 
   // call the next middleWare
@@ -20,4 +26,4 @@ const Comm = store => next => action => {
 
 };
 
-export { Comm as default };
+export { Communications as default };
