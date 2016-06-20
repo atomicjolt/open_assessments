@@ -3,12 +3,8 @@
 import React              from "react";
 import { connect }        from "react-redux";
 
-import appHistory         from "../../history";
+import History         from "../../history";
 import AssessmentActions  from "../../actions/assessment";
-import CommHandler        from "../../utils/communication_handler";
-import CheckUnderstanding from "../assessments/check_understanding";
-import ProgressDropdown   from "../common/progress_dropdown";
-import FullPostNav        from "../post_nav/full_post_nav.jsx";
 
 const select = (state) => {
   return {
@@ -21,7 +17,7 @@ const select = (state) => {
 export class Start extends React.Component{
 
   instructions(){
-    const kind = this.props.kind.get('assessmentKind', '').toUpperCase();
+    const kind = this.props.assessment.get('assessmentKind', '').toUpperCase();
     let instruction;
 
     switch (kind) {
@@ -52,34 +48,20 @@ export class Start extends React.Component{
 
   render(){
     const startButtonText = "Start Quiz";
-    var content;
-    var progressBar;
-
-    // if(this.props.settings.enableStart){
-    //   content = <CheckUnderstanding />
-    //   progressBar = <div>
-    //                   <ProgressDropdown disabled={true} settings={this.props.settings} questions={this.state.allQuestions} currentQuestion={this.state.currentItemIndex + 1} questionCount={this.state.questionCount} />
-    //                 </div>;
-
-    // }
-    // const quizType = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
-    // const titleBar = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : <div>{this.props.settings ? this.props.settings.assessmentTitle : ""}</div>;
-    // progressBar    = this.props.settings.assessmentKind && this.props.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : progressBar;
+    const titleText = this.props.assessment.get('title', '');
 
     return <div className="assessment">
-      {/*titleBar*/}
-      {/*progressBar*/}
+      <div>{titleText}</div>
       <div className="section_list">
         <div className="section_container">
-          {instructions()}
+          {this.instructions()}
         <div>
-          <button onClick={()=>{history.push('assessment');}}>
+          <button onClick={()=>{History.push('assessment');}}>
             {startButtonText}
           </button>
-        </div>);
+        </div>
         </div>
       </div>
-      {/*<FullPostNav/>*/}
     </div>;
   }
 
