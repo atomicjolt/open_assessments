@@ -7,13 +7,13 @@ function getParser(metaData){
     "QTI1": Qti1Selectors,
     "QTI2": Qti2Assessment,
     "EDX": EdxAssessment
-  }[metaData.get('type')];
+  }[metaData.get('standard')];
 }
 
 function makeSelector(name){
   return (state, props) => {
     var parser = getParser(state.assessment);
-    if(!parser){return parser;} // Handle no assessment loaded 
+    if(!parser){return parser;} // Handle no assessment loaded
     var func = parser[name];
     return func(state, props);
   };
