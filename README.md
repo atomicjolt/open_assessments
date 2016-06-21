@@ -62,6 +62,8 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     // Functional settings
     max_attempts                 - The maximum number of attempts the assessment can be taken
     user_attempts                - The number of time the user has attempted the assessment
+    questions_per_section        - Number of questions to select and display from each section
+    shuffle_question_answers    - Shuffle the answers for each question.
 
     // Settings for Analytics - these are returned to the calling server
     eid                          - External identifier. A value that can be used to uniquely identifier the user in another system. Might by a system id, student number, etc
@@ -83,7 +85,6 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     lis_outcome_service_url      -
 
     //
-    questions_per_section        - Number of questions to select and display from each section
     images                       - Path to images provided by the server. Used with the Rails asset pipeline where the names of images include a SHA in production that can't be known by the client ahead of time. (This should probably be refactored so the images live with the client code rather than the server code)
     show_post_message_navigation - Show study plan and controls for LMS
     section_count                -

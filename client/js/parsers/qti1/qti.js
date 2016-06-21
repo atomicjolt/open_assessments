@@ -1,21 +1,22 @@
 import _   from 'lodash';
 
-export function getItems(sections, perSec) {
+export function getItems(sections, questionsPerSection, shuffleQuestionAnswers) {
 
   var items = [];
-  if (!perSec || perSec <= 0) {
+  if (!questionsPerSection || questionsPerSection <= 0) {
     for (var i = 0; i < sections.length; i++) {
       for (var j = 0; j < sections[i].items.length; j++) {
         var item = sections[i].items[j];
 
-        //TODO: do this based on assessment setting
-        item.answers = _.shuffle(item.answers);
+        if(shuffleQuestionAnswers){
+          item.answers = _.shuffle(item.answers);
+        }
         items.push(item);
       }
     }
   } else {
     for (var i = 0; i < sections.length; i++) {
-      var count = perSec > sections[i].items.length ? sections[i].items.length : perSec;
+      var count = questionsPerSection > sections[i].items.length ? sections[i].items.length : questionsPerSection;
       for (var j = 0; j < count; j++) {
         var item = sections[i].items[j];
         for (var k = 0; k < items.length; k++) {
@@ -23,8 +24,9 @@ export function getItems(sections, perSec) {
             console.error("two items have the same id.");
           }
         }
-        //TODO: do this based on assessment setting
-        item.answers = _.shuffle(item.answers);
+        if(shuffleQuestionAnswers){
+          item.answers = _.shuffle(item.answers);
+        }
         items.push(item);
       }
     }
