@@ -25,19 +25,19 @@ export default class ResultSummary extends React.Component{
 
       if(!correct || correct == "partial"){
         lists.negativeList.push(this.props.outcomes[sectionIndex]);
-        i += (this.props.settings.perSec - perSecCount);
+        i += (this.props.settings.questions_per_section - perSecCount);
         sectionIndex++;
         perSecCount = 0;
         continue;
       } else {
         correctCount++;
-        if(correctCount == this.props.settings.perSec || correctCount == this.props.assessment.sections[sectionIndex].items.length){
+        if(correctCount == this.props.settings.questions_per_section || correctCount == this.props.assessment.sections[sectionIndex].items.length){
           lists.positiveList.push(this.props.outcomes[sectionIndex]);
           correctCount = 0;
         }
       }
 
-      if(perSecCount == this.props.settings.perSec || perSecCount == this.props.assessment.sections[sectionIndex].items.length){
+      if(perSecCount == this.props.settings.questions_per_section || perSecCount == this.props.assessment.sections[sectionIndex].items.length){
         sectionIndex++;
         correctCount = 0;
         perSecCount = 0;
