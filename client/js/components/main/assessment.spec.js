@@ -7,7 +7,7 @@ import Helper    from "../../../specs_support/helper";
 import appHistory                             from "../../history";
 import { Assessment }         from './assessment';
 
-fdescribe('assessment', function() {
+describe('assessment', function() {
   var result;
   var subject;
   var props;

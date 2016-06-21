@@ -56,6 +56,8 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     assessmentKind    // FORMATIVE or SUMMATIVE
     max_attempts      // The maximum number of attempts the assessment can be taken
     enableStart       // Whether to show the assessment start screen
+    questions_per_section // How many questions should be taken from each qti section
+    view              // How many questions to be displayed at a time
 
     userAttempts      // The number of time the user has attempted the assessment
     eid               // External identifier. A value that can be used to uniquely identifier the user in another system. Might by a system id, student number, etc
