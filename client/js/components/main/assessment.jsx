@@ -3,7 +3,7 @@
 import React                                  from "react";
 import { connect }                            from "react-redux";
 
-import AssessmentActions                      from "../../actions/assessment";
+import * as AssessmentActions                 from "../../actions/assessment";
 import appHistory                             from "../../history";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";

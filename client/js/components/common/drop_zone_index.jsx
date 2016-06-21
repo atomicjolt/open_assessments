@@ -1,8 +1,9 @@
 "use strict";
 
-import React							from 'react';
-import AssessmentActions	from '../../actions/assessment';
-import Draggable				from './draggable';
+import React							    from "react";
+
+import * as AssessmentActions from "../../actions/assessment";
+import Draggable				      from "./draggable";
 
 export default class DropZone extends React.Component{
 

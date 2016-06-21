@@ -1,9 +1,9 @@
 "use strict";
 
-import React              from "react";
-import { connect }        from "react-redux";
+import React                  from "react";
+import { connect }            from "react-redux";
 
-import AssessmentActions  from "../../actions/assessment";
+import * as AssessmentActions from "../../actions/assessment";
 
 //polyfill trunc  // TODO this should be moved to a central location
 Math.trunc = Math.trunc || function(x) {

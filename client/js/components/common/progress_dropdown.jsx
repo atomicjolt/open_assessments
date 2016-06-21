@@ -1,9 +1,9 @@
 "use strict";
 
-import React              from 'react';
-import AssessmentActions  from "../../actions/assessment";
-import AssessmentStore    from "../../stores/assessment";
-import ProgressListItem   from "./progress_list_item";
+import React                  from "react";
+import * as AssessmentActions from "../../actions/assessment";
+import AssessmentStore        from "../../stores/assessment";
+import ProgressListItem       from "./progress_list_item";
 
 export default class ProgressDropdown extends React.Component{
 
@@ -13,7 +13,7 @@ export default class ProgressDropdown extends React.Component{
 
   navButtonClicked(){
     if(this.state && this.state.expanded){
-      this.setState({expanded: !this.state.expanded})
+      this.setState({expanded: !this.state.expanded});
     } else {
       this.setState({expanded: true});
     }
@@ -23,7 +23,7 @@ export default class ProgressDropdown extends React.Component{
   }
 
   mouseOver(e){
-    e.preventDefault()
+    e.preventDefault();
     e.target.style.backgroundColor = "grey";
     e.target.style.color = "white";
   }
@@ -54,11 +54,3 @@ export default class ProgressDropdown extends React.Component{
     );
   }
 }
-
-ProgressDropdown.propTypes = {
-
-};
-
-ProgressDropdown.contextTypes = {
-  theme: React.PropTypes.object
-};
