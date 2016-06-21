@@ -22,14 +22,12 @@ const select = (state, props) => {
   };
 };
 
-//TODO test renders qestion
-//TODO test renders loading
-//TODO test goes to assessment result
-
 export class Assessment extends React.Component{
 
   componentWillMount(){
-    if(this.props.assessmentResult != null){
+    let v = this.props.progress.get('assessmentResult');
+    debugger;
+    if(this.props.progress.get('assessmentResult') != null){
       appHistory.push("assessment-result");
     }
   }
@@ -101,12 +99,12 @@ export class Assessment extends React.Component{
   }
 
   render(){
-    if(this.props.assessment.get("KIND" === "SUMMATIVE")){
+    if(this.props.settings.get("assessment_kind") === "SUMMATIVE"){
       window.onbeforeunload = this.popup;
     }
 
     let progressBar; //TODO
-    let titleText =  this.props.assessment.get('title', '');
+    let titleText =  this.props.assessment.get("title", "");
 
     return<div className="assessment">
       <div>{titleText}</div>
