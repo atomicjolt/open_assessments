@@ -24,7 +24,6 @@ export default class Parser{
   static parse(assessmentId, xml){
 
     const top = xml.find(">")[0].tagName;
-    console.log(top);
 
     if(top == "assessmentItem") {
       return {
