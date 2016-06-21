@@ -57,7 +57,9 @@ export class Assessment extends React.Component{
   }
 
   /**
-   * Gets correct number of items for the current items_per_section setting
+   * Returns an array of Items containing the question at
+   * state.progress.currentItemIndex. The array will be of length
+   * specified by props.settings.questions_per_section.
    */
   getItems(){
     let displayNum = this.props.settings.get('questions_per_section');
@@ -85,10 +87,9 @@ export class Assessment extends React.Component{
   getContent(){
     if(this.props.progress.get('isSubmitted')){
       return <Loading />;
-    }else if(!this.props.questionCount){
+    } else if(!this.props.questionCount) {
       return <Loading />;
-    }
-    else {
+    } else {
       return this.getItems();
     }
   }
