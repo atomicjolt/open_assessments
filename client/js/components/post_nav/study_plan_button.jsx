@@ -5,7 +5,13 @@ import { connect }    from "react-redux";
 
 import CommHandler    from "../../utils/communication_handler";
 
-export default class StudyPlanButton extends React.Component {
+const select = (state, props) => {
+  return {
+    show_post_message_navigation: state.settings.get("show_post_message_navigation")
+  };
+};
+
+export class StudyPlanButton extends React.Component {
 
   render() {
     if (!this.props.display || self == top) {
@@ -19,3 +25,5 @@ export default class StudyPlanButton extends React.Component {
     </div>;
   }
 };
+
+export default connect(select, {})(StudyPlanButton);
