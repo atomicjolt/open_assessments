@@ -1,18 +1,26 @@
 "use strict";
 
-import React              from 'react';
+import React              from "react";
+import { connect }        from "react-redux";
+
 import AssessmentActions  from "../../actions/assessment";
 
-//polyfill trunc
+//polyfill trunc  // TODO this should be moved to a central location
 Math.trunc = Math.trunc || function(x) {
   return x < 0 ? Math.ceil(x) : Math.floor(x);
+};
+
+const select = (state) => {
+  return {
+    assessmentResult: state.progress.assessmentResult
+  };
 };
 
 export class FormativeResult extends React.Component{
 
   retake(){
-    AssessmentActions.retakeAssessment();
-    this.props.context.router.transitionTo("start");
+    this.props.retakeAssessment();
+    this.props.context.router.transitionTo("start"); // TODO this won't work
   }
 
   render() {
