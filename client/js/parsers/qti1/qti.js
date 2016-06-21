@@ -32,8 +32,8 @@ export function getItems(sections, perSec) {
   return items;
 }
 
-export function loadOutcomes(assessment) {
-  var outcomes = assessment.sections.map((section)=> {
+export function loadOutcomes(sections) {
+  var outcomes = sections.map((section)=> {
     if (section.outcome != "root section") {
       return section.outcome;
     }
