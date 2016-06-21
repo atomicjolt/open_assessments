@@ -38,7 +38,7 @@ export class Assessment extends React.Component{
   /**
    * Return an item for a given index in props.allQuestions
    */
-  item(index){
+  getItem(index){
     let props = this.props;
     if(props.questionCount === undefined || index >= props.questionCount || index < 0){
       return <div></div>;
@@ -57,33 +57,39 @@ export class Assessment extends React.Component{
   }
 
   /**
-   * Gets correct number of items for the current view setting
+   * Gets correct number of items for the current items_per_section setting
    */
-  items(){
-    let view = this.props.settings.get('view');
+  getItems(){
+    let displayNum = this.props.settings.get('questions_per_section');
     let current = this.props.progress.get('currentItemIndex');
-    let cont;
-    switch(view){
-      case "SHOW_ONE":
-        cont = this.item(current);
-        break;
-      default:
-        cont = this.item(current);
-        break;
-    };
-    return cont;
+    let items = [];
+    if(displayNum > 0 && displayNum < this.props.questionCount){
+      let start = current / displayNum;
+      for(let i = start; i < displayNum; i++){
+        items.push(this.getItem(i));
+      }
+    }
+    else{
+      this.props.allQuestions.forEach((question, index) => {
+        items.push(this.getItem(index));
+      });
+    }
+
+    return items;
   }
 
   /**
    * Returns page content to be rendered. Will determine if questions
    * or loading bar should be rendered
    */
-  content(){
+  getContent(){
     if(this.props.progress.get('isSubmitted')){
+      return <Loading />;
+    }else if(!this.props.questionCount){
       return <Loading />;
     }
     else {
-      return this.items();
+      return this.getItems();
     }
   }
 
@@ -102,7 +108,7 @@ export class Assessment extends React.Component{
 
     let progressBar; //TODO add progress bar
     let titleText =  this.props.assessment.get("title", "");
-    let content = this.content();
+    let content = this.getContent();
     return<div className="assessment">
       <div>{titleText}</div>
       {progressBar}
