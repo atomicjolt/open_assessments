@@ -3,38 +3,60 @@ import ReactDOM           from 'react-dom';
 import Immutable          from 'immutable';
 import TestUtils          from 'react/lib/ReactTestUtils';
 
-import Start              from './start';
-import Rapper             from '../../../specs_support/rapper';
-import configureStore     from '../../store/configure_store';
+import { Start }              from './start';
 
 describe('start', function() {
-
   var result;
+  var subject;
   var settings;
+  var assessment;
+  var props;
 
   beforeEach(()=>{
-    var settings = Immutable.fromJS({
-      assessment_kind : "summative",
+    settings = Immutable.fromJS({
       src_url         : "asdf",
       jwt             : "asdfasdf",
       csrf            : "asdfasfd",
       api_url         : "www.example.com"
     });
 
-    var assessment = Immutable.fromJS({});
+    assessment = Immutable.fromJS({
+      title:"Test Title",
+      assessment_kind : "SUMMATIVE"
+    });
 
-    const state = {
+    props = {
       settings,
       assessment
     };
 
-    const store = configureStore(state);
-    result = TestUtils.renderIntoDocument(<Rapper childProps={{store}} child={Start}/>);
+    result = TestUtils.renderIntoDocument(<Start {...props} /> );
+    subject = ReactDOM.findDOMNode(result);
   });
 
-  it('renders the start page', function(){
-    var instance = result.refs.original.getWrappedInstance();
-    expect(ReactDOM.findDOMNode(instance)).toBeDefined();
+  it('renders the start page', () => {
+    expect(subject).toBeDefined();
+  });
+
+  it('renders assessment title', () => {
+    expect(subject.innerHTML).toContain("Test Title");
+  });
+
+  it('renders summative', () =>{
+    expect(subject.innerHTML).toContain("Summative");
+  });
+  it('renders default', () =>{
+    assessment = assessment.set('assessment_kind', '');
+    props = {
+      assessment,
+      settings
+    };
+    result = TestUtils.renderIntoDocument(<Start {...props} /> );
+    subject = ReactDOM.findDOMNode(result);
+
+    expect(subject.innerHTML).not.toContain("Summative");
+    expect(subject.innerHTML).not.toContain("Formative");
+    expect(subject.innerHTML).not.toContain("Show What You Know");
   });
 
 });

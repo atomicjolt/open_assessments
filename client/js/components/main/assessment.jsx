@@ -3,7 +3,7 @@
 import React                                  from "react";
 import { connect }                            from "react-redux";
 
-import AssessmentActions                      from "../../actions/assessment";
+import * as AssessmentActions                 from "../../actions/assessment";
 import appHistory                             from "../../history";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
@@ -121,6 +121,7 @@ export class Assessment extends React.Component{
       {progressBar}
       <div className="section_list">
         <div className="section_container">
+        easdfasdfasdf
           {content}
         </div>
       </div>
@@ -129,4 +130,4 @@ export class Assessment extends React.Component{
 
 }
 
-export default connect(select, {...AssessmentActions}, null, {withRef: true})(Assessment);
+export default connect(select, {...AssessmentActions})(Assessment);

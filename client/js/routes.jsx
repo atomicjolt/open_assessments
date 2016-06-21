@@ -10,7 +10,7 @@ import Start              from './components/main/start';
 import AssessmentResult   from './components/assessment_results/_assessment_result';
 import NotFound           from './components/not_found';
 import About              from './components/main/about';
-
+import RetriesExceeded    from './components/main/retries_exceeded';
 
 export default (
   <Router history={appHistory}>
@@ -19,6 +19,7 @@ export default (
       <Route path="assessment" component={Assessment}/>
       <Route path="assessment-result" component={AssessmentResult}/>
       <Route path="about" component={About}/>
+      <Route path="retries-exceeded" component={RetriesExceeded} />
       <Route path="*" component={NotFound}/>
     </Route>
   </Router>

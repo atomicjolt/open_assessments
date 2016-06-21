@@ -2,17 +2,19 @@ import * as Qti1Selectors  from "../parsers/qti1/selectors";
 import * as Qti2Selectors  from "../parsers/qti2/selectors";
 import * as EdxSelectors   from "../parsers/edX/selectors";
 
-function getSelectors(metaData){
+function getSelectors(standard){
   return {
     "QTI1": Qti1Selectors,
     "QTI2": Qti2Selectors,
     "EDX": EdxSelectors
-  }[metaData.type];
+  }[standard];
 }
 
 function makeDispatchingSelector(name){
   return (state, props) => {
-    var func = getSelectors(state.assessmentMetaData)[name];
+    var selectors = getSelectors(state.assessment.get('standard'));
+    if(selectors === undefined){return;} // Handle no assessment loaded
+    var func = selectors[name];
     return func(state, props);
   };
 }

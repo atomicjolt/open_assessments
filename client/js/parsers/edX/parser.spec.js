@@ -1,5 +1,5 @@
 import Assessment         from './parser';
-// import AssessmentActions  from "../actions/assessment";
+// import * as AssessmentActions  from "../../actions/assessment";
 import $                  from 'jquery';
 
 xdescribe('edX assessment parser', () => {

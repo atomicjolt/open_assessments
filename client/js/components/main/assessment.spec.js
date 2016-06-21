@@ -3,8 +3,8 @@ import ReactDOM  from "react-dom";
 import TestUtils from "react/lib/ReactTestUtils";
 import Helper    from "../../../specs_support/helper";
 
-import { Assessment }         from './assessment';
-import AssessmentActions from '../../actions/assessment';
+import { Assessment }          from './assessment';
+import * as AssessmentActions  from "../../actions/assessment";
 
 describe('assessment', function() {
   var result;

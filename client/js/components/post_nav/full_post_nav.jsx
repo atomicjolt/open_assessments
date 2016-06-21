@@ -7,15 +7,14 @@ import CommunicationHandler from "../../utils/communication_handler";
 
 const select = (state, props) => {
   return {
-    display: state.settings.get("show_post_message_navigation")
+    show_post_message_navigation: state.settings.get("show_post_message_navigation")
   };
 };
 
-@connect(select, null, null, { withRefs: true })
-export default class FullPostNav extends React.Component {
+export class FullPostNav extends React.Component {
 
   render() {
-    if (!this.props.display || self == top) {
+    if (!this.props.show_post_message_navigation || self == top) {
       return <div></div>;
     }
 
@@ -26,3 +25,5 @@ export default class FullPostNav extends React.Component {
       </div>;
   }
 };
+
+export default connect(select, {})(FullPostNav);

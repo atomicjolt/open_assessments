@@ -7,12 +7,11 @@ import CommHandler    from "../../utils/communication_handler";
 
 const select = (state, props) => {
   return {
-    display: state.settings.show_post_message_navigation
+    show_post_message_navigation: state.settings.get("show_post_message_navigation")
   };
 };
 
-@connect(select, null, null, { withRefs: true })
-export default class StudyPlanButton extends React.Component {
+export class StudyPlanButton extends React.Component {
 
   render() {
     if (!this.props.display || self == top) {
@@ -26,3 +25,5 @@ export default class StudyPlanButton extends React.Component {
     </div>;
   }
 };
+
+export default connect(select, {})(StudyPlanButton);

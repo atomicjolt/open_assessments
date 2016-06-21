@@ -63,6 +63,7 @@ function getAssessmentData(){
 
 // Build settings from DEFAULT_SETTINGS, the url, and data embedded in the page
 var settings = _.merge(window.DEFAULT_SETTINGS, QueryString.params(), { assessment_data: getAssessmentData() });
+settings.assessment_kind = settings.assessment_kind ? settings.assessment_kind.toUpperCase() : null;
 settings = Immutable.fromJS(settings);
 
 const store = configureStore({settings});

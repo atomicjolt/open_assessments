@@ -5,23 +5,21 @@ import { connect }                from "react-redux";
 import * as AssessmentActions     from "../../actions/assessment";
 import FormativeResult            from "./formative_result.jsx";
 import SummativeResult            from "./summative_result.jsx";
-import ResultStyles               from "./result_styles.js";
 import CommunicationHandler       from "../../utils/communication_handler";
-import { items }                  from "../../selectors/assessment";
+import { questions, outcomes }    from "../../selectors/assessment";
 
 const select = (state) => {
   return {
-    assessmentResult : state.assessment.assessmentResult(),
-    timeSpent        : state.assessment.timeSpent(),
-    questions        : item(state),
-    outcomes         : state.assessment.outcomes(),
-    assessment       : state.assessment.current(),
+    assessmentResult : state.assessmentResult,
+    timeSpent        : state.timeSpent,
+    questions        : questions(state),
+    outcomes         : outcomes(state),
+    assessment       : state.assessment,
     settings         : state.settings
   };
 };
 
-@connect(select, {...AssessmentActions}, null, {withRef: true})
-export default class AssessmentResult extends React.Component{
+export class AssessmentResult extends React.Component{
 
   constructor(props, context){
     super(props, context);
@@ -31,7 +29,7 @@ export default class AssessmentResult extends React.Component{
 
   sendAnalytics(){
     if(this.props.assessmentResult && this.props.assessmentResult.assessment_results_id) {
-      this.props.assessmentPostAnalytics(this.props.assessmentResult.assessment_results_id, this.props.settings.externalUserId, this.props.settings.externalContextId);
+      this.props.assessmentPostAnalytics(this.props.assessmentResult.assessment_results_id, this.props.settings.externalUserId, this.props.settings.external_context_id);
     }
   }
   sendLtiOutcome(){
@@ -46,39 +44,38 @@ export default class AssessmentResult extends React.Component{
   }
 
   isSummative(){
-    return this.props.settings.assessmentKind.toUpperCase() == "SUMMATIVE";
+    return this.props.settings.assessment_kind == "SUMMATIVE";
   }
 
   isFormative(){
-    return this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE";
-  }
-
-  getStyles(theme){
-    return ResultStyles.getStyles(theme, this.isFormative());
+    return this.props.settings.assessment_kind == "FORMATIVE";
   }
 
   render(){
-    var styles = this.getStyles(this.context.theme);
-
     if(this.props.assessmentResult == null){
       return <div />;
     }
-
     if(this.isFormative()){
       return <FormativeResult
           assessmentResult={this.props.assessmentResult}
           settings={this.props.settings}
           questions={this.props.questions}
           assessment={this.props.assessment}
-          styles={styles}
           context={this.context}
           />;
     } else {
       return <SummativeResult
-          styles={styles}
+          settings={this.props.settings}
+          assessmentResult={this.props.assessmentResult}
+          assessment={this.props.assessment}
+          questionResponses={this.props.questionResponses}
+          questions={this.props.questions}
           timeSpent={this.props.timeSpent}
           isSummative={this.isSummative()}
+          outcomes={this.props.outcomes}
         />;
     }
   }
-}
+};
+
+export default connect(select, {...AssessmentActions})(AssessmentResult);

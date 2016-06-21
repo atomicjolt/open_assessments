@@ -8,162 +8,65 @@ import history            from "../../history";
 
 const select = (state) => {
   return {
-    title             : state.settings.assessmentTitle,
-    maxAttempts       : state.settings.allowedAttempts,
-    userAttempts      : state.settings.userAttempts,
-    eid               : state.settings.lisUserId,
-    userId            : state.settings.userId,
-    isLti             : state.settings.isLti,
-    assessmentId      : state.settings.assessmentId,
-    assessmentKind    : state.settings.assessmentKind,
-    ltiRole           : state.settings.ltiRole,
-    externalContextId : state.settings.externalContextId,
-    accountId         : state.settings.accountId,
+    title             : state.settings.title,
+    maxAttempts       : state.settings.max_attempts,
+    userAttempts      : state.settings.user_attempts,
+    eid               : state.settings.lis_user_id,
+    userId            : state.settings.user_id,
+    isLti             : state.settings.is_lti,
+    assessmentId      : state.settings.assessment_id,
+    assessmentKind    : state.settings.assessment_kind,
+    ltiRole           : state.settings.lti_role,
+    external_context_id : state.settings.external_context_id,
+    accountId         : state.settings.account_id,
     icon              : state.settings.images.QuizIcon_svg,
     theme             : state.settings.theme
   };
 };
 
-@connect(select, { start }, null, {withRef: true})
-export default class CheckUnderstanding extends React.Component{
+export class CheckUnderstanding extends React.Component{
 
   start(eid, assessmentId, context){
-    this.props.start(eid, assessmentId, this.props.externalContextId);
+    this.props.start(eid, assessmentId, this.props.external_context_id);
     history.push(`assessment`);
   }
 
   manageAttempts(){
-    history.push(`attempts/${this.props.assessmentId}/${this.props.externalContextId}`);
+    history.push(`attempts/${this.props.assessmentId}/${this.props.external_context_id}`);
   }
 
   previewAttempt(){
     history.push(`preview/${this.props.assessmentId}`);
   }
 
-  getStyles(props){
-    const theme = props.theme;
-    if(!theme){return {};}
-
-    return {
-      assessmentContainer:{
-        marginTop: props.assessmentKind.toUpperCase() == "FORMATIVE" ? "0px":"100px",
-        boxShadow: props.assessmentKind.toUpperCase() == "FORMATIVE" ?  "" : props.theme.assessmentContainerBoxShadow,
-        borderRadius: theme.assessmentContainerBorderRadius
-      },
-      header: {
-        backgroundColor: theme.headerBackgroundColor
-      },
-      startButton: {
-        margin: "5px 5px 5px -5px",
-        width: theme.definitelyWidth,
-        backgroundColor: theme.definitelyBackgroundColor,
-        border: "transparent"
-      },
-      checkUnderstandingButton: {
-        backgroundColor: theme.maybeBackgroundColor
-      },
-      fullQuestion:{
-        backgroundColor: theme.fullQuestionBackgroundColor,
-        padding: "20px"
-      },
-      buttonGroup: {
-        textAlign: props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center",
-        background: "#e9e9e9",
-        borderBottom: "2px solid #e3e3e3"
-      },
-      buttonWrapper: {
-        textAlign: props.assessmentKind.toUpperCase() != "SUMMATIVE" ? "left" : "center"
-      },
-      teacherButton: {
-        border:"transparent",
-        backgroundColor:"#3299bb",
-        color:"#fff",
-        minWidth: "150px",
-        margin: "3px 2px"
-      },
-      attempts:{
-        margin: "20px auto",
-        width: "300px",
-        border: "1px solid black",
-        borderRadius: "4px",
-        textAlign: "center"
-      },
-      tips:{
-        paddingLeft: "-20px !important",
-        margin: "20px auto",
-        width: "300px",
-        textAlign: "start",
-      },
-      attemptsContainer: {
-        textAlign: "center"
-      },
-      swyk: {
-        // posistion: "absolute",
-        // top: "20px",
-        // left: "20px"
-        marginBottom: "25px",
-        marginTop: "-25px"
-      },
-      icon: {
-        height: "62px",
-        width: "62px",
-        fontColor: theme.primaryBackgroundColor
-      },
-      formative: {
-        padding: "0px",
-        marginTop: "-20px"
-      },
-      data: {
-        marginTop: "-5px"
-      },
-      checkDiv: {
-        backgroundColor: theme.primaryBackgroundColor,
-        margin: "20px 0px 0px 0px"
-      },
-      selfCheck: {
-        fontSize: "140%"
-      },
-      h4: {
-        color: "white"
-      },
-      images: {
-        greenQuizIcon: "greenQuizIcon",
-      }
-    }
-  }
-
-  getAttempts(styles, theme){
-    if(!theme.shouldShowAttempts){
-      return "";
-    }
-
-    if (props.userAttempts >= props.maxAttempts && props.ltiRole != "admin"){
+  getAttempts(){
+    if (this.props.userAttempts >= this.props.maxAttempts && this.props.ltiRole != "admin"){
       return (
-        <div style={styles.attemptsContainer}>
-          <div style={{...styles.attempts, ...{border: null}}}>
+        <div>
+          <div>
           <h1>Oops!</h1>
           <h3>You have already taken this quiz the maximum number of times</h3>
         </div>
         <h4><u>TIPS:</u></h4>
-        <div style={styles.tips}>
+        <div>
           <ul>
             <li>{"Right now you can do three things to make sure you are ready for the next performance assessment: review the material in this module, use the self-checks to see if you're getting it, and ask your peers or instructor for help if you need it."}</li>
             <li>{"In the future, allow enough time between your first and last quiz attempts to get help from your instructor before the last attempt!"}</li>
           </ul>
         </div>
       </div>
-        )
+      );
     }
-    var attempt = ""
+    var attempt = "";
     // right now only 2 attempts are allowed or other things will break
-    switch(props.userAttempts+1){
+    switch(this.props.userAttempts+1){
       case 1: attempt = "1st"; break;
       case 2: attempt = "2nd"; break;
       default: "1st";
     }
-    var attemptStructure = <div style={styles.attemptsContainer}>
+    var attemptStructure = <div>
         <div> You can take this quiz twice. Your highest score will count as your grade. Don't wait until the last minute to take the quiz - take the quiz early so you'll have plenty of time to study and improve your grade on your second attempt.</div>
-          <div style={styles.attempts}>
+          <div>
           <h4>Attempt</h4>
           <h1>{this.props.userAttempts + 1}</h1>
           <h3>of {this.props.maxAttempts}</h3>
@@ -177,8 +80,8 @@ export default class CheckUnderstanding extends React.Component{
 
   }
 
-  getSWYK(styles){
-    return  <div style={styles.swyk}>
+  getSWYK(){
+    return  <div>
               <h2>Show What You Know</h2>
               <div>Take this pre-test to see what you already know about the concepts in this section.</div>
               <div>The pre-test does not count toward your grade, but will help you plan where to focus</div>
@@ -190,7 +93,7 @@ export default class CheckUnderstanding extends React.Component{
     return this.props.assessmentKind.toUpperCase() == "SUMMATIVE" && this.props.ltiRole == "admin" && this.props.isLti;
   }
 
-  getFormative(styles){
+  getFormative(){
     // THIS IS THE FRAME FOR CANDELLA SO ITS NOT BEING USED BUT ITS GOOD CODE
     // THAT WE MIGHT REUSE LATER
 
@@ -202,38 +105,37 @@ export default class CheckUnderstanding extends React.Component{
     //           </div>
     //         </div>
     //         <hr />
-    return <div style={styles.formative}>
+    return <div>
               <div className="row">
               </div>
-              <div className="row" style={styles.checkDiv}>
+              <div className="row">
                 <div className="col-md-10 col-sm-9">
-                  <h4 style={styles.h4}>{this.props.title}</h4>
+                  <h4>{this.props.title}</h4>
                 </div>
                 <div className="col-md-2 col-sm-3">
-                  <button style={{...styles.startButton, ...styles.checkUnderstandingButton}} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId, this.context)}}>Start Quiz</button>
+                  <button className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId, this.context)}}>Start Quiz</button>
                 </div>
               </div>
            </div>
   }
 
   render() {
-    var styles = this.getStyles(this.props);
     var buttonText = "Start Quiz";
     var content = "There was an error, contact your teacher.";
 
     if(this.props.assessmentKind.toUpperCase() == "SUMMATIVE"){
-      content = this.getAttempts(styles, this.props.theme);
+      content = this.getAttempts();
     } else if(this.props.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
-      content = this.getSWYK(styles);
+      content = this.getSWYK();
       buttonText = "Start Pre-test";
     } else if(this.props.assessmentKind.toUpperCase() == "FORMATIVE"){
-      content = this.getFormative(styles);
+      content = this.getFormative();
     }
 
     var startButton = (
-      <div style={styles.buttonWrapper}>
-        <button style={styles.startButton} className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId, this.context)}}>{buttonText}</button>
-      </div>)
+      <div>
+        <button className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId);}}>{buttonText}</button>
+      </div>);
     if (this.props.userAttempts >= this.props.maxAttempts && this.props.assessmentKind.toUpperCase() == "SUMMATIVE" && this.props.ltiRole != "admin"){
       startButton = "";
     }
@@ -241,24 +143,24 @@ export default class CheckUnderstanding extends React.Component{
       startButton = "";
     }
 
-    var teacherOptions = null
+    var teacherOptions = null;
     if(this.canManage()){
       teacherOptions = (
-        <div style={styles.buttonGroup}>
-          <button className="btn btn-sm" onClick={()=>{this.manageAttempts()}} style={styles.teacherButton}>Manage Quiz Attempts</button>
-          <button className="btn btn-sm" onClick={()=>{this.previewAttempt()}} style={styles.teacherButton}>Answer Key</button>
+        <div>
+          <button className="btn btn-sm" onClick={()=>{this.manageAttempts();}}>Manage Quiz Attempts</button>
+          <button className="btn btn-sm" onClick={()=>{this.previewAttempt();}}>Answer Key</button>
         </div>
-      )
+      );
     }
 
     return (
-      <div className="assessment_container" style={styles.assessmentContainer}>
+      <div className="assessment_container">
         {teacherOptions}
         <div className="question">
-          <div className="header" style={styles.header}>
+          <div className="header">
             <p>{this.props.name}</p>
           </div>
-          <div className="full_question" style={styles.fullQuestion}>
+          <div className="full_question">
             {content}
             {startButton}
           </div>
@@ -268,3 +170,5 @@ export default class CheckUnderstanding extends React.Component{
   }
 
 }
+
+export default connect(select, { start }, null, {withRef: true})(CheckUnderstanding);
