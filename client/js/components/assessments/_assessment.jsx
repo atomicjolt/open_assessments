@@ -97,8 +97,8 @@ export default class Assessment extends React.Component{
     //     content         = <CheckUnderstanding
     //     title           = {this.state.assessment.title}
     //     name            = {this.state.question.name}
-    //     maxAttempts     = {this.state.settings.allowedAttempts}
-    //     userAttempts    = {this.state.settings.userAttempts}
+    //     maxAttempts     = {this.state.settings.max_attempts}
+    //     userAttempts    = {this.state.settings.user_attempts}
     //     eid             = {this.state.settings.lisUserId}
     //     isLti           = {this.state.settings.isLti}
     //     assessmentId    = {this.state.assessment.assessmentId}
@@ -123,7 +123,7 @@ export default class Assessment extends React.Component{
         messageIndex     = {this.props.messageIndex}
         allQuestions     = {this.props.allQuestions}
         studentAnswers   = {this.props.studentAnswers}
-        confidenceLevels = {this.props.settings.confidenceLevels}
+        confidence_levels = {this.props.settings.confidence_levels}
         outcomes         = {this.props.outcomes}/>;
         progressBar      =  <div style={styles.progressContainer}>
                               {progressText}

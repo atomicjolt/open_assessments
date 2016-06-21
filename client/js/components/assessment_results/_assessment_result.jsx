@@ -29,7 +29,7 @@ export class AssessmentResult extends React.Component{
 
   sendAnalytics(){
     if(this.props.assessmentResult && this.props.assessmentResult.assessment_results_id) {
-      this.props.assessmentPostAnalytics(this.props.assessmentResult.assessment_results_id, this.props.settings.externalUserId, this.props.settings.externalContextId);
+      this.props.assessmentPostAnalytics(this.props.assessmentResult.assessment_results_id, this.props.settings.externalUserId, this.props.settings.external_context_id);
     }
   }
   sendLtiOutcome(){
@@ -44,13 +44,12 @@ export class AssessmentResult extends React.Component{
   }
 
   isSummative(){
-    return this.props.settings.assessmentKind.toUpperCase() == "SUMMATIVE";
+    return this.props.settings.assessment_kind == "SUMMATIVE";
   }
 
   isFormative(){
-    return this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE";
+    return this.props.settings.assessment_kind == "FORMATIVE";
   }
-
 
   render(){
     if(this.props.assessmentResult == null){
@@ -79,4 +78,4 @@ export class AssessmentResult extends React.Component{
   }
 };
 
-export default connect(select, {...AssessmentActions}, null, {withRef: true})(AssessmentResult);
+export default connect(select, {...AssessmentActions})(AssessmentResult);

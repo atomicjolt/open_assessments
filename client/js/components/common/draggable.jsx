@@ -1,8 +1,8 @@
 "use strict";
 
-import React								from 'react';
-import ReactDOM							from 'react-dom';
-import AssessmentActions		from '../../actions/assessment';
+import React								  from 'react';
+import ReactDOM							  from 'react-dom';
+import * as AssessmentActions from "../../actions/assessment";
 
 export default class Draggable extends React.Component{
 	static propTypes = {

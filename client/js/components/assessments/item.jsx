@@ -1,8 +1,8 @@
 "use strict";
 
-import React              from 'react';
-import AssessmentActions  from "../../actions/assessment";
-import UniversalInput     from "./universal_input";
+import React                  from "react";
+import * as AssessmentActions from "../../actions/assessment";
+import UniversalInput         from "./universal_input";
 
 export default class Item extends React.Component{
 

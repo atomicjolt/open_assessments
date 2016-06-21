@@ -8,17 +8,17 @@ import history            from "../../history";
 
 const select = (state) => {
   return {
-    title             : state.settings.assessmentTitle,
-    maxAttempts       : state.settings.allowedAttempts,
-    userAttempts      : state.settings.userAttempts,
-    eid               : state.settings.lisUserId,
-    userId            : state.settings.userId,
-    isLti             : state.settings.isLti,
-    assessmentId      : state.settings.assessmentId,
-    assessmentKind    : state.settings.assessmentKind,
-    ltiRole           : state.settings.ltiRole,
-    externalContextId : state.settings.externalContextId,
-    accountId         : state.settings.accountId,
+    title             : state.settings.title,
+    maxAttempts       : state.settings.max_attempts,
+    userAttempts      : state.settings.user_attempts,
+    eid               : state.settings.lis_user_id,
+    userId            : state.settings.user_id,
+    isLti             : state.settings.is_lti,
+    assessmentId      : state.settings.assessment_id,
+    assessmentKind    : state.settings.assessment_kind,
+    ltiRole           : state.settings.lti_role,
+    external_context_id : state.settings.external_context_id,
+    accountId         : state.settings.account_id,
     icon              : state.settings.images.QuizIcon_svg,
     theme             : state.settings.theme
   };
@@ -27,12 +27,12 @@ const select = (state) => {
 export class CheckUnderstanding extends React.Component{
 
   start(eid, assessmentId, context){
-    this.props.start(eid, assessmentId, this.props.externalContextId);
+    this.props.start(eid, assessmentId, this.props.external_context_id);
     history.push(`assessment`);
   }
 
   manageAttempts(){
-    history.push(`attempts/${this.props.assessmentId}/${this.props.externalContextId}`);
+    history.push(`attempts/${this.props.assessmentId}/${this.props.external_context_id}`);
   }
 
   previewAttempt(){

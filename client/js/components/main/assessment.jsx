@@ -25,8 +25,6 @@ const select = (state, props) => {
 export class Assessment extends React.Component{
 
   componentWillMount(){
-    let v = this.props.progress.get('assessmentResult');
-    debugger;
     if(this.props.progress.get('assessmentResult') != null){
       appHistory.push("assessment-result");
     }
@@ -45,7 +43,6 @@ export class Assessment extends React.Component{
     if(props.questionCount === undefined || index >= props.questionCount || index < 0){
       return <div></div>;
     }
-
     return <Item
       assessment       = {props.assessment}
       settings         = {props.settings}
@@ -103,15 +100,15 @@ export class Assessment extends React.Component{
       window.onbeforeunload = this.popup;
     }
 
-    let progressBar; //TODO
+    let progressBar; //TODO add progress bar
     let titleText =  this.props.assessment.get("title", "");
-
+    let content = this.content();
     return<div className="assessment">
       <div>{titleText}</div>
       {progressBar}
       <div className="section_list">
         <div className="section_container">
-          {this.content()}
+          {content}
         </div>
       </div>
     </div>;

@@ -1,8 +1,8 @@
 "use strict";
 
-import React              from 'react';
-import AssessmentActions  from "../../actions/assessment";
-import Styles             from "../../themes/selection.js";
+import React                  from "react";
+import * as AssessmentActions from "../../actions/assessment";
+import Styles                 from "../../themes/selection.js";
 
 const styles = Styles;
 

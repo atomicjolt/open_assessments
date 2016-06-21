@@ -3,8 +3,8 @@
 import React              from "react";
 import { connect }        from "react-redux";
 
-import History         from "../../history";
-import AssessmentActions  from "../../actions/assessment";
+import History                from "../../history";
+import * as AssessmentActions from "../../actions/assessment";
 
 const select = (state) => {
   return {
@@ -38,7 +38,7 @@ export class Start extends React.Component{
             <div>The pre-test does not count toward your grade, but will help you plan where to focus</div>
             <div>your time and effort as you study. The pre-test is optional.</div>
           </div>;
-          
+
         break;
       default:
         instruction = <div></div>;

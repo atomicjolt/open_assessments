@@ -1,8 +1,5 @@
-import Network                                from "../constants/network";
-import { Constants as AdminUserConstants }    from "../actions/admin/users";
-import { Constants as AdminAccountConstants } from "../actions/admin/users";
+import _       from "lodash";
+import server  from "./server";
 
-export default {
-  [JwtConstants.REFRESH_JWT]:            { method: Network.GET, url: (action) => { `api/sessions/${action.userId}`; } },
-  [AssessmentConstants.LOAD_ASSESSMENT]: { method: Network.GET, url: (action) => { action.settings.srcUrl; } }
-};
+// Override endpoints as needed. Right now rails and oea are the same so we just go with {}
+export default _.merge(server, {});

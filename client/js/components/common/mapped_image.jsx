@@ -1,7 +1,7 @@
 "use strict";
 
-import React							from 'react';
-import AssessmentActions	from '../../actions/assessment';
+import React							     from "react";
+import * as AssessmentActions  from "../../actions/assessment";
 
 export default class MappedImage extends React.Component{
 
@@ -10,7 +10,7 @@ export default class MappedImage extends React.Component{
   };
 
   render(){
-		var str = "mappedImg" + this.props.item.id;
+    var str = "mappedImg" + this.props.item.id;
 		var mapName = "#" + str;
 		var coordStr = this.props.item.coordinates.toString();
 
@@ -22,6 +22,7 @@ export default class MappedImage extends React.Component{
 					<area shape="rect" coords={coordStr} onClick={()=>{}} />
 				</map>
 			</div>
-		)
+		);
 	}
+
 };

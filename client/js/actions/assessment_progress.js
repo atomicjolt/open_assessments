@@ -40,51 +40,13 @@ export const selectConfidenceLevel = (level, index) => ({
   index
 });
 
-export const submitAssessment = (body) => ({
-  type:Constants.ASSESSMENT_GRADED,
-  body
-});
+export const submitAssessment = (identifier, assessmentId, questions, answers, settings, outcomes) => {
 
-// TODO refactor logic to component
-// (identifier, assessmentId, questions, studentAnswers, settings, outcomes){
-//     Dispatcher.dispatch({action: Constants.ASSESSMENT_SUBMITTED});
-//     // Only send data needed for server-side grading.
-//     questions = questions.map(function(q){
-//       return {
-//         id: q.id,
-//         score: q.score,
-//         confidenceLevel: q.confidenceLevel,
-//         timeSpent: q.timeSpent,
-//         startTime: q.startTime,
-//         outcome_guid: q.outcome_guid
-//       }
-//     });
-//     settings = {
-//       externalUserId: settings.externalUserId,
-//       externalContextId: settings.externalContextId,
-//       userAssessmentId: settings.userAssessmentId,
-//       ltiLaunchId: settings.ltiLaunchId,
-//       userAttempts: settings.userAttempts,
-//       srcUrl: settings.srcUrl,
-//       lisResultSourceDid: settings.lisResultSourceDid,
-//       lisOutcomeServiceUrl: settings.lisOutcomeServiceUrl,
-//       lisUserId: settings.lisUserId,
-//       isLti: settings.isLti,
-//       ltiRole: settings.ltiRole,
-//       assessmentKind: settings.assessmentKind,
-//       accountId: settings.accountId
-//     };
-//     var body = {
-//       itemToGrade: {
-//         questions    : questions,
-//         answers      : studentAnswers,
-//         assessmentId : assessmentId,
-//         identifier   : identifier,
-//         settings     : settings
-//       }
-//     };
-//     Api.post(Constants.ASSESSMENT_GRADED,'api/grades', body);
-//   }
+  return {
+    type:Constants.ASSESSMENT_GRADED,
+    identifier, assessmentId, questions, answers, settings, outcomes
+  };
+};
 
 export const nextQuestion = () => ({
   type: Constants.ASSESSMENT_NEXT_QUESTION
@@ -108,15 +70,15 @@ export const assessmentViewed = (settings, assessment) => ({
 //     var body = {
 //       assessment_result : {
 //         offline          : settings.offline,
-//         assessment_id    : settings.assessmentId,
+//         assessment_id    : settings.assessment_id,
 //         identifier       : assessment.id,
 //         eId              : settings.eId,
-//         external_user_id : settings.externalUserId,
-//         external_context_id : settings.externalContextId,
+//         external_user_id : settings.external_user_id,
+//         external_context_id : settings.external_context_id,
 //         resultsEndPoint  : settings.resultsEndPoint,
 //         keywords         : settings.keywords,
 //         objectives       : assessment.objectives,
-//         src_url          : settings.srcUrl
+//         src_url          : settings.src_url
 //       }
 //     };
 //     Api.post(Constants.ASSESSMENT_VIEWED, '/api/assessment_results', body);
@@ -134,14 +96,14 @@ export const itemViewed = (body) => ({
 //       item_result : {
 //         offline              : settings.offline,
 //         assessment_result_id : assessment_result.id,
-//         assessment_id        : settings.assessmentId,
+//         assessment_id        : settings.assessment_id,
 //         identifier           : assessment.id,
 //         eId                  : settings.eId,
-//         external_user_id     : settings.externalUserId,
+//         external_user_id     : settings.external_user_id,
 //         resultsEndPoint      : settings.resultsEndPoint,
 //         keywords             : settings.keywords,
 //         objectives           : assessment.objectives,
-//         src_url              : settings.srcUrl
+//         src_url              : settings.src_url
 //       }
 //     };
 //     Api.post(Constants.ASSESSMENT_VIEWED, '/api/item_results', body);

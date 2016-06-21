@@ -5,7 +5,8 @@ import TestUtils from "react/lib/ReactTestUtils";
 import Helper    from "../../../specs_support/helper";
 
 import appHistory                             from "../../history";
-import { Assessment }         from './assessment';
+import { Assessment }          from './assessment';
+import * as AssessmentActions  from "../../actions/assessment";
 
 describe('assessment', function() {
   var result;
@@ -99,6 +100,5 @@ describe('assessment', function() {
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     subject = ReactDOM.findDOMNode(result);
     expect(appHistory.push).toHaveBeenCalledWith("assessment-result");
-
   });
 });

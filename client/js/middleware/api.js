@@ -28,7 +28,12 @@ const API = store => next => action => {
   } else if(action.apiCall){
     const handler = callMap[action.type];
     if(handler){
-      request(handler.method, handler.url(action), action.params, action.body);
+      request(
+        handler.method,
+        handler.url(action),
+        handler.params ? handler.params(params) : action.params,
+        handler.body ? handler.body(action) : action.body
+      );
     } else {
       throw `No handler implemented for ${action.type}`;
     }
