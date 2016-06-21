@@ -1,14 +1,14 @@
 "use strict";
 
-import React            from 'react';
-import AssessmentActions    from "../../actions/assessment";
+import React              from 'react';
+import AssessmentActions  from "../../actions/assessment";
 
 //polyfill trunc
 Math.trunc = Math.trunc || function(x) {
   return x < 0 ? Math.ceil(x) : Math.floor(x);
 };
 
-export default class FormativeResult extends React.Component{
+export class FormativeResult extends React.Component{
 
   retake(){
     AssessmentActions.retakeAssessment();
@@ -42,7 +42,7 @@ export default class FormativeResult extends React.Component{
       var confidenceColor;
       if(this.props.assessmentResult.correct_list[index] == "partial"){
         color = this.props.context.theme.partialColor;
-        message = "Partially Correct"
+        message = "Partially Correct";
       }
       if (this.props.assessmentResult.confidence_level_list[index] == "Just A Guess"){
         confidenceColor = this.props.context.theme.maybeBackgroundColor;
@@ -56,8 +56,8 @@ export default class FormativeResult extends React.Component{
                     dangerouslySetInnerHTML={{
                       __html: this.props.questions[index].material
                     }}>
-                  </div> )
-                  
+                  </div>);
+
       return <div key={"result-"+index}>
               <div style={styles.resultList}>
                 <div><div style={{color: color, float: "left"}}>Question {index+1} -- {message}</div><div style={{color: confidenceColor, float: "right"}}>{this.props.assessmentResult.confidence_level_list[index]}</div></div>
@@ -65,11 +65,8 @@ export default class FormativeResult extends React.Component{
               <div style={{...styles.resultList, ...styles.resultOutcome}}>
                 <div style={{width: "70%"}}>{material}</div>
               </div>
-            </div>
+            </div>;
     });
-
-
-
 
     return <div style={styles.assessment}>
             <div style={styles.assessmentContainer}>
@@ -83,14 +80,16 @@ export default class FormativeResult extends React.Component{
                       <div>{feedback}</div>
                       <div>{results}</div>
                       <div style={styles.buttonsDiv}>
-                        <button className="btn btn-check-answer" style={styles.retakeButton}  onClick={(e)=>{this.retake()}}>Retake</button>
+                        <button className="btn btn-check-answer" style={styles.retakeButton} onClick={ (e) => { this.retake(); }}>Retake</button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </div>;
   }
 
 }
+
+export default connect(select, {...AssessmentActions})(FormativeResult);
