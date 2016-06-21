@@ -108,15 +108,15 @@ export const assessmentViewed = (settings, assessment) => ({
 //     var body = {
 //       assessment_result : {
 //         offline          : settings.offline,
-//         assessment_id    : settings.assessmentId,
+//         assessment_id    : settings.assessment_id,
 //         identifier       : assessment.id,
 //         eId              : settings.eId,
-//         external_user_id : settings.externalUserId,
-//         external_context_id : settings.externalContextId,
+//         external_user_id : settings.external_user_id,
+//         external_context_id : settings.external_context_id,
 //         resultsEndPoint  : settings.resultsEndPoint,
 //         keywords         : settings.keywords,
 //         objectives       : assessment.objectives,
-//         src_url          : settings.srcUrl
+//         src_url          : settings.src_url
 //       }
 //     };
 //     Api.post(Constants.ASSESSMENT_VIEWED, '/api/assessment_results', body);
@@ -134,14 +134,14 @@ export const itemViewed = (body) => ({
 //       item_result : {
 //         offline              : settings.offline,
 //         assessment_result_id : assessment_result.id,
-//         assessment_id        : settings.assessmentId,
+//         assessment_id        : settings.assessment_id,
 //         identifier           : assessment.id,
 //         eId                  : settings.eId,
-//         external_user_id     : settings.externalUserId,
+//         external_user_id     : settings.external_user_id,
 //         resultsEndPoint      : settings.resultsEndPoint,
 //         keywords             : settings.keywords,
 //         objectives           : assessment.objectives,
-//         src_url              : settings.srcUrl
+//         src_url              : settings.src_url
 //       }
 //     };
 //     Api.post(Constants.ASSESSMENT_VIEWED, '/api/item_results', body);

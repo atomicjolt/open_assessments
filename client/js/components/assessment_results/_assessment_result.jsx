@@ -29,7 +29,7 @@ export class AssessmentResult extends React.Component{
 
   sendAnalytics(){
     if(this.props.assessmentResult && this.props.assessmentResult.assessment_results_id) {
-      this.props.assessmentPostAnalytics(this.props.assessmentResult.assessment_results_id, this.props.settings.externalUserId, this.props.settings.externalContextId);
+      this.props.assessmentPostAnalytics(this.props.assessmentResult.assessment_results_id, this.props.settings.externalUserId, this.props.settings.external_context_id);
     }
   }
   sendLtiOutcome(){
