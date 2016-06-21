@@ -106,7 +106,7 @@ export default class ResultSummary extends React.Component{
       focusStudy:"Review these concepts before your last quiz attempt or to prepare for your next performance assessment."
     };
 
-    if(this.props.settings.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
+    if(this.props.settings.assessment_kind === "SHOW_WHAT_YOU_KNOW"){
       contentData = {
         goodWork: "What You Already Know",
         moreToLearn: "What You Need to Learn",
