@@ -32,14 +32,11 @@ export function getItems(sections, perSec) {
   return items;
 }
 
+// Extract outcomes from sections. Ignore the "root section" outcome.
 export function loadOutcomes(sections) {
-  var outcomes = sections.map((section)=> {
-    if (section.outcome != "root section") {
-      return section.outcome;
-    }
-  });
-  outcomes = _.drop(outcomes);
-  return outcomes;
+  return sections
+    .map((section) => section.get("outcome"))
+    .filter((outcome) => outcome != "root section");
 }
 
 export function checkAnswer(item, selectedAnswers){

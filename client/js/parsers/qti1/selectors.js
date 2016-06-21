@@ -11,7 +11,7 @@ export const questionsPerSection = (state, props) => state.settings.questions_pe
 // input selectors change.
 export const sections = createSelector(
   [ assessment ],
-  (assessment) => { return { sections: assessment.get('sections') }; }
+  (assessment) => assessment.get('sections')
 );
 
 export const questions = createSelector(
@@ -21,7 +21,7 @@ export const questions = createSelector(
 
 export const outcomes = createSelector(
   [ sections ],
-  (assessment) => loadOutcomes(sections)
+  (sections) => loadOutcomes(sections)
 );
 
 export const questionCount = createSelector(
