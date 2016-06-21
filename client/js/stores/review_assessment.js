@@ -55,7 +55,7 @@
 //   },
 //   questionCount(){
 //     if(_items && _items.length > 0)return _items.length;
-//     return SettingsStore.current().sectionCount * SettingsStore.current().perSec;
+//     return SettingsStore.current().section_count * SettingsStore.current().perSec;
 //   },
 //   studentAnswers(){
 //     return _studentAnswers[_itemIndex];
