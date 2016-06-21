@@ -19,8 +19,8 @@ export const sections = createSelector(
 export const questions = createSelector(
   [ sections, questionsPerSection ],
   (sections, questionsPerSection) => getItems(
-    sections.toJS(),
-    null, // Return all of the sections 
+    sections,
+    null, // Return all of the sections
     shuffleQuestionAnswers
   )
 );

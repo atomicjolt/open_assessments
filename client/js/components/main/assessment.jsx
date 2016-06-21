@@ -107,7 +107,7 @@ export class Assessment extends React.Component{
     }
 
     let progressBar; //TODO add progress bar
-    let titleText =  this.props.assessment.get("title", "");
+    let titleText =  this.props.assessment.title;
     let content = this.getContent();
     return<div className="assessment">
       <div>{titleText}</div>
