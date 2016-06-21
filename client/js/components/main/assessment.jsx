@@ -70,8 +70,7 @@ export class Assessment extends React.Component{
       for(let i = start; i < displayNum; i++){
         items.push(this.getItem(i));
       }
-    }
-    else{
+    } else {
       this.props.allQuestions.forEach((question, index) => {
         items.push(this.getItem(index));
       });
