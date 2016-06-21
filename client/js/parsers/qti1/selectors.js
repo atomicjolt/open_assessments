@@ -12,7 +12,7 @@ export const shuffleQuestionAnswers = (state, props) => state.settings.shuffle_q
 // input selectors change.
 export const sections = createSelector(
   [ assessment ],
-  (assessment) => assessment.get('sections')
+  (assessment) => assessment.sections
 );
 
 export const questions = createSelector(

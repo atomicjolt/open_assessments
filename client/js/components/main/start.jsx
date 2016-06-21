@@ -8,18 +8,17 @@ import * as AssessmentActions from "../../actions/assessment";
 
 const select = (state) => {
   return {
-    settings      : state.settings,
-    assessment    : state.assessment,
+    title           : state.assessment.title,
+    assessment_kind : state.settings.assessment_kind
   };
 };
 
 export class Start extends React.Component{
 
   instructions(){
-    const kind = this.props.assessment.get('assessment_kind', '').toUpperCase();
     let instruction;
 
-    switch (kind) {
+    switch (this.props.assessment_kind){
       case "SUMMATIVE":
         // Get summative instructions
         instruction = <div>Summative Quiz</div>;
@@ -48,7 +47,7 @@ export class Start extends React.Component{
 
   render(){
     const startButtonText = "Start Quiz";
-    const titleText = this.props.assessment.get('title', '');
+    const titleText = this.props.title;
 
     return <div className="assessment">
       <div>{titleText}</div>
