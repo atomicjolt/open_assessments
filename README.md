@@ -48,6 +48,7 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     results_end_point            - Endpoint where results will be written. Might be the same as api_url but doesn't have to be
 
     ##### Assessment settings
+
     // Specify either a src_url, assessment_data or assessment_id. Only one is required.
     src_url                      - A url where the assessment can be downloaded. ie http://www.openassessments.com/api/assessments/55.xml
     assessment_data              - The assessment data in QTI format.
@@ -58,6 +59,7 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     enable_start                 - Whether to show the assessment start screen before starting the assessment. This helps with calculating accurate timing. ie the timer won't start until the user presses start.
     icon                         -
     theme                        -
+    view                         - How many questions should be displayed at at time. SHOW_ONE, SHOW_THREE, SHOW_SECTION.
 
     // Functional settings
     max_attempts                 - The maximum number of attempts the assessment can be taken
