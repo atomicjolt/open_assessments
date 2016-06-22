@@ -4,28 +4,36 @@ import React                  from "react";
 import * as AssessmentActions from "../../actions/assessment";
 import UniversalInput         from "./universal_input";
 
+// NOTE pass NextQuestion from parent
+// NOTE pass PrevQuestion from parent
+// NOTE pass submit button clicked
+
 export default class Item extends React.Component{
 
   static propTypes = {
-    question         : React.PropTypes.object.isRequired,
-    currentItemIndex : React.PropTypes.number.isRequired,
-    questionCount    : React.PropTypes.number.isRequired,
-    messageIndex     : React.PropTypes.number.isRequired,
-    confidenceLevels : React.PropTypes.bool.isRequired,
-    outcomes         : React.PropTypes.object
+    question                   : React.PropTypes.object.isRequired,
+    currentItemIndex           : React.PropTypes.number.isRequired,
+    questionCount              : React.PropTypes.number.isRequired,
+    messageIndex               : React.PropTypes.number.isRequired,
+    confidenceLevels           : React.PropTypes.bool.isRequired,
+    nextQuestionClicked        : React.PropTypes.func.isRequired,
+    prevQuestionClicked        : React.PropTypes.func.isRequired,
+    confidenceLevelClicked     : React.PropTypes.func.isRequired,
+    submitButtonClicked        : React.PropTypes.func.isRequired,
+    outcomes                   : React.PropTypes.object,
   };
 
   nextButtonClicked(e){
     e.preventDefault();
     this.setState({unAnsweredQuestions: null});
-    AssessmentActions.nextQuestion();
+    this.props.nextQuestionClicked();
     this.setState({showMessage: false});
   }
 
   previousButtonClicked(e){
     e.preventDefault();
     this.setState({unAnsweredQuestions: null});
-    AssessmentActions.previousQuestion();
+    this.props.prevQuestionClicked();
     this.setState({showMessage: false});
   }
 
@@ -77,11 +85,11 @@ export default class Item extends React.Component{
   getFooterNav(){
     if(this.props.shouldShowFooter){
       return <div>
-              <button onClick={()=>{this.previousButtonClicked();}}>
+              <button onClick={(e)=>{this.previousButtonClicked(e);}}>
               <i className="glyphicon glyphicon-chevron-left"></i>
               Previous
               </button>
-              <button onClick={()=>{this.nextButtonClicked();}}>
+              <button onClick={(e)=>{this.nextButtonClicked(e);}}>
                 Next
                 <i className="glyphicon glyphicon-chevron-right"></i>
               </button>
@@ -151,14 +159,14 @@ export default class Item extends React.Component{
               </div>;
     }
     else if(index == 0){
-    result = <div className="check_answer_result">
-                <p>Incorrect</p>
-              </div>;
+      result = <div className="check_answer_result">
+                  <p>Incorrect</p>
+                </div>;
     }
     else {
-      result =  <div className="check_answer_result">
+      result = <div className="check_answer_result">
                   <p>Correct</p>
-                </div>;
+               </div>;
     }
 
     return result;

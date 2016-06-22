@@ -53,7 +53,14 @@ export class Assessment extends React.Component{
       allQuestions     = {props.allQuestions}
       studentAnswers   = {{/*this.props.studentAnswers*/}}
       confidenceLevels = {{/*this.props.settings.confidence_levels*/}}
-      outcomes         = {props.outcomes}/>;
+      outcomes         = {props.outcomes}
+      shouldShowFooter
+
+      nextQuestionClicked = {() => {console.log("next");}}
+      prevQuestionClicked = {() => {}}
+      confidenceLevelClicked = {() => {}}
+      submitButtonClicked = {() => {}}
+      />;
   }
 
   /**
