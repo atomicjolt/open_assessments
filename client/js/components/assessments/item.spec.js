@@ -3,7 +3,7 @@ import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import Item               from './item';
 
-fdescribe('item', function() {
+describe('item', function() {
 
   var question = {
     title:"Test Question Title"
