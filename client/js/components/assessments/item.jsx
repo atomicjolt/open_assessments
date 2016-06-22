@@ -29,60 +29,11 @@ export default class Item extends React.Component{
     this.props.prevQuestion();
   }
 
-  // confidenceLevelClicked(e, currentItemIndex){
-    // e.preventDefault();
-    //
-    // if(this.props.selectedAnswerId && this.props.selectedAnswerId.length > 0){
-    //   AssessmentActions.selectConfidenceLevel(e.target.value, currentItemIndex);
-    //   if(this.props.currentItemIndex == this.props.questionCount - 1 && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-    //     this.submitButtonClicked();
-    //   } else {
-    //     AssessmentActions.nextQuestion();
-    //     this.setState({showMessage: false});
-    //   }
-    // } else {
-    //   this.setState({showMessage: true});
-    // }
-    // if(document.getElementById("focus")){document.getElementById("focus").focus();}
-  // }
-
   submitButtonClicked(e){
     e.preventDefault();
     // AssessmentActions.selectQuestion(this.props.currentItemIndex); TODO
     this.props.submitAssessment();
   }
-
-  // getFooterNav(){
-  //   if(this.props.shouldShowFooter){
-  //   return <div>
-  //           <button onClick={(e)=>{this.previousButtonClicked(e);}}>
-  //           <i className="glyphicon glyphicon-chevron-left"></i>
-  //           Previous
-  //           </button>
-  //           <button onClick={(e)=>{this.nextButtonClicked(e);}}>
-  //             Next
-  //             <i className="glyphicon glyphicon-chevron-right"></i>
-  //           </button>
-  //         </div>;
-  //   }
-  //   return "";
-  // }
-
-
-
-  // getConfidenceLevels(level){
-  //   if(level){
-  //     var levelMessage = <div><b>How sure are you of your answer? Click below to move forward.</b></div>;
-  //     return <div className="confidence_wrapper">
-  //               {levelMessage}
-  //               <input type="button" className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex); }}/>
-  //               <input type="button" className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex); }}/>
-  //               <input type="button" className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex); }}/>
-  //             </div>
-  //   } /*else {
-  //     return <div className="lower_level"><input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer()}}/></div>
-  //   }*/
-  // }
 
   getNavigationButtons() {
     return <div className="confidence_wrapper">
@@ -161,7 +112,6 @@ export default class Item extends React.Component{
 
   render() {
     var result = this.getResult(this.props.messageIndex);
-    var must_answer_message = this.state && this.state.showMessage ? <div>You must select an answer before continuing.</div> : "";
     var navigation = this.getNavigationButtons();
 
     var counter = this.getCounter();
@@ -201,7 +151,6 @@ export default class Item extends React.Component{
                   <div className="col-md-5 col-sm-6 col-xs-8" >
                     {result}
                     {navigation}
-                    {must_answer_message}
                   </div>
                   <div className="col-md-7 col-sm-6 col-xs-4">
                     {submitButton}
