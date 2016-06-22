@@ -28,12 +28,6 @@ export class Index extends React.Component {
     } else if(!this.props.enableStart) {
       appHistory.push("assessment");
     }
-
-    // Generate an action anytime the window is resized
-    window.onresize = (e) => {
-      this.props.sendSize();
-    };
-
   }
 
   componentDidMount(){

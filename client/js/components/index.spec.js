@@ -5,7 +5,6 @@ import ReactDOM             from 'react-dom';
 import TestUtils            from 'react/lib/ReactTestUtils';
 import { Index }            from './index';
 import appHistory           from "../history";
-import * as CommActions     from "../actions/communications";
 
 describe('index', function() {
   var result, props, scrollParentToTopCalled, sendSizeCalled;

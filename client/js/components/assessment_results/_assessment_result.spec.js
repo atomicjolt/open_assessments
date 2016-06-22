@@ -35,7 +35,7 @@ describe('assessment result', function() {
       outcomes:() => [],
       sendSize: () => {},
       showLMSNavigation: () => {},
-      navigateHome: () => {},
+      navigateHome: () => {}
     };
     result = TestUtils.renderIntoDocument(<AssessmentResult {...props} />);
 
