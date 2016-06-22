@@ -13,9 +13,10 @@ import {questionCount, questions, outcomes }  from "../../selectors/assessment";
 
 const select = (state, props) => {
   return {
-    settings             : state.settings,
+    settings             : state.settings.toJS(),
     assessment           : state.assessment,
     progress             : state.progress,
+    responses            : state.progress.get('responses').toJS(),
     questionCount        : questionCount(state, props),
     allQuestions         : questions(state, props),
     outcomes             : outcomes(state, props)
@@ -33,6 +34,27 @@ export class Assessment extends React.Component{
   componentDidMount(){
     // Trigger action to indicate the assessment was viewed
     this.props.assessmentViewed();
+  }
+
+//NOTE working on submit assessment
+  submitAssessment(){
+    console.log("submit");
+    var complete = this.checkCompletion();
+    if(complete === true){
+      window.onbeforeunload = null;
+      this.props.submitAssessment(
+        this.props.assessment.id,
+        this.props.assessment.assessmentId,
+        this.props.allQuestions,
+        this.props.responses,
+        this.props.settings,
+        this.props.outcomes
+      );
+    }
+  }
+
+  checkCompletion(){
+    return true; //NOTE do
   }
 
   /**
@@ -56,10 +78,10 @@ export class Assessment extends React.Component{
       outcomes         = {props.outcomes}
       shouldShowFooter
 
-      nextQuestionClicked = {() => {this.props.nextQuestion();}}
-      prevQuestionClicked = {() => {this.props.previousQuestion();}}
-      confidenceLevelClicked = {() => {/* TODO */}}
-      submitButtonClicked = {() => {/* TODO */ }}
+      nextQuestion = {() => {props.nextQuestion();}}
+      prevQuestion = {() => {props.previousQuestion();}}
+      confidenceLevel = {() => {/* TODO */}}
+      submitAssessment = {() => {this.submitAssessment();}}
       />;
   }
 
@@ -69,7 +91,7 @@ export class Assessment extends React.Component{
    * specified by props.settings.questions_per_section.
    */
   getItems(){
-    let displayNum = this.props.settings.get('questions_per_section');
+    let displayNum = this.props.settings.questions_per_section;
     let current = this.props.progress.get('currentItemIndex');
     let items = [];
     if(displayNum > 0 && displayNum < this.props.questionCount){
@@ -109,7 +131,7 @@ export class Assessment extends React.Component{
   }
 
   render(){
-    if(this.props.settings.get("assessment_kind") === "SUMMATIVE"){
+    if(this.props.settings.assessment_kind === "SUMMATIVE"){
       window.onbeforeunload = this.popup;
     }
 

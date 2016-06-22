@@ -16,24 +16,24 @@ export default class Item extends React.Component{
     questionCount              : React.PropTypes.number.isRequired,
     messageIndex               : React.PropTypes.number.isRequired,
     confidenceLevels           : React.PropTypes.bool.isRequired,
-    nextQuestionClicked        : React.PropTypes.func.isRequired,
-    prevQuestionClicked        : React.PropTypes.func.isRequired,
-    confidenceLevelClicked     : React.PropTypes.func.isRequired,
-    submitButtonClicked        : React.PropTypes.func.isRequired,
+    nextQuestion               : React.PropTypes.func.isRequired,
+    prevQuestion               : React.PropTypes.func.isRequired,
+    confidenceLevel            : React.PropTypes.func.isRequired,
+    submitAssessment           : React.PropTypes.func.isRequired,
     outcomes                   : React.PropTypes.object,
   };
 
   nextButtonClicked(e){
     e.preventDefault();
     this.setState({unAnsweredQuestions: null});
-    this.props.nextQuestionClicked();
+    this.props.nextQuestion();
     this.setState({showMessage: false});
   }
 
   previousButtonClicked(e){
     e.preventDefault();
     this.setState({unAnsweredQuestions: null});
-    this.props.prevQuestionClicked();
+    this.props.prevQuestion();
     this.setState({showMessage: false});
   }
 
@@ -55,33 +55,26 @@ export default class Item extends React.Component{
   }
 
   submitButtonClicked(e){
-    e && e.preventDefault();
-    // AssessmentActions.selectQuestion(this.props.currentItemIndex);
-    var complete = this.checkCompletion();
-    if(complete === true){
-      window.onbeforeunload = null;
-      AssessmentActions.submitAssessment(this.props.assessment.id, this.props.assessment.assessmentId, this.props.allQuestions, this.props.allStudentAnswers, this.props.settings, this.props.outcomes);
-    }
-    else {
-      this.setState({unAnsweredQuestions: complete});
-    }
+    e.preventDefault();
+    // AssessmentActions.selectQuestion(this.props.currentItemIndex); TODO
+    this.props.submitAssessment();
   }
 
   //NOTE move to assessment?
-  checkCompletion(){
-    var questionsNotAnswered = [];
-    var answers = this.props.allStudentAnswers;
-    for (var i = 0; i < answers.length; i++) {
-      if(answers[i] == null || answers[i].length == 0){
-
-        questionsNotAnswered.push(i+1);
-      }
-    };
-    if(questionsNotAnswered.length > 0){
-      return questionsNotAnswered;
-    }
-    return true;
-  }
+  // checkCompletion(){
+  //   var questionsNotAnswered = [];
+  //   var answers = this.props.allStudentAnswers;
+  //   for (var i = 0; i < answers.length; i++) {
+  //     if(answers[i] == null || answers[i].length == 0){
+  //
+  //       questionsNotAnswered.push(i+1);
+  //     }
+  //   };
+  //   if(questionsNotAnswered.length > 0){
+  //     return questionsNotAnswered;
+  //   }
+  //   return true;
+  // }
 
   getFooterNav(){
     if(this.props.shouldShowFooter){

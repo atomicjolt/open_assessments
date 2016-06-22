@@ -40,13 +40,16 @@ export const selectConfidenceLevel = (level, index) => ({
   index
 });
 
-export const submitAssessment = (identifier, assessmentId, questions, answers, settings, outcomes) => {
-
-  return {
-    type:Constants.ASSESSMENT_GRADED,
+export const submitAssessment = (
+  identifier,
+  assessmentId,
+  questions,
+  answers,
+  settings,
+  outcomes) => ({
+    type:Constants.ASSESSMENT_SUBMITTED,
     identifier, assessmentId, questions, answers, settings, outcomes
-  };
-};
+  });
 
 export const nextQuestion = () => ({
   type: Constants.ASSESSMENT_NEXT_QUESTION
