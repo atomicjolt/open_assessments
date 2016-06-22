@@ -93,9 +93,7 @@ export class Assessment extends React.Component{
       messageIndex     = {props.progress.answerMessageIndex[index]}
       allQuestions     = {props.allQuestions}
       studentAnswers   = {{/*this.props.studentAnswers*/}}
-      confidenceLevels = {{/*this.props.settings.confidence_levels*/}}
       outcomes         = {props.outcomes}
-      shouldShowFooter
 
       nextQuestion = {() => {props.nextQuestion();}}
       prevQuestion = {() => {props.previousQuestion();}}
