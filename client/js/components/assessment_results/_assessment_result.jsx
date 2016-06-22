@@ -10,12 +10,12 @@ import { questions, outcomes }    from "../../selectors/assessment";
 
 const select = (state) => {
   return {
-    assessmentResult : state.get('assessmentResult').toJS(),
+    assessmentResult : state.assessmentResult.toJS(),
     timeSpent        : state.timeSpent,
     questions        : questions(state),
     outcomes         : outcomes(state),
-    assessment       : state.get('assessment').toJS(),
-    settings         : state.get('settings').toJS()
+    assessment       : state.assessment.toJS(),
+    settings         : state.settings.toJS()
   };
 };
 

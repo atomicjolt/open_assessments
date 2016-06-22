@@ -14,9 +14,9 @@ import {questionCount, questions, outcomes }  from "../../selectors/assessment";
 
 const select = (state, props) => {
   return {
-    settings             : state.get('settings').toJS(),
-    assessment           : state.get('assessment').toJS(),
-    progress             : state.get('progress').toJS(),
+    settings             : state.settings.toJS(),
+    assessment           : state.assessment.toJS(),
+    progress             : state.progress.toJS(),
     questionCount        : questionCount(state, props),
     allQuestions         : questions(state, props),
     outcomes             : outcomes(state, props)
