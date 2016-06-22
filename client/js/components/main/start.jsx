@@ -47,10 +47,9 @@ export class Start extends React.Component{
 
   render(){
     const startButtonText = "Start Quiz";
-    const titleText = this.props.title;
 
     return <div className="assessment">
-      <div>{titleText}</div>
+      <div>{this.props.title}</div>
       <div className="section_list">
         <div className="section_container">
           {this.instructions()}

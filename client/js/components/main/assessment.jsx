@@ -3,6 +3,7 @@
 import React                                  from "react";
 import { connect }                            from "react-redux";
 
+import * as CommunicationActions              from "../../actions/communications";
 import * as AssessmentActions                 from "../../actions/assessment";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
 import appHistory                             from "../../history";
@@ -13,9 +14,9 @@ import {questionCount, questions, outcomes }  from "../../selectors/assessment";
 
 const select = (state, props) => {
   return {
-    settings             : state.settings,
-    assessment           : state.assessment,
-    progress             : state.progress,
+    settings             : state.get('settings').toJS(),
+    assessment           : state.get('assessment').toJS(),
+    progress             : state.get('progress').toJS(),
     questionCount        : questionCount(state, props),
     allQuestions         : questions(state, props),
     outcomes             : outcomes(state, props)
@@ -25,14 +26,23 @@ const select = (state, props) => {
 export class Assessment extends React.Component{
 
   componentWillMount(){
-    if(this.props.progress.get('assessmentResult') != null){
+    if(this.props.progress.assessmentResult != null){
       appHistory.push("assessment-result");
     }
   }
 
   componentDidMount(){
     // Trigger action to indicate the assessment was viewed
-    this.props.assessmentViewed();
+    this.props.assessmentViewed(this.props.settings, this.props.assessment);
+
+    this.props.sendSize();
+    this.props.scrollParentToTop();
+    this.props.hideLMSNavigation();
+  }
+
+  componentDidUpdate() {
+    this.props.sendSize();
+    this.props.scrollParentToTop();
   }
 
   /**
@@ -62,8 +72,8 @@ export class Assessment extends React.Component{
    * specified by props.settings.questions_per_section.
    */
   getItems(){
-    let displayNum = this.props.settings.get('questions_per_section');
-    let current = this.props.progress.get('currentItemIndex');
+    let displayNum = this.props.settings.questions_per_section;
+    let current = this.props.progress.currentItemIndex;
     let items = [];
     if(displayNum > 0 && displayNum < this.props.questionCount){
       let start = current / displayNum;
@@ -84,7 +94,7 @@ export class Assessment extends React.Component{
    * or loading bar should be rendered
    */
   getContent(){
-    if(this.props.progress.get('isSubmitted')){
+    if(this.props.progress.isSubmitted){
       return <Loading />;
     } else if(!this.props.questionCount) {
       return <Loading />;
@@ -102,7 +112,7 @@ export class Assessment extends React.Component{
   }
 
   render(){
-    if(this.props.settings.get("assessment_kind") === "SUMMATIVE"){
+    if(this.props.settings.assessment_kind === "SUMMATIVE"){
       window.onbeforeunload = this.popup;
     }
 
@@ -122,4 +132,4 @@ export class Assessment extends React.Component{
 
 }
 
-export default connect(select, {...AssessmentProgress})(Assessment);
+export default connect(select, {...AssessmentActions, ...CommunicationActions})(Assessment);

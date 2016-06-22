@@ -23,7 +23,7 @@ describe('assessment', function() {
   beforeEach(() => {
     spyOn(appHistory, 'push');
 
-    settings = Immutable.fromJS({
+    settings = {
       user_id      : 0,
       max_attempts : 1,
       eid          : "external_identifier",
@@ -31,15 +31,15 @@ describe('assessment', function() {
       view         : "SHOW_ONE",
       questions_per_section:1,
       assessment_kind: "SUMMATIVE"
-    });
+    };
 
-    assessment = Immutable.fromJS({
+    assessment = {
       title: "Test Title"
-    });
+    };
 
-    progress = Immutable.fromJS({
+    progress = {
       currentItemIndex:0
-    });
+    };
 
     questionCount = () => 1;
     allQuestions = () => [{
@@ -75,7 +75,10 @@ describe('assessment', function() {
       questionCount:questionCount(),
       allQuestions:allQuestions(),
       outcomes:outcomes(),
-      assessmentViewed
+      assessmentViewed,
+      sendSize: () => {},
+      scrollParentToTop: () => {},
+      hideLMSNavigation: () => {},
     };
 
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
@@ -96,7 +99,7 @@ describe('assessment', function() {
   });
 
   it('redirects to assessment result when assessment has been submitted', () => {
-    props.progress = props.progress.set('assessmentResult', 'done');
+    props.progress.assessmentResult = 'done';
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     subject = ReactDOM.findDOMNode(result);
     expect(appHistory.push).toHaveBeenCalledWith("assessment-result");

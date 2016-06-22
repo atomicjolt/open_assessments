@@ -1,22 +1,27 @@
 "use strict";
 
-import React       from 'react';
-import ReactDOM    from 'react-dom';
-import TestUtils   from 'react/lib/ReactTestUtils';
-import { Index }   from './index';
-import appHistory  from "../history";
+import React                from 'react';
+import ReactDOM             from 'react-dom';
+import TestUtils            from 'react/lib/ReactTestUtils';
+import { Index }            from './index';
+import appHistory           from "../history";
 
 describe('index', function() {
-  var Subject;
-  var result;
-  var props;
+  var result, props, scrollParentToTopCalled, sendSizeCalled;
+
 
   beforeEach(()=>{
+    scrollParentToTopCalled = false;
+    sendSizeCalled = false;
+
     props = {
-      loadAssessment:() => {}
+      loadAssessment: () => {},
+      scrollParentToTop: () => { scrollParentToTopCalled = true; },
+      sendSize: () => { sendSizeCalled = true; }
     };
+
     result = TestUtils.renderIntoDocument(<Index {...props} />);
-    spyOn(appHistory, 'push')
+    spyOn(appHistory, 'push');
   });
 
   it('renders the index', function() {
@@ -36,6 +41,14 @@ describe('index', function() {
     result = TestUtils.renderIntoDocument(<Index {...props} />);
 
     expect(appHistory.push).toHaveBeenCalledWith("retries-exceeded");
+  });
+
+  it('calls the send size comm handler action', () => {
+    expect(sendSizeCalled).toBe(true);
+  });
+
+  it('calls the scroll parent to top comm handler action', () => {
+    expect(scrollParentToTopCalled).toBe(true);
   });
 
   afterEach(()=>{

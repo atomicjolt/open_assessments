@@ -10,29 +10,12 @@ import CheckBox             from "../common/checkbox";
 import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
-import CommunicationHandler from "../../utils/communication_handler";
 
 export default class UniversalInput extends React.Component{
 
   static propTypes = {
     item: React.PropTypes.object.isRequired,
     isResult: React.PropTypes.bool
-  }
-
-  constructor(){
-    super();
-    CommunicationHandler.init();
-  }
-
-  componentDidMount(){
-    CommunicationHandler.sendSize();
-    CommunicationHandler.scrollParentToTop();
-    CommunicationHandler.hideLMSNavigation();
-  }
-
-  componentDidUpdate(){
-    CommunicationHandler.sendSize();
-    CommunicationHandler.scrollParentToTop();
   }
 
   wasChosen(id){
@@ -61,21 +44,17 @@ export default class UniversalInput extends React.Component{
       var renderedMessages = item.messages.map(function(message){
         return (<li>{message}</li>);
       });
-      messages = (<div className="panel-messages alert alert-danger" role="alert">
-                   <ul>
-                     {renderedMessages}
-                   </ul>
-                 </div>);
+      messages = <div className="panel-messages alert alert-danger" role="alert">
+        <ul>
+          {renderedMessages}
+        </ul>
+      </div>
     }
 
     if(item.isGraded && item.solution){
-      solution = (<div className="panel-footer text-center">
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: item.solution
-                    }}>
-                  </div>
-                 </div>);
+      solution = <div className="panel-footer text-center">
+        <div dangerouslySetInnerHTML={{ __html: item.solution }} />
+      </div>
     }
 
     switch(item.question_type){
@@ -123,24 +102,19 @@ export default class UniversalInput extends React.Component{
 
     var material = '';
     if(item.edXMaterial){
-      material = <div
-                  dangerouslySetInnerHTML={{
-                    __html: item.edXMaterial
-                  }}>
-                </div>;
+      material = <div dangerouslySetInnerHTML={{ __html: item.edXMaterial }} />
     }
-    return (<div className="panel-messages-container panel panel-default">
-              <div className="panel-heading text-center">
-                {item.title}
-                {messages}
-              </div>
-              <div className="panel-body">
-                {material}
-                {items}
-              </div>
-              {solution}
-            </div>
 
-           );
+    return <div className="panel-messages-container panel panel-default">
+      <div className="panel-heading text-center">
+        {item.title}
+        {messages}
+      </div>
+      <div className="panel-body">
+        {material}
+        {items}
+      </div>
+      {solution}
+    </div>
   }
 }
