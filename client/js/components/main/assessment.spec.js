@@ -7,7 +7,7 @@ import appHistory                             from "../../history";
 import { Assessment }          from './assessment';
 import * as AssessmentActions  from "../../actions/assessment";
 
-fdescribe('assessment', function() {
+describe('assessment', function() {
   var result;
   var subject;
   var props;
@@ -96,7 +96,7 @@ fdescribe('assessment', function() {
   });
 
   it('redirects to assessment result when assessment has been submitted', () => {
-    props.progress.assessmentResult = "done"; 
+    props.progress.assessmentResult = "done";
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     subject = ReactDOM.findDOMNode(result);
     expect(appHistory.push).toHaveBeenCalledWith("assessment-result");
