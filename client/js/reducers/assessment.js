@@ -1,6 +1,5 @@
 "use strict";
-
-import Immutable from 'immutable';
+import Immutable                             from "immutable";
 import { Constants as AssessmentConstants }  from "../actions/assessment";
 
 const initialState = Immutable.fromJS({});

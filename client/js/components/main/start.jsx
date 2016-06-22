@@ -3,23 +3,22 @@
 import React              from "react";
 import { connect }        from "react-redux";
 
-import History         from "../../history";
-import AssessmentActions  from "../../actions/assessment";
+import History                from "../../history";
+import * as AssessmentActions from "../../actions/assessment";
 
 const select = (state) => {
   return {
-    settings      : state.settings,
-    assessment    : state.assessment,
+    title           : state.assessment.title,
+    assessment_kind : state.settings.assessment_kind
   };
 };
 
 export class Start extends React.Component{
 
   instructions(){
-    const kind = this.props.assessment.get('assessment_kind', '').toUpperCase();
     let instruction;
 
-    switch (kind) {
+    switch (this.props.assessment_kind){
       case "SUMMATIVE":
         // Get summative instructions
         instruction = <div>Summative Quiz</div>;
@@ -38,7 +37,7 @@ export class Start extends React.Component{
             <div>The pre-test does not count toward your grade, but will help you plan where to focus</div>
             <div>your time and effort as you study. The pre-test is optional.</div>
           </div>;
-          
+
         break;
       default:
         instruction = <div></div>;
@@ -48,10 +47,9 @@ export class Start extends React.Component{
 
   render(){
     const startButtonText = "Start Quiz";
-    const titleText = this.props.assessment.get('title', '');
 
     return <div className="assessment">
-      <div>{titleText}</div>
+      <div>{this.props.title}</div>
       <div className="section_list">
         <div className="section_container">
           {this.instructions()}

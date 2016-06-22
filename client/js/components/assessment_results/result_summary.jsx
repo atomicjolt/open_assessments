@@ -25,19 +25,19 @@ export default class ResultSummary extends React.Component{
 
       if(!correct || correct == "partial"){
         lists.negativeList.push(this.props.outcomes[sectionIndex]);
-        i += (this.props.settings.perSec - perSecCount);
+        i += (this.props.settings.questions_per_section - perSecCount);
         sectionIndex++;
         perSecCount = 0;
         continue;
       } else {
         correctCount++;
-        if(correctCount == this.props.settings.perSec || correctCount == this.props.assessment.sections[sectionIndex].items.length){
+        if(correctCount == this.props.settings.questions_per_section || correctCount == this.props.assessment.sections[sectionIndex].items.length){
           lists.positiveList.push(this.props.outcomes[sectionIndex]);
           correctCount = 0;
         }
       }
 
-      if(perSecCount == this.props.settings.perSec || perSecCount == this.props.assessment.sections[sectionIndex].items.length){
+      if(perSecCount == this.props.settings.questions_per_section || perSecCount == this.props.assessment.sections[sectionIndex].items.length){
         sectionIndex++;
         correctCount = 0;
         perSecCount = 0;
@@ -89,20 +89,24 @@ export default class ResultSummary extends React.Component{
   render() {
     var outcomeLists = this.generateOutcomeLists();
     var name = "Your Score";
+
     if( this.props.user && this.props.user.name ){
       name = "Score for " + this.props.user.name;
     }
-    var timeSpent = null;
-    if( this.props.timeSpent ){
-      timeSpent= "Time Spent: " + this.props.timeSpent.minutes + " mins " + this.props.timeSpent.seconds + " secs"
-    }
-    var contentData = {
-          goodWork:"Good Work on These Concepts",
-          moreToLearn:"There is Still More to Learn",
-          focusStudy:"Review these concepts before your last quiz attempt or to prepare for your next performance assessment."
-        };
 
-    if(this.props.settings.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
+    var timeSpent = null;
+
+    if( this.props.timeSpent ){
+      timeSpent= "Time Spent: " + this.props.timeSpent.minutes + " mins " + this.props.timeSpent.seconds + " secs";
+    }
+
+    var contentData = {
+      goodWork:"Good Work on These Concepts",
+      moreToLearn:"There is Still More to Learn",
+      focusStudy:"Review these concepts before your last quiz attempt or to prepare for your next performance assessment."
+    };
+
+    if(this.props.settings.assessment_kind === "SHOW_WHAT_YOU_KNOW"){
       contentData = {
         goodWork: "What You Already Know",
         moreToLearn: "What You Need to Learn",
@@ -112,29 +116,29 @@ export default class ResultSummary extends React.Component{
 
     return (<div className="row" tabIndex="0">
 
-          <div className="col-md-4 col-sm-4 col-xs-4" >
-            <h3><strong>{name}</strong></h3>
-            <div>
-              <h1>{Math.floor(this.props.assessmentResult.score)}%</h1>
-            </div>
-            {timeSpent}
-            <br />
-          </div>
+      <div className="col-md-4 col-sm-4 col-xs-4" >
+        <h3><strong>{name}</strong></h3>
+        <div>
+          <h1>{Math.floor(this.props.assessmentResult.score)}%</h1>
+        </div>
+        {timeSpent}
+        <br />
+      </div>
 
-          <div className="col-md-4 col-sm-4 col-xs-4" >
-            <h3><strong>{contentData.goodWork}</strong></h3>
-            <p>You answered questions that covered these concepts correctly.</p>
-            {outcomeLists.positiveList}
-            <div></div>
-          </div>
+      <div className="col-md-4 col-sm-4 col-xs-4" >
+        <h3><strong>{contentData.goodWork}</strong></h3>
+        <p>You answered questions that covered these concepts correctly.</p>
+        {outcomeLists.positiveList}
+        <div></div>
+      </div>
 
-          <div className="col-md-4 col-sm-4 col-xs-4" >
-            <h3><strong>{contentData.moreToLearn}<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
-            <p>{contentData.focusStudy}</p>
-            {outcomeLists.negativeList}
-          </div>
+      <div className="col-md-4 col-sm-4 col-xs-4" >
+        <h3><strong>{contentData.moreToLearn}<i styleclassName="glyphicon glyphicon-warning-sign" ></i></strong></h3>
+        <p>{contentData.focusStudy}</p>
+        {outcomeLists.negativeList}
+      </div>
 
-        </div>)
+    </div>);
   }
 
 }

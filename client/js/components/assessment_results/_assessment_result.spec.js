@@ -12,7 +12,7 @@ describe('assessment result', function() {
   beforeAll(function(){
     jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
     const settings = {
-      assessmentKind:"SUMMATIVE"
+      assessment_kind: "SUMMATIVE"
     };
     const assessment =  readFixtures("qti1/text.xml");
     const assessmentMetaData = {

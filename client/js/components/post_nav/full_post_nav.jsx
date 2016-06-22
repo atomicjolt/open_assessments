@@ -6,14 +6,14 @@ import * as CommunicationActions  from "../../actions/communications";
 
 const select = (state, props) => {
   return {
-    display: state.settings.get("show_post_message_navigation")
+    show_post_message_navigation: state.settings.get("show_post_message_navigation")
   };
 };
 
 export class FullPostNav extends React.Component {
 
   render() {
-    if (!this.props.display || self == top) {
+    if (!this.props.show_post_message_navigation || self == top) {
       return <div></div>;
     }
 

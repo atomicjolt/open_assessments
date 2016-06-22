@@ -1,9 +1,9 @@
 "use strict";
 
-import React                            from "react";
+import React                      from "react";
 
 export default (props) => {
-  if (!props.display || self == top) {
+  if (!props.show_post_message_navigation || self == top) {
     return <div></div>;
   }
 

@@ -1,12 +1,12 @@
 "use strict";
 
-import React                 from 'react';
+import React                  from 'react';
 
-import AssessmentActions     from "../../actions/assessment";
-import ReviewAssessmentStore from "../../stores/review_assessment";
-import ItemResult            from "./item_result";
-import ResultSummary         from "./result_summary.jsx";
-import StudyPlanButton       from "../post_nav/study_plan_button.jsx";
+import * as AssessmentActions from "../../actions/assessment";
+import ReviewAssessmentStore  from "../../stores/review_assessment";
+import ItemResult             from "./item_result";
+import ResultSummary          from "./result_summary.jsx";
+import StudyPlanButton        from "../post_nav/study_plan_button.jsx";
 
 export default class SummativeResult extends React.Component{
   getItemResults(){
@@ -66,7 +66,10 @@ export default class SummativeResult extends React.Component{
         />
 
 
-      <StudyPlanButton navigateHome={() => { this.props.navigateHome }}/>
+      <StudyPlanButton
+        showPostMessageNavigation={this.props.showPostMessageNavigation}
+        navigateHome={() => { this.props.navigateHome() }}
+      />
 
         <hr />
 
