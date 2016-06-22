@@ -3,7 +3,7 @@
 import React                                  from "react";
 import { connect }                            from "react-redux";
 
-import * as AssessmentActions                 from "../../actions/assessment";
+// import * as AssessmentActions                 from "../../actions/assessment";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
 import appHistory                             from "../../history";
 import Item                                   from "../assessments/item";
@@ -49,17 +49,17 @@ export class Assessment extends React.Component{
       question         = {props.allQuestions[index]}
       currentItemIndex = {index}
       questionCount    = {props.questionCount}
-      messageIndex     = {-1 /*props.progress.get('answerMessageIndex')*/}
+      messageIndex     = {props.progress.getIn(['answerMessageIndex', `${index}`])}
       allQuestions     = {props.allQuestions}
       studentAnswers   = {{/*this.props.studentAnswers*/}}
       confidenceLevels = {{/*this.props.settings.confidence_levels*/}}
       outcomes         = {props.outcomes}
       shouldShowFooter
 
-      nextQuestionClicked = {() => {console.log("next");}}
-      prevQuestionClicked = {() => {}}
-      confidenceLevelClicked = {() => {}}
-      submitButtonClicked = {() => {}}
+      nextQuestionClicked = {() => {this.props.nextQuestion();}}
+      prevQuestionClicked = {() => {this.props.previousQuestion();}}
+      confidenceLevelClicked = {() => {/* TODO */}}
+      submitButtonClicked = {() => {/* TODO */ }}
       />;
   }
 
@@ -74,7 +74,7 @@ export class Assessment extends React.Component{
     let items = [];
     if(displayNum > 0 && displayNum < this.props.questionCount){
       let start = current / displayNum;
-      for(let i = start; i < displayNum; i++){
+      for(let i = start; i < (start + displayNum); i++){
         items.push(this.getItem(i));
       }
     } else {

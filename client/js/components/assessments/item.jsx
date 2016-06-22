@@ -56,7 +56,7 @@ export default class Item extends React.Component{
 
   submitButtonClicked(e){
     e && e.preventDefault();
-    AssessmentActions.selectQuestion(this.props.currentItemIndex);
+    // AssessmentActions.selectQuestion(this.props.currentItemIndex);
     var complete = this.checkCompletion();
     if(complete === true){
       window.onbeforeunload = null;
@@ -67,6 +67,7 @@ export default class Item extends React.Component{
     }
   }
 
+  //NOTE move to assessment?
   checkCompletion(){
     var questionsNotAnswered = [];
     var answers = this.props.allStudentAnswers;
@@ -149,23 +150,21 @@ export default class Item extends React.Component{
         </button>);
   }
 
-
+  //NOTE ask david
   getResult(index){
     var result;
 
-    if(index == -1){
+    if(index == 1){
       result = <div className="check_answer_result">
-                <p></p>
-              </div>;
-    }
-    else if(index == 0){
+                  <p>Correct</p>
+               </div>;
+    } else if(index == 2) {
       result = <div className="check_answer_result">
                   <p>Incorrect</p>
                 </div>;
-    }
-    else {
+    } else {
       result = <div className="check_answer_result">
-                  <p>Correct</p>
+                <p></p>
                </div>;
     }
 
