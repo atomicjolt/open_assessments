@@ -1,9 +1,8 @@
 "use strict";
 
-import React                from "react";
-import { connect }          from "react-redux";
-
-import CommunicationHandler from "../../utils/communication_handler";
+import React                      from "react";
+import { connect }                from "react-redux";
+import * as CommunicationActions  from "../../actions/communications";
 
 const select = (state, props) => {
   return {
@@ -19,11 +18,11 @@ export class FullPostNav extends React.Component {
     }
 
     return <div className="lti-bottom-nav-buttons">
-        <button className="lti-nav-btn" id="lti-prev" onClick={()=>{CommunicationHandler.navigatePrevious();}}><span className="lti-btn-arrow">&#10094;</span><span className="lti-btn-text">Previous</span></button>
-        <button className="lti-nav-btn" id="lti-next" onClick={()=>{CommunicationHandler.navigateNext();}}><span className="lti-btn-text">Next</span><span className="lti-btn-arrow">&#10095;</span></button>
-        <button className="lti-nav-btn" id="study-plan" onClick={()=>{CommunicationHandler.navigateHome();}}>Study Plan</button>
-      </div>;
+      <button className="lti-nav-btn" id="lti-prev" onClick={()=>{this.props.navigatePrevious();}}><span className="lti-btn-arrow">&#10094;</span><span className="lti-btn-text">Previous</span></button>
+      <button className="lti-nav-btn" id="lti-next" onClick={()=>{this.props.navigateNext();}}><span className="lti-btn-text">Next</span><span className="lti-btn-arrow">&#10095;</span></button>
+      <button className="lti-nav-btn" id="study-plan" onClick={()=>{this.props.navigateHome();}}>Study Plan</button>
+    </div>;
   }
 };
 
-export default connect(select, {})(FullPostNav);
+export default connect(select, { ...CommunicationActions })(FullPostNav)

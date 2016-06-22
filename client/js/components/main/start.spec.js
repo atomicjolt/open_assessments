@@ -34,8 +34,7 @@ describe('start', function() {
     expect(subject.innerHTML).toContain("Summative");
   });
   it('renders default', () =>{
-    props.assessment_kind = "";
-
+    props['assessment_kind'] = '';
     result = TestUtils.renderIntoDocument(<Start {...props} /> );
     subject = ReactDOM.findDOMNode(result);
 

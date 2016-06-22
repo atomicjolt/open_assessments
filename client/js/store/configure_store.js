@@ -4,8 +4,9 @@ import rootReducer                               from '../reducers';
 import DevTools                                  from '../dev/dev_tools.jsx';
 import API                                       from '../middleware/api';
 import AssessmentLoader                          from '../middleware/assessment_loader';
+import Communications                            from '../middleware/communications';
 
-let middleware = [ API, AssessmentLoader ];
+let middleware = [ API, AssessmentLoader, Communications ];
 
 let enhancers = [
   applyMiddleware(...middleware)
