@@ -14,7 +14,7 @@ const select = (state, props) => {
   return {
     settings             : state.settings.toJS(),
     assessment           : state.assessment,
-    progress             : state.progress,
+    progress             : state.progress.toJS(),
     currentQuestion      : state.progress.get('currentItemIndex'),
     responses            : state.progress.get('responses').toJS(),
     questionCount        : questionCount(state, props),
@@ -26,7 +26,7 @@ const select = (state, props) => {
 export class Assessment extends React.Component{
 
   componentWillMount(){
-    if(this.props.progress.get('assessmentResult') != null){
+    if(this.props.progress.assessmentResult != null){
       appHistory.push("assessment-result");
     }
   }
@@ -90,7 +90,7 @@ export class Assessment extends React.Component{
       question         = {props.allQuestions[index]}
       currentItemIndex = {index}
       questionCount    = {props.questionCount}
-      messageIndex     = {props.progress.getIn(['answerMessageIndex', `${index}`])}
+      messageIndex     = {props.progress.answerMessageIndex[index]}
       allQuestions     = {props.allQuestions}
       studentAnswers   = {{/*this.props.studentAnswers*/}}
       confidenceLevels = {{/*this.props.settings.confidence_levels*/}}
@@ -111,7 +111,7 @@ export class Assessment extends React.Component{
    */
   getItems(){
     let displayNum = this.props.settings.questions_per_section;
-    let current = this.props.progress.get('currentItemIndex');
+    let current = this.props.progress.currentItemIndex;
     let items = [];
     if(displayNum > 0 && displayNum < this.props.questionCount){
       let start = current / displayNum;
@@ -132,7 +132,7 @@ export class Assessment extends React.Component{
    * or loading bar should be rendered
    */
   getContent(){
-    if(this.props.progress.get('isSubmitted')){
+    if(this.props.progress.isSubmitted){
       return <Loading />;
     } else if(!this.props.questionCount) {
       return <Loading />;
