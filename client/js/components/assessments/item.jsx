@@ -68,19 +68,7 @@ export default class Item extends React.Component{
   //   return "";
   // }
 
-  getWarning(state, questionCount, questionIndex){
-    if(state.unAnsweredQuestions &&
-      state.unAnsweredQuestions.length > 0 &&
-      questionIndex + 1 == questionCount){
-      return <div>
-        <i className="glyphicon glyphicon-exclamation-sign"></i>
-         You left question(s) {/*state.unAnsweredQuestions.join()*/} blank.
-         Use the "Progress" drop-down menu at the top to go back and answer
-         the question(s), then come back and submit.
-       </div>;
-    }
-    return "";
-  }
+
 
   // getConfidenceLevels(level){
   //   if(level){
@@ -97,9 +85,6 @@ export default class Item extends React.Component{
   // }
 
   getNavigationButtons() {
-    // if (!this.props.shouldShowNextPrevious && this.props.confidenceLevels) {
-    //   return "";
-    // }
     return <div className="confidence_wrapper">
               {this.getPreviousButton()}
               {this.getNextButton()}
@@ -153,18 +138,17 @@ export default class Item extends React.Component{
     return;
   }
 
-  //NOTE ask david
   getResult(index){
     var result;
 
-    if(index == 1){
+    if(index == CORRECT_RESPONSE){
       result = <div className="check_answer_result">
                   <p>Correct</p>
                </div>;
-    } else if(index == 2) {
+    } else if(index == INCORRECT_RESPONSE) {
       result = <div className="check_answer_result">
-                  <p>Incorrect</p>
-                </div>;
+                <p>Incorrect</p>
+               </div>;
     } else {
       result = <div className="check_answer_result">
                 <p></p>
@@ -176,25 +160,20 @@ export default class Item extends React.Component{
 
 
   render() {
-    // var unAnsweredWarning = this.getWarning(this.state, this.props.questionCount, this.props.currentItemIndex);
     var result = this.getResult(this.props.messageIndex);
     var must_answer_message = this.state && this.state.showMessage ? <div>You must select an answer before continuing.</div> : "";
-    // var confidenceButtons = this.getConfidenceLevels(this.props.confidenceLevels);
-    // var footer = this.getFooterNav();
-    var navigationDiv = this.getNavigationButtons();
+    var navigation = this.getNavigationButtons();
 
-    //Check if we need to display the counter in the top right
     var counter = this.getCounter();
     let submitButton = this.getSubmitButton();
 
     var questionDirections = "";
     if(this.props.question.question_type == "multiple_answers_question"){
       questionDirections =
-      <div>Choose <b>ALL</b> that apply.</div>
-    }
-    else {
+        <div>Choose <b>ALL</b> that apply.</div>;
+    } else {
       questionDirections =
-      <div>Choose the <b>BEST</b> answer.</div>
+        <div>Choose the <b>BEST</b> answer.</div>;
     }
 
     return (
@@ -221,9 +200,7 @@ export default class Item extends React.Component{
                 <div className="row">
                   <div className="col-md-5 col-sm-6 col-xs-8" >
                     {result}
-                    {/*confidenceButtons*/}
-                    {navigationDiv}
-                    {/*unAnsweredWarning*/}
+                    {navigation}
                     {must_answer_message}
                   </div>
                   <div className="col-md-7 col-sm-6 col-xs-4">
@@ -233,10 +210,11 @@ export default class Item extends React.Component{
               </div>
             </form>
           </div>
-          {/*footer*/}
         </div>
       </div>
     );
   }
-
 }
+
+export const CORRECT_RESPONSE = 1;
+export const INCORRECT_RESPONSE = 2;

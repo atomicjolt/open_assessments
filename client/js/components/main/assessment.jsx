@@ -16,6 +16,7 @@ const select = (state, props) => {
     settings             : state.settings.toJS(),
     assessment           : state.assessment,
     progress             : state.progress,
+    currentQuestion      : state.progress.get('currentItemIndex'),
     responses            : state.progress.get('responses').toJS(),
     questionCount        : questionCount(state, props),
     allQuestions         : questions(state, props),
@@ -23,7 +24,6 @@ const select = (state, props) => {
   };
 };
 
-//NOTE Add warning
 export class Assessment extends React.Component{
 
   componentWillMount(){
@@ -38,7 +38,6 @@ export class Assessment extends React.Component{
   }
 
   submitAssessment(){
-    console.log("submit");
     var complete = this.checkCompletion();
     if(complete === true){
       window.onbeforeunload = null;
@@ -50,12 +49,14 @@ export class Assessment extends React.Component{
         this.props.settings,
         this.props.outcomes
       );
+    } else {
+      //TODO display some sort of warning message?
     }
   }
 
   checkCompletion(){
     return true;
-    //NOTE  Old implementation
+    //TODO
     // var questionsNotAnswered = [];
     // var responses = this.props.responses;
     // for (var i = 0; i < answers.length; i++) {
@@ -134,6 +135,19 @@ export class Assessment extends React.Component{
     }
   }
 
+  isLastQuestion(){
+    return this.props.currentQuestion === this.props.questionCount -1;
+  }
+
+  getWarning(){
+    let unanswered = true;
+    let warning;
+    if(unanswered && this.isLastQuestion()){
+      warning = <div>Warning There are unanswered questions</div>;
+    }
+    return warning;
+  }
+
   popup(){
     return "Don’t leave!\n If you leave now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this quiz and then use the \"Progress\" drop-down menu";
   }
@@ -150,11 +164,14 @@ export class Assessment extends React.Component{
     let progressBar; //TODO add progress bar
     let titleText =  this.props.assessment.title;
     let content = this.getContent();
+    let warning = this.getWarning();
+
     return<div className="assessment">
       <div>{titleText}</div>
       {progressBar}
       <div className="section_list">
         <div className="section_container">
+          {warning}
           {content}
         </div>
       </div>
