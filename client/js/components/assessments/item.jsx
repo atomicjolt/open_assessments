@@ -45,6 +45,7 @@ export default class Item extends React.Component{
     let disabled = (this.props.currentItemIndex == this.props.questionCount - 1);
     return (
         <button
+          className="next-btn"
           onClick={(e) => { this.nextButtonClicked(e); }}
           disabled={disabled}
         >
@@ -56,6 +57,7 @@ export default class Item extends React.Component{
     let disabled = (this.props.currentItemIndex === 0);
     return (
         <button
+          className="prev-btn"
           onClick={(e) => { this.previousButtonClicked(e); }}
           disabled={disabled}
         >
