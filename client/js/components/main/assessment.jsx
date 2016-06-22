@@ -4,23 +4,18 @@ import React                                  from "react";
 import { connect }                            from "react-redux";
 
 import * as AssessmentActions                 from "../../actions/assessment";
+import * as AssessmentProgress                from "../../actions/assessment_progress";
 import appHistory                             from "../../history";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import ProgressDropdown                       from "../common/progress_dropdown";
-import { questionCount, questions, outcomes } from "../../selectors/assessment";
+import {questionCount, questions, outcomes }  from "../../selectors/assessment";
 
 const select = (state, props) => {
   return {
     settings             : state.settings,
     assessment           : state.assessment,
-    isStarted            : state.progress.istarted,
-    isSubmitted          : state.progress.isSubmitted,
-    question             : state.progress.currentQuestion,
-    currentItemIndex     : state.progress.currentItemIndex,
-    assessmentResult     : state.progress.assessmentResult,
-    messageIndex         : state.progress.answerMessageIndex,
-    studentAnswers       : state.progress.allStudentAnswers,
+    progress             : state.progress,
     questionCount        : questionCount(state, props),
     allQuestions         : questions(state, props),
     outcomes             : outcomes(state, props)
@@ -30,14 +25,72 @@ const select = (state, props) => {
 export class Assessment extends React.Component{
 
   componentWillMount(){
-    if(this.props.assessmentResult != null){
+    if(this.props.progress.get('assessmentResult') != null){
       appHistory.push("assessment-result");
     }
   }
 
   componentDidMount(){
     // Trigger action to indicate the assessment was viewed
-    this.props.assessmentViewed(this.props.settings, this.props.assessment);
+    this.props.assessmentViewed();
+  }
+
+  /**
+   * Return an item for a given index in props.allQuestions
+   */
+  getItem(index){
+    let props = this.props;
+    if(props.questionCount === undefined || index >= props.questionCount || index < 0){
+      return <div></div>;
+    }
+    return <Item
+      assessment       = {props.assessment}
+      settings         = {props.settings}
+      question         = {props.allQuestions[index]}
+      currentItemIndex = {index}
+      questionCount    = {props.questionCount}
+      messageIndex     = {-1 /*props.progress.get('answerMessageIndex')*/}
+      allQuestions     = {props.allQuestions}
+      studentAnswers   = {{/*this.props.studentAnswers*/}}
+      confidenceLevels = {{/*this.props.settings.confidence_levels*/}}
+      outcomes         = {props.outcomes}/>;
+  }
+
+  /**
+   * Returns an array of Items containing the question at
+   * state.progress.currentItemIndex. The array will be of length
+   * specified by props.settings.questions_per_section.
+   */
+  getItems(){
+    let displayNum = this.props.settings.get('questions_per_section');
+    let current = this.props.progress.get('currentItemIndex');
+    let items = [];
+    if(displayNum > 0 && displayNum < this.props.questionCount){
+      let start = current / displayNum;
+      for(let i = start; i < displayNum; i++){
+        items.push(this.getItem(i));
+      }
+    } else {
+      this.props.allQuestions.forEach((question, index) => {
+        items.push(this.getItem(index));
+      });
+    }
+
+    return items;
+  }
+
+  /**
+   * Returns page content to be rendered. Will determine if questions
+   * or loading bar should be rendered
+   */
+  getContent(){
+    if(this.props.progress.get('isSubmitted')){
+      return <Loading />;
+    } else if(!this.props.questionCount) {
+      return <Loading />;
+    } else {
+      return this.getItems();
+    }
   }
 
   popup(){
@@ -49,79 +102,18 @@ export class Assessment extends React.Component{
   }
 
   render(){
-    window.onbeforeunload = this.popup;
-    // // if(AssessmentStore.assessmentResult() != null || this.props.settings.assessment_type.toUpperCase() != "SUMMATIVE"){
-    //   // window.onbeforeunload = null;
-    // // }
-
-    var showStart = this.props.settings.enable_start && !this.props.assessment.isStarted;
-    var content;
-    var progressBar;
-    var titleBar;
-
-    if(!this.props.ed || this.props.isSubmitted){
-      content = <Loading />;
-    } else if(showStart){
-
-      content = <CheckUnderstanding
-        title           = {this.props.assessment.title}
-        name            = {this.props.question.name}
-        maxAttempts     = {this.props.settings.allowed_attempts}
-        userAttempts    = {this.props.settings.user_attempts}
-        eid             = {this.props.settings.lis_user_id}
-        isLti           = {this.props.settings.is_lti}
-        assessmentId    = {this.props.assessment.assessment_id}
-        assessmentKind  = {this.props.settings.assessment_type}
-        primaryOutcome  = {this.props.outcomes[0]}
-        ltiRole         = {this.props.settings.lti_role}
-        icon            = {this.props.settings.images.quiz_icon_svg}/>;
-
-      //TODO progress bar sytles
-      progressBar = <div>
-                      {progressText}
-                      <ProgressDropdown disabled={true} questions={this.props.allQuestions} currentQuestion={this.props.currentItemIndex + 1} questionCount={this.props.questionCount} />
-                    </div>;
-
-    } else {
-      content = <Item
-        question         = {this.props.question}
-        assessment       = {this.props.assessment}
-        currentItemIndex = {this.props.currentItemIndex}
-        settings         = {this.props.settings}
-        questionCount    = {this.props.questionCount}
-        assessmentResult = {this.props.assessmentResult}
-        messageIndex     = {this.props.messageIndex}
-        allQuestions     = {this.props.allQuestions}
-        studentAnswers   = {this.props.studentAnswers}
-        confidenceLevels = {this.props.settings.confidence_levels}
-        outcomes         = {this.props.outcomes}/>;
-
-      //TODO progress bar styles
-      progressBar = <div>
-                      {progressText}
-                      <ProgressDropdown settings={this.props.settings} questions={this.props.allQuestions} currentQuestion={this.props.currentItemIndex + 1} questionCount={this.props.questionCount} />
-                    </div>;
-    // // TODO figure out when to mark an item as viewed. assessmentResult must be valid before this call is made.
-    //   // AssessmentActions.itemViewed(this.props.settings, this.props.assessment, this.props.assessmentResult);
+    if(this.props.settings.get("assessment_kind") === "SUMMATIVE"){
+      window.onbeforeunload = this.popup;
     }
 
-    var isSummative = false; // this.props.settings.assessment_type.toUpperCase() === "SUMMATIVE";
-
-    var percentCompleted = this.checkProgress(this.props.currentItemIndex, this.props.questionCount);
-    var progressStyle = {width:percentCompleted+"%"};
-    var progressText = "";
-    var quizType = isSummative ? "Quiz" : "Show What You Know";
-    var titleBar = isSummative ? <div>{this.props.assessment ? this.props.assessment.title : ""}</div> : "";
-    if(this.props.assessment){
-      progressText = this.props.settings.shouldShowProgressText ? <div><b>{this.props.assessment.title + " Progress"}</b>{" - You are on question " + (this.props.currentItemIndex + 1) + " of " + this.props.questionCount}</div> : "";
-    }
-    progressBar = isSummative ? progressBar : "";
+    let progressBar; //TODO add progress bar
+    let titleText =  this.props.assessment.title;
+    let content = this.getContent();
     return<div className="assessment">
-      {titleBar}
+      <div>{titleText}</div>
       {progressBar}
       <div className="section_list">
         <div className="section_container">
-        easdfasdfasdf
           {content}
         </div>
       </div>
@@ -130,4 +122,4 @@ export class Assessment extends React.Component{
 
 }
 
-export default connect(select, {...AssessmentActions})(Assessment);
+export default connect(select, {...AssessmentProgress})(Assessment);

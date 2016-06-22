@@ -12,7 +12,7 @@ function getSelectors(standard){
 
 function makeDispatchingSelector(name){
   return (state, props) => {
-    var selectors = getSelectors(state.assessment.get('standard'));
+    var selectors = getSelectors(state.assessment.standard);
     if(selectors === undefined){return;} // Handle no assessment loaded
     var func = selectors[name];
     return func(state, props);

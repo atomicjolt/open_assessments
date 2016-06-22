@@ -37,7 +37,7 @@ export function getItems(sections, questionsPerSection, shuffleQuestionAnswers) 
 // Extract outcomes from sections. Ignore the "root section" outcome.
 export function loadOutcomes(sections) {
   return sections
-    .map((section) => section.get("outcome"))
+    .map((section) => section.outcome)
     .filter((outcome) => outcome != "root section");
 }
 
