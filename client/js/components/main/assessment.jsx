@@ -43,7 +43,9 @@ export class Assessment extends React.Component{
     if(props.questionCount === undefined || index >= props.questionCount || index < 0){
       return <div></div>;
     }
+
     return <Item
+      key              = {index}
       assessment       = {props.assessment}
       settings         = {props.settings}
       question         = {props.allQuestions[index]}
@@ -52,8 +54,8 @@ export class Assessment extends React.Component{
       messageIndex     = {-1 /*props.progress.get('answerMessageIndex')*/}
       allQuestions     = {props.allQuestions}
       studentAnswers   = {{/*this.props.studentAnswers*/}}
-      confidenceLevels = {{/*this.props.settings.confidence_levels*/}}
-      outcomes         = {props.outcomes}/>;
+      confidenceLevels = {false /*this.props.settings.confidence_levels*/}
+      outcomes         = {props.outcomes} />;
   }
 
   /**
