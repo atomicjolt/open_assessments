@@ -1,9 +1,9 @@
-import React              from 'react';
-import ReactDOM           from 'react-dom';
-import TestUtils          from 'react/lib/ReactTestUtils';
+import React                  from 'react';
+import ReactDOM               from 'react-dom';
+import TestUtils              from 'react/lib/ReactTestUtils';
 import { AssessmentResult }   from './_assessment_result';
-import Rapper             from '../../../specs_support/rapper';
-import configureStore     from '../../store/configure_store';
+import Rapper                 from '../../../specs_support/rapper';
+import configureStore         from '../../store/configure_store';
 
 describe('assessment result', function() {
 
@@ -32,7 +32,10 @@ describe('assessment result', function() {
       questionResponses:[],
       assessmentPostAnalytics:() => {},
       assessmentPostLtiOutcome:() => {},
-      outcomes:() => []
+      outcomes:() => [],
+      sendSize: () => {},
+      showLMSNavigation: () => {},
+      navigateHome: () => {},
     };
     result = TestUtils.renderIntoDocument(<AssessmentResult {...props} />);
 

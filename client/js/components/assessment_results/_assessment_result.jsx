@@ -3,6 +3,7 @@
 import React                      from 'react';
 import { connect }                from "react-redux";
 import * as AssessmentActions     from "../../actions/assessment";
+import * as CommunicationActions   from "../../actions/communications";
 import FormativeResult            from "./formative_result.jsx";
 import SummativeResult            from "./summative_result.jsx";
 import { questions, outcomes }    from "../../selectors/assessment";
@@ -29,6 +30,10 @@ export class AssessmentResult extends React.Component{
   componentDidMount(){
     this.props.sendSize();
     this.props.showLMSNavigation();
+  }
+
+  componentDidUpdate() {
+    this.props.sendSize();
   }
 
   sendAnalytics(){
@@ -73,9 +78,10 @@ export class AssessmentResult extends React.Component{
           timeSpent={this.props.timeSpent}
           isSummative={this.isSummative()}
           outcomes={this.props.outcomes}
+          navigateHome={() => { this.props.navigateHome() }}
         />;
     }
   }
 };
 
-export default connect(select, {...AssessmentActions}, null, {withRef: true})(AssessmentResult);
+export default connect(select, {...AssessmentActions, ...CommunicationActions}, null, {withRef: true})(AssessmentResult);

@@ -31,16 +31,18 @@ export class Index extends React.Component {
 
     // Generate an action anytime the window is resized
     window.onresize = (e) => {
-      this.props.postSize();
+      this.props.sendSize();
     };
 
   }
 
   componentDidMount(){
+    this.props.sendSize();
     this.props.scrollParentToTop();
   }
 
   componentDidUpdate(){
+    this.props.sendSize();
     this.props.scrollParentToTop();
   }
 

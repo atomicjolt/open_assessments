@@ -3,7 +3,7 @@
 import wrapper from '../constants/wrapper';
 
 const constants = [
-  "POST_SIZE",
+  "SEND_SIZE",
   "SCROLL_PARENT_TO_TOP",
   "LTI_NAVIGATE_HOME",
   "LTI_NAVIGATE_NEXT",
@@ -16,9 +16,9 @@ const requests = [];
 
 export const Constants = wrapper(constants, requests);
 
-export const postSize = () => {
+export const sendSize = () => {
   return {
-    type: Constants.POST_SIZE
+    type: Constants.SEND_SIZE
   };
 };
 

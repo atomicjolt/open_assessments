@@ -1,11 +1,10 @@
-import communication                            from "./communications";
+import { default as communication, communicationHandler }               from "./communications";
 import { Constants as CommunicationConstants }  from "../actions/communications";
-import CommHandler                              from "../utils/communication_handler.js";
 
 describe('iframe communication middleware', () => {
   beforeEach(() => {
-    spyOn(CommHandler, 'sendSize');
-    spyOn(CommHandler, 'scrollParentToTop');
+    spyOn(communicationHandler, 'sendSize');
+    spyOn(communicationHandler, 'scrollParentToTop');
   });
 
   it('implements Redux middleware interface', () => {
@@ -34,10 +33,10 @@ describe('iframe communication middleware', () => {
     actionHandler(action);
   });
 
-  it('calls comm handler sendsize when it recieves POST_SIZE', () => {
+  it('calls comm handler sendsize when it recieves SEND_SIZE', () => {
     const store = { getState: () => {} };
     const action = {
-      type: CommunicationConstants.POST_SIZE
+      type: CommunicationConstants.SEND_SIZE
     };
 
     const middleware = communication(store);
@@ -45,7 +44,7 @@ describe('iframe communication middleware', () => {
     const actionHandler = middleware(nextHandler);
     actionHandler(action);
 
-    expect(CommHandler.sendSize).toHaveBeenCalled();
+    expect(communicationHandler.sendSize).toHaveBeenCalled();
   });
 
   it('calls comm handler scrollParentToTop when it recieves SCROLL_PARENT_TO_TOP', () => {
@@ -59,6 +58,6 @@ describe('iframe communication middleware', () => {
     const actionHandler = middleware(nextHandler);
     actionHandler(action);
 
-    expect(CommHandler.scrollParentToTop).toHaveBeenCalled();
+    expect(communicationHandler.scrollParentToTop).toHaveBeenCalled();
   });
 });

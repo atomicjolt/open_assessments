@@ -5,7 +5,7 @@ import { connect }                      from "react-redux";
 import * as CommunicationActions        from "../../actions/communications";
 import CommHandler                      from "../../utils/communication_handler";
 
-export class StudyPlanButton extends React.Component {
+export default class StudyPlanButton extends React.Component {
 
   render() {
     if (!this.props.display || self == top) {
@@ -19,5 +19,3 @@ export class StudyPlanButton extends React.Component {
     </div>;
   }
 };
-
-export default connect(null, { ...CommunicationActions })(StudyPlanButton)

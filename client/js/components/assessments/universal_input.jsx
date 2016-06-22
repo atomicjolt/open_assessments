@@ -13,22 +13,11 @@ import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
 
-export class UniversalInput extends React.Component{
+export default class UniversalInput extends React.Component{
 
   static propTypes = {
     item: React.PropTypes.object.isRequired,
     isResult: React.PropTypes.bool
-  }
-
-  componentDidMount(){
-    this.props.sendSize();
-    this.props.scrollParentToTop();
-    this.props.hideLMSNavigation();
-  }
-
-  componentDidUpdate(){
-    this.props.sendSize();
-    this.props.scrollParentToTop();
   }
 
   wasChosen(id){
@@ -140,5 +129,3 @@ export class UniversalInput extends React.Component{
            );
   }
 }
-
-export default connect(null, { ...CommunicationActions })(UniversalInput)

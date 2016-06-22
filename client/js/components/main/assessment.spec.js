@@ -30,6 +30,9 @@ describe('assessment', function() {
 
     var props = {
       assessmentViewed:() => {},
+      sendSize: () => {},
+      scrollParentToTop: () => {},
+      hideLMSNavigation: () => {},
       settings,
       assessment
     };

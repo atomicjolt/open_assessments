@@ -9,11 +9,6 @@ import ResultSummary         from "./result_summary.jsx";
 import StudyPlanButton       from "../post_nav/study_plan_button.jsx";
 
 export default class SummativeResult extends React.Component{
-
-  constructor(props){
-    super(props);
-  }
-
   getItemResults(){
     if(this.props.questionResponses){
       return this.props.questionResponses.map((qr, index)=>{
@@ -71,7 +66,7 @@ export default class SummativeResult extends React.Component{
         />
 
 
-        <StudyPlanButton/>
+      <StudyPlanButton navigateHome={() => { this.props.navigateHome }}/>
 
         <hr />
 

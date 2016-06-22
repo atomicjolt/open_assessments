@@ -4,6 +4,7 @@ import React                                  from "react";
 import { connect }                            from "react-redux";
 
 import AssessmentActions                      from "../../actions/assessment";
+import CommunicationActions                   from "../../actions/communications";
 import appHistory                             from "../../history";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
@@ -38,6 +39,15 @@ export class Assessment extends React.Component{
   componentDidMount(){
     // Trigger action to indicate the assessment was viewed
     this.props.assessmentViewed(this.props.settings, this.props.assessment);
+
+    this.props.sendSize();
+    this.props.scrollParentToTop();
+    this.props.hideLMSNavigation();
+  }
+
+  componentDidUpdate() {
+    this.props.sendSize();
+    this.props.scrollParentToTop();
   }
 
   popup(){
@@ -130,4 +140,4 @@ export class Assessment extends React.Component{
 
 }
 
-export default connect(select, {...AssessmentActions})(Assessment);
+export default connect(select, {...AssessmentActions, ...CommunicationActions})(Assessment);

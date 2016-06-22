@@ -8,18 +8,17 @@ import appHistory           from "../history";
 import * as CommActions     from "../actions/communications";
 
 describe('index', function() {
-  var result, props, initCommCalled, scrollParentToTopCalled, postSizeCalled;
+  var result, props, scrollParentToTopCalled, sendSizeCalled;
 
 
   beforeEach(()=>{
-    initCommCalled = false;
     scrollParentToTopCalled = false;
-    postSizeCalled = false;
+    sendSizeCalled = false;
 
     props = {
       loadAssessment: () => {},
       scrollParentToTop: () => { scrollParentToTopCalled = true; },
-      postSize: () => { postSizeCalled = true; }
+      sendSize: () => { sendSizeCalled = true; }
     };
 
     result = TestUtils.renderIntoDocument(<Index {...props} />);
@@ -45,12 +44,8 @@ describe('index', function() {
     expect(appHistory.push).toHaveBeenCalledWith("retries-exceeded");
   });
 
-  it('calls the initialize comm handler action', () => {
-    expect(initCommCalled).toBe(true);
-  });
-
-  it('calls the post size comm handler action', () => {
-    expect(postSizeCalled).toBe(true);
+  it('calls the send size comm handler action', () => {
+    expect(sendSizeCalled).toBe(true);
   });
 
   it('calls the scroll parent to top comm handler action', () => {

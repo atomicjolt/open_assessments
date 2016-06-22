@@ -2,13 +2,13 @@ import { Constants as CommunicationConstants }      from "../actions/communicati
 import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
 import CommunicationHandler                         from "../utils/communication_handler.js";
 
-const communicationHandler = new CommunicationHandler();
+export const communicationHandler = new CommunicationHandler() ;
 
 const Communications = store => next => action => {
 
   switch(action.type) {
 
-    case CommunicationConstants.POST_SIZE:
+    case CommunicationConstants.SEND_SIZE:
       communicationHandler.sendSize();
       break;
 
