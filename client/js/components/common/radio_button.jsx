@@ -13,8 +13,9 @@ export default class RadioButton extends React.Component{
   }
 
   checkedStatus(){
-    var checked = null;
-    var optionFlag = null;
+    var checked     = null;
+    var optionFlag  = null;
+
     if( this.props.checked === true ) {
       checked = "true";
     } else if ( this.props.checked === false ){
@@ -22,45 +23,39 @@ export default class RadioButton extends React.Component{
     } else if ( !this.props.isDisabled ) {
       // checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null; TODO
     }
+
     return checked;
   }
 
   optionFlagStatus(){
+    var optionFlag;
     if(this.props.showAsCorrect){
       var label = "Correct Answer that was ";
-      var optionFlag;
       label += this.checkedStatus() ? "chosen" : "not chosen";
-      optionFlag = <div className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect}>&#10003;</div>;
+      optionFlag = <div className="correctIndicator"
+                        aria-label={label}
+                        style={styles.checkStyleCorrect}>&#10003;</div>;
     } else if (this.props.showAsCorrect === false && this.checkedStatus()){
-      optionFlag = <div className="wrongIndicator" aria-label="Wrong answer that was chosen" style={styles.checkStyleWrong}>&#10008;</div>;
+      optionFlag = <div className="wrongIndicator"
+                        aria-label="Wrong answer that was chosen"
+                        style={styles.checkStyleWrong}>&#10008;</div>;
     }
     return optionFlag;
   }
 
   render(){
-    var styles = Styles;
-    var checked = null;
-    var optionFlag = null;
-
-    var checked = this.checkedStatus();
-
-    var radio = <input type="radio" defaultChecked={checked} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>;
-
-    if(this.props.showAsCorrect){
-      var label = "Correct Answer that was ";
-      label += checked ? "chosen" : "not chosen";
-      optionFlag = <div className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect}>&#10003;</div>;
-    } else if (this.props.showAsCorrect === false && checked){
-      optionFlag = <div className="wrongIndicator" aria-label="Wrong answer that was chosen" style={styles.checkStyleWrong}>&#10008;</div>;
-    }
-
     return (
       <div>
         {this.optionFlagStatus()}
-        <div className="btn btn-block btn-question" style={styles.btnQuestion}>
+        <div className="btn btn-block btn-question" style={Styles.btnQuestion}>
           <label>
-            <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected() }}/>
-            <span style={styles.span}>{this.props.item.material}</span>
+            <input type="radio"
+                   defaultChecked={this.checkedStatus()}
+                   disabled={this.props.isDisabled}
+                   name={this.props.name}
+                   onClick={()=>{ this.answerSelected() }}
+            />
+            <span style={Styles.span}>{this.props.item.material}</span>
           </label>
         </div>
       </div>
