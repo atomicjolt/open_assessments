@@ -3,9 +3,11 @@ import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import Item               from './item';
 
-describe('item', function() {
+fdescribe('item', function() {
 
-  var question = {};
+  var question = {
+    title:"Test Question Title"
+  };
   var currentItemIndex = 0;
 
   var settings = {
@@ -20,12 +22,20 @@ describe('item', function() {
     settings={settings}
     questionCount={questionCount}
     assessment={assessment}
-    theme={{}}
+    nextQuestion = {() => {}}
+    prevQuestion = {() => {}}
+    submitAssessment = {() => {}}
   />);
 
   it('renders an item', function() {
     const subject = ReactDOM.findDOMNode(result);
-    expect(subject.textContent).toContain("Choose the BEST answer.");
+    expect(subject.textContent).toContain("Test Question Title");
   });
 
+  it("renders submit button on last question", () => {});
+  it("disables next button on last question", () => {});
+  it("disables previous button on first question", () => {});
+  it("calls nextQuestion callback on next button click", () => {});
+  it("calls prevQuestion callback on prev button click", () => {});
+  it("calls submitAssessment callback on submit button click", () => {});
 });
