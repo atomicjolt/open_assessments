@@ -23,6 +23,7 @@ const select = (state, props) => {
   };
 };
 
+//NOTE Add warning
 export class Assessment extends React.Component{
 
   componentWillMount(){
@@ -36,7 +37,6 @@ export class Assessment extends React.Component{
     this.props.assessmentViewed();
   }
 
-//NOTE working on submit assessment
   submitAssessment(){
     console.log("submit");
     var complete = this.checkCompletion();
@@ -54,7 +54,19 @@ export class Assessment extends React.Component{
   }
 
   checkCompletion(){
-    return true; //NOTE do
+    return true;
+    //NOTE  Old implementation
+    // var questionsNotAnswered = [];
+    // var responses = this.props.responses;
+    // for (var i = 0; i < answers.length; i++) {
+    //   if(answers[i] == null || answers[i].length == 0){
+    //     questionsNotAnswered.push(i+1);
+    //   }
+    // };
+    // if(questionsNotAnswered.length > 0){
+    //   return questionsNotAnswered;
+    // }
+    return true;
   }
 
   /**

@@ -4,10 +4,6 @@ import React                  from "react";
 import * as AssessmentActions from "../../actions/assessment";
 import UniversalInput         from "./universal_input";
 
-// NOTE pass NextQuestion from parent
-// NOTE pass PrevQuestion from parent
-// NOTE pass submit button clicked
-
 export default class Item extends React.Component{
 
   static propTypes = {
@@ -25,19 +21,15 @@ export default class Item extends React.Component{
 
   nextButtonClicked(e){
     e.preventDefault();
-    this.setState({unAnsweredQuestions: null});
     this.props.nextQuestion();
-    this.setState({showMessage: false});
   }
 
   previousButtonClicked(e){
     e.preventDefault();
-    this.setState({unAnsweredQuestions: null});
     this.props.prevQuestion();
-    this.setState({showMessage: false});
   }
 
-  confidenceLevelClicked(e, currentItemIndex){
+  // confidenceLevelClicked(e, currentItemIndex){
     // e.preventDefault();
     //
     // if(this.props.selectedAnswerId && this.props.selectedAnswerId.length > 0){
@@ -52,7 +44,7 @@ export default class Item extends React.Component{
     //   this.setState({showMessage: true});
     // }
     // if(document.getElementById("focus")){document.getElementById("focus").focus();}
-  }
+  // }
 
   submitButtonClicked(e){
     e.preventDefault();
@@ -60,87 +52,105 @@ export default class Item extends React.Component{
     this.props.submitAssessment();
   }
 
-  //NOTE move to assessment?
-  // checkCompletion(){
-  //   var questionsNotAnswered = [];
-  //   var answers = this.props.allStudentAnswers;
-  //   for (var i = 0; i < answers.length; i++) {
-  //     if(answers[i] == null || answers[i].length == 0){
-  //
-  //       questionsNotAnswered.push(i+1);
-  //     }
-  //   };
-  //   if(questionsNotAnswered.length > 0){
-  //     return questionsNotAnswered;
+  // getFooterNav(){
+  //   if(this.props.shouldShowFooter){
+  //   return <div>
+  //           <button onClick={(e)=>{this.previousButtonClicked(e);}}>
+  //           <i className="glyphicon glyphicon-chevron-left"></i>
+  //           Previous
+  //           </button>
+  //           <button onClick={(e)=>{this.nextButtonClicked(e);}}>
+  //             Next
+  //             <i className="glyphicon glyphicon-chevron-right"></i>
+  //           </button>
+  //         </div>;
   //   }
-  //   return true;
+  //   return "";
   // }
 
-  getFooterNav(){
-    if(this.props.shouldShowFooter){
-      return <div>
-              <button onClick={(e)=>{this.previousButtonClicked(e);}}>
-              <i className="glyphicon glyphicon-chevron-left"></i>
-              Previous
-              </button>
-              <button onClick={(e)=>{this.nextButtonClicked(e);}}>
-                Next
-                <i className="glyphicon glyphicon-chevron-right"></i>
-              </button>
-            </div>;
-    }
-
-    return "";
-  }
-
   getWarning(state, questionCount, questionIndex){
-    if(state && state.unAnsweredQuestions && state.unAnsweredQuestions.length > 0 && questionIndex + 1 == questionCount){
-      return <div><i className="glyphicon glyphicon-exclamation-sign"></i> You left question(s) {state.unAnsweredQuestions.join()} blank. Use the "Progress" drop-down menu at the top to go back and answer the question(s), then come back and submit.</div>
+    if(state.unAnsweredQuestions &&
+      state.unAnsweredQuestions.length > 0 &&
+      questionIndex + 1 == questionCount){
+      return <div>
+        <i className="glyphicon glyphicon-exclamation-sign"></i>
+         You left question(s) {/*state.unAnsweredQuestions.join()*/} blank.
+         Use the "Progress" drop-down menu at the top to go back and answer
+         the question(s), then come back and submit.
+       </div>;
     }
-
     return "";
   }
 
-  getConfidenceLevels(level){
-    if(level){
-      var levelMessage = <div><b>How sure are you of your answer? Click below to move forward.</b></div>;
-      return    (<div className="confidence_wrapper">
-                  {levelMessage}
-                  <input type="button" className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex) }}/>
-                  <input type="button" className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex) }}/>
-                  <input type="button" className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex) }}/>
-                </div>
-                );
-    } /*else {
-      return <div className="lower_level"><input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer()}}/></div>
-    }*/
-  }
+  // getConfidenceLevels(level){
+  //   if(level){
+  //     var levelMessage = <div><b>How sure are you of your answer? Click below to move forward.</b></div>;
+  //     return <div className="confidence_wrapper">
+  //               {levelMessage}
+  //               <input type="button" className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex); }}/>
+  //               <input type="button" className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex); }}/>
+  //               <input type="button" className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex); }}/>
+  //             </div>
+  //   } /*else {
+  //     return <div className="lower_level"><input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer()}}/></div>
+  //   }*/
+  // }
 
   getNavigationButtons() {
-    if (!this.props.shouldShowNextPrevious && this.props.confidenceLevels) {
-      return "";
-    }
-
+    // if (!this.props.shouldShowNextPrevious && this.props.confidenceLevels) {
+    //   return "";
+    // }
     return <div className="confidence_wrapper">
-      {this.getPreviousButton()}
-      {this.getNextButton()}
-    </div>
+              {this.getPreviousButton()}
+              {this.getNextButton()}
+            </div>;
   }
 
   getNextButton() {
-    var disabled = (this.props.currentItemIndex == this.props.questionCount - 1) ? "disabled" : "";
+    let disabled = (this.props.currentItemIndex == this.props.questionCount - 1);
     return (
-        <button className={"btn btn-next-item " + disabled} onClick={(e) => { this.nextButtonClicked(e); }}>
+        <button
+          onClick={(e) => { this.nextButtonClicked(e); }}
+          disabled={disabled}
+        >
           <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
         </button>);
   }
 
   getPreviousButton() {
-    var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentItemIndex > 0) ? "" : "disabled");
+    let disabled = (this.props.currentItemIndex === 0);
     return (
-        <button className={prevButtonClassName} onClick={(e) => { this.previousButtonClicked(e); }}>
+        <button
+          onClick={(e) => { this.previousButtonClicked(e); }}
+          disabled={disabled}
+        >
           <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
         </button>);
+  }
+
+  getSubmitButton(){
+    let submitButton = "";
+    if(this.props.currentItemIndex == this.props.questionCount - 1 &&
+        this.props.assessment_kind === "SUMMATIVE"){
+      submitButton = <div>
+                      <button
+                        className="btn btn-check-answer"
+                        onClick={(e)=>{this.submitButtonClicked(e);}}
+                      >
+                        Submit
+                      </button>
+                    </div>;
+    }
+    return submitButton;
+  }
+
+  getCounter(){
+    if(this.props.shouldShowCounter){
+      return <span className="counter">
+              {this.props.currentItemIndex + 1} of {this.props.questionCount}
+             </span>;
+    }
+    return;
   }
 
   //NOTE ask david
@@ -166,43 +176,16 @@ export default class Item extends React.Component{
 
 
   render() {
-    var unAnsweredWarning = this.getWarning(this.state, this.props.questionCount, this.props.currentItemIndex);
+    // var unAnsweredWarning = this.getWarning(this.state, this.props.questionCount, this.props.currentItemIndex);
     var result = this.getResult(this.props.messageIndex);
     var must_answer_message = this.state && this.state.showMessage ? <div>You must select an answer before continuing.</div> : "";
-    var confidenceButtons = this.getConfidenceLevels(this.props.confidenceLevels);
-    var submitButton = (this.props.currentItemIndex == this.props.questionCount - 1) ? <button className="btn btn-check-answer" onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
-    var footer = this.getFooterNav();
+    // var confidenceButtons = this.getConfidenceLevels(this.props.confidenceLevels);
+    // var footer = this.getFooterNav();
     var navigationDiv = this.getNavigationButtons();
 
     //Check if we need to display the counter in the top right
-    var counter = "";
-
-    if(this.props.shouldShowCenter){
-      counter = <span className="counter">{this.props.currentItemIndex + 1} of {this.props.questionCount}</span>
-    }
-    var formativeHeader = "";
-    // if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-    //   formativeHeader =
-    //       <div>
-    //         <div className="row">
-    //         </div>
-    //         <div className="row">
-    //           <div className="col-md-10">
-    //             <h4>{this.props.assessment.title}</h4>
-    //           </div>
-    //           <div className="col-md-2">
-    //           </div>
-    //         </div>
-    //       </div>
-    // }
-
-    var submitButtonDiv =  <div>
-                          {submitButton}
-                        </div>;
-
-    // if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-    //   submitButtonDiv = ""
-    // }
+    var counter = this.getCounter();
+    let submitButton = this.getSubmitButton();
 
     var questionDirections = "";
     if(this.props.question.question_type == "multiple_answers_question"){
@@ -222,7 +205,6 @@ export default class Item extends React.Component{
             <p>{this.props.question.title}</p>
           </div>
           <div>
-            {formativeHeader}
             <form className="edit_item">
               <div className="full_question" tabIndex="0">
                 <div className="inner_question">
@@ -230,8 +212,8 @@ export default class Item extends React.Component{
                     {questionDirections}
                     <div
                       dangerouslySetInnerHTML={{
-                    __html: this.props.question.material
-                    }}>
+                        __html: this.props.question.material
+                      }}>
                     </div>
                   </div>
                   <UniversalInput item={this.props.question} isResult={false}/>
@@ -239,19 +221,19 @@ export default class Item extends React.Component{
                 <div className="row">
                   <div className="col-md-5 col-sm-6 col-xs-8" >
                     {result}
-                    {confidenceButtons}
+                    {/*confidenceButtons*/}
                     {navigationDiv}
-                    {unAnsweredWarning}
+                    {/*unAnsweredWarning*/}
                     {must_answer_message}
                   </div>
                   <div className="col-md-7 col-sm-6 col-xs-4">
-                    {submitButtonDiv}
+                    {submitButton}
                   </div>
                 </div>
               </div>
             </form>
           </div>
-          {footer}
+          {/*footer*/}
         </div>
       </div>
     );
