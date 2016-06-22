@@ -31,7 +31,6 @@ export default class Item extends React.Component{
 
   submitButtonClicked(e){
     e.preventDefault();
-    // AssessmentActions.selectQuestion(this.props.currentItemIndex); TODO
     this.props.submitAssessment();
   }
 

@@ -3,7 +3,6 @@
 import React                                  from "react";
 import { connect }                            from "react-redux";
 
-// import * as AssessmentActions                 from "../../actions/assessment";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
 import appHistory                             from "../../history";
 import Item                                   from "../assessments/item";
@@ -37,6 +36,10 @@ export class Assessment extends React.Component{
     this.props.assessmentViewed();
   }
 
+  /**
+   * Will check if assessment is completed and then dispatch submit assessment
+   * action
+   */
   submitAssessment(){
     var complete = this.checkCompletion();
     if(complete === true){
@@ -54,9 +57,12 @@ export class Assessment extends React.Component{
     }
   }
 
+  /**
+   * Returns true if all questions have been answered, false otherwise.
+   */
   checkCompletion(){
     return true;
-    //TODO
+    //TODO calculate number of unanswered questions
     // var questionsNotAnswered = [];
     // var responses = this.props.responses;
     // for (var i = 0; i < answers.length; i++) {
@@ -67,7 +73,7 @@ export class Assessment extends React.Component{
     // if(questionsNotAnswered.length > 0){
     //   return questionsNotAnswered;
     // }
-    return true;
+    // return true;
   }
 
   /**
@@ -135,14 +141,21 @@ export class Assessment extends React.Component{
     }
   }
 
+  /**
+   * Returns true if the current question is the last question, false otherwise.
+   */
   isLastQuestion(){
     return this.props.currentQuestion === this.props.questionCount -1;
   }
 
+/**
+ * Returns a warning if there are unanswered question and we are on the
+ * last question.
+ */
   getWarning(){
-    let unanswered = true;
+    let unanswered = this.checkCompletion();
     let warning;
-    if(unanswered && this.isLastQuestion()){
+    if(unanswered === true && this.isLastQuestion()){
       warning = <div>Warning There are unanswered questions</div>;
     }
     return warning;
