@@ -117,8 +117,8 @@ export class Assessment extends React.Component{
     let current = this.props.progress.currentItemIndex;
     let items = [];
     if(displayNum > 0 && displayNum < this.props.questionCount){
-      let start = current / displayNum;
-      let end = start + displayNum;
+      let start = parseInt(current / displayNum) * displayNum;
+      let end = parseInt(start + displayNum);
 
       for(let i = start; i < end; i++){
         items.push(this.getItem(i));
