@@ -15,24 +15,26 @@ export default class Parser{
    *  * a single section containing sections, items, sectionRefs, and/or
    *    itemRefs; or,
    *
-   * * a test containing one or more test-parts, which in turn contain sections
-   *   and/or sectionRefs.
+   *  * a test containing one or more test-parts, which in turn contain sections
+   *    and/or sectionRefs.
    *
    * Currently, this ignores the latter two cases, but represents a single item
    * with a containing section.
    */
   static parse(assessmentId, xml){
 
-    const top = xml.find(">")[0].tagName;
+    const top = xml.find(">")[0];
+    const tag_name = top.tagName;
 
-    if(top == "assessmentItem") {
+    if(tag_name == "assessmentItem") {
       return {
         standard: AssessmentFormats.Qti2,
-        item: xml.find("assessmentItem")[0],
-        assessmentId
+        id: assessmentId,
+        title: top.getAttribute("title"),
+        item: top
       };
-    } else if(top == "assessmentSection") {
-    } else if(top == "assessmentTest") {
+    } else if(tag_name == "assessmentSection") {
+    } else if(tag_name == "assessmentTest") {
     } else {
       throw `Assessment isn't rooted with an expected tag.  Found ${top.tagname}.`;
     }
