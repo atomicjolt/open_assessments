@@ -13,21 +13,9 @@ describe('start', function() {
   var props;
 
   beforeEach(()=>{
-    settings = Immutable.fromJS({
-      src_url         : "asdf",
-      jwt             : "asdfasdf",
-      csrf            : "asdfasfd",
-      api_url         : "www.example.com"
-    });
-
-    assessment = Immutable.fromJS({
-      title:"Test Title",
-      assessment_kind : "SUMMATIVE"
-    });
-
     props = {
-      settings,
-      assessment
+      title:"Test Title",
+      assessment_kind:"SUMMATIVE"
     };
 
     result = TestUtils.renderIntoDocument(<Start {...props} /> );
@@ -46,11 +34,7 @@ describe('start', function() {
     expect(subject.innerHTML).toContain("Summative");
   });
   it('renders default', () =>{
-    assessment = assessment.set('assessment_kind', '');
-    props = {
-      assessment,
-      settings
-    };
+    props['assessment_kind'] = '';
     result = TestUtils.renderIntoDocument(<Start {...props} /> );
     subject = ReactDOM.findDOMNode(result);
 

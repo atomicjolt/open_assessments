@@ -1,5 +1,4 @@
 "use strict";
-
 import { Constants as AssessmentConstants }  from "../actions/assessment";
 
 const initialState = {};

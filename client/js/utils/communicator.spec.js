@@ -5,10 +5,10 @@ describe("Communicator", () => {
 
   describe("enableListener", () => {
     it("initializes the communicator", () => {
-      var handler = {
+      const handler = {
         handleComm: () => {
         }
-      }
+      };
       Communicator.enableListener(handler);
     });
   });

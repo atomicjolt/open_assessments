@@ -9,31 +9,36 @@ import ResultSummary          from "./result_summary.jsx";
 import StudyPlanButton        from "../post_nav/study_plan_button.jsx";
 
 export default class SummativeResult extends React.Component{
-
-  constructor(props){
-    super(props);
-  }
-
   getItemResults(){
     if(this.props.questionResponses){
       return this.props.questionResponses.map((qr, index)=>{
-        let question = ReviewAssessmentStore.itemByIdent(qr.ident); // TODO itemByIdent will need to be moved to a selector or we need to rethink how we find these values.
+        // TODO itemByIdent will need to be moved to a selector or we need to
+        // rethink how we find these values.
+        let question = ReviewAssessmentStore.itemByIdent(qr.ident);
         if(question === undefined){
           return <p>Question was removed.</p>;
         } else {
-          return <ItemResult key={index}
-                             question={question}
-                             isCorrect={qr.correct}
-                             index={index}
-                             confidence={qr.confidence_level}
-                             chosen={qr.responses_chosen}
-                             correctAnswers={question.correct}/>;
+          return <ItemResult
+            key={index}
+            question={question}
+            isCorrect={qr.correct}
+            index={index}
+            confidence={qr.confidence_level}
+            chosen={qr.responses_chosen}
+            correctAnswers={question.correct}
+          />;
         }
       });
 
     } else {
       return this.props.questions.map((question, index)=>{
-        return <ItemResult key={index} question={question} isCorrect={this.props.assessmentResult.correct_list[index]} index={index} confidence={this.props.assessmentResult.confidence_level_list[index]}/>;
+        return <ItemResult
+          key={index}
+          question={question}
+          isCorrect={this.props.assessmentResult.correct_list[index]}
+          index={index}
+          confidence={this.props.assessmentResult.confidence_level_list[index]}
+        />;
       });
 
     }
@@ -71,7 +76,10 @@ export default class SummativeResult extends React.Component{
         />
 
 
-        <StudyPlanButton/>
+      <StudyPlanButton
+        showPostMessageNavigation={this.props.showPostMessageNavigation}
+        navigateHome={() => { this.props.navigateHome() }}
+      />
 
         <hr />
 

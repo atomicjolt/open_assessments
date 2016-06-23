@@ -9,7 +9,7 @@ import * as AssessmentActions from "../../actions/assessment";
 const select = (state) => {
   return {
     title           : state.assessment.title,
-    assessment_kind : state.settings.assessment_kind
+    assessment_kind : state.settings.get('assessment_kind')
   };
 };
 
@@ -47,10 +47,9 @@ export class Start extends React.Component{
 
   render(){
     const startButtonText = "Start Quiz";
-    const titleText = this.props.title;
 
     return <div className="assessment">
-      <div>{titleText}</div>
+      <div>{this.props.title}</div>
       <div className="section_list">
         <div className="section_container">
           {this.instructions()}

@@ -21,7 +21,7 @@ describe('assessment reducer', () => {
   describe("initial reducer state", () => {
     it("returns empty state", () => {
       const state = assessment(initialState, {});
-      expect(state.toJS()).toEqual({});
+      expect(state).toEqual({});
     });
   });
 
@@ -32,7 +32,7 @@ describe('assessment reducer', () => {
         payload: parsedAssessment
       };
       const state = assessment(initialState, action);
-      expect(state.toJS()).toEqual(parsedAssessment);
+      expect(state).toEqual(parsedAssessment);
     });
   });
 

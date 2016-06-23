@@ -1,85 +1,94 @@
-import $            from 'jquery';
-import Communicator from '../utils/communicator';
+import Communicator                                       from './communicator';
+import { CommunicatorResizeMsg, CommunicatorSizeRequest } from './communicator';
 
-export default {
+export default class {
 
-  init: function(){
+  constructor(){
     Communicator.enableListener(this);
-  },
+  }
 
-  sendSize: function(){
+  sendSize(){
 
-    // TODO if we are calculating height this
-    // way we might not need to use jquery at all.
-    var height = Math.max(
-            $(document).height(),
-            document.body.scrollHeight, 
+    const height = Math.max(
+            document.body.clientHeight,
+            document.body.scrollHeight,
             document.body.offsetHeight,
-            document.documentElement.clientHeight, 
+            document.documentElement.clientHeight,
             document.documentElement.scrollHeight,
             document.documentElement.offsetHeight);
 
-    var payload = {
-      height: height,
-      width: $(document).width()
+    const width = Math.max(
+      document.body.clientWidth,              /* width of <body> */
+      document.documentElement.clientWidth,   /* width of <html> */
+      window.innerWidth);
+
+    const payload = {
+      height,
+      width
     };
 
-    var ltiPayload = {
+    const ltiPayload = {
       subject: "lti.frameResize",
-      height: height
+      height
     };
 
-    // OEA specific message indicate the need for a resize
-    Communicator.commMsg('open_assessments_resize', payload);
+    // OEA specific message indicating the need for a resize
+    Communicator.commMsg(CommunicatorResizeMsg, payload);
+
     // Let the LMS (Canvas) know about a resize
     Communicator.broadcastMsg(ltiPayload);
-  },
+
+  }
 
   // get rid of LMS module navigation
-  hideLMSNavigation: function () {
+  hideLMSNavigation() {
     Communicator.broadcastMsg({
       subject: "lti.showModuleNavigation",
       show: false
     });
-  },
+  }
 
   // show LMS module navigation
-  showLMSNavigation: function () {
+  showLMSNavigation() {
     Communicator.broadcastMsg({
       subject: "lti.showModuleNavigation",
       show: true
     });
-  },
+  }
 
-  // tell the parent iFrame to scroll to top
-  scrollParentToTop: function () {
+  // Tell the parent iFrame to scroll to top
+  scrollParentToTop() {
     Communicator.broadcastMsg({
       subject: "lti.scrollToTop"
     });
-  },
+  }
 
-  navigateHome: function(){
+  navigateHome(){
     this.navigate("home");
-  },
+  }
 
-  navigateNext: function(){
+  navigateNext(){
     this.navigate("next");
-  },
+  }
 
-  navigatePrevious: function(){
+  navigatePrevious(){
     this.navigate("previous");
-  },
+  }
 
-  navigate: function(location){
+  navigate(location){
     Communicator.broadcastMsg({
       subject: "lti.navigation",
-      location: location
+      location
     });
-  },
+  }
 
-  handleComm: function(e){
+  broadcast(payload){
+    Communicator.broadcastMsg(payload);
+  }
+
+  handleComm(e){
     switch(e.data.open_assessments_msg){
-      case 'open_assessments_size_request':
+      case CommunicatorSizeRequest:
         this.sendSize();
         break;
     }
