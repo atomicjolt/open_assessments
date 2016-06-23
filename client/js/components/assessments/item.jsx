@@ -11,73 +11,8 @@ export default class Item extends React.Component{
     currentItemIndex           : React.PropTypes.number.isRequired,
     questionCount              : React.PropTypes.number.isRequired,
     messageIndex               : React.PropTypes.number.isRequired,
-    goToNextQuestion           : React.PropTypes.func.isRequired,
-    goToPrevQuestion           : React.PropTypes.func.isRequired,
-    submitAssessment           : React.PropTypes.func.isRequired,
     outcomes                   : React.PropTypes.object,
   };
-
-  // nextButtonClicked(e){
-  //   e.preventDefault();
-  //   this.props.goToNextQuestion();
-  // }
-  //
-  // previousButtonClicked(e){
-  //   e.preventDefault();
-  //   this.props.goToPrevQuestion();
-  // }
-  //
-  // submitButtonClicked(e){
-  //   e.preventDefault();
-  //   this.props.submitAssessment();
-  // }
-
-  // getNavigationButtons() {
-  //   return <div className="confidence_wrapper">
-  //             {this.getPreviousButton()}
-  //             {this.getNextButton()}
-  //          </div>;
-  // }
-
-  // getNextButton() {
-  //   let disabled = (this.props.currentItemIndex == this.props.questionCount - 1);
-  //   return (
-  //       <button
-  //         className="next-btn"
-  //         onClick={(e) => { this.nextButtonClicked(e); }}
-  //         disabled={disabled}
-  //       >
-  //         <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
-  //       </button>);
-  // }
-  //
-  // getPreviousButton() {
-  //   let disabled = (this.props.currentItemIndex === 0);
-  //   return (
-  //       <button
-  //         className="prev-btn"
-  //         onClick={(e) => { this.previousButtonClicked(e); }}
-  //         disabled={disabled}
-  //       >
-  //         <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
-  //       </button>);
-  // }
-  //
-  // getSubmitButton(){
-  //   let submitButton;
-  //   if(this.props.currentItemIndex == this.props.questionCount - 1 &&
-  //       this.props.assessment_kind === "SUMMATIVE"){
-  //     submitButton = <div>
-  //                     <button
-  //                       className="btn btn-check-answer"
-  //                       onClick={(e)=>{this.submitButtonClicked(e);}}
-  //                     >
-  //                       Submit
-  //                     </button>
-  //                   </div>;
-  //   }
-  //   return submitButton;
-  // }
 
   getCounter(){
     if(this.props.shouldShowCounter){
@@ -110,10 +45,8 @@ export default class Item extends React.Component{
 
   render() {
     var result = this.getResult(this.props.messageIndex);
-    // var navigation = this.getNavigationButtons();
 
     var counter = this.getCounter();
-    // var submitButton = this.getSubmitButton();
 
     var questionDirections;
     if(this.props.question.question_type == "multiple_answers_question"){
@@ -148,10 +81,8 @@ export default class Item extends React.Component{
                 <div className="row">
                   <div className="col-md-5 col-sm-6 col-xs-8" >
                     {result}
-                    {/*navigation*/}
                   </div>
                   <div className="col-md-7 col-sm-6 col-xs-4">
-                    {/*submitButton*/}
                   </div>
                 </div>
               </div>
