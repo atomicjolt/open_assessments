@@ -182,8 +182,8 @@ export class Assessment extends React.Component{
   }
 
   getNextButton() {
-  let disabled = (this.props.currentQuestion == this.props.questionCount - 1);
-  return (
+    let disabled = (this.props.currentQuestion == this.props.questionCount - 1);
+    return (
       <button
         className="next-btn"
         onClick={(e) => { this.nextButtonClicked(e); }}
@@ -208,7 +208,7 @@ export class Assessment extends React.Component{
   getSubmitButton(){
     let submitButton;
     if(this.props.currentQuestion == this.props.questionCount - 1 &&
-        this.props.assessment_kind === "SUMMATIVE"){
+        this.props.settings.assessment_kind === "SUMMATIVE"){
       submitButton = <div>
                       <button
                         className="btn btn-check-answer"

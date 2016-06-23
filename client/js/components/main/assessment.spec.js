@@ -18,6 +18,7 @@ describe("assessment", function() {
   var allQuestions;
   var outcomes;
   var assessmentViewed;
+  var currentQuestion;
 
   beforeEach(() => {
     spyOn(appHistory, "push");
@@ -41,7 +42,9 @@ describe("assessment", function() {
       answerMessageIndex:[]
     };
 
-    questionCount = () => 1;
+    currentQuestion = 0;
+
+    questionCount = () => 10;
     allQuestions = () => [{
       timeSpent:0,
       outcomes:{shortOutcome:"", longOutcome:""},
@@ -72,6 +75,7 @@ describe("assessment", function() {
       settings,
       assessment,
       progress,
+      currentQuestion,
       questionCount:questionCount(),
       allQuestions:allQuestions(),
       outcomes:outcomes(),
@@ -104,4 +108,28 @@ describe("assessment", function() {
     subject = ReactDOM.findDOMNode(result);
     expect(appHistory.push).toHaveBeenCalledWith("assessment-result");
   });
+
+  it("renders submit button on last question", () => {
+    props.currentQuestion = 9;
+    debugger;
+    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
+    subject = ReactDOM.findDOMNode(result);
+    debugger;
+    expect(subject.textContent).toContain("Submit");
+  });
+
+  it("disables next button on last question", () => {
+    props.currentQuestion = 9;
+    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
+    subject = ReactDOM.findDOMNode(result);
+
+    expect(subject.innerHTML).toContain('<button class="next-btn" disabled="">');
+    expect(subject.innerHTML).not.toContain('<button class="prev-btn" disabled="">');
+  });
+
+  it("disables previous button on first question", () => {
+    expect(subject.innerHTML).toContain('<button class="prev-btn" disabled="">');
+    expect(subject.innerHTML).not.toContain('<button class="next-btn" disabled="">');
+  });
+
 });

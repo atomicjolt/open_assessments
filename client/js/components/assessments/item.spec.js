@@ -55,22 +55,4 @@ describe('item', function() {
     expect(subject.textContent).toContain("Test Question Title");
   });
 
-  it("renders submit button on last question", () => {
-    currentItemIndex = 9;
-    renderItem();
-    expect(subject.textContent).toContain("Submit");
-  });
-
-  it("disables next button on last question", () => {
-    currentItemIndex = 9;
-    renderItem();
-
-    expect(subject.innerHTML).toContain('<button class="next-btn" disabled="">');
-    expect(subject.innerHTML).not.toContain('<button class="prev-btn" disabled="">');
-  });
-
-  it("disables previous button on first question", () => {
-    expect(subject.innerHTML).toContain('<button class="prev-btn" disabled="">');
-    expect(subject.innerHTML).not.toContain('<button class="next-btn" disabled="">');
-  });
 });
