@@ -104,11 +104,9 @@ export class Assessment extends React.Component{
       allQuestions     = {props.allQuestions}
       studentAnswers   = {{/*this.props.studentAnswers*/}}
       outcomes         = {props.outcomes}
-
-      nextQuestion = {() => {props.nextQuestion();}}
-      prevQuestion = {() => {props.previousQuestion();}}
-      confidenceLevel = {() => {/* TODO */}}
-      submitAssessment = {() => {this.submitAssessment();}}
+      nextButtonClick = {() => {props.nextQuestion();}}
+      prevButtonClick = {() => {props.previousQuestion();}}
+      submitButtonClick = {() => {this.submitAssessment();}}
       />;
   }
 
@@ -123,9 +121,12 @@ export class Assessment extends React.Component{
     let items = [];
     if(displayNum > 0 && displayNum < this.props.questionCount){
       let start = current / displayNum;
-      for(let i = start; i < (start + displayNum); i++){
-        items.push(this.getItem(i));
-      }
+      let end = start + displayNum;
+      let questions = this.props.allQuestions.slice(start, end);
+
+      questions.forEach((question, index) => {
+        items.push(this.getItem(start + index));
+      });
     } else {
       this.props.allQuestions.forEach((question, index) => {
         items.push(this.getItem(index));
@@ -153,7 +154,7 @@ export class Assessment extends React.Component{
    * Returns true if the current question is the last question, false otherwise.
    */
   isLastQuestion(){
-    return this.props.currentQuestion === this.props.questionCount -1;
+    return this.props.currentQuestion === this.props.questionCount - 1;
   }
 
 /**

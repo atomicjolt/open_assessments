@@ -12,33 +12,32 @@ export default class Item extends React.Component{
     questionCount              : React.PropTypes.number.isRequired,
     messageIndex               : React.PropTypes.number.isRequired,
     confidenceLevels           : React.PropTypes.bool.isRequired,
-    nextQuestion               : React.PropTypes.func.isRequired,
-    prevQuestion               : React.PropTypes.func.isRequired,
-    confidenceLevel            : React.PropTypes.func.isRequired,
-    submitAssessment           : React.PropTypes.func.isRequired,
+    nextButtonClick            : React.PropTypes.func.isRequired,
+    prevButtonClick            : React.PropTypes.func.isRequired,
+    submitButtonClick          : React.PropTypes.func.isRequired,
     outcomes                   : React.PropTypes.object,
   };
 
   nextButtonClicked(e){
     e.preventDefault();
-    this.props.nextQuestion();
+    this.props.nextButtonClick();
   }
 
   previousButtonClicked(e){
     e.preventDefault();
-    this.props.prevQuestion();
+    this.props.prevButtonClick();
   }
 
   submitButtonClicked(e){
     e.preventDefault();
-    this.props.submitAssessment();
+    this.props.submitButtonClick();
   }
 
   getNavigationButtons() {
     return <div className="confidence_wrapper">
               {this.getPreviousButton()}
               {this.getNextButton()}
-            </div>;
+           </div>;
   }
 
   getNextButton() {
@@ -66,7 +65,7 @@ export default class Item extends React.Component{
   }
 
   getSubmitButton(){
-    let submitButton = "";
+    let submitButton;
     if(this.props.currentItemIndex == this.props.questionCount - 1 &&
         this.props.assessment_kind === "SUMMATIVE"){
       submitButton = <div>
@@ -87,7 +86,6 @@ export default class Item extends React.Component{
               {this.props.currentItemIndex + 1} of {this.props.questionCount}
              </span>;
     }
-    return;
   }
 
   getResult(index){
@@ -116,9 +114,9 @@ export default class Item extends React.Component{
     var navigation = this.getNavigationButtons();
 
     var counter = this.getCounter();
-    let submitButton = this.getSubmitButton();
+    var submitButton = this.getSubmitButton();
 
-    var questionDirections = "";
+    var questionDirections;
     if(this.props.question.question_type == "multiple_answers_question"){
       questionDirections =
         <div>Choose <b>ALL</b> that apply.</div>;
@@ -166,5 +164,6 @@ export default class Item extends React.Component{
   }
 }
 
+export const UNGRADED_RESPONSE = 0;
 export const CORRECT_RESPONSE = 1;
 export const INCORRECT_RESPONSE = 2;
