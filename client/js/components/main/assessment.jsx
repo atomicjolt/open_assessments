@@ -153,6 +153,13 @@ export class Assessment extends React.Component{
     return this.props.currentQuestion === this.props.questionCount - 1;
   }
 
+  /**
+   * Returns true if the current question is the first question, false otherwise
+   */
+  isFirstQuestion(){
+    return this.props.currentQuestion === 0;
+  }
+
 /**
  * Returns a warning if there are unanswered questions and we are on the
  * last question.
@@ -182,7 +189,7 @@ export class Assessment extends React.Component{
   }
 
   getNextButton() {
-    let disabled = (this.props.currentQuestion == this.props.questionCount - 1);
+    let disabled = this.isLastQuestion();
     return (
       <button
         className="next-btn"
@@ -194,7 +201,7 @@ export class Assessment extends React.Component{
   }
 
   getPreviousButton() {
-    let disabled = (this.props.currentQuestion === 0); //TODO use class method
+    let disabled = this.isFirstQuestion();
     return (
         <button
           className="prev-btn"
