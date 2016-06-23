@@ -8,8 +8,8 @@ const initialState = Immutable.fromJS({
   isStarted: false,
   currentItemIndex: 0,
   selectedAnswerId: '',
-  answerMessageIndex: [], // TODO Find more appropriate name 
-  responses: [],
+  answerMessageIndex: [], // TODO Find more appropriate name
+  responses: {},
   startedAt: 0,
   finishedAt: 0,
   assessmentResult:null
@@ -30,6 +30,10 @@ export default (state = initialState, action) => {
 
     case AssessmentConstants.ASSESSMENT_VIEWED:
       state = state.set("startedAt", Date.now());
+      break;
+
+    case AssessmentConstants.ANSWER_SELECTED:
+      state = state.setIn(["responses", action.questionId], action.answerId);
       break;
 
     default:
