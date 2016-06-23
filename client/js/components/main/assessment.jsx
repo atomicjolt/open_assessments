@@ -4,7 +4,6 @@ import React                                  from "react";
 import { connect }                            from "react-redux";
 
 import * as CommunicationActions              from "../../actions/communications";
-import * as AssessmentActions                 from "../../actions/assessment";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
 import appHistory                             from "../../history";
 import Item                                   from "../assessments/item";
@@ -202,4 +201,4 @@ export class Assessment extends React.Component{
 
 }
 
-export default connect(select, {...AssessmentActions, ...CommunicationActions})(Assessment);
+export default connect(select, {...AssessmentProgress, ...CommunicationActions})(Assessment);
