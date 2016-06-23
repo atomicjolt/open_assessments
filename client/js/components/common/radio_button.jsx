@@ -62,7 +62,13 @@ export default class RadioButton extends React.Component{
         {this.optionFlagStatus()}
         <div className="btn btn-block btn-question">
           <label>
-            <input type="radio" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected();}}/>
+            <input
+              type="radio"
+              defaultChecked={this.checkedStatus()}
+              disabled={this.props.isDisabled}
+              name={this.props.name}
+              onClick={()=>{ this.answerSelected();}}
+            />
             <span>{this.props.item.material}</span>
           </label>
         </div>
