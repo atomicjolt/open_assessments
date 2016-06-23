@@ -11,7 +11,6 @@ export default class Item extends React.Component{
     currentItemIndex           : React.PropTypes.number.isRequired,
     questionCount              : React.PropTypes.number.isRequired,
     messageIndex               : React.PropTypes.number.isRequired,
-    confidenceLevels           : React.PropTypes.bool.isRequired,
     goToNextQuestion           : React.PropTypes.func.isRequired,
     goToPrevQuestion           : React.PropTypes.func.isRequired,
     submitAssessment           : React.PropTypes.func.isRequired,
