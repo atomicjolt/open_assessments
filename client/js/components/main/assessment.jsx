@@ -107,7 +107,7 @@ export class Assessment extends React.Component{
       goToNextQuestion = {() => {props.nextQuestion();}}
       goToPrevQuestion = {() => {props.previousQuestion();}}
       submitAssessment = {() => {this.submitAssessment();}}
-      answerSelected   = {
+      selectAnswer     = {
         (questionId, answerId) =>
           {this.props.answerSelected(questionId, answerId);}
       }

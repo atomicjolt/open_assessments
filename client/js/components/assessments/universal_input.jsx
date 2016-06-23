@@ -15,7 +15,7 @@ export default class UniversalInput extends React.Component{
 
   static propTypes = {
     item: React.PropTypes.object.isRequired,
-    answerSelected: React.PropTypes.func.isRequired,
+    selectAnswer: React.PropTypes.func.isRequired,
     isResult: React.PropTypes.bool,
     chosen: React.PropTypes.array
   }
@@ -36,9 +36,9 @@ export default class UniversalInput extends React.Component{
     }
   }
 
-  buildAnswerSelected(itemId){
+  buildSelectAnswer(itemId){
     return (answerId) => {
-      this.props.answerSelected(itemId, answerId);
+      this.props.selectAnswer(itemId, answerId);
     };
   }
 
@@ -71,7 +71,7 @@ export default class UniversalInput extends React.Component{
       case "true_false_question":
         items = item.answers.map((answer) => {
           return <RadioButton
-            answerSelected={this.buildAnswerSelected(item.id)}
+            selectAnswer={this.buildSelectAnswer(item.id)}
             isDisabled={this.props.isResult}
             key={item.id + "_" + answer.id}
             item={answer}

@@ -8,15 +8,13 @@ export default class RadioButton extends React.Component{
   static propTypes = {
     item: React.PropTypes.object.isRequired,
     name: React.PropTypes.string.isRequired,
-    answerSelected: React.PropTypes.func.isRequired,
+    selectAnswer: React.PropTypes.func.isRequired,
     isDisabled: React.PropTypes.bool,
     checked: React.PropTypes.bool
   };
 
-  answerSelected(){
-    // AssessmentActions.answerSelected(this.props.item); TODO
-    this.props.answerSelected(this.props.item.id);
-    // debugger;
+  selectAnswer(){
+    this.props.selectAnswer(this.props.item.id);
   }
 
   checkedStatus(){
@@ -50,7 +48,7 @@ export default class RadioButton extends React.Component{
 
     var checked = this.checkedStatus();
 
-    // var radio = <input type="radio" defaultChecked={checked} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected();}}/>;
+    // var radio = <input type="radio" defaultChecked={checked} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.selectAnswer();}}/>;
 
     if(this.props.showAsCorrect){
       var label = "Correct Answer that was ";
@@ -70,7 +68,7 @@ export default class RadioButton extends React.Component{
               defaultChecked={this.checkedStatus()}
               disabled={this.props.isDisabled}
               name={this.props.name}
-              onClick={()=>{ this.answerSelected();}}
+              onClick={()=>{ this.selectAnswer();}}
             />
             <span>{this.props.item.material}</span>
           </label>

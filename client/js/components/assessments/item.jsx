@@ -14,7 +14,7 @@ export default class Item extends React.Component{
     goToNextQuestion           : React.PropTypes.func.isRequired,
     goToPrevQuestion           : React.PropTypes.func.isRequired,
     submitAssessment           : React.PropTypes.func.isRequired,
-    answerSelected             : React.PropTypes.func.isRequired,
+    selectAnswer               : React.PropTypes.func.isRequired,
     outcomes                   : React.PropTypes.object,
   };
 
@@ -147,7 +147,7 @@ export default class Item extends React.Component{
                   <UniversalInput
                     item={this.props.question}
                     isResult={false}
-                    answerSelected={this.props.answerSelected}
+                    selectAnswer={this.props.selectAnswer}
                   />
                 </div>
                 <div className="row">
