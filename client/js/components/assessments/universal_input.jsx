@@ -38,7 +38,7 @@ export default class UniversalInput extends React.Component{
   wasChosen(id){
     if( this.props.chosen ){
       return this.props.chosen.indexOf(id) > -1;
-    }else{
+    } else {
       return null;
     }
   }
