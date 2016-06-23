@@ -53,7 +53,7 @@ export default class RadioButton extends React.Component{
                    defaultChecked={this.checkedStatus()}
                    disabled={this.props.isDisabled}
                    name={this.props.name}
-                   onClick={()=>{ this.answerSelected() }}
+                   onClick={()=>{ this.answerSelected(); }}
             />
             <span style={Styles.span}>{this.props.item.material}</span>
           </label>
@@ -71,4 +71,4 @@ RadioButton.propTypes = {
 
 RadioButton.contextTypes = {
   theme: React.PropTypes.object
-}
+};
