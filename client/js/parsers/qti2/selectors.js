@@ -27,20 +27,25 @@ import { getItems, loadOutcomes } from "./qti";
 // );
 
 export function questions(state, props) {
-  const item = state.assessment.item;
-  const xml = $(item);
-  const select_one = xml.find("choiceInteraction[maxChoices=1]");
+  const item        = state.assessment.item;
+  const xml         = $(item);
+  const select_one  = xml.find("choiceInteraction[maxChoices=1]");
+  const material    = $("<div></div>");
 
-  var material = $("<div></div>");
-
-  // If we don't .clone(), we'll end up moving the elements out of the original,
-  // and on subsequent calls they will be missing.
+  // If we don't .clone(), then .appendTo() *moves* the elements out of the
+  // original, and on subsequent calls they will be missing.
   xml.find("itemBody > *:not(choiceInteraction)").clone().appendTo(material);
+
+  const answers = xml.find("choiceInteraction > simpleChoice").map((i, t) => ({
+    id: t.getAttribute("identifier"),
+    material: $(t).html(),
+    xml: t
+  })).get();
 
   return [{
     question_type: select_one ? "multiple_choice_question" : "UNKNOWN",
     material: material.html(),
-    answers: [{id: null}],
+    answers,
     xml: item
   }];
 }
@@ -50,6 +55,5 @@ export function outcomes() {
 }
 
 export function questionCount(state, props) {
-  console.log("questionCount");
   return 1;
 }
