@@ -9,7 +9,7 @@ import * as AssessmentActions from "../../actions/assessment";
 const select = (state) => {
   return {
     title           : state.assessment.title,
-    assessment_kind : state.settings.assessment_kind
+    assessment_kind : state.settings.get('assessment_kind')
   };
 };
 

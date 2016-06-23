@@ -4,7 +4,6 @@ import React                                  from "react";
 import { connect }                            from "react-redux";
 
 import * as CommunicationActions              from "../../actions/communications";
-import * as AssessmentActions                 from "../../actions/assessment";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
 import appHistory                             from "../../history";
 import Item                                   from "../assessments/item";
@@ -15,8 +14,10 @@ import {questionCount, questions, outcomes }  from "../../selectors/assessment";
 const select = (state, props) => {
   return {
     settings             : state.settings.toJS(),
-    assessment           : state.assessment.toJS(),
+    assessment           : state.assessment,
     progress             : state.progress.toJS(),
+    currentQuestion      : state.progress.get('currentItemIndex'),
+    responses            : state.progress.get('responses').toJS(),
     questionCount        : questionCount(state, props),
     allQuestions         : questions(state, props),
     outcomes             : outcomes(state, props)
@@ -46,6 +47,46 @@ export class Assessment extends React.Component{
   }
 
   /**
+   * Will check if assessment is completed and then dispatch submit assessment
+   * action
+   */
+  submitAssessment(){
+    var complete = this.checkCompletion();
+    if(complete === true){
+      window.onbeforeunload = null;
+      this.props.submitAssessment(
+        this.props.assessment.id,
+        this.props.assessment.assessmentId,
+        this.props.allQuestions,
+        this.props.responses,
+        this.props.settings,
+        this.props.outcomes
+      );
+    } else {
+      //TODO display some sort of warning message?
+    }
+  }
+
+  /**
+   * Returns true if all questions have been answered, false otherwise.
+   */
+  checkCompletion(){
+    return true;
+    //TODO calculate number of unanswered questions
+    // var questionsNotAnswered = [];
+    // var responses = this.props.responses;
+    // for (var i = 0; i < answers.length; i++) {
+    //   if(answers[i] == null || answers[i].length == 0){
+    //     questionsNotAnswered.push(i+1);
+    //   }
+    // };
+    // if(questionsNotAnswered.length > 0){
+    //   return questionsNotAnswered;
+    // }
+    // return true;
+  }
+
+  /**
    * Return an item for a given index in props.allQuestions
    */
   getItem(index){
@@ -59,11 +100,14 @@ export class Assessment extends React.Component{
       question         = {props.allQuestions[index]}
       currentItemIndex = {index}
       questionCount    = {props.questionCount}
-      messageIndex     = {-1 /*props.progress.get('answerMessageIndex')*/}
+      messageIndex     = {props.progress.answerMessageIndex[index]}
       allQuestions     = {props.allQuestions}
       studentAnswers   = {{/*this.props.studentAnswers*/}}
-      confidenceLevels = {{/*this.props.settings.confidence_levels*/}}
-      outcomes         = {props.outcomes}/>;
+      outcomes         = {props.outcomes}
+      goToNextQuestion = {() => {props.nextQuestion();}}
+      goToPrevQuestion = {() => {props.previousQuestion();}}
+      submitAssessment = {() => {this.submitAssessment();}}
+      />;
   }
 
   /**
@@ -77,7 +121,9 @@ export class Assessment extends React.Component{
     let items = [];
     if(displayNum > 0 && displayNum < this.props.questionCount){
       let start = current / displayNum;
-      for(let i = start; i < displayNum; i++){
+      let end = start + displayNum;
+
+      for(let i = start; i < end; i++){
         items.push(this.getItem(i));
       }
     } else {
@@ -103,6 +149,26 @@ export class Assessment extends React.Component{
     }
   }
 
+  /**
+   * Returns true if the current question is the last question, false otherwise.
+   */
+  isLastQuestion(){
+    return this.props.currentQuestion === this.props.questionCount - 1;
+  }
+
+/**
+ * Returns a warning if there are unanswered questions and we are on the
+ * last question.
+ */
+  getWarning(){
+    let unanswered = this.checkCompletion();
+    let warning;
+    if(unanswered === true && this.isLastQuestion()){
+      warning = <div>Warning There are unanswered questions</div>;
+    }
+    return warning;
+  }
+
   popup(){
     return "Don’t leave!\n If you leave now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this quiz and then use the \"Progress\" drop-down menu";
   }
@@ -119,11 +185,14 @@ export class Assessment extends React.Component{
     let progressBar; //TODO add progress bar
     let titleText =  this.props.assessment.title;
     let content = this.getContent();
+    let warning = this.getWarning();
+
     return<div className="assessment">
       <div>{titleText}</div>
       {progressBar}
       <div className="section_list">
         <div className="section_container">
+          {warning}
           {content}
         </div>
       </div>
@@ -132,4 +201,4 @@ export class Assessment extends React.Component{
 
 }
 
-export default connect(select, {...AssessmentActions, ...CommunicationActions})(Assessment);
+export default connect(select, {...AssessmentProgress, ...CommunicationActions})(Assessment);

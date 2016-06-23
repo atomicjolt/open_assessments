@@ -15,7 +15,7 @@ describe('start', function() {
   beforeEach(()=>{
     props = {
       title:"Test Title",
-      assessment_kind: "SUMMATIVE"
+      assessment_kind:"SUMMATIVE"
     };
 
     result = TestUtils.renderIntoDocument(<Start {...props} /> );
