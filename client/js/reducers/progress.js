@@ -8,7 +8,7 @@ const initialState = Immutable.fromJS({
   isStarted: false,
   currentItemIndex: 0,
   selectedAnswerId: '',
-  answerMessageIndex: [],
+  answerMessageIndex: [], // TODO Find more appropriate name 
   responses: [],
   startedAt: 0,
   finishedAt: 0,

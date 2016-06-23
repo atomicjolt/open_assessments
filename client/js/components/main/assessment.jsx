@@ -158,7 +158,7 @@ export class Assessment extends React.Component{
   }
 
 /**
- * Returns a warning if there are unanswered question and we are on the
+ * Returns a warning if there are unanswered questions and we are on the
  * last question.
  */
   getWarning(){
