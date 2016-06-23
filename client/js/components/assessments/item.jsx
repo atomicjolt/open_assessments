@@ -12,25 +12,25 @@ export default class Item extends React.Component{
     questionCount              : React.PropTypes.number.isRequired,
     messageIndex               : React.PropTypes.number.isRequired,
     confidenceLevels           : React.PropTypes.bool.isRequired,
-    nextButtonClick            : React.PropTypes.func.isRequired,
-    prevButtonClick            : React.PropTypes.func.isRequired,
-    submitButtonClick          : React.PropTypes.func.isRequired,
+    goToNextQuestion           : React.PropTypes.func.isRequired,
+    goToPrevQuestion           : React.PropTypes.func.isRequired,
+    submitAssessment           : React.PropTypes.func.isRequired,
     outcomes                   : React.PropTypes.object,
   };
 
   nextButtonClicked(e){
     e.preventDefault();
-    this.props.nextButtonClick();
+    this.props.goToNextQuestion();
   }
 
   previousButtonClicked(e){
     e.preventDefault();
-    this.props.prevButtonClick();
+    this.props.goToPrevQuestion();
   }
 
   submitButtonClicked(e){
     e.preventDefault();
-    this.props.submitButtonClick();
+    this.props.submitAssessment();
   }
 
   getNavigationButtons() {

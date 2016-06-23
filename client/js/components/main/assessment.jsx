@@ -104,9 +104,9 @@ export class Assessment extends React.Component{
       allQuestions     = {props.allQuestions}
       studentAnswers   = {{/*this.props.studentAnswers*/}}
       outcomes         = {props.outcomes}
-      nextButtonClick = {() => {props.nextQuestion();}}
-      prevButtonClick = {() => {props.previousQuestion();}}
-      submitButtonClick = {() => {this.submitAssessment();}}
+      goToNextQuestion = {() => {props.nextQuestion();}}
+      goToPrevQuestion = {() => {props.previousQuestion();}}
+      submitAssessment = {() => {this.submitAssessment();}}
       />;
   }
 
@@ -122,11 +122,10 @@ export class Assessment extends React.Component{
     if(displayNum > 0 && displayNum < this.props.questionCount){
       let start = current / displayNum;
       let end = start + displayNum;
-      let questions = this.props.allQuestions.slice(start, end);
 
-      questions.forEach((question, index) => {
-        items.push(this.getItem(start + index));
-      });
+      for(let i = start; i < end; i++){
+        items.push(this.getItem(i));
+      }
     } else {
       this.props.allQuestions.forEach((question, index) => {
         items.push(this.getItem(index));
