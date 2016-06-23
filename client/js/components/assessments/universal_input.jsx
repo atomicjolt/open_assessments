@@ -15,7 +15,9 @@ export default class UniversalInput extends React.Component{
 
   static propTypes = {
     item: React.PropTypes.object.isRequired,
-    isResult: React.PropTypes.bool
+    answerSelected: React.PropTypes.func.isRequired,
+    isResult: React.PropTypes.bool,
+    chosen: React.PropTypes.array
   }
 
   wasChosen(id){
@@ -34,6 +36,12 @@ export default class UniversalInput extends React.Component{
     }
   }
 
+  buildAnswerSelected(itemId){
+    return (answerId) => {
+      this.props.answerSelected(itemId, answerId);
+    };
+  }
+
   render(){
     var item = this.props.item;
     var messages = '';
@@ -48,13 +56,13 @@ export default class UniversalInput extends React.Component{
         <ul>
           {renderedMessages}
         </ul>
-      </div>
+      </div>;
     }
 
     if(item.isGraded && item.solution){
       solution = <div className="panel-footer text-center">
         <div dangerouslySetInnerHTML={{ __html: item.solution }} />
-      </div>
+      </div>;
     }
 
     switch(item.question_type){
@@ -62,7 +70,15 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         items = item.answers.map((answer) => {
-          return <RadioButton isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-radio" checked={this.wasChosen(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)}/>;
+          return <RadioButton
+            answerSelected={this.buildAnswerSelected(item.id)}
+            isDisabled={this.props.isResult}
+            key={item.id + "_" + answer.id}
+            item={answer}
+            name="answer-radio"
+            checked={this.wasChosen(answer.id)}
+            showAsCorrect={this.showAsCorrect(answer.id)}
+          />;
         });
         break;
       case "edx_dropdown":
