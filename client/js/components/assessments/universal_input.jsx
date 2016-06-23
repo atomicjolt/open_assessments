@@ -36,11 +36,11 @@ export default class UniversalInput extends React.Component{
     }
   }
 
-  buildSelectAnswer(itemId){
-    return (answerId) => {
-      this.props.selectAnswer(itemId, answerId);
-    };
-  }
+  // buildSelectAnswer(itemId){
+  //   return (answerId) => {
+  //     this.props.selectAnswer(itemId, answerId);
+  //   };
+  // }
 
   render(){
     var item = this.props.item;
@@ -71,7 +71,7 @@ export default class UniversalInput extends React.Component{
       case "true_false_question":
         items = item.answers.map((answer) => {
           return <RadioButton
-            selectAnswer={this.buildSelectAnswer(item.id)}
+            selectAnswer={this.props.selectAnswer}
             isDisabled={this.props.isResult}
             key={item.id + "_" + answer.id}
             item={answer}

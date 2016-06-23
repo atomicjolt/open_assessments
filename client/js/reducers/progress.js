@@ -9,7 +9,7 @@ const initialState = Immutable.fromJS({
   currentItemIndex: 0,
   selectedAnswerId: '',
   answerMessageIndex: [], // TODO Find more appropriate name
-  responses: {},
+  responses: [],
   startedAt: 0,
   finishedAt: 0,
   assessmentResult:null
@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
       break;
 
     case AssessmentConstants.ANSWER_SELECTED:
-      state = state.setIn(["responses", action.questionId], action.answerId);
+      state = state.setIn(["responses", `${action.questionIndex}`], action.answerId);
       break;
 
     default:

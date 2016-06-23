@@ -108,8 +108,8 @@ export class Assessment extends React.Component{
       goToPrevQuestion = {() => {props.previousQuestion();}}
       submitAssessment = {() => {this.submitAssessment();}}
       selectAnswer     = {
-        (questionId, answerId) =>
-          {this.props.answerSelected(questionId, answerId);}
+        (answerId) =>
+          {this.props.answerSelected(index, answerId);}
       }
       />;
   }
