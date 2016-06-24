@@ -73,7 +73,8 @@ export default class UniversalInput extends React.Component{
                               item={answer}
                               name="answer-radio"
                               checked={this.wasChosen(answer.id)}
-                              showAsCorrect={this.showAsCorrect(answer.id)} />;
+                              showAsCorrect={this.showAsCorrect(answer.id)}
+                              selectAnswer={this.props.selectAnswer} />;
         });
         break;
       case "edx_dropdown":
