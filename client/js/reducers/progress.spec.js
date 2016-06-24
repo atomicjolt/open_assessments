@@ -31,24 +31,26 @@ describe('assessment reducer', () => {
 
   describe("next question", () => {
     const action = {
-      type: AssessmentConstants.ASSESSMENT_NEXT_QUESTION,
+      type: AssessmentConstants.ASSESSMENT_NEXT_QUESTIONS,
+      pageSize:3
     };
 
     it("increments currentItemIndex", () => {
       var state = progress(undefined, action);
-      expect(state.get('currentItemIndex')).toEqual(1);
+      expect(state.get('currentItemIndex')).toEqual(3);
     });
   });
 
   describe("previous question", () => {
     const action = {
-      type: AssessmentConstants.ASSESSMENT_PREVIOUS_QUESTION,
+      type: AssessmentConstants.ASSESSMENT_PREVIOUS_QUESTIONS,
+      pageSize:2
     };
     let initialState = Immutable.fromJS({currentItemIndex: 5});
 
     it("decrements currentItemIndex", () => {
       const state = progress(initialState, action);
-      expect(state.get('currentItemIndex')).toEqual(4);
+      expect(state.get('currentItemIndex')).toEqual(3);
     });
   });
 

@@ -86,10 +86,10 @@ describe("assessment", function() {
       sendSize: () => {},
       scrollParentToTop: () => {},
       hideLMSNavigation: () => {},
-      nextQuestion: () => {}
+      nextQuestions: () => {}
     };
 
-    spyOn(props, "nextQuestion");
+    spyOn(props, "nextQuestions");
 
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     subject = ReactDOM.findDOMNode(result);
@@ -103,7 +103,7 @@ describe("assessment", function() {
   it("Calls nextButtonClicked when the next button is clicked", () => {
     let button = TestUtils.findRenderedDOMComponentWithClass(result, "next-btn");
     TestUtils.Simulate.click(button);
-    expect(props.nextQuestion).toHaveBeenCalled();
+    expect(props.nextQuestions).toHaveBeenCalled();
   });
 
   it("renders the assessment", () => {
