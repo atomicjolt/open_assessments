@@ -111,10 +111,8 @@ describe("assessment", function() {
 
   it("renders submit button on last question", () => {
     props.currentQuestion = 9;
-    debugger;
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     subject = ReactDOM.findDOMNode(result);
-    debugger;
     expect(subject.textContent).toContain("Submit");
   });
 
