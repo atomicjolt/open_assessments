@@ -71,10 +71,17 @@ describe('assessment reducer', () => {
       answerId:1
     };
 
-    it("adds answerId to respones[index]", () => {
+    it("adds answerId to responses[][]", () => {
       const state = progress(undefined, action);
-      debugger;
-      expect(state.getIn(['responses', '0'])).toEqual(1);
+      expect(state.getIn(['responses', '0']).toJS()).toEqual([1]);
     });
+
+    it("appends to array if items already exist", () => {
+      var initialState = Immutable.fromJS({responses:[[2]]});
+      const state = progress(initialState, action);
+      expect(state.getIn(['responses', '0']).toJS()).toEqual([2,1]);
+    });
+
   });
+
 });

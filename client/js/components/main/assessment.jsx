@@ -94,6 +94,7 @@ export class Assessment extends React.Component{
     if(props.questionCount === undefined || index >= props.questionCount || index < 0){
       return <div></div>;
     }
+    debugger;
     return <Item
       settings         = {props.settings}
       question         = {props.allQuestions[index]}

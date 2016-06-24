@@ -20,7 +20,7 @@ export default class UniversalInput extends React.Component{
     response: React.PropTypes.array
   }
 
-  wasChosen(id){
+  wasSelected(id){
     if( this.props.response ){
       return this.props.response.indexOf(id) > -1;
     } else {
@@ -72,7 +72,7 @@ export default class UniversalInput extends React.Component{
                               key={item.id + "_" + answer.id}
                               item={answer}
                               name="answer-radio"
-                              checked={this.wasChosen(answer.id)}
+                              checked={this.wasSelected(answer.id)}
                               showAsCorrect={this.showAsCorrect(answer.id)}
                               selectAnswer={this.props.selectAnswer} />;
         });
@@ -96,7 +96,7 @@ export default class UniversalInput extends React.Component{
         break;
       case "multiple_answers_question":
         items = item.answers.map((answer) => {
-          return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasChosen(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)}/>;
+          return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasSelected(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)}/>;
         });
         break;
       case "edx_image_mapped_input":
