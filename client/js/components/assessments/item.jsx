@@ -9,6 +9,7 @@ export default class Item extends React.Component{
 
   static propTypes = {
     question                   : React.PropTypes.object.isRequired,
+    response                   : React.PropTypes.array.isRequired,
     currentItemIndex           : React.PropTypes.number.isRequired,
     questionCount              : React.PropTypes.number.isRequired,
     messageIndex               : React.PropTypes.number.isRequired,
@@ -142,6 +143,7 @@ export default class Item extends React.Component{
                     item={this.props.question}
                     isResult={false}
                     selectAnswer={this.props.selectAnswer}
+                    response={this.props.response}
                   />
                 </div>
                 <div className="row">

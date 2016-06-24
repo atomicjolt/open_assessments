@@ -17,12 +17,12 @@ export default class UniversalInput extends React.Component{
     item: React.PropTypes.object.isRequired,
     selectAnswer: React.PropTypes.func.isRequired,
     isResult: React.PropTypes.bool,
-    chosen: React.PropTypes.array
+    response: React.PropTypes.array
   }
 
   wasChosen(id){
-    if( this.props.chosen ){
-      return this.props.chosen.indexOf(id) > -1;
+    if( this.props.response ){
+      return this.props.response.indexOf(id) > -1;
     } else {
       return null;
     }

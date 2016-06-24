@@ -95,14 +95,13 @@ export class Assessment extends React.Component{
       return <div></div>;
     }
     return <Item
-      assessment       = {props.assessment}
       settings         = {props.settings}
       question         = {props.allQuestions[index]}
+      response         = {props.responses[index]}
       currentItemIndex = {index}
       questionCount    = {props.questionCount}
       messageIndex     = {props.progress.answerMessageIndex[index]}
       allQuestions     = {props.allQuestions}
-      studentAnswers   = {{/*this.props.studentAnswers*/}}
       outcomes         = {props.outcomes}
       goToNextQuestion = {() => {props.nextQuestion();}}
       goToPrevQuestion = {() => {props.previousQuestion();}}
