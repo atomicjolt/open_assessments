@@ -13,13 +13,29 @@ import {questionCount, questions, outcomes }  from "../../selectors/assessment";
 
 const select = (state, props) => {
   return {
+
+    // Assessment configuration settings, these should never be modified
     settings             : state.settings.toJS(),
+
+    // Assessment to be rendered
     assessment           : state.assessment,
+
+    // State of user-assessment interactions
     progress             : state.progress.toJS(),
+
+    // The position of the current question within the allQuestions arary
     currentQuestion      : state.progress.get('currentItemIndex'),
+
+    // Array of user responses
     responses            : state.progress.get('responses').toJS(),
+
+    // How many questions are in the assessment
     questionCount        : questionCount(state, props),
+
+    // Array containing all assessment questions
     allQuestions         : questions(state, props),
+
+    // TODO 
     outcomes             : outcomes(state, props)
   };
 };
