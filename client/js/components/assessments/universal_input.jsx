@@ -23,7 +23,7 @@ export default class UniversalInput extends React.Component{
   wasChosen(id){
     if( this.props.chosen ){
       return this.props.chosen.indexOf(id) > -1;
-    }else{
+    } else {
       return null;
     }
   }
@@ -52,17 +52,21 @@ export default class UniversalInput extends React.Component{
       var renderedMessages = item.messages.map(function(message){
         return (<li>{message}</li>);
       });
-      messages = <div className="panel-messages alert alert-danger" role="alert">
-        <ul>
-          {renderedMessages}
-        </ul>
-      </div>;
+      messages = (
+        <div className="panel-messages alert alert-danger" role="alert">
+          <ul>
+            {renderedMessages}
+          </ul>
+        </div>
+      );
     }
 
     if(item.isGraded && item.solution){
-      solution = <div className="panel-footer text-center">
-        <div dangerouslySetInnerHTML={{ __html: item.solution }} />
-      </div>;
+      solution = (
+        <div className="panel-footer text-center">
+          <div dangerouslySetInnerHTML={{ __html: item.solution }} />
+        </div>
+      );
     }
 
     switch(item.question_type){
@@ -70,15 +74,12 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         items = item.answers.map((answer) => {
-          return <RadioButton
-            selectAnswer={this.props.selectAnswer}
-            isDisabled={this.props.isResult}
-            key={item.id + "_" + answer.id}
-            item={answer}
-            name="answer-radio"
-            checked={this.wasChosen(answer.id)}
-            showAsCorrect={this.showAsCorrect(answer.id)}
-          />;
+          return <RadioButton isDisabled={this.props.isResult}
+                              key={item.id + "_" + answer.id}
+                              item={answer}
+                              name="answer-radio"
+                              checked={this.wasChosen(answer.id)}
+                              showAsCorrect={this.showAsCorrect(answer.id)} />;
         });
         break;
       case "edx_dropdown":
@@ -118,19 +119,21 @@ export default class UniversalInput extends React.Component{
 
     var material = '';
     if(item.edXMaterial){
-      material = <div dangerouslySetInnerHTML={{ __html: item.edXMaterial }} />
+      material = <div dangerouslySetInnerHTML={{ __html: item.edXMaterial }} />;
     }
 
-    return <div className="panel-messages-container panel panel-default">
-      <div className="panel-heading text-center">
-        {item.title}
-        {messages}
+    return (
+      <div className="panel-messages-container panel panel-default">
+        <div className="panel-heading text-center">
+          {item.title}
+          {messages}
+        </div>
+        <div className="panel-body">
+          {material}
+          {items}
+        </div>
+        {solution}
       </div>
-      <div className="panel-body">
-        {material}
-        {items}
-      </div>
-      {solution}
-    </div>
+    );
   }
 }
