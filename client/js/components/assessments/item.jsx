@@ -1,8 +1,9 @@
 "use strict";
 
-import React                  from "react";
-import * as AssessmentActions from "../../actions/assessment";
-import UniversalInput         from "./universal_input";
+import React  from "react";
+
+import * as AssessmentActions  from "../../actions/assessment";
+import UniversalInput          from "./universal_input";
 
 export default class Item extends React.Component{
 
@@ -33,50 +34,47 @@ export default class Item extends React.Component{
   }
 
   getNavigationButtons() {
-    return <div className="confidence_wrapper">
-              {this.getPreviousButton()}
-              {this.getNextButton()}
-           </div>;
+    return (
+      <div className="confidence_wrapper">
+        {this.getPreviousButton()}
+        {this.getNextButton()}
+      </div>
+    );
   }
 
   getNextButton() {
     let disabled = (this.props.currentItemIndex == this.props.questionCount - 1);
     return (
-        <button
-          className="next-btn"
-          onClick={(e) => { this.nextButtonClicked(e); }}
-          disabled={disabled}
-        >
-          <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
-        </button>);
+      <button className="next-btn"
+              onClick={(e) => { this.nextButtonClicked(e); }}
+              disabled={disabled}>
+        <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
+      </button>
+    );
   }
 
   getPreviousButton() {
     let disabled = (this.props.currentItemIndex === 0);
     return (
-        <button
-          className="prev-btn"
-          onClick={(e) => { this.previousButtonClicked(e); }}
-          disabled={disabled}
-        >
-          <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
-        </button>);
+      <button className="prev-btn"
+              onClick={(e) => { this.previousButtonClicked(e); }}
+              disabled={disabled}>
+        <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
+      </button>
+    );
   }
 
-  getSubmitButton(){
-    let submitButton;
-    if(this.props.currentItemIndex == this.props.questionCount - 1 &&
-        this.props.assessment_kind === "SUMMATIVE"){
-      submitButton = <div>
-                      <button
-                        className="btn btn-check-answer"
-                        onClick={(e)=>{this.submitButtonClicked(e);}}
-                      >
-                        Submit
-                      </button>
-                    </div>;
+  getSubmitButton() {
+    if(this.props.currentItemIndex == this.props.questionCount - 1 && this.props.assessment_kind === "SUMMATIVE") {
+      return (
+        <div>
+          <button className="btn btn-check-answer"
+                  onClick={(e)=>{this.submitButtonClicked(e);}}>
+            Submit
+          </button>
+        </div>
+      );
     }
-    return submitButton;
   }
 
   getCounter(){
@@ -88,23 +86,21 @@ export default class Item extends React.Component{
   }
 
   getResult(index){
-    var result;
+    var text;
 
     if(index == CORRECT_RESPONSE){
-      result = <div className="check_answer_result">
-                  <p>Correct</p>
-               </div>;
+      text = "Correct";
     } else if(index == INCORRECT_RESPONSE) {
-      result = <div className="check_answer_result">
-                <p>Incorrect</p>
-               </div>;
+      text = "Incorrect";
     } else {
-      result = <div className="check_answer_result">
-                <p></p>
-               </div>;
+      text = "";
     }
 
-    return result;
+    return (
+      <div className="check_answer_result">
+        <p>{text}</p>
+      </div>
+    );
   }
 
 
@@ -117,18 +113,16 @@ export default class Item extends React.Component{
 
     var questionDirections;
     if(this.props.question.question_type == "multiple_answers_question"){
-      questionDirections =
-        <div>Choose <b>ALL</b> that apply.</div>;
+      questionDirections = <div>Choose <b>ALL</b> that apply.</div>;
     } else {
-      questionDirections =
-        <div>Choose the <b>BEST</b> answer.</div>;
+      questionDirections = <div>Choose the <b>BEST</b> answer.</div>;
     }
 
     return (
       <div className="assessment_container">
         <div className="question">
           <div className="header">
-                {counter}
+            {counter}
             <p>{this.props.question.title}</p>
           </div>
           <div>
@@ -138,9 +132,9 @@ export default class Item extends React.Component{
                   <div className="question_text">
                     {questionDirections}
                     <div
-                      dangerouslySetInnerHTML={{
-                        __html: this.props.question.material
-                      }}>
+                        dangerouslySetInnerHTML={{
+                          __html: this.props.question.material
+                        }}>
                     </div>
                   </div>
                   <UniversalInput item={this.props.question} isResult={false}/>
