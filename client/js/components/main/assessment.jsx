@@ -94,20 +94,24 @@ export class Assessment extends React.Component{
     if(props.questionCount === undefined || index >= props.questionCount || index < 0){
       return <div></div>;
     }
-    return <Item
-      assessment       = {props.assessment}
-      settings         = {props.settings}
-      question         = {props.allQuestions[index]}
-      currentItemIndex = {index}
-      questionCount    = {props.questionCount}
-      messageIndex     = {props.progress.answerMessageIndex[index]}
-      allQuestions     = {props.allQuestions}
-      studentAnswers   = {{/*this.props.studentAnswers*/}}
-      outcomes         = {props.outcomes}
-      goToNextQuestion = {() => {props.nextQuestion();}}
-      goToPrevQuestion = {() => {props.previousQuestion();}}
-      submitAssessment = {() => {this.submitAssessment();}}
-      />;
+
+    return (
+      <Item
+          key              = {index /* react uses this to distinguish children */}
+          assessment       = {props.assessment}
+          settings         = {props.settings}
+          question         = {props.allQuestions[index]}
+          currentItemIndex = {index}
+          questionCount    = {props.questionCount}
+          messageIndex     = {props.progress.answerMessageIndex[index]}
+          allQuestions     = {props.allQuestions}
+          studentAnswers   = {{/*this.props.studentAnswers*/}}
+          outcomes         = {props.outcomes}
+          goToNextQuestion = {() => {props.nextQuestion();}}
+          goToPrevQuestion = {() => {props.previousQuestion();}}
+          submitAssessment = {() => {this.submitAssessment();}}
+      />
+    );
   }
 
   /**
