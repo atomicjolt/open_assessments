@@ -18,6 +18,7 @@ describe("assessment", function() {
   var allQuestions;
   var outcomes;
   var assessmentViewed;
+  var responses;
 
   beforeEach(() => {
     spyOn(appHistory, "push");
@@ -40,6 +41,8 @@ describe("assessment", function() {
       currentItemIndex:0,
       answerMessageIndex:[]
     };
+
+    responses = [];
 
     questionCount = () => 1;
     allQuestions = () => [{
@@ -72,6 +75,7 @@ describe("assessment", function() {
       settings,
       assessment,
       progress,
+      responses,
       questionCount:questionCount(),
       allQuestions:allQuestions(),
       outcomes:outcomes(),

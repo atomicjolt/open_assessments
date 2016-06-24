@@ -14,13 +14,21 @@ import DragAndDrop          from "../common/drag_and_drop";
 export default class UniversalInput extends React.Component{
 
   static propTypes = {
+    // Item to be displayed
     item: React.PropTypes.object.isRequired,
-    isResult: React.PropTypes.bool
+
+    selectAnswer: React.PropTypes.func.isRequired,
+
+    // Whether or not entire question should be disabled
+    isResult: React.PropTypes.bool,
+
+    // Array of selected answer IDs
+    response: React.PropTypes.array
   }
 
-  wasChosen(id){
-    if( this.props.chosen ){
-      return this.props.chosen.indexOf(id) > -1;
+  wasSelected(id){
+    if( this.props.response ){
+      return this.props.response.indexOf(id) > -1;
     } else {
       return null;
     }
@@ -66,12 +74,16 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         items = item.answers.map((answer) => {
-          return <RadioButton isDisabled={this.props.isResult}
-                              key={item.id + "_" + answer.id}
-                              item={answer}
-                              name="answer-radio"
-                              checked={this.wasChosen(answer.id)}
-                              showAsCorrect={this.showAsCorrect(answer.id)} />;
+          return (
+            <RadioButton
+              isDisabled={this.props.isResult}
+              key={item.id + "_" + answer.id}
+              item={answer}
+              name="answer-radio"
+              checked={this.wasSelected(answer.id)}
+              showAsCorrect={this.showAsCorrect(answer.id)}
+              selectAnswer={this.props.selectAnswer} />
+          );
         });
         break;
       case "edx_dropdown":
@@ -93,7 +105,7 @@ export default class UniversalInput extends React.Component{
         break;
       case "multiple_answers_question":
         items = item.answers.map((answer) => {
-          return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasChosen(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)}/>;
+          return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasSelected(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)}/>;
         });
         break;
       case "edx_image_mapped_input":

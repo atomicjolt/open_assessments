@@ -9,22 +9,27 @@ describe('radio button', function() {
     id: 1,
     material: "The radio button label"
   };
+  var selectAnswer = () => {};
 
-  var result = TestUtils.renderIntoDocument(<RadioButton item={item} name="answer-radio" />);
+  var result = TestUtils.renderIntoDocument(<RadioButton
+                                              item={item}
+                                              name="answer-radio"
+                                              selectAnswer={selectAnswer}/>);
+  var subject = ReactDOM.findDOMNode(result);
 
   it('renders the radio button label', function() {
-    expect(ReactDOM.findDOMNode(result).textContent).toContain(item.material);
+    expect(subject.textContent).toContain(item.material);
   });
 
   it('renders input attributes', function() {
-    expect(ReactDOM.findDOMNode(result).childNodes[0].childNodes[0].childNodes[0].attributes.name.value).toContain("answer-radio");
+    expect(subject.innerHTML).toContain('type="radio"');
   });
 
   it('calls the answerSelected function on click', () => {
-    spyOn(result, "answerSelected");
+    spyOn(result, "selectAnswer");
     var radio = TestUtils.findRenderedDOMComponentWithTag(result, 'input');
     TestUtils.Simulate.click(radio);
-    expect(result.answerSelected).toHaveBeenCalled();
+    expect(result.selectAnswer).toHaveBeenCalled();
   });
 
 });

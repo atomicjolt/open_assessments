@@ -21,9 +21,10 @@ export const start = (assessmentId) => ({
   assessmentId
 });
 
-export const answerSelected = (item) => ({
+export const answerSelected = (questionIndex, answerId) => ({
   type: Constants.ANSWER_SELECTED,
-  item
+  questionIndex,
+  answerId
 });
 
 export const selectQuestion = (index) => ({
