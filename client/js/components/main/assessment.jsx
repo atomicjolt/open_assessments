@@ -29,6 +29,9 @@ const select = (state, props) => {
     // Array of user responses
     responses            : state.progress.get('responses').toJS(),
 
+    // How many questions to display at a time
+    displayNum           : state.settings.get('questions_per_section'),
+
     // How many Items are in the assessment
     questionCount        : questionCount(state, props),
 
@@ -196,12 +199,12 @@ export class Assessment extends React.Component{
 
   nextButtonClicked(e){
     e.preventDefault();
-    this.props.nextQuestion();
+    this.props.nextQuestions(this.props.displayNum);
   }
 
   previousButtonClicked(e){
     e.preventDefault();
-    this.props.previousQuestion();
+    this.props.previousQuestions(this.props.displayNum);
   }
 
   submitButtonClicked(e){
