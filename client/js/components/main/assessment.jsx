@@ -14,25 +14,25 @@ import {questionCount, questions, outcomes }  from "../../selectors/assessment";
 const select = (state, props) => {
   return {
 
-    // Assessment configuration settings, these should never be modified
+    // Assessment configuration settings. these should never be modified.
     settings             : state.settings.toJS(),
 
-    // Assessment to be rendered
+    // Assessment to be rendered.
     assessment           : state.assessment,
 
-    // State of user-assessment interactions
+    // State of user-assessment interactions.
     progress             : state.progress.toJS(),
 
-    // The position of the current question within the allQuestions arary
+    // The index of the current question within the allQuestions array
     currentQuestion      : state.progress.get('currentItemIndex'),
 
     // Array of user responses
     responses            : state.progress.get('responses').toJS(),
 
-    // How many questions are in the assessment
+    // How many Items are in the assessment
     questionCount        : questionCount(state, props),
 
-    // Array containing all assessment questions
+    // Array containing all assessment Items
     allQuestions         : questions(state, props),
 
     // TODO
@@ -207,7 +207,7 @@ export class Assessment extends React.Component{
     let content = this.getContent();
     let warning = this.getWarning();
 
-    return(
+    return (
       <div className="assessment">
         <div>{titleText}</div>
         {progressBar}

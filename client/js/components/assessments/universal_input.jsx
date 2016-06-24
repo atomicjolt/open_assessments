@@ -14,16 +14,15 @@ import DragAndDrop          from "../common/drag_and_drop";
 export default class UniversalInput extends React.Component{
 
   static propTypes = {
-    // Question to be displayed
+    // Item to be displayed
     item: React.PropTypes.object.isRequired,
 
-    // Method to dispatch ANSWER_SELECTED action
     selectAnswer: React.PropTypes.func.isRequired,
 
     // Whether or not entire question should be disabled
     isResult: React.PropTypes.bool,
 
-    // Array of previously selected answer Ids
+    // Array of selected answer IDs
     response: React.PropTypes.array
   }
 

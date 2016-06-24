@@ -8,36 +8,32 @@ import UniversalInput          from "./universal_input";
 export default class Item extends React.Component{
 
   static propTypes = {
-    // Question object to be displayed
-    question                   : React.PropTypes.object.isRequired,
+    // Item to be displayed
+    question          : React.PropTypes.object.isRequired,
 
-    // Array of previously selected answer Ids
-    response                   : React.PropTypes.array.isRequired,
+    // Array of selected answer IDs
+    response          : React.PropTypes.array.isRequired,
 
-    // The position of the question in an array of questions
-    currentItemIndex           : React.PropTypes.number.isRequired,
+    // The position of the item in the array of items
+    currentItemIndex  : React.PropTypes.number.isRequired,
 
-    // The total number of questions in an array of questions
-    questionCount              : React.PropTypes.number.isRequired,
+    // The total number of items in the array of items
+    questionCount     : React.PropTypes.number.isRequired,
 
-    // Should match response constants declared below, whether the
-    // question should be displayed as correct, incorrect, or ungraded
-    messageIndex               : React.PropTypes.number.isRequired,
+    // Whether the item should be displayed as correct, incorrect,
+    // or ungraded. Should match response constants declared below.
+    messageIndex      : React.PropTypes.number.isRequired,
 
-    // Method to dispatch NEXT_QUESTION action
-    goToNextQuestion           : React.PropTypes.func.isRequired,
+    goToNextQuestion  : React.PropTypes.func.isRequired,
 
-    // Method to dispatch PREVIOUS_QUESTION action
-    goToPrevQuestion           : React.PropTypes.func.isRequired,
+    goToPrevQuestion  : React.PropTypes.func.isRequired,
 
-    // Method to dispatch SUBMIT_ASSESSMENT action
-    submitAssessment           : React.PropTypes.func.isRequired,
+    submitAssessment  : React.PropTypes.func.isRequired,
 
-    // Method to dispatch ANSWER_SELECTED action
-    selectAnswer               : React.PropTypes.func.isRequired,
+    selectAnswer      : React.PropTypes.func.isRequired,
 
     // TODO
-    outcomes                   : React.PropTypes.object,
+    outcomes          : React.PropTypes.object,
   };
 
   nextButtonClicked(e){

@@ -6,19 +6,18 @@ import * as AssessmentActions from "../../actions/assessment";
 export default class RadioButton extends React.Component{
 
   static propTypes = {
-    // Question to be displayed
+    // Item being displayed
     item: React.PropTypes.object.isRequired,
 
     // Type of question being rendered
     name: React.PropTypes.string.isRequired,
 
-    // Method to dispatch ANSWER_SELECTED action
     selectAnswer: React.PropTypes.func.isRequired,
 
-    // Whether or not question should be disabled
+    // Whether or not input should be disabled
     isDisabled: React.PropTypes.bool,
 
-    // Whether or not input should be selected or not
+    // Whether or not input should be selected
     checked: React.PropTypes.bool
   };
 
