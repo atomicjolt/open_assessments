@@ -16,11 +16,11 @@ export default class RadioButton extends React.Component{
     var checked     = null;
     var optionFlag  = null;
 
-    if( this.props.checked === true ) {
+    if(this.props.checked === true) {
       checked = "true";
-    } else if ( this.props.checked === false ){
+    } else if(this.props.checked === false) {
       checked = false;
-    } else if ( !this.props.isDisabled ) {
+    } else if(!this.props.isDisabled) {
       // checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null; TODO
     }
 
@@ -29,6 +29,7 @@ export default class RadioButton extends React.Component{
 
   optionFlagStatus(){
     var optionFlag;
+
     if(this.props.showAsCorrect){
       var label = "Correct Answer that was ";
       label += this.checkedStatus() ? "chosen" : "not chosen";
@@ -40,10 +41,11 @@ export default class RadioButton extends React.Component{
                         aria-label="Wrong answer that was chosen"
                         style={styles.checkStyleWrong}>&#10008;</div>;
     }
+
     return optionFlag;
   }
 
-  render(){
+  render() {
     return (
       <div>
         {this.optionFlagStatus()}
@@ -53,8 +55,7 @@ export default class RadioButton extends React.Component{
                    defaultChecked={this.checkedStatus()}
                    disabled={this.props.isDisabled}
                    name={this.props.name}
-                   onClick={()=>{ this.answerSelected(); }}
-            />
+                   onClick={() => { this.answerSelected(); }} />
             <span style={Styles.span}>{this.props.item.material}</span>
           </label>
         </div>
