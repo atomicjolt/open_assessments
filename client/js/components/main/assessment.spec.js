@@ -86,7 +86,10 @@ describe("assessment", function() {
       sendSize: () => {},
       scrollParentToTop: () => {},
       hideLMSNavigation: () => {},
+      nextQuestion: () => {}
     };
+
+    spyOn(props, "nextQuestion");
 
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     subject = ReactDOM.findDOMNode(result);
@@ -95,6 +98,12 @@ describe("assessment", function() {
   afterEach(() => {
     jasmine.clock().uninstall();
     jasmine.Ajax.uninstall();
+  });
+
+  it("Calls nextButtonClicked when the next button is clicked", () => {
+    let button = TestUtils.findRenderedDOMComponentWithClass(result, "next-btn");
+    TestUtils.Simulate.click(button);
+    expect(props.nextQuestion).toHaveBeenCalled();
   });
 
   it("renders the assessment", () => {
