@@ -158,7 +158,8 @@ export default class Parser{
         id            : xml.attr('ident'),
         material      : this.buildMaterial(xml.find('material').children()),
         matchMaterial : matchMaterial,
-        xml           : xml
+        xml           : xml,
+        feedback      : this.parseFeedback(xml)
       };
       return answer;
     };
@@ -243,6 +244,12 @@ export default class Parser{
       }
     });
     return result;
+  }
+
+  static parseFeedback(xml){
+    return {
+      // See code below and drupal.xml for an example
+    };
   }
 
 }
