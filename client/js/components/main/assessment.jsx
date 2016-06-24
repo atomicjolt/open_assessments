@@ -122,7 +122,9 @@ export class Assessment extends React.Component{
           messageIndex     = {props.progress.answerMessageIndex[index]}
           allQuestions     = {props.allQuestions}
           outcomes         = {props.outcomes}
-      />
+          selectAnswer     = {
+            (answerId) =>
+              {this.props.answerSelected(index, answerId);}}/>
     );
   }
 
