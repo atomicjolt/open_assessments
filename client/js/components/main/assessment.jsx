@@ -112,21 +112,19 @@ export class Assessment extends React.Component{
     }
     return (
       <Item
-        key              = {index /* react uses this to distinguish children */}
-        settings         = {props.settings}
-        question         = {props.allQuestions[index]}
-        response         = {props.responses[index]}
-        currentItemIndex = {index}
-        questionCount    = {props.questionCount}
-        messageIndex     = {props.progress.answerMessageIndex[index]}
-        allQuestions     = {props.allQuestions}
-        outcomes         = {props.outcomes}
-        goToNextQuestion = {() => {props.nextQuestion();}}
-        goToPrevQuestion = {() => {props.previousQuestion();}}
-        submitAssessment = {() => {this.submitAssessment();}}
-        selectAnswer     = {
-          (answerId) =>
-            {this.props.answerSelected(index, answerId);}}/>
+          key              = {index /* react uses this to distinguish children */}
+          settings         = {props.settings}
+          assessment       = {props.assessment}
+          question         = {props.allQuestions[index]}
+          response         = {props.responses[index]}
+          currentItemIndex = {index}
+          questionCount    = {props.questionCount}
+          messageIndex     = {props.progress.answerMessageIndex[index]}
+          allQuestions     = {props.allQuestions}
+          outcomes         = {props.outcomes}
+          selectAnswer     = {
+            (answerId) =>
+              {this.props.answerSelected(index, answerId);}}/>
     );
   }
 
@@ -140,8 +138,8 @@ export class Assessment extends React.Component{
     let current = this.props.progress.currentItemIndex;
     let items = [];
     if(displayNum > 0 && displayNum < this.props.questionCount){
-      let start = current / displayNum;
-      let end = start + displayNum;
+      let start = parseInt(current / displayNum) * displayNum;
+      let end = parseInt(start + displayNum);
 
       for(let i = start; i < end; i++){
         items.push(this.getItem(i));
@@ -176,6 +174,13 @@ export class Assessment extends React.Component{
     return this.props.currentQuestion === this.props.questionCount - 1;
   }
 
+  /**
+   * Returns true if the current question is the first question, false otherwise
+   */
+  isFirstQuestion(){
+    return this.props.currentQuestion === 0;
+  }
+
 /**
  * Returns a warning if there are unanswered questions and we are on the
  * last question.
@@ -188,6 +193,71 @@ export class Assessment extends React.Component{
     }
     return warning;
   }
+
+  nextButtonClicked(e){
+    e.preventDefault();
+    this.props.nextQuestion();
+  }
+
+  previousButtonClicked(e){
+    e.preventDefault();
+    this.props.previousQuestion();
+  }
+
+  submitButtonClicked(e){
+    e.preventDefault();
+    this.props.submitAssessment();
+  }
+
+  getNextButton() {
+    let disabled = this.isLastQuestion();
+    return (
+      <button
+        className="next-btn"
+        onClick={(e) => { this.nextButtonClicked(e); }}
+        disabled={disabled}
+      >
+        <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
+      </button>);
+  }
+
+  getPreviousButton() {
+    let disabled = this.isFirstQuestion();
+    return (
+        <button
+          className="prev-btn"
+          onClick={(e) => { this.previousButtonClicked(e); }}
+          disabled={disabled}
+        >
+          <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
+        </button>);
+  }
+
+  getSubmitButton(){
+    let submitButton;
+    if(this.props.currentQuestion == this.props.questionCount - 1 &&
+        this.props.settings.assessment_kind === "SUMMATIVE"){
+      submitButton = <div>
+                      <button
+                        className="btn btn-check-answer"
+                        onClick={(e)=>{this.submitButtonClicked(e);}}
+                      >
+                        Submit
+                      </button>
+                    </div>;
+    }
+    return submitButton;
+  }
+
+
+  getNav(){
+    return <div className="confidence_wrapper">
+              {this.getPreviousButton()}
+              {this.getNextButton()}
+              {this.getSubmitButton()}
+           </div>;
+  }
+
 
   popup(){
     return "Don’t leave!\n If you leave now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this quiz and then use the \"Progress\" drop-down menu";
@@ -206,6 +276,7 @@ export class Assessment extends React.Component{
     let titleText =  this.props.assessment.title;
     let content = this.getContent();
     let warning = this.getWarning();
+    let nav = this.getNav();
 
     return (
       <div className="assessment">
@@ -215,6 +286,7 @@ export class Assessment extends React.Component{
           <div className="section_container">
             {warning}
             {content}
+            {nav}
           </div>
         </div>
       </div>
