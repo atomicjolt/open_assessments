@@ -13,13 +13,29 @@ import {questionCount, questions, outcomes }  from "../../selectors/assessment";
 
 const select = (state, props) => {
   return {
+
+    // Assessment configuration settings. these should never be modified.
     settings             : state.settings.toJS(),
+
+    // Assessment to be rendered.
     assessment           : state.assessment,
+
+    // State of user-assessment interactions.
     progress             : state.progress.toJS(),
+
+    // The index of the current question within the allQuestions array
     currentQuestion      : state.progress.get('currentItemIndex'),
+
+    // Array of user responses
     responses            : state.progress.get('responses').toJS(),
+
+    // How many Items are in the assessment
     questionCount        : questionCount(state, props),
+
+    // Array containing all assessment Items
     allQuestions         : questions(state, props),
+
+    // TODO
     outcomes             : outcomes(state, props)
   };
 };
@@ -97,14 +113,14 @@ export class Assessment extends React.Component{
     return (
       <Item
           key              = {index /* react uses this to distinguish children */}
-          assessment       = {props.assessment}
           settings         = {props.settings}
+          assessment       = {props.assessment}
           question         = {props.allQuestions[index]}
+          response         = {props.responses[index]}
           currentItemIndex = {index}
           questionCount    = {props.questionCount}
           messageIndex     = {props.progress.answerMessageIndex[index]}
           allQuestions     = {props.allQuestions}
-          studentAnswers   = {{/*this.props.studentAnswers*/}}
           outcomes         = {props.outcomes}
       />
     );
@@ -260,17 +276,19 @@ export class Assessment extends React.Component{
     let warning = this.getWarning();
     let nav = this.getNav();
 
-    return<div className="assessment">
-      <div>{titleText}</div>
-      {progressBar}
-      <div className="section_list">
-        <div className="section_container">
-          {warning}
-          {content}
-          {nav}
+    return (
+      <div className="assessment">
+        <div>{titleText}</div>
+        {progressBar}
+        <div className="section_list">
+          <div className="section_container">
+            {warning}
+            {content}
+            {nav}
+          </div>
         </div>
       </div>
-    </div>;
+    );
   }
 
 }

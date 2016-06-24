@@ -8,18 +8,41 @@ import UniversalInput          from "./universal_input";
 export default class Item extends React.Component{
 
   static propTypes = {
-    question                   : React.PropTypes.object.isRequired,
-    currentItemIndex           : React.PropTypes.number.isRequired,
-    questionCount              : React.PropTypes.number.isRequired,
-    messageIndex               : React.PropTypes.number.isRequired,
-    outcomes                   : React.PropTypes.object,
+    // Item to be displayed
+    question          : React.PropTypes.object.isRequired,
+
+    // Array of selected answer IDs
+    response          : React.PropTypes.array.isRequired,
+
+    // The position of the item in the array of items
+    currentItemIndex  : React.PropTypes.number.isRequired,
+
+    // The total number of items in the array of items
+    questionCount     : React.PropTypes.number.isRequired,
+
+    // Whether the item should be displayed as correct, incorrect,
+    // or ungraded. Should match response constants declared below.
+    messageIndex      : React.PropTypes.number.isRequired,
+
+    goToNextQuestion  : React.PropTypes.func.isRequired,
+
+    goToPrevQuestion  : React.PropTypes.func.isRequired,
+
+    submitAssessment  : React.PropTypes.func.isRequired,
+
+    selectAnswer      : React.PropTypes.func.isRequired,
+
+    // TODO
+    outcomes          : React.PropTypes.object,
   };
 
   getCounter(){
     if(this.props.shouldShowCounter){
-      return <span className="counter">
-            {this.props.currentItemIndex + 1} of {this.props.questionCount}
-           </span>;
+      return (
+        <span className="counter">
+          {this.props.currentItemIndex + 1} of {this.props.questionCount}
+        </span>
+      );
     }
   }
 
@@ -73,7 +96,12 @@ export default class Item extends React.Component{
                         }}>
                     </div>
                   </div>
-                  <UniversalInput item={this.props.question} isResult={false}/>
+                  <UniversalInput
+                    item={this.props.question}
+                    isResult={false}
+                    selectAnswer={this.props.selectAnswer}
+                    response={this.props.response}
+                  />
                 </div>
                 <div className="row">
                   <div className="col-md-5 col-sm-6 col-xs-8" >
