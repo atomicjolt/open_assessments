@@ -22,7 +22,7 @@ export default class RadioButton extends React.Component{
     let optionFlag = null;
 
     if( this.props.checked === true ) {
-      checked = "true";
+      checked = true;
     } else if(this.props.checked === false) {
       checked = false;
     } else if(!this.props.isDisabled) {
@@ -33,10 +33,10 @@ export default class RadioButton extends React.Component{
   }
 
   optionFlagStatus(){
-    var optionFlag;
+    let optionFlag;
 
     if(this.props.showAsCorrect){
-      var label = "Correct Answer that was ";
+      let label = "Correct Answer that was ";
       label += this.checkedStatus() ? "chosen" : "not chosen";
       optionFlag = <div className="correctIndicator"
                         aria-label={label}>&#10003;</div>;
