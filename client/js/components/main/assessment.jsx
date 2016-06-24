@@ -116,12 +116,12 @@ export class Assessment extends React.Component{
           settings         = {props.settings}
           assessment       = {props.assessment}
           question         = {props.allQuestions[index]}
-          response         = {props.responses[index]}
+          response         = {props.responses[index] || []}
           currentItemIndex = {index}
           questionCount    = {props.questionCount}
-          messageIndex     = {props.progress.answerMessageIndex[index]}
+          messageIndex     = {props.progress.answerMessageIndex[index] || 0}
           allQuestions     = {props.allQuestions}
-          outcomes         = {props.outcomes}
+          outcomes         = {props.outcomes || {}}
           selectAnswer     = {
             (answerId) =>
               {this.props.answerSelected(index, answerId);}}/>

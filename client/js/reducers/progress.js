@@ -33,13 +33,12 @@ export default (state = initialState, action) => {
       break;
 
     case AssessmentConstants.ANSWER_SELECTED:
-      var responses = state.getIn(
-        ['responses', `${action.questionIndex}`],
-        Immutable.List()
-      );
+      var responses = state.getIn(['responses', `${action.questionIndex}`]);
+      if(responses === undefined){responses = Immutable.List();} 
       responses = responses.push(action.answerId);
       state = state.setIn(["responses", `${action.questionIndex}`], responses);
       break;
+
 
     default:
 
