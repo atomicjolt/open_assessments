@@ -3,9 +3,9 @@ import { createSelector } from "reselect";
 
 import { getItems, loadOutcomes } from "./qti";
 
-export const questionsPerSection = (state, props) => state.settings.get('questions_per_section');
+export const questionsPerSection    = (state, props) => state.settings.questions_per_section;
 export const assessment             = (state, props) => state.assessment;
-export const shuffleQuestionAnswers = (state, props) => state.settings.get('shuffle_question_answers');
+export const shuffleQuestionAnswers = (state, props) => state.settings.shuffle_question_answers;
 
 // Memoized selectors. These selectors transform state. Since the transformation might be
 // expensive the results are memoized. The transform function will only be called if the
