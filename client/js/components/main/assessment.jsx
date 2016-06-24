@@ -35,7 +35,7 @@ const select = (state, props) => {
     // Array containing all assessment questions
     allQuestions         : questions(state, props),
 
-    // TODO 
+    // TODO
     outcomes             : outcomes(state, props)
   };
 };
@@ -110,24 +110,24 @@ export class Assessment extends React.Component{
     if(props.questionCount === undefined || index >= props.questionCount || index < 0){
       return <div></div>;
     }
-    debugger;
-    return <Item
-      settings         = {props.settings}
-      question         = {props.allQuestions[index]}
-      response         = {props.responses[index]}
-      currentItemIndex = {index}
-      questionCount    = {props.questionCount}
-      messageIndex     = {props.progress.answerMessageIndex[index]}
-      allQuestions     = {props.allQuestions}
-      outcomes         = {props.outcomes}
-      goToNextQuestion = {() => {props.nextQuestion();}}
-      goToPrevQuestion = {() => {props.previousQuestion();}}
-      submitAssessment = {() => {this.submitAssessment();}}
-      selectAnswer     = {
-        (answerId) =>
-          {this.props.answerSelected(index, answerId);}
-      }
-      />;
+    return (
+      <Item
+        key              = {index /* react uses this to distinguish children */}
+        settings         = {props.settings}
+        question         = {props.allQuestions[index]}
+        response         = {props.responses[index]}
+        currentItemIndex = {index}
+        questionCount    = {props.questionCount}
+        messageIndex     = {props.progress.answerMessageIndex[index]}
+        allQuestions     = {props.allQuestions}
+        outcomes         = {props.outcomes}
+        goToNextQuestion = {() => {props.nextQuestion();}}
+        goToPrevQuestion = {() => {props.previousQuestion();}}
+        submitAssessment = {() => {this.submitAssessment();}}
+        selectAnswer     = {
+          (answerId) =>
+            {this.props.answerSelected(index, answerId);}}/>
+    );
   }
 
   /**
@@ -207,16 +207,18 @@ export class Assessment extends React.Component{
     let content = this.getContent();
     let warning = this.getWarning();
 
-    return<div className="assessment">
-      <div>{titleText}</div>
-      {progressBar}
-      <div className="section_list">
-        <div className="section_container">
-          {warning}
-          {content}
+    return(
+      <div className="assessment">
+        <div>{titleText}</div>
+        {progressBar}
+        <div className="section_list">
+          <div className="section_container">
+            {warning}
+            {content}
+          </div>
         </div>
       </div>
-    </div>;
+    );
   }
 
 }

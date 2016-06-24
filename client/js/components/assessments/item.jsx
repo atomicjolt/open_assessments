@@ -101,9 +101,11 @@ export default class Item extends React.Component{
 
   getCounter(){
     if(this.props.shouldShowCounter){
-      return <span className="counter">
-              {this.props.currentItemIndex + 1} of {this.props.questionCount}
-             </span>;
+      return (
+        <span className="counter">
+          {this.props.currentItemIndex + 1} of {this.props.questionCount}
+        </span>
+      );
     }
   }
 

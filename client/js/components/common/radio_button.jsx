@@ -18,7 +18,7 @@ export default class RadioButton extends React.Component{
     // Whether or not question should be disabled
     isDisabled: React.PropTypes.bool,
 
-    // Whether or not input should be selected or not 
+    // Whether or not input should be selected or not
     checked: React.PropTypes.bool
   };
 
@@ -30,7 +30,7 @@ export default class RadioButton extends React.Component{
     let checked = null;
     let optionFlag = null;
 
-    if( this.props.checked === true ) {
+    if(this.props.checked === true) {
       checked = true;
     } else if(this.props.checked === false) {
       checked = false;

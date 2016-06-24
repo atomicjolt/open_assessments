@@ -75,13 +75,16 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         items = item.answers.map((answer) => {
-          return <RadioButton isDisabled={this.props.isResult}
-                              key={item.id + "_" + answer.id}
-                              item={answer}
-                              name="answer-radio"
-                              checked={this.wasSelected(answer.id)}
-                              showAsCorrect={this.showAsCorrect(answer.id)}
-                              selectAnswer={this.props.selectAnswer} />;
+          return (
+            <RadioButton
+              isDisabled={this.props.isResult}
+              key={item.id + "_" + answer.id}
+              item={answer}
+              name="answer-radio"
+              checked={this.wasSelected(answer.id)}
+              showAsCorrect={this.showAsCorrect(answer.id)}
+              selectAnswer={this.props.selectAnswer} />
+          );
         });
         break;
       case "edx_dropdown":
