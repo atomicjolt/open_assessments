@@ -44,17 +44,21 @@ export default class UniversalInput extends React.Component{
       var renderedMessages = item.messages.map(function(message){
         return (<li>{message}</li>);
       });
-      messages = <div className="panel-messages alert alert-danger" role="alert">
-        <ul>
-          {renderedMessages}
-        </ul>
-      </div>
+      messages = (
+        <div className="panel-messages alert alert-danger" role="alert">
+          <ul>
+            {renderedMessages}
+          </ul>
+        </div>
+      );
     }
 
     if(item.isGraded && item.solution){
-      solution = <div className="panel-footer text-center">
-        <div dangerouslySetInnerHTML={{ __html: item.solution }} />
-      </div>
+      solution = (
+        <div className="panel-footer text-center">
+          <div dangerouslySetInnerHTML={{ __html: item.solution }} />
+        </div>
+      );
     }
 
     switch(item.question_type){
@@ -107,19 +111,21 @@ export default class UniversalInput extends React.Component{
 
     var material = '';
     if(item.edXMaterial){
-      material = <div dangerouslySetInnerHTML={{ __html: item.edXMaterial }} />
+      material = <div dangerouslySetInnerHTML={{ __html: item.edXMaterial }} />;
     }
 
-    return <div className="panel-messages-container panel panel-default">
-      <div className="panel-heading text-center">
-        {item.title}
-        {messages}
+    return (
+      <div className="panel-messages-container panel panel-default">
+        <div className="panel-heading text-center">
+          {item.title}
+          {messages}
+        </div>
+        <div className="panel-body">
+          {material}
+          {items}
+        </div>
+        {solution}
       </div>
-      <div className="panel-body">
-        {material}
-        {items}
-      </div>
-      {solution}
-    </div>
+    );
   }
 }

@@ -65,10 +65,8 @@ export default class Item extends React.Component{
   }
 
   getSubmitButton() {
-    let submitButton;
-    if(this.props.currentItemIndex == this.props.questionCount - 1 &&
-       this.props.assessment_kind === "SUMMATIVE") {
-      submitButton = (
+    if(this.props.currentItemIndex == this.props.questionCount - 1 && this.props.assessment_kind === "SUMMATIVE") {
+      return (
         <div>
           <button className="btn btn-check-answer"
                   onClick={(e)=>{this.submitButtonClicked(e);}}>
@@ -77,7 +75,6 @@ export default class Item extends React.Component{
         </div>
       );
     }
-    return submitButton;
   }
 
   getCounter(){
@@ -135,9 +132,9 @@ export default class Item extends React.Component{
                   <div className="question_text">
                     {questionDirections}
                     <div
-                      dangerouslySetInnerHTML={{
-                        __html: this.props.question.material
-                      }}>
+                        dangerouslySetInnerHTML={{
+                          __html: this.props.question.material
+                        }}>
                     </div>
                   </div>
                   <UniversalInput item={this.props.question} isResult={false}/>
