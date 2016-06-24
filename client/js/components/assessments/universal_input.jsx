@@ -36,12 +36,6 @@ export default class UniversalInput extends React.Component{
     }
   }
 
-  // buildSelectAnswer(itemId){
-  //   return (answerId) => {
-  //     this.props.selectAnswer(itemId, answerId);
-  //   };
-  // }
-
   render(){
     var item = this.props.item;
     var messages = '';
