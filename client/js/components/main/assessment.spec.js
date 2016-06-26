@@ -12,7 +12,7 @@ describe("assessment", function() {
   var allQuestions,
     assessment,
     assessmentViewed,
-    currentItemPage,
+    currentItem,
     displayNum,
     outcomes,
     previousQuestions,
@@ -57,7 +57,7 @@ describe("assessment", function() {
       title: "Test Title"
     };
 
-    currentItemPage = 5;
+    currentItem = 5;
 
     displayNum = 1;
 
@@ -84,7 +84,7 @@ describe("assessment", function() {
       allQuestions:allQuestions(),
       assessment,
       assessmentViewed: () => {},
-      currentItemPage,
+      currentItem,
       displayNum,
       hideLMSNavigation: () => {},
       nextQuestions: () => {},
@@ -127,7 +127,7 @@ describe("assessment", function() {
   });
 
   it("Calls submitAssessment when the submit button is clicked", () => {
-    props.currentItemPage = 9;
+    props.currentItem = 9;
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     let button = TestUtils.findRenderedDOMComponentWithClass(result, "btn-check-answer");
     TestUtils.Simulate.click(button);
@@ -152,7 +152,7 @@ describe("assessment", function() {
   });
 
   it("renders submit button on last page of items", () => {
-    props.currentItemPage = 9;
+    props.currentItem = 9;
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     subject = ReactDOM.findDOMNode(result);
 
@@ -160,7 +160,7 @@ describe("assessment", function() {
   });
 
   it("disables next button on last page of items", () => {
-    props.currentItemPage = 9;
+    props.currentItem = 9;
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     subject = ReactDOM.findDOMNode(result);
 
@@ -169,7 +169,7 @@ describe("assessment", function() {
   });
 
   it("disables previous button on first page of items", () => {
-    props.currentItemPage = 0;
+    props.currentItem = 0;
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     subject = ReactDOM.findDOMNode(result);
 

@@ -24,7 +24,7 @@ const select = (state, props) => {
     progress        : state.progress.toJS(),
 
     // Current page of items to display when paging through items
-    currentItemPage : state.progress.get('currentItemIndex'), //TODO rename currentItemIndex
+    currentItem : state.progress.get('currentItemIndex'), //TODO rename currentItemIndex
 
     // Array of user responses
     responses       : state.progress.get('responses').toJS(),
@@ -177,7 +177,7 @@ export class Assessment extends React.Component{
   isLastPage(){
     //Default to display all questions in section if question count not specified
     var displayNum = this.props.displayNum;
-    var currentPage = parseInt(this.props.currentItemPage / displayNum);
+    var currentPage = parseInt(this.props.currentItem / displayNum);
     var lastPage = parseInt((this.props.questionCount - 1) / displayNum);
     return currentPage === lastPage;
   }
@@ -188,7 +188,7 @@ export class Assessment extends React.Component{
    */
   isFirstPage(){
     var displayNum = this.props.displayNum || this.props.questionCount;
-    var currentPage = parseInt(this.props.currentItemPage / displayNum);
+    var currentPage = parseInt(this.props.currentItem / displayNum);
     return currentPage === 0;
   }
 
