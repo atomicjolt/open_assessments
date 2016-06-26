@@ -15,7 +15,7 @@ const select = (state, props) => {
   return {
 
     // Assessment configuration settings. these should never be modified.
-    settings             : state.settings.toJS(),
+    settings             : state.settings,
 
     // Assessment to be rendered.
     assessment           : state.assessment,
