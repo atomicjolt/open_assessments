@@ -18,7 +18,7 @@ export const parse = (settings, data) => {
   const xmlns  = xml.find('>').attr('xmlns');
 
   if(xmlns.startsWith("http://www.imsglobal.org/xsd/imsqti_v2p")) {
-    return Qti2.parse(settings.get("assessmentId"), xml);
+    return Qti2.parse(settings.assessment_id, xml);
   }
 
   const assessmentXml   = xml.find('assessment').addBack('assessment');
@@ -26,7 +26,7 @@ export const parse = (settings, data) => {
   const sequential      = xml.find('sequential').addBack('sequential');
 
   if(assessmentXml.length > 0 || questestinterop.length > 0){
-    return Qti1.parse(settings.get("assessmentId"), assessmentXml, xml);
+    return Qti1.parse(settings.assessment_id, assessmentXml, xml);
   } else if(sequential.length > 0){
     return EdX.parse(settings, sequential);
   }

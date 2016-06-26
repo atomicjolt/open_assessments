@@ -1,19 +1,9 @@
-import Immutable                     from 'immutable';
-import { Constants as JwtConstants } from "../actions/jwt";
+import _  from "lodash";
 
-const initialState = Immutable.fromJS({});
+export default (state = {}, action) => {
+  return state; // Just return state. Don't let settings from the server mutate.
+};
 
-export default (state = initialState, action) => {
-
-  switch(action.type){
-
-    case JwtConstants.REFRESH_JWT:
-      return state.set('jwt', action.payload);
-      break;
-
-    default:
-      return state;
-
-  }
-
+export const getInitialSettings = (serverSettings) => {
+  return _.merge({}, serverSettings); // Add default settings that can be overriden by values in serverSettings
 };

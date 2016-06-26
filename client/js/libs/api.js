@@ -31,16 +31,16 @@ export default class Api{
 
       switch (method){
         case NetworkConstants.GET:
-          request = Request.get(url);
+          request = Request.get(fullUrl);
           break;
         case NetworkConstants.POST:
-          request = Request.post(url).send(body);
+          request = Request.post(fullUrl).send(body);
           break;
         case NetworkConstants.PUT:
-          request = Request.put(url).send(body);
+          request = Request.put(fullUrl).send(body);
           break;
         case NetworkConstants.DEL:
-          request = Request.del(url);
+          request = Request.del(fullUrl);
           break;
       }
 

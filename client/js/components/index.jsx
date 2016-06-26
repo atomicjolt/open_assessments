@@ -10,9 +10,9 @@ import appHistory                       from "../history";
 
 const select = (state) => {
   return {
-    maxAttempts: state.settings.get("max_attempts"),
-    userAttempts: state.settings.get("userAttempts"),
-    enableStart: state.settings.get("enableStart")
+    maxAttempts: state.settings.max_attempts,
+    userAttempts: state.settings.userAttempts,
+    enableStart: state.settings.enableStart
   };
 };
 
