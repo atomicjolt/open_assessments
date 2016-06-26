@@ -15,7 +15,7 @@ const select = (state, props) => {
   return {
 
     // Assessment configuration settings. these should never be modified.
-    settings        : state.settings.toJS(),
+    settings        : state.settings,
 
     // Assessment to be rendered.
     assessment      : state.assessment,
@@ -31,7 +31,7 @@ const select = (state, props) => {
 
     // How many questions to display at a time. Default to show all questions
     // in a section if not specified
-    displayNum      : state.settings.get('questions_per_section') || questionCount(state, props),
+    displayNum      : state.settings.questions_per_section || questionCount(state, props),
 
     // How many Items are in the assessment
     questionCount   : questionCount(state, props),
@@ -199,7 +199,7 @@ export class Assessment extends React.Component{
   getWarning(){
     let unanswered = this.checkCompletion();
     let warning;
-    if(unanswered === true && this.isFirstPage()){
+    if(unanswered === true && this.isLastPage()){
       warning = <div>Warning There are unanswered questions</div>;
     }
     return warning;

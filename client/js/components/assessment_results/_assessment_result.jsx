@@ -14,8 +14,8 @@ const select = (state) => {
     timeSpent        : state.timeSpent,
     questions        : questions(state),
     outcomes         : outcomes(state),
-    assessment       : state.assessment.toJS(),
-    settings         : state.settings.toJS()
+    assessment       : state.assessment,
+    settings         : state.settings
   };
 };
 

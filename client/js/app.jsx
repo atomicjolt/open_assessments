@@ -16,7 +16,7 @@ import configureStore          from './store/configure_store';
 import jwt                     from './loaders/jwt';
 import QueryString             from './utils/query_string';
 import { htmlDecodeWithRoot }  from './utils/utils';
-import initialSettingsState    from './reducers/settings';
+import { getInitialSettings }  from './reducers/settings';
 
 // Polyfill es6 promises for IE
 es6Promise.polyfill();
