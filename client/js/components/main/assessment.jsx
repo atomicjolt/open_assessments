@@ -30,7 +30,7 @@ const select = (state, props) => {
     responses       : state.progress.get('responses').toJS(),
 
     // How many questions to display at a time. Default to show all questions
-    // in a section if not specified 
+    // in a section if not specified
     displayNum      : state.settings.get('questions_per_section') || questionCount(state, props),
 
     // How many Items are in the assessment
