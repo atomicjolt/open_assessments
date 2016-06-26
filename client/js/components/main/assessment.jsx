@@ -24,7 +24,7 @@ const select = (state, props) => {
     progress        : state.progress.toJS(),
 
     // Current page of items to display when paging through items
-    currentItem : state.progress.get('currentItemIndex'), //TODO rename currentItemIndex
+    currentItem : state.progress.get('currentItemIndex'),
 
     // Array of user responses
     responses       : state.progress.get('responses').toJS(),
@@ -207,15 +207,12 @@ export class Assessment extends React.Component{
 
   nextButtonClicked(e){
     e.preventDefault();
-    // Page by total number of questions if displayNum is not specified
-    this.props.nextQuestions(this.props.displayNum || this.props.questionCount - 1);
+    this.props.nextQuestions(this.props.displayNum);
   }
 
   previousButtonClicked(e){
     e.preventDefault();
-
-    // Page by total number of questions if displayNum is not specified
-    this.props.previousQuestions(this.props.displayNum || this.props.questionCount - 1);
+    this.props.previousQuestions(this.props.displayNum);
   }
 
   submitButtonClicked(e){
@@ -229,47 +226,49 @@ export class Assessment extends React.Component{
       <button
         className="next-btn"
         onClick={(e) => { this.nextButtonClicked(e); }}
-        disabled={disabled}
-      >
+        disabled={disabled}>
         <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
-      </button>);
+      </button>
+    );
   }
 
   getPreviousButton() {
     let disabled = this.isFirstPage();
     return (
-        <button
-          className="prev-btn"
-          onClick={(e) => { this.previousButtonClicked(e); }}
-          disabled={disabled}
-        >
-          <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
-        </button>);
+      <button
+        className="prev-btn"
+        onClick={(e) => { this.previousButtonClicked(e); }}
+        disabled={disabled}>
+        <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
+      </button>
+    );
   }
 
   getSubmitButton(){
     let submitButton;
-    if( this.isLastPage() &&
-        this.props.settings.assessment_kind === "SUMMATIVE"){
-      submitButton = <div>
-                      <button
-                        className="btn btn-check-answer"
-                        onClick={(e)=>{this.submitButtonClicked(e);}}
-                      >
-                        Submit
-                      </button>
-                    </div>;
+    if(this.isLastPage() && this.props.settings.assessment_kind === "SUMMATIVE"){
+      submitButton = (
+        <div>
+          <button
+            className="btn btn-check-answer"
+            onClick={(e)=>{this.submitButtonClicked(e);}}>
+            Submit
+          </button>
+        </div>
+      );
     }
     return submitButton;
   }
 
 
   getNav(){
-    return <div className="confidence_wrapper">
-              {this.getPreviousButton()}
-              {this.getNextButton()}
-              {this.getSubmitButton()}
-           </div>;
+    return (
+      <div className="confidence_wrapper">
+        {this.getPreviousButton()}
+        {this.getNextButton()}
+        {this.getSubmitButton()}
+     </div>
+    );
   }
 
 
