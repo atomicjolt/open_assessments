@@ -174,14 +174,20 @@ export class Assessment extends React.Component{
    * Returns true if the current question is the last question, false otherwise.
    */
   isLastQuestion(){
-    return this.props.currentQuestion === this.props.questionCount - 1;
+    //Default to display all questions in section if question count not specified
+    var displayNum = this.props.displayNum || this.props.questionCount;
+    var currentPage = parseInt(this.props.currentQuestion / displayNum);
+    var lastPage = parseInt((this.props.questionCount - 1) / displayNum);
+    return currentPage === lastPage;
   }
 
   /**
    * Returns true if the current question is the first question, false otherwise
    */
   isFirstQuestion(){
-    return this.props.currentQuestion === 0;
+    var displayNum = this.props.displayNum || this.props.questionCount;
+    var currentPage = parseInt(this.props.currentQuestion / displayNum);
+    return this.props.currentPage === 0;
   }
 
 /**
@@ -199,12 +205,15 @@ export class Assessment extends React.Component{
 
   nextButtonClicked(e){
     e.preventDefault();
-    this.props.nextQuestions(this.props.displayNum);
+    // Page by total number of questions if displayNum is not specified
+    this.props.nextQuestions(this.props.displayNum || this.props.questionCount - 1);
   }
 
   previousButtonClicked(e){
     e.preventDefault();
-    this.props.previousQuestions(this.props.displayNum);
+
+    // Page by total number of questions if displayNum is not specified
+    this.props.previousQuestions(this.props.displayNum || this.props.questionCount - 1);
   }
 
   submitButtonClicked(e){
