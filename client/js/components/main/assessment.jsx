@@ -15,31 +15,32 @@ const select = (state, props) => {
   return {
 
     // Assessment configuration settings. these should never be modified.
-    settings             : state.settings.toJS(),
+    settings        : state.settings.toJS(),
 
     // Assessment to be rendered.
-    assessment           : state.assessment,
+    assessment      : state.assessment,
 
     // State of user-assessment interactions.
-    progress             : state.progress.toJS(),
+    progress        : state.progress.toJS(),
 
-    // The index of the current question within the allQuestions array
-    currentQuestion      : state.progress.get('currentItemIndex'),
+    // Current page of items to display when paging through items
+    currentItemPage : state.progress.get('currentItemIndex'), //TODO rename currentItemIndex
 
     // Array of user responses
-    responses            : state.progress.get('responses').toJS(),
+    responses       : state.progress.get('responses').toJS(),
 
-    // How many questions to display at a time
-    displayNum           : state.settings.get('questions_per_section'),
+    // How many questions to display at a time. Default to show all questions
+    // in a section if not specified 
+    displayNum      : state.settings.get('questions_per_section') || questionCount(state, props),
 
     // How many Items are in the assessment
-    questionCount        : questionCount(state, props),
+    questionCount   : questionCount(state, props),
 
     // Array containing all assessment Items
-    allQuestions         : questions(state, props),
+    allQuestions    : questions(state, props),
 
     // TODO
-    outcomes             : outcomes(state, props)
+    outcomes        : outcomes(state, props)
   };
 };
 
@@ -171,23 +172,24 @@ export class Assessment extends React.Component{
   }
 
   /**
-   * Returns true if the current question is the last question, false otherwise.
+   * Returns true if the current page of items is the last page, false otherwise.
    */
-  isLastQuestion(){
+  isLastPage(){
     //Default to display all questions in section if question count not specified
-    var displayNum = this.props.displayNum || this.props.questionCount;
-    var currentPage = parseInt(this.props.currentQuestion / displayNum);
+    var displayNum = this.props.displayNum;
+    var currentPage = parseInt(this.props.currentItemPage / displayNum);
     var lastPage = parseInt((this.props.questionCount - 1) / displayNum);
     return currentPage === lastPage;
   }
 
   /**
-   * Returns true if the current question is the first question, false otherwise
+   * Returns true if the current page of items is the first page of items,
+   * false otherwise
    */
-  isFirstQuestion(){
+  isFirstPage(){
     var displayNum = this.props.displayNum || this.props.questionCount;
-    var currentPage = parseInt(this.props.currentQuestion / displayNum);
-    return this.props.currentPage === 0;
+    var currentPage = parseInt(this.props.currentItemPage / displayNum);
+    return currentPage === 0;
   }
 
 /**
@@ -197,7 +199,7 @@ export class Assessment extends React.Component{
   getWarning(){
     let unanswered = this.checkCompletion();
     let warning;
-    if(unanswered === true && this.isLastQuestion()){
+    if(unanswered === true && this.isFirstPage()){
       warning = <div>Warning There are unanswered questions</div>;
     }
     return warning;
@@ -222,7 +224,7 @@ export class Assessment extends React.Component{
   }
 
   getNextButton() {
-    let disabled = this.isLastQuestion();
+    let disabled = this.isLastPage();
     return (
       <button
         className="next-btn"
@@ -234,7 +236,7 @@ export class Assessment extends React.Component{
   }
 
   getPreviousButton() {
-    let disabled = this.isFirstQuestion();
+    let disabled = this.isFirstPage();
     return (
         <button
           className="prev-btn"
@@ -247,7 +249,7 @@ export class Assessment extends React.Component{
 
   getSubmitButton(){
     let submitButton;
-    if(this.props.currentQuestion == this.props.questionCount - 1 &&
+    if( this.isLastPage() &&
         this.props.settings.assessment_kind === "SUMMATIVE"){
       submitButton = <div>
                       <button
