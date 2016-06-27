@@ -92,6 +92,12 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     show_post_message_navigation - Show study plan and controls for LMS
     section_count                -
 
+    ##### QBank specific settings - These are only use if you are using QBank as your backend
+    api_url                      - For QBank assume the api_url looks like http://localhost:8091/api/v1 (the host and port will vary based on deployment)
+    eid                          - Used by OEA to uniquely identify a User. In the MIT Clix project this isn't guaranteed to uniquely identify a user but since there are no logins this is as close as we can get.
+    bank                         - The id of the QBank bank. Looks something like: "assessment.Bank%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU"
+    assessment_offered_id        - An identifier provided by QBank that uniquely identifies the assessment to be taken. Use this id to get an assessment taken id. Looks something like "assessment.AssessmentOffered%3A576d7ee94a40456f9a434e4d%40ODL.MIT.EDU"
+
 ####Embed
 Open Assessments is embedded into the page via an iframe. Example:
     `<iframe id="openassessments_container" src="//www.openassessments.com/assessments/load?confidence_levels=true&src_url=http://www.openassessments.com/api/assessments/55.xml&results_end_point=http://www.openassessments.com/api&assessment_id=55&eid=ch15" frameborder="0" style="border:none;width:100%;height:100%;min-height:400px;"></iframe><script src="http://www.openassessments.com/assets/openassessments.js" type="text/javascript"></script>`

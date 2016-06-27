@@ -1,3 +1,4 @@
+import api                                          from "../libs/api";
 import Network                                      from "../constants/network";
 import { Constants as JwtConstants }                from "../actions/jwt";
 import { Constants as AssessmentConstants }         from "../actions/assessment";
@@ -10,9 +11,23 @@ export default {
     url    : (action) => { `api/sessions/${action.userId}`; }
   },
 
-  [AssessmentConstants.LOAD_ASSESSMENT] : {
-    method : Network.GET,
-    url    : (action) => { action.settings.src_url; }
+  [AssessmentConstants.LOAD_ASSESSMENT] : (store, action) => {
+    const state = store.getState();
+
+    // Make a post request to get a assessment taken
+    const url = `assessment/banks/${state.settings.bank}/assessmentsoffered/${state.settings.assessment_offered_id}/assessmentstaken`;
+    const params = {
+
+    };
+    const body = {
+      sessionId: action.settings.eid
+    };
+    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, params, body);
+    if(promise){
+      promise.then(() => {
+
+      });
+    }
   },
 
   [AssessmentConstants.ASSESSMENT_POST_ANALYTICS] : {
