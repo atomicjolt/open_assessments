@@ -24,16 +24,10 @@ export default class Item extends React.Component{
     // or ungraded. Should match response constants declared below.
     messageIndex      : React.PropTypes.number.isRequired,
 
-    goToNextQuestion  : React.PropTypes.func.isRequired,
-
-    goToPrevQuestion  : React.PropTypes.func.isRequired,
-
-    submitAssessment  : React.PropTypes.func.isRequired,
-
     selectAnswer      : React.PropTypes.func.isRequired,
 
     // TODO
-    outcomes          : React.PropTypes.object,
+    outcomes          : React.PropTypes.array,
   };
 
   getCounter(){

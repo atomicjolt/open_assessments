@@ -18,14 +18,16 @@ const initialState = Immutable.fromJS({
 export default (state = initialState, action) => {
 
   switch(action.type){
-    case AssessmentConstants.ASSESSMENT_NEXT_QUESTION:
+    case AssessmentConstants.ASSESSMENT_NEXT_QUESTIONS:
       var currentItemIndex = state.get("currentItemIndex");
-      state = state.set("currentItemIndex", currentItemIndex + 1);
+      var increment = action.pageSize;
+      state = state.set("currentItemIndex", currentItemIndex + increment);
       break;
 
-    case AssessmentConstants.ASSESSMENT_PREVIOUS_QUESTION:
+    case AssessmentConstants.ASSESSMENT_PREVIOUS_QUESTIONS:
       var currentItemIndex = state.get("currentItemIndex");
-      state = state.set("currentItemIndex", currentItemIndex - 1);
+      var decrement = action.pageSize;
+      state = state.set("currentItemIndex", currentItemIndex - decrement);
       break;
 
     case AssessmentConstants.ASSESSMENT_VIEWED:
@@ -33,13 +35,12 @@ export default (state = initialState, action) => {
       break;
 
     case AssessmentConstants.ANSWER_SELECTED:
-      var responses = state.getIn(
-        ['responses', `${action.questionIndex}`],
-        Immutable.List()
-      );
+      var responses = state.getIn(['responses', `${action.questionIndex}`]);
+      if(responses === undefined){responses = Immutable.List();}
       responses = responses.push(action.answerId);
       state = state.setIn(["responses", `${action.questionIndex}`], responses);
       break;
+
 
     default:
 
