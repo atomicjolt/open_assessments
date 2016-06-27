@@ -138,12 +138,12 @@ export class Assessment extends React.Component{
    * specified by props.settings.questions_per_section.
    */
   getItems(){
-    let displayNum = this.props.questionsPerPage;
+    let questionsPerPage = this.props.questionsPerPage;
     let current = this.props.progress.currentItemIndex;
     let items = [];
-    if(displayNum > 0 && displayNum < this.props.questionCount){
-      let start = parseInt(current / displayNum) * displayNum;
-      let end = parseInt(start + displayNum);
+    if(questionsPerPage > 0 && questionsPerPage < this.props.questionCount){
+      let start = parseInt(current / questionsPerPage) * questionsPerPage;
+      let end = parseInt(start + questionsPerPage);
 
       for(let i = start; i < end; i++){
         items.push(this.getItem(i));
@@ -176,9 +176,9 @@ export class Assessment extends React.Component{
    */
   isLastPage(){
     //Default to display all questions in section if question count not specified
-    var displayNum = this.props.questionsPerPage;
-    var currentPage = parseInt(this.props.currentItem / displayNum);
-    var lastPage = parseInt((this.props.questionCount - 1) / displayNum);
+    var questionsPerPage = this.props.questionsPerPage;
+    var currentPage = parseInt(this.props.currentItem / questionsPerPage);
+    var lastPage = parseInt((this.props.questionCount - 1) / questionsPerPage);
     return currentPage === lastPage;
   }
 
@@ -187,8 +187,8 @@ export class Assessment extends React.Component{
    * false otherwise
    */
   isFirstPage(){
-    var displayNum = this.props.questionsPerPage;
-    var currentPage = parseInt(this.props.currentItem / displayNum);
+    var questionsPerPage = this.props.questionsPerPage;
+    var currentPage = parseInt(this.props.currentItem / questionsPerPage);
     return currentPage === 0;
   }
 
