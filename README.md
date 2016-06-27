@@ -64,7 +64,8 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     // Functional settings
     max_attempts                 - The maximum number of attempts the assessment can be taken
     user_attempts                - The number of time the user has attempted the assessment
-    questions_per_section        - Number of questions to select and display from each section
+    questions_per_section        - Number of questions to utilize from each section.
+    questions_per_page           - Number of questions to be displayed on screen at one time.
     shuffle_question_answers     - Shuffle the answers for each question.
 
     // Settings for Analytics - these are returned to the calling server

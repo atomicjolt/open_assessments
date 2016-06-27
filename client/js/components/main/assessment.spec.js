@@ -7,17 +7,17 @@ import appHistory              from "../../history";
 import { Assessment }          from "./assessment";
 import * as AssessmentActions  from "../../actions/assessment";
 
-describe("assessment", function() {
+fdescribe("assessment", function() {
   var props;
   var allQuestions,
     assessment,
     assessmentViewed,
     currentItem,
-    displayNum,
     outcomes,
     previousQuestions,
     progress,
     questionCount,
+    questionsPerPage,
     responses,
     result,
     settings,
@@ -59,7 +59,7 @@ describe("assessment", function() {
 
     currentItem = 5;
 
-    displayNum = 1;
+    questionsPerPage = 1;
 
     outcomes = () => {};
 
@@ -76,7 +76,7 @@ describe("assessment", function() {
       max_attempts : 1,
       eid          : "external_identifier",
       src_url      : "http://www.openassessments.com/api/assessments/55.xml",
-      questions_per_section:1,
+      questions_per_page:1,
       assessment_kind: "SUMMATIVE"
     };
 
@@ -85,13 +85,13 @@ describe("assessment", function() {
       assessment,
       assessmentViewed: () => {},
       currentItem,
-      displayNum,
       hideLMSNavigation: () => {},
       nextQuestions: () => {},
       outcomes:outcomes(),
       previousQuestions: () => {},
       progress,
       questionCount,
+      questionsPerPage,
       responses,
       scrollParentToTop: () => {},
       sendSize: () => {},

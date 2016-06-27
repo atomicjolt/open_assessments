@@ -31,7 +31,7 @@ const select = (state, props) => {
 
     // How many questions to display at a time. Default to show all questions
     // in a section if not specified
-    displayNum      : state.settings.questions_per_section || questionCount(state, props),
+    questionsPerPage: state.settings.questions_per_page || questionCount(state, props),
 
     // How many Items are in the assessment
     questionCount   : questionCount(state, props),
@@ -138,7 +138,7 @@ export class Assessment extends React.Component{
    * specified by props.settings.questions_per_section.
    */
   getItems(){
-    let displayNum = this.props.settings.questions_per_section;
+    let displayNum = this.props.questionsPerPage;
     let current = this.props.progress.currentItemIndex;
     let items = [];
     if(displayNum > 0 && displayNum < this.props.questionCount){
@@ -176,7 +176,7 @@ export class Assessment extends React.Component{
    */
   isLastPage(){
     //Default to display all questions in section if question count not specified
-    var displayNum = this.props.displayNum;
+    var displayNum = this.props.questionsPerPage;
     var currentPage = parseInt(this.props.currentItem / displayNum);
     var lastPage = parseInt((this.props.questionCount - 1) / displayNum);
     return currentPage === lastPage;
@@ -187,7 +187,7 @@ export class Assessment extends React.Component{
    * false otherwise
    */
   isFirstPage(){
-    var displayNum = this.props.displayNum || this.props.questionCount;
+    var displayNum = this.props.questionsPerPage;
     var currentPage = parseInt(this.props.currentItem / displayNum);
     return currentPage === 0;
   }
@@ -207,12 +207,12 @@ export class Assessment extends React.Component{
 
   nextButtonClicked(e){
     e.preventDefault();
-    this.props.nextQuestions(this.props.displayNum);
+    this.props.nextQuestions(this.props.questionsPerPage);
   }
 
   previousButtonClicked(e){
     e.preventDefault();
-    this.props.previousQuestions(this.props.displayNum);
+    this.props.previousQuestions(this.props.questionsPerPage);
   }
 
   submitButtonClicked(e){
