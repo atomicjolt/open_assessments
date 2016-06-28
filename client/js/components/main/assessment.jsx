@@ -29,6 +29,10 @@ const select = (state, props) => {
     // Array of user responses
     responses       : state.progress.get('responses').toJS(),
 
+    // Array of graded user response objects containing keys
+    // correct:true/false, feedback:"Answer feedback"
+    checkedResponses: state.progress.get('checkedResponses').toJS(),
+
     // How many questions to display at a time. Default to show all questions
     // in a section if not specified
     questionsPerPage: state.settings.questions_per_page || questionCount(state, props),
@@ -123,7 +127,7 @@ export class Assessment extends React.Component{
           response         = {props.responses[index] || []}
           currentItemIndex = {index}
           questionCount    = {props.questionCount}
-          messageIndex     = {props.progress.answerMessageIndex[index] || 0}
+          checkedResponse  = {props.checkedResponses[index] || {}}
           allQuestions     = {props.allQuestions}
           outcomes         = {props.outcomes || {}}
           selectAnswer     = {

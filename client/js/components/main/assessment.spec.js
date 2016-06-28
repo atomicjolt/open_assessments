@@ -12,6 +12,7 @@ describe("assessment", function() {
   var allQuestions,
     assessment,
     assessmentViewed,
+    checkedResponses,
     currentItem,
     outcomes,
     previousQuestions,
@@ -57,6 +58,8 @@ describe("assessment", function() {
       title: "Test Title"
     };
 
+    checkedResponses = [];
+
     currentItem = 5;
 
     questionsPerPage = 1;
@@ -64,8 +67,7 @@ describe("assessment", function() {
     outcomes = () => {};
 
     progress = {
-      currentItemIndex:0,
-      answerMessageIndex:[]
+      currentItemIndex:0
     };
 
     questionCount = 10;
@@ -84,6 +86,7 @@ describe("assessment", function() {
       allQuestions:allQuestions(),
       assessment,
       assessmentViewed: () => {},
+      checkedResponses,
       currentItem,
       hideLMSNavigation: () => {},
       nextQuestions: () => {},

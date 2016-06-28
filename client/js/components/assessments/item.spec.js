@@ -8,13 +8,10 @@ describe('item', function() {
   var question = {
     title:"Test Question Title"
   };
+  var checkedResponse = {};
   var currentItemIndex = 0;
-  var assessmentKind = "SUMMATIVE";
   var assessment = {};
   var questionCount = 10;
-  var nextQuestion = () => {};
-  var previousQuestion = () => {};
-  var submitAssessment = () => {};
 
   var result;
   var subject;
@@ -22,13 +19,10 @@ describe('item', function() {
   var renderItem = () => {
     result = TestUtils.renderIntoDocument(<Item
       question={question}
+      checkedResponse={checkedResponse}
       currentItemIndex={currentItemIndex}
       questionCount={questionCount}
       assessment={assessment}
-      nextQuestion = {nextQuestion}
-      prevQuestion = {previousQuestion}
-      submitAssessment = {submitAssessment}
-      assessment_kind={assessmentKind}
     />);
     subject = ReactDOM.findDOMNode(result);
   };
@@ -39,12 +33,8 @@ describe('item', function() {
       title:"Test Question Title"
     };
     currentItemIndex = 0;
-    assessmentKind = "SUMMATIVE";
     assessment = {};
     questionCount = 10;
-    nextQuestion = () => {};
-    previousQuestion = () => {};
-    submitAssessment = () => {};
 
     renderItem();
   });
@@ -53,6 +43,39 @@ describe('item', function() {
 
   it('renders an item', () => {
     expect(subject.textContent).toContain("Test Question Title");
+  });
+
+  describe('feedback', () => {
+    it('renders correct when item is correct', () => {
+      checkedResponse = {correct:true, feedback:'Correct answer'};
+      renderItem();
+
+      expect(subject.textContent).toContain("Correct");
+      expect(subject.textContent).toContain("Correct answer");
+      expect(subject.textContent).not.toContain("Incorrect");
+      expect(subject.textContent).not.toContain("Incorrect answer");
+    });
+
+    it('renders incorrect when item is incorrect', () => {
+      checkedResponse = {correct:false, feedback:'Incorrect answer'};
+      renderItem();
+
+      expect(subject.textContent).toContain("Incorrect");
+      expect(subject.textContent).toContain("Incorrect answer");
+      expect(subject.textContent).not.toContain("Correct");
+      expect(subject.textContent).not.toContain("Correct answer");
+
+    });
+
+    it('renders without feedback when item is unchecked', () => {
+      checkedResponse = {};
+      renderItem();
+
+      expect(subject.textContent).not.toContain("Incorrect");
+      expect(subject.textContent).not.toContain("incorrect answer");
+      expect(subject.textContent).not.toContain("Correct");
+      expect(subject.textContent).not.toContain("Correct answer");
+    });
   });
 
 });

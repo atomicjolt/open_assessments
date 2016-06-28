@@ -8,7 +8,7 @@ const initialState = Immutable.fromJS({
   isStarted: false,
   currentItemIndex: 0,
   selectedAnswerId: '',
-  answerMessageIndex: [], // TODO Find more appropriate name
+  checkedResponses: [],
   responses: [],
   startedAt: 0,
   finishedAt: 0,
@@ -41,6 +41,14 @@ export default (state = initialState, action) => {
       }
       responses = responses.push(action.answerId);
       state = state.setIn(["responses", `${action.questionIndex}`], responses);
+      break;
+
+    case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE:
+      var checkedResponse = Immutable.fromJS(action.payload);
+      state = state.setIn(
+        ['checkedResponses', `${action.questionIndex}`],
+        checkedResponse
+      );
       break;
 
 

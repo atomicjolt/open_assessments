@@ -32,8 +32,9 @@ export const selectQuestion = (index) => ({
   type: Constants.QUESTION_SELECTED, index
 });
 
-export const checkAnswer = () => ({
-  type: Constants.ASSESSMENT_CHECK_ANSWER
+export const checkAnswer = (questionIndex) => ({
+  type: Constants.ASSESSMENT_CHECK_ANSWER,
+  questionIndex
 });
 
 export const selectConfidenceLevel = (level, index) => ({
