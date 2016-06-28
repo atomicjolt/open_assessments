@@ -36,7 +36,9 @@ export default (state = initialState, action) => {
 
     case AssessmentConstants.ANSWER_SELECTED:
       var responses = state.getIn(['responses', `${action.questionIndex}`]);
-      if(responses === undefined){responses = Immutable.List();}
+      if(responses === undefined || action.exclusive === true){
+        responses = Immutable.List();
+      }
       responses = responses.push(action.answerId);
       state = state.setIn(["responses", `${action.questionIndex}`], responses);
       break;

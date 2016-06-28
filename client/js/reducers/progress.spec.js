@@ -70,7 +70,8 @@ describe('assessment reducer', () => {
     const action = {
       type: AssessmentConstants.ANSWER_SELECTED,
       questionIndex:0,
-      answerId:1
+      answerId:1,
+      exclusive:false
     };
 
     it("adds answerId to responses[][]", () => {
@@ -78,10 +79,22 @@ describe('assessment reducer', () => {
       expect(state.getIn(['responses', '0']).toJS()).toEqual([1]);
     });
 
-    it("appends to array if items already exist", () => {
+    it("appends to array if items already exist and exclusive flag is false", () => {
       var initialState = Immutable.fromJS({responses:[[2]]});
       const state = progress(initialState, action);
       expect(state.getIn(['responses', '0']).toJS()).toEqual([2,1]);
+    });
+
+    it("replaces responses if exclusive answer flag is true", () => {
+      let action = {
+        type: AssessmentConstants.ANSWER_SELECTED,
+        questionIndex:0,
+        answerId:1,
+        exclusive:true
+      };
+      var initialState = Immutable.fromJS({responses:[[2]]});
+      const state = progress(initialState, action);
+      expect(state.getIn(['responses', '0']).toJS()).toEqual([1]);
     });
 
   });

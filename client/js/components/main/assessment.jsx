@@ -131,8 +131,8 @@ export class Assessment extends React.Component{
           allQuestions     = {props.allQuestions}
           outcomes         = {props.outcomes || {}}
           selectAnswer     = {
-            (answerId) =>
-              {this.props.answerSelected(index, answerId);}}/>
+            (answerId, exclusive) =>
+              {this.props.answerSelected(index, answerId, exclusive);}}/>
     );
   }
 
