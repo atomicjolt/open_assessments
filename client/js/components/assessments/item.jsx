@@ -20,9 +20,8 @@ export default class Item extends React.Component{
     // The total number of items in the array of items
     questionCount     : React.PropTypes.number.isRequired,
 
-    // Whether the item should be displayed as correct, incorrect,
-    // or ungraded. Should match response constants declared below.
-    messageIndex      : React.PropTypes.number.isRequired,
+    //TODO add documentation
+    checkedResponse   : React.PropTypes.object.isRequired,
 
     selectAnswer      : React.PropTypes.func.isRequired,
 
@@ -40,27 +39,29 @@ export default class Item extends React.Component{
     }
   }
 
-  getResult(index){
-    var text;
+  getFeedback(){
+    var feedback;
+    var correct;
 
-    if(index == CORRECT_RESPONSE){
-      text = "Correct";
-    } else if(index == INCORRECT_RESPONSE) {
-      text = "Incorrect";
-    } else {
-      text = "";
+    var response = this.props.checkedResponse;
+    
+    if(this.props.checkedResponse){
+      if(response.correct === true){correct = "Correct";}
+      else if(response.correct === false){correct = "Incorrect";}
+
+      if(response.feedback){feedback = response.feedback;}
     }
 
     return (
-      <div className="check_answer_result">
-        <p>{text}</p>
+      <div>
+        <p>{correct}</p>
+        <p>{feedback}</p>
       </div>
     );
   }
 
-
   render() {
-    var result = this.getResult(this.props.messageIndex);
+    var feedback = this.getFeedback();
 
     var counter = this.getCounter();
 
@@ -99,7 +100,7 @@ export default class Item extends React.Component{
                 </div>
                 <div className="row">
                   <div className="col-md-5 col-sm-6 col-xs-8" >
-                    {result}
+                    {feedback}
                   </div>
                   <div className="col-md-7 col-sm-6 col-xs-4">
                   </div>
@@ -112,7 +113,3 @@ export default class Item extends React.Component{
     );
   }
 }
-
-export const UNGRADED_RESPONSE = 0;
-export const CORRECT_RESPONSE = 1;
-export const INCORRECT_RESPONSE = 2;
