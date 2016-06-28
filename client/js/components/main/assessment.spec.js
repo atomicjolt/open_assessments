@@ -7,11 +7,12 @@ import appHistory              from "../../history";
 import { Assessment }          from "./assessment";
 import * as AssessmentActions  from "../../actions/assessment";
 
-fdescribe("assessment", function() {
+describe("assessment", function() {
   var props;
   var allQuestions,
     assessment,
     assessmentViewed,
+    checkedResponses,
     currentItem,
     outcomes,
     previousQuestions,
@@ -57,6 +58,8 @@ fdescribe("assessment", function() {
       title: "Test Title"
     };
 
+    checkedResponses = [];
+
     currentItem = 5;
 
     questionsPerPage = 1;
@@ -64,8 +67,7 @@ fdescribe("assessment", function() {
     outcomes = () => {};
 
     progress = {
-      currentItemIndex:0,
-      answerMessageIndex:[]
+      currentItemIndex:0
     };
 
     questionCount = 10;
@@ -84,6 +86,7 @@ fdescribe("assessment", function() {
       allQuestions:allQuestions(),
       assessment,
       assessmentViewed: () => {},
+      checkedResponses,
       currentItem,
       hideLMSNavigation: () => {},
       nextQuestions: () => {},
