@@ -20,7 +20,8 @@ export default class Item extends React.Component{
     // The total number of items in the array of items
     questionCount     : React.PropTypes.number.isRequired,
 
-    //TODO add documentation
+    // Graded user response object containing keys
+    // correct:true/false, feedback:"Answer feedback"
     checkedResponse   : React.PropTypes.object.isRequired,
 
     selectAnswer      : React.PropTypes.func.isRequired,
@@ -44,7 +45,7 @@ export default class Item extends React.Component{
     var correct;
 
     var response = this.props.checkedResponse;
-    
+
     if(this.props.checkedResponse){
       if(response.correct === true){correct = "Correct";}
       else if(response.correct === false){correct = "Incorrect";}

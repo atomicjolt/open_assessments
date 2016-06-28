@@ -19,7 +19,6 @@ describe('assessment reducer', () => {
         isStarted: false,
         currentItemIndex: 0,
         selectedAnswerId: '',
-        // answerMessageIndex: [],
         checkedResponses:[],
         responses: [],
         startedAt: 0,

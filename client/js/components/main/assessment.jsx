@@ -29,7 +29,7 @@ const select = (state, props) => {
     // Array of user responses
     responses       : state.progress.get('responses').toJS(),
 
-    // Array of checked user response objects containing keys
+    // Array of graded user response objects containing keys
     // correct:true/false, feedback:"Answer feedback"
     checkedResponses: state.progress.get('checkedResponses').toJS(),
 
