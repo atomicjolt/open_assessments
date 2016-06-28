@@ -21,10 +21,11 @@ export const start = (assessmentId) => ({
   assessmentId
 });
 
-export const answerSelected = (questionIndex, answerId) => ({
+export const answerSelected = (questionIndex, answerId, exclusive) => ({
   type: Constants.ANSWER_SELECTED,
   questionIndex,
-  answerId
+  answerId,
+  exclusive
 });
 
 export const selectQuestion = (index) => ({

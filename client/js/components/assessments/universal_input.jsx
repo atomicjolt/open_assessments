@@ -74,6 +74,7 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         items = item.answers.map((answer) => {
+          var selectRadio = _.curryRight(this.props.selectAnswer);
           return (
             <RadioButton
               isDisabled={this.props.isResult}
@@ -82,7 +83,7 @@ export default class UniversalInput extends React.Component{
               name="answer-radio"
               checked={this.wasSelected(answer.id)}
               showAsCorrect={this.showAsCorrect(answer.id)}
-              selectAnswer={this.props.selectAnswer} />
+              selectAnswer={selectRadio(true)} />
           );
         });
         break;
