@@ -22,7 +22,7 @@ export default class RadioButton extends React.Component{
   };
 
   selectAnswer(){
-    this.props.selectAnswer(this.props.item.id, true);
+    this.props.selectAnswer(this.props.item.id);
   }
 
   checkedStatus(){
