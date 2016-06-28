@@ -4,13 +4,15 @@ import application                      from './application';
 import assessment                       from './assessment';
 import progress                         from './progress';
 import jwt                              from './jwt';
+import assessmentMeta                   from './assessment_meta';
 
 const rootReducer = combineReducers({
   settings,
   jwt,
   application,
   assessment,
-  progress
+  progress,
+  assessmentMeta
 });
 
 export default rootReducer;
