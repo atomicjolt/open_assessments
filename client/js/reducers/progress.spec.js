@@ -19,7 +19,8 @@ describe('assessment reducer', () => {
         isStarted: false,
         currentItemIndex: 0,
         selectedAnswerId: '',
-        answerMessageIndex: [],
+        // answerMessageIndex: [],
+        checkedResponses:[],
         responses: [],
         startedAt: 0,
         finishedAt: 0,
@@ -82,6 +83,22 @@ describe('assessment reducer', () => {
       var initialState = Immutable.fromJS({responses:[[2]]});
       const state = progress(initialState, action);
       expect(state.getIn(['responses', '0']).toJS()).toEqual([2,1]);
+    });
+
+  });
+
+  describe("check answer", () => {
+    const action = {
+      type: AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE,
+      payload:{correct:true, feedback:"You win!"},
+      questionIndex:3
+    };
+    it("it returns feedback", () => {
+      var initialState = Immutable.fromJS({checkedResponses:[]});
+      const state = progress(initialState, action);
+      expect(state.getIn(['checkedResponses', '3']).toJS()).toEqual(
+        {correct:true, feedback:"You win!"}
+      );
     });
 
   });
