@@ -47,7 +47,7 @@ export default class Item extends React.Component{
     var response = this.props.checkedResponse;
 
     if(response){
-      if(response.feedback){feedbackText = response.feedback;}
+      feedbackText = response.feedback;
 
       if(response.correct === true){
         content = (
