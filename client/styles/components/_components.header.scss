@@ -1,0 +1,22 @@
+.c-header{
+  height: 5rem;
+  padding: 0 3rem;
+  background: $white;
+  border-bottom: .2rem solid $lightest-gray;
+}
+
+  .c-header__title{
+    color: $blue;
+    @include bold;
+    font-size: 2rem;
+    float: left;
+    line-height: 4.6rem;
+  }
+
+  .c-header__question-number{
+    color: $gray;
+    @include bold;
+    font-size: 1.6rem;
+    float: right;
+    line-height: 4.6rem;
+  }

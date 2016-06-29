@@ -1,4 +1,30 @@
-@import '_defines';
-//@import '../../node_modules/font-awesome/scss/font-awesome';
-//@import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
-@import '_common';
+
+/*-------------------------------------*\
+      #IMPORTS
+\*-------------------------------------*/
+
+//settings
+@import "settings/settings.variables";
+@import "settings/settings.fonts";
+
+//tools
+@import "tools/tools.mixins";
+
+//generic
+
+//base
+@import "base/base";
+
+//objects
+@import "objects/objects.objects";
+
+//components
+@import "components/components.header";
+@import "components/components.question-prompt";
+@import "components/components.answers";
+@import "components/components.assessment-navigation";
+@import "components/components.feedback";
+@import "components/components.confidence-map";
+
+//trumps
+@import "trumps/trumps.trumps";
