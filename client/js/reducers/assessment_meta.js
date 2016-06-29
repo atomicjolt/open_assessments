@@ -8,10 +8,7 @@ export default (state = initialState, action) => {
 
   switch(action.type){
     case AssessmentConstants.LOAD_ASSESSMENT_META:
-      state = _.cloneDeep(action.payload)
-      break;
-    default:
-
+      return action.payload;
   }
   return state;
 };
