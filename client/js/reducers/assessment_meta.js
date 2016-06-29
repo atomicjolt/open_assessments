@@ -7,7 +7,7 @@ const initialState = {};
 export default (state = initialState, action) => {
 
   switch(action.type){
-    case AssessmentConstants.LOAD_ASSESSMENT_META_DONE:
+    case AssessmentMetaConstants.LOAD_ASSESSMENT_META_DONE:
       return action.payload;
   }
   return state;
