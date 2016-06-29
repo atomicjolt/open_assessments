@@ -1,7 +1,7 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
-import AssessmentNav      from './loading';
+import AssessmentNav      from './assessment_nav';
 
 
 var isFirstPage = false;
@@ -22,7 +22,7 @@ var resetProps = () => {
     previousQuestions
   };
 };
-xdescribe('assessment navigation', () => {
+describe('assessment navigation', () => {
 
   beforeEach(() => {
     resetProps();
@@ -38,16 +38,16 @@ xdescribe('assessment navigation', () => {
       result = TestUtils.renderIntoDocument(<AssessmentNav {...props} />);
       subject = ReactDOM.findDOMNode(result);
 
-      // expect(subject.innerHTML).toContain('<button class="prev-btn" disabled="">');
-      // expect(subject.innerHTML).not.toContain('<button class="next-btn" disabled="">');
+      expect(subject.innerHTML).not.toContain('c-btn--previous');
+      expect(subject.innerHTML).toContain('c-btn--next');
     });
 
     it('shows previous button after first page of items', () => {
       result = TestUtils.renderIntoDocument(<AssessmentNav {...props} />);
       subject = ReactDOM.findDOMNode(result);
 
-      // expect(subject.innerHTML).toContain('<button class="prev-btn" disabled="">');
-      // expect(subject.innerHTML).not.toContain('<button class="next-btn" disabled="">');
+      expect(subject.innerHTML).toContain('c-btn--previous');
+      expect(subject.innerHTML).toContain('c-btn--next');
     });
   });
 
@@ -56,17 +56,17 @@ xdescribe('assessment navigation', () => {
       props.isLastPage = true;
       result = TestUtils.renderIntoDocument(<AssessmentNav {...props} />);
       subject = ReactDOM.findDOMNode(result);
-
-      // expect(subject.innerHTML).toContain('<button class="prev-btn" disabled="">');
-      // expect(subject.innerHTML).not.toContain('<button class="next-btn" disabled="">');
+      expect(subject.innerHTML).toContain('c-btn--previous');
+      expect(subject.innerHTML).toContain('c-btn--finish');
+      expect(subject.innerHTML).not.toContain('c-btn--next');
     });
 
     it('shows next button otherwise', () => {
       result = TestUtils.renderIntoDocument(<AssessmentNav {...props} />);
       subject = ReactDOM.findDOMNode(result);
 
-      // expect(subject.innerHTML).toContain('<button class="prev-btn" disabled="">');
-      // expect(subject.innerHTML).not.toContain('<button class="next-btn" disabled="">');
+      expect(subject.innerHTML).toContain('c-btn--previous');
+      expect(subject.innerHTML).toContain('c-btn--next');
     });
   });
 });

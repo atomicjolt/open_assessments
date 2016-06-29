@@ -15,33 +15,43 @@ export default class AssessmentNav extends React.Component{
 
 
   getNextButton() {
-    let disabled = this.props.isLastPage;
-    return (
-      <button
+    var nextButton = (
+      <a
         className="c-btn c-btn--next"
-        onClick={(e) => { this.props.nextQuestions(e); }}
-        disabled={disabled}>
+        onClick={(e) => { this.props.nextQuestions(e); }}>
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
 		      <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
 			  </svg>
          <span>Next</span>
-      </button>
+      </a>
     );
+
+    if(this.props.isLastPage){
+      nextButton = (
+        <a className="c-btn c-btn--finish">
+		       <span>Submit</span>
+	       </a>
+      );
+    }
+
+    return nextButton;
   }
 
   getPreviousButton() {
-    let disabled = this.props.isFirstPage;
+    var buttonStyle = 'c-btn--previous';
+    if(this.props.isFirstPage){buttonStyle = 'c-btn--hide';} // Hide previous button on first page
     return (
-      <button
-        className="c-btn c-btn--previous"
-        onClick={(e) => { this.props.previousQuestions(e); }}
-        disabled={disabled}>
+      <a
+        className={`c-btn ${buttonStyle}`}
+        onClick={(e) => { this.props.previousQuestions(e); }}>
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
 			    <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
 		    </svg>
         <span>Previous</span>
-      </button>
+      </a>
     );
+
+
   }
 
   // getSubmitButton(){
