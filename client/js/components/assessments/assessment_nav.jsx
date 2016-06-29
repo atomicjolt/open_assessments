@@ -22,7 +22,7 @@ export default class AssessmentNav extends React.Component{
         onClick={(e) => { this.props.nextQuestions(e); }}
         disabled={disabled}>
         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-		      path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
+		      <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
 			  </svg>
          <span>Next</span>
       </button>

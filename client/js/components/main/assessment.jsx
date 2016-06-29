@@ -180,7 +180,6 @@ export class Assessment extends React.Component{
    * Returns true if the current page of items is the last page, false otherwise.
    */
   isLastPage(){
-    //Default to display all questions in section if question count not specified
     var questionsPerPage = this.props.questionsPerPage;
     var currentPage = parseInt(this.props.currentItem / questionsPerPage);
     var lastPage = parseInt((this.props.questionCount - 1) / questionsPerPage);
@@ -255,20 +254,17 @@ export class Assessment extends React.Component{
       window.onbeforeunload = this.popup;
     }
 
-    let progressBar; //TODO add progress bar
     let titleText =  this.props.assessment.title;
     let content = this.getContent();
     let warning = this.getWarning();
     let counter = this.getCounter();
 
-    //TODO add counter
     return (
       <div className="o-assessment-container">
         <div className="c-header">
           <div className="c-header__title">{titleText}</div>
           <div className="c-header__question-number">{counter}</div>
         </div>
-        {progressBar}
         <div className="section_list">
           <div className="section_container">
             {warning}
