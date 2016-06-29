@@ -91,10 +91,10 @@ export default class Item extends React.Component{
         <div>
           <div className="c-question-prompt">
             <p>{this.props.question.title}</p>
-            <p>{questionDirections}</p>
-            <p dangerouslySetInnerHTML={
+            {questionDirections}
+            <div dangerouslySetInnerHTML={
               {__html: this.props.question.material}}>
-            </p>
+            </div>
           </div>
           <div className="c-answers">
             <UniversalInput
