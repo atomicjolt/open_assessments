@@ -224,7 +224,7 @@ export class Assessment extends React.Component{
     let disabled = this.isLastPage();
     return (
       <button
-        className="next-btn"
+        className="c-btn c-btn--next"
         onClick={(e) => { this.nextButtonClicked(e); }}
         disabled={disabled}>
         <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
@@ -236,7 +236,7 @@ export class Assessment extends React.Component{
     let disabled = this.isFirstPage();
     return (
       <button
-        className="prev-btn"
+        className="c-btn c-btn--previous"
         onClick={(e) => { this.previousButtonClicked(e); }}
         disabled={disabled}>
         <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
@@ -263,7 +263,7 @@ export class Assessment extends React.Component{
 
   getNav(){
     return (
-      <div className="confidence_wrapper">
+      <div className="c-assessment-navigation">
         {this.getPreviousButton()}
         {this.getNextButton()}
         {this.getSubmitButton()}
@@ -291,9 +291,13 @@ export class Assessment extends React.Component{
     let warning = this.getWarning();
     let nav = this.getNav();
 
+    //TODO add counter
     return (
-      <div className="assessment">
-        <div>{titleText}</div>
+      <div className="o-assessment-container">
+        <div className="c-header">
+          <div className="c-header__title">{titleText}</div>
+          <div className="c-header__question-number">Question 1 of 16</div>
+        </div>
         {progressBar}
         <div className="section_list">
           <div className="section_container">
