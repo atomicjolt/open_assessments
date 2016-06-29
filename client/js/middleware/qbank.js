@@ -7,6 +7,11 @@ import { Constants as AssessmentMetaConstants }     from "../actions/assessment_
 import { DONE }                                     from "../constants/wrapper";
 
 export default {
+  [JwtConstants.REFRESH_JWT] : {
+    method : Network.GET,
+    url    : (action) => { `api/sessions/${action.userId}`; }
+  },
+
   [AssessmentConstants.LOAD_ASSESSMENT] : (store, action) => {
     const state = store.getState();
 
@@ -113,6 +118,25 @@ export default {
         }
       };
 
+    }
+  },
+
+  [AssessmentProgressConstants.ASSESSMENT_SUBMITTED] : (store, action) => {
+    const state = store.getState();
+
+    let url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
+
+    let promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {});
+    if(promise){
+      promise.then((response, error) => {
+        store.dispatch({
+          type:     action.type + DONE,
+          payload: response.body,
+          original: action,
+          response,
+          error
+        });
+      });
     }
   }
 };
