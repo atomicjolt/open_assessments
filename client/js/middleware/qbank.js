@@ -120,6 +120,24 @@ export default {
       };
 
     }
-  }
+  },
 
+  [AssessmentProgressConstants.ASSESSMENT_SUBMITTED] : (store, action) => {
+    const state = store.getState();
+
+    let url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
+
+    let promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {});
+    if(promise){
+      promise.then((response, error) => {
+        store.dispatch({
+          type:     action.type + DONE,
+          payload: response.body,
+          original: action,
+          response,
+          error
+        });
+      });
+    }
+  }
 };
