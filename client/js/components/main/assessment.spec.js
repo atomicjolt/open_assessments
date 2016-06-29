@@ -117,25 +117,16 @@ describe("assessment", function() {
   });
 
   it("Calls nextQuestions when the next button is clicked", () => {
-    let button = TestUtils.findRenderedDOMComponentWithClass(result, "next-btn");
+    let button = TestUtils.findRenderedDOMComponentWithClass(result, "c-btn--next");
     TestUtils.Simulate.click(button);
     expect(props.nextQuestions).toHaveBeenCalled();
   });
 
   it("Calls previousQuestions when the previous button is clicked", () => {
-    let button = TestUtils.findRenderedDOMComponentWithClass(result, "prev-btn");
+    let button = TestUtils.findRenderedDOMComponentWithClass(result, "c-btn--previous");
     TestUtils.Simulate.click(button);
 
     expect(props.previousQuestions).toHaveBeenCalled();
-  });
-
-  it("Calls submitAssessment when the submit button is clicked", () => {
-    props.currentItem = 9;
-    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
-    let button = TestUtils.findRenderedDOMComponentWithClass(result, "btn-check-answer");
-    TestUtils.Simulate.click(button);
-
-    expect(props.submitAssessment).toHaveBeenCalled();
   });
 
   it("renders the assessment", () => {
@@ -154,30 +145,32 @@ describe("assessment", function() {
     expect(appHistory.push).toHaveBeenCalledWith("assessment-result");
   });
 
-  it("renders submit button on last page of items", () => {
+  it('isLastPage should return true on last question', () => {
     props.currentItem = 9;
-    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
-    subject = ReactDOM.findDOMNode(result);
 
-    expect(subject.textContent).toContain("Submit");
+    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
+    expect(result.isLastPage()).toEqual(true);
   });
 
-  it("disables next button on last page of items", () => {
-    props.currentItem = 9;
-    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
-    subject = ReactDOM.findDOMNode(result);
+  it('isLastPage should not return true otherwise', () =>{
+    props.currentItem = 8;
 
-    expect(subject.innerHTML).toContain('<button class="next-btn" disabled="">');
-    expect(subject.innerHTML).not.toContain('<button class="prev-btn" disabled="">');
+    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
+    expect(result.isLastPage()).toEqual(false);
   });
 
-  it("disables previous button on first page of items", () => {
+  it('isFirstPage should return true on first question', () => {
     props.currentItem = 0;
-    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
-    subject = ReactDOM.findDOMNode(result);
 
-    expect(subject.innerHTML).toContain('<button class="prev-btn" disabled="">');
-    expect(subject.innerHTML).not.toContain('<button class="next-btn" disabled="">');
+    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
+    expect(result.isFirstPage()).toEqual(true);
+  });
+
+  it('isFirstPage should not return true otherwise', () =>{
+    props.currentItem = 1;
+
+    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
+    expect(result.isFirstPage()).toEqual(false);
   });
 
 });
