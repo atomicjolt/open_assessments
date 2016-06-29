@@ -25,7 +25,7 @@ const select = (state, props) => {
     progress        : state.progress.toJS(),
 
     // Current page of items to display when paging through items
-    currentItem : state.progress.get('currentItemIndex'),
+    currentItem     : state.progress.get('currentItemIndex'),
 
     // Array of user responses
     responses       : state.progress.get('responses').toJS(),
@@ -225,6 +225,22 @@ export class Assessment extends React.Component{
     this.props.submitAssessment();
   }
 
+  /**
+   * Returns inner text for question counter
+   */
+  getCounter(){
+    if(this.props.questionsPerPage === 1){
+      return `Question ${this.props.currentItem + 1} of ${this.props.questionCount}`;
+    } else {
+      var currentPage = (
+        parseInt(this.props.currentItem / this.props.questionsPerPage) + 1
+      );
+      var totalPages = (
+        parseInt(this.props.questionCount / this.props.questionsPerPage)
+      );
+      return `Page ${currentPage} of ${totalPages}`;
+    }
+  }
 
   popup(){
     return "Don’t leave!\n If you leave now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this quiz and then use the \"Progress\" drop-down menu";
@@ -243,13 +259,14 @@ export class Assessment extends React.Component{
     let titleText =  this.props.assessment.title;
     let content = this.getContent();
     let warning = this.getWarning();
+    let counter = this.getCounter();
 
     //TODO add counter
     return (
       <div className="o-assessment-container">
         <div className="c-header">
           <div className="c-header__title">{titleText}</div>
-          <div className="c-header__question-number">Question 1 of 16</div>
+          <div className="c-header__question-number">{counter}</div>
         </div>
         {progressBar}
         <div className="section_list">
