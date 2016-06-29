@@ -45,12 +45,12 @@ export default class RadioButton extends React.Component{
 
     if(this.props.displayCorrect === true){
       content = (
-				<div className="c-feedback  c-feedback--correct">
-					<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-					    <path d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/>
-					</svg>
-					<span>correct</span>
-				</div>
+        <div className="c-feedback  c-feedback--correct">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+            <path d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/>
+          </svg>
+          <span>correct</span>
+        </div>
       );
     } else if(this.props.displayIncorrect === true) {
       content = (
@@ -71,8 +71,8 @@ export default class RadioButton extends React.Component{
     if(this.props.feedback){
       content = (
         <div className="c-answer-feedback">
-					<p>{this.props.feedback}</p>
-				</div>
+          <p>{this.props.feedback}</p>
+        </div>
       );
       return content;
     }
@@ -91,9 +91,9 @@ export default class RadioButton extends React.Component{
         className={`c-answer-container ${containerStyle}`}
         onClick={() => { this.selectAnswer(); }}>
         {feedbackImage}
-				<div className="c-answer-container__radio">
-					<div className="c-radio-button">
-						<input
+        <div className="c-answer-container__radio">
+          <div className="c-radio-button">
+            <input
               type="radio"
               checked={this.checkedStatus()}
               disabled={this.props.isDisabled}
@@ -103,12 +103,12 @@ export default class RadioButton extends React.Component{
               for={this.props.id}>
               <span></span>
             </label>
-					</div>
-				</div>
+          </div>
+        </div>
 
-				<div className="c-answer-container__content">
-					<p>{this.props.item.material}</p>
-				</div>
+        <div className="c-answer-container__content">
+        <p>{this.props.item.material}</p>
+        </div>
         {feedback}
       </li>
     );
