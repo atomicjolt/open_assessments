@@ -26,9 +26,9 @@ export default {
     if(promise){
       promise.then((response, error) => {
         store.dispatch({
-          type:     AssessmentMetaConstants.LOAD_ASSESSMENT_META,
+          type:     AssessmentMetaConstants.LOAD_ASSESSMENT_META_DONE,
           payload:  response.body,
-          original: AssessmentMetaConstants.LOAD_ASSESSMENT_META,
+          original: action,
           response,
           error
         });
