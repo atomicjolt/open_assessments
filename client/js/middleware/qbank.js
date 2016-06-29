@@ -83,7 +83,7 @@ export default {
       promise.then((response, error) => {
         store.dispatch({
           type:     action.type + DONE,
-          payload: {},
+          payload: response.body,
           original: action,
           response,
           error
