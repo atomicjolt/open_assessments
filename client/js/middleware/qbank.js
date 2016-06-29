@@ -3,16 +3,10 @@ import Network                                      from "../constants/network";
 import { Constants as JwtConstants }                from "../actions/jwt";
 import { Constants as AssessmentConstants }         from "../actions/assessment";
 import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
-import { Constants as AssessmentMetaConstants }
-import { DONE }    from "../constants/wrapper";
+import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta";
+import { DONE }                                     from "../constants/wrapper";
 
 export default {
-
-  [JwtConstants.REFRESH_JWT] : {
-    method : Network.GET,
-    url    : (action) => { `api/sessions/${action.userId}`; }
-  },
-
   [AssessmentConstants.LOAD_ASSESSMENT] : (store, action) => {
     const state = store.getState();
 
@@ -40,7 +34,7 @@ export default {
           promise.then((response, error) => {
             store.dispatch({
               type:     action.type + DONE,
-              payload:  response.body,
+              payload:  response.body.qti,
               original: action,
               response,
               error
@@ -83,12 +77,12 @@ export default {
       promise.then((response, error) => {
         store.dispatch({
           type:     action.type + DONE,
-          payload: {},
+          payload: response.body,
           original: action,
           response,
           error
         });
-      }
+      });
     }
   },
 
@@ -98,7 +92,7 @@ export default {
     body   : (action) => {
 
       // Only send data needed for server-side grading.
-      const questions = action.questions.map(function(question){
+      const questions = action.questions.map((question) => {
         return {
           id               : question.id,
           score            : question.score,
@@ -121,5 +115,4 @@ export default {
 
     }
   }
-
 };

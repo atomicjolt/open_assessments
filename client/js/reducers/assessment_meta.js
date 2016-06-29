@@ -7,11 +7,9 @@ const initialState = {};
 export default (state = initialState, action) => {
 
   switch(action.type){
-    case AssessmentConstants.LOAD_ASSESSMENT_META:
-      state = _.cloneDeep(action.payload)
-      break;
+    case AssessmentMetaConstants.LOAD_ASSESSMENT_META:
+      return action.payload;
     default:
-
+      return state;
   }
-  return state;
 };

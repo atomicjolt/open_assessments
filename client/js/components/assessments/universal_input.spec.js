@@ -10,6 +10,7 @@ describe('Assessment Questions', ()=> {
   var result;
   var item;
   var Content;
+  var selectAnswer = () => {};
   beforeEach(()=>{
     item = {
       id       : 0,
@@ -25,7 +26,12 @@ describe('Assessment Questions', ()=> {
       solution : "<p>solution text</p>"
     };
 
-    result = TestUtils.renderIntoDocument(<UniversalInput settings={ {} } item={item} />);
+    result = TestUtils.renderIntoDocument(
+      <UniversalInput
+        settings={ {} }
+        item={item}
+        selectAnswer={selectAnswer}
+    />);
   });
 
   it('It Renders the page', ()=>{
@@ -71,7 +77,12 @@ describe('Assessment Questions', ()=> {
 
     beforeEach(()=>{
       item.question_type = 'multiple_choice_question';
-      Content = (<UniversalInput settings={ {} } item={item} />);
+      Content = (
+        <UniversalInput
+          settings={ {} }
+          item={item}
+          selectAnswer={selectAnswer}/>
+      );
       result = TestUtils.renderIntoDocument(Content);
     });
 
@@ -107,7 +118,13 @@ describe('Assessment Questions', ()=> {
   describe('Text Input', ()=>{
     beforeEach(()=>{
       item.question_type = 'edx_numerical_input';
-      Content = (<UniversalInput settings={ {} } item={item} />);
+      Content = (
+        <UniversalInput
+          settings={ {} }
+          item={item}
+          selectAnswer={selectAnswer}
+          />
+      );
       result = TestUtils.renderIntoDocument(Content);
     });
 
