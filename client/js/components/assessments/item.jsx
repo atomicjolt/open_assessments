@@ -41,52 +41,39 @@ export default class Item extends React.Component{
   }
 
   getFeedback(){
-    var feedback;
-    var feedbackStyle;
-    var feedbackImage;
-    var correct;
+    var feedbackText;
+    var content;
 
     var response = this.props.checkedResponse;
 
+    if(response){
+      if(response.feedback){feedbackText = response.feedback;}
 
-    if(this.props.checkedResponse){
       if(response.correct === true){
-        correct = "Correct";
-        feedbackStyle = "c-feedback--correct";
-        feedbackImage = (
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-					    <path d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/>
-					</svg>
+        content = (
+          <div className="c-question-feedback  c-feedback--correct">
+  					<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  					    <path d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/>
+  					</svg>
+            <p>{feedbackText}</p>
+			    </div>
         );
       }
       else if(response.correct === false){
-        correct = "Incorrect";
-        feedbackStyle = "c-feedback--incorrect";
-        feedbackImage = (
-      		<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-    			<path d="M24 4c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.95 20-20-8.95-20-20-20zm10 27.17l-2.83 2.83-7.17-7.17-7.17 7.17-2.83-2.83 7.17-7.17-7.17-7.17 2.83-2.83 7.17 7.17 7.17-7.17 2.83 2.83-7.17 7.17 7.17 7.17z"/>
-    		</svg>
+        content = (
+  				<div className="c-question-feedback  c-feedback--incorrect">
+  					<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  					    <path d="M24 4c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.95 20-20-8.95-20-20-20zm10 27.17l-2.83 2.83-7.17-7.17-7.17 7.17-2.83-2.83 7.17-7.17-7.17-7.17 2.83-2.83 7.17 7.17 7.17-7.17 2.83 2.83-7.17 7.17 7.17 7.17z"/>
+  					</svg>
+            <p>{feedbackText}</p>
+			    </div>
         );
       }
-
-      if(response.feedback){feedback = response.feedback;}
     }
 
 
 
-    return (
-    	<div className={`c-question-feedback ${feedbackStyle}`}>
-        {feedbackImage}
-    		<p>{feedback}</p>
-    	</div>
-    );
-
-    return (
-      <div>
-        <p>{correct}</p>
-        <p>{feedback}</p>
-      </div>
-    );
+    return (content);
   }
 
   render() {
