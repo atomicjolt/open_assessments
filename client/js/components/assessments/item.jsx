@@ -74,24 +74,18 @@ export default class Item extends React.Component{
     }
 
     return (
-      <div className="assessment_container">
-        <div className="question">
-          <div className="header">
-            {counter}
+        <div>
+          <div className="c-question-prompt">
             <p>{this.props.question.title}</p>
+            <p>{questionDirections}</p>
+            <p dangerouslySetInnerHTML={
+              {__html: this.props.question.material}}>
+            </p>
           </div>
           <div>
             <form className="edit_item">
               <div className="full_question" tabIndex="0">
                 <div className="inner_question">
-                  <div className="question_text">
-                    {questionDirections}
-                    <div
-                        dangerouslySetInnerHTML={{
-                          __html: this.props.question.material
-                        }}>
-                    </div>
-                  </div>
                   <UniversalInput
                     item={this.props.question}
                     isResult={false}
@@ -110,7 +104,6 @@ export default class Item extends React.Component{
             </form>
           </div>
         </div>
-      </div>
     );
   }
 }
