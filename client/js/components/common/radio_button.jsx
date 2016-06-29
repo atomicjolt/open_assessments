@@ -9,6 +9,9 @@ export default class RadioButton extends React.Component{
     // Item being displayed
     item: React.PropTypes.object.isRequired,
 
+    // TODO document
+    id: React.PropTypes.string.isRequired,
+
     selectAnswer: React.PropTypes.func.isRequired,
 
     // Whether or not input should be disabled
@@ -52,32 +55,26 @@ export default class RadioButton extends React.Component{
 
     return optionFlag;
   }
-// <div>
-//         {this.optionFlagStatus()}
-//         <div className="btn btn-block btn-question">
-//           <label>
-//             <input type="radio"
-//                    defaultChecked={this.checkedStatus()}
-//                    disabled={this.props.isDisabled}
-//                    name={this.props.name}
-//                    onClick={() => { this.selectAnswer(); }} />
-//             <span>{this.props.item.material}</span>
-//           </label>
-//         </div>
-//       </div>
+
   render() {
+    var containerStyle;
+    if(this.props.checked === true){containerStyle = "is-clicked";}
     return (
-      <li className="c-answer-container">
+      <li
+        className={`c-answer-container ${containerStyle}`}
+        onClick={() => { this.selectAnswer(); }}>
 				<div className="c-answer-container__radio">
 					<div className="c-radio-button">
 						<input
               type="radio"
-              defaultChecked={this.checkedStatus()}
+              checked={this.checkedStatus()}
               disabled={this.props.isDisabled}
               name="radio"
-              onClick={() => { this.selectAnswer(); }}
-              id="radio01"/>
-						<label for="radio01"><span></span></label>
+              id={this.props.id}/>
+            <label
+              for={this.props.id}>
+              <span></span>
+            </label>
 					</div>
 				</div>
 
