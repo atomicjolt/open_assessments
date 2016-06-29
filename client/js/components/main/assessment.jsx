@@ -6,6 +6,7 @@ import { connect }                            from "react-redux";
 import * as CommunicationActions              from "../../actions/communications";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
 import appHistory                             from "../../history";
+import Nav                                    from "../assessments/assessment_nav";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import ProgressDropdown                       from "../common/progress_dropdown";
@@ -224,57 +225,6 @@ export class Assessment extends React.Component{
     this.props.submitAssessment();
   }
 
-  getNextButton() {
-    let disabled = this.isLastPage();
-    return (
-      <button
-        className="c-btn c-btn--next"
-        onClick={(e) => { this.nextButtonClicked(e); }}
-        disabled={disabled}>
-        <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
-      </button>
-    );
-  }
-
-  getPreviousButton() {
-    let disabled = this.isFirstPage();
-    return (
-      <button
-        className="c-btn c-btn--previous"
-        onClick={(e) => { this.previousButtonClicked(e); }}
-        disabled={disabled}>
-        <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
-      </button>
-    );
-  }
-
-  getSubmitButton(){
-    let submitButton;
-    if(this.isLastPage() && this.props.settings.assessment_kind === "SUMMATIVE"){
-      submitButton = (
-        <div>
-          <button
-            className="btn btn-check-answer"
-            onClick={(e)=>{this.submitButtonClicked(e);}}>
-            Submit
-          </button>
-        </div>
-      );
-    }
-    return submitButton;
-  }
-
-
-  getNav(){
-    return (
-      <div className="c-assessment-navigation">
-        {this.getPreviousButton()}
-        {this.getNextButton()}
-        {this.getSubmitButton()}
-     </div>
-    );
-  }
-
 
   popup(){
     return "Don’t leave!\n If you leave now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this quiz and then use the \"Progress\" drop-down menu";
@@ -293,7 +243,6 @@ export class Assessment extends React.Component{
     let titleText =  this.props.assessment.title;
     let content = this.getContent();
     let warning = this.getWarning();
-    let nav = this.getNav();
 
     //TODO add counter
     return (
@@ -307,7 +256,12 @@ export class Assessment extends React.Component{
           <div className="section_container">
             {warning}
             {content}
-            {nav}
+            <Nav
+              assessmentKind={this.props.settings.assessment_kind}
+              isFirstPage={this.isFirstPage()}
+              isLastPage={this.isLastPage()}
+              nextQuestions={(e) => { this.nextButtonClicked(e); }}
+              previousQuestions={(e) => { this.previousButtonClicked(e); }}/>
           </div>
         </div>
       </div>

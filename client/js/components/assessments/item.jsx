@@ -72,25 +72,7 @@ export default class Item extends React.Component{
     } else {
       questionDirections = <div>Choose the <b>BEST</b> answer.</div>;
     }
-  // <form className="edit_item">
-  //             <div className="full_question" tabIndex="0">
-  //               <div className="inner_question">
-  //                 <UniversalInput
-  //                   item={this.props.question}
-  //                   isResult={false}
-  //                   selectAnswer={this.props.selectAnswer}
-  //                   response={this.props.response}
-  //                 />
-  //               </div>
-  //               <div className="row">
-  //                 <div className="col-md-5 col-sm-6 col-xs-8" >
-  //                   {feedback}
-  //                 </div>
-  //                 <div className="col-md-7 col-sm-6 col-xs-4">
-  //                 </div>
-  //               </div>
-  //             </div>
-  //           </form>
+
     return (
         <div>
           <div className="c-question-prompt">
