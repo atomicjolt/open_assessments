@@ -3,6 +3,8 @@ import Network                                      from "../constants/network";
 import { Constants as JwtConstants }                from "../actions/jwt";
 import { Constants as AssessmentConstants }         from "../actions/assessment";
 import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
+import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta.js";
+import { DONE }    from "../constants/wrapper";
 
 export default {
 
@@ -14,18 +16,37 @@ export default {
   [AssessmentConstants.LOAD_ASSESSMENT] : (store, action) => {
     const state = store.getState();
 
-    // Make a post request to get a assessment taken
-    const url = `assessment/banks/${state.settings.bank}/assessmentsoffered/${state.settings.assessment_offered_id}/assessmentstaken`;
-    const params = {
+    const metaUrl = `assessment/banks/${state.settings.bank}/assessmentsoffered/${state.settings.assessment_offered_id}/assessmentstaken`;
 
-    };
     const body = {
       sessionId: action.settings.eid
     };
-    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, params, body);
-    if(promise){
-      promise.then(() => {
 
+    const metaPromise = api.post(metaUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body);
+    if(metaPromise){
+      metaPromise.then((response, error) => {
+        store.dispatch({
+          type:     AssessmentMetaConstants.LOAD_ASSESSMENT_META_DONE,
+          payload:  response.body,
+          original: action,
+          response,
+          error
+        });
+
+        const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${response.body.id}/questions?qti`;
+
+        const assessmentPromise = api.get(assessmentUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {})
+        if(assessmentPromise) {
+          assessmentPromise.then((assessmentResponse, error) => {
+            store.dispatch({
+              type:     action.type + DONE,
+              payload:  assessmentResponse.body,
+              original: action,
+              response,
+              error
+            });
+          });
+        }
       });
     }
   },
@@ -45,6 +66,30 @@ export default {
   [AssessmentConstants.ASSESSMENT_POST_LTI_OUTCOME] : {
     method : Network.POST,
     url    : (action) => { `api/assessment_results/${action.resultsId}/lti_outcome`; }
+  },
+
+  [AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER]: (store, action) => {
+    const state = store.getState();
+
+    const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${action.questionId}/submit`;
+
+    const body = {
+      type: action.answer.genus,
+      choiceId: action.answer.id
+    };
+
+    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body);
+    if(promise){
+      promise.then((response, error) => {
+        store.dispatch({
+          type:     action.type + DONE,
+          payload: response.body,
+          original: action,
+          response,
+          error
+        });
+      });
+    }
   },
 
   [AssessmentProgressConstants.ASSESSMENT_GRADED] : {
@@ -75,6 +120,24 @@ export default {
       };
 
     }
-  }
+  },
 
+  [AssessmentProgressConstants.ASSESSMENT_SUBMITTED] : (store, action) => {
+    const state = store.getState();
+
+    const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
+
+    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {});
+    if(promise){
+      promise.then((response, error) => {
+        store.dispatch({
+          type:     action.type + DONE,
+          payload: response.body,
+          original: action,
+          response,
+          error
+        });
+      });
+    }
+  }
 };
