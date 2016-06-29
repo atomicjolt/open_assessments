@@ -272,7 +272,8 @@ export class Assessment extends React.Component{
           isFirstPage={this.isFirstPage()}
           isLastPage={this.isLastPage()}
           nextQuestions={(e) => { this.nextButtonClicked(e); }}
-          previousQuestions={(e) => { this.previousButtonClicked(e); }}/>
+          previousQuestions={(e) => { this.previousButtonClicked(e); }}
+          submitAssessment={(e) => {this.submitButtonClicked(e);}}/>
       </div>
     );
   }
