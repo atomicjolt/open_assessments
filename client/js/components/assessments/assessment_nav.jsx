@@ -1,7 +1,9 @@
 "use strict";
 
-import React                                  from "react";
+import React from "react";
 
+import NextButton      from "./next_button";
+import PreviousButton  from "./previous_button";
 
 export default class AssessmentNav extends React.Component{
 
@@ -53,16 +55,20 @@ export default class AssessmentNav extends React.Component{
         <span>Previous</span>
       </a>
     );
-
-
   }
 
   render(){
 
     return (
       <div className="c-assessment-navigation">
-        {this.getPreviousButton()}
-        {this.getNextButton()}
+        <PreviousButton
+          isFirstPage={this.props.isFirstPage}
+          previousQuestions={this.props.previousQuestions}
+          />
+        <NextButton
+          isLastPage={this.props.isLastPage}
+          nextQuestions={this.props.nextQuestions}
+          submitAssessment={this.props.submitAssessment} />
      </div>
     );
   }
