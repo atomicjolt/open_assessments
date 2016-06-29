@@ -265,18 +265,14 @@ export class Assessment extends React.Component{
           <div className="c-header__title">{titleText}</div>
           <div className="c-header__question-number">{counter}</div>
         </div>
-        <div className="section_list">
-          <div className="section_container">
-            {warning}
-            {content}
-            <Nav
-              assessmentKind={this.props.settings.assessment_kind}
-              isFirstPage={this.isFirstPage()}
-              isLastPage={this.isLastPage()}
-              nextQuestions={(e) => { this.nextButtonClicked(e); }}
-              previousQuestions={(e) => { this.previousButtonClicked(e); }}/>
-          </div>
-        </div>
+        {warning}
+        {content}
+        <Nav
+          assessmentKind={this.props.settings.assessment_kind}
+          isFirstPage={this.isFirstPage()}
+          isLastPage={this.isLastPage()}
+          nextQuestions={(e) => { this.nextButtonClicked(e); }}
+          previousQuestions={(e) => { this.previousButtonClicked(e); }}/>
       </div>
     );
   }

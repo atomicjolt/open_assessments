@@ -1,6 +1,7 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
+
 import AssessmentNav      from './assessment_nav';
 
 
@@ -8,8 +9,9 @@ var isFirstPage = false;
 var isLastPage = false;
 var nextQuestions = () => {};
 var previousQuestions = () => {};
+var submitAssessment = () => {};
 
-var props;
+var props = {};
 
 var result;
 var subject;
@@ -19,13 +21,16 @@ var resetProps = () => {
     isFirstPage,
     isLastPage,
     nextQuestions,
-    previousQuestions
+    previousQuestions,
+    submitAssessment
   };
 };
+
 describe('assessment navigation', () => {
 
   beforeEach(() => {
     resetProps();
+
     result = TestUtils.renderIntoDocument(<AssessmentNav {...props} />);
     subject = ReactDOM.findDOMNode(result);
   });
@@ -49,6 +54,15 @@ describe('assessment navigation', () => {
       expect(subject.innerHTML).toContain('c-btn--previous');
       expect(subject.innerHTML).toContain('c-btn--next');
     });
+
+    it('calls previousQuestions when previous button clicked', () => {
+      spyOn(props, "previousQuestions");
+      result = TestUtils.renderIntoDocument(<AssessmentNav {...props} />);
+      var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--previous');
+      TestUtils.Simulate.click(button);
+
+      expect(props.previousQuestions).toHaveBeenCalled();
+    });
   });
 
   describe('next button', () => {
@@ -67,6 +81,24 @@ describe('assessment navigation', () => {
 
       expect(subject.innerHTML).toContain('c-btn--previous');
       expect(subject.innerHTML).toContain('c-btn--next');
+    });
+
+    it('calls nextQuestions when next button clicked', () => {
+      spyOn(props, "nextQuestions");
+      result = TestUtils.renderIntoDocument(<AssessmentNav {...props} />);
+      var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--next');
+      TestUtils.Simulate.click(button);
+      expect(props.nextQuestions).toHaveBeenCalled();
+    });
+
+    it('calls submitAssessment when submit button clicked', () => {
+      spyOn(props, "submitAssessment");
+      props.isLastPage = true;
+      result = TestUtils.renderIntoDocument(<AssessmentNav {...props} />);
+      var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--finish');
+      TestUtils.Simulate.click(button);
+
+      expect(props.submitAssessment).toHaveBeenCalled();
     });
   });
 });

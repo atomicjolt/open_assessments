@@ -10,7 +10,8 @@ export default class AssessmentNav extends React.Component{
     isFirstPage: React.PropTypes.bool.isRequired,
     isLastPage: React.PropTypes.bool.isRequired,
     nextQuestions: React.PropTypes.func.isRequired,
-    previousQuestions: React.PropTypes.func.isRequired
+    previousQuestions: React.PropTypes.func.isRequired,
+    submitAssessment: React.PropTypes.func.isRequired
   };
 
 
@@ -28,7 +29,9 @@ export default class AssessmentNav extends React.Component{
 
     if(this.props.isLastPage){
       nextButton = (
-        <a className="c-btn c-btn--finish">
+        <a
+          className="c-btn c-btn--finish"
+          onClick={(e) => {this.props.submitAssessment(e);}}>
 		       <span>Submit</span>
 	       </a>
       );
@@ -54,29 +57,12 @@ export default class AssessmentNav extends React.Component{
 
   }
 
-  // getSubmitButton(){
-  //   let submitButton;
-  //   if(this.isLastPage() &&  this.props.settings.assessmentKind === "SUMMATIVE"){
-  //     submitButton = (
-  //       <div>
-  //         <button
-  //           className="btn btn-check-answer"
-  //           onClick={(e)=>{this.submitButtonClicked(e);}}>
-  //           Submit
-  //         </button>
-  //       </div>
-  //     );
-  //   }
-  //   return submitButton;
-  // }
-
   render(){
 
     return (
       <div className="c-assessment-navigation">
         {this.getPreviousButton()}
         {this.getNextButton()}
-        {/* this.getSubmitButton() */}
      </div>
     );
   }
