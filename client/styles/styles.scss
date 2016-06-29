@@ -3,14 +3,11 @@
       #IMPORTS
 \*-------------------------------------*/
 
-//settings
-@import "settings/settings.variables";
-@import "settings/settings.fonts";
+//themes (to switch themes, target the appropriate file)
+@import "themes/themes.mit";
 
 //tools
 @import "tools/tools.mixins";
-
-//generic
 
 //base
 @import "base/base";
@@ -25,6 +22,3 @@
 @import "components/components.assessment-navigation";
 @import "components/components.feedback";
 @import "components/components.confidence-map";
-
-//trumps
-@import "trumps/trumps.trumps";

@@ -1,12 +1,12 @@
 .c-header{
   height: 5rem;
   padding: 0 3rem;
-  background: $white;
-  border-bottom: .2rem solid $lightest-gray;
+  background: $header-background;
+  border-bottom: .2rem solid $header-border;
 }
 
   .c-header__title{
-    color: $blue;
+    color: $primary;
     @include bold;
     font-size: 2rem;
     float: left;
@@ -14,7 +14,7 @@
   }
 
   .c-header__question-number{
-    color: $gray;
+    color: $subtext-color;
     @include bold;
     font-size: 1.6rem;
     float: right;

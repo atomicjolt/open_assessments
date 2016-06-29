@@ -1,5 +1,5 @@
 .c-answer-feedback{
-  background: $white;
+  background: $answer-feedback-background;
   padding: 1rem 1.5rem;
   margin: 1rem -0.8rem 0;
   border-radius: 0 0 0.3rem 0.3rem;
@@ -7,19 +7,19 @@
   p{
     @include regular;
     font-size: 1.2rem;
-    color: $text-gray;
+    color: $text-color;
   }
 }
 
 .c-question-feedback{
-  background: $lightest-gray;
+  background: $question-feedback-background;
   padding: 1.5rem 3rem 1.5rem 7rem;
   position: relative;
 
   p{
     @include regular;
     font-size: 1.4rem;
-    color: $text-gray;
+    color: $text-color;
   }
 
   svg{
@@ -39,10 +39,10 @@
   width: 13rem;
   border-radius: 0 0 $radius $radius;
   padding: 0.7rem 0.5rem 0.5rem 3.5rem;
-  background: $lightest-gray;
+  background: $answer-result-background;
   @include semi-bold;
   font-size: 1.4rem;
-  color: $text-gray;
+  color: $text-color;
   text-transform: uppercase;
 
   svg{
@@ -57,7 +57,7 @@
 .c-feedback--incorrect{
   svg{
     path{
-      fill: $red;
+      fill: $incorrect;
     }
   }
 }
@@ -65,7 +65,7 @@
 .c-feedback--correct{
   svg{
     path{
-      fill: $green;
+      fill: $correct;
     }
   }
 }

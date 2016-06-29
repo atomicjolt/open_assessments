@@ -3,33 +3,30 @@
 }
 
 .c-answer-container{
-  border-radius: 0.3rem;
+  @include answer-styling;
+  border-radius: $radius;
   min-height: 3.5rem;
-  background: $white;
-  box-shadow: 0 0 0.3rem rgba(0,0,0,.3);
   position: relative;
   padding: 0.8rem 0.8rem 0;
   margin-bottom: 1rem;
-  border: 0.2rem solid $white;
   cursor: pointer;
   @include transition(all 0.1s ease);
 
   &:hover{
-    border-color: $blue;
+    @include answer-hover;
   }
 
   &.is-clicked{
-    background: $blue;
-    border-color: $blue;
+    @include answer-clicked;
 
     .c-answer-container__content{
       p{
-        color: $white;
+        color: $answer-text-clicked;
       }
     }
 
     .c-feedback{
-      background: $white;
+      background: $answer-result-background-clicked;
     }
   }
 }
@@ -50,7 +47,7 @@
       height: 1.5rem;
       width: 1.5rem;
       border-radius: 50%;
-      border: 0.2rem solid $gray;
+      border: 0.2rem solid $radio-color;
       margin: 0.2rem;
     }
 
@@ -58,7 +55,7 @@
       content: '';
       width: .7rem;
       height: .7rem;
-      background: $white;
+      background: $radio-selected;
       border-radius: 50%;
       position: absolute;
       top: 0.2rem;
@@ -66,14 +63,14 @@
     }
 
     input[type="radio"]:checked + label{
-      border-color: $white;
+      border-color: $radio-selected;
     }
 
     input{
       display: none;
       margin: 0;
-      height: 15px;
-      width: 15px;
+      height: 0.01rem;
+      width: 0.01rem;
     }
   }
 
@@ -84,7 +81,7 @@
     p{
       @include regular;
       font-size: 1.4rem;
-      color: $text-gray;
+      color: $answer-text;
       margin-bottom: 1rem;
     }
 
@@ -92,32 +89,6 @@
       display: inline-block;
       max-width: 20rem;
       margin-bottom: 1rem;
-    }
-
-    .c-video{
-      margin-bottom: 1rem;
-      width: 15rem;
-      height: 9rem;
-      background: $dark-gray;
-      border-radius: $radius;
-      display: inline-block;
-      position: relative;
-      @include transition(all .2s ease);
-
-      &:after{
-        content: '';
-        width: 0;
-        height: 0;
-        border-width: 2rem 0 2rem 3.5rem;
-        border-style: solid;
-        border-color: transparent transparent transparent $white;
-        position: absolute;
-        @include center(both);
-      }
-
-      &:hover{
-        background: darken($dark-gray, 10%);
-      }
     }
 
     audio{

@@ -7,7 +7,7 @@
   font-size: 1.4rem;
   margin: 0;
   padding-bottom: 1rem;
-  color: $text-gray;
+  color: $text-color;
   text-align: center;
 }
 
@@ -20,13 +20,13 @@
   cursor: pointer;
 
   &.is-clicked{
-    border-color: $blue;
+    border-color: $primary;
   }
 
   p{
     text-align: center;
     @include regular;
-    color: $text-gray;
+    color: $text-color;
     font-size: 1.4rem;
     margin-top: 2rem;
   }
@@ -35,7 +35,7 @@
     content: '';
     width: .7rem;
     height: .7rem;
-    background: $blue;
+    background: $primary;
     border-radius: 50%;
     position: absolute;
     top: 0.2rem;
@@ -43,7 +43,7 @@
   }
 
   input[type="radio"]:checked + label{
-    border-color: $blue;
+    border-color: $primary;
   }
 
   .c-radio-button{
@@ -52,7 +52,7 @@
   }
 
   &:hover{
-    border-color: $blue;
+    border-color: $primary;
   }
 }
 

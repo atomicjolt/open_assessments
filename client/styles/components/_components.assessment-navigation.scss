@@ -7,93 +7,89 @@
   padding: 0 1.5rem;
   height: 3.5rem;
   border-radius: $radius;
+  border-width: 0.2rem;
+  border-style: solid;
   text-transform: uppercase;
   @include bold;
   font-size: 1.4rem;
+  position: relative;
 
   span{
     display: inline-block;
     height: 100%;
-    // position: relative;
-    // @include center(vertical);
     line-height: 3rem;
+  }
+
+  svg {
+    @include transform(rotate(90deg));
+    width: 2.4rem;
+    height: 2.4rem;
+    position: absolute;
+    left: .3rem;
+    top: .3rem;
+
+    path{
+      @include transition(all 0.2s ease);
+    }
   }
 }
 
   a.c-btn--previous, .c-btn--previous{
-    background: $white;
-    color: $purple;
-    border: 0.2rem solid $purple;
+    background: $btn-secondary-background;
+    color: $btn-secondary-text;
+    border-color: $btn-secondary-border;
     @include transition(all 0.2s ease);
-    position: relative;
     padding-left: 3rem;
 
     &:hover{
-      background: $purple;
-      color: $white;
+      border-color: $btn-secondary-border-hover;
+      background: $btn-secondary-background-hover;
+      color: $btn-secondary-text-hover;
 
       svg path{
-        fill: $white;
+        fill: $btn-secondary-text-hover;
       }
     }
 
     svg {
-      @include transform(rotate(90deg));
-      width: 2.4rem;
-      height: 2.4rem;
-      position: absolute;
-      left: .3rem;
-      top: .3rem;
-
       path{
-        fill: $purple;
-        @include transition(all 0.2s ease);
+        fill: $btn-secondary-text;
       }
     }
   }
 
   a.c-btn--next, .c-btn--next{
-    background: $maroon;
-    color: $white;
-    border: 0.2rem solid $maroon;
-    @include transition(all 0.2s ease);
-    position: relative;
     padding-right: 3rem;
-    float: right;
 
     &:hover{
-      background: $white;
-      color: $maroon;
-
       svg path{
-        fill: $maroon;
+        fill: $btn-primary-text-hover;
       }
     }
 
     svg {
-      @include transform(rotate(-90deg));
-      width: 2.4rem;
-      height: 2.4rem;
-      position: absolute;
-      right: .3rem;
-      top: .3rem;
-
       path{
-        fill: $white;
-        @include transition(all 0.2s ease);
+        fill: $btn-primary-text;
       }
     }
   }
 
-  a.c-btn--check-answer, .c-btn--check-answer, a.c-btn--finish, .c-btn--finish{
-    background: $maroon;
-    color: $white;
-    border: 0.2rem solid $maroon;
+  a.c-btn--check-answer, .c-btn--check-answer,
+  a.c-btn--finish, .c-btn--finish,
+  a.c-btn--next, .c-btn--next{
+    background: $btn-primary-background;
+    color: $btn-primary-text;
+    border-color: $btn-primary-border;
     float: right;
     @include transition(all 0.2s ease);
 
     &:hover{
-      background: $white;
-      color: $maroon;
+      border-color: $btn-primary-border-hover;
+      background: $btn-primary-background-hover;
+      color: $btn-primary-text-hover;
     }
+  }
+
+  a.c-btn--hide{
+    visibility:hidden;
   }

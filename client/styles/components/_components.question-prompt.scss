@@ -1,43 +1,20 @@
 .c-question-prompt{
   padding: 2rem 3rem 2rem;
+  @include semi-bold;
+  font-size: 1.8rem;
+  color: $text-color;
 
-  p{
-    @include semi-bold;
-    font-size: 1.8rem;
-    color: $text-gray;
+  *{
     margin-bottom: 1rem;
   }
 
   img{
     display: inline-block;
     max-width: 30rem;
-    margin-bottom: 1rem;
   }
 
-  .c-video{
-    margin-bottom: 1rem;
-    width: 15rem;
-    height: 9rem;
-    background: $dark-gray;
-    border-radius: $radius;
-    display: inline-block;
-    position: relative;
-    @include transition(all .2s ease);
-
-    &:after{
-      content: '';
-      width: 0;
-      height: 0;
-      border-width: 2rem 0 2rem 3.5rem;
-      border-style: solid;
-      border-color: transparent transparent transparent $white;
-      position: absolute;
-      @include center(both);
-    }
-
-    &:hover{
-      background: darken($dark-gray, 10%);
-    }
+  audio{
+    width: 100%;
   }
 
   .c-playback{
@@ -46,6 +23,7 @@
     min-height: 0.1rem;
     padding-right: 0.5rem;
     position: relative;
+    margin: 0;
 
     svg{
       position: absolute;;
@@ -54,14 +32,33 @@
       height: 2.4rem;
 
       path{
-        fill: $gray;
+        fill: $subtext-color;
       }
     }
   }
+}
 
-  audio{
-    // border-radius: $radius;
-    width: 100%;
-    margin-bottom: 1rem;
+.c-video{
+  width: 15rem;
+  height: 9rem;
+  background: $video-link-background;
+  border-radius: $radius;
+  display: inline-block;
+  position: relative;
+  @include transition(all .2s ease);
+
+  &:after{
+    content: '';
+    width: 0;
+    height: 0;
+    border-width: 2rem 0 2rem 3.5rem;
+    border-style: solid;
+    border-color: transparent transparent transparent $video-link-icon;
+    position: absolute;
+    @include center(both);
+  }
+
+  &:hover{
+    background: darken($video-link-background, 10%);
   }
 }
