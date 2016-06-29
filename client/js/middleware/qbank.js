@@ -16,15 +16,15 @@ export default {
   [AssessmentConstants.LOAD_ASSESSMENT] : (store, action) => {
     const state = store.getState();
 
-    let url = `assessment/banks/${state.settings.bank}/assessmentsoffered/${state.settings.assessment_offered_id}/assessmentstaken`;
+    const metaUrl = `assessment/banks/${state.settings.bank}/assessmentsoffered/${state.settings.assessment_offered_id}/assessmentstaken`;
 
-    let body = {
+    const body = {
       sessionId: action.settings.eid
     };
 
-    let promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body);
-    if(promise){
-      promise.then((response, error) => {
+    const metaPromise = api.post(metaUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body);
+    if(metaPromise){
+      metaPromise.then((response, error) => {
         store.dispatch({
           type:     AssessmentMetaConstants.LOAD_ASSESSMENT_META_DONE,
           payload:  response.body,
@@ -33,14 +33,14 @@ export default {
           error
         });
 
-        url = `assessment/banks/${state.settings.bank}/assessmentstaken/${response.body.id}/questions?qti`;
+        const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${response.body.id}/questions?qti`;
 
-        promise = api.get(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {})
-        if(promise) {
-          promise.then((response, error) => {
+        const assessmentPromise = api.get(assessmentUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {})
+        if(assessmentPromise) {
+          assessmentPromise.then((assessmentResponse, error) => {
             store.dispatch({
               type:     action.type + DONE,
-              payload:  response.body,
+              payload:  assessmentResponse.body,
               original: action,
               response,
               error
@@ -71,14 +71,14 @@ export default {
   [AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER]: (store, action) => {
     const state = store.getState();
 
-    let url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${action.questionId}/submit`;
+    const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${action.questionId}/submit`;
 
-    let body = {
+    const body = {
       type: action.answer.genus,
       choiceId: action.answer.id
     };
 
-    let promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body);
+    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body);
     if(promise){
       promise.then((response, error) => {
         store.dispatch({
@@ -125,9 +125,9 @@ export default {
   [AssessmentProgressConstants.ASSESSMENT_SUBMITTED] : (store, action) => {
     const state = store.getState();
 
-    let url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
+    const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
 
-    let promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {});
+    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {});
     if(promise){
       promise.then((response, error) => {
         store.dispatch({
