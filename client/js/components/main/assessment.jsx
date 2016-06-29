@@ -6,9 +6,10 @@ import { connect }                            from "react-redux";
 import * as CommunicationActions              from "../../actions/communications";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
 import appHistory                             from "../../history";
-import Nav                                    from "../assessments/assessment_nav";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
+import NextButton                             from "../assessments/next_button";
+import PreviousButton                         from "../assessments/previous_button";
 import ProgressDropdown                       from "../common/progress_dropdown";
 import {questionCount, questions, outcomes }  from "../../selectors/assessment";
 
@@ -267,14 +268,17 @@ export class Assessment extends React.Component{
         </div>
         {warning}
         {content}
-        <Nav
-          assessmentKind={this.props.settings.assessment_kind}
-          isFirstPage={this.isFirstPage()}
-          isLastPage={this.isLastPage()}
-          nextQuestions={(e) => { this.nextButtonClicked(e); }}
-          previousQuestions={(e) => { this.previousButtonClicked(e); }}
-          submitAssessment={(e) => {this.submitButtonClicked(e);}}/>
-      </div>
+        <div className="c-assessment-navigation">
+          <PreviousButton
+            isFirstPage={this.isFirstPage()}
+            previousQuestions={(e) => {this.previousButtonClicked(e);}}
+            />
+          <NextButton
+            isLastPage={this.isLastPage()}
+            nextQuestions={(e) => {this.nextButtonClicked(e);}}
+            submitAssessment={(e) => {this.submitButtonClicked(e);}} />
+        </div>
+    </div>
     );
   }
 
