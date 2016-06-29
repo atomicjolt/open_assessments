@@ -21,7 +21,10 @@ export default class AssessmentNav extends React.Component{
         className="c-btn c-btn--next"
         onClick={(e) => { this.props.nextQuestions(e); }}
         disabled={disabled}>
-        <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+		      path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
+			  </svg>
+         <span>Next</span>
       </button>
     );
   }
@@ -33,7 +36,10 @@ export default class AssessmentNav extends React.Component{
         className="c-btn c-btn--previous"
         onClick={(e) => { this.props.previousQuestions(e); }}
         disabled={disabled}>
-        <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+			    <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
+		    </svg>
+        <span>Previous</span>
       </button>
     );
   }
