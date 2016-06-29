@@ -9,9 +9,6 @@ export default class RadioButton extends React.Component{
     // Item being displayed
     item: React.PropTypes.object.isRequired,
 
-    // Type of question being rendered
-    name: React.PropTypes.string.isRequired,
-
     selectAnswer: React.PropTypes.func.isRequired,
 
     // Whether or not input should be disabled
@@ -55,22 +52,39 @@ export default class RadioButton extends React.Component{
 
     return optionFlag;
   }
-
+// <div>
+//         {this.optionFlagStatus()}
+//         <div className="btn btn-block btn-question">
+//           <label>
+//             <input type="radio"
+//                    defaultChecked={this.checkedStatus()}
+//                    disabled={this.props.isDisabled}
+//                    name={this.props.name}
+//                    onClick={() => { this.selectAnswer(); }} />
+//             <span>{this.props.item.material}</span>
+//           </label>
+//         </div>
+//       </div>
   render() {
     return (
-      <div>
-        {this.optionFlagStatus()}
-        <div className="btn btn-block btn-question">
-          <label>
-            <input type="radio"
-                   defaultChecked={this.checkedStatus()}
-                   disabled={this.props.isDisabled}
-                   name={this.props.name}
-                   onClick={() => { this.selectAnswer(); }} />
-            <span>{this.props.item.material}</span>
-          </label>
-        </div>
-      </div>
+      <li className="c-answer-container">
+				<div className="c-answer-container__radio">
+					<div className="c-radio-button">
+						<input
+              type="radio"
+              defaultChecked={this.checkedStatus()}
+              disabled={this.props.isDisabled}
+              name="radio"
+              onClick={() => { this.selectAnswer(); }}
+              id="radio01"/>
+						<label for="radio01"><span></span></label>
+					</div>
+				</div>
+
+				<div className="c-answer-container__content">
+					<p>{this.props.item.material}</p>
+				</div>
+      </li>
     );
   }
 }

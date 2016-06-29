@@ -127,17 +127,22 @@ export default class UniversalInput extends React.Component{
       material = <div dangerouslySetInnerHTML={{ __html: item.edXMaterial }} />;
     }
 
+      // <div className="panel-messages-container panel panel-default">
+      //   <div className="panel-heading text-center">
+      //     {item.title}
+      //     {messages}
+      //   </div>
+      //   <div className="panel-body">
+      //     {material}
+      //     {items}
+      //   </div>
+      //   {solution}
+      // </div>
     return (
-      <div className="panel-messages-container panel panel-default">
-        <div className="panel-heading text-center">
-          {item.title}
-          {messages}
-        </div>
-        <div className="panel-body">
-          {material}
+      <div>
+        <ul>
           {items}
-        </div>
-        {solution}
+        </ul>
       </div>
     );
   }
