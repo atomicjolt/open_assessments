@@ -101,7 +101,8 @@ export default class Item extends React.Component{
               item={this.props.question}
               isResult={false}
               selectAnswer={this.props.selectAnswer}
-              response={this.props.response}/>
+              response={this.props.response}
+              checkedResponse={ {correct:false, feedback:"Howdy"} /*this.props.checkedResponse*/}/>
           </div>
           {feedback}
         </div>
