@@ -43,7 +43,7 @@ export class Index extends React.Component {
   render(){
     let strings = new LocalizedStrings(locales());
     return <div>
-      <p>{strings.assessments.new}</p>
+      <p>{/*strings.assessments.new*/}</p>
       {this.props.children}
     </div>;
   }

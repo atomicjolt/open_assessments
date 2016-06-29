@@ -30,23 +30,13 @@ describe('Assessment Questions', ()=> {
       <UniversalInput
         settings={ {} }
         item={item}
-        selectAnswer={selectAnswer}
-    />);
+        selectAnswer={selectAnswer}/>);
   });
 
   it('It Renders the page', ()=>{
     expect(ReactDOM.findDOMNode(result)).toBeDefined();
   });
 
-  it('It renders the title', ()=>{
-    expect(ReactDOM.findDOMNode(result).innerText).toContain('title');
-  });
-
-  it('It renders the question text', ()=>{
-    const subject = ReactDOM.findDOMNode(result);
-    expect(subject.innerText).toContain(item.messages[0]);
-    expect(subject.innerText).toContain(item.messages[1]);
-  });
 
   xdescribe('Drag and Drop', ()=>{
     beforeEach(()=>{
@@ -193,9 +183,6 @@ describe('Assessment Questions', ()=> {
     });
   });
 
-  it('Renders the solution', ()=>{
-    expect(ReactDOM.findDOMNode(result).textContent).toContain('solution text');
-  });
 
   xit('Does not render the solution if the question is not answered', ()=>{
     expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers);

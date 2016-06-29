@@ -8,6 +8,8 @@ import * as AssessmentProgress                from "../../actions/assessment_pro
 import appHistory                             from "../../history";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
+import NextButton                             from "../assessments/next_button";
+import PreviousButton                         from "../assessments/previous_button";
 import ProgressDropdown                       from "../common/progress_dropdown";
 import {questionCount, questions, outcomes }  from "../../selectors/assessment";
 
@@ -24,7 +26,7 @@ const select = (state, props) => {
     progress        : state.progress.toJS(),
 
     // Current page of items to display when paging through items
-    currentItem : state.progress.get('currentItemIndex'),
+    currentItem     : state.progress.get('currentItemIndex'),
 
     // Array of user responses
     responses       : state.progress.get('responses').toJS(),
@@ -179,7 +181,6 @@ export class Assessment extends React.Component{
    * Returns true if the current page of items is the last page, false otherwise.
    */
   isLastPage(){
-    //Default to display all questions in section if question count not specified
     var questionsPerPage = this.props.questionsPerPage;
     var currentPage = parseInt(this.props.currentItem / questionsPerPage);
     var lastPage = parseInt((this.props.questionCount - 1) / questionsPerPage);
@@ -224,57 +225,22 @@ export class Assessment extends React.Component{
     this.props.submitAssessment();
   }
 
-  getNextButton() {
-    let disabled = this.isLastPage();
-    return (
-      <button
-        className="next-btn"
-        onClick={(e) => { this.nextButtonClicked(e); }}
-        disabled={disabled}>
-        <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
-      </button>
-    );
-  }
-
-  getPreviousButton() {
-    let disabled = this.isFirstPage();
-    return (
-      <button
-        className="prev-btn"
-        onClick={(e) => { this.previousButtonClicked(e); }}
-        disabled={disabled}>
-        <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
-      </button>
-    );
-  }
-
-  getSubmitButton(){
-    let submitButton;
-    if(this.isLastPage() && this.props.settings.assessment_kind === "SUMMATIVE"){
-      submitButton = (
-        <div>
-          <button
-            className="btn btn-check-answer"
-            onClick={(e)=>{this.submitButtonClicked(e);}}>
-            Submit
-          </button>
-        </div>
+  /**
+   * Returns inner text for question counter
+   */
+  getCounter(){
+    if(this.props.questionsPerPage === 1){
+      return `Question ${this.props.currentItem + 1} of ${this.props.questionCount}`;
+    } else {
+      var currentPage = (
+        parseInt(this.props.currentItem / this.props.questionsPerPage) + 1
       );
+      var totalPages = (
+        parseInt(this.props.questionCount / this.props.questionsPerPage)
+      );
+      return `Page ${currentPage} of ${totalPages}`;
     }
-    return submitButton;
   }
-
-
-  getNav(){
-    return (
-      <div className="confidence_wrapper">
-        {this.getPreviousButton()}
-        {this.getNextButton()}
-        {this.getSubmitButton()}
-     </div>
-    );
-  }
-
 
   popup(){
     return "Don’t leave!\n If you leave now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this quiz and then use the \"Progress\" drop-down menu";
@@ -289,24 +255,30 @@ export class Assessment extends React.Component{
       window.onbeforeunload = this.popup;
     }
 
-    let progressBar; //TODO add progress bar
     let titleText =  this.props.assessment.title;
     let content = this.getContent();
     let warning = this.getWarning();
-    let nav = this.getNav();
+    let counter = this.getCounter();
 
     return (
-      <div className="assessment">
-        <div>{titleText}</div>
-        {progressBar}
-        <div className="section_list">
-          <div className="section_container">
-            {warning}
-            {content}
-            {nav}
-          </div>
+      <div className="o-assessment-container">
+        <div className="c-header">
+          <div className="c-header__title">{titleText}</div>
+          <div className="c-header__question-number">{counter}</div>
         </div>
-      </div>
+        {warning}
+        {content}
+        <div className="c-assessment-navigation">
+          <PreviousButton
+            isFirstPage={this.isFirstPage()}
+            previousQuestions={(e) => {this.previousButtonClicked(e);}}
+            />
+          <NextButton
+            isLastPage={this.isLastPage()}
+            nextQuestions={(e) => {this.nextButtonClicked(e);}}
+            submitAssessment={(e) => {this.submitButtonClicked(e);}} />
+        </div>
+    </div>
     );
   }
 

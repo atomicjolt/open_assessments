@@ -23,7 +23,11 @@ export default class UniversalInput extends React.Component{
     isResult: React.PropTypes.bool,
 
     // Array of selected answer IDs
-    response: React.PropTypes.array
+    response: React.PropTypes.array,
+
+    // Graded user response object containing keys
+    // correct:true/false, feedback:"Answer feedback"
+    checkedResponse: React.PropTypes.object
   }
 
   wasSelected(id){
@@ -75,15 +79,38 @@ export default class UniversalInput extends React.Component{
       case "true_false_question":
         items = item.answers.map((answer) => {
           var selectRadio = _.curryRight(this.props.selectAnswer);
+          var id = item.id + "_" + answer.id;
+          var feedback;
+
+          if(this.props.checkedResponse && this.wasSelected(answer.id)){
+            feedback = this.props.checkedResponse.feedback;
+          }
+
+          var displayCorrect = (
+            this.props.checkedResponse &&
+            this.props.checkedResponse.correct === true &&
+            this.wasSelected(answer.id)
+          );
+
+          var displayIncorrect = (
+            this.props.checkedResponse &&
+            this.props.checkedResponse.correct === false &&
+            this.wasSelected(answer.id)
+          );
+
+
           return (
             <RadioButton
               isDisabled={this.props.isResult}
-              key={item.id + "_" + answer.id}
+              key={id}
+              id={id}
               item={answer}
               name="answer-radio"
               checked={this.wasSelected(answer.id)}
-              showAsCorrect={this.showAsCorrect(answer.id)}
-              selectAnswer={selectRadio(true)} />
+              displayCorrect={displayCorrect}
+              displayIncorrect={displayIncorrect}
+              feedback={feedback}
+              selectAnswer={selectRadio(true)}/>
           );
         });
         break;
@@ -128,16 +155,10 @@ export default class UniversalInput extends React.Component{
     }
 
     return (
-      <div className="panel-messages-container panel panel-default">
-        <div className="panel-heading text-center">
-          {item.title}
-          {messages}
-        </div>
-        <div className="panel-body">
-          {material}
+      <div>
+        <ul>
           {items}
-        </div>
-        {solution}
+        </ul>
       </div>
     );
   }
