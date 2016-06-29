@@ -10,6 +10,7 @@ describe('Assessment Questions', ()=> {
   var result;
   var item;
   var Content;
+  var selectAnswer = () => {};
   beforeEach(()=>{
     item = {
       id       : 0,
@@ -25,22 +26,17 @@ describe('Assessment Questions', ()=> {
       solution : "<p>solution text</p>"
     };
 
-    result = TestUtils.renderIntoDocument(<UniversalInput settings={ {} } item={item} />);
+    result = TestUtils.renderIntoDocument(
+      <UniversalInput
+        settings={ {} }
+        item={item}
+        selectAnswer={selectAnswer}/>);
   });
 
   it('It Renders the page', ()=>{
     expect(ReactDOM.findDOMNode(result)).toBeDefined();
   });
 
-  it('It renders the title', ()=>{
-    expect(ReactDOM.findDOMNode(result).innerText).toContain('title');
-  });
-
-  it('It renders the question text', ()=>{
-    const subject = ReactDOM.findDOMNode(result);
-    expect(subject.innerText).toContain(item.messages[0]);
-    expect(subject.innerText).toContain(item.messages[1]);
-  });
 
   xdescribe('Drag and Drop', ()=>{
     beforeEach(()=>{
@@ -71,7 +67,12 @@ describe('Assessment Questions', ()=> {
 
     beforeEach(()=>{
       item.question_type = 'multiple_choice_question';
-      Content = (<UniversalInput settings={ {} } item={item} />);
+      Content = (
+        <UniversalInput
+          settings={ {} }
+          item={item}
+          selectAnswer={selectAnswer}/>
+      );
       result = TestUtils.renderIntoDocument(Content);
     });
 
@@ -107,7 +108,13 @@ describe('Assessment Questions', ()=> {
   describe('Text Input', ()=>{
     beforeEach(()=>{
       item.question_type = 'edx_numerical_input';
-      Content = (<UniversalInput settings={ {} } item={item} />);
+      Content = (
+        <UniversalInput
+          settings={ {} }
+          item={item}
+          selectAnswer={selectAnswer}
+          />
+      );
       result = TestUtils.renderIntoDocument(Content);
     });
 
@@ -176,9 +183,6 @@ describe('Assessment Questions', ()=> {
     });
   });
 
-  it('Renders the solution', ()=>{
-    expect(ReactDOM.findDOMNode(result).textContent).toContain('solution text');
-  });
 
   xit('Does not render the solution if the question is not answered', ()=>{
     expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers);

@@ -1,0 +1,99 @@
+.c-answers{
+  padding: 0 3rem;
+}
+
+.c-answer-container{
+  @include answer-styling;
+  border-radius: $radius;
+  min-height: 3.5rem;
+  position: relative;
+  padding: 0.8rem 0.8rem 0;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  @include transition(all 0.1s ease);
+
+  &:hover{
+    @include answer-hover;
+  }
+
+  &.is-clicked{
+    @include answer-clicked;
+
+    .c-answer-container__content{
+      p{
+        color: $answer-text-clicked;
+      }
+    }
+
+    .c-feedback{
+      background: $answer-result-background-clicked;
+    }
+  }
+}
+
+  .c-answer-container__radio{
+    width: 2rem;
+    position: absolute;
+    left: 0.8rem;
+    top: 0.8rem;
+  }
+
+  .c-radio-button{
+
+    label{
+      display: inline-block;
+      cursor: pointer;
+      position: relative;
+      height: 1.5rem;
+      width: 1.5rem;
+      border-radius: 50%;
+      border: 0.2rem solid $radio-color;
+      margin: 0.2rem;
+    }
+
+    input[type="radio"]:checked + label:before{
+      content: '';
+      width: .7rem;
+      height: .7rem;
+      background: $radio-selected;
+      border-radius: 50%;
+      position: absolute;
+      top: 0.2rem;
+      left: 0.2rem;
+    }
+
+    input[type="radio"]:checked + label{
+      border-color: $radio-selected;
+    }
+
+    input{
+      display: none;
+      margin: 0;
+      height: 0.01rem;
+      width: 0.01rem;
+    }
+  }
+
+  .c-answer-container__content{
+    width: 100%;
+    padding-left: 3rem;
+
+    p{
+      @include regular;
+      font-size: 1.4rem;
+      color: $answer-text;
+      margin-bottom: 1rem;
+    }
+
+    img{
+      display: inline-block;
+      max-width: 20rem;
+      margin-bottom: 1rem;
+    }
+
+    audio{
+      // border-radius: $radius;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+  }

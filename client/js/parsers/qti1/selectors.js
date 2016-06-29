@@ -4,6 +4,7 @@ import { createSelector } from "reselect";
 import { getItems, loadOutcomes } from "./qti";
 
 export const questionsPerSection    = (state, props) => state.settings.questions_per_section;
+export const questionsPerPage       = (state, props) => state.settings.questions_per_page;
 export const assessment             = (state, props) => state.assessment;
 export const shuffleQuestionAnswers = (state, props) => state.settings.shuffle_question_answers;
 
@@ -20,7 +21,7 @@ export const questions = createSelector(
   [ sections, questionsPerSection ],
   (sections, questionsPerSection) => getItems(
     sections,
-    null, // Return all of the sections
+    null, // Return all of the items
     shuffleQuestionAnswers
   )
 );

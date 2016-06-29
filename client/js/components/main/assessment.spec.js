@@ -8,45 +8,28 @@ import { Assessment }          from "./assessment";
 import * as AssessmentActions  from "../../actions/assessment";
 
 describe("assessment", function() {
-  var result;
-  var subject;
   var props;
-  var settings;
-  var assessment;
-  var progress;
-  var questionCount;
-  var allQuestions;
-  var outcomes;
-  var assessmentViewed;
-  var currentQuestion;
-  var responses;
+  var allQuestions,
+    assessment,
+    assessmentViewed,
+    checkedResponses,
+    currentItem,
+    outcomes,
+    previousQuestions,
+    progress,
+    questionCount,
+    questionsPerPage,
+    responses,
+    result,
+    settings,
+    subject,
+    submitAssessment;
 
+  // Props are reset to these default values between each test. To use
+  // a modified prop in your test case, modify props.myProp in your test case and
+  // re-render dom element with  result = TestUtils.renderIntoDocument. Then
+  // proceed to test your result.
   beforeEach(() => {
-    spyOn(appHistory, "push");
-
-    settings = {
-      user_id      : 0,
-      max_attempts : 1,
-      eid          : "external_identifier",
-      src_url      : "http://www.openassessments.com/api/assessments/55.xml",
-      view         : "SHOW_ONE",
-      questions_per_section:1,
-      assessment_kind: "SUMMATIVE"
-    };
-
-    assessment = {
-      title: "Test Title"
-    };
-
-    progress = {
-      currentItemIndex:0,
-      answerMessageIndex:[]
-    };
-
-    currentQuestion = 0;
-    responses = [];
-    questionCount = () => 10;
-
     allQuestions = () => [{
       timeSpent:0,
       outcomes:{shortOutcome:"", longOutcome:""},
@@ -70,26 +53,59 @@ describe("assessment", function() {
       title:"Test Question Title",
       id:"TestQuestionID"
     }];
-    outcomes = () => {};
-    assessmentViewed = () => {};
 
-    props = {
-      settings,
-      assessment,
-      progress,
-      currentQuestion,
-      responses,
-      questionCount:questionCount(),
-      allQuestions:allQuestions(),
-      outcomes:outcomes(),
-      assessmentViewed,
-      sendSize: () => {},
-      scrollParentToTop: () => {},
-      hideLMSNavigation: () => {},
-      nextQuestion: () => {}
+    assessment = {
+      title: "Test Title"
     };
 
-    spyOn(props, "nextQuestion");
+    checkedResponses = [];
+
+    currentItem = 5;
+
+    questionsPerPage = 1;
+
+    outcomes = () => {};
+
+    progress = {
+      currentItemIndex:0
+    };
+
+    questionCount = 10;
+
+    responses = [];
+    settings = {
+      user_id      : 0,
+      max_attempts : 1,
+      eid          : "external_identifier",
+      src_url      : "http://www.openassessments.com/api/assessments/55.xml",
+      questions_per_page:1,
+      assessment_kind: "SUMMATIVE"
+    };
+
+    props = {
+      allQuestions:allQuestions(),
+      assessment,
+      assessmentViewed: () => {},
+      checkedResponses,
+      currentItem,
+      hideLMSNavigation: () => {},
+      nextQuestions: () => {},
+      outcomes:outcomes(),
+      previousQuestions: () => {},
+      progress,
+      questionCount,
+      questionsPerPage,
+      responses,
+      scrollParentToTop: () => {},
+      sendSize: () => {},
+      settings,
+      submitAssessment: () => {}
+    };
+
+    spyOn(props, "nextQuestions");
+    spyOn(props, "previousQuestions");
+    spyOn(props, "submitAssessment");
+    spyOn(appHistory, "push");
 
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     subject = ReactDOM.findDOMNode(result);
@@ -100,10 +116,17 @@ describe("assessment", function() {
     jasmine.Ajax.uninstall();
   });
 
-  it("Calls nextButtonClicked when the next button is clicked", () => {
-    let button = TestUtils.findRenderedDOMComponentWithClass(result, "next-btn");
+  it("Calls nextQuestions when the next button is clicked", () => {
+    let button = TestUtils.findRenderedDOMComponentWithClass(result, "c-btn--next");
     TestUtils.Simulate.click(button);
-    expect(props.nextQuestion).toHaveBeenCalled();
+    expect(props.nextQuestions).toHaveBeenCalled();
+  });
+
+  it("Calls previousQuestions when the previous button is clicked", () => {
+    let button = TestUtils.findRenderedDOMComponentWithClass(result, "c-btn--previous");
+    TestUtils.Simulate.click(button);
+
+    expect(props.previousQuestions).toHaveBeenCalled();
   });
 
   it("renders the assessment", () => {
@@ -118,28 +141,36 @@ describe("assessment", function() {
     props.progress.assessmentResult = "done";
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     subject = ReactDOM.findDOMNode(result);
+
     expect(appHistory.push).toHaveBeenCalledWith("assessment-result");
   });
 
-  it("renders submit button on last question", () => {
-    props.currentQuestion = 9;
+  it('isLastPage should return true on last question', () => {
+    props.currentItem = 9;
+
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
-    subject = ReactDOM.findDOMNode(result);
-    expect(subject.textContent).toContain("Submit");
+    expect(result.isLastPage()).toEqual(true);
   });
 
-  it("disables next button on last question", () => {
-    props.currentQuestion = 9;
-    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
-    subject = ReactDOM.findDOMNode(result);
+  it('isLastPage should not return true otherwise', () =>{
+    props.currentItem = 8;
 
-    expect(subject.innerHTML).toContain('<button class="next-btn" disabled="">');
-    expect(subject.innerHTML).not.toContain('<button class="prev-btn" disabled="">');
+    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
+    expect(result.isLastPage()).toEqual(false);
   });
 
-  it("disables previous button on first question", () => {
-    expect(subject.innerHTML).toContain('<button class="prev-btn" disabled="">');
-    expect(subject.innerHTML).not.toContain('<button class="next-btn" disabled="">');
+  it('isFirstPage should return true on first question', () => {
+    props.currentItem = 0;
+
+    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
+    expect(result.isFirstPage()).toEqual(true);
+  });
+
+  it('isFirstPage should not return true otherwise', () =>{
+    props.currentItem = 1;
+
+    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
+    expect(result.isFirstPage()).toEqual(false);
   });
 
 });

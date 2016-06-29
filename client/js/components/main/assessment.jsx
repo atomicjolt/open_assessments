@@ -8,6 +8,8 @@ import * as AssessmentProgress                from "../../actions/assessment_pro
 import appHistory                             from "../../history";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
+import NextButton                             from "../assessments/next_button";
+import PreviousButton                         from "../assessments/previous_button";
 import ProgressDropdown                       from "../common/progress_dropdown";
 import {questionCount, questions, outcomes }  from "../../selectors/assessment";
 
@@ -15,28 +17,36 @@ const select = (state, props) => {
   return {
 
     // Assessment configuration settings. these should never be modified.
-    settings             : state.settings,
+    settings        : state.settings,
 
     // Assessment to be rendered.
-    assessment           : state.assessment,
+    assessment      : state.assessment,
 
     // State of user-assessment interactions.
-    progress             : state.progress.toJS(),
+    progress        : state.progress.toJS(),
 
-    // The index of the current question within the allQuestions array
-    currentQuestion      : state.progress.get('currentItemIndex'),
+    // Current page of items to display when paging through items
+    currentItem     : state.progress.get('currentItemIndex'),
 
     // Array of user responses
-    responses            : state.progress.get('responses').toJS(),
+    responses       : state.progress.get('responses').toJS(),
+
+    // Array of graded user response objects containing keys
+    // correct:true/false, feedback:"Answer feedback"
+    checkedResponses: state.progress.get('checkedResponses').toJS(),
+
+    // How many questions to display at a time. Default to show all questions
+    // in a section if not specified
+    questionsPerPage: state.settings.questions_per_page || questionCount(state, props),
 
     // How many Items are in the assessment
-    questionCount        : questionCount(state, props),
+    questionCount   : questionCount(state, props),
 
     // Array containing all assessment Items
-    allQuestions         : questions(state, props),
+    allQuestions    : questions(state, props),
 
     // TODO
-    outcomes             : outcomes(state, props)
+    outcomes        : outcomes(state, props)
   };
 };
 
@@ -116,15 +126,15 @@ export class Assessment extends React.Component{
           settings         = {props.settings}
           assessment       = {props.assessment}
           question         = {props.allQuestions[index]}
-          response         = {props.responses[index]}
+          response         = {props.responses[index] || []}
           currentItemIndex = {index}
           questionCount    = {props.questionCount}
-          messageIndex     = {props.progress.answerMessageIndex[index]}
+          checkedResponse  = {props.checkedResponses[index] || {}}
           allQuestions     = {props.allQuestions}
-          outcomes         = {props.outcomes}
+          outcomes         = {props.outcomes || {}}
           selectAnswer     = {
-            (answerId) =>
-              {this.props.answerSelected(index, answerId);}}/>
+            (answerId, exclusive) =>
+              {this.props.answerSelected(index, answerId, exclusive);}}/>
     );
   }
 
@@ -134,12 +144,12 @@ export class Assessment extends React.Component{
    * specified by props.settings.questions_per_section.
    */
   getItems(){
-    let displayNum = this.props.settings.questions_per_section;
+    let questionsPerPage = this.props.questionsPerPage;
     let current = this.props.progress.currentItemIndex;
     let items = [];
-    if(displayNum > 0 && displayNum < this.props.questionCount){
-      let start = parseInt(current / displayNum) * displayNum;
-      let end = parseInt(start + displayNum);
+    if(questionsPerPage > 0 && questionsPerPage < this.props.questionCount){
+      let start = parseInt(current / questionsPerPage) * questionsPerPage;
+      let end = parseInt(start + questionsPerPage);
 
       for(let i = start; i < end; i++){
         items.push(this.getItem(i));
@@ -168,17 +178,23 @@ export class Assessment extends React.Component{
   }
 
   /**
-   * Returns true if the current question is the last question, false otherwise.
+   * Returns true if the current page of items is the last page, false otherwise.
    */
-  isLastQuestion(){
-    return this.props.currentQuestion === this.props.questionCount - 1;
+  isLastPage(){
+    var questionsPerPage = this.props.questionsPerPage;
+    var currentPage = parseInt(this.props.currentItem / questionsPerPage);
+    var lastPage = parseInt((this.props.questionCount - 1) / questionsPerPage);
+    return currentPage === lastPage;
   }
 
   /**
-   * Returns true if the current question is the first question, false otherwise
+   * Returns true if the current page of items is the first page of items,
+   * false otherwise
    */
-  isFirstQuestion(){
-    return this.props.currentQuestion === 0;
+  isFirstPage(){
+    var questionsPerPage = this.props.questionsPerPage;
+    var currentPage = parseInt(this.props.currentItem / questionsPerPage);
+    return currentPage === 0;
   }
 
 /**
@@ -188,7 +204,7 @@ export class Assessment extends React.Component{
   getWarning(){
     let unanswered = this.checkCompletion();
     let warning;
-    if(unanswered === true && this.isLastQuestion()){
+    if(unanswered === true && this.isLastPage()){
       warning = <div>Warning There are unanswered questions</div>;
     }
     return warning;
@@ -196,12 +212,12 @@ export class Assessment extends React.Component{
 
   nextButtonClicked(e){
     e.preventDefault();
-    this.props.nextQuestion();
+    this.props.nextQuestions(this.props.questionsPerPage);
   }
 
   previousButtonClicked(e){
     e.preventDefault();
-    this.props.previousQuestion();
+    this.props.previousQuestions(this.props.questionsPerPage);
   }
 
   submitButtonClicked(e){
@@ -209,55 +225,22 @@ export class Assessment extends React.Component{
     this.props.submitAssessment();
   }
 
-  getNextButton() {
-    let disabled = this.isLastQuestion();
-    return (
-      <button
-        className="next-btn"
-        onClick={(e) => { this.nextButtonClicked(e); }}
-        disabled={disabled}
-      >
-        <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
-      </button>);
-  }
-
-  getPreviousButton() {
-    let disabled = this.isFirstQuestion();
-    return (
-        <button
-          className="prev-btn"
-          onClick={(e) => { this.previousButtonClicked(e); }}
-          disabled={disabled}
-        >
-          <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
-        </button>);
-  }
-
-  getSubmitButton(){
-    let submitButton;
-    if(this.props.currentQuestion == this.props.questionCount - 1 &&
-        this.props.settings.assessment_kind === "SUMMATIVE"){
-      submitButton = <div>
-                      <button
-                        className="btn btn-check-answer"
-                        onClick={(e)=>{this.submitButtonClicked(e);}}
-                      >
-                        Submit
-                      </button>
-                    </div>;
+  /**
+   * Returns inner text for question counter
+   */
+  getCounter(){
+    if(this.props.questionsPerPage === 1){
+      return `Question ${this.props.currentItem + 1} of ${this.props.questionCount}`;
+    } else {
+      var currentPage = (
+        parseInt(this.props.currentItem / this.props.questionsPerPage) + 1
+      );
+      var totalPages = (
+        parseInt(this.props.questionCount / this.props.questionsPerPage)
+      );
+      return `Page ${currentPage} of ${totalPages}`;
     }
-    return submitButton;
   }
-
-
-  getNav(){
-    return <div className="confidence_wrapper">
-              {this.getPreviousButton()}
-              {this.getNextButton()}
-              {this.getSubmitButton()}
-           </div>;
-  }
-
 
   popup(){
     return "Don’t leave!\n If you leave now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this quiz and then use the \"Progress\" drop-down menu";
@@ -272,24 +255,30 @@ export class Assessment extends React.Component{
       window.onbeforeunload = this.popup;
     }
 
-    let progressBar; //TODO add progress bar
     let titleText =  this.props.assessment.title;
     let content = this.getContent();
     let warning = this.getWarning();
-    let nav = this.getNav();
+    let counter = this.getCounter();
 
     return (
-      <div className="assessment">
-        <div>{titleText}</div>
-        {progressBar}
-        <div className="section_list">
-          <div className="section_container">
-            {warning}
-            {content}
-            {nav}
-          </div>
+      <div className="o-assessment-container">
+        <div className="c-header">
+          <div className="c-header__title">{titleText}</div>
+          <div className="c-header__question-number">{counter}</div>
         </div>
-      </div>
+        {warning}
+        {content}
+        <div className="c-assessment-navigation">
+          <PreviousButton
+            isFirstPage={this.isFirstPage()}
+            previousQuestions={(e) => {this.previousButtonClicked(e);}}
+            />
+          <NextButton
+            isLastPage={this.isLastPage()}
+            nextQuestions={(e) => {this.nextButtonClicked(e);}}
+            submitAssessment={(e) => {this.submitButtonClicked(e);}} />
+        </div>
+    </div>
     );
   }
 

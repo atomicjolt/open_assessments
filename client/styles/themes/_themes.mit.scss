@@ -1,0 +1,138 @@
+/*-------------------------------------*\
+      #THEME FOR MIT
+\*-------------------------------------*/
+
+// Please use rems as units of measurement instead of pixels.
+// The conversion rate is 1rem = 10px
+
+//Text colors
+$text-color: #4A4A4A;
+$subtext-color: #9B9B9B;
+
+//Shades of gray
+$dark-gray: #636463;
+$gray: #9B9B9B;
+$light-gray: #dddddd;
+$lightest-gray: #efefef;
+$white: #ffffff;
+
+//Brand color scheme
+$primary: #4F7DB2;
+$secondary: #4C4086;
+$accent: #922A7D;
+
+//Right and wrong answer colors
+$incorrect: #D0021B;
+$correct: #7ED321;
+
+//Border-radius (set to 0 for no rounded corners)
+$radius: 0.3rem;
+
+//Main container styling and width
+@mixin main-container{
+  background: $white;
+  box-shadow: 0 0 0.5rem rgba(0,0,0,.3);
+  max-width: 100rem;
+}
+
+//Header styling
+$header-background: $white;
+$header-border: $lightest-gray;
+
+//Answer container styling
+@mixin answer-styling{
+  background: $white;
+  box-shadow: 0 0 0.3rem rgba(0,0,0,.3);
+  border: 0.2rem solid $white;
+}
+//Answer container styling on hover
+@mixin answer-hover{
+  border-color: $primary;
+}
+//Answer container styling when selected
+@mixin answer-clicked{
+  background: $primary;
+  border-color: $primary;
+}
+//Color for answer text
+$answer-text: $text-color;
+//Text color when answer is selected
+$answer-text-clicked: $white;
+
+//Radio button colors
+$radio-color: $gray;
+$radio-selected: $white;
+
+//Video link styling
+$video-link-background: $dark-gray;
+$video-link-icon: $white;
+
+//Confidence map colors
+$confidence-border: $lightest-gray;
+$confidence-hover-border: $primary;
+
+//Secondary button colors
+$btn-secondary-background: $white;
+$btn-secondary-background-hover: $secondary;
+
+$btn-secondary-border: $secondary;
+$btn-secondary-border-hover: $secondary;
+
+$btn-secondary-text: $secondary;
+$btn-secondary-text-hover: $white;
+
+//Primary button colors
+$btn-primary-background: $accent;
+$btn-primary-background-hover: $white;
+
+$btn-primary-border: $accent;
+$btn-primary-border-hover: $accent;
+
+$btn-primary-text: $white;
+$btn-primary-text-hover: $accent;
+
+//Answer correct/incorrect result background
+$answer-result-background: $lightest-gray;
+$answer-result-background-clicked: $white;
+
+//Feedback at the answer level's background
+$answer-feedback-background: $white;
+
+//Feedback at the question level's background
+$question-feedback-background: $lightest-gray;
+
+
+//Includes for custom fonts
+@font-face {
+    font-family: 'open_sansbold';
+    src: url('fonts/opensans-bold-webfont.woff2') format('woff2'),
+         url('fonts/opensans-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'open_sansregular';
+    src: url('fonts/opensans-regular-webfont.woff2') format('woff2'),
+         url('fonts/opensans-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'open_sanssemibold';
+    src: url('fonts/opensans-semibold-webfont.woff2') format('woff2'),
+         url('fonts/opensans-semibold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+//Open Sans font sizes mixins
+@mixin regular{
+  font-family: 'open_sansregular', sans-serif;
+}
+@mixin semi-bold{
+  font-family: 'open_sanssemibold', sans-serif;
+}
+@mixin bold{
+  font-family: 'open_sansbold', sans-serif;
+}
