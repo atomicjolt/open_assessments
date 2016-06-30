@@ -15,8 +15,16 @@ export default class NextButton extends React.Component{
     submitAssessment: React.PropTypes.func.isRequired,
   };
 
-  getNextButton(){
-    return (
+  render(){
+    var submitButton = (
+      <a
+        className="c-btn c-btn--finish"
+        onClick={(e) => {this.props.submitAssessment(e);}}>
+        <span>Submit</span>
+      </a>
+    );
+
+    var nextButton = (
       <a
         className="c-btn c-btn--next"
         onClick={(e) => { this.props.nextQuestions(e); }}>
@@ -26,21 +34,8 @@ export default class NextButton extends React.Component{
          <span>Next</span>
       </a>
     );
-  }
 
-  getSubmitButton(){
-    return (
-      <a
-        className="c-btn c-btn--finish"
-        onClick={(e) => {this.props.submitAssessment(e);}}>
-        <span>Submit</span>
-      </a>
-    );
-  }
-
-  render(){
-    var nextButton = this.getNextButton();
-    if(this.props.isLastPage === true){nextButton = this.getSubmitButton();}
+    if(this.props.isLastPage === true){nextButton = submitButton;}
 
     return nextButton;
   }
