@@ -11,9 +11,9 @@ import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
 
-export const CORRECT = 1;
-export const INCORRECT = 2;
-export const UNGRADED = 3;
+export const CORRECT = "CORRECT";
+export const INCORRECT = "INCORRECT";
+export const UNGRADED = "UNGRADED";
 
 export default class UniversalInput extends React.Component{
 
@@ -95,8 +95,7 @@ export default class UniversalInput extends React.Component{
           if(this.props.checkedResponse && this.wasSelected(answer.id)){
             if(this.props.checkedResponse.correct === true){
               gradeState = CORRECT;
-            }
-            else if(this.props.checkedResponse.correct === false){
+            } else if(this.props.checkedResponse.correct === false) {
               gradeState = INCORRECT;
             }
           }

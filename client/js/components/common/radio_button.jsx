@@ -17,7 +17,7 @@ export default class RadioButton extends React.Component{
 
     selectAnswer: React.PropTypes.func.isRequired,
 
-    // Whether answer is correct, incorrect, or has not been graded
+    // Whether answer is correct, incorrect, or has not been graded.
     // Should be one of CORRECT, INCORRECT, UNGRADED.
     gradeState: React.PropTypes.number.isRequired,
 
