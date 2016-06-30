@@ -45,4 +45,9 @@ describe('next button', () => {
 
     expect(props.submitAssessment).toHaveBeenCalled();
   });
+
+  describe('unlock next', () => {
+    it('shows next on answer')
+
+  });
 });
