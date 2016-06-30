@@ -19,7 +19,7 @@ export const parse = (settings, data) => {
   if(data.startsWith("[")) {
 
     // Looks like JSON.  We only have one JSON format.
-    return CLIx.parse(data);
+    return CLIx.parse(settings.get("assessmentId"), data);
 
   } else if(data.startsWith("<?xml")) {
 

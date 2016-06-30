@@ -20,6 +20,7 @@ describe("QTI2 assessment parser", () => {
 
       expect(assessment).toBeDefined();
       expect(assessment.id).toEqual(1);
+      expect(assessment.item.title).toEqual("Unattended Luggage");
       expect(assessment.title).toEqual("Unattended Luggage");
       expect(assessment.standard).toEqual(AssessmentFormats.Qti2);
     });

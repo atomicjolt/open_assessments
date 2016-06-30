@@ -6,6 +6,13 @@ import Qti  from './qti';
 
 export default class Parser {
 
+  static parseItem(xml) {
+    return {
+      title: xml.getAttribute("title"),
+      xml
+    };
+  }
+
   /**
    * Parses the XML document by slightly massaging the XML into a consistent
    * structure.  It can come as:
@@ -27,11 +34,12 @@ export default class Parser {
     const tag_name = top.tagName;
 
     if(tag_name == "assessmentItem") {
+      let item = this.parseItem(top);
       return {
         standard: AssessmentFormats.Qti2,
         id: assessmentId,
-        title: top.getAttribute("title"),
-        item: top
+        title: item.title, // Borrow the item's title as the assessment's title.
+        item
       };
     } else if(tag_name == "assessmentSection") {
     } else if(tag_name == "assessmentTest") {
