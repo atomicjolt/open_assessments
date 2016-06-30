@@ -5,14 +5,11 @@ import React from "react";
 export default class NextButton extends React.Component{
 
   static propTypes = {
-    //TODO document
-    unlockNext: React.PropTypes.string.isRequired,
-
     // Whether or not the current page of items is the last page of items
     isLastPage: React.PropTypes.bool.isRequired,
 
     // Function to be called when submit button is clicked
-    submitAssessment: React.PropTypes.func.isRequired
+    submitAssessment: React.PropTypes.func.isRequired,
   };
 
   getNextButton(){
@@ -38,34 +35,10 @@ export default class NextButton extends React.Component{
     );
   }
 
-
-  getCheckAnswerButton(){
-    return (
-  		<a href="" class="c-btn c-btn--check-answer">
-  			<span>check answer</span>
-  		</a>
-    );
-  }
-
-
-  nextCondition = () => {
-    if(this.props.unlockNext === "ON_CORRECT") {
-      
-    } else if(this.props.unlockNext === "ON_ANSWER_CHECK") {
-
-    } else if(this.props.unlockNext === "ALWAYS") {
-
-    }
-  }
-
   render(){
+    var nextButton = this.getNextButton();
+    if(this.props.isLastPage === true){nextButton = this.getSubmitButton();}
 
-    var finalState = this.getNextButton();
-    if(this.props.isLastPage === true){finalState = this.getSubmitButton();}
-
-    // if(condition) return finalState
-    // return initial state
-
-    return; //nextButton;
+    return nextButton;
   }
   };
