@@ -5,7 +5,7 @@ import React                  from "react";
 
 import { CORRECT, INCORRECT, UNGRADED } from "../assessments/universal_input";
 
-export default class RadioButton extends React.Component{
+export default class FeedbackIcon extends React.Component{
 
   static propTypes = {
     // Whether answer is correct, incorrect, or has not been graded
