@@ -9,6 +9,7 @@ import appHistory                             from "../../history";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import NextButton                             from "../assessments/next_button";
+import CheckAnswerButton                      from "../assessments/check_answer_button";
 import PreviousButton                         from "../assessments/previous_button";
 import ProgressDropdown                       from "../common/progress_dropdown";
 import {questionCount, questions, outcomes }  from "../../selectors/assessment";
@@ -40,7 +41,7 @@ const select = (state, props) => {
     questionsPerPage: state.settings.questions_per_page || questionCount(state, props),
 
     // When the next question should be unlocked. Should be either "ON_CORRECT" or
-    // "ON_ANSWER"
+    // "ON_ANSWER" TODO update
     unlockNext: state.settings.unlock_next,
 
     // How many Items are in the assessment
@@ -114,6 +115,29 @@ export class Assessment extends React.Component{
     //   return questionsNotAnswered;
     // }
     // return true;
+  }
+
+// TODO document
+  getNextUnlocked(unlockNext, currentItem, questionsPerPage, checkedResponses){
+    var start = parseInt(currentItem / questionsPerPage) * questionsPerPage;
+    var end = start + questionsPerPage;
+
+    var currentResponses = checkedResponses.slice(start, end);
+
+    if(unlockNext === "ON_CORRECT") {
+      var correctResponses = currentResponses.filter((response) => {
+        if(response && response.correct === true){return true;}
+      });
+      return (correctResponses.length === questionsPerPage);
+
+    } else if(unlockNext === "ON_ANSWER_CHECK") {
+      var correctResponses = currentResponses.filter((response) => {
+        if(response !== undefined){return true;}
+      });
+
+      return(correctResponses.length === questionsPerPage);
+    }
+    return true;
   }
 
   /**
@@ -214,6 +238,30 @@ export class Assessment extends React.Component{
     return warning;
   }
 
+  getNextButton(){
+    var button;
+    var renderNext = this.getNextUnlocked(
+      this.props.unlockNext,
+      this.props.currentItem,
+      this.props.questionsPerPage,
+      this.props.checkedResponses
+    );
+
+    if(renderNext === true){
+      button = (
+        <NextButton
+          isLastPage={this.isLastPage()}
+          nextQuestions={(e) => {this.nextButtonClicked(e);}}
+          submitAssessment={(e) => {this.submitButtonClicked(e);}} />
+      );
+    } else {
+      button = (
+        <CheckAnswerButton checkAnswers={(e) => this.checkAnswers(e)}/>
+      );
+    }
+    return button;
+  }
+
   nextButtonClicked(e){
     e.preventDefault();
     this.props.nextQuestions(this.props.questionsPerPage);
@@ -227,6 +275,13 @@ export class Assessment extends React.Component{
   submitButtonClicked(e){
     e.preventDefault();
     this.props.submitAssessment();
+  }
+
+  checkAnswers(e){
+    e.preventDefault();
+    this.props.checkAnswer(this.props.currentItem);
+    //TODO add support for multiple item display. This will currently only
+    //work when questions_per_page = 1
   }
 
   /**
@@ -263,6 +318,7 @@ export class Assessment extends React.Component{
     let content = this.getContent();
     let warning = this.getWarning();
     let counter = this.getCounter();
+    let nextButton = this.getNextButton();
 
     return (
       <div className="o-assessment-container">
@@ -275,13 +331,8 @@ export class Assessment extends React.Component{
         <div className="c-assessment-navigation">
           <PreviousButton
             isFirstPage={this.isFirstPage()}
-            previousQuestions={(e) => {this.previousButtonClicked(e);}}
-            />
-          <NextButton
-            isLastPage={this.isLastPage()}
-            nextQuestions={(e) => {this.nextButtonClicked(e);}}
-            submitAssessment={(e) => {this.submitButtonClicked(e);}}
-            unlockNext={this.props.unlockNext} />
+            previousQuestions={(e) => {this.previousButtonClicked(e);}}/>
+          {nextButton}
         </div>
     </div>
     );
