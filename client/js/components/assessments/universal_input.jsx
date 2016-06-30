@@ -38,46 +38,15 @@ export default class UniversalInput extends React.Component{
     }
   }
 
-  showAsCorrect(id){
-    if(this.props.correctAnswers && this.props.correctAnswers[0] && this.props.correctAnswers[0].id){
-      return this.props.correctAnswers[0].id.indexOf(id) > -1;
-    } else {
-      return null;
-    }
-  }
-
   render(){
     var item = this.props.item;
-    var messages = '';
-    var solution = '';
-    var items = '';
-
-    if(item.messages){
-      var renderedMessages = item.messages.map(function(message){
-        return (<li>{message}</li>);
-      });
-      messages = (
-        <div className="panel-messages alert alert-danger" role="alert">
-          <ul>
-            {renderedMessages}
-          </ul>
-        </div>
-      );
-    }
-
-    if(item.isGraded && item.solution){
-      solution = (
-        <div className="panel-footer text-center">
-          <div dangerouslySetInnerHTML={{ __html: item.solution }} />
-        </div>
-      );
-    }
+    var answerInputs;
 
     switch(item.question_type){
       case "edx_multiple_choice":
       case "multiple_choice_question":
       case "true_false_question":
-        items = item.answers.map((answer) => {
+        answerInputs = item.answers.map((answer) => {
           var selectRadio = _.curryRight(this.props.selectAnswer);
           var id = item.id + "_" + answer.id;
           var feedback;
@@ -115,49 +84,43 @@ export default class UniversalInput extends React.Component{
         });
         break;
       case "edx_dropdown":
-        items = item.answers.map((answer) => {
+        answerInputs = item.answers.map((answer) => {
           return <Option isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-option"/>;
         });
         break;
       case "matching_question":
-        items = <Matching isDisabled={this.props.isResult} item={item} name="answer-option"/>;
+        answerInputs = <Matching isDisabled={this.props.isResult} item={item} name="answer-option"/>;
         break;
       case "edx_numerical_input":
       case "edx_text_input":
-        items = item.answers.map((answer) => {
+        answerInputs = item.answers.map((answer) => {
           return <TextField isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-text"/>;
         });
         break;
       case "text_only_question":
-        items = <TextArea />;
+        answerInputs = <TextArea />;
         break;
       case "multiple_answers_question":
-        items = item.answers.map((answer) => {
-          return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasSelected(answer.id)} showAsCorrect={this.showAsCorrect(answer.id)}/>;
+        answerInputs = item.answers.map((answer) => {
+          return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasSelected(answer.id)} />;
         });
         break;
       case "edx_image_mapped_input":
-        items = item.answers.map((answer)=>{
+        answerInputs = item.answers.map((answer)=>{
           return <MappedImage key={item.id + "_" + answer.id} item={answer} />;
         });
         break;
       case "edx_drag_and_drop":
-        items = item.answers.map((answer)=>{
+        answerInputs = item.answers.map((answer)=>{
           return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />;
         });
         break;
     }
 
-
-    var material = '';
-    if(item.edXMaterial){
-      material = <div dangerouslySetInnerHTML={{ __html: item.edXMaterial }} />;
-    }
-
     return (
       <div>
         <ul>
-          {items}
+          {answerInputs}
         </ul>
       </div>
     );
