@@ -11,6 +11,10 @@ import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
 
+export const CORRECT = "CORRECT";
+export const INCORRECT = "INCORRECT";
+export const UNGRADED = "UNGRADED";
+
 export default class UniversalInput extends React.Component{
 
   static propTypes = {
@@ -55,18 +59,15 @@ export default class UniversalInput extends React.Component{
             feedback = this.props.checkedResponse.feedback;
           }
 
-          var displayCorrect = (
-            this.props.checkedResponse &&
-            this.props.checkedResponse.correct === true &&
-            this.wasSelected(answer.id)
-          );
+          var gradeState = UNGRADED;
 
-          var displayIncorrect = (
-            this.props.checkedResponse &&
-            this.props.checkedResponse.correct === false &&
-            this.wasSelected(answer.id)
-          );
-
+          if(this.props.checkedResponse && this.wasSelected(answer.id)){
+            if(this.props.checkedResponse.correct === true){
+              gradeState = CORRECT;
+            } else if(this.props.checkedResponse.correct === false) {
+              gradeState = INCORRECT;
+            }
+          }
 
           return (
             <RadioButton
@@ -76,8 +77,7 @@ export default class UniversalInput extends React.Component{
               item={answer}
               name="answer-radio"
               checked={this.wasSelected(answer.id)}
-              displayCorrect={displayCorrect}
-              displayIncorrect={displayIncorrect}
+              gradeState={gradeState}
               feedback={feedback}
               selectAnswer={selectRadio(true)}/>
           );

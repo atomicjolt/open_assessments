@@ -1,7 +1,10 @@
 "use strict";
 
 import React                  from "react";
+
+import { CORRECT, INCORRECT, UNGRADED } from "../assessments/universal_input";
 import * as AssessmentActions from "../../actions/assessment";
+import FeedbackIcon from "./feedback_icon";
 
 export default class RadioButton extends React.Component{
 
@@ -14,7 +17,9 @@ export default class RadioButton extends React.Component{
 
     selectAnswer: React.PropTypes.func.isRequired,
 
-    
+    // Whether answer is correct, incorrect, or has not been graded.
+    // Should be one of CORRECT, INCORRECT, UNGRADED.
+    gradeState: React.PropTypes.number.isRequired,
 
     // Whether or not input should be disabled
     isDisabled: React.PropTypes.bool,
@@ -42,31 +47,6 @@ export default class RadioButton extends React.Component{
     return checked;
   }
 
-  getFeedbackImage(){
-    var content;
-
-    if(this.props.displayCorrect === true){
-      content = (
-        <div className="c-feedback  c-feedback--correct">
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-            <path d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/>
-          </svg>
-          <span>correct</span>
-        </div>
-      );
-    } else if(this.props.displayIncorrect === true) {
-      content = (
-        <div className="c-feedback  c-feedback--incorrect">
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-              <path d="M24 4c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.95 20-20-8.95-20-20-20zm10 27.17l-2.83 2.83-7.17-7.17-7.17 7.17-2.83-2.83 7.17-7.17-7.17-7.17 2.83-2.83 7.17 7.17 7.17-7.17 2.83 2.83-7.17 7.17 7.17 7.17z"/>
-          </svg>
-          <span>incorrect</span>
-        </div>
-      );
-    }
-
-    return content;
-  }
 
   getFeedback(){
     var content;
@@ -83,7 +63,6 @@ export default class RadioButton extends React.Component{
 
   render() {
     var containerStyle;
-    var feedbackImage = this.getFeedbackImage();
     var feedback = this.getFeedback();
 
     if(this.props.checked === true){containerStyle = "is-clicked";}
@@ -92,7 +71,7 @@ export default class RadioButton extends React.Component{
       <li
         className={`c-answer-container ${containerStyle}`}
         onClick={() => { this.selectAnswer(); }}>
-        {feedbackImage}
+        <FeedbackIcon gradeState={this.props.gradeState} />
         <div className="c-answer-container__radio">
           <div className="c-radio-button">
             <input
