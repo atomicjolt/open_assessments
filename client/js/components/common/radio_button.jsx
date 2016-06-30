@@ -2,6 +2,7 @@
 
 import React                  from "react";
 import * as AssessmentActions from "../../actions/assessment";
+import { CORRECT, INCORRECT, UNGRADED } from "../assessments/universal_input";
 
 export default class RadioButton extends React.Component{
 
@@ -14,7 +15,9 @@ export default class RadioButton extends React.Component{
 
     selectAnswer: React.PropTypes.func.isRequired,
 
-    
+    // Whether answer is correct, incorrect, or has not been graded
+    // Should be one of CORRECT, INCORRECT, UNGRADED.
+    gradeState: React.PropTypes.number.isRequired,
 
     // Whether or not input should be disabled
     isDisabled: React.PropTypes.bool,
@@ -45,7 +48,7 @@ export default class RadioButton extends React.Component{
   getFeedbackImage(){
     var content;
 
-    if(this.props.displayCorrect === true){
+    if(this.props.gradeState === CORRECT){
       content = (
         <div className="c-feedback  c-feedback--correct">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
@@ -54,7 +57,7 @@ export default class RadioButton extends React.Component{
           <span>correct</span>
         </div>
       );
-    } else if(this.props.displayIncorrect === true) {
+    } else if(this.props.gradeState === INCORRECT) {
       content = (
         <div className="c-feedback  c-feedback--incorrect">
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
