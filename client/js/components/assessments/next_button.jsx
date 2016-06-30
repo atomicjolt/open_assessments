@@ -8,6 +8,9 @@ export default class NextButton extends React.Component{
     // Whether or not the current page of items is the last page of items
     isLastPage: React.PropTypes.bool.isRequired,
 
+    // Function to be called when next button is clicked
+    nextQuestions: React.PropTypes.func.isRequired,
+
     // Function to be called when submit button is clicked
     submitAssessment: React.PropTypes.func.isRequired,
   };

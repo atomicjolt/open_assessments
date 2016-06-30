@@ -40,8 +40,8 @@ const select = (state, props) => {
     // in a section if not specified
     questionsPerPage: state.settings.questions_per_page || questionCount(state, props),
 
-    // When the next question should be unlocked. Should be either "ON_CORRECT" or
-    // "ON_ANSWER" TODO update
+    // When the next question should be unlocked. Should be either "ON_CORRECT",
+    // "ON_ANSWER_CHECK", or "ALWAYS"
     unlockNext: state.settings.unlock_next,
 
     // How many Items are in the assessment
@@ -117,7 +117,23 @@ export class Assessment extends React.Component{
     // return true;
   }
 
-// TODO document
+  /**
+   * Determine if user should be allowed to go to next questions or not
+   *
+   * unlockNext - Global setting controlling when next button should
+   * be available to the user. Should be one of "ON_CORRECT", "ON_ANSWER_CHECK",
+   * "ALWAYS"
+   *
+   * currentItem - The index of the current item in the array of items
+   *
+   * questionsPerPage - Global setting controller how many items should be
+   * displayed at once.
+   *
+   * checkedResponses - Array of all graded responses
+   *
+   * return - True if user is allowed to move onto next set of
+   * questions. False otherwise.
+   */
   getNextUnlocked(unlockNext, currentItem, questionsPerPage, checkedResponses){
     var start = parseInt(currentItem / questionsPerPage) * questionsPerPage;
     var end = start + questionsPerPage;
@@ -238,6 +254,10 @@ export class Assessment extends React.Component{
     return warning;
   }
 
+  /**
+   * Returns NextButton if next questions are unlocked,  CheckAnswerButton
+   * otherwise.
+   */
   getNextButton(){
     var button;
     var renderNext = this.getNextUnlocked(
