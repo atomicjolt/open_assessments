@@ -11,11 +11,11 @@ export default class CheckAnswerButton extends React.Component{
 
   render(){
     return (
-  		<a
+      <a
         onClick={(e) => this.props.checkAnswers(e)}
         className="c-btn c-btn--check-answer">
-  			<span>check answer</span>
-  		</a>
+        <span>check answer</span>
+      </a>
     );
   }
 };
