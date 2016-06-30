@@ -39,6 +39,10 @@ const select = (state, props) => {
     // in a section if not specified
     questionsPerPage: state.settings.questions_per_page || questionCount(state, props),
 
+    // When the next question should be unlocked. Should be either "ON_CORRECT" or
+    // "ON_ANSWER"
+    unlockNext: state.settings.unlock_next,
+
     // How many Items are in the assessment
     questionCount   : questionCount(state, props),
 
@@ -276,7 +280,8 @@ export class Assessment extends React.Component{
           <NextButton
             isLastPage={this.isLastPage()}
             nextQuestions={(e) => {this.nextButtonClicked(e);}}
-            submitAssessment={(e) => {this.submitButtonClicked(e);}} />
+            submitAssessment={(e) => {this.submitButtonClicked(e);}}
+            unlockNext={this.props.unlockNext} />
         </div>
     </div>
     );
