@@ -1,8 +1,10 @@
 "use strict";
 
 import React                  from "react";
-import * as AssessmentActions from "../../actions/assessment";
+
 import { CORRECT, INCORRECT, UNGRADED } from "../assessments/universal_input";
+import * as AssessmentActions from "../../actions/assessment";
+import FeedbackIcon from "./feedback_icon";
 
 export default class RadioButton extends React.Component{
 
@@ -95,7 +97,7 @@ export default class RadioButton extends React.Component{
       <li
         className={`c-answer-container ${containerStyle}`}
         onClick={() => { this.selectAnswer(); }}>
-        {feedbackImage}
+        <FeedbackIcon gradeState={this.props.gradeState} />
         <div className="c-answer-container__radio">
           <div className="c-radio-button">
             <input
