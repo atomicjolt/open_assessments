@@ -42,11 +42,11 @@ export default class Parser {
         item
       };
     } else if(tag_name == "assessmentSection") {
+      throw "We don't handled assessmentSection tags yet";
     } else if(tag_name == "assessmentTest") {
-    } else {
-      throw `Assessment isn't rooted with an expected tag.  Found ${top.tagname}.`;
+      throw "We don't handled assessmentTest tags yet";
     }
 
-    throw "Uh-oh!";
+    throw `Assessment isn't rooted with an expected tag.  Found ${top.tagname}.`;
   }
 };
