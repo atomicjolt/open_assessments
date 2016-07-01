@@ -58,7 +58,7 @@ describe('api middleware', function() {
       type: actionType,
       apiCall: true
     };
-    expect(actionHandler(action)).toThrow(new Error(`No handler implemented for ${actionType}`));
+    expect(() => { actionHandler(action); }).toThrow(`No handler implemented for ${actionType}`);
   });
 
   it("handles known actions", () => {
