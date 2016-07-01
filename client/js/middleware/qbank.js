@@ -35,7 +35,7 @@ export default {
 
         const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${response.body.id}/questions?qti`;
 
-        const assessmentPromise = api.get(assessmentUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {})
+        const assessmentPromise = api.get(assessmentUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {});
         if(assessmentPromise) {
           assessmentPromise.then((assessmentResponse, error) => {
             store.dispatch({
