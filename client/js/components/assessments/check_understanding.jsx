@@ -7,32 +7,29 @@ import { start }          from "../../actions/assessment_progress";
 import history            from "../../history";
 
 const select = (state) => {
+
+  const role = _.isEmpty(state.settings.lti) ? state.settings.role : state.settings.lti.lti_role;
+
   return {
-    title             : state.settings.title,
-    maxAttempts       : state.settings.max_attempts,
-    userAttempts      : state.settings.user_attempts,
-    eid               : state.settings.lis_user_id,
-    userId            : state.settings.user_id,
-    isLti             : state.settings.is_lti,
-    assessmentId      : state.settings.assessment_id,
-    assessmentKind    : state.settings.assessment_kind,
-    ltiRole           : state.settings.lti_role,
-    external_context_id : state.settings.external_context_id,
-    accountId         : state.settings.account_id,
-    icon              : state.settings.images.QuizIcon_svg,
-    theme             : state.settings.theme
+    title               : state.settings.title,
+    maxAttempts         : state.settings.max_attempts,
+    userAttempts        : state.settings.user_attempts,
+    assessmentId        : state.settings.assessment_id,
+    assessmentKind      : state.settings.assessment_kind,
+    icon                : state.settings.images.QuizIcon_svg,
+    role
   };
 };
 
 export class CheckUnderstanding extends React.Component{
 
-  start(eid, assessmentId, context){
-    this.props.start(eid, assessmentId, this.props.external_context_id);
+  start(assessmentId, context){
+    this.props.start(assessmentId);
     history.push(`assessment`);
   }
 
   manageAttempts(){
-    history.push(`attempts/${this.props.assessmentId}/${this.props.external_context_id}`);
+    history.push(`attempts/${this.props.assessmentId}`);
   }
 
   previewAttempt(){
@@ -40,7 +37,7 @@ export class CheckUnderstanding extends React.Component{
   }
 
   getAttempts(){
-    if (this.props.userAttempts >= this.props.maxAttempts && this.props.ltiRole != "admin"){
+    if (this.props.userAttempts >= this.props.maxAttempts && this.props.role != "admin"){
       return (
         <div>
           <div>
@@ -72,25 +69,25 @@ export class CheckUnderstanding extends React.Component{
           <h3>of {this.props.maxAttempts}</h3>
           <p>This is your {attempt} attempt for this quiz</p>
         </div>
-      </div>
-    if(!this.props.isLti){
-      attemptStructure = ""
+      </div>;
+    if(!this.props.is_lti){
+      attemptStructure = "";
     }
     return attemptStructure;
 
   }
 
   getSWYK(){
-    return  <div>
+    return <div>
               <h2>Show What You Know</h2>
               <div>Take this pre-test to see what you already know about the concepts in this section.</div>
               <div>The pre-test does not count toward your grade, but will help you plan where to focus</div>
               <div>your time and effort as you study. The pre-test is optional.</div>
-            </div>
+            </div>;
   }
 
   canManage(){
-    return this.props.assessmentKind.toUpperCase() == "SUMMATIVE" && this.props.ltiRole == "admin" && this.props.isLti;
+    return this.props.assessmentKind == "SUMMATIVE" && this.props.role == "admin" && this.props.is_lti;
   }
 
   getFormative(){
@@ -113,33 +110,33 @@ export class CheckUnderstanding extends React.Component{
                   <h4>{this.props.title}</h4>
                 </div>
                 <div className="col-md-2 col-sm-3">
-                  <button className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId, this.context)}}>Start Quiz</button>
+                  <button className="btn btn-info" onClick={()=>{ this.start(this.props.assessmentId); }}>Start Quiz</button>
                 </div>
               </div>
-           </div>
+           </div>;
   }
 
   render() {
     var buttonText = "Start Quiz";
     var content = "There was an error, contact your teacher.";
 
-    if(this.props.assessmentKind.toUpperCase() == "SUMMATIVE"){
+    if(this.props.assessmentKind == "SUMMATIVE"){
       content = this.getAttempts();
-    } else if(this.props.assessmentKind.toUpperCase() == "SHOW_WHAT_YOU_KNOW"){
+    } else if(this.props.assessmentKind == "SHOW_WHAT_YOU_KNOW"){
       content = this.getSWYK();
       buttonText = "Start Pre-test";
-    } else if(this.props.assessmentKind.toUpperCase() == "FORMATIVE"){
+    } else if(this.props.assessmentKind == "FORMATIVE"){
       content = this.getFormative();
     }
 
     var startButton = (
       <div>
-        <button className="btn btn-info" onClick={()=>{this.start(this.props.eid, this.props.assessmentId);}}>{buttonText}</button>
+        <button className="btn btn-info" onClick={()=>{this.start(this.props.assessmentId);}}>{buttonText}</button>
       </div>);
-    if (this.props.userAttempts >= this.props.maxAttempts && this.props.assessmentKind.toUpperCase() == "SUMMATIVE" && this.props.ltiRole != "admin"){
+    if (this.props.userAttempts >= this.props.maxAttempts && this.props.assessmentKind == "SUMMATIVE" && this.props.role != "admin"){
       startButton = "";
     }
-    if (this.props.assessmentKind.toUpperCase() == "FORMATIVE"){
+    if (this.props.assessmentKind == "FORMATIVE"){
       startButton = "";
     }
 

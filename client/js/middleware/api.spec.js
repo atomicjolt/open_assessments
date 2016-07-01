@@ -1,7 +1,11 @@
-import api                from "./api";
-import Network            from "../constants/network";
-import Helper             from "../../specs_support/helper";
-import * as JwtActions    from "../actions/jwt";
+import api                              from "./api";
+import Network                          from "../constants/network";
+import Helper                           from "../../specs_support/helper";
+import * as AssessmentActions           from "../actions/assessment";
+import * as AssessmentMetaActions       from "../actions/assessment_meta";
+import * as AssessmentProgressActions   from "../actions/assessment_progress";
+import * as CommunicationsActions       from "../actions/communications";
+import * as JwtActions                  from "../actions/jwt";
 
 describe('api middleware', function() {
 
@@ -61,7 +65,13 @@ describe('api middleware', function() {
     const middleware = api(Helper.makeStore());
     const nextHandler = () => {};
     const actionHandler = middleware(nextHandler);
-    const actions = JwtActions;
+    const actions = {
+      ...JwtActions,
+      ...AssessmentActions,
+      ...AssessmentMetaActions,
+      ...AssessmentProgressActions,
+      ...CommunicationsActions
+    };
     const apiActions = _.filter(actions, _.isFunction);
     _.each(apiActions, (func) => {
       const action = func();
