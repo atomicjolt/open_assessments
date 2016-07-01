@@ -44,7 +44,7 @@ export default class Assessment extends React.Component{
   }
 
   getStyles(theme){
-    var minWidth = this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "480px" : "635px";
+    var minWidth = this.state.settings.assessmentKind  == "FORMATIVE" ? "480px" : "635px";
     return {
       progressBar: {
         backgroundColor: theme.progressBarColor,
@@ -54,7 +54,7 @@ export default class Assessment extends React.Component{
         height: theme.progressBarHeight
       },
       assessment: {
-        padding: this.state.settings.assessmentKind.toUpperCase()  == "FORMATIVE" ? "" : theme.assessmentPadding,
+        padding: this.state.settings.assessmentKind  == "FORMATIVE" ? "" : theme.assessmentPadding,
         backgroundColor: theme.assessmentBackground,
         minWidth: minWidth
       },
@@ -84,7 +84,7 @@ export default class Assessment extends React.Component{
 
   render(){
     window.onbeforeunload = this.popup;
-    if(AssessmentStore.assessmentResult() != null || this.state.settings.assessmentKind.toUpperCase() != "SUMMATIVE"){
+    if(AssessmentStore.assessmentResult() != null || this.state.settings.assessmentKind != "SUMMATIVE"){
       window.onbeforeunload = null;
     }
     var styles = this.getStyles(this.context.theme)
@@ -100,7 +100,7 @@ export default class Assessment extends React.Component{
     //     maxAttempts     = {this.state.settings.max_attempts}
     //     userAttempts    = {this.state.settings.user_attempts}
     //     eid             = {this.state.settings.lisUserId}
-    //     isLti           = {this.state.settings.isLti}
+    //     is_lti           = {this.state.settings.is_lti}
     //     assessmentId    = {this.state.assessment.assessmentId}
     //     assessmentKind  = {this.state.settings.assessmentKind}
     //     primaryOutcome  = {this.state.outcomes[0]}
@@ -141,12 +141,12 @@ export default class Assessment extends React.Component{
     var percentCompleted = this.checkProgress(this.state.currentIndex, this.state.questionCount);
     var progressStyle = {width:percentCompleted+"%"};
     var progressText = "";
-    var quizType = this.state.settings.assessmentKind.toUpperCase() === "SUMMATIVE" ? "Quiz" : "Show What You Know";
-    var titleBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>;
+    var quizType = this.state.settings.assessmentKind === "SUMMATIVE" ? "Quiz" : "Show What You Know";
+    var titleBar = this.state.settings.assessmentKind === "FORMATIVE" ?  "" : <div style={styles.titleBar}>{this.state.assessment ? this.state.assessment.title : ""}</div>;
     if(this.state.assessment){
       progressText = this.context.theme.shouldShowProgressText ? <div><b>{this.state.assessment.title + " Progress"}</b>{" - You are on question " + (this.state.currentIndex + 1) + " of " + this.state.questionCount}</div> : "";
     }
-    progressBar = this.state.settings.assessmentKind.toUpperCase() === "FORMATIVE" ? "" : progressBar;
+    progressBar = this.state.settings.assessmentKind === "FORMATIVE" ? "" : progressBar;
     return <div className="assessment" style={styles.assessment}>
       {titleBar}
       {progressBar}
