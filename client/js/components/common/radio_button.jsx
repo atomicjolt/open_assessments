@@ -32,10 +32,6 @@ export default class RadioButton extends React.Component{
     checked: React.PropTypes.bool
   }
 
-  static contextTypes = {
-    theme: React.PropTypes.object
-  }
-
   selectAnswer(){
     this.props.selectAnswer(this.props.item.id);
   }
