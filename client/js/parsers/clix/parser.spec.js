@@ -14,7 +14,7 @@ describe("CLIx assessment parser", () => {
 
     it("parses example assessment JSON from CLIx into an object", () => {
       const data        = readFixtures("clix/assessment.json");
-      const settings    = Immutable.fromJS({ assessmentId: 1 });
+      const settings    = {assessment_id: 1};
       const assessment  = parse(settings, data);
 
       expect(assessment).toBeDefined();
