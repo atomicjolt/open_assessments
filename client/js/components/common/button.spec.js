@@ -4,7 +4,7 @@ import TestUtils  from 'react/lib/ReactTestUtils';
 
 import Button     from './button';
 
-fdescribe('button', () => {
+describe('button', () => {
 
   it('calls onClick when button is clicked', () => {
     var props = {

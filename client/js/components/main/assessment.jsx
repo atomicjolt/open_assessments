@@ -361,13 +361,12 @@ export class Assessment extends React.Component{
           buttonMode={NAV_BUTTON_MODES.TWO_BUTTON}
           nextUnlocked={nextUnlocked}
           checkAnswerUnlocked={!nextUnlocked}
-          submitButtonUnlocked={this.isLastPage()}
+          submitUnlocked={this.isLastPage()}
           previousUnlocked={!this.isFirstPage()}
           nextQuestions={(e) => this.nextButtonClicked(e)}
           previousQuestions={(e) => this.previousButtonClicked(e)}
           submitAssessment={(e) => this.submitButtonClicked(e)}
-          checkAnswers={(e) => this.checkAnswers(e)}
-           />
+          checkAnswers={(e) => this.checkAnswers(e)}/>
     </div>
     );
   }
