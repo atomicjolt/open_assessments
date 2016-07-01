@@ -19,6 +19,7 @@ export function transformItem(itemXml) {
   return {
     question_type: select_one ? "multiple_choice_question" : "UNKNOWN",
     material: material.html(),
+    isHtml: true,
     answers
   };
 }

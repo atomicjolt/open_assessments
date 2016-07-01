@@ -27,7 +27,7 @@ import { getItems, loadOutcomes, transformItem }  from "./qti";
 // );
 
 export function questions(state, props) {
-  const item        = state.assessment.item;
+  const item = state.assessment.item;
   return [transformItem(item.xml)];
 }
 
