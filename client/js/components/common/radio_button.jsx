@@ -95,7 +95,7 @@ export default class RadioButton extends React.Component{
                    name="radio"
                    id={props.id} />
             <label for={props.id}>
-              <span>{this.renderMaterial}</span>
+              <span>{this.renderMaterial(props.item.material, props.isHtml)}</span>
             </label>
           </div>
         </div>
