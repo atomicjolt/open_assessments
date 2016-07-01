@@ -11,9 +11,6 @@ import AssessmentNav                          from "../assessments/assessment_na
 import { NAV_BUTTON_MODES }                   from "../assessments/assessment_nav";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
-import NextButton                             from "../assessments/next_button";
-import CheckAnswerButton                      from "../assessments/check_answer_button";
-import PreviousButton                         from "../assessments/previous_button";
 import ProgressDropdown                       from "../common/progress_dropdown";
 import {questionCount, questions, outcomes }  from "../../selectors/assessment";
 
