@@ -77,23 +77,20 @@
   .c-answer-container__content{
     width: 100%;
     padding-left: 3rem;
+    @include regular;
+    font-size: 1.4rem;
+    color: $answer-text;
 
-    p{
-      @include regular;
-      font-size: 1.4rem;
-      color: $answer-text;
+    & > * {
       margin-bottom: 1rem;
     }
 
     img{
       display: inline-block;
       max-width: 20rem;
-      margin-bottom: 1rem;
     }
 
     audio{
-      // border-radius: $radius;
       width: 100%;
-      margin-bottom: 1rem;
     }
   }
