@@ -6,6 +6,7 @@ import { CORRECT, INCORRECT, UNGRADED } from "../assessments/universal_input";
 import * as AssessmentActions from "../../actions/assessment";
 import FeedbackIcon from "./feedback_icon";
 
+
 export default class RadioButton extends React.Component{
 
   static propTypes = {
@@ -14,6 +15,9 @@ export default class RadioButton extends React.Component{
 
     // Unique html element id
     id: React.PropTypes.string.isRequired,
+
+    // Whether the material is raw HTML to be embedded "dangerously."
+    isHtml: React.PropTypes.bool,
 
     selectAnswer: React.PropTypes.func.isRequired,
 
@@ -26,7 +30,7 @@ export default class RadioButton extends React.Component{
 
     // Whether or not input should be selected
     checked: React.PropTypes.bool
-  };
+  }
 
   selectAnswer(){
     this.props.selectAnswer(this.props.item.id);
@@ -47,7 +51,6 @@ export default class RadioButton extends React.Component{
     return checked;
   }
 
-
   getFeedback(){
     var content;
     if(this.props.feedback){
@@ -60,36 +63,43 @@ export default class RadioButton extends React.Component{
     }
   }
 
+  renderMaterial(material, isHtml) {
+    if(isHtml) {
+      return <div className="c-answer-container__content"
+                  dangerouslySetInnerHTML={{__html: material}} />;
+    } else {
+      return (
+        <div className="c-answer-container__content">
+          <p>{material}</p>
+        </div>
+      );
+    }
+  }
 
   render() {
+    const props = this.props;
     var containerStyle;
     var feedback = this.getFeedback();
 
     if(this.props.checked === true){containerStyle = "is-clicked";}
 
     return (
-      <li
-        className={`c-answer-container ${containerStyle}`}
-        onClick={() => { this.selectAnswer(); }}>
-        <FeedbackIcon gradeState={this.props.gradeState} />
+      <li className={`c-answer-container ${containerStyle}`}
+          onClick={() => { this.selectAnswer(); }}>
+        <FeedbackIcon gradeState={props.gradeState} />
         <div className="c-answer-container__radio">
           <div className="c-radio-button">
-            <input
-              type="radio"
-              checked={this.checkedStatus()}
-              disabled={this.props.isDisabled}
-              name="radio"
-              id={this.props.id}/>
-            <label
-              for={this.props.id}>
-              <span></span>
+            <input type="radio"
+                   checked={this.checkedStatus()}
+                   disabled={props.isDisabled}
+                   name="radio"
+                   id={props.id} />
+            <label for={props.id}>
+              <span>{this.renderMaterial(props.item.material, props.isHtml)}</span>
             </label>
           </div>
         </div>
 
-        <div className="c-answer-container__content">
-        <p>{this.props.item.material}</p>
-        </div>
         {feedback}
       </li>
     );
