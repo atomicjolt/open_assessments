@@ -81,7 +81,7 @@ export default class AssessmentNav extends React.Component{
     );
   }
 
-  getCheckAnswerButton(keys){
+  getCheckAnswerButton(key){
     return (
       <Button
         key={key}
