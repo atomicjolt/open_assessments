@@ -67,25 +67,44 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     questions_per_section        - Number of questions to utilize from each section.
     questions_per_page           - Number of questions to be displayed on screen at one time.
     shuffle_question_answers     - Shuffle the answers for each question.
-
-    // Settings for Analytics - these are returned to the calling server
-    eid                          - External identifier. A value that can be used to uniquely identifier the user in another system. Might by a system id, student number, etc
-    account_id                   -
-    user_id                      - A user identifier that will be returned to the server whenever results or analytics are sent.
-    external_user_id             -
-    external_context_id          -
     confidence_levels            - Whether or not to show confidence controls
-    keywords                     -
-    csrf_token                   -
+
+    // User settings
+    role                         - The current user's role. This will control if certain controls show up. The server is still responsible for security.
+
+    // API settings
+    csrf_token                   - CSRF token provided by server. Will be added to all subsequent API requests.
+    jwt                          - A jwt token that will be added to all subsequent API requests.
+
+    // Settings for Analytics - these are returned to the calling server. All values are optional and are backend dependent.
+    eid                          - External identifier. A value that can be used to uniquely identifier the user in another system. Might by a system id, student number, etc
+    account_id                   - Account ID from Rails project.
+    user_id                      - A user identifier that will be returned to the server whenever results or analytics are sent. Can be provided by the calling server as an authenticated user. Also provided during an LTI launch (see LTI section below)
+    keywords                     - Keywords that will be passed to the server.
     user_assessment_id           -
 
-    // LTI Launch values. These are provided by the server if the assessment is loaded via an LTI launch
-    is_lti                       - Indicates if the Open Assessments was launched via LTI
-    lti_role                     -
-    lti_launch_id                -
-    lis_user_id                  -
-    lis_result_sourced_id        -
-    lis_outcome_service_url      -
+    // LTI Launch values. These are provided by the server if the assessment is loaded via an LTI launch. These values live under the "lti" namespace
+    is_lti                             - indicates if OEA was launched via LTI
+    lti:
+    resource_link_id                    - A resource_link_id provided by LTI launch
+    resource_link_title                 - Title from the resource link ie "Steve Job's biography"
+    resource_link_description           - Description from the resource link ie "Biography of Steve Jobs"
+    user_id                             - A unique user id provided by the LTI launch. ie "292832126"
+    roles                               - User roles from the LTI launch. ie "Instructor"
+    lis_person_name_full                - The user's full name ie "Steve Jobs"
+    lis_person_name_family              - The user's family (last) name ie "Jobs"
+    lis_person_name_given               - The user's given (first) name ie "Steve"
+    lis_person_contact_email_primary    - The user's email "steve@apple.com"
+    lis_person_sourced_id               - ie "school.edu:user"
+    context_id                          - ie "456434513"
+    context_title                       - ie "Great Innovators"
+    context_label                       - ie "SI182"
+    lis_outcome_service_url             - A url where a score can be written. ie "http://www.imsglobal.org/developers/BLTI/tool_consumer_outcome.php"
+    lis_result_sourcedid                - ie "feb-123-456-2929::28883"
+    tool_consumer_instance_guid         - ie "lmsng.school.edu"
+    tool_consumer_instance_description  - ie "University of School (LMSng)"
+    oauth_callback                      - ie "about:blank"
+    ext_submit                          - ie "Press to Launch"
 
     //
     images                       - Path to images provided by the server. Used with the Rails asset pipeline where the names of images include a SHA in production that can't be known by the client ahead of time. (This should probably be refactored so the images live with the client code rather than the server code)
