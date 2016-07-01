@@ -15,7 +15,7 @@ export default class Button extends React.Component{
       <a
         className={`c-btn c-btn--${this.props.buttonType}`}
         onClick={(e) => {this.props.onClick(e);}}>
-        <span>{this.props.buttonType}</span>
+        <span>{this.props.buttonText}</span>
         {this.props.children}
       </a>
     );
