@@ -4,7 +4,7 @@ import React                                  from "react";
 import { connect }                            from "react-redux";
 
 import * as CommunicationActions              from "../../actions/communications";
-import * as AssessmentProgress                from "../../actions/assessment_progress"
+import * as AssessmentProgress                from "../../actions/assessment_progress";
 import appHistory                             from "../../history";
 import Button                                 from "../common/button";
 import AssessmentNav                          from "../assessments/assessment_nav";
@@ -254,33 +254,6 @@ export class Assessment extends React.Component{
     return warning;
   }
 
-  /**
-   * Returns NextButton if next questions are unlocked,  CheckAnswerButton
-   * otherwise.
-   */
-  // getNextButton(){ TODO remove
-  //   var button;
-  //   var renderNext = this.getNextUnlocked(
-  //     this.props.unlockNext,
-  //     this.props.currentItem,
-  //     this.props.questionsPerPage,
-  //     this.props.checkedResponses
-  //   );
-  //
-  //   if(renderNext === true){
-  //     button = (
-  //       <NextButton
-  //         isLastPage={this.isLastPage()}
-  //         nextQuestions={(e) => {this.nextButtonClicked(e);}}
-  //         submitAssessment={(e) => {this.submitButtonClicked(e);}} />
-  //     );
-  //   } else {
-  //     button = (
-  //       <CheckAnswerButton checkAnswers={(e) => this.checkAnswers(e)}/>
-  //     );
-  //   }
-  //   return button;
-  // }
 
   nextButtonClicked(e){
     e.preventDefault();
