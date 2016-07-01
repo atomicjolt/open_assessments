@@ -81,12 +81,10 @@ export const assessmentViewed = (settings, assessment) => ({
 //         assessment_id    : settings.assessment_id,
 //         identifier       : assessment.id,
 //         eId              : settings.eId,
-//         external_user_id : settings.external_user_id,
-//         external_context_id : settings.external_context_id,
-//         resultsEndPoint  : settings.resultsEndPoint,
 //         keywords         : settings.keywords,
 //         objectives       : assessment.objectives,
-//         src_url          : settings.src_url
+//         src_url          : settings.src_url,
+//         lti              : settings.lti
 //       }
 //     };
 //     Api.post(Constants.ASSESSMENT_VIEWED, '/api/assessment_results', body);
