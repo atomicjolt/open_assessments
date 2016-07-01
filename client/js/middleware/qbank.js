@@ -10,7 +10,7 @@ export default {
 
   [JwtConstants.REFRESH_JWT] : {
     method : Network.GET,
-    url    : (action) => { `api/sessions/${action.userId}`; }
+    url    : (action) => ( `api/sessions/${action.userId}` )
   },
 
   [AssessmentConstants.LOAD_ASSESSMENT] : (store, action) => {

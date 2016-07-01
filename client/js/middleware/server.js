@@ -7,12 +7,12 @@ export default {
 
   [JwtConstants.REFRESH_JWT] : {
     method : Network.GET,
-    url    : (action) => { `api/sessions/${action.userId}`; }
+    url    : (action) => ( `api/sessions/${action.userId}` )
   },
 
   [AssessmentConstants.LOAD_ASSESSMENT] : {
     method : Network.GET,
-    url    : (action) => { action.settings.src_url; }
+    url    : (action) => ( action.settings.src_url )
   },
 
   [AssessmentConstants.ASSESSMENT_POST_ANALYTICS] : {
@@ -29,7 +29,7 @@ export default {
 
   [AssessmentConstants.ASSESSMENT_POST_LTI_OUTCOME] : {
     method : Network.POST,
-    url    : (action) => { `api/assessment_results/${action.resultsId}/lti_outcome`; }
+    url    : (action) => ( `api/assessment_results/${action.resultsId}/lti_outcome` )
   },
 
   [AssessmentProgressConstants.ASSESSMENT_GRADED] : {
