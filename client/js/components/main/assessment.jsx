@@ -4,8 +4,11 @@ import React                                  from "react";
 import { connect }                            from "react-redux";
 
 import * as CommunicationActions              from "../../actions/communications";
-import * as AssessmentProgress                from "../../actions/assessment_progress";
+import * as AssessmentProgress                from "../../actions/assessment_progress"
 import appHistory                             from "../../history";
+import Button                                 from "../common/button";
+import AssessmentNav                          from "../assessments/assessment_nav";
+import { NAV_BUTTON_MODES }                   from "../assessments/assessment_nav";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import NextButton                             from "../assessments/next_button";
@@ -258,29 +261,29 @@ export class Assessment extends React.Component{
    * Returns NextButton if next questions are unlocked,  CheckAnswerButton
    * otherwise.
    */
-  getNextButton(){
-    var button;
-    var renderNext = this.getNextUnlocked(
-      this.props.unlockNext,
-      this.props.currentItem,
-      this.props.questionsPerPage,
-      this.props.checkedResponses
-    );
-
-    if(renderNext === true){
-      button = (
-        <NextButton
-          isLastPage={this.isLastPage()}
-          nextQuestions={(e) => {this.nextButtonClicked(e);}}
-          submitAssessment={(e) => {this.submitButtonClicked(e);}} />
-      );
-    } else {
-      button = (
-        <CheckAnswerButton checkAnswers={(e) => this.checkAnswers(e)}/>
-      );
-    }
-    return button;
-  }
+  // getNextButton(){ TODO remove
+  //   var button;
+  //   var renderNext = this.getNextUnlocked(
+  //     this.props.unlockNext,
+  //     this.props.currentItem,
+  //     this.props.questionsPerPage,
+  //     this.props.checkedResponses
+  //   );
+  //
+  //   if(renderNext === true){
+  //     button = (
+  //       <NextButton
+  //         isLastPage={this.isLastPage()}
+  //         nextQuestions={(e) => {this.nextButtonClicked(e);}}
+  //         submitAssessment={(e) => {this.submitButtonClicked(e);}} />
+  //     );
+  //   } else {
+  //     button = (
+  //       <CheckAnswerButton checkAnswers={(e) => this.checkAnswers(e)}/>
+  //     );
+  //   }
+  //   return button;
+  // }
 
   nextButtonClicked(e){
     e.preventDefault();
@@ -338,7 +341,13 @@ export class Assessment extends React.Component{
     let content = this.getContent();
     let warning = this.getWarning();
     let counter = this.getCounter();
-    let nextButton = this.getNextButton();
+
+    let nextUnlocked = this.getNextUnlocked(
+      this.props.unlockNext,
+      this.props.currentItem,
+      this.props.questionsPerPage,
+      this.props.checkedResponses
+    );
 
     return (
       <div className="o-assessment-container">
@@ -348,12 +357,17 @@ export class Assessment extends React.Component{
         </div>
         {warning}
         {content}
-        <div className="c-assessment-navigation">
-          <PreviousButton
-            isFirstPage={this.isFirstPage()}
-            previousQuestions={(e) => {this.previousButtonClicked(e);}}/>
-          {nextButton}
-        </div>
+        <AssessmentNav
+          buttonMode={NAV_BUTTON_MODES.TWO_BUTTON}
+          nextUnlocked={nextUnlocked}
+          checkAnswerUnlocked={!nextUnlocked}
+          submitButtonUnlocked={this.isLastPage()}
+          previousUnlocked={!this.isFirstPage()}
+          nextQuestions={(e) => this.nextButtonClicked(e)}
+          previousQuestions={(e) => this.previousButtonClicked(e)}
+          submitAssessment={(e) => this.submitButtonClicked(e)}
+          checkAnswers={(e) => this.checkAnswers(e)}
+           />
     </div>
     );
   }
