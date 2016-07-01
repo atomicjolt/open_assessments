@@ -69,6 +69,7 @@ export default class UniversalInput extends React.Component{
           return <RadioButton isDisabled={this.props.isResult}
                               key={item.id + "_" + answer.id}
                               item={answer}
+                              isHtml={item.isHtml}
                               name="answer-radio"
                               checked={this.wasChosen(answer.id)}
                               showAsCorrect={this.showAsCorrect(answer.id)} />;
