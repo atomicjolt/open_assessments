@@ -13,5 +13,5 @@ export function outcomes() {
 }
 
 export function questionCount(state, props) {
-  return 1;
+  return state.assessment.items.length;
 }
