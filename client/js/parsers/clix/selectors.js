@@ -5,7 +5,6 @@ import { transformItem }  from "./clix";
 
 
 export function questions(state, props) {
-  console.log("questions", state, props);
   return state.assessment.items.map(transformItem);
 }
 
