@@ -34,7 +34,7 @@ export default class AssessmentNav extends React.Component{
     checkAnswerUnlocked: React.PropTypes.bool.isRequired,
 
     // Whether or not the submit button is available to the user
-    submitButtonUnlocked: React.PropTypes.bool.isRequired,
+    submitUnlocked: React.PropTypes.bool.isRequired,
 
     // The button configuration to be displayed. Should be one of
     // NAV_BUTTON_MODES.
@@ -42,9 +42,10 @@ export default class AssessmentNav extends React.Component{
   };
 
 
-  getPreviousButton(){
+  getPreviousButton(key){
     return (
       <Button
+        key={key}
         buttonType="previous"
         buttonText="Previous"
         onClick={this.props.previousQuestions}>
@@ -55,9 +56,10 @@ export default class AssessmentNav extends React.Component{
     );
   }
 
-  getNextButton(){
+  getNextButton(key){
     return (
       <Button
+        key={key}
         buttonType="next"
         buttonText="Next"
         onClick={this.props.nextQuestions}>
@@ -69,18 +71,20 @@ export default class AssessmentNav extends React.Component{
   }
 
 
-  getSubmitButton(){
+  getSubmitButton(key){
     return (
      <Button
+       key={key}
        buttonType="finish"
        buttonText="Submit"
        onClick={this.props.submitAssessment} />
     );
   }
 
-  getCheckAnswerButton(){
+  getCheckAnswerButton(keys){
     return (
       <Button
+        key={key}
         buttonType="check-answer"
         buttonText="check answer"
         onClick={this.props.checkAnswers} />
@@ -91,18 +95,18 @@ export default class AssessmentNav extends React.Component{
 
 
     // Two button mode always renders previous button as left button if enabled
-    if(buttonMap.previous === true){buttons.push(this.getPreviousButton());}
+    if(buttonMap.previous === true){buttons.push(this.getPreviousButton("previous"));}
 
 
     // Two button mode selects between next, submit, and check answer buttons for
     // the right button.
 
     if(buttonMap.submit === true){
-      buttons.push(this.getSubmitButton());
+      buttons.push(this.getSubmitButton("submit"));
     } else if(buttonMap.next === true) {
-      buttons.push(this.getNextButton());
+      buttons.push(this.getNextButton("next"));
     } else {
-      buttons.push(this.getCheckAnswerButton());
+      buttons.push(this.getCheckAnswerButton("check-answer"));
     }
 
     return buttons;
