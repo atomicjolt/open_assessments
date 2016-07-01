@@ -101,7 +101,7 @@ export default class AssessmentNav extends React.Component{
     var buttonMap = {
       previous: this.props.previousUnlocked,
       next: this.props.nextUnlocked,
-      submit: this.props.submitButtonUnlocked,
+      submit: this.props.submitUnlocked,
       checkAnswer: this.props.checkAnswerUnlocked
     };
 
