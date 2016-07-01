@@ -3,13 +3,14 @@ import { DONE }    from "../constants/wrapper";
 
 // import the map of constants that maps methods and urls for the appropriate backend.
 // import callMap     from "./rails";
-import callMap     from "./oea";
+// import callMap     from "./oea";
+import callMap     from "./qbank";
 
 const API = store => next => action => {
 
   function request(method, url, params, body){
     const state = store.getState();
-    const promise = api.execRequest(method, url, state.settings.get("apiUrl"), state.settings.get("jwt"), state.settings.get("csrfToken"), params, body);
+    const promise = api.execRequest(method, url, state.settings.api_url, state.jwt, state.settings.csrf_token, params, body);
     if(promise){
       promise.then((response, error) => {
         store.dispatch({
@@ -26,8 +27,11 @@ const API = store => next => action => {
   if(action.method){
     request(action.method, action.url, action.params, action.body);
   } else if(action.apiCall){
+
     const handler = callMap[action.type];
-    if(handler){
+    if(_.isFunction(handler)){
+      handler(store, action);
+    } else if(_.isObject(handler)){
       request(
         handler.method,
         handler.url(action),
@@ -37,6 +41,7 @@ const API = store => next => action => {
     } else {
       throw `No handler implemented for ${action.type}`;
     }
+
   }
 
   // call the next middleWare

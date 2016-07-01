@@ -15,12 +15,12 @@ const AssessmentLoad = store => next => action => {
 
   if(action.type == AssessmentConstants.LOAD_ASSESSMENT){
     const state = store.getState();
-    const assessmentData = state.settings.get("assessment_data");
+    const assessmentData = state.settings.assessment_data;
     if(assessmentData){
       loadAssessment(state.settings, assessmentData);
     } else {
       // Make an api call to load the assessment
-      Request.get(state.settings.get("src_url")).then((response, error) => {
+      Request.get(state.settings.src_url).then((response, error) => {
         loadAssessment(state.settings, response.text);
       });
     }

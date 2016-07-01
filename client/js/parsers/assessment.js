@@ -16,10 +16,12 @@ export const AssessmentFormats = {
 // whatever type it is.
 export const parse = (settings, data) => {
 
+  const assessment_id = settings.assessment_id;
+
   if(data.startsWith("[")) {
 
     // Looks like JSON.  We only have one JSON format.
-    return CLIx.parse(settings.get("assessmentId"), data);
+    return CLIx.parse(assessment_id, data);
 
   } else if(data.startsWith("<?xml")) {
 
@@ -28,7 +30,7 @@ export const parse = (settings, data) => {
     const xmlns  = xml.find('>').attr('xmlns');
 
     if(xmlns.startsWith("http://www.imsglobal.org/xsd/imsqti_v2p")) {
-      return Qti2.parse(settings.get("assessmentId"), xml);
+      return Qti2.parse(assessment_id, xml);
     }
 
     // TODO: It would be nice to detect /all/ the XML formats based on
@@ -39,7 +41,7 @@ export const parse = (settings, data) => {
     const sequential      = xml.find('sequential').addBack('sequential');
 
     if(assessmentXml.length > 0 || questestinterop.length > 0){
-      return Qti1.parse(settings.get("assessmentId"), assessmentXml, xml);
+      return Qti1.parse(assessment_id, assessmentXml, xml);
     } else if(sequential.length > 0){
       return EdX.parse(settings, sequential);
     }

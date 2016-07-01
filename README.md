@@ -64,8 +64,9 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     // Functional settings
     max_attempts                 - The maximum number of attempts the assessment can be taken
     user_attempts                - The number of time the user has attempted the assessment
-    questions_per_section        - Number of questions to select and display from each section
-    shuffle_question_answers    - Shuffle the answers for each question.
+    questions_per_section        - Number of questions to utilize from each section.
+    questions_per_page           - Number of questions to be displayed on screen at one time.
+    shuffle_question_answers     - Shuffle the answers for each question.
 
     // Settings for Analytics - these are returned to the calling server
     eid                          - External identifier. A value that can be used to uniquely identifier the user in another system. Might by a system id, student number, etc
@@ -90,6 +91,12 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     images                       - Path to images provided by the server. Used with the Rails asset pipeline where the names of images include a SHA in production that can't be known by the client ahead of time. (This should probably be refactored so the images live with the client code rather than the server code)
     show_post_message_navigation - Show study plan and controls for LMS
     section_count                -
+
+    ##### QBank specific settings - These are only use if you are using QBank as your backend
+    api_url                      - For QBank assume the api_url looks like http://localhost:8091/api/v1 (the host and port will vary based on deployment)
+    eid                          - Used by OEA to uniquely identify a User. In the MIT Clix project this isn't guaranteed to uniquely identify a user but since there are no logins this is as close as we can get.
+    bank                         - The id of the QBank bank. Looks something like: "assessment.Bank%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU"
+    assessment_offered_id        - An identifier provided by QBank that uniquely identifies the assessment to be taken. Use this id to get an assessment taken id. Looks something like "assessment.AssessmentOffered%3A576d7ee94a40456f9a434e4d%40ODL.MIT.EDU"
 
 ####Embed
 Open Assessments is embedded into the page via an iframe. Example:

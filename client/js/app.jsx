@@ -1,6 +1,7 @@
 "use strict";
 
 import 'babel-polyfill';
+
 import es6Promise              from 'es6-promise';
 import React                   from 'react';
 import ReactDOM                from 'react-dom';
@@ -15,6 +16,7 @@ import configureStore          from './store/configure_store';
 import jwt                     from './loaders/jwt';
 import QueryString             from './utils/query_string';
 import { htmlDecodeWithRoot }  from './utils/utils';
+import { getInitialSettings }  from './reducers/settings';
 
 // Polyfill es6 promises for IE
 es6Promise.polyfill();
@@ -42,35 +44,10 @@ class Root extends React.Component {
   }
 }
 
-function getAssessmentData(){
-  var data = null;
-  const el = document.getElementById('assessment_data');
-  if(el && el.innerText.length > 0){
-    data = el.innerText;
-  }
-  var result = htmlDecodeWithRoot(data);
-  if(!result){ // Result was empty. Try returning the raw result
-    result = data;
-  }
-  result = _.trim(result);
-  result = result.replace('<![CDATA[', '');
-  result = result.replace('<!--[CDATA[', '');
-  if(result.slice(-3) == ']]>'){
-    result = result.slice(0,-3);
-  }
-  return result;
-}
-
-// Build settings from DEFAULT_SETTINGS, the url, and data embedded in the page
-var settings = _.merge(window.DEFAULT_SETTINGS, QueryString.params(), { assessment_data: getAssessmentData() });
-settings.assessment_kind = settings.assessment_kind ? settings.assessment_kind.toUpperCase() : null;
-settings = Immutable.fromJS(settings);
-
-const store = configureStore({settings});
-
-if (window.DEFAULT_SETTINGS.jwt){
-  // Setup JWT refresh
-  jwt(store.dispatch, window.DEFAULT_SETTINGS.userId);
+const settings = getInitialSettings(window.DEFAULT_SETTINGS);
+const store = configureStore({settings, jwt: window.DEFAULT_JWT});
+if (window.DEFAULT_JWT){ // Setup JWT refresh
+  jwt(store.dispatch, settings.user_id);
 }
 
 ReactDOM.render(

@@ -6,7 +6,7 @@ import * as CommunicationActions  from "../../actions/communications";
 
 const select = (state, props) => {
   return {
-    show_post_message_navigation: state.settings.get("show_post_message_navigation")
+    show_post_message_navigation: state.settings.show_post_message_navigation
   };
 };
 

@@ -1,33 +1,51 @@
 "use strict";
 
 import React                  from "react";
+
+import { CORRECT, INCORRECT, UNGRADED } from "../assessments/universal_input";
 import * as AssessmentActions from "../../actions/assessment";
-import Styles                 from "../../themes/selection.js";
+import FeedbackIcon from "./feedback_icon";
 
 
 export default class RadioButton extends React.Component{
 
   static propTypes = {
+    // Item being displayed
     item: React.PropTypes.object.isRequired,
-    name: React.PropTypes.string.isRequired,
+
+    // Unique html element id
+    id: React.PropTypes.string.isRequired,
+
+    // Whether the material is raw HTML to be embedded "dangerously."
     isHtml: React.PropTypes.bool,
-    isDisabled: React.PropTypes.bool
+
+    selectAnswer: React.PropTypes.func.isRequired,
+
+    // Whether answer is correct, incorrect, or has not been graded.
+    // Should be one of CORRECT, INCORRECT, UNGRADED.
+    gradeState: React.PropTypes.number.isRequired,
+
+    // Whether or not input should be disabled
+    isDisabled: React.PropTypes.bool,
+
+    // Whether or not input should be selected
+    checked: React.PropTypes.bool
   }
 
   static contextTypes = {
     theme: React.PropTypes.object
   }
 
-  answerSelected(){
-    // AssessmentActions.answerSelected(this.props.item); TODO
+  selectAnswer(){
+    this.props.selectAnswer(this.props.item.id);
   }
 
   checkedStatus(){
-    var checked     = null;
-    var optionFlag  = null;
+    let checked = null;
+    let optionFlag = null;
 
     if(this.props.checked === true) {
-      checked = "true";
+      checked = true;
     } else if(this.props.checked === false) {
       checked = false;
     } else if(!this.props.isDisabled) {
@@ -37,49 +55,57 @@ export default class RadioButton extends React.Component{
     return checked;
   }
 
-  optionFlagStatus(){
-    var optionFlag;
-
-    if(this.props.showAsCorrect){
-      var label = "Correct Answer that was ";
-      label += this.checkedStatus() ? "chosen" : "not chosen";
-      optionFlag = <div className="correctIndicator"
-                        aria-label={label}
-                        style={Styles.checkStyleCorrect}>&#10003;</div>;
-    } else if (this.props.showAsCorrect === false && this.checkedStatus()){
-      optionFlag = <div className="wrongIndicator"
-                        aria-label="Wrong answer that was chosen"
-                        style={Styles.checkStyleWrong}>&#10008;</div>;
+  getFeedback(){
+    var content;
+    if(this.props.feedback){
+      content = (
+        <div className="c-answer-feedback">
+          <p>{this.props.feedback}</p>
+        </div>
+      );
+      return content;
     }
-
-    return optionFlag;
   }
 
   renderMaterial(material, isHtml) {
     if(isHtml) {
-      return <span style={ Styles.span }
-                   dangerouslySetInnerHTML={{__html: material}}></span>;
+      return <div className="c-answer-container__content"
+                  dangerouslySetInnerHTML={{__html: material}} />;
     } else {
-      return <span style={ Styles.span }>{material}</span>;
+      return (
+        <div className="c-answer-container__content">
+          <p>{material}</p>
+        </div>
+      );
     }
   }
 
   render() {
     const props = this.props;
+    var containerStyle;
+    var feedback = this.getFeedback();
+
+    if(this.props.checked === true){containerStyle = "is-clicked";}
+
     return (
-      <div>
-        {this.optionFlagStatus()}
-        <div className="btn btn-block btn-question" style={Styles.btnQuestion}>
-          <label>
+      <li className={`c-answer-container ${containerStyle}`}
+          onClick={() => { this.selectAnswer(); }}>
+        <FeedbackIcon gradeState={props.gradeState} />
+        <div className="c-answer-container__radio">
+          <div className="c-radio-button">
             <input type="radio"
-                   defaultChecked={this.checkedStatus()}
+                   checked={this.checkedStatus()}
                    disabled={props.isDisabled}
-                   name={props.name}
-                   onClick={() => { this.answerSelected(); }} />
-            { this.renderMaterial(props.item.material, props.isHtml) }
-          </label>
+                   name="radio"
+                   id={props.id} />
+            <label for={props.id}>
+              <span>{this.renderMaterial}</span>
+            </label>
+          </div>
         </div>
-      </div>
+
+        {feedback}
+      </li>
     );
   }
 }
