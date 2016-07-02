@@ -21,11 +21,22 @@ export default class TwoButtonNav extends React.Component{
 
     // Function to be called when next button is clicked
     goToNextQuestions     : React.PropTypes.func.isRequired,
+
+    // Function to be called when previous button is clicked
     goToPreviousQuestions : React.PropTypes.func.isRequired,
+
+    // Function to be called when check answer button is clicked
     checkAnswers          : React.PropTypes.func.isRequired,
+
+    // Function to be called when submit button is clicked
     submitAssessment      : React.PropTypes.func.isRequired,
 
+    // The state of the secondary action button. Should be a value included in
+    // SECONDARY_ACTION.
     secondaryAction: React.PropTypes.string.isRequired,
+
+    // The state of the primary action button. Should be a value included in
+    // PRIMARY_ACTION.  
     primaryAction: React.PropTypes.string.isRequired
   };
 
