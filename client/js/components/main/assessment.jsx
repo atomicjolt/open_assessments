@@ -6,9 +6,8 @@ import { connect }                            from "react-redux";
 import * as CommunicationActions              from "../../actions/communications";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
 import appHistory                             from "../../history";
-import Button                                 from "../common/button";
-import AssessmentNav                          from "../assessments/assessment_nav";
-import { NAV_BUTTON_MODES }                   from "../assessments/assessment_nav";
+import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
+import TwoButtonNav                           from "../assessments/two_button_nav";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import ProgressDropdown                       from "../common/progress_dropdown";
@@ -270,7 +269,7 @@ export class Assessment extends React.Component{
     this.props.submitAssessment();
   }
 
-  checkAnswers(e){
+  checkAnswersButtonClicked(e){
     e.preventDefault();
     this.props.checkAnswer(this.props.currentItem);
     //TODO add support for multiple item display. This will currently only
@@ -319,6 +318,17 @@ export class Assessment extends React.Component{
       this.props.checkedResponses
     );
 
+    let secondaryAction = SECONDARY_ACTION.ENABLED;
+    let primaryAction = PRIMARY_ACTION.CHECK_ANSWERS;
+
+    if(this.isFirstPage() === true){secondaryAction = SECONDARY_ACTION.DISABLED;}
+
+    if(nextUnlocked === true && this.isLastPage() === true){
+      primaryAction = PRIMARY_ACTION.SUBMIT;
+    } else if(nextUnlocked === true){
+      primaryAction = PRIMARY_ACTION.NEXT;
+    }
+
     return (
       <div className="o-assessment-container">
         <div className="c-header">
@@ -327,17 +337,14 @@ export class Assessment extends React.Component{
         </div>
         {warning}
         {content}
-        <AssessmentNav
-          buttonMode={NAV_BUTTON_MODES.TWO_BUTTON}
-          nextUnlocked={nextUnlocked}
-          checkAnswerUnlocked={!nextUnlocked}
-          submitUnlocked={this.isLastPage()}
-          previousUnlocked={!this.isFirstPage()}
-          nextQuestions={(e) => this.nextButtonClicked(e)}
-          previousQuestions={(e) => this.previousButtonClicked(e)}
+        <TwoButtonNav
+          goToNextQuestions={(e) => this.nextButtonClicked(e)}
+          goToPreviousQuestions={(e) => this.previousButtonClicked(e)}
+          checkAnswers={(e) => this.checkAnswersButtonClicked(e)}
           submitAssessment={(e) => this.submitButtonClicked(e)}
-          checkAnswers={(e) => this.checkAnswers(e)}/>
-    </div>
+          secondaryAction={secondaryAction}
+          primaryAction={primaryAction}/>
+      </div>
     );
   }
 
