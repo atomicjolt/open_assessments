@@ -10,9 +10,9 @@ export const SECONDARY_ACTION = {
 };
 
 export const PRIMARY_ACTION = {
-  NEXT         : "NEXT",
-  CHECK_ANSWER : "CHECK_ANSWER",
-  SUBMIT       : "SUBMIT"
+  NEXT          : "NEXT",
+  CHECK_ANSWERS : "CHECK_ANSWERS",
+  SUBMIT        : "SUBMIT"
 };
 
 export default class TwoButtonNav extends React.Component{
@@ -66,7 +66,7 @@ export default class TwoButtonNav extends React.Component{
           </svg>
         </Button>
       );
-    } else if(this.props.primaryAction === PRIMARY_ACTION.CHECK_ANSWER) {
+    } else if(this.props.primaryAction === PRIMARY_ACTION.CHECK_ANSWERS) {
       primaryButton = (
         <Button
           buttonType="check-answer"
