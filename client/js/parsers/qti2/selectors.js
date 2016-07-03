@@ -1,7 +1,7 @@
 import $                   from "jquery";
 import { createSelector }  from "reselect";
 
-import { getItems, loadOutcomes } from "./qti";
+import { getItems, loadOutcomes, transformItem }  from "./qti";
 
 // Input selectors. These selectors only retrieve data from state. They do not modify it.
 // export const assessment          = (state, props) => state.assessment;
@@ -27,27 +27,8 @@ import { getItems, loadOutcomes } from "./qti";
 // );
 
 export function questions(state, props) {
-  const item        = state.assessment.item;
-  const xml         = $(item);
-  const select_one  = xml.find("choiceInteraction[maxChoices=1]");
-  const material    = $("<div></div>");
-
-  // If we don't .clone(), then .appendTo() *moves* the elements out of the
-  // original, and on subsequent calls they will be missing.
-  xml.find("itemBody > *:not(choiceInteraction)").clone().appendTo(material);
-
-  const answers = xml.find("choiceInteraction > simpleChoice").map((i, t) => ({
-    id: t.getAttribute("identifier"),
-    material: $(t).html(),
-    xml: t
-  })).get();
-
-  return [{
-    question_type: select_one ? "multiple_choice_question" : "UNKNOWN",
-    material: material.html(),
-    answers,
-    xml: item
-  }];
+  const item = state.assessment.item;
+  return [transformItem(item.xml)];
 }
 
 export function outcomes() {
