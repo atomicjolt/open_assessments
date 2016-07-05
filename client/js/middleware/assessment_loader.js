@@ -18,7 +18,7 @@ const AssessmentLoad = store => next => action => {
     const assessmentData = state.settings.assessment_data;
     if(assessmentData){
       loadAssessment(state.settings, assessmentData);
-    } else {
+    } else if(state.settings.src_url){
       // Make an api call to load the assessment
       Request.get(state.settings.src_url).then((response, error) => {
         loadAssessment(state.settings, response.text);
