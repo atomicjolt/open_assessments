@@ -141,13 +141,13 @@ export class Assessment extends React.Component{
 
     if(unlockNext === "ON_CORRECT") {
       var correctResponses = currentResponses.filter((response) => {
-        if(response && response.correct === true){return true;}
+        return response && response.correct === true;
       });
       return (correctResponses.length === questionsPerPage);
 
     } else if(unlockNext === "ON_ANSWER_CHECK") {
       var correctResponses = currentResponses.filter((response) => {
-        if(response !== undefined){return true;}
+        return response !== undefined;
       });
 
       return(correctResponses.length === questionsPerPage);
@@ -317,7 +317,7 @@ export class Assessment extends React.Component{
       this.props.checkedResponses
     );
 
-    let secondaryAction = SECONDARY_ACTION.ENABLED;
+    let secondaryAction = SECONDARY_ACTION.PREV;
     let primaryAction = PRIMARY_ACTION.CHECK_ANSWERS;
 
     // Figure out which nav buttons to render
