@@ -30,7 +30,7 @@ describe("CLIx assessment parser", () => {
 
   });
 
-  fdescribe("parse feedback", () => {
+  describe("parse feedback", () => {
     var feedback = "<modalFeedback  identifier='Feedback1591099233' outcomeIdentifier='FEEDBACKMODAL' showHide='show'><p>Listen carefully</p></modalFeedback>";
 
     it('parses feedback content', () => {
