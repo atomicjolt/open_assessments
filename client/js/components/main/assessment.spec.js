@@ -28,8 +28,8 @@ var allQuestions,
 var result;
 var subject;
 
-var reset = () => {
-  allQuestions = () => [{
+function reset(){
+  allQuestions = [{
     timeSpent:0,
     outcomes:{shortOutcome:"", longOutcome:""},
     material: "Test Material",
@@ -63,8 +63,6 @@ var reset = () => {
 
   questionsPerPage = 1;
 
-  outcomes = () => {};
-
   progress = {
     currentItemIndex:0
   };
@@ -73,23 +71,22 @@ var reset = () => {
 
   responses = [];
   settings = {
-    user_id      : 0,
-    max_attempts : 1,
-    eid          : "external_identifier",
-    src_url      : "http://www.openassessments.com/api/assessments/55.xml",
-    questions_per_page:1,
-    assessment_kind: "SUMMATIVE"
+    user_id            : 0,
+    max_attempts       : 1,
+    eid                : "external_identifier",
+    src_url            : "http://www.openassessments.com/api/assessments/55.xml",
+    questions_per_page : 1,
+    assessment_kind    : "SUMMATIVE"
   };
 
   props = {
-    allQuestions:allQuestions(),
+    allQuestions,
     assessment,
     assessmentViewed: () => {},
     checkedResponses,
     currentItem,
     hideLMSNavigation: () => {},
     nextQuestions: () => {},
-    outcomes:outcomes(),
     previousQuestions: () => {},
     progress,
     questionCount,
