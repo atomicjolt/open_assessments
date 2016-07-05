@@ -15,7 +15,7 @@ describe('Two Button Nav', () => {
     beforeEach(() => {
       props = {
         goToPreviousQuestions: () => {},
-        secondaryAction: SECONDARY_ACTION.ENABLED
+        secondaryAction: SECONDARY_ACTION.PREV
       };
     });
 
@@ -31,7 +31,7 @@ describe('Two Button Nav', () => {
     });
 
     it('does not render previous button when not enabled', () => {
-      props.secondaryAction = SECONDARY_ACTION.DISABLED;
+      props.secondaryAction = SECONDARY_ACTION.NONE;
       render();
 
       expect(subject.innerHTML).not.toContain('Previous');
@@ -113,7 +113,7 @@ describe('Two Button Nav', () => {
       };
       render();
 
-      expect(subject.innerHTML).toContain('check answer');
+      expect(subject.innerHTML).toContain('Check Answer');
     });
 
     it('calls onClick when answer button is clicked', () => {

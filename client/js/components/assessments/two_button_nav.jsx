@@ -5,8 +5,8 @@ import React from "react";
 import Button from "../common/button";
 
 export const SECONDARY_ACTION = {
-  ENABLED  : "ENABLED",
-  DISABLED : "DISABLED"
+  PREV : "PREV",
+  NONE : "NONE"
 };
 
 export const PRIMARY_ACTION = {
@@ -15,6 +15,14 @@ export const PRIMARY_ACTION = {
   SUBMIT        : "SUBMIT"
 };
 
+
+/**
+ * Component to display two button style nav. Will render two buttons, primary
+ * button and secondary button. Primary button will be displayed in one of three
+ * states next questions, check answer, or submit asessment. Secondary button
+ * will either render previous questions button, or nothing at all if no
+ * previous questions are available.
+ */
 export default class TwoButtonNav extends React.Component{
 
   static propTypes = {
@@ -45,7 +53,7 @@ export default class TwoButtonNav extends React.Component{
     var secondaryButton;
     var primaryButton;
 
-    if(this.props.secondaryAction === SECONDARY_ACTION.ENABLED){
+    if(this.props.secondaryAction === SECONDARY_ACTION.PREV){
       secondaryButton = (
         <Button
           buttonType="previous"
@@ -80,15 +88,15 @@ export default class TwoButtonNav extends React.Component{
       primaryButton = (
         <Button
           buttonType="check-answer"
-          buttonText="check answer"
+          buttonText="Check Answer"
           onClick={this.props.checkAnswers} />
       );
     }
 
     return (
       <div className="c-assessment-navigation">
-        {primaryButton}
         {secondaryButton}
+        {primaryButton}
       </div>
     );
   }
