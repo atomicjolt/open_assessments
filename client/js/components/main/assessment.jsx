@@ -253,7 +253,6 @@ export class Assessment extends React.Component{
     return warning;
   }
 
-
   nextButtonClicked(e){
     e.preventDefault();
     this.props.nextQuestions(this.props.questionsPerPage);
@@ -321,7 +320,7 @@ export class Assessment extends React.Component{
     let secondaryAction = SECONDARY_ACTION.ENABLED;
     let primaryAction = PRIMARY_ACTION.CHECK_ANSWERS;
 
-    // Figure out which nav buttons to render 
+    // Figure out which nav buttons to render
     if(this.isFirstPage() === true){secondaryAction = SECONDARY_ACTION.DISABLED;}
 
     if(nextUnlocked === true && this.isLastPage() === true){

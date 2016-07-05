@@ -36,7 +36,7 @@ export default class TwoButtonNav extends React.Component{
     secondaryAction: React.PropTypes.string.isRequired,
 
     // The state of the primary action button. Should be a value included in
-    // PRIMARY_ACTION.  
+    // PRIMARY_ACTION.
     primaryAction: React.PropTypes.string.isRequired
   };
 
@@ -65,7 +65,6 @@ export default class TwoButtonNav extends React.Component{
            buttonText="Submit"
            onClick={this.props.submitAssessment} />
       );
-
     } else if(this.props.primaryAction === PRIMARY_ACTION.NEXT) {
       primaryButton = (
         <Button
@@ -93,4 +92,4 @@ export default class TwoButtonNav extends React.Component{
       </div>
     );
   }
-  };
+};
