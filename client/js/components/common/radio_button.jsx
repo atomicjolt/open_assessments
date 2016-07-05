@@ -56,7 +56,7 @@ export default class RadioButton extends React.Component{
       return (
         <div className="c-answer-feedback">
           <div
-            dangerouslySetInnerHTML={{__html:this.props.feedback}/*TODO handle when not html*/}/>
+            dangerouslySetInnerHTML={{__html:this.props.feedback}}/>
         </div>
       );
     }
