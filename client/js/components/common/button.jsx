@@ -2,6 +2,10 @@
 
 import React from "react";
 
+/**
+ * Component to render a generic button. Can optionally wrap svg to display
+ * button icon
+ */
 export default class Button extends React.Component{
 
   static propTypes = {
