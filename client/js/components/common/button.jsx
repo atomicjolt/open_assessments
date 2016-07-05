@@ -3,8 +3,8 @@
 import React from "react";
 
 /**
- * Component to render a generic button. Can optionally wrap svg to display
- * button icon
+ * Component to render a generic button. Can optionally wrap child components to
+ * to be displayed. I.E. <Button><svg /><Button />
  */
 export default class Button extends React.Component{
 
