@@ -67,6 +67,7 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     questions_per_section        - Number of questions to utilize from each section.
     questions_per_page           - Number of questions to be displayed on screen at one time.
     shuffle_question_answers     - Shuffle the answers for each question.
+    unlock_next                  - When the next set of items should be available to user. ON_CORRECT (Next questions are available when all currently visible questions have been answered correctly), ON_ANSWER_CHECK (When all answers have been checked), or ALWAYS (Next items are always available).
     confidence_levels            - Whether or not to show confidence controls
 
     // User settings

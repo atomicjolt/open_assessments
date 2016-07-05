@@ -23,7 +23,7 @@ export default class RadioButton extends React.Component{
 
     // Whether answer is correct, incorrect, or has not been graded.
     // Should be one of CORRECT, INCORRECT, UNGRADED.
-    gradeState: React.PropTypes.number.isRequired,
+    gradeState: React.PropTypes.string.isRequired,
 
     // Whether or not input should be disabled
     isDisabled: React.PropTypes.bool,

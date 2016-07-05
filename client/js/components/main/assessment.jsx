@@ -6,10 +6,10 @@ import { connect }                            from "react-redux";
 import * as CommunicationActions              from "../../actions/communications";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
 import appHistory                             from "../../history";
+import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
+import TwoButtonNav                           from "../assessments/two_button_nav";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
-import NextButton                             from "../assessments/next_button";
-import PreviousButton                         from "../assessments/previous_button";
 import ProgressDropdown                       from "../common/progress_dropdown";
 import {questionCount, questions, outcomes }  from "../../selectors/assessment";
 
@@ -38,6 +38,10 @@ const select = (state, props) => {
     // How many questions to display at a time. Default to show all questions
     // in a section if not specified
     questionsPerPage: state.settings.questions_per_page || questionCount(state, props),
+
+    // When the next question should be unlocked. Should be either "ON_CORRECT",
+    // "ON_ANSWER_CHECK", or "ALWAYS"
+    unlockNext: state.settings.unlock_next,
 
     // How many Items are in the assessment
     questionCount   : questionCount(state, props),
@@ -113,6 +117,45 @@ export class Assessment extends React.Component{
   }
 
   /**
+   * Determine if user should be allowed to go to next questions or not
+   *
+   * unlockNext - Global setting controlling when next button should
+   * be available to the user. Should be one of "ON_CORRECT", "ON_ANSWER_CHECK",
+   * "ALWAYS"
+   *
+   * currentItem - The index of the current item in the array of items
+   *
+   * questionsPerPage - Global setting controller how many items should be
+   * displayed at once.
+   *
+   * checkedResponses - Array of all graded responses
+   *
+   * return - True if user is allowed to move onto next set of
+   * questions. False otherwise.
+   */
+  getNextUnlocked(unlockNext, currentItem, questionsPerPage, checkedResponses){
+    var start = Math.floor(currentItem / questionsPerPage) * questionsPerPage;
+    var end = start + questionsPerPage;
+
+    var currentResponses = checkedResponses.slice(start, end);
+
+    if(unlockNext === "ON_CORRECT") {
+      var correctResponses = currentResponses.filter((response) => {
+        return response && response.correct === true;
+      });
+      return (correctResponses.length === questionsPerPage);
+
+    } else if(unlockNext === "ON_ANSWER_CHECK") {
+      var correctResponses = currentResponses.filter((response) => {
+        return response !== undefined;
+      });
+
+      return(correctResponses.length === questionsPerPage);
+    }
+    return true;
+  }
+
+  /**
    * Return an item for a given index in props.allQuestions
    */
   getItem(index){
@@ -148,8 +191,8 @@ export class Assessment extends React.Component{
     let current = this.props.progress.currentItemIndex;
     let items = [];
     if(questionsPerPage > 0 && questionsPerPage < this.props.questionCount){
-      let start = parseInt(current / questionsPerPage) * questionsPerPage;
-      let end = parseInt(start + questionsPerPage);
+      let start = Math.floor(current / questionsPerPage) * questionsPerPage;
+      let end = Math.floor(start + questionsPerPage);
 
       for(let i = start; i < end; i++){
         items.push(this.getItem(i));
@@ -182,8 +225,8 @@ export class Assessment extends React.Component{
    */
   isLastPage(){
     var questionsPerPage = this.props.questionsPerPage;
-    var currentPage = parseInt(this.props.currentItem / questionsPerPage);
-    var lastPage = parseInt((this.props.questionCount - 1) / questionsPerPage);
+    var currentPage = Math.floor(this.props.currentItem / questionsPerPage);
+    var lastPage = Math.floor((this.props.questionCount - 1) / questionsPerPage);
     return currentPage === lastPage;
   }
 
@@ -193,7 +236,7 @@ export class Assessment extends React.Component{
    */
   isFirstPage(){
     var questionsPerPage = this.props.questionsPerPage;
-    var currentPage = parseInt(this.props.currentItem / questionsPerPage);
+    var currentPage = Math.floor(this.props.currentItem / questionsPerPage);
     return currentPage === 0;
   }
 
@@ -225,6 +268,13 @@ export class Assessment extends React.Component{
     this.props.submitAssessment();
   }
 
+  checkAnswersButtonClicked(e){
+    e.preventDefault();
+    this.props.checkAnswer(this.props.currentItem);
+    //TODO add support for multiple item display. This will currently only
+    //work when questions_per_page = 1
+  }
+
   /**
    * Returns inner text for question counter
    */
@@ -233,10 +283,10 @@ export class Assessment extends React.Component{
       return `Question ${this.props.currentItem + 1} of ${this.props.questionCount}`;
     } else {
       var currentPage = (
-        parseInt(this.props.currentItem / this.props.questionsPerPage) + 1
+        Math.floor(this.props.currentItem / this.props.questionsPerPage) + 1
       );
       var totalPages = (
-        parseInt(this.props.questionCount / this.props.questionsPerPage)
+        Math.floor(this.props.questionCount / this.props.questionsPerPage)
       );
       return `Page ${currentPage} of ${totalPages}`;
     }
@@ -260,6 +310,25 @@ export class Assessment extends React.Component{
     let warning = this.getWarning();
     let counter = this.getCounter();
 
+    let nextUnlocked = this.getNextUnlocked(
+      this.props.unlockNext,
+      this.props.currentItem,
+      this.props.questionsPerPage,
+      this.props.checkedResponses
+    );
+
+    let secondaryAction = SECONDARY_ACTION.PREV;
+    let primaryAction = PRIMARY_ACTION.CHECK_ANSWERS;
+
+    // Figure out which nav buttons to render
+    if(this.isFirstPage() === true){secondaryAction = SECONDARY_ACTION.DISABLED;}
+
+    if(nextUnlocked === true && this.isLastPage() === true){
+      primaryAction = PRIMARY_ACTION.SUBMIT;
+    } else if(nextUnlocked === true){
+      primaryAction = PRIMARY_ACTION.NEXT;
+    }
+
     return (
       <div className="o-assessment-container">
         <div className="c-header">
@@ -268,17 +337,14 @@ export class Assessment extends React.Component{
         </div>
         {warning}
         {content}
-        <div className="c-assessment-navigation">
-          <PreviousButton
-            isFirstPage={this.isFirstPage()}
-            previousQuestions={(e) => {this.previousButtonClicked(e);}}
-            />
-          <NextButton
-            isLastPage={this.isLastPage()}
-            nextQuestions={(e) => {this.nextButtonClicked(e);}}
-            submitAssessment={(e) => {this.submitButtonClicked(e);}} />
-        </div>
-    </div>
+        <TwoButtonNav
+          goToNextQuestions={(e) => this.nextButtonClicked(e)}
+          goToPreviousQuestions={(e) => this.previousButtonClicked(e)}
+          checkAnswers={(e) => this.checkAnswersButtonClicked(e)}
+          submitAssessment={(e) => this.submitButtonClicked(e)}
+          secondaryAction={secondaryAction}
+          primaryAction={primaryAction}/>
+      </div>
     );
   }
 
