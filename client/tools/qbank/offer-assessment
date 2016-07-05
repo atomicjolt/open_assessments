@@ -1,0 +1,46 @@
+#!/bin/bash
+
+function usage {
+    echo "Usage: $0 server [bank_id [assessment_id]]"
+    echo
+    echo "Creates an offering of an assessment.  If no assessment is specified, the
+assessments in the bank are listed.  If no bank is specified, the banks are
+listed."
+    echo
+    echo "        server: The base URL of the server, like \"https://localhost:8000\""
+    echo
+    echo "       bank_id: Looks like assessment.Bank%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU"
+    echo
+    echo " assessment_id: Looks like assessment.Assessment%3A5758832b4a4045389d50650f%40ODL.MIT.EDU"
+    exit 1
+}
+
+function _wget {
+    wget -q -O /dev/stdout --no-check-certificate "$@" | json_pp
+}
+
+server="$1"; shift
+bank_id="$1"; shift
+assessment_id="$1"; shift
+
+[ "$server" ] || usage
+[ "$1" ] && usage
+
+server=${server%/}
+
+if [ "$assessment_id" ]
+then
+    url="$server/api/v1/assessment/banks/$bank_id/assessments/$assessment_id/assessmentsoffered"
+    body="{
+     \"name\": \"Assessment Offered\",
+     \"description\": \"For testing purposes\"
+}"
+    _wget --post-data="$body" "$url"
+elif [ "$bank_id" ]
+then
+    url="$server/api/v1/assessment/banks/$bank_id/assessments"
+    _wget "$url"
+else
+    url="$server/api/v1/assessment/banks"
+    _wget "$url"
+fi
