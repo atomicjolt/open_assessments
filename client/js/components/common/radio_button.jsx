@@ -52,14 +52,13 @@ export default class RadioButton extends React.Component{
   }
 
   getFeedback(){
-    var content;
     if(this.props.feedback){
-      content = (
+      return (
         <div className="c-answer-feedback">
-          <p>{this.props.feedback}</p>
+          <div
+            dangerouslySetInnerHTML={{__html:this.props.feedback}/*TODO handle when not html*/}/>
         </div>
       );
-      return content;
     }
   }
 
@@ -79,7 +78,6 @@ export default class RadioButton extends React.Component{
   render() {
     const props = this.props;
     var containerStyle;
-    var feedback = this.getFeedback();
 
     if(this.props.checked === true){containerStyle = "is-clicked";}
 
@@ -99,8 +97,7 @@ export default class RadioButton extends React.Component{
             </label>
           </div>
         </div>
-
-        {feedback}
+        {this.getFeedback()}
       </li>
     );
   }
