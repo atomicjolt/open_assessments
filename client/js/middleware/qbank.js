@@ -19,7 +19,7 @@ export default {
     const metaUrl = `assessment/banks/${state.settings.bank}/assessmentsoffered/${state.settings.assessment_offered_id}/assessmentstaken`;
 
     const body = {
-      sessionId: action.settings.eid
+      sessionId: state.settings.eid
     };
 
     const metaPromise = api.post(metaUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body);
