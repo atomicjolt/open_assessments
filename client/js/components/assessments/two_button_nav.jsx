@@ -19,7 +19,7 @@ export const PRIMARY_ACTION = {
 /**
  * Component to display two button style nav. Will render two buttons, primary
  * button and secondary button. Primary button will be displayed in one of three
- * states next questions, check answer, or submit asessment. Secondary button
+ * states: "next questions", "check answer", or "submit asessment". Secondary button
  * will either render previous questions button, or nothing at all if no
  * previous questions are available.
  */
