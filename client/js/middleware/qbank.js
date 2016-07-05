@@ -133,7 +133,6 @@ export default {
     const state = store.getState();
 
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
-    parseFeedback();
     const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {});
     if(promise){
       promise.then((response, error) => {
