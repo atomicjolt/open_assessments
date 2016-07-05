@@ -96,9 +96,9 @@ export default class RadioButton extends React.Component{
                      disabled={props.isDisabled}
                      name="radio"
                      id={props.id} />
-               <label>
+               <div className="outline">
                 <span></span>
-               </label>
+               </div>
             </div>
           </div>
   				<div className="c-answer-container__content">

@@ -40,7 +40,7 @@
 
   .c-radio-button{
 
-    label{
+    .outline{
       display: inline-block;
       cursor: pointer;
       position: relative;
@@ -51,7 +51,7 @@
       margin: 0.2rem;
     }
 
-    input[type="radio"]:checked + label:before{
+    input[type="radio"]:checked + .outline:before{
       content: '';
       width: .7rem;
       height: .7rem;
@@ -62,7 +62,7 @@
       left: 0.2rem;
     }
 
-    input[type="radio"]:checked + label{
+    input[type="radio"]:checked + .outline{
       border-color: $radio-selected;
     }
 
