@@ -4,7 +4,8 @@ import { Constants as JwtConstants }                from "../actions/jwt";
 import { Constants as AssessmentConstants }         from "../actions/assessment";
 import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
 import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta.js";
-import { DONE }    from "../constants/wrapper";
+import { DONE }                                     from "../constants/wrapper";
+import { parseFeedback }                            from "../parsers/clix/parser";
 
 export default {
 
@@ -81,9 +82,15 @@ export default {
     const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body);
     if(promise){
       promise.then((response, error) => {
+
+        var payload = {
+          correct  : response ? response.body.correct : false,
+          feedback : response ? parseFeedback(response.body.feedback) : ""
+        };
+
         store.dispatch({
           type:     action.type + DONE,
-          payload: response.body,
+          payload,
           original: action,
           response,
           error
@@ -126,7 +133,7 @@ export default {
     const state = store.getState();
 
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
-
+    parseFeedback();
     const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {});
     if(promise){
       promise.then((response, error) => {
