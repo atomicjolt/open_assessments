@@ -1,5 +1,6 @@
 .c-assessment-navigation{
   padding: 2rem 3rem 3rem;
+  @include clearfix;
 }
 
 .c-btn{
@@ -21,11 +22,9 @@
   }
 
   svg {
-    @include transform(rotate(90deg));
     width: 2.4rem;
     height: 2.4rem;
     position: absolute;
-    left: .3rem;
     top: .3rem;
 
     path{
@@ -52,6 +51,9 @@
     }
 
     svg {
+      left: .3rem;
+      @include transform(rotate(90deg));
+
       path{
         fill: $btn-secondary-text;
       }
@@ -68,6 +70,9 @@
     }
 
     svg {
+      right: .3rem;
+      @include transform(rotate(-90deg));
+
       path{
         fill: $btn-primary-text;
       }
@@ -88,8 +93,4 @@
       background: $btn-primary-background-hover;
       color: $btn-primary-text-hover;
     }
-  }
-
-  a.c-btn--hide{
-    visibility:hidden;
   }

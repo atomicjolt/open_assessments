@@ -11,6 +11,17 @@
 	box-sizing: $sizing;
 }
 
+// Clearfix hack mixin
+// Add clearfix hack - to contain floats within containers
+@mixin clearfix {
+    &:before,
+    &:after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+}
+
 //transition mixin
 @mixin transition($transition...) {
   -webkit-transition: $transition;
