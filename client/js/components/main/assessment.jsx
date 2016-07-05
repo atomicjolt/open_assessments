@@ -134,7 +134,7 @@ export class Assessment extends React.Component{
    * questions. False otherwise.
    */
   getNextUnlocked(unlockNext, currentItem, questionsPerPage, checkedResponses){
-    var start = parseInt(currentItem / questionsPerPage) * questionsPerPage;
+    var start = Math.floor(currentItem / questionsPerPage) * questionsPerPage;
     var end = start + questionsPerPage;
 
     var currentResponses = checkedResponses.slice(start, end);
@@ -191,8 +191,8 @@ export class Assessment extends React.Component{
     let current = this.props.progress.currentItemIndex;
     let items = [];
     if(questionsPerPage > 0 && questionsPerPage < this.props.questionCount){
-      let start = parseInt(current / questionsPerPage) * questionsPerPage;
-      let end = parseInt(start + questionsPerPage);
+      let start = Math.floor(current / questionsPerPage) * questionsPerPage;
+      let end = Math.floor(start + questionsPerPage);
 
       for(let i = start; i < end; i++){
         items.push(this.getItem(i));
@@ -225,8 +225,8 @@ export class Assessment extends React.Component{
    */
   isLastPage(){
     var questionsPerPage = this.props.questionsPerPage;
-    var currentPage = parseInt(this.props.currentItem / questionsPerPage);
-    var lastPage = parseInt((this.props.questionCount - 1) / questionsPerPage);
+    var currentPage = Math.floor(this.props.currentItem / questionsPerPage);
+    var lastPage = Math.floor((this.props.questionCount - 1) / questionsPerPage);
     return currentPage === lastPage;
   }
 
@@ -236,7 +236,7 @@ export class Assessment extends React.Component{
    */
   isFirstPage(){
     var questionsPerPage = this.props.questionsPerPage;
-    var currentPage = parseInt(this.props.currentItem / questionsPerPage);
+    var currentPage = Math.floor(this.props.currentItem / questionsPerPage);
     return currentPage === 0;
   }
 
@@ -283,10 +283,10 @@ export class Assessment extends React.Component{
       return `Question ${this.props.currentItem + 1} of ${this.props.questionCount}`;
     } else {
       var currentPage = (
-        parseInt(this.props.currentItem / this.props.questionsPerPage) + 1
+        Math.floor(this.props.currentItem / this.props.questionsPerPage) + 1
       );
       var totalPages = (
-        parseInt(this.props.questionCount / this.props.questionsPerPage)
+        Math.floor(this.props.questionCount / this.props.questionsPerPage)
       );
       return `Page ${currentPage} of ${totalPages}`;
     }
