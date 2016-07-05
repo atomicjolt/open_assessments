@@ -22,3 +22,8 @@ export default class Parser {
     };
   }
 };
+
+export function parseFeedback(feedbackXml){
+  var xml = $(feedbackXml);
+  return xml.html();
+}

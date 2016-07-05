@@ -3,6 +3,7 @@ import $          from "jquery";
 
 import { AssessmentFormats, parse }  from "../assessment";
 import Parser                        from "./parser";
+import { parseFeedback }             from "./parser";
 
 describe("CLIx assessment parser", () => {
 
@@ -27,5 +28,21 @@ describe("CLIx assessment parser", () => {
       expect(assessment.items[2].title).toEqual("Social Introductions Role Play");
     });
 
+  });
+
+  fdescribe("parse feedback", () => {
+    var feedback = "<modalFeedback  identifier='Feedback1591099233' outcomeIdentifier='FEEDBACKMODAL' showHide='show'><p>Listen carefully</p></modalFeedback>";
+
+    it('parses feedback content', () => {
+      var result = parseFeedback(feedback);
+
+      expect(result).toEqual("<p>Listen carefully</p>");
+    });
+
+    it('handles no feedback', () => {
+      var result = parseFeedback(undefined);
+
+      expect(result).toEqual(undefined);
+    });
   });
 });
