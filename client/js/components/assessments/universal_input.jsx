@@ -103,7 +103,30 @@ export default class UniversalInput extends React.Component{
         break;
       case "multiple_answers_question":
         answerInputs = item.answers.map((answer) => {
-          return <CheckBox isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-check" checked={this.wasSelected(answer.id)} />;
+          var selectCheckbox = _.curryRight(this.props.selectAnswer);
+          var id = item.id + "_" + answer.id;
+          var feedback;
+          var gradeState = UNGRADED;
+
+          // Determine if we have feedback to render
+          var response = this.props.checkedResponse;
+          if(response && this.wasSelected(answer.id)){
+            feedback = response.feedback;
+            gradeState = response.correct === true ? CORRECT : INCORRECT;
+          }
+
+          return (
+            <CheckBox
+                isDisabled={this.props.isResult}
+                key={id}
+                id={id}
+                item={answer}
+                isHtml={item.isHtml}
+                checked={this.wasSelected(answer.id)}
+                gradeState={gradeState}
+                feedback={feedback}
+                selectAnswer={selectCheckbox(false)} />
+          );
         });
         break;
       case "edx_image_mapped_input":
