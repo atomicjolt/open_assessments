@@ -1,20 +1,38 @@
 "use strict";
 
-import React                    from "react";
-import * as AssessmentActions   from "../../actions/assessment";
-import Styles                   from "../../themes/selection.js";
+import React from "react";
 
-const styles = Styles;
+import { CORRECT, INCORRECT, UNGRADED } from "../assessments/universal_input";
+import FeedbackIcon from "./feedback_icon";
 
 export default class CheckBox extends React.Component{
 
   static propTypes = {
+    // Item being displayed
     item: React.PropTypes.object.isRequired,
-    name: React.PropTypes.string.isRequired
+
+    // Unique html element id
+    id: React.PropTypes.string.isRequired,
+
+    // Whether the material is raw HTML to be embedded "dangerously."
+    isHtml: React.PropTypes.bool,
+
+    selectAnswer: React.PropTypes.func.isRequired,
+
+    // Whether answer is correct, incorrect, or has not been graded.
+    // Should be one of CORRECT, INCORRECT, UNGRADED.
+    gradeState: React.PropTypes.string.isRequired,
+
+    // Whether or not input should be disabled
+    isDisabled: React.PropTypes.bool,
+
+    // Whether or not input should be selected
+    checked: React.PropTypes.bool
   }
 
   answerSelected(){
-    AssessmentActions.answerSelected(this.props.item);
+    this.props.selectAnswer();
+    // AssessmentActions.answerSelected(this.props.item);
   }
 
   checkedStatus(){
@@ -32,7 +50,7 @@ export default class CheckBox extends React.Component{
               type="checkbox"
               defaultChecked={this.checkedStatus()}
               disabled={this.props.isDisabled}
-              name={this.props.name}
+              name="checkbox"
               onClick={()=>{ this.answerSelected(); }}/>
             <span>{this.props.item.material}</span>
           </label>
