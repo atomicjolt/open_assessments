@@ -9,23 +9,23 @@ var _cache = {};
 
 export default class Api{
 
-  static get(url, apiUrl, jwt, csrf, params){
-    return Api.execRequest(NetworkConstants.GET, url, apiUrl, jwt, csrf, params, null);
+  static get(url, apiUrl, jwt, csrf, params, headers){
+    return Api.execRequest(NetworkConstants.GET, url, apiUrl, jwt, csrf, params, null, headers);
   }
 
-  static post(url, apiUrl, jwt, csrf, params, body){
-    return Api.execRequest(NetworkConstants.POST, url, apiUrl, jwt, csrf, params, body);
+  static post(url, apiUrl, jwt, csrf, params, body, headers){
+    return Api.execRequest(NetworkConstants.POST, url, apiUrl, jwt, csrf, params, body, headers);
   }
 
-  static put(url, apiUrl, jwt, csrf, params, body){
-    return Api.execRequest(NetworkConstants.PUT, url, apiUrl, jwt, csrf, params, body);
+  static put(url, apiUrl, jwt, csrf, params, body, headers){
+    return Api.execRequest(NetworkConstants.PUT, url, apiUrl, jwt, csrf, params, body, headers);
   }
 
-  static del(url, apiUrl, jwt, csrf, params){
-    return Api.execRequest(NetworkConstants.DEL, url, apiUrl, jwt, csrf, params, null);
+  static del(url, apiUrl, jwt, csrf, params, headers){
+    return Api.execRequest(NetworkConstants.DEL, url, apiUrl, jwt, csrf, params, null, headers);
   }
 
-  static execRequest(method, url, apiUrl, jwt, csrf, params, body){
+  static execRequest(method, url, apiUrl, jwt, csrf, params, body, headers){
     return Api._doRequest(Api._makeUrl(`${url}${Api.queryStringFrom(params)}`, apiUrl), (fullUrl) => {
       var request;
 
@@ -48,6 +48,13 @@ export default class Api{
             .timeout(NetworkConstants.TIMEOUT)
             .set('Authorization', 'Bearer ' + jwt)
             .set('X-CSRF-Token', csrf);
+
+      if(headers !== undefined) {
+        _.each(headers, (headerValue, headerKey) => {
+          request.set(headerKey, headerValue);
+        });
+      }
+
       return request;
     }, method);
   }
@@ -193,5 +200,3 @@ export default class Api{
 //       return request;
 //     }
 //   }
-
-

@@ -22,7 +22,7 @@ export default {
       sessionId: state.settings.eid
     };
 
-    const metaPromise = api.post(metaUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body);
+    const metaPromise = api.post(metaUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
     if(metaPromise){
       metaPromise.then((response, error) => {
         store.dispatch({
@@ -35,7 +35,7 @@ export default {
 
         const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${response.body.id}/questions?qti`;
 
-        const assessmentPromise = api.get(assessmentUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {});
+        const assessmentPromise = api.get(assessmentUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, { "X-Api-Proxy": state.settings.eid });
         if(assessmentPromise) {
           assessmentPromise.then((assessmentResponse, error) => {
             store.dispatch({
@@ -78,7 +78,7 @@ export default {
       choiceId: action.answer.id
     };
 
-    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body);
+    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
     if(promise){
       promise.then((response, error) => {
         store.dispatch({
@@ -127,7 +127,7 @@ export default {
 
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
 
-    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {});
+    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {}, { "X-Api-Proxy": state.settings.eid });
     if(promise){
       promise.then((response, error) => {
         store.dispatch({
