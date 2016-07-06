@@ -34,10 +34,6 @@ export default class CheckBox extends React.Component{
     this.props.selectAnswer(this.props.item.id);
   }
 
-  checkedStatus(){
-    return this.props.checked === true;
-  }
-
   getFeedback(){
     if(this.props.feedback){
       return (
@@ -74,14 +70,14 @@ export default class CheckBox extends React.Component{
         <label
           htmlFor={props.id}>
           <div className="c-answer-container__radio">
-            <div className="c-radio-button">
+            <div className="c-checkbox">
               <input type="checkbox"
-                     checked={this.checkedStatus()}
+                     checked={props.checked}
                      disabled={props.isDisabled}
                      name="answer-checkbox"
                      onChange={() => { this.selectAnswer(); }}
                      id={props.id}/>
-               <div className="c-radio-button__border">
+                   <div className="c-checkbox__border">
                 <span></span>
                </div>
             </div>
