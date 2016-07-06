@@ -11,27 +11,6 @@ describe('Assessment Questions', ()=> {
   var item;
   var Content;
   var selectAnswer = () => {};
-  beforeEach(()=>{
-    item = {
-      id       : 0,
-      question_type: "multiple_choice_question",
-      url      : "www.iamcool.com",
-      title    : "title",
-      xml      : null,
-      standard : 'edX',
-      edXMaterial : "<p>hello world</p>",
-      answers  : [{id: "0", material: "test1"}, {id: "1", material: "test2"}],
-      isGraded : true,
-      messages : ["My Message1", "My Message2"],
-      solution : "<p>solution text</p>"
-    };
-
-    result = TestUtils.renderIntoDocument(
-      <UniversalInput
-        settings={ {} }
-        item={item}
-        selectAnswer={selectAnswer}/>);
-  });
 
   it('It Renders the page', ()=>{
     expect(ReactDOM.findDOMNode(result)).toBeDefined();
@@ -66,7 +45,20 @@ describe('Assessment Questions', ()=> {
   describe('Multiple Choice', ()=>{
 
     beforeEach(()=>{
-      item.question_type = 'multiple_choice_question';
+      item = {
+        id       : 0,
+        question_type: "multiple_choice_question",
+        url      : "www.iamcool.com",
+        title    : "title",
+        xml      : null,
+        standard : 'edX',
+        edXMaterial : "<p>hello world</p>",
+        answers  : [{id: "0", material: "test1"}, {id: "1", material: "test2"}],
+        isGraded : true,
+        messages : ["My Message1", "My Message2"],
+        solution : "<p>solution text</p>"
+      };
+
       Content = (
         <UniversalInput
           settings={ {} }
@@ -168,13 +160,31 @@ describe('Assessment Questions', ()=> {
   describe('Multiple Answer', ()=>{
 
     beforeEach(()=>{
-      item.question_type = 'multiple_answers_question';
-      Content = (<UniversalInput settings={ {} } item={item} />);
+      item = {
+        id       : 0,
+        question_type: "multiple_answers_question",
+        url      : "www.iamcool.com",
+        title    : "title",
+        xml      : null,
+        standard : 'edX',
+        edXMaterial : "<p>hello world</p>",
+        answers  : [{id: "0", material: "test1"}, {id: "1", material: "test2"}],
+        isGraded : true,
+        messages : ["My Message1", "My Message2"],
+        solution : "<p>solution text</p>"
+      };
+
+      Content = (
+        <UniversalInput
+          settings={ {} }
+          item={item}
+          selectAnswer={selectAnswer}/>
+      );
       result = TestUtils.renderIntoDocument(Content);
     });
 
-    it('Renders the checkboxes', ()=>{
-      expect(TestUtils.scryRenderedComponentsWithType(result,'checkbox')).toBeDefined();
+    it('Renders the checkboxes', () => {
+      expect(TestUtils.scryRenderedComponentsWithType(result, 'checkbox')).toBeDefined();
     });
 
     it('Checkbox text is rendered', ()=>{
