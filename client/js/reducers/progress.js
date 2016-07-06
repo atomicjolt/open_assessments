@@ -37,9 +37,18 @@ export default (state = initialState, action) => {
     case AssessmentConstants.ANSWER_SELECTED:
       var responses = state.getIn(['responses', `${action.questionIndex}`]);
       if(responses === undefined || action.exclusive === true){
+        // Create new list if no list exists or multi answer is not allowed
         responses = Immutable.List();
       }
-      responses = responses.push(action.answerId);
+
+      var answerIndex = responses.indexOf(action.answerId);
+      if(answerIndex > -1){
+        // Radio buttons shouldn't toggle
+        if(!action.exclusive){responses = responses.delete(answerIndex);}
+      } else {
+        responses = responses.push(action.answerId);
+      }
+
       state = state.setIn(["responses", `${action.questionIndex}`], responses);
       break;
 
