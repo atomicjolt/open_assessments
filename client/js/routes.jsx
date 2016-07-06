@@ -13,12 +13,12 @@ import About              from './components/main/about';
 import RetriesExceeded    from './components/main/retries_exceeded';
 
 // @todo: replace this with a `real` component or template
-const NotFound = () => (
-  <div>
-    <h1>Page Not Found</h1>
-    <p>Sorry, but the page you were trying to view does not exist.</p>
-  </div>
-);
+//const NotFound = () => (
+//  <div>
+//    <h1>Page Not Found</h1>
+//    <p>Sorry, but the page you were trying to view does not exist.</p>
+//  </div>
+//);
 
 export default (
   <Router history={appHistory}>
