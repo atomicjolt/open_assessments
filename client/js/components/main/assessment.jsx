@@ -321,7 +321,7 @@ export class Assessment extends React.Component{
     let primaryAction = PRIMARY_ACTION.CHECK_ANSWERS;
 
     // Figure out which nav buttons to render
-    if(this.isFirstPage() === true){secondaryAction = SECONDARY_ACTION.DISABLED;}
+    if(this.isFirstPage() === true){secondaryAction = SECONDARY_ACTION.NONE;}
 
     if(nextUnlocked === true && this.isLastPage() === true){
       primaryAction = PRIMARY_ACTION.SUBMIT;
