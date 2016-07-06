@@ -270,9 +270,13 @@ export class Assessment extends React.Component{
 
   checkAnswersButtonClicked(e){
     e.preventDefault();
-    this.props.checkAnswer([this.props.currentItem]);
-    //TODO add support for multiple item display. This will currently only
-    //work when questions_per_page = 1
+
+    const questionIndexes = _.range(
+      this.props.progress.currentItemIndex,
+      this.props.progress.currentItemIndex + this.props.questionsPerPage
+    );
+
+    this.props.checkAnswer(questionIndexes);
   }
 
   /**
