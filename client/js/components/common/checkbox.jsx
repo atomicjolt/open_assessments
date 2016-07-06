@@ -80,8 +80,7 @@ export default class CheckBox extends React.Component{
                      disabled={props.isDisabled}
                      name="answer-checkbox"
                      onChange={() => { this.selectAnswer(); }}
-                     id={props.id}
-                      />
+                     id={props.id}/>
                <div className="c-radio-button__border">
                 <span></span>
                </div>
