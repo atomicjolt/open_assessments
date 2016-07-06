@@ -42,6 +42,16 @@ export default class UniversalInput extends React.Component{
     }
   }
 
+  getGradeState(response){
+    if(response.correct === true){
+      return CORRECT;
+    } else if(response.correct === false){
+      return INCORRECT;
+    }
+
+    return UNGRADED;
+  }
+
   render(){
     var item = this.props.item;
     var answerInputs;
@@ -53,20 +63,15 @@ export default class UniversalInput extends React.Component{
         answerInputs = item.answers.map((answer) => {
           var selectRadio = _.curryRight(this.props.selectAnswer);
           var id = item.id + "_" + answer.id;
+        
           var feedback;
-
-          if(this.props.checkedResponse && this.wasSelected(answer.id)){
-            feedback = this.props.checkedResponse.feedback;
-          }
-
           var gradeState = UNGRADED;
+          var response = this.props.checkedResponse;
 
-          if(this.props.checkedResponse && this.wasSelected(answer.id)){
-            if(this.props.checkedResponse.correct === true){
-              gradeState = CORRECT;
-            } else if(this.props.checkedResponse.correct === false) {
-              gradeState = INCORRECT;
-            }
+          // Determine if we have feedback to render
+          if(response && this.wasSelected(answer.id)){
+            feedback = response.feedback;
+            gradeState = this.getGradeState(response);
           }
 
           return (
@@ -107,14 +112,12 @@ export default class UniversalInput extends React.Component{
           var id = item.id + "_" + answer.id;
           var feedback;
           var gradeState = UNGRADED;
+          var response = this.props.checkedResponse;
 
           // Determine if we have feedback to render
-          var response = this.props.checkedResponse;
           if(response && this.wasSelected(answer.id)){
             feedback = response.feedback;
-
-            if(response.correct === true){gradeState = CORRECT;}
-            else if(response.correct === false){gradeState = INCORRECT;}
+            gradeState = this.getGradeState(response);
           }
 
           return (
