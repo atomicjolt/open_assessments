@@ -1,6 +1,6 @@
 import { Constants as JwtConstants } from "../actions/jwt";
 
-const initialState = {};
+const initialState = null;
 
 export default (state = initialState, action) => {
 
