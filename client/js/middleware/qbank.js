@@ -5,6 +5,7 @@ import { Constants as AssessmentConstants }         from "../actions/assessment"
 import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
 import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta.js";
 import { DONE }                                     from "../constants/wrapper";
+import { parse }                                    from "../parsers/assessment";
 
 export default {
 
@@ -40,7 +41,7 @@ export default {
           assessmentPromise.then((assessmentResponse, error) => {
             store.dispatch({
               type:     action.type + DONE,
-              payload:  assessmentResponse.body,
+              payload:  parse(state.settings, assessmentResponse.text),
               original: action,
               response,
               error
