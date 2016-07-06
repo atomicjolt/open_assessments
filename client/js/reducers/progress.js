@@ -42,9 +42,13 @@ export default (state = initialState, action) => {
       }
 
       var answerIndex = responses.indexOf(action.answerId);
+      var shouldToggle = !action.exclusive;
+
+      // Only add answer to responses array if it doesn't exist
       if(answerIndex > -1){
-        // Radio buttons shouldn't toggle
-        if(!action.exclusive){responses = responses.delete(answerIndex);}
+        // Don't toggle Radio buttons
+        if(shouldToggle){responses = responses.delete(answerIndex);}
+        
       } else {
         responses = responses.push(action.answerId);
       }
