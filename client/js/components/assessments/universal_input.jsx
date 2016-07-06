@@ -112,7 +112,9 @@ export default class UniversalInput extends React.Component{
           var response = this.props.checkedResponse;
           if(response && this.wasSelected(answer.id)){
             feedback = response.feedback;
-            gradeState = response.correct === true ? CORRECT : INCORRECT;
+
+            if(response.correct === true){gradeState = CORRECT;}
+            else if(response.correct === false){gradeState = INCORRECT;}
           }
 
           return (
