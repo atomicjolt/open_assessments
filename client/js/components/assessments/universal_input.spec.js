@@ -183,7 +183,7 @@ describe('Assessment Questions', ()=> {
       result = TestUtils.renderIntoDocument(Content);
     });
 
-    it('Renders the checkboxes', () => {
+    it('Renders the checkboxes', ()=>{
       expect(TestUtils.scryRenderedComponentsWithType(result, 'checkbox')).toBeDefined();
     });
 
