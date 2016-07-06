@@ -2,28 +2,45 @@ import React              from 'react';
 import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import Checkbox           from './checkbox';
+import { CORRECT, INCORRECT, UNGRADED } from "../assessments/universal_input";
 
 describe('checkbox', function() {
 
   var item = {
-    id: 1,
-    material: "checkbox label"
+    id: "1",
+    material: "Checkbox content"
   };
-  var result = TestUtils.renderIntoDocument(<Checkbox item={item} name="answer-radio" />);
 
-  it('renders the checkbox label', function() {
-    expect(ReactDOM.findDOMNode(result).textContent).toContain(item.material);
+  var props = {
+    item,
+    name         : "answer-checkbox",
+    selectAnswer : () => {},
+    id           : item.id,
+    gradeState   : UNGRADED
+  };
+
+  var result;
+  var subject;
+
+  beforeEach(function(){
+    spyOn(props, "selectAnswer");
+
+    result = TestUtils.renderIntoDocument(<Checkbox {...props} />);
+    subject = ReactDOM.findDOMNode(result);
+  });
+
+  it('renders the radio button label', function() {
+    expect(subject.textContent).toContain(item.material);
   });
 
   it('renders input attributes', function() {
-    expect(ReactDOM.findDOMNode(result).childNodes[0].childNodes[0].childNodes[0].attributes.name.value).toContain("answer-radio");
+    expect(subject.innerHTML).toContain('type="checkbox"');
   });
 
-  it('calls the answerSelected function when clicked', () => {
-    spyOn(result, "answerSelected");
+  it('calls the answerSelected function on click', () => {
     var checkbox = TestUtils.findRenderedDOMComponentWithTag(result, 'input');
-    TestUtils.Simulate.click(checkbox);
-    expect(result.answerSelected).toHaveBeenCalled();
-  });
+    TestUtils.Simulate.change(checkbox);
 
+    expect(props.selectAnswer).toHaveBeenCalled();
+  });
 });
