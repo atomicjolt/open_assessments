@@ -35,25 +35,32 @@ export default class UniversalInput extends React.Component{
   }
 
   wasSelected(id){
-    if( this.props.response ){
+    if(this.props.response){
       return this.props.response.indexOf(id) > -1;
     } else {
       return null;
     }
   }
 
-  getGradeState(response){
-    if(response.correct === true){
+  getGradeState(id, response){
+    if(this.wasSelected(id) && response.correct === true){
       return CORRECT;
-    } else if(response.correct === false){
+    } else if(this.wasSelected(id) && response.correct === false){
       return INCORRECT;
     }
 
     return UNGRADED;
   }
 
+  getFeedback(id, response){
+    if(this.wasSelected(id)){
+      return response.feedback;
+    }
+  }
+
   render(){
-    var item = this.props.item;
+    var props = this.props;
+    var item = props.item;
     var answerInputs;
 
     switch(item.question_type){
@@ -61,22 +68,14 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
         answerInputs = item.answers.map((answer) => {
-          var selectRadio = _.curryRight(this.props.selectAnswer);
+          var selectRadio = _.curryRight(props.selectAnswer);
           var id = item.id + "_" + answer.id;
-        
-          var feedback;
-          var gradeState = UNGRADED;
-          var response = this.props.checkedResponse;
-
-          // Determine if we have feedback to render
-          if(response && this.wasSelected(answer.id)){
-            feedback = response.feedback;
-            gradeState = this.getGradeState(response);
-          }
+          var gradeState = this.getGradeState(answer.id, props.checkedResponse);
+          var feedback = this.getFeedback(answer.id, props.checkedResponse);
 
           return (
             <RadioButton
-                isDisabled={this.props.isResult}
+                isDisabled={props.isResult}
                 key={id}
                 id={id}
                 item={answer}
@@ -91,16 +90,16 @@ export default class UniversalInput extends React.Component{
         break;
       case "edx_dropdown":
         answerInputs = item.answers.map((answer) => {
-          return <Option isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-option"/>;
+          return <Option isDisabled={props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-option"/>;
         });
         break;
       case "matching_question":
-        answerInputs = <Matching isDisabled={this.props.isResult} item={item} name="answer-option"/>;
+        answerInputs = <Matching isDisabled={props.isResult} item={item} name="answer-option"/>;
         break;
       case "edx_numerical_input":
       case "edx_text_input":
         answerInputs = item.answers.map((answer) => {
-          return <TextField isDisabled={this.props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-text"/>;
+          return <TextField isDisabled={props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-text"/>;
         });
         break;
       case "text_only_question":
@@ -108,21 +107,14 @@ export default class UniversalInput extends React.Component{
         break;
       case "multiple_answers_question":
         answerInputs = item.answers.map((answer) => {
-          var selectCheckbox = _.curryRight(this.props.selectAnswer);
+          var selectCheckbox = _.curryRight(props.selectAnswer);
           var id = item.id + "_" + answer.id;
-          var feedback;
-          var gradeState = UNGRADED;
-          var response = this.props.checkedResponse;
-
-          // Determine if we have feedback to render
-          if(response && this.wasSelected(answer.id)){
-            feedback = response.feedback;
-            gradeState = this.getGradeState(response);
-          }
+          var gradeState = this.getGradeState(answer.id, props.checkedResponse);
+          var feedback = this.getFeedback(answer.id, props.checkedResponse);
 
           return (
             <CheckBox
-                isDisabled={this.props.isResult}
+                isDisabled={props.isResult}
                 key={id}
                 id={id}
                 item={answer}
