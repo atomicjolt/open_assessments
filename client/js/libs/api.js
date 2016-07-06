@@ -1,8 +1,9 @@
 "use strict";
 
-import Request          from "superagent";
-import NetworkConstants from "../constants/network";
 import _                from "lodash";
+import Request          from "superagent";
+
+import NetworkConstants from "../constants/network";
 
 var _pendingRequests = {};
 var _cache = {};
@@ -59,6 +60,10 @@ export default class Api{
     }, method);
   }
 
+  /**
+   * Returns a complete, absolute URL by conditionally appending `path` to
+   * `apiUrl`.  If `path` already contains "http", it is returned as-is.
+   */
   static _makeUrl(part, apiUrl){
     if(part.indexOf("http") >= 0){
       return part;

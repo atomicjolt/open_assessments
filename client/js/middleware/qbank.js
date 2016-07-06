@@ -4,7 +4,7 @@ import { Constants as JwtConstants }                from "../actions/jwt";
 import { Constants as AssessmentConstants }         from "../actions/assessment";
 import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
 import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta.js";
-import { DONE }    from "../constants/wrapper";
+import { DONE }                                     from "../constants/wrapper";
 
 export default {
 
