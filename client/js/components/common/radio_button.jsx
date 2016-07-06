@@ -32,7 +32,7 @@ export default class RadioButton extends React.Component{
     checked: React.PropTypes.bool
   }
 
-  selectAnswer(e){
+  selectAnswer(){
     this.props.selectAnswer(this.props.item.id);
   }
 
@@ -95,15 +95,15 @@ export default class RadioButton extends React.Component{
                      disabled={props.isDisabled}
                      name="radio"
                      id={props.id}
-                     onChange={(e) => { this.selectAnswer(e); }} />
+                     onChange={() => { this.selectAnswer(); }} />
                    <div className="c-radio-button__border">
                 <span></span>
                </div>
             </div>
           </div>
-  				<div className="c-answer-container__content">
+          <div className="c-answer-container__content">
             {this.renderMaterial(props.item.material, props.isHtml)}
-  				</div>
+          </div>
         </label>
         {feedback}
       </li>
