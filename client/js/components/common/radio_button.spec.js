@@ -24,6 +24,7 @@ describe('radio button', function() {
 
   beforeEach(function(){
     spyOn(props, "selectAnswer");
+    
     result = TestUtils.renderIntoDocument(<RadioButton {...props} />);
     subject = ReactDOM.findDOMNode(result);
   });
