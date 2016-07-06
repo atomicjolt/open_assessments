@@ -30,32 +30,69 @@ export default class CheckBox extends React.Component{
     checked: React.PropTypes.bool
   }
 
-  answerSelected(){
-    this.props.selectAnswer();
-    // AssessmentActions.answerSelected(this.props.item);
+  selectAnswer(){
+    this.props.selectAnswer(this.props.item.id);
   }
 
   checkedStatus(){
     return this.props.checked === true;
   }
 
-
-  render(){
-    return (
-      <div>
-        {/*this.optionFlagStatus() TODO feedback */}
-        <div className="btn btn-block btn-question" style={styles.btnQuestion}>
-          <label>
-            <input
-              type="checkbox"
-              defaultChecked={this.checkedStatus()}
-              disabled={this.props.isDisabled}
-              name="checkbox"
-              onClick={()=>{ this.answerSelected(); }}/>
-            <span>{this.props.item.material}</span>
-          </label>
+  getFeedback(){
+    if(this.props.feedback){
+      return (
+        <div className="c-answer-feedback">
+          <p>{this.props.feedback}</p>
         </div>
-      </div>
+      );
+    }
+  }
+
+  renderMaterial(material, isHtml) {
+    if(isHtml) {
+      return <div className="c-answer-container__content"
+                  dangerouslySetInnerHTML={{__html: material}} />;
+    } else {
+      return (
+        <div className="c-answer-container__content">
+          <p>{material}</p>
+        </div>
+      );
+    }
+  }
+
+  render() {
+    const props = this.props;
+    var containerStyle = "";
+    var feedback = this.getFeedback();
+
+    if(this.props.checked === true){containerStyle = "is-clicked";}
+
+    return (
+      <li className={`c-answer-container ${containerStyle}`}>
+        <FeedbackIcon gradeState={props.gradeState} />
+        <label
+          htmlFor={props.id}>
+          <div className="c-answer-container__radio">
+            <div className="c-radio-button">
+              <input type="checkbox"
+                     checked={this.checkedStatus()}
+                     disabled={props.isDisabled}
+                     name="answer-checkbox"
+                     onChange={() => { this.selectAnswer(); }}
+                     id={props.id}
+                      />
+               <div className="c-radio-button__border">
+                <span></span>
+               </div>
+            </div>
+          </div>
+          <div className="c-answer-container__content">
+            {this.renderMaterial(props.item.material, props.isHtml)}
+          </div>
+        </label>
+        {feedback}
+      </li>
     );
   }
 }
