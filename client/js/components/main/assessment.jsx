@@ -152,14 +152,14 @@ export class Assessment extends React.Component{
 
         return correctAnswerSelected;
       });
+      debugger;
       return correctResponses.length === questionsPerPage;
 
     } else if(unlockNext === "ON_ANSWER_CHECK") {
       var correctResponses = checked.filter((response) => {
         return response !== undefined;
       });
-
-      return(correctResponses.length === questionsPerPage);
+      return correctResponses.length === questionsPerPage;
     }
     return true;
   }
