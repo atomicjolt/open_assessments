@@ -50,7 +50,7 @@ export default class Api{
             .set('Authorization', 'Bearer ' + jwt)
             .set('X-CSRF-Token', csrf);
 
-      if(headers !== undefined) {
+      if(!_.isUndefined(headers)){
         _.each(headers, (headerValue, headerKey) => {
           request.set(headerKey, headerValue);
         });
