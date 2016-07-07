@@ -18,10 +18,13 @@ export const parse = (settings, data) => {
 
   const assessment_id = settings.assessment_id;
 
-  if(data.startsWith("[")) {
+  if(data.startsWith("{")) {
 
-    // Looks like JSON.  We only have one JSON format.
-    return CLIx.parse(assessment_id, data);
+    let json = JSON.parse(data);
+
+    if(json.format == "MIT-CLIx-OEA") {
+      return CLIx.parse(assessment_id, json);
+    }
 
   } else if(data.startsWith("<?xml")) {
 

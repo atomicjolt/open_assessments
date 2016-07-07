@@ -25,9 +25,6 @@ export default class Item extends React.Component{
     checkedResponse   : React.PropTypes.object.isRequired,
 
     selectAnswer      : React.PropTypes.func.isRequired,
-
-    // TODO
-    outcomes          : React.PropTypes.array,
   };
 
   getCounter(){

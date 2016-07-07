@@ -15,7 +15,8 @@ export const Constants = wrapper(constants, requests);
 
 export const loadAssessment = () => {
   return {
-    type: Constants.LOAD_ASSESSMENT
+    type: Constants.LOAD_ASSESSMENT,
+    apiCall: true
   };
 };
 

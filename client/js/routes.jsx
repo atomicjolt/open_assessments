@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React                          from 'react'; // if you use jsx, you have to have React imported
 import { Router, Route, IndexRoute }  from 'react-router';
@@ -20,7 +20,7 @@ export default (
       <Route path="assessment-result" component={AssessmentResult}/>
       <Route path="about" component={About}/>
       <Route path="retries-exceeded" component={RetriesExceeded} />
-      <Route path="*" component={NotFound}/>
     </Route>
+    <Route path='*' component={NotFound} />
   </Router>
 );

@@ -77,27 +77,34 @@ export default class RadioButton extends React.Component{
 
   render() {
     const props = this.props;
-    var containerStyle;
+    var containerStyle = "";
+    var feedback = this.getFeedback();
 
     if(this.props.checked === true){containerStyle = "is-clicked";}
 
     return (
-      <li className={`c-answer-container ${containerStyle}`}
-          onClick={() => { this.selectAnswer(); }}>
+      <li className={`c-answer-container ${containerStyle}`}>
         <FeedbackIcon gradeState={props.gradeState} />
-        <div className="c-answer-container__radio">
-          <div className="c-radio-button">
-            <input type="radio"
-                   checked={this.checkedStatus()}
-                   disabled={props.isDisabled}
-                   name="radio"
-                   id={props.id} />
-            <label for={props.id}>
-              <span>{this.renderMaterial(props.item.material, props.isHtml)}</span>
-            </label>
+        <label
+          htmlFor={props.id}>
+          <div className="c-answer-container__radio">
+            <div className="c-radio-button">
+              <input type="radio"
+                     checked={this.checkedStatus()}
+                     disabled={props.isDisabled}
+                     name="radio"
+                     id={props.id}
+                     onChange={() => { this.selectAnswer(); }} />
+                   <div className="c-radio-button__border">
+                <span></span>
+               </div>
+            </div>
           </div>
-        </div>
-        {this.getFeedback()}
+          <div className="c-answer-container__content">
+            {this.renderMaterial(props.item.material, props.isHtml)}
+          </div>
+        </label>
+        {feedback}
       </li>
     );
   }

@@ -6,6 +6,52 @@ import { Constants as AssessmentProgressConstants } from "../actions/assessment_
 import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta.js";
 import { DONE }                                     from "../constants/wrapper";
 import { parseFeedback }                            from "../parsers/clix/parser";
+import{ parse }                                    from "../parsers/assessment";
+
+
+// var payload = { TODO
+//           correct  : response ? response.body.correct : false,
+//           feedback : response ? parseFeedback(response.body.feedback) : ""
+//         };
+function checkAnswers(store, action) {
+  const state = store.getState();
+  const currentItemIndex = state.progress.get("currentItemIndex");
+  const questionIndexes = _.range(currentItemIndex, currentItemIndex + state.settings.questions_per_page);
+
+  return _.map(questionIndexes, (questionIndex) => {
+    const question = state.assessment.items[questionIndex];
+    const choiceIds = state.progress.get("responses").get(questionIndex).toJS();
+
+    const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${question.json.id}/submit`;
+
+    let type = question.json.genusTypeId;
+    if(type && type.startsWith("question")) {
+      type = type.replace("question", "answer");
+    } else {
+      console.error("Couldn't get the question type");
+    }
+
+    const body = {
+      type,
+      choiceIds
+    };
+
+    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
+    if(promise){
+      promise.then((response, error) => {
+        store.dispatch({
+          type:     AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
+          payload:  response.body,
+          original: action,
+          response,
+          error
+        });
+      });
+
+      return promise;
+    }
+  });
+}
 
 export default {
 
@@ -20,10 +66,10 @@ export default {
     const metaUrl = `assessment/banks/${state.settings.bank}/assessmentsoffered/${state.settings.assessment_offered_id}/assessmentstaken`;
 
     const body = {
-      sessionId: action.settings.eid
+      sessionId: state.settings.eid
     };
 
-    const metaPromise = api.post(metaUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body);
+    const metaPromise = api.post(metaUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
     if(metaPromise){
       metaPromise.then((response, error) => {
         store.dispatch({
@@ -36,12 +82,12 @@ export default {
 
         const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${response.body.id}/questions?qti`;
 
-        const assessmentPromise = api.get(assessmentUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {});
+        const assessmentPromise = api.get(assessmentUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, { "X-Api-Proxy": state.settings.eid });
         if(assessmentPromise) {
           assessmentPromise.then((assessmentResponse, error) => {
             store.dispatch({
               type:     action.type + DONE,
-              payload:  assessmentResponse.body,
+              payload:  parse(state.settings, assessmentResponse.text),
               original: action,
               response,
               error
@@ -70,33 +116,15 @@ export default {
   },
 
   [AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER]: (store, action) => {
-    const state = store.getState();
+    checkAnswers(store, action);
+  },
 
-    const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${action.questionId}/submit`;
+  [AssessmentProgressConstants.ASSESSMENT_NEXT_QUESTIONS]: (store, action) => {
+    checkAnswers(store, action);
+  },
 
-    const body = {
-      type: action.answer.genus,
-      choiceId: action.answer.id
-    };
+  [AssessmentProgressConstants.ASSESSMENT_PREVIOUS_QUESTIONS]: (store, action) => {
 
-    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body);
-    if(promise){
-      promise.then((response, error) => {
-
-        var payload = {
-          correct  : response ? response.body.correct : false,
-          feedback : response ? parseFeedback(response.body.feedback) : ""
-        };
-
-        store.dispatch({
-          type:     action.type + DONE,
-          payload,
-          original: action,
-          response,
-          error
-        });
-      });
-    }
   },
 
   [AssessmentProgressConstants.ASSESSMENT_GRADED] : {
@@ -130,20 +158,23 @@ export default {
   },
 
   [AssessmentProgressConstants.ASSESSMENT_SUBMITTED] : (store, action) => {
-    const state = store.getState();
+    Promise.all(checkAnswers(store, action)).then(() => {
+      const state = store.getState();
 
-    const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
-    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {});
-    if(promise){
-      promise.then((response, error) => {
-        store.dispatch({
-          type:     action.type + DONE,
-          payload: response.body,
-          original: action,
-          response,
-          error
+      const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
+
+      const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {}, { "X-Api-Proxy": state.settings.eid });
+      if(promise){
+        promise.then((response, error) => {
+          store.dispatch({
+            type:     action.type + DONE,
+            payload: response.body,
+            original: action,
+            response,
+            error
+          });
         });
-      });
-    }
+      }
+    });
   }
 };

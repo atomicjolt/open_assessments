@@ -1,59 +1,93 @@
 "use strict";
 
-import React                    from "react";
-import * as AssessmentActions   from "../../actions/assessment";
-import Styles                   from "../../themes/selection.js";
+import React from "react";
 
-const styles = Styles;
+import { CORRECT, INCORRECT, UNGRADED } from "../assessments/universal_input";
+import FeedbackIcon from "./feedback_icon";
 
 export default class CheckBox extends React.Component{
 
   static propTypes = {
+    // Item being displayed
     item: React.PropTypes.object.isRequired,
-    name: React.PropTypes.string.isRequired
+
+    // Unique html element id
+    id: React.PropTypes.string.isRequired,
+
+    // Whether the material is raw HTML to be embedded "dangerously."
+    isHtml: React.PropTypes.bool,
+
+    selectAnswer: React.PropTypes.func.isRequired,
+
+    // Whether answer is correct, incorrect, or has not been graded.
+    // Should be one of CORRECT, INCORRECT, UNGRADED.
+    gradeState: React.PropTypes.string.isRequired,
+
+    // Whether or not input should be disabled
+    isDisabled: React.PropTypes.bool,
+
+    // Whether or not input should be selected
+    checked: React.PropTypes.bool
   }
 
-  answerSelected(){
-    AssessmentActions.answerSelected(this.props.item);
+  selectAnswer(){
+    this.props.selectAnswer(this.props.item.id);
   }
 
-  checkedStatus(){
-    var checked = null;
-    var optionFlag = null;
-    if( this.props.checked === true ) {
-      checked = "true";
-    } else if ( this.props.checked === false ){
-      checked = false;
-    } else if ( !this.props.isDisabled ) {
-      checked = (this.props.studentAnswers && this.props.studentAnswers.indexOf(this.props.item.id) > -1) ? "true" : null;
+  getFeedback(){
+    if(this.props.feedback){
+      return (
+        <div className="c-answer-feedback">
+          <p>{this.props.feedback}</p>
+        </div>
+      );
     }
-    return checked;
   }
 
-  optionFlagStatus(){
-    if(this.props.showAsCorrect){
-      var label = "Correct Answer that was ";
-      var optionFlag;
-      label += this.checkedStatus() ? "chosen" : "not chosen";
-      optionFlag = <div className="correctIndicator" aria-label={label} style={styles.checkStyleCorrect}>&#10003;</div>;
-    } else if (this.props.showAsCorrect === false && this.checkedStatus()){
-      optionFlag = <div className="wrongIndicator" aria-label="Wrong answer that was chosen" style={styles.checkStyleWrong}>&#10008;</div>;
+  renderMaterial(material, isHtml) {
+    if(isHtml) {
+      return <div className="c-answer-container__content"
+                  dangerouslySetInnerHTML={{__html: material}} />;
+    } else {
+      return (
+        <div className="c-answer-container__content">
+          <p>{material}</p>
+        </div>
+      );
     }
-    return optionFlag;
   }
 
-  render(){
+  render() {
+    const props = this.props;
+    var containerStyle = "";
+    var feedback = this.getFeedback();
+
+    if(this.props.checked === true){containerStyle = "is-clicked";}
 
     return (
-      <div>
-        {this.optionFlagStatus()}
-        <div className="btn btn-block btn-question" style={styles.btnQuestion}>
-          <label>
-            <input type="checkbox" defaultChecked={this.checkedStatus()} disabled={this.props.isDisabled} name={this.props.name} onClick={()=>{ this.answerSelected(); }}/>
-            <span style={styles.span}>{this.props.item.material}</span>
-          </label>
-        </div>
-      </div>
+      <li className={`c-answer-container ${containerStyle}`}>
+        <FeedbackIcon gradeState={props.gradeState} />
+        <label
+          htmlFor={props.id}>
+          <div className="c-answer-container__radio">
+            <div className="c-checkbox">
+              <input type="checkbox"
+                     checked={props.checked}
+                     disabled={props.isDisabled}
+                     name="answer-checkbox"
+                     onChange={() => { this.selectAnswer(); }}
+                     id={props.id}/>
+                   <div className="c-checkbox__border">
+                <span></span>
+               </div>
+            </div>
+          </div>
+          <div className="c-answer-container__content">
+            {this.renderMaterial(props.item.material, props.isHtml)}
+          </div>
+        </label>
+        {feedback}
+      </li>
     );
   }
 }
