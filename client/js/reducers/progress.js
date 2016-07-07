@@ -48,7 +48,7 @@ export default (state = initialState, action) => {
       if(answerIndex > -1){
         // Don't toggle Radio buttons
         if(shouldToggle){responses = responses.delete(answerIndex);}
-        
+
       } else {
         responses = responses.push(action.answerId);
       }
@@ -57,13 +57,28 @@ export default (state = initialState, action) => {
       break;
 
     case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE:
-      var checkedResponse = Immutable.fromJS({
-        ...action.payload,
-        choiceIds:action.choiceIds
-      });
-      state = state.setIn(
+      // var checkedResponse = Immutable.fromJS({
+      //   ...action.payload,
+      //   choiceIds:action.choiceIds
+      // });
+      // state = state.setIn(
+      //   ['checkedResponses', `${action.questionIndex}`],
+      //   checkedResponse
+      // );
+
+      var checkedResponses = state.getIn(
         ['checkedResponses', `${action.questionIndex}`],
-        checkedResponse
+        Immutable.Map()
+      );
+
+      action.choiceIds.forEach((id) => {
+        var feedback = Immutable.Map({...action.payload});
+        checkedResponses = checkedResponses.set(id,feedback);
+      });
+
+      state = state.setIn(
+        ["checkedResponses", `${action.questionIndex}`],
+        checkedResponses
       );
       break;
 

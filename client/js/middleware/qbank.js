@@ -42,6 +42,7 @@ function checkAnswers(store, action) {
         store.dispatch({
           type:     AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
           payload:  response.body,
+          questionIndex,
           choiceIds,
           original: action,
           response,
