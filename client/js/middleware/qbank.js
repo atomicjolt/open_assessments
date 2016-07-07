@@ -7,6 +7,46 @@ import { Constants as AssessmentMetaConstants }     from "../actions/assessment_
 import { DONE }                                     from "../constants/wrapper";
 import { parse }                                    from "../parsers/assessment";
 
+function checkAnswers(store, action) {
+  const state = store.getState();
+  const currentItemIndex = state.progress.get("currentItemIndex");
+  const questionIndexes = _.range(currentItemIndex, currentItemIndex + state.settings.questions_per_page);
+
+  return _.map(questionIndexes, (questionIndex) => {
+    const question = state.assessment.items[questionIndex];
+    const choiceIds = state.progress.get("responses").get(questionIndex).toJS();
+
+    const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${question.json.id}/submit`;
+
+    let type = question.json.genusTypeId;
+    if(type && type.startsWith("question")) {
+      type = type.replace("question", "answer");
+    } else {
+      console.error("Couldn't get the question type");
+    }
+
+    const body = {
+      type,
+      choiceIds
+    };
+
+    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
+    if(promise){
+      promise.then((response, error) => {
+        store.dispatch({
+          type:     AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
+          payload:  response.body,
+          original: action,
+          response,
+          error
+        });
+      });
+
+      return promise;
+    }
+  });
+}
+
 export default {
 
   [JwtConstants.REFRESH_JWT] : {
@@ -70,27 +110,15 @@ export default {
   },
 
   [AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER]: (store, action) => {
-    const state = store.getState();
+    checkAnswers(store, action);
+  },
 
-    const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${action.questionId}/submit`;
+  [AssessmentProgressConstants.ASSESSMENT_NEXT_QUESTIONS]: (store, action) => {
+    checkAnswers(store, action);
+  },
 
-    const body = {
-      type: action.answer.genus,
-      choiceId: action.answer.id
-    };
+  [AssessmentProgressConstants.ASSESSMENT_PREVIOUS_QUESTIONS]: (store, action) => {
 
-    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
-    if(promise){
-      promise.then((response, error) => {
-        store.dispatch({
-          type:     action.type + DONE,
-          payload: response.body,
-          original: action,
-          response,
-          error
-        });
-      });
-    }
   },
 
   [AssessmentProgressConstants.ASSESSMENT_GRADED] : {
@@ -124,21 +152,23 @@ export default {
   },
 
   [AssessmentProgressConstants.ASSESSMENT_SUBMITTED] : (store, action) => {
-    const state = store.getState();
+    Promise.all(checkAnswers(store, action)).then(() => {
+      const state = store.getState();
 
-    const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
+      const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
 
-    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {}, { "X-Api-Proxy": state.settings.eid });
-    if(promise){
-      promise.then((response, error) => {
-        store.dispatch({
-          type:     action.type + DONE,
-          payload: response.body,
-          original: action,
-          response,
-          error
+      const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {}, { "X-Api-Proxy": state.settings.eid });
+      if(promise){
+        promise.then((response, error) => {
+          store.dispatch({
+            type:     action.type + DONE,
+            payload: response.body,
+            original: action,
+            response,
+            error
+          });
         });
-      });
-    }
+      }
+    });
   }
 };

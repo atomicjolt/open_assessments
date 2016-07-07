@@ -27,6 +27,11 @@ export default {
     }
   },
 
+  [AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER] : () => {},
+  [AssessmentProgressConstants.ASSESSMENT_SUBMITTED] : () => {},
+  [AssessmentProgressConstants.ASSESSMENT_NEXT_QUESTIONS]: () => {},
+  [AssessmentProgressConstants.ASSESSMENT_PREVIOUS_QUESTIONS]: () => {},
+
   [AssessmentConstants.ASSESSMENT_POST_LTI_OUTCOME] : {
     method : Network.POST,
     url    : (action) => ( `api/assessment_results/${action.resultsId}/lti_outcome` )

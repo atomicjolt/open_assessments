@@ -4,15 +4,17 @@ const constants = [
   "ASSESSMENT_START",
   "ANSWER_SELECTED",
   "QUESTION_SELECTED",
-  "ASSESSMENT_CHECK_ANSWER",
   "LEVEL_SELECTED",
-  "ASSESSMENT_NEXT_QUESTIONS",
-  "ASSESSMENT_PREVIOUS_QUESTIONS",
   "RETAKE_ASSESSMENT",
   "ASSESSMENT_VIEWED"
 ];
 
-const requests = ["ASSESSMENT_SUBMITTED"];
+const requests = [
+  "ASSESSMENT_SUBMITTED",
+  "ASSESSMENT_CHECK_ANSWER",
+  "ASSESSMENT_NEXT_QUESTIONS",
+  "ASSESSMENT_PREVIOUS_QUESTIONS"
+];
 
 export const Constants = wrapper(constants, requests);
 
@@ -32,9 +34,10 @@ export const selectQuestion = (index) => ({
   type: Constants.QUESTION_SELECTED, index
 });
 
-export const checkAnswer = (questionIndex) => ({
+export const checkAnswer = (questionIndexes) => ({
   type: Constants.ASSESSMENT_CHECK_ANSWER,
-  questionIndex
+  questionIndexes,
+  apiCall: true
 });
 
 export const selectConfidenceLevel = (level, index) => ({
@@ -51,17 +54,20 @@ export const submitAssessment = (
   settings,
   outcomes) => ({
     type:Constants.ASSESSMENT_SUBMITTED,
-    identifier, assessmentId, questions, answers, settings, outcomes
+    identifier, assessmentId, questions, answers, settings, outcomes,
+    apiCall: true
   });
 
 export const nextQuestions = (pageSize = 1) => ({
   type: Constants.ASSESSMENT_NEXT_QUESTIONS,
-  pageSize
+  pageSize,
+  apiCall: true
 });
 
 export const previousQuestions = (pageSize = 1) => ({
   type: Constants.ASSESSMENT_PREVIOUS_QUESTIONS,
-  pageSize
+  pageSize,
+  apiCall: true
 });
 
 export const retakeAssessment = () => ({
