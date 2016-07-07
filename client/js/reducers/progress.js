@@ -60,6 +60,9 @@ export default (state = initialState, action) => {
 
       var checkedResponses = Immutable.Map();
 
+      // TODO Currently we are setting the same response for all choiceIds.
+      // When we have an example of multi answer feedback we should figure out
+      // how to assign feedback to each answer. 
       action.choiceIds.forEach((id) => {
         var feedback = Immutable.Map(action.payload);
         checkedResponses = checkedResponses.set(id,feedback);
