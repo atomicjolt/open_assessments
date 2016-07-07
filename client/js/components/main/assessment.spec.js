@@ -15,7 +15,7 @@ var allQuestions,
   checkedResponses,
   currentItem,
   previousQuestions,
-  progress,
+  assessmentProgress,
   questionCount,
   questionsPerPage,
   responses,
@@ -62,7 +62,7 @@ function reset(){
 
   questionsPerPage = 1;
 
-  progress = {
+  assessmentProgress = {
     currentItemIndex:0
   };
 
@@ -87,7 +87,7 @@ function reset(){
     hideLMSNavigation: () => {},
     nextQuestions: () => {},
     previousQuestions: () => {},
-    progress,
+    assessmentProgress,
     questionCount,
     questionsPerPage,
     responses,
@@ -147,7 +147,7 @@ describe("assessment", function() {
 
   it("redirects to assessment result when assessment has been submitted", () => {
     spyOn(appHistory, "push");
-    props.progress.assessmentResult = "done";
+    props.assessmentProgress.assessmentResult = "done";
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     subject = ReactDOM.findDOMNode(result);
 

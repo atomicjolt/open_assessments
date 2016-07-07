@@ -12,12 +12,12 @@ import { parse }                                    from "../parsers/assessment"
 
 function checkAnswers(store, action) {
   const state = store.getState();
-  const currentItemIndex = state.progress.get("currentItemIndex");
+  const currentItemIndex = state.assessmentProgress.get("currentItemIndex");
   const questionIndexes = _.range(currentItemIndex, currentItemIndex + state.settings.questions_per_page);
 
   return _.map(questionIndexes, (questionIndex) => {
     const question = state.assessment.items[questionIndex];
-    const choiceIds = state.progress.getIn(
+    const choiceIds = state.assessmentProgress.getIn(
       ["responses", `${questionIndex}`],
       Immutable.List()
     ).toJS();
