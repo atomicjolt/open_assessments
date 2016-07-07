@@ -152,7 +152,6 @@ export class Assessment extends React.Component{
 
         return correctAnswerSelected;
       });
-      debugger;
       return correctResponses.length === questionsPerPage;
 
     } else if(unlockNext === "ON_ANSWER_CHECK") {

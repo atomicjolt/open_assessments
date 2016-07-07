@@ -39,9 +39,14 @@ function checkAnswers(store, action) {
     const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
     if(promise){
       promise.then((response, error) => {
+        const payload = {
+          correct  : response ? response.body.correct : false,
+          feedback : response ? parseFeedback(response.body.feedback) : ""
+        };
+
         store.dispatch({
-          type:     AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
-          payload:  response.body,
+          type: AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
+          payload,
           questionIndex,
           choiceIds,
           original: action,
