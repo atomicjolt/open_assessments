@@ -1,3 +1,4 @@
+import Immutable                                    from "immutable";
 import api                                          from "../libs/api";
 import Network                                      from "../constants/network";
 import { Constants as JwtConstants }                from "../actions/jwt";
@@ -14,7 +15,10 @@ function checkAnswers(store, action) {
 
   return _.map(questionIndexes, (questionIndex) => {
     const question = state.assessment.items[questionIndex];
-    const choiceIds = state.progress.get("responses").get(questionIndex).toJS();
+    const choiceIds = state.progress.getIn(
+      ["responses", `${questionIndex}`],
+      Immutable.List()
+    ).toJS();
 
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${question.json.id}/submit`;
 
