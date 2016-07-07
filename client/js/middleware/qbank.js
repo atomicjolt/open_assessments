@@ -34,10 +34,10 @@ function checkAnswers(store, action) {
 
     const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
     if(promise){
-      promise.then((response, error) => {
+      promise.then((response) => {
         const payload = {
-          correct  : response ? response.body.correct : false,
-          feedback : response ? parseFeedback(response.body.feedback) : ""
+          correct  : response.body.correct,
+          feedback : parseFeedback(response.body.feedback)
         };
 
         store.dispatch({
@@ -49,6 +49,9 @@ function checkAnswers(store, action) {
           response,
           error
         });
+      },
+      (error) => {
+        console.error(error);
       });
 
       return promise;

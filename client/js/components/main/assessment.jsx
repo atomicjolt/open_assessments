@@ -130,6 +130,8 @@ export class Assessment extends React.Component{
    *
    * checkedResponses - Array of all graded responses
    *
+   * responses - Array of all question responses
+   *
    * return - True if user is allowed to move onto next set of
    * questions. False otherwise.
    */
