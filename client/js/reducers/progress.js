@@ -57,7 +57,10 @@ export default (state = initialState, action) => {
       break;
 
     case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE:
-      var checkedResponse = Immutable.fromJS(action.payload);
+      var checkedResponse = Immutable.fromJS({
+        ...action.payload,
+        choiceIds:action.choiceIds
+      });
       state = state.setIn(
         ['checkedResponses', `${action.questionIndex}`],
         checkedResponse
