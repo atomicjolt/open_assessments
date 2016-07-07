@@ -44,7 +44,7 @@ class Root extends React.Component {
   }
 }
 
-const settings = getInitialSettings(window.DEFAULT_SETTINGS, QueryString);
+const settings = getInitialSettings(window.DEFAULT_SETTINGS, QueryString.params());
 const store = configureStore({settings, jwt: window.DEFAULT_JWT});
 if (window.DEFAULT_JWT){ // Setup JWT refresh
   jwt(store.dispatch, settings.user_id);
