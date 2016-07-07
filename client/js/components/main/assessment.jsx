@@ -144,7 +144,7 @@ export class Assessment extends React.Component{
         var correctAnswerSelected = false;
         var current = currentAnswers;
 
-        Object.keys(response).forEach((choice) => {
+        _.keys(response).forEach((choice) => {
           var answerGraded = _.includes(current[index], choice);
           var correctAnswer = response[choice].correct;
           if(answerGraded && correctAnswer){correctAnswerSelected = true;}
