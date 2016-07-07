@@ -43,10 +43,11 @@ export default class UniversalInput extends React.Component{
   }
 
   getGradeState(id, checkedResponse){
+    if(!checkedResponse){return UNGRADED;}
 
     if(checkedResponse[id] && checkedResponse[id].correct){
       return CORRECT;
-    } else if(checkedResponse[id] && !checkedResponse[id].correct){
+    } else if(checkedResponse[id] && !checkedResponse[id].correct) {
       return INCORRECT;
     }
 
@@ -54,6 +55,8 @@ export default class UniversalInput extends React.Component{
   }
 
   getFeedback(id, checkedResponse){
+    if(!checkedResponse){return;}
+    
     if(checkedResponse[id]){
       return checkedResponse[id].feedback;
     }
