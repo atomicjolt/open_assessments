@@ -6,7 +6,7 @@ import { Constants as AssessmentProgressConstants } from "../actions/assessment_
 import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta.js";
 import { DONE }                                     from "../constants/wrapper";
 import { parseFeedback }                            from "../parsers/clix/parser";
-import{ parse }                                    from "../parsers/assessment";
+import { parse }                                    from "../parsers/assessment";
 
 
 // var payload = { TODO
