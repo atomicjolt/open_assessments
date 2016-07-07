@@ -42,19 +42,23 @@ export default class UniversalInput extends React.Component{
     }
   }
 
-  getGradeState(id, response){
-    if(this.wasSelected(id) && response.correct === true){
+  getGradeState(id, checkedResponse){
+    if(!checkedResponse){return UNGRADED;}
+
+    if(checkedResponse[id] && checkedResponse[id].correct){
       return CORRECT;
-    } else if(this.wasSelected(id) && response.correct === false){
+    } else if(checkedResponse[id] && !checkedResponse[id].correct) {
       return INCORRECT;
     }
 
     return UNGRADED;
   }
 
-  getFeedback(id, response){
-    if(this.wasSelected(id)){
-      return response.feedback;
+  getFeedback(id, checkedResponse){
+    if(!checkedResponse){return;}
+    
+    if(checkedResponse[id]){
+      return checkedResponse[id].feedback;
     }
   }
 

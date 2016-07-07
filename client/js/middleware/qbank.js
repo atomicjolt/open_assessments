@@ -6,7 +6,9 @@ import { Constants as AssessmentConstants }         from "../actions/assessment"
 import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
 import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta.js";
 import { DONE }                                     from "../constants/wrapper";
+import { parseFeedback }                            from "../parsers/clix/parser";
 import { parse }                                    from "../parsers/assessment";
+
 
 function checkAnswers(store, action) {
   const state = store.getState();
@@ -36,14 +38,23 @@ function checkAnswers(store, action) {
 
     const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
     if(promise){
-      promise.then((response, error) => {
+      promise.then((response) => {
+        const payload = {
+          correct  : response.body.correct,
+          feedback : parseFeedback(response.body.feedback)
+        };
+
         store.dispatch({
-          type:     AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
-          payload:  response.body,
+          type: AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
+          payload,
+          questionIndex,
+          choiceIds,
           original: action,
-          response,
-          error
+          response
         });
+      },
+      (error) => {
+        console.error(error);
       });
 
       return promise;

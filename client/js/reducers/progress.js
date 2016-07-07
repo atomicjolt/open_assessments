@@ -48,7 +48,7 @@ export default (state = initialState, action) => {
       if(answerIndex > -1){
         // Don't toggle Radio buttons
         if(shouldToggle){responses = responses.delete(answerIndex);}
-        
+
       } else {
         responses = responses.push(action.answerId);
       }
@@ -57,10 +57,20 @@ export default (state = initialState, action) => {
       break;
 
     case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE:
-      var checkedResponse = Immutable.fromJS(action.payload);
+
+      var checkedResponses = Immutable.Map();
+
+      // TODO Currently we are setting the same response for all choiceIds.
+      // When we have an example of multi answer feedback we should figure out
+      // how to assign feedback to each answer. 
+      action.choiceIds.forEach((id) => {
+        var feedback = Immutable.Map(action.payload);
+        checkedResponses = checkedResponses.set(id,feedback);
+      });
+
       state = state.setIn(
         ['checkedResponses', `${action.questionIndex}`],
-        checkedResponse
+        checkedResponses
       );
       break;
 

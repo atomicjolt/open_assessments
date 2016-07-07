@@ -103,13 +103,14 @@ describe('assessment reducer', () => {
     const action = {
       type: AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE,
       payload:{correct:true, feedback:"You win!"},
+      choiceIds:['a'],
       questionIndex:3
     };
     it("it returns feedback", () => {
       var initialState = Immutable.fromJS({checkedResponses:[]});
       const state = progress(initialState, action);
       expect(state.getIn(['checkedResponses', '3']).toJS()).toEqual(
-        {correct:true, feedback:"You win!"}
+        {a:{correct:true, feedback:"You win!"}}
       );
     });
 

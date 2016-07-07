@@ -21,3 +21,10 @@ export default class Parser {
     };
   }
 };
+
+export function parseFeedback(feedbackXml){
+  var xml = $.parseXML(feedbackXml);
+  var $xml = $(xml);
+  var feedback = $xml.find('modalFeedback');
+  return feedback.html();
+}

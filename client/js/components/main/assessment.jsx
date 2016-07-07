@@ -130,27 +130,37 @@ export class Assessment extends React.Component{
    *
    * checkedResponses - Array of all graded responses
    *
+   * responses - Array of all question responses
+   *
    * return - True if user is allowed to move onto next set of
    * questions. False otherwise.
    */
-  getNextUnlocked(unlockNext, currentItem, questionsPerPage, checkedResponses){
-    var start = Math.floor(currentItem / questionsPerPage) * questionsPerPage;
-    var end = start + questionsPerPage;
+  getNextUnlocked(unlockNext, currentItem, questionsPerPage, checkedResponses, responses){
+    var end = currentItem + questionsPerPage;
 
-    var currentResponses = checkedResponses.slice(start, end);
+    var checked = checkedResponses.slice(currentItem, end);
+    var currentAnswers = responses.slice(currentItem, end);
 
     if(unlockNext === "ON_CORRECT") {
-      var correctResponses = currentResponses.filter((response) => {
-        return response && response.correct === true;
+      var correctResponses = checked.filter((response, index) => {
+        var correctAnswerSelected = false;
+        var current = currentAnswers;
+
+        _.keys(response).forEach((choice) => {
+          var answerGraded = _.includes(current[index], choice);
+          var correctAnswer = response[choice].correct;
+          if(answerGraded && correctAnswer){correctAnswerSelected = true;}
+        });
+
+        return correctAnswerSelected;
       });
-      return (correctResponses.length === questionsPerPage);
+      return correctResponses.length === questionsPerPage;
 
     } else if(unlockNext === "ON_ANSWER_CHECK") {
-      var correctResponses = currentResponses.filter((response) => {
+      var correctResponses = checked.filter((response) => {
         return response !== undefined;
       });
-
-      return(correctResponses.length === questionsPerPage);
+      return correctResponses.length === questionsPerPage;
     }
     return true;
   }
@@ -318,7 +328,8 @@ export class Assessment extends React.Component{
       this.props.unlockNext,
       this.props.currentItem,
       this.props.questionsPerPage,
-      this.props.checkedResponses
+      this.props.checkedResponses,
+      this.props.responses
     );
 
     let secondaryAction = SECONDARY_ACTION.PREV;
