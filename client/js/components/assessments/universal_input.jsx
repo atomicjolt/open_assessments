@@ -54,7 +54,7 @@ export default class UniversalInput extends React.Component{
   }
 
   getFeedback(id, checkedResponse){
-    if(checkedResponse[id] && this.wasSelected(id)){
+    if(checkedResponse[id]){
       return checkedResponse[id].feedback;
     }
   }
