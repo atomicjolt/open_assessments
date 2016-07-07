@@ -61,7 +61,7 @@ export default (state = initialState, action) => {
       var checkedResponses = Immutable.Map();
 
       action.choiceIds.forEach((id) => {
-        var feedback = Immutable.Map({...action.payload});
+        var feedback = Immutable.Map(action.payload);
         checkedResponses = checkedResponses.set(id,feedback);
       });
 

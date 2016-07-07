@@ -46,8 +46,7 @@ function checkAnswers(store, action) {
           questionIndex,
           choiceIds,
           original: action,
-          response,
-          error
+          response
         });
       },
       (error) => {
