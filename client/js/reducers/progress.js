@@ -58,7 +58,7 @@ export default (state = initialState, action) => {
 
     case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE:
 
-      var checkedResponses = Immutable.Map(); 
+      var checkedResponses = Immutable.Map();
 
       action.choiceIds.forEach((id) => {
         var feedback = Immutable.Map({...action.payload});
@@ -66,7 +66,7 @@ export default (state = initialState, action) => {
       });
 
       state = state.setIn(
-        ["checkedResponses", `${action.questionIndex}`],
+        ['checkedResponses', `${action.questionIndex}`],
         checkedResponses
       );
       break;

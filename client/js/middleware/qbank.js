@@ -9,10 +9,6 @@ import { parseFeedback }                            from "../parsers/clix/parser
 import { parse }                                    from "../parsers/assessment";
 
 
-// var payload = { TODO
-//           correct  : response ? response.body.correct : false,
-//           feedback : response ? parseFeedback(response.body.feedback) : ""
-//         };
 function checkAnswers(store, action) {
   const state = store.getState();
   const currentItemIndex = state.progress.get("currentItemIndex");
