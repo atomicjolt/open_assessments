@@ -15,3 +15,8 @@ export function outcomes() {
 export function questionCount(state, props) {
   return state.assessment.items.length;
 }
+
+//TODO document
+export function isCheckingAnswer(state, props){
+  return state.progress.get('checkingQuestions', 0) > 0;
+}
