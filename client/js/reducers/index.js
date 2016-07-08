@@ -12,6 +12,7 @@ const rootReducer = combineReducers({
   jwt,
   application,
   assessment,
+  assessmentProgress,
   assessmentMeta,
   assessmentResults
 });
