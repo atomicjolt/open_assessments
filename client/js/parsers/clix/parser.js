@@ -23,8 +23,12 @@ export default class Parser {
 };
 
 export function parseFeedback(feedbackXml){
-  var xml = $.parseXML(feedbackXml);
-  var $xml = $(xml);
-  var feedback = $xml.find('modalFeedback');
-  return feedback.html();
+  try{
+    var xml = $.parseXML(feedbackXml);
+    var $xml = $(xml);
+    var feedback = $xml.find('modalFeedback');
+    return feedback.html();
+  } catch(e) {
+    // If we can't parse the feedback, then return undefined
+  }
 }
