@@ -130,7 +130,10 @@ export default {
   },
 
   [AssessmentProgressConstants.ASSESSMENT_NEXT_QUESTIONS]: (store, action) => {
-    checkAnswers(store, action);
+    const state = store.getState();
+    if(state.settings.unlock_next == "ALWAYS") {
+      checkAnswers(store, action);
+    }
   },
 
   [AssessmentProgressConstants.ASSESSMENT_PREVIOUS_QUESTIONS]: (store, action) => {

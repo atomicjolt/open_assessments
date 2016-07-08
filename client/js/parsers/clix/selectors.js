@@ -29,7 +29,7 @@ export function questionResults(state, props) {
   let questionResponses = {};
 
   _.each(questionIndexes, (index) => {
-    const response = state.assessmentResults.getIn(['questionResults', index, 0]) || {};
+    const response = state.assessmentResults.getIn(['questionResults', index, 0]);
     if(response) {
       questionResponses[index] = {};
       questionResponses[index].correct = response.correct;
