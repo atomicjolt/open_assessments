@@ -28,7 +28,7 @@ export function parseFeedback(feedbackXml){
     var $xml = $(xml);
     var feedback = $xml.find('modalFeedback');
     return feedback.html();
-  } else if(feedbackXML === "No feedback available."){
+  } else if(feedbackXml === "No feedback available."){
     // Don't return any feedback when no feedback is available
   } else {
     console.error("We cannot recognize feedback from server");
