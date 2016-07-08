@@ -7,7 +7,9 @@ const initialState = Immutable.fromJS({
   isSubmitted: false,
   isStarted: false,
   currentItemIndex: 0,
-  checkingQuestions: 0, //TODO name?
+
+  // Number of 'check answer' api calls that have not yet returned 
+  numQuestionsChecking: 0,
   selectedAnswerId: '',
   checkedResponses: [],
   responses: [],
@@ -74,16 +76,17 @@ export default (state = initialState, action) => {
         checkedResponses
       );
 
-      var checked = state.get('checkingQuestions');
+      // Decrement number of questions being checked
+      var checked = state.get('numQuestionsChecking');
       if(checked <= 0){
         throw "ASSESSMENT_CHECK_ANSWER_DONE dispatched when no answers were being checked";
       }
-      state = state.set('checkingQuestions', --checked);
+      state = state.set('numQuestionsChecking', --checked);
       break;
 
     case AssessmentConstants.CHECK_QUESTIONS:
-      var checking = state.get('checkingQuestions');
-      state = state.set('checkingQuestions', action.numQuestions + checking);
+      var checking = state.get('numQuestionsChecking');
+      state = state.set('numQuestionsChecking', action.numQuestions + checking);
 
       break;
 
