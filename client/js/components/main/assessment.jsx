@@ -331,7 +331,7 @@ export class Assessment extends React.Component{
 
     let titleText =  this.props.assessment.title;
     let content = this.getContent();
-    let warning = this.getWarning();
+    let warning;// = this.getWarning(); 
     let counter = this.getCounter();
 
     let nextUnlocked = this.getNextUnlocked(
