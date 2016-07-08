@@ -81,7 +81,6 @@ export default (state = initialState, action) => {
       state = state.set("isSubmitted", true);
       break;
 
-
     default:
 
   }
