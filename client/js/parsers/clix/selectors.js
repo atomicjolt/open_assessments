@@ -30,10 +30,12 @@ export function questionResults(state, props) {
 
   _.each(questionIndexes, (index) => {
     const response = state.assessmentResults.getIn(['questionResults', index, 0]) || {};
-    questionResponses[index] = {};
-    questionResponses[index].correct = response.correct;
-    questionResponses[index].answerIds = response.choiceIds;
-    questionResponses[index].feedback = response.feedback;
+    if(response) {
+      questionResponses[index] = {};
+      questionResponses[index].correct = response.correct;
+      questionResponses[index].answerIds = response.choiceIds;
+      questionResponses[index].feedback = response.feedback;
+    }
   });
 
   return questionResponses;
