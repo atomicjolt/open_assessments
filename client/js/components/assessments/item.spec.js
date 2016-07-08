@@ -8,7 +8,7 @@ describe('item', function() {
   var question = {
     title:"Test Question Title"
   };
-  var checkedResponse = {};
+  var questionResult = {};
   var currentItemIndex = 0;
   var assessment = {};
   var questionCount = 10;
@@ -19,7 +19,7 @@ describe('item', function() {
   var renderItem = () => {
     result = TestUtils.renderIntoDocument(<Item
       question={question}
-      checkedResponse={checkedResponse}
+      questionResult={questionResult}
       currentItemIndex={currentItemIndex}
       questionCount={questionCount}
       assessment={assessment}
@@ -47,7 +47,7 @@ describe('item', function() {
 
   describe('feedback', () => {
     it('renders correct when item is correct', () => {
-      checkedResponse = {correct:true, feedback:'Correct answer'};
+      questionResult = {correct:true, feedback:'Correct answer'};
       renderItem();
 
       expect(subject.textContent).toContain("Correct");
@@ -57,7 +57,7 @@ describe('item', function() {
     });
 
     it('renders incorrect when item is incorrect', () => {
-      checkedResponse = {correct:false, feedback:'Incorrect answer'};
+      questionResult = {correct:false, feedback:'Incorrect answer'};
       renderItem();
 
       expect(subject.textContent).toContain("Incorrect");
@@ -68,7 +68,7 @@ describe('item', function() {
     });
 
     it('renders without feedback when item is unchecked', () => {
-      checkedResponse = {};
+      questionResult = {};
       renderItem();
 
       expect(subject.textContent).not.toContain("Incorrect");

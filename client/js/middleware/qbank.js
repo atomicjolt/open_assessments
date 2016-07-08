@@ -41,7 +41,8 @@ function checkAnswers(store, action) {
       promise.then((response) => {
         const payload = {
           correct  : response.body.correct,
-          feedback : parseFeedback(response.body.feedback)
+          feedback : parseFeedback(response.body.feedback),
+          choiceIds
         };
 
         store.dispatch({

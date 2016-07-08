@@ -22,7 +22,7 @@ export default class Item extends React.Component{
 
     // Graded user response object containing keys
     // correct:true/false, feedback:"Answer feedback"
-    checkedResponse   : React.PropTypes.object.isRequired,
+    questionResult   : React.PropTypes.object.isRequired,
 
     selectAnswer      : React.PropTypes.func.isRequired,
   };
@@ -38,7 +38,7 @@ export default class Item extends React.Component{
   }
 
   getFeedback(){
-    var response = this.props.checkedResponse;
+    var response = this.props.questionResult;
 
     if(response){
 
@@ -93,7 +93,7 @@ export default class Item extends React.Component{
               isResult={false}
               selectAnswer={this.props.selectAnswer}
               response={this.props.response}
-              checkedResponse={this.props.checkedResponse}/>
+              questionResult={this.props.questionResult}/>
           </div>
           {this.getFeedback()}
         </div>
