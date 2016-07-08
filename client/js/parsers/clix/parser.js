@@ -23,12 +23,15 @@ export default class Parser {
 };
 
 export function parseFeedback(feedbackXml){
-  try{
+  if(feedbackXml.startsWith('<?xml')){
     var xml = $.parseXML(feedbackXml);
     var $xml = $(xml);
     var feedback = $xml.find('modalFeedback');
     return feedback.html();
-  } catch(e) {
-    // If we can't parse the feedback, then return undefined
+  } else if(feedbackXML === "No feedback available."){
+    // Don't return any feedback when no feedback is available
+  } else {
+    console.error("We cannot recognize feedback from server");
   }
+
 }
