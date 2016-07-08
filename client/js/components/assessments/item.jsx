@@ -81,7 +81,6 @@ export default class Item extends React.Component{
     return (
         <div>
           <div className="c-question-prompt">
-            <p>{this.props.question.title}</p>
             {questionDirections}
             <div dangerouslySetInnerHTML={
               {__html: this.props.question.material}}>
