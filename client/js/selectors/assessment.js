@@ -30,5 +30,9 @@ function makeDispatchingSelector(name){
 export const questions        = makeDispatchingSelector("questions");
 export const outcomes         = makeDispatchingSelector("outcomes");
 export const questionCount    = makeDispatchingSelector("questionCount");
-//TODO document
+
+/*
+ * Returns true if api calls to check answers have not yet returned, false
+ * otherwise
+ */
 export const isCheckingAnswer = makeDispatchingSelector("isCheckingAnswer");

@@ -16,7 +16,10 @@ export function questionCount(state, props) {
   return state.assessment.items.length;
 }
 
-//TODO document
+/*
+ * Returns true if api calls to check answers have not yet returned, false
+ * otherwise
+ */
 export function isCheckingAnswer(state, props){
   return state.progress.get('checkingQuestions', 0) > 0;
 }
