@@ -11,7 +11,7 @@ import TwoButtonNav                           from "../assessments/two_button_na
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import ProgressDropdown                       from "../common/progress_dropdown";
-import {questionCount, questions, outcomes }  from "../../selectors/assessment";
+import {questionCount, questions, outcomes, isCheckingAnswer }  from "../../selectors/assessment";
 
 const select = (state, props) => {
   return {
@@ -48,6 +48,8 @@ const select = (state, props) => {
 
     // Array containing all assessment Items
     allQuestions    : questions(state, props),
+
+    isCheckingAnswer: isCheckingAnswer(state, props),
 
     // TODO
     outcomes        : outcomes(state, props)
@@ -342,6 +344,8 @@ export class Assessment extends React.Component{
       primaryAction = PRIMARY_ACTION.SUBMIT;
     } else if(nextUnlocked === true){
       primaryAction = PRIMARY_ACTION.NEXT;
+    } else if(this.props.isCheckingAnswer) {
+      primaryAction = PRIMARY_ACTION.SPINNER;
     }
 
     return (

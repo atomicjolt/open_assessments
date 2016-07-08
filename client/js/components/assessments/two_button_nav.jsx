@@ -12,7 +12,8 @@ export const SECONDARY_ACTION = {
 export const PRIMARY_ACTION = {
   NEXT          : "NEXT",
   CHECK_ANSWERS : "CHECK_ANSWERS",
-  SUBMIT        : "SUBMIT"
+  SUBMIT        : "SUBMIT",
+  SPINNER       : "SPINNER"
 };
 
 
@@ -91,6 +92,8 @@ export default class TwoButtonNav extends React.Component{
           buttonText="Check Answer"
           onClick={this.props.checkAnswers} />
       );
+    } else if(this.props.primaryAction === PRIMARY_ACTION.SPINNER){
+      primaryButton = <div>So Spinny</div>;
     }
 
     return (
