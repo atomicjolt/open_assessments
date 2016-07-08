@@ -2,7 +2,7 @@ import Immutable                            from "immutable";
 
 import { Constants as AssessmentConstants } from "../actions/assessment_progress";
 import { parse }                            from '../parsers/assessment';
-import progress                             from "./progress";
+import assessmentProgress                   from "./assessment_progress";
 
 describe('assessment reducer', () => {
 
@@ -13,7 +13,7 @@ describe('assessment reducer', () => {
 
   describe("initial reducer state", () => {
     it("returns empty state", () => {
-      const state = progress(initialState, {});
+      const state = assessmentProgress(initialState, {});
       expect(state.toJS()).toEqual({
         isSubmitted: false,
         isStarted: false,
@@ -36,7 +36,7 @@ describe('assessment reducer', () => {
     };
 
     it("increments currentItemIndex", () => {
-      var state = progress(undefined, action);
+      var state = assessmentProgress(undefined, action);
       expect(state.get('currentItemIndex')).toEqual(3);
     });
   });
@@ -49,7 +49,7 @@ describe('assessment reducer', () => {
     let initialState = Immutable.fromJS({currentItemIndex: 5});
 
     it("decrements currentItemIndex", () => {
-      const state = progress(initialState, action);
+      const state = assessmentProgress(initialState, action);
       expect(state.get('currentItemIndex')).toEqual(3);
     });
   });
@@ -61,7 +61,7 @@ describe('assessment reducer', () => {
     };
 
     it("sets started at time", () => {
-      const state = progress(undefined, action);
+      const state = assessmentProgress(undefined, action);
       expect(state.get('startedAt')).not.toEqual(0);
     });
   });
@@ -75,13 +75,13 @@ describe('assessment reducer', () => {
     };
 
     it("adds answerId to responses[][]", () => {
-      const state = progress(undefined, action);
+      const state = assessmentProgress(undefined, action);
       expect(state.getIn(['responses', '0']).toJS()).toEqual([1]);
     });
 
     it("appends to array if items already exist and exclusive flag is false", () => {
       var initialState = Immutable.fromJS({responses:[[2]]});
-      const state = progress(initialState, action);
+      const state = assessmentProgress(initialState, action);
       expect(state.getIn(['responses', '0']).toJS()).toEqual([2,1]);
     });
 
@@ -93,7 +93,7 @@ describe('assessment reducer', () => {
         exclusive:true
       };
       var initialState = Immutable.fromJS({responses:[[2]]});
-      const state = progress(initialState, action);
+      const state = assessmentProgress(initialState, action);
       expect(state.getIn(['responses', '0']).toJS()).toEqual([1]);
     });
 
@@ -108,7 +108,7 @@ describe('assessment reducer', () => {
     };
     it("it returns feedback", () => {
       var initialState = Immutable.fromJS({checkedResponses:[]});
-      const state = progress(initialState, action);
+      const state = assessmentProgress(initialState, action);
       expect(state.getIn(['checkedResponses', '3']).toJS()).toEqual(
         {a:{correct:true, feedback:"You win!"}}
       );

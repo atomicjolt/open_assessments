@@ -70,7 +70,7 @@ export default class TwoButtonNav extends React.Component{
       primaryButton = (
          <Button
            buttonType="finish"
-           buttonText="Submit"
+           buttonText="Finish Quiz"
            onClick={this.props.submitAssessment} />
       );
     } else if(this.props.primaryAction === PRIMARY_ACTION.NEXT) {

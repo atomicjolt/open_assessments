@@ -24,13 +24,13 @@ const select = (state, props) => {
     assessment      : state.assessment,
 
     // State of user-assessment interactions.
-    progress        : state.progress.toJS(),
+    assessmentProgress        : state.assessmentProgress.toJS(),
 
     // Current page of items to display when paging through items
-    currentItem     : state.progress.get('currentItemIndex'),
+    currentItem     : state.assessmentProgress.get('currentItemIndex'),
 
     // Array of user responses
-    responses       : state.progress.get('responses').toJS(),
+    responses       : state.assessmentProgress.get('responses').toJS(),
 
     // How many questions to display at a time. Default to show all questions
     // in a section if not specified
@@ -59,7 +59,7 @@ const select = (state, props) => {
 export class Assessment extends React.Component{
 
   componentWillMount(){
-    if(this.props.progress.assessmentResult != null){
+    if(this.props.assessmentProgress.assessmentResult != null){
       appHistory.push("assessment-result");
     }
   }
@@ -181,12 +181,12 @@ export class Assessment extends React.Component{
 
   /**
    * Returns an array of Items containing the question at
-   * state.progress.currentItemIndex. The array will be of length
+   * state.assessmentProgress.currentItemIndex. The array will be of length
    * specified by props.settings.questions_per_section.
    */
   getItems(){
     let questionsPerPage = this.props.questionsPerPage;
-    let current = this.props.progress.currentItemIndex;
+    let current = this.props.assessmentProgress.currentItemIndex;
     let items = [];
     if(questionsPerPage > 0 && questionsPerPage < this.props.questionCount){
       let start = Math.floor(current / questionsPerPage) * questionsPerPage;
@@ -209,7 +209,7 @@ export class Assessment extends React.Component{
    * or loading bar should be rendered
    */
   getContent(){
-    if(this.props.progress.isSubmitted){
+    if(this.props.assessmentProgress.isSubmitted){
       return <Loading />;
     } else if(!this.props.questionCount) {
       return <Loading />;
@@ -270,8 +270,8 @@ export class Assessment extends React.Component{
     e.preventDefault();
 
     const questionIndexes = _.range(
-      this.props.progress.currentItemIndex,
-      this.props.progress.currentItemIndex + this.props.questionsPerPage
+      this.props.assessmentProgress.currentItemIndex,
+      this.props.assessmentProgress.currentItemIndex + this.props.questionsPerPage
     );
 
     this.props.checkAnswer(questionIndexes);
