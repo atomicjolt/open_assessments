@@ -21,5 +21,5 @@ export function questionCount(state, props) {
  * otherwise
  */
 export function isCheckingAnswer(state, props){
-  return state.progress.get('checkingQuestions', 0) > 0;
+  return state.progress.get('numQuestionsChecking', 0) > 0;
 }

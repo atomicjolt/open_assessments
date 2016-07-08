@@ -50,7 +50,7 @@ const select = (state, props) => {
     allQuestions    : questions(state, props),
 
     // Returns true if any api calls to check answers have not yet returned,
-    // false otherwise.  
+    // false otherwise.
     isCheckingAnswer: isCheckingAnswer(state, props),
 
     // TODO
