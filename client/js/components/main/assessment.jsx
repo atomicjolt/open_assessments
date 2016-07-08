@@ -76,6 +76,9 @@ export class Assessment extends React.Component{
   componentDidUpdate() {
     this.props.sendSize();
     this.props.scrollParentToTop();
+    if(this.props.assessmentProgress.isSubmitted) {
+      appHistory.push("assessment-complete");
+    }
   }
 
   /**

@@ -11,13 +11,15 @@ import AssessmentResult   from './components/assessment_results/_assessment_resu
 import NotFound           from './components/not_found';
 import About              from './components/main/about';
 import RetriesExceeded    from './components/main/retries_exceeded';
+import AssessmentComplete from './components/main/assessment_complete';
 
 export default (
   <Router history={appHistory}>
     <Route path="/" component={Index}>
       <IndexRoute component={Start} />
       <Route path="assessment" component={Assessment}/>
-      <Route path="assessment-result" component={AssessmentResult}/>
+      <Route path="assessment-result" component={AssessmentResult} />
+      <Route path="assessment-complete" component={AssessmentComplete} />
       <Route path="about" component={About}/>
       <Route path="retries-exceeded" component={RetriesExceeded} />
     </Route>

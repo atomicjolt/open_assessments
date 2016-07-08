@@ -22,8 +22,8 @@ export function questionResults(state, props) {
   // When we have an example of multi answer feedback we should figure out
   // how to assign feedback to each answer.
   const questionIndexes = _.range(
-    state.progress.get('currentItemIndex'),
-    state.progress.get('currentItemIndex') + state.settings.questions_per_page
+    state.assessmentProgress.get('currentItemIndex'),
+    state.assessmentProgress.get('currentItemIndex') + state.settings.questions_per_page
   );
 
   let questionResponses = {};
