@@ -30,7 +30,8 @@ describe('item', function() {
   // Reset variables to default and render an item
   beforeEach(() => {
     question = {
-      title:"Test Question Title"
+      title:"Test Question Title",
+      material:"Test Question Material"
     };
     currentItemIndex = 0;
     assessment = {};
@@ -42,7 +43,7 @@ describe('item', function() {
 
 
   it('renders an item', () => {
-    expect(subject.textContent).toContain("Test Question Title");
+    expect(subject.textContent).toContain("Test Question Material");
   });
 
   describe('feedback', () => {

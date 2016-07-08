@@ -142,7 +142,7 @@ describe("assessment", function() {
   });
 
   it("renders a question", () => {
-    expect(subject.innerHTML).toContain("Test Question Title");
+    expect(subject.innerHTML).toContain("Test Material");
   });
 
   it("redirects to assessment result when assessment has been submitted", () => {
