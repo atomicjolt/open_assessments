@@ -7,6 +7,7 @@ const initialState = Immutable.fromJS({
   isSubmitted: false,
   isStarted: false,
   currentItemIndex: 0,
+  checkingQuestions: 0, //TODO name?
   selectedAnswerId: '',
   checkedResponses: [],
   responses: [],
@@ -62,7 +63,7 @@ export default (state = initialState, action) => {
 
       // TODO Currently we are setting the same response for all choiceIds.
       // When we have an example of multi answer feedback we should figure out
-      // how to assign feedback to each answer. 
+      // how to assign feedback to each answer.
       action.choiceIds.forEach((id) => {
         var feedback = Immutable.Map(action.payload);
         checkedResponses = checkedResponses.set(id,feedback);
@@ -72,6 +73,18 @@ export default (state = initialState, action) => {
         ['checkedResponses', `${action.questionIndex}`],
         checkedResponses
       );
+
+      var checked = state.get('checkingQuestions');
+      if(checked <= 0){
+        throw "ASSESSMENT_CHECK_ANSWER_DONE dispatched when no answers were being checked";
+      }
+      state = state.set('checkingQuestions', --checked);
+      break;
+
+    case AssessmentConstants.CHECK_QUESTIONS:
+      var checking = state.get('checkingQuestions');
+      state = state.set('checkingQuestions', action.numQuestions + checking);
+
       break;
 
 
