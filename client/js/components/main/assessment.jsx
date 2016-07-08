@@ -11,7 +11,12 @@ import TwoButtonNav                           from "../assessments/two_button_na
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import ProgressDropdown                       from "../common/progress_dropdown";
-import {questionCount, questions, outcomes }  from "../../selectors/assessment";
+import {
+  questionCount,
+  questions,
+  outcomes,
+  assessmentLoaded
+}  from "../../selectors/assessment";
 
 const select = (state, props) => {
   return {
@@ -21,6 +26,9 @@ const select = (state, props) => {
 
     // Assessment to be rendered.
     assessment      : state.assessment,
+
+    // Returns true if assessment has loaded, false otherwise
+    assessmentLoaded: assessmentLoaded(state, props),
 
     // State of user-assessment interactions.
     progress        : state.progress.toJS(),
@@ -223,7 +231,7 @@ export class Assessment extends React.Component{
   getContent(){
     if(this.props.progress.isSubmitted){
       return <Loading />;
-    } else if(!this.props.questionCount) {
+    } else if(!this.props.assessmentLoaded) {
       return <Loading />;
     } else {
       return this.getItems();
@@ -293,6 +301,8 @@ export class Assessment extends React.Component{
    * Returns inner text for question counter
    */
   getCounter(){
+    if(!this.props.assessmentLoaded){return;}
+
     if(this.props.questionsPerPage === 1){
       return `Question ${this.props.currentItem + 1} of ${this.props.questionCount}`;
     } else {

@@ -27,6 +27,9 @@ function makeDispatchingSelector(name){
 // Selectors that will interact with the assessment data.
 // All of these take state and props as parameters and just
 // wrap a call to the selectors native to the assessment.
-export const questions      = makeDispatchingSelector("questions");
-export const outcomes       = makeDispatchingSelector("outcomes");
-export const questionCount  = makeDispatchingSelector("questionCount");
+export const questions        = makeDispatchingSelector("questions");
+export const outcomes         = makeDispatchingSelector("outcomes");
+export const questionCount    = makeDispatchingSelector("questionCount");
+
+// Returns true if assessment has loaded, false otherwise.
+export const assessmentLoaded = makeDispatchingSelector("assessmentLoaded");
