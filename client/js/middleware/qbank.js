@@ -41,7 +41,8 @@ function checkAnswers(store, action) {
       promise.then((response) => {
         const payload = {
           correct  : response.body.correct,
-          feedback : parseFeedback(response.body.feedback)
+          feedback : parseFeedback(response.body.feedback),
+          choiceIds
         };
 
         store.dispatch({
@@ -129,7 +130,10 @@ export default {
   },
 
   [AssessmentProgressConstants.ASSESSMENT_NEXT_QUESTIONS]: (store, action) => {
-    checkAnswers(store, action);
+    const state = store.getState();
+    if(state.settings.unlock_next == "ALWAYS") {
+      checkAnswers(store, action);
+    }
   },
 
   [AssessmentProgressConstants.ASSESSMENT_PREVIOUS_QUESTIONS]: (store, action) => {

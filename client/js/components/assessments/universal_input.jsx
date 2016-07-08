@@ -31,7 +31,7 @@ export default class UniversalInput extends React.Component{
 
     // Graded user response object containing keys
     // correct:true/false, feedback:"Answer feedback"
-    checkedResponse: React.PropTypes.object
+    questionResult: React.PropTypes.object
   }
 
   wasSelected(id){
@@ -42,23 +42,23 @@ export default class UniversalInput extends React.Component{
     }
   }
 
-  getGradeState(id, checkedResponse){
-    if(!checkedResponse){return UNGRADED;}
+  getGradeState(id, questionResult){
+    if(!questionResult){return UNGRADED;}
 
-    if(checkedResponse[id] && checkedResponse[id].correct){
+    if(_.includes(questionResult.answerIds, id) && questionResult.correct){
       return CORRECT;
-    } else if(checkedResponse[id] && !checkedResponse[id].correct) {
+    } else if(_.includes(questionResult.answerIds, id) && !questionResult.correct) {
       return INCORRECT;
     }
 
     return UNGRADED;
   }
 
-  getFeedback(id, checkedResponse){
-    if(!checkedResponse){return;}
-    
-    if(checkedResponse[id]){
-      return checkedResponse[id].feedback;
+  getFeedback(id, questionResult){
+    if(!questionResult){return;}
+
+    if(_.includes(questionResult.answerIds, id)){
+      return questionResult.feedback;
     }
   }
 
@@ -74,8 +74,8 @@ export default class UniversalInput extends React.Component{
         answerInputs = item.answers.map((answer) => {
           var selectRadio = _.curryRight(props.selectAnswer);
           var id = item.id + "_" + answer.id;
-          var gradeState = this.getGradeState(answer.id, props.checkedResponse);
-          var feedback = this.getFeedback(answer.id, props.checkedResponse);
+          var gradeState = this.getGradeState(answer.id, props.questionResult);
+          var feedback = this.getFeedback(answer.id, props.questionResult);
 
           return (
             <RadioButton
@@ -113,8 +113,8 @@ export default class UniversalInput extends React.Component{
         answerInputs = item.answers.map((answer) => {
           var selectCheckbox = _.curryRight(props.selectAnswer);
           var id = item.id + "_" + answer.id;
-          var gradeState = this.getGradeState(answer.id, props.checkedResponse);
-          var feedback = this.getFeedback(answer.id, props.checkedResponse);
+          var gradeState = this.getGradeState(answer.id, props.questionResult);
+          var feedback = this.getFeedback(answer.id, props.questionResult);
 
           return (
             <CheckBox
