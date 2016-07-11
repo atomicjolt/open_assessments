@@ -11,7 +11,7 @@ import TwoButtonNav                           from "../assessments/two_button_na
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import ProgressDropdown                       from "../common/progress_dropdown";
-import {questionCount, questions, outcomes, isCheckingAnswer }  from "../../selectors/assessment";
+import { questionCount, questions, outcomes, isCheckingAnswer }  from "../../selectors/assessment";
 import { questionResults }                    from "../../selectors/assessment";
 
 const select = (state, props) => {
