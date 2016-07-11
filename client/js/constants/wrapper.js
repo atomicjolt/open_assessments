@@ -3,7 +3,6 @@
 import _ from "lodash";
 
 export const DONE = "_DONE";
-export const FAILED = "_FAILED";
 
 export default function(actionTypes, asyncActionTypes){
 
@@ -19,7 +18,6 @@ export default function(actionTypes, asyncActionTypes){
   }, types);
 
   types.DONE = DONE;
-
 
   return types;
 }

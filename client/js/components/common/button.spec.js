@@ -10,7 +10,6 @@ describe('button', () => {
     var props = {
       onClick:() => {},
       buttonClass: "myBtn"
-
     };
     spyOn(props, "onClick");
     var result = TestUtils.renderIntoDocument(<Button {...props} />);
