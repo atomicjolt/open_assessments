@@ -117,7 +117,7 @@ describe('assessment reducer', () => {
 
     it("decrements numQuestionsChecking", () => {
       var initialState = Immutable.fromJS({numQuestionsChecking:1});
-      const state = progress(initialState, action);
+      const state = assessmentProgress(initialState, action);
       expect(state.get('numQuestionsChecking')).toEqual(0);
     });
   });
@@ -129,7 +129,7 @@ describe('assessment reducer', () => {
         numQuestions: 1
       };
       var initialState = Immutable.fromJS({numQuestionsChecking:0});
-      const state = progress(initialState, action);
+      const state = assessmentProgress(initialState, action);
       expect(state.get('numQuestionsChecking')).toEqual(1);
     });
   });
