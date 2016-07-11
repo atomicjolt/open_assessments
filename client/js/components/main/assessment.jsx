@@ -17,6 +17,7 @@ import {
   outcomes,
   assessmentLoaded
 }  from "../../selectors/assessment";
+import { questionResults }                    from "../../selectors/assessment";
 
 const select = (state, props) => {
   return {
@@ -31,17 +32,13 @@ const select = (state, props) => {
     assessmentLoaded: assessmentLoaded(state, props),
 
     // State of user-assessment interactions.
-    progress        : state.progress.toJS(),
+    assessmentProgress        : state.assessmentProgress.toJS(),
 
     // Current page of items to display when paging through items
-    currentItem     : state.progress.get('currentItemIndex'),
+    currentItem     : state.assessmentProgress.get('currentItemIndex'),
 
     // Array of user responses
-    responses       : state.progress.get('responses').toJS(),
-
-    // Array of graded user response objects containing keys
-    // correct:true/false, feedback:"Answer feedback"
-    checkedResponses: state.progress.get('checkedResponses').toJS(),
+    responses       : state.assessmentProgress.get('responses').toJS(),
 
     // How many questions to display at a time. Default to show all questions
     // in a section if not specified
@@ -57,6 +54,11 @@ const select = (state, props) => {
     // Array containing all assessment Items
     allQuestions    : questions(state, props),
 
+    // Array of graded user response objects containing keys
+    // correct:true/false, feedback:"Answer feedback",
+    // answerIds: answers feedback applies to
+    questionResults : questionResults(state, props),
+
     // TODO
     outcomes        : outcomes(state, props)
   };
@@ -65,7 +67,7 @@ const select = (state, props) => {
 export class Assessment extends React.Component{
 
   componentWillMount(){
-    if(this.props.progress.assessmentResult != null){
+    if(this.props.assessmentProgress.assessmentResult != null){
       appHistory.push("assessment-result");
     }
   }
@@ -82,6 +84,9 @@ export class Assessment extends React.Component{
   componentDidUpdate() {
     this.props.sendSize();
     this.props.scrollParentToTop();
+    if(this.props.assessmentProgress.isSubmitted) {
+      appHistory.push("assessment-complete");
+    }
   }
 
   /**
@@ -136,51 +141,37 @@ export class Assessment extends React.Component{
    * questionsPerPage - Global setting controller how many items should be
    * displayed at once.
    *
-   * checkedResponses - Array of all graded responses
+   * questionResponses - Array of all graded responses
    *
-   * responses - Array of all question responses
+   * responses - Array of question responses for displayed questions
    *
    * return - True if user is allowed to move onto next set of
    * questions. False otherwise.
    */
-  getNextUnlocked(unlockNext, currentItem, questionsPerPage, checkedResponses, responses){
-    var end = currentItem + questionsPerPage;
-
-    var checked = checkedResponses.slice(currentItem, end);
-    var currentAnswers = responses.slice(currentItem, end);
-
+  getNextUnlocked(unlockNext, questionsPerPage, questionResponses){
     if(unlockNext === "ON_CORRECT") {
-      var correctResponses = checked.filter((response, index) => {
-        var correctAnswerSelected = false;
-        var current = currentAnswers;
-
-        _.keys(response).forEach((choice) => {
-          var answerGraded = _.includes(current[index], choice);
-          var correctAnswer = response[choice].correct;
-          if(answerGraded && correctAnswer){correctAnswerSelected = true;}
-        });
-
-        return correctAnswerSelected;
+      const incorrectResponse = _.find(questionResponses, (response) => {
+        return !response.correct;
       });
-      return correctResponses.length === questionsPerPage;
 
+      return _.isUndefined(incorrectResponse) && _.compact(_.values(questionResponses)).length === questionsPerPage;
     } else if(unlockNext === "ON_ANSWER_CHECK") {
-      var correctResponses = checked.filter((response) => {
-        return response !== undefined;
-      });
-      return correctResponses.length === questionsPerPage;
+
+      return _.compact(_.values(questionResponses)).length === questionsPerPage;
     }
     return true;
   }
+
 
   /**
    * Return an item for a given index in props.allQuestions
    */
   getItem(index){
-    let props = this.props;
+    const props = this.props;
     if(props.questionCount === undefined || index >= props.questionCount || index < 0){
       return <div></div>;
     }
+
     return (
       <Item
           key              = {index /* react uses this to distinguish children */}
@@ -190,7 +181,7 @@ export class Assessment extends React.Component{
           response         = {props.responses[index] || []}
           currentItemIndex = {index}
           questionCount    = {props.questionCount}
-          checkedResponse  = {props.checkedResponses[index] || {}}
+          questionResult   = {props.questionResults[index] || {}}
           allQuestions     = {props.allQuestions}
           outcomes         = {props.outcomes || {}}
           selectAnswer     = {
@@ -201,12 +192,12 @@ export class Assessment extends React.Component{
 
   /**
    * Returns an array of Items containing the question at
-   * state.progress.currentItemIndex. The array will be of length
+   * state.assessmentProgress.currentItemIndex. The array will be of length
    * specified by props.settings.questions_per_section.
    */
   getItems(){
     let questionsPerPage = this.props.questionsPerPage;
-    let current = this.props.progress.currentItemIndex;
+    let current = this.props.assessmentProgress.currentItemIndex;
     let items = [];
     if(questionsPerPage > 0 && questionsPerPage < this.props.questionCount){
       let start = Math.floor(current / questionsPerPage) * questionsPerPage;
@@ -229,7 +220,7 @@ export class Assessment extends React.Component{
    * or loading bar should be rendered
    */
   getContent(){
-    if(this.props.progress.isSubmitted){
+    if(this.props.assessmentProgress.isSubmitted){
       return <Loading />;
     } else if(!this.props.assessmentLoaded) {
       return <Loading />;
@@ -290,8 +281,8 @@ export class Assessment extends React.Component{
     e.preventDefault();
 
     const questionIndexes = _.range(
-      this.props.progress.currentItemIndex,
-      this.props.progress.currentItemIndex + this.props.questionsPerPage
+      this.props.assessmentProgress.currentItemIndex,
+      this.props.assessmentProgress.currentItemIndex + this.props.questionsPerPage
     );
 
     this.props.checkAnswer(questionIndexes);
@@ -331,15 +322,13 @@ export class Assessment extends React.Component{
 
     let titleText =  this.props.assessment.title;
     let content = this.getContent();
-    let warning;// = this.getWarning(); 
+    let warning;// = this.getWarning();
     let counter = this.getCounter();
 
     let nextUnlocked = this.getNextUnlocked(
       this.props.unlockNext,
-      this.props.currentItem,
       this.props.questionsPerPage,
-      this.props.checkedResponses,
-      this.props.responses
+      this.props.questionResults,
     );
 
     let secondaryAction = SECONDARY_ACTION.PREV;

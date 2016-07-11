@@ -12,7 +12,7 @@ Math.trunc = Math.trunc || function(x) {
 
 const select = (state) => {
   return {
-    assessmentResult: state.progress.assessmentResult
+    assessmentResult: state.assessmentProgress.assessmentResult
   };
 };
 

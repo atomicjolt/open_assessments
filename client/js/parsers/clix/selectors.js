@@ -20,3 +20,28 @@ export function questionCount(state, props) {
 export function assessmentLoaded(state, props){
   return !_.isEmpty(state.assessment);
 }
+
+export function questionResults(state, props) {
+
+  // TODO Currently we are setting the same response for all choiceIds.
+  // When we have an example of multi answer feedback we should figure out
+  // how to assign feedback to each answer.
+  const questionIndexes = _.range(
+    state.assessmentProgress.get('currentItemIndex'),
+    state.assessmentProgress.get('currentItemIndex') + state.settings.questions_per_page
+  );
+
+  let questionResponses = {};
+
+  _.each(questionIndexes, (index) => {
+    const response = state.assessmentResults.getIn(['questionResults', index, 0]);
+    if(response) {
+      questionResponses[index] = {};
+      questionResponses[index].correct = response.correct;
+      questionResponses[index].answerIds = response.choiceIds;
+      questionResponses[index].feedback = response.feedback;
+    }
+  });
+
+  return questionResponses;
+}
