@@ -90,7 +90,7 @@ describe('Two Button Nav', () => {
       };
       render();
 
-      expect(subject.innerHTML).toContain('Submit');
+      expect(subject.innerHTML).toContain('Finish Quiz');
     });
 
     it('calls onClick when submit button is clicked', () => {

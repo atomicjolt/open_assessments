@@ -12,7 +12,7 @@ import { parse }                                    from "../parsers/assessment"
 
 function checkAnswers(store, action) {
   const state = store.getState();
-  const currentItemIndex = state.progress.get("currentItemIndex");
+  const currentItemIndex = state.assessmentProgress.get("currentItemIndex");
   const questionIndexes = _.range(currentItemIndex, currentItemIndex + state.settings.questions_per_page);
 
   // Let progress reducer know how many questions are being checked
@@ -23,7 +23,7 @@ function checkAnswers(store, action) {
 
   return _.map(questionIndexes, (questionIndex) => {
     const question = state.assessment.items[questionIndex];
-    const choiceIds = state.progress.getIn(
+    const choiceIds = state.assessmentProgress.getIn(
       ["responses", `${questionIndex}`],
       Immutable.List()
     ).toJS();
@@ -47,7 +47,8 @@ function checkAnswers(store, action) {
       promise.then((response) => {
         const payload = {
           correct  : response.body.correct,
-          feedback : parseFeedback(response.body.feedback)
+          feedback : parseFeedback(response.body.feedback),
+          choiceIds
         };
 
         store.dispatch({
@@ -135,7 +136,10 @@ export default {
   },
 
   [AssessmentProgressConstants.ASSESSMENT_NEXT_QUESTIONS]: (store, action) => {
-    checkAnswers(store, action);
+    const state = store.getState();
+    if(state.settings.unlock_next == "ALWAYS") {
+      checkAnswers(store, action);
+    }
   },
 
   [AssessmentProgressConstants.ASSESSMENT_PREVIOUS_QUESTIONS]: (store, action) => {

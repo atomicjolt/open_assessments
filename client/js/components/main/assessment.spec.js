@@ -12,10 +12,10 @@ var props;
 var allQuestions,
   assessment,
   assessmentViewed,
-  checkedResponses,
+  questionResults,
   currentItem,
   previousQuestions,
-  progress,
+  assessmentProgress,
   questionCount,
   questionsPerPage,
   responses,
@@ -56,13 +56,13 @@ function reset(){
     title: "Test Title"
   };
 
-  checkedResponses = [];
+  questionResults = {};
 
   currentItem = 5;
 
   questionsPerPage = 1;
 
-  progress = {
+  assessmentProgress = {
     currentItemIndex:0
   };
 
@@ -82,12 +82,12 @@ function reset(){
     allQuestions,
     assessment,
     assessmentViewed: () => {},
-    checkedResponses,
+    questionResults,
     currentItem,
     hideLMSNavigation: () => {},
     nextQuestions: () => {},
     previousQuestions: () => {},
-    progress,
+    assessmentProgress,
     questionCount,
     questionsPerPage,
     responses,
@@ -142,12 +142,12 @@ describe("assessment", function() {
   });
 
   it("renders a question", () => {
-    expect(subject.innerHTML).toContain("Test Question Title");
+    expect(subject.innerHTML).toContain("Test Material");
   });
 
   it("redirects to assessment result when assessment has been submitted", () => {
     spyOn(appHistory, "push");
-    props.progress.assessmentResult = "done";
+    props.assessmentProgress.assessmentResult = "done";
     result = TestUtils.renderIntoDocument(<Assessment {...props} />);
     subject = ReactDOM.findDOMNode(result);
 
@@ -187,100 +187,68 @@ describe("assessment", function() {
     beforeEach(() => { reset(); });
 
     describe('when unlockNext is ON_CORRECT', () => {
-      var checkedResponse = () => ({a:{correct:true, feedback:"Correct Answer"}});
+      var checkedResponse = () => ({correct:true, feedback:"Correct Answer"});
       var unlockNext = "ON_CORRECT";
       var currentItem = 0;
       var questionsPerPage = 10;
-      var checkedResponses = [];
+      var questionResults = {};
       var responses = [];
       for(var i = 0; i < 10; i++){
-        checkedResponses.push(checkedResponse());
+        questionResults[i] = checkedResponse();
         responses.push('a');
       }
 
       it('should return true when all answers in current page are correct', () => {
         var subject = result.getNextUnlocked;
 
-        expect(
-          subject(
-            unlockNext,
-            currentItem,
-            questionsPerPage,
-            checkedResponses,
-            responses)).toEqual(true);
+        expect(subject(unlockNext, questionsPerPage, questionResults)).toEqual(true);
       });
 
       it('should return false when there is an incorrect answer in current page', () => {
         var subject = result.getNextUnlocked;
-        var incorrectResponses = [];
-        for(var i = 0; i < 10; i++){incorrectResponses.push(checkedResponse());}
-        incorrectResponses[9].a.correct = false;
+        var incorrectResponses = {};
+        for(var i = 0; i < 10; i++){ incorrectResponses[i] = checkedResponse(); }
+        incorrectResponses[9].correct = false;
 
-        expect(
-          subject(
-            unlockNext,
-            currentItem,
-            questionsPerPage,
-            incorrectResponses,
-            responses)).toEqual(false);
+        expect(subject(unlockNext, questionsPerPage, incorrectResponses)).toEqual(false);
       });
 
       it('should return false when there is an unanswered question in current page', () => {
         var subject = result.getNextUnlocked;
-        var gradedResponses = [];
-        for(var i = 0; i < 10; i++){
-          if(i === 5){continue;}
-          gradedResponses.push(checkedResponse());
+        var gradedResponses = {};
+        for(var i = 0; i < 5; i++){
+          gradedResponses[i] = checkedResponse();
         }
 
-        expect(
-          subject(
-            unlockNext,
-            currentItem,
-            questionsPerPage,
-            gradedResponses,
-            responses)).toEqual(false);
+        expect(subject(unlockNext, questionsPerPage, gradedResponses)).toEqual(false);
       });
     });
 
     describe('when unlockNext is ON_ANSWER_CHECK', () => {
-      var checkedResponse = () => ({a:{correct:false, feedback:"Correct Answer"}});
+      var checkedResponse = () => ({correct:false, feedback:"Correct Answer"});
       var unlockNext = "ON_ANSWER_CHECK";
       var currentItem = 0;
       var questionsPerPage = 10;
-      var checkedResponses = [];
+      var questionResults = {};
       var responses = [];
       for(var i = 0; i < 10; i++){
-        checkedResponses.push(checkedResponse());
+        questionResults[i] = checkedResponse();
         responses.push('a');
       }
 
       it('should return true when all questions have been checked in current page', () => {
         var subject = result.getNextUnlocked;
 
-        expect(
-          subject(
-            unlockNext,
-            currentItem,
-            questionsPerPage,
-            checkedResponses,
-            responses)).toEqual(true);
+        expect(subject(unlockNext, questionsPerPage, questionResults)).toEqual(true);
       });
 
       it('should return false when all questions have not been answered in current page', () => {
         var subject = result.getNextUnlocked;
-        var incompleteResponses = [];
-        for(var i = 0; i < 10; i++){
-          if(i % 3 == 0){continue;}
-          incompleteResponses.push(checkedResponse());
+        var incompleteResponses = {};
+        for(var i = 0; i < 5; i++){
+          incompleteResponses[i] = checkedResponse();
         }
-        expect(
-          subject(
-            unlockNext,
-            currentItem,
-            questionsPerPage,
-            incompleteResponses,
-            responses)).toEqual(false);
+        expect(subject(unlockNext, questionsPerPage, incompleteResponses)).toEqual(false);
       });
     });
 
@@ -289,19 +257,14 @@ describe("assessment", function() {
       var unlockNext = "ALWAYS";
       var currentItem = 0;
       var questionsPerPage = 10;
-      var checkedResponses = [];
+      var questionResults = {};
       var responses = [];
 
       it('should return true if no questions are answered', () => {
         var subject = result.getNextUnlocked;
 
-        expect(
-          subject(
-            unlockNext,
-            currentItem,
-            questionsPerPage,
-            checkedResponses,
-            responses)).toEqual(true);
+        expect(subject(unlockNext, questionsPerPage, questionResults)).toEqual(true);
+
       });
     });
   });

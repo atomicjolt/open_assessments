@@ -8,7 +8,7 @@ const initialState = Immutable.fromJS({
   isStarted: false,
   currentItemIndex: 0,
 
-  // Number of 'check answer' api calls that have not yet returned 
+  // Number of 'check answer' api calls that have not yet returned
   numQuestionsChecking: 0,
   selectedAnswerId: '',
   checkedResponses: [],
@@ -76,6 +76,8 @@ export default (state = initialState, action) => {
         checkedResponses
       );
 
+      state = state.setIn(['questionResults'], )
+
       // Decrement number of questions being checked
       var checked = state.get('numQuestionsChecking');
       if(checked <= 0){
@@ -90,6 +92,10 @@ export default (state = initialState, action) => {
 
       break;
 
+    case AssessmentConstants.ASSESSMENT_SUBMITTED_DONE:
+      state = state.set("finishedAt", Date.now());
+      state = state.set("isSubmitted", true);
+      break;
 
     default:
 

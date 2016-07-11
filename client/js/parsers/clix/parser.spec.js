@@ -31,16 +31,21 @@ describe("CLIx assessment parser", () => {
   });
 
   describe("parse feedback", () => {
-    var feedback = "<modalFeedback  identifier='Feedback1591099233' outcomeIdentifier='FEEDBACKMODAL' showHide='show'><p>Listen carefully</p></modalFeedback>";
-
+    var feedback = "<?xml version='1.0' encoding='utf-8'?><modalFeedback identifier='assessment.Answer%3A577eab12b3fcec48316ad493%40ODL.MIT.EDU' outcomeIdentifier='FEEDBACKMODAL' showHide='show'><p>Well done!</p></modalFeedback>";
     it('parses feedback content', () => {
       var result = parseFeedback(feedback);
 
-      expect(result).toEqual("<p>Listen carefully</p>");
+      expect(result).toEqual("<p>Well done!</p>");
     });
 
-    it('handles no feedback', () => {
-      var result = parseFeedback(undefined);
+    it('handles no feedback available', () => {
+      var result = parseFeedback("No feedback available.");
+
+      expect(result).toEqual(undefined);
+    });
+
+    it('handles bad xml', () => {
+      var result = parseFeedback('<notxml>reallyNotXml');
 
       expect(result).toEqual(undefined);
     });

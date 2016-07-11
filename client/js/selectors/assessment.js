@@ -27,9 +27,10 @@ function makeDispatchingSelector(name){
 // Selectors that will interact with the assessment data.
 // All of these take state and props as parameters and just
 // wrap a call to the selectors native to the assessment.
-export const questions        = makeDispatchingSelector("questions");
-export const outcomes         = makeDispatchingSelector("outcomes");
-export const questionCount    = makeDispatchingSelector("questionCount");
+export const questions       = makeDispatchingSelector("questions");
+export const outcomes        = makeDispatchingSelector("outcomes");
+export const questionCount   = makeDispatchingSelector("questionCount");
+export const questionResults = makeDispatchingSelector("questionResults");
 
 /*
  * Returns true if api calls to check answers have not yet returned, false
