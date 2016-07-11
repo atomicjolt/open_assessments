@@ -61,6 +61,9 @@ function checkAnswers(store, action) {
         });
       },
       (error) => {
+        store.dispatch({
+          type: AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_FAILED
+        });
         console.error(error);
       });
 

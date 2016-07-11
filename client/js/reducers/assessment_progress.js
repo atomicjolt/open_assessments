@@ -81,7 +81,16 @@ export default (state = initialState, action) => {
       // Decrement number of questions being checked
       var checked = state.get('numQuestionsChecking');
       if(checked <= 0){
-        throw "ASSESSMENT_CHECK_ANSWER_DONE dispatched when no answers were being checked";
+        throw "assessment_check_answer_done dispatched when no answers were being checked";
+      }
+      state = state.set('numQuestionsChecking', --checked);
+      break;
+
+    case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_FAILED:
+      // Decrement number of questions being checked
+      var checked = state.get('numQuestionsChecking');
+      if(checked <= 0){
+        throw "assessment_check_answer_done dispatched when no answers were being checked";
       }
       state = state.set('numQuestionsChecking', --checked);
       break;

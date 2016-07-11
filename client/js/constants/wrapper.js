@@ -3,6 +3,7 @@
 import _ from "lodash";
 
 export const DONE = "_DONE";
+export const FAILED = "_FAILED";
 
 export default function(actionTypes, asyncActionTypes){
 
@@ -14,10 +15,12 @@ export default function(actionTypes, asyncActionTypes){
   types = _.reduce(asyncActionTypes, (result, key) => {
     result[key] = key;
     result[`${key}${DONE}`] = `${key}${DONE}`;
+    result[`${key}${FAILED}`] = `${key}${FAILED}`;
     return result;
   }, types);
 
   types.DONE = DONE;
+
 
   return types;
 }
