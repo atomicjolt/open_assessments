@@ -1,260 +1,101 @@
 "use strict";
 
-import React                  from "react";
-import * as AssessmentActions from "../../actions/assessment";
-import UniversalInput         from "./universal_input";
+import React  from "react";
+
+import * as AssessmentActions  from "../../actions/assessment";
+import UniversalInput          from "./universal_input";
 
 export default class Item extends React.Component{
 
   static propTypes = {
-    question         : React.PropTypes.object.isRequired,
-    currentItemIndex : React.PropTypes.number.isRequired,
-    questionCount    : React.PropTypes.number.isRequired,
-    messageIndex     : React.PropTypes.number.isRequired,
-    confidenceLevels : React.PropTypes.bool.isRequired,
-    outcomes         : React.PropTypes.object
+    // Item to be displayed
+    question          : React.PropTypes.object.isRequired,
+
+    // Array of selected answer IDs
+    response          : React.PropTypes.array.isRequired,
+
+    // The position of the item in the array of items
+    currentItemIndex  : React.PropTypes.number.isRequired,
+
+    // The total number of items in the array of items
+    questionCount     : React.PropTypes.number.isRequired,
+
+    // Graded user response object containing keys
+    // correct:true/false, feedback:"Answer feedback"
+    questionResult   : React.PropTypes.object.isRequired,
+
+    selectAnswer      : React.PropTypes.func.isRequired,
   };
 
-  nextButtonClicked(e){
-    e.preventDefault();
-    this.setState({unAnsweredQuestions: null});
-    AssessmentActions.nextQuestion();
-    this.setState({showMessage: false});
-  }
-
-  previousButtonClicked(e){
-    e.preventDefault();
-    this.setState({unAnsweredQuestions: null});
-    AssessmentActions.previousQuestion();
-    this.setState({showMessage: false});
-  }
-
-  confidenceLevelClicked(e, currentItemIndex){
-    // e.preventDefault();
-    //
-    // if(this.props.selectedAnswerId && this.props.selectedAnswerId.length > 0){
-    //   AssessmentActions.selectConfidenceLevel(e.target.value, currentItemIndex);
-    //   if(this.props.currentItemIndex == this.props.questionCount - 1 && this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-    //     this.submitButtonClicked();
-    //   } else {
-    //     AssessmentActions.nextQuestion();
-    //     this.setState({showMessage: false});
-    //   }
-    // } else {
-    //   this.setState({showMessage: true});
-    // }
-    // if(document.getElementById("focus")){document.getElementById("focus").focus();}
-  }
-
-  submitButtonClicked(e){
-    e && e.preventDefault();
-    AssessmentActions.selectQuestion(this.props.currentItemIndex);
-    var complete = this.checkCompletion();
-    if(complete === true){
-      window.onbeforeunload = null;
-      AssessmentActions.submitAssessment(this.props.assessment.id, this.props.assessment.assessmentId, this.props.allQuestions, this.props.allStudentAnswers, this.props.settings, this.props.outcomes);
-    }
-    else {
-      this.setState({unAnsweredQuestions: complete});
+  getCounter(){
+    if(this.props.shouldShowCounter){
+      return (
+        <span className="counter">
+          {this.props.currentItemIndex + 1} of {this.props.questionCount}
+        </span>
+      );
     }
   }
 
-  checkCompletion(){
-    var questionsNotAnswered = [];
-    var answers = this.props.allStudentAnswers;
-    for (var i = 0; i < answers.length; i++) {
-      if(answers[i] == null || answers[i].length == 0){
+  getFeedback(){
+    var response = this.props.questionResult;
 
-        questionsNotAnswered.push(i+1);
+    if(response){
+
+      if(response.correct === true){
+        return (
+          <div className="c-question-feedback  c-feedback--correct">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+              <path d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/>
+            </svg>
+            <div
+              dangerouslySetInnerHTML={{__html:response.feedback}}>
+            </div>
+          </div>
+        );
+      } else if(response.correct === false) {
+        return (
+          <div className="c-question-feedback  c-feedback--incorrect">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+              <path d="M24 4c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.95 20-20-8.95-20-20-20zm10 27.17l-2.83 2.83-7.17-7.17-7.17 7.17-2.83-2.83 7.17-7.17-7.17-7.17 2.83-2.83 7.17 7.17 7.17-7.17 2.83 2.83-7.17 7.17 7.17 7.17z"/>
+            </svg>
+            <div
+              dangerouslySetInnerHTML={{__html:response.feedback}}>
+            </div>
+          </div>
+        );
       }
-    };
-    if(questionsNotAnswered.length > 0){
-      return questionsNotAnswered;
     }
-    return true;
   }
-
-  getFooterNav(){
-    if(this.props.shouldShowFooter){
-      return <div>
-              <button onClick={()=>{this.previousButtonClicked();}}>
-              <i className="glyphicon glyphicon-chevron-left"></i>
-              Previous
-              </button>
-              <button onClick={()=>{this.nextButtonClicked();}}>
-                Next
-                <i className="glyphicon glyphicon-chevron-right"></i>
-              </button>
-            </div>;
-    }
-
-    return "";
-  }
-
-  getWarning(state, questionCount, questionIndex){
-    if(state && state.unAnsweredQuestions && state.unAnsweredQuestions.length > 0 && questionIndex + 1 == questionCount){
-      return <div><i className="glyphicon glyphicon-exclamation-sign"></i> You left question(s) {state.unAnsweredQuestions.join()} blank. Use the "Progress" drop-down menu at the top to go back and answer the question(s), then come back and submit.</div>
-    }
-
-    return "";
-  }
-
-  getConfidenceLevels(level){
-    if(level){
-      var levelMessage = <div><b>How sure are you of your answer? Click below to move forward.</b></div>;
-      return    (<div className="confidence_wrapper">
-                  {levelMessage}
-                  <input type="button" className="btn btn-check-answer" value="Just A Guess" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex) }}/>
-                  <input type="button" className="btn btn-check-answer" value="Pretty Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex) }}/>
-                  <input type="button" className="btn btn-check-answer" value="Very Sure" onClick={(e) => { this.confidenceLevelClicked(e, this.props.currentItemIndex) }}/>
-                </div>
-                );
-    } /*else {
-      return <div className="lower_level"><input type="button" className="btn btn-check-answer" value="Check Answer" onClick={() => { AssessmentActions.checkAnswer()}}/></div>
-    }*/
-  }
-
-  getNavigationButtons() {
-    if (!this.props.shouldShowNextPrevious && this.props.confidenceLevels) {
-      return "";
-    }
-
-    return <div className="confidence_wrapper">
-      {this.getPreviousButton()}
-      {this.getNextButton()}
-    </div>
-  }
-
-  getNextButton() {
-    var disabled = (this.props.currentItemIndex == this.props.questionCount - 1) ? "disabled" : "";
-    return (
-        <button className={"btn btn-next-item " + disabled} onClick={(e) => { this.nextButtonClicked(e); }}>
-          <span>Next</span> <i className="glyphicon glyphicon-chevron-right"></i>
-        </button>);
-  }
-
-  getPreviousButton() {
-    var prevButtonClassName = "btn btn-prev-item " + ((this.props.currentItemIndex > 0) ? "" : "disabled");
-    return (
-        <button className={prevButtonClassName} onClick={(e) => { this.previousButtonClicked(e); }}>
-          <i className="glyphicon glyphicon-chevron-left"></i><span>Previous</span>
-        </button>);
-  }
-
-
-  getResult(index){
-    var result;
-
-    if(index == -1){
-      result = <div className="check_answer_result">
-                <p></p>
-              </div>;
-    }
-    else if(index == 0){
-    result = <div className="check_answer_result">
-                <p>Incorrect</p>
-              </div>;
-    }
-    else {
-      result =  <div className="check_answer_result">
-                  <p>Correct</p>
-                </div>;
-    }
-
-    return result;
-  }
-
 
   render() {
-    var unAnsweredWarning = this.getWarning(this.state, this.props.questionCount, this.props.currentItemIndex);
-    var result = this.getResult(this.props.messageIndex);
-    var must_answer_message = this.state && this.state.showMessage ? <div>You must select an answer before continuing.</div> : "";
-    var confidenceButtons = this.getConfidenceLevels(this.props.confidenceLevels);
-    var submitButton = (this.props.currentItemIndex == this.props.questionCount - 1) ? <button className="btn btn-check-answer" onClick={(e)=>{this.submitButtonClicked(e)}}>Submit</button> : "";
-    var footer = this.getFooterNav();
-    var navigationDiv = this.getNavigationButtons();
+    var counter = this.getCounter();
 
-    //Check if we need to display the counter in the top right
-    var counter = "";
-
-    if(this.props.shouldShowCenter){
-      counter = <span className="counter">{this.props.currentItemIndex + 1} of {this.props.questionCount}</span>
-    }
-    var formativeHeader = "";
-    // if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-    //   formativeHeader =
-    //       <div>
-    //         <div className="row">
-    //         </div>
-    //         <div className="row">
-    //           <div className="col-md-10">
-    //             <h4>{this.props.assessment.title}</h4>
-    //           </div>
-    //           <div className="col-md-2">
-    //           </div>
-    //         </div>
-    //       </div>
-    // }
-
-    var submitButtonDiv =  <div>
-                          {submitButton}
-                        </div>;
-
-    // if(this.props.settings.assessmentKind.toUpperCase() == "FORMATIVE"){
-    //   submitButtonDiv = ""
-    // }
-
-    var questionDirections = "";
+    var questionDirections;
     if(this.props.question.question_type == "multiple_answers_question"){
-      questionDirections =
-      <div>Choose <b>ALL</b> that apply.</div>
-    }
-    else {
-      questionDirections =
-      <div>Choose the <b>BEST</b> answer.</div>
+      questionDirections = <div>Choose <b>ALL</b> that apply.</div>;
+    } else {
+      questionDirections = <div>Choose the <b>BEST</b> answer.</div>;
     }
 
     return (
-      <div className="assessment_container">
-        <div className="question">
-          <div className="header">
-                {counter}
-            <p>{this.props.question.title}</p>
+        <div>
+          <div className="c-question-prompt">
+            {questionDirections}
+            <div dangerouslySetInnerHTML={
+              {__html: this.props.question.material}}>
+            </div>
           </div>
-          <div>
-            {formativeHeader}
-            <form className="edit_item">
-              <div className="full_question" tabIndex="0">
-                <div className="inner_question">
-                  <div className="question_text">
-                    {questionDirections}
-                    <div
-                      dangerouslySetInnerHTML={{
-                    __html: this.props.question.material
-                    }}>
-                    </div>
-                  </div>
-                  <UniversalInput item={this.props.question} isResult={false}/>
-                </div>
-                <div className="row">
-                  <div className="col-md-5 col-sm-6 col-xs-8" >
-                    {result}
-                    {confidenceButtons}
-                    {navigationDiv}
-                    {unAnsweredWarning}
-                    {must_answer_message}
-                  </div>
-                  <div className="col-md-7 col-sm-6 col-xs-4">
-                    {submitButtonDiv}
-                  </div>
-                </div>
-              </div>
-            </form>
+          <div className="c-answers">
+            <UniversalInput
+              item={this.props.question}
+              isResult={false}
+              selectAnswer={this.props.selectAnswer}
+              response={this.props.response}
+              questionResult={this.props.questionResult}/>
           </div>
-          {footer}
+          {this.getFeedback()}
         </div>
-      </div>
     );
   }
-
 }

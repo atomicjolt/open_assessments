@@ -1,0 +1,71 @@
+.c-answer-feedback{
+  background: $answer-feedback-background;
+  padding: 1rem 1.5rem;
+  margin: 1rem -0.8rem 0;
+  border-radius: 0 0 0.3rem 0.3rem;
+
+  p{
+    @include regular;
+    font-size: 1.2rem;
+    color: $text-color;
+  }
+}
+
+.c-question-feedback{
+  background: $question-feedback-background;
+  padding: 1.5rem 3rem 1.5rem 7rem;
+  position: relative;
+
+  p{
+    @include regular;
+    font-size: 1.4rem;
+    color: $text-color;
+  }
+
+  svg{
+    position: absolute;
+    left: 3rem;
+    @include center(vertical);
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+}
+
+.c-feedback{
+  position: absolute;
+  top: -0.2rem;
+  right: 0.8rem;
+  height: 3.5rem;
+  width: 13rem;
+  border-radius: 0 0 $radius $radius;
+  padding: 0.7rem 0.5rem 0.5rem 3.5rem;
+  background: $answer-result-background;
+  @include semi-bold;
+  font-size: 1.4rem;
+  color: $text-color;
+  text-transform: uppercase;
+
+  svg{
+    position: absolute;
+    left: 0.5rem;
+    top: 0.5rem;
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+}
+
+.c-feedback--incorrect{
+  svg{
+    path{
+      fill: $incorrect;
+    }
+  }
+}
+
+.c-feedback--correct{
+  svg{
+    path{
+      fill: $correct;
+    }
+  }
+}

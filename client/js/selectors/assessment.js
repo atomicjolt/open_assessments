@@ -1,20 +1,25 @@
+import { AssessmentFormats }  from "../parsers/assessment";
+import * as ClixSelectors  from "../parsers/clix/selectors";
+import * as EdxSelectors   from "../parsers/edX/selectors";
 import * as Qti1Selectors  from "../parsers/qti1/selectors";
-import * as Qti2Assessment from "../parsers/qti2/selectors";
-import * as EdxAssessment  from "../parsers/edX/selectors";
+import * as Qti2Selectors  from "../parsers/qti2/selectors";
 
-function getParser(standard){
-  return {
-    "QTI1": Qti1Selectors,
-    "QTI2": Qti2Assessment,
-    "EDX": EdxAssessment
-  }[standard];
+
+const SELECTORS_MAP = {};
+SELECTORS_MAP[AssessmentFormats.CLIx] = ClixSelectors;
+SELECTORS_MAP[AssessmentFormats.EdX] = EdxSelectors;
+SELECTORS_MAP[AssessmentFormats.Qti1] = Qti1Selectors;
+SELECTORS_MAP[AssessmentFormats.Qti2] = Qti2Selectors;
+
+function getSelectors (standard) {
+  return SELECTORS_MAP[standard];
 }
 
-function makeSelector(name){
+function makeDispatchingSelector(name){
   return (state, props) => {
-    var parser = getParser(state.assessment.standard);
-    if(parser === undefined){return;} // Handle no assessment loaded
-    var func = parser[name];
+    var selectors = getSelectors(state.assessment.standard);
+    if(selectors === undefined){return;} // Handle no assessment loaded
+    var func = selectors[name];
     return func(state, props);
   };
 }
@@ -22,6 +27,7 @@ function makeSelector(name){
 // Selectors that will interact with the assessment data.
 // All of these take state and props as parameters and just
 // wrap a call to the selectors native to the assessment.
-export const questions = makeSelector("questions");
-export const outcomes = makeSelector("outcomes");
-export const questionCount = makeSelector("questionCount");
+export const questions       = makeDispatchingSelector("questions");
+export const outcomes        = makeDispatchingSelector("outcomes");
+export const questionCount   = makeDispatchingSelector("questionCount");
+export const questionResults = makeDispatchingSelector("questionResults");

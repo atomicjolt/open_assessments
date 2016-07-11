@@ -2,29 +2,46 @@ import React              from 'react';
 import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import RadioButton        from './radio_button';
+import { CORRECT, INCORRECT, UNGRADED } from "../assessments/universal_input";
 
 describe('radio button', function() {
 
   var item = {
-    id: 1,
+    id: "1",
     material: "The radio button label"
   };
 
-  var result = TestUtils.renderIntoDocument(<RadioButton item={item} name="answer-radio" />);
+  var props = {
+    item,
+    name         : "answer-radio",
+    selectAnswer : () => {},
+    id           : item.id,
+    gradeState   : UNGRADED
+  };
+
+  var result;
+  var subject;
+
+  beforeEach(function(){
+    spyOn(props, "selectAnswer");
+    
+    result = TestUtils.renderIntoDocument(<RadioButton {...props} />);
+    subject = ReactDOM.findDOMNode(result);
+  });
 
   it('renders the radio button label', function() {
-    expect(ReactDOM.findDOMNode(result).textContent).toContain(item.material);
+    expect(subject.textContent).toContain(item.material);
   });
 
   it('renders input attributes', function() {
-    expect(ReactDOM.findDOMNode(result).childNodes[0].childNodes[0].childNodes[0].attributes.name.value).toContain("answer-radio");
+    expect(subject.innerHTML).toContain('type="radio"');
   });
 
   it('calls the answerSelected function on click', () => {
-    spyOn(result, "answerSelected");
     var radio = TestUtils.findRenderedDOMComponentWithTag(result, 'input');
-    TestUtils.Simulate.click(radio);
-    expect(result.answerSelected).toHaveBeenCalled();
+    TestUtils.Simulate.change(radio);
+
+    expect(props.selectAnswer).toHaveBeenCalled();
   });
 
 });

@@ -1,18 +1,20 @@
-import configureStore     from "./configure_store";
 import Immutable          from 'immutable';
+
+import configureStore     from "./configure_store";
 
 describe('configure store', function() {
 
   it('setups up initial state', function() {
-    var initialState = Immutable.fromJS({
-        jwt: "jwt_token",
-        csrf: "csrf_token",
-        apiUrl: "http://www.example.com"
-    });
-    var settings = {
-      settings: initialState
-    }
-    var store = configureStore(settings);
-    expect(store.getState().settings.get("jwt")).toBe('jwt_token');
+    const settings = {
+      csrf     : "csrf_token",
+      apiUrl   : "http://www.example.com"
+    };
+    const initialState = {
+      jwt      : "jwt_token",
+      settings
+    };
+    const store = configureStore(initialState);
+    expect(store.getState().settings).toBe(settings);
+    expect(store.getState().jwt).toBe('jwt_token');
   });
 });

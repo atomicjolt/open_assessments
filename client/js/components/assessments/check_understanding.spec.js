@@ -9,17 +9,13 @@ describe('check understanding', function() {
 
   describe('formative start screen', ()=>{
     let props = {
-      title : "Test Title",
-      maxAttempts : 2,
-      userAttempts : 1,
-      eid : "asdf",
-      isLti : true,
-      assessmentId : 24,
-      assessmentKind : "formative",
-      ltiRole : "User",
-      icon : "test.svg",
-      images : {},
-      theme : {}
+      title          : "Test Title",
+      maxAttempts    : 2,
+      userAttempts   : 1,
+      assessmentId   : 24,
+      assessmentKind : "FORMATIVE",
+      lti            : { lti_role : "User" },
+      icon           : "test.svg"
     };
 
     var result = TestUtils.renderIntoDocument(<CheckUnderstanding {...props} />);
@@ -31,17 +27,13 @@ describe('check understanding', function() {
 
   describe('show what you know start screen', ()=>{
     let props = {
-      title : "Test Title",
-      maxAttempts : 2,
-      userAttempts : 1,
-      eid : "asdf",
-      isLti : true,
-      assessmentId : 24,
-      assessmentKind : "show_what_you_know",
-      ltiRole : "User",
-      icon : "test.svg",
-      images : {},
-      theme : {}
+      title          : "Test Title",
+      maxAttempts    : 2,
+      userAttempts   : 1,
+      assessmentId   : 24,
+      assessmentKind : "SHOW_WHAT_YOU_KNOW",
+      lti            : { lti_role : "User" },
+      icon           : "test.svg",
     };
 
     var result = TestUtils.renderIntoDocument(<CheckUnderstanding {...props}/>);
@@ -58,9 +50,9 @@ describe('check understanding', function() {
       maxAttempts : 2,
       userAttempts : 0,
       eid : "asdf",
-      isLti : true,
+      is_lti : true,
       assessmentId : 24,
-      assessmentKind : "summative",
+      assessmentKind : "SUMMATIVE",
       ltiRole : "User",
       icon : "test.svg",
       images : {},

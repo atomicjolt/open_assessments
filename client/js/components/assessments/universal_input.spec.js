@@ -10,37 +10,12 @@ describe('Assessment Questions', ()=> {
   var result;
   var item;
   var Content;
-  beforeEach(()=>{
-    item = {
-      id       : 0,
-      question_type: "multiple_choice_question",
-      url      : "www.iamcool.com",
-      title    : "title",
-      xml      : null,
-      standard : 'edX',
-      edXMaterial : "<p>hello world</p>",
-      answers  : [{id: "0", material: "test1"}, {id: "1", material: "test2"}],
-      isGraded : true,
-      messages : ["My Message1", "My Message2"],
-      solution : "<p>solution text</p>"
-    };
-
-    result = TestUtils.renderIntoDocument(<UniversalInput settings={ {} } item={item} />);
-  });
+  var selectAnswer = () => {};
 
   it('It Renders the page', ()=>{
     expect(ReactDOM.findDOMNode(result)).toBeDefined();
   });
 
-  it('It renders the title', ()=>{
-    expect(ReactDOM.findDOMNode(result).innerText).toContain('title');
-  });
-
-  it('It renders the question text', ()=>{
-    const subject = ReactDOM.findDOMNode(result);
-    expect(subject.innerText).toContain(item.messages[0]);
-    expect(subject.innerText).toContain(item.messages[1]);
-  });
 
   xdescribe('Drag and Drop', ()=>{
     beforeEach(()=>{
@@ -70,8 +45,26 @@ describe('Assessment Questions', ()=> {
   describe('Multiple Choice', ()=>{
 
     beforeEach(()=>{
-      item.question_type = 'multiple_choice_question';
-      Content = (<UniversalInput settings={ {} } item={item} />);
+      item = {
+        id       : 0,
+        question_type: "multiple_choice_question",
+        url      : "www.iamcool.com",
+        title    : "title",
+        xml      : null,
+        standard : 'edX',
+        edXMaterial : "<p>hello world</p>",
+        answers  : [{id: "0", material: "test1"}, {id: "1", material: "test2"}],
+        isGraded : true,
+        messages : ["My Message1", "My Message2"],
+        solution : "<p>solution text</p>"
+      };
+
+      Content = (
+        <UniversalInput
+          settings={ {} }
+          item={item}
+          selectAnswer={selectAnswer}/>
+      );
       result = TestUtils.renderIntoDocument(Content);
     });
 
@@ -107,7 +100,13 @@ describe('Assessment Questions', ()=> {
   describe('Text Input', ()=>{
     beforeEach(()=>{
       item.question_type = 'edx_numerical_input';
-      Content = (<UniversalInput settings={ {} } item={item} />);
+      Content = (
+        <UniversalInput
+          settings={ {} }
+          item={item}
+          selectAnswer={selectAnswer}
+          />
+      );
       result = TestUtils.renderIntoDocument(Content);
     });
 
@@ -161,13 +160,31 @@ describe('Assessment Questions', ()=> {
   describe('Multiple Answer', ()=>{
 
     beforeEach(()=>{
-      item.question_type = 'multiple_answers_question';
-      Content = (<UniversalInput settings={ {} } item={item} />);
+      item = {
+        id       : 0,
+        question_type: "multiple_answers_question",
+        url      : "www.iamcool.com",
+        title    : "title",
+        xml      : null,
+        standard : 'edX',
+        edXMaterial : "<p>hello world</p>",
+        answers  : [{id: "0", material: "test1"}, {id: "1", material: "test2"}],
+        isGraded : true,
+        messages : ["My Message1", "My Message2"],
+        solution : "<p>solution text</p>"
+      };
+
+      Content = (
+        <UniversalInput
+          settings={ {} }
+          item={item}
+          selectAnswer={selectAnswer}/>
+      );
       result = TestUtils.renderIntoDocument(Content);
     });
 
     it('Renders the checkboxes', ()=>{
-      expect(TestUtils.scryRenderedComponentsWithType(result,'checkbox')).toBeDefined();
+      expect(TestUtils.scryRenderedComponentsWithType(result, 'checkbox')).toBeDefined();
     });
 
     it('Checkbox text is rendered', ()=>{
@@ -176,9 +193,6 @@ describe('Assessment Questions', ()=> {
     });
   });
 
-  it('Renders the solution', ()=>{
-    expect(ReactDOM.findDOMNode(result).textContent).toContain('solution text');
-  });
 
   xit('Does not render the solution if the question is not answered', ()=>{
     expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers);

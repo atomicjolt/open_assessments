@@ -64,7 +64,7 @@ export default {
   btnQuestionBackground: defines.white,
   btnQuestionColor: defines.black,
   btnQuestionTextAlign: "left",
-  btnQuestionPadding: "0",
+  btnQuestionPadding: "0px",
   btnQuestionMarginBottom: "5px",
   btnQuestionDisplay: "block",
   btnQuestionWidth: "100%",

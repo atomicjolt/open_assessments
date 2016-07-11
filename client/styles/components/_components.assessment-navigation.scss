@@ -1,0 +1,96 @@
+.c-assessment-navigation{
+  padding: 2rem 3rem 3rem;
+  @include clearfix;
+}
+
+.c-btn{
+  display: inline-block;
+  padding: 0 1.5rem;
+  height: 3.5rem;
+  border-radius: $radius;
+  border-width: 0.2rem;
+  border-style: solid;
+  text-transform: uppercase;
+  @include bold;
+  font-size: 1.4rem;
+  position: relative;
+
+  span{
+    display: inline-block;
+    height: 100%;
+    line-height: 3rem;
+  }
+
+  svg {
+    width: 2.4rem;
+    height: 2.4rem;
+    position: absolute;
+    top: .3rem;
+
+    path{
+      @include transition(all 0.2s ease);
+    }
+  }
+}
+
+  a.c-btn--previous, .c-btn--previous{
+    background: $btn-secondary-background;
+    color: $btn-secondary-text;
+    border-color: $btn-secondary-border;
+    @include transition(all 0.2s ease);
+    padding-left: 3rem;
+
+    &:hover{
+      border-color: $btn-secondary-border-hover;
+      background: $btn-secondary-background-hover;
+      color: $btn-secondary-text-hover;
+
+      svg path{
+        fill: $btn-secondary-text-hover;
+      }
+    }
+
+    svg {
+      left: .3rem;
+      @include transform(rotate(90deg));
+
+      path{
+        fill: $btn-secondary-text;
+      }
+    }
+  }
+
+  a.c-btn--next, .c-btn--next{
+    padding-right: 3rem;
+
+    &:hover{
+      svg path{
+        fill: $btn-primary-text-hover;
+      }
+    }
+
+    svg {
+      right: .3rem;
+      @include transform(rotate(-90deg));
+
+      path{
+        fill: $btn-primary-text;
+      }
+    }
+  }
+
+  a.c-btn--check-answer, .c-btn--check-answer,
+  a.c-btn--finish, .c-btn--finish,
+  a.c-btn--next, .c-btn--next{
+    background: $btn-primary-background;
+    color: $btn-primary-text;
+    border-color: $btn-primary-border;
+    float: right;
+    @include transition(all 0.2s ease);
+
+    &:hover{
+      border-color: $btn-primary-border-hover;
+      background: $btn-primary-background-hover;
+      color: $btn-primary-text-hover;
+    }
+  }

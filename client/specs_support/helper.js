@@ -2,6 +2,7 @@
 
 import _                  from "lodash";
 import Immutable          from 'immutable';
+
 import configureStore     from "../js/store/configure_store";
 
 export default class Helper{
@@ -19,14 +20,14 @@ export default class Helper{
 
   // Create a real store that can be used for testing
   static makeStore(settings){
-    var initialSettings = _.assign({
-      jwt: "jwt_token",
-      csrf: "csrf_token",
-      apiUrl: "http://www.example.com"
+    const initialSettings = _.assign({
+      csrf_token: "csrf_token",
+      api_url: "http://www.example.com"
     }, settings);
 
     return configureStore({
-      settings: Immutable.fromJS(initialSettings)
+      settings: initialSettings,
+      jwt: "jwt_token"
     });
   }
 

@@ -1,0 +1,148 @@
+{
+  "format": "MIT-CLIx-OEA",
+  "data": [
+    {
+      "displayName": {
+        "text": "Question 2",
+        "languageTypeId": "639-2%3AENG%40ISO",
+        "formatTypeId": "TextFormats%3APLAIN%40okapia.net",
+        "scriptTypeId": "15924%3ALATN%40ISO"
+      },
+      "description": {
+        "text": "QTI AssessmentItem",
+        "languageTypeId": "639-2%3AENG%40ISO",
+        "formatTypeId": "TextFormats%3APLAIN%40okapia.net",
+        "scriptTypeId": "15924%3ALATN%40ISO"
+      },
+      "recordTypeIds": [
+        "question-record-type%3Aqti%40ODL.MIT.EDU",
+        "question-record-type%3Amulti-choice-text%40ODL.MIT.EDU"
+      ],
+      "text": {
+        "text": "<p>Which festival involves throwing colored powder on strangers?</p>",
+        "languageTypeId": "639-2%3AENG%40ISO",
+        "formatTypeId": "TextFormats%3APLAIN%40okapia.net",
+        "scriptTypeId": "15924%3ALATN%40ISO"
+      },
+      "bankId": "assessment.Bank%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU",
+      "choices": [
+        {
+          "text": "<p>Diwali</p>",
+          "id": "id1513dca8-1ea2-472a-b6d3-dec36666f265",
+          "name": ""
+        },
+        {
+          "text": "<p>Holi</p>",
+          "id": "id33225675-52e1-42b7-b36c-885ecb128f21",
+          "name": ""
+        },
+        {
+          "text": "<p>Independence Day</p>",
+          "id": "id4352cb25-b39c-46bc-bf8f-958f10a916af",
+          "name": ""
+        }
+      ],
+      "genusTypeId": "question-type%3Aqti-choice-interaction%40ODL.MIT.EDU",
+      "assignedBankIds": [
+        "assessment.Bank%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU"
+      ],
+      "qti": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<assessmentItem adaptive=\"False\" identifier=\"assessment.Item%3A576d69554a40456f9a434e41%40ODL.MIT.EDU\" timeDependent=\"False\" title=\"Question 2\" xml_ns=\"http://www.imsglobal.org/xsd/imsqti_v2p1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd http://www.w3.org/1998/Math/MathML http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd\">\n <outcomeDeclaration baseType=\"float\" cardinality=\"single\" identifier=\"SCORE\">\n  <defaultValue>\n   <value>\n    0\n   </value>\n  </defaultValue>\n </outcomeDeclaration>\n <outcomeDeclaration baseType=\"float\" cardinality=\"single\" identifier=\"MAXSCORE\">\n  <defaultValue>\n   <value>\n    1\n   </value>\n  </defaultValue>\n </outcomeDeclaration>\n <outcomeDeclaration baseType=\"float\" cardinality=\"single\" identifier=\"MINSCORE\" view=\"testConstructor\">\n  <defaultValue>\n   <value>\n    0\n   </value>\n  </defaultValue>\n </outcomeDeclaration>\n <outcomeDeclaration baseType=\"identifier\" cardinality=\"single\" identifier=\"FEEDBACKBASIC\">\n  <defaultValue>\n   <value>\n    empty\n   </value>\n  </defaultValue>\n </outcomeDeclaration>\n <itemBody>\n  <p>\n   Which festival involves throwing colored powder on strangers?\n  </p>\n  <choiceInteraction maxChoices=\"1\" responseIdentifier=\"RESPONSE_1\" shuffle=\"true\">\n   <simpleChoice identifier=\"id1513dca8-1ea2-472a-b6d3-dec36666f265\">\n    <p>\n     Diwali\n    </p>\n   </simpleChoice>\n   <simpleChoice identifier=\"id33225675-52e1-42b7-b36c-885ecb128f21\">\n    <p>\n     Holi\n    </p>\n   </simpleChoice>\n   <simpleChoice identifier=\"id4352cb25-b39c-46bc-bf8f-958f10a916af\">\n    <p>\n     Independence Day\n    </p>\n   </simpleChoice>\n  </choiceInteraction>\n </itemBody>\n</assessmentItem>",
+      "type": "Question",
+      "id": "assessment.Item%3A576d69554a40456f9a434e41%40ODL.MIT.EDU",
+      "multiAnswer": false,
+      "learningObjectiveIds": [ ]
+    },
+    {
+      "displayName": {
+        "text": "Question 3",
+        "languageTypeId": "639-2%3AENG%40ISO",
+        "formatTypeId": "TextFormats%3APLAIN%40okapia.net",
+        "scriptTypeId": "15924%3ALATN%40ISO"
+      },
+      "description": {
+        "text": "QTI AssessmentItem",
+        "languageTypeId": "639-2%3AENG%40ISO",
+        "formatTypeId": "TextFormats%3APLAIN%40okapia.net",
+        "scriptTypeId": "15924%3ALATN%40ISO"
+      },
+      "recordTypeIds": [
+        "question-record-type%3Aqti%40ODL.MIT.EDU",
+        "question-record-type%3Amulti-choice-text%40ODL.MIT.EDU"
+      ],
+      "text": {
+        "text": "<p>This Indian dessert is made from cashews.</p>",
+        "languageTypeId": "639-2%3AENG%40ISO",
+        "formatTypeId": "TextFormats%3APLAIN%40okapia.net",
+        "scriptTypeId": "15924%3ALATN%40ISO"
+      },
+      "bankId": "assessment.Bank%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU",
+      "choices": [
+        {
+          "text": "<p>Kaju katli</p>",
+          "id": "id266e8898-256b-4e00-a7b3-eed410597e52",
+          "name": ""
+        },
+        {
+          "text": "<p>Jalebi</p>",
+          "id": "id4adc932c-053f-436a-88ff-17370b175a0d",
+          "name": ""
+        },
+        {
+          "text": "<p>Kulfi</p>",
+          "id": "id7df1daa2-fc60-4563-9e44-977dd87c4d02",
+          "name": ""
+        }
+      ],
+      "genusTypeId": "question-type%3Aqti-choice-interaction%40ODL.MIT.EDU",
+      "assignedBankIds": [
+        "assessment.Bank%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU"
+      ],
+      "qti": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<assessmentItem adaptive=\"False\" identifier=\"assessment.Item%3A576d69554a40456f9a434e43%40ODL.MIT.EDU\" timeDependent=\"False\" title=\"Question 3\" xml_ns=\"http://www.imsglobal.org/xsd/imsqti_v2p1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd http://www.w3.org/1998/Math/MathML http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd\">\n <outcomeDeclaration baseType=\"float\" cardinality=\"single\" identifier=\"SCORE\">\n  <defaultValue>\n   <value>\n    0\n   </value>\n  </defaultValue>\n </outcomeDeclaration>\n <outcomeDeclaration baseType=\"float\" cardinality=\"single\" identifier=\"MAXSCORE\">\n  <defaultValue>\n   <value>\n    1\n   </value>\n  </defaultValue>\n </outcomeDeclaration>\n <outcomeDeclaration baseType=\"float\" cardinality=\"single\" identifier=\"MINSCORE\" view=\"testConstructor\">\n  <defaultValue>\n   <value>\n    0\n   </value>\n  </defaultValue>\n </outcomeDeclaration>\n <outcomeDeclaration baseType=\"identifier\" cardinality=\"single\" identifier=\"FEEDBACKBASIC\">\n  <defaultValue>\n   <value>\n    empty\n   </value>\n  </defaultValue>\n </outcomeDeclaration>\n <itemBody>\n  <p>\n   This Indian dessert is made from cashews.\n  </p>\n  <choiceInteraction maxChoices=\"1\" responseIdentifier=\"RESPONSE_1\" shuffle=\"true\">\n   <simpleChoice identifier=\"id266e8898-256b-4e00-a7b3-eed410597e52\">\n    <p>\n     Kaju katli\n    </p>\n   </simpleChoice>\n   <simpleChoice identifier=\"id4adc932c-053f-436a-88ff-17370b175a0d\">\n    <p>\n     Jalebi\n    </p>\n   </simpleChoice>\n   <simpleChoice identifier=\"id7df1daa2-fc60-4563-9e44-977dd87c4d02\">\n    <p>\n     Kulfi\n    </p>\n   </simpleChoice>\n  </choiceInteraction>\n </itemBody>\n</assessmentItem>",
+      "type": "Question",
+      "id": "assessment.Item%3A576d69554a40456f9a434e43%40ODL.MIT.EDU",
+      "multiAnswer": false,
+      "learningObjectiveIds": [ ]
+    },
+    {
+      "displayName": {
+        "text": "Social Introductions Role Play",
+        "languageTypeId": "639-2%3AENG%40ISO",
+        "formatTypeId": "TextFormats%3APLAIN%40okapia.net",
+        "scriptTypeId": "15924%3ALATN%40ISO"
+      },
+      "description": {
+        "text": "QTI AssessmentItem",
+        "languageTypeId": "639-2%3AENG%40ISO",
+        "formatTypeId": "TextFormats%3APLAIN%40okapia.net",
+        "scriptTypeId": "15924%3ALATN%40ISO"
+      },
+      "recordTypeIds": [
+        "question-record-type%3Aqti%40ODL.MIT.EDU",
+        "question-record-type%3Afiles%40ODL.MIT.EDU",
+        "question-record-type%3Afile-submission%40ODL.MIT.EDU"
+      ],
+      "text": {
+        "text": "<p><object class=\"HTML5\" data=\"AssetContent:audioTestFile__mp3\" type=\"audio/mpeg\"/></p>\n<p><strong>Introducting a new student</strong></p>\n<p>It's the first day of school after the summer vacations. A new student has joined the class</p>\n<p>Student 1 talks to the new student to make him/her feel comfortable.</p>\n<p>Student 2 talks about herself or himself and asks a few questions about the new school</p>",
+        "languageTypeId": "639-2%3AENG%40ISO",
+        "formatTypeId": "TextFormats%3APLAIN%40okapia.net",
+        "scriptTypeId": "15924%3ALATN%40ISO"
+      },
+      "bankId": "assessment.Bank%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU",
+      "learningObjectiveIds": [ ],
+      "genusTypeId": "question-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU",
+      "assignedBankIds": [
+        "assessment.Bank%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU"
+      ],
+      "qti": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<assessmentItem adaptive=\"False\" identifier=\"assessment.Item%3A576d69554a40456f9a434e45%40ODL.MIT.EDU\" timeDependent=\"False\" title=\"Social Introductions Role Play\" xml_ns=\"http://www.imsglobal.org/xsd/imsqti_v2p1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd http://www.w3.org/1998/Math/MathML http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd\">\n <outcomeDeclaration baseType=\"float\" cardinality=\"single\" identifier=\"SCORE\">\n  <defaultValue>\n   <value>\n    0\n   </value>\n  </defaultValue>\n </outcomeDeclaration>\n <outcomeDeclaration baseType=\"float\" cardinality=\"single\" identifier=\"MAXSCORE\">\n  <defaultValue>\n   <value>\n    1\n   </value>\n  </defaultValue>\n </outcomeDeclaration>\n <outcomeDeclaration baseType=\"float\" cardinality=\"single\" identifier=\"MINSCORE\" view=\"testConstructor\">\n  <defaultValue>\n   <value>\n    0\n   </value>\n  </defaultValue>\n </outcomeDeclaration>\n <itemBody>\n  <p>\n   <object class=\"HTML5\" data=\"/api/v1/repository/repositories/repository.Repository%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU/assets/repository.Asset%3A576d69554a40456f9a434e47%40ODL.MIT.EDU/contents/repository.AssetContent%3A576d69554a40456f9a434e49%40ODL.MIT.EDU\" type=\"audio/mpeg\">\n    <p>\n    </p>\n    <p>\n     <strong>\n      Introducting a new student\n     </strong>\n    </p>\n    <p>\n     It's the first day of school after the summer vacations. A new student has joined the class\n    </p>\n    <p>\n     Student 1 talks to the new student to make him/her feel comfortable.\n    </p>\n    <p>\n     Student 2 talks about herself or himself and asks a few questions about the new school\n    </p>\n   </object>\n  </p>\n  <uploadInteraction responseIdentifier=\"RESPONSE_1\"/>\n </itemBody>\n</assessmentItem>",
+      "type": "Question",
+      "id": "assessment.Item%3A576d69554a40456f9a434e45%40ODL.MIT.EDU",
+      "fileIds": {
+        "audioTestFile__mp3": {
+          "assetId": "repository.Asset%3A576d69554a40456f9a434e47%40ODL.MIT.EDU",
+          "assetContentTypeId": "asset-content-genus-type%3Amp3%40iana.org",
+          "assetContentId": "repository.AssetContent%3A576d69554a40456f9a434e49%40ODL.MIT.EDU"
+        }
+      }
+    }
+  ]
+}

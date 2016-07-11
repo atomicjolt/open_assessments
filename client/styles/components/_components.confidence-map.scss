@@ -1,0 +1,70 @@
+.c-confidence-map{
+  padding: 2rem 3rem 1rem;
+}
+
+.c-confidence-prompt{
+  @include semi-bold;
+  font-size: 1.4rem;
+  margin: 0;
+  padding-bottom: 1rem;
+  color: $text-color;
+  text-align: center;
+}
+
+.c-confidence-item{
+  display: inline-block;
+  width: 33.333%;
+  border: 0.2rem solid $lightest-gray;
+  padding: 1rem;
+  position: relative;
+  cursor: pointer;
+
+  &.is-clicked{
+    border-color: $primary;
+  }
+
+  p{
+    text-align: center;
+    @include regular;
+    color: $text-color;
+    font-size: 1.4rem;
+    margin-top: 2rem;
+  }
+
+  input[type="radio"]:checked + label:before{
+    content: '';
+    width: .7rem;
+    height: .7rem;
+    background: $primary;
+    border-radius: 50%;
+    position: absolute;
+    top: 0.2rem;
+    left: 0.2rem;
+  }
+
+  input[type="radio"]:checked + label{
+    border-color: $primary;
+  }
+
+  .c-radio-button{
+    position: absolute;
+    @include center(horizontal);
+  }
+
+  &:hover{
+    border-color: $primary;
+  }
+}
+
+.c-confidence-item--left{
+  border-right: 0.2rem solid transparent;
+}
+
+.c-confidence-item--middle{
+  border-right: 0.2rem solid transparent;
+  border-left: 0.2rem solid transparent;
+}
+
+.c-confidence-item--right{
+  border-left: 0.2rem solid transparent;
+}
