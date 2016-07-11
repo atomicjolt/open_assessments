@@ -60,33 +60,23 @@ export default (state = initialState, action) => {
       break;
 
     case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE:
+      if(!action.error){
+        var checkedResponses = Immutable.Map();
 
-      var checkedResponses = Immutable.Map();
+        // TODO Currently we are setting the same response for all choiceIds.
+        // When we have an example of multi answer feedback we should figure out
+        // how to assign feedback to each answer.
+        action.choiceIds.forEach((id) => {
+          var feedback = Immutable.Map(action.payload);
+          checkedResponses = checkedResponses.set(id,feedback);
+        });
 
-      // TODO Currently we are setting the same response for all choiceIds.
-      // When we have an example of multi answer feedback we should figure out
-      // how to assign feedback to each answer.
-      action.choiceIds.forEach((id) => {
-        var feedback = Immutable.Map(action.payload);
-        checkedResponses = checkedResponses.set(id,feedback);
-      });
-
-      state = state.setIn(
-        ['checkedResponses', `${action.questionIndex}`],
-        checkedResponses
-      );
-
-      state = state.setIn(['questionResults'], )
-
-      // Decrement number of questions being checked
-      var checked = state.get('numQuestionsChecking');
-      if(checked <= 0){
-        throw "assessment_check_answer_done dispatched when no answers were being checked";
+        state = state.setIn(
+          ['checkedResponses', `${action.questionIndex}`],
+          checkedResponses
+          );
       }
-      state = state.set('numQuestionsChecking', --checked);
-      break;
 
-    case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_FAILED:
       // Decrement number of questions being checked
       var checked = state.get('numQuestionsChecking');
       if(checked <= 0){

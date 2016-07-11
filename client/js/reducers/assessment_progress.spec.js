@@ -122,18 +122,6 @@ describe('assessment reducer', () => {
     });
   });
 
-  describe("check answer failed", () => {
-    const action = {
-      type: AssessmentConstants.ASSESSMENT_CHECK_ANSWER_FAILED
-    };
-
-    it("decrements numQuestionsChecking", () => {
-      var initialState = Immutable.fromJS({numQuestionsChecking:1});
-      const state = assessmentProgress(initialState, action);
-      expect(state.get('numQuestionsChecking')).toEqual(0);
-    });
-  });
-
   describe("check questions", () => {
     it('checks adds number of questions to numQuestionsChecking', () => {
       const action = {
