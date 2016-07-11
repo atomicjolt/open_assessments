@@ -45,7 +45,10 @@ export default class TwoButtonNav extends React.Component{
 
     // The state of the primary action button. Should be a value included in
     // PRIMARY_ACTION.
-    primaryAction: React.PropTypes.string.isRequired
+    primaryAction: React.PropTypes.string.isRequired,
+
+    //TODO document
+    localizedStrings: React.PropTypes.object.isRequired
   };
 
 
@@ -57,7 +60,7 @@ export default class TwoButtonNav extends React.Component{
       secondaryButton = (
         <Button
           buttonType="previous"
-          buttonText="Previous"
+          buttonText={this.props.localizedStrings.previousButton}
           onClick={this.props.goToPreviousQuestions}>
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
              <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
@@ -70,14 +73,14 @@ export default class TwoButtonNav extends React.Component{
       primaryButton = (
          <Button
            buttonType="finish"
-           buttonText="Finish Quiz"
+           buttonText={this.props.localizedStrings.submitButton}
            onClick={this.props.submitAssessment} />
       );
     } else if(this.props.primaryAction === PRIMARY_ACTION.NEXT) {
       primaryButton = (
         <Button
           buttonType="next"
-          buttonText="Next"
+          buttonText={this.props.localizedStrings.nextButton}
           onClick={this.props.goToNextQuestions}>
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
              <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
@@ -88,7 +91,7 @@ export default class TwoButtonNav extends React.Component{
       primaryButton = (
         <Button
           buttonType="check-answer"
-          buttonText="Check Answer"
+          buttonText={this.props.localizedStrings.checkAnswerButton}
           onClick={this.props.checkAnswers} />
       );
     }

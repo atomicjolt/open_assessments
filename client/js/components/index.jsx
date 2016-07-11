@@ -12,7 +12,7 @@ const select = (state) => {
   return {
     maxAttempts: state.settings.max_attempts,
     userAttempts: state.settings.userAttempts,
-    enableStart: state.settings.enableStart
+    enableStart: state.settings.enable_start
   };
 };
 
