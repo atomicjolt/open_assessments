@@ -1,7 +1,8 @@
-import React              from 'react';
-import ReactDOM           from 'react-dom';
-import TestUtils          from 'react/lib/ReactTestUtils';
-import Item               from './item';
+import React                from 'react';
+import ReactDOM             from 'react-dom';
+import TestUtils            from 'react/lib/ReactTestUtils';
+import Item                 from './item';
+import { localizeStrings }  from "../../selectors/localize";
 
 describe('item', function() {
 
@@ -23,6 +24,7 @@ describe('item', function() {
       currentItemIndex={currentItemIndex}
       questionCount={questionCount}
       assessment={assessment}
+      localizedStrings={localizeStrings({settings:{locale:"en"}}).item}
     />);
     subject = ReactDOM.findDOMNode(result);
   };

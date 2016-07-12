@@ -1,13 +1,16 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
-import NotFound           from './not_found';
+import { NotFound }       from './not_found';
 
 describe('not_found', function() {
   var result;
 
   beforeEach(()=>{
-    result = TestUtils.renderIntoDocument(<NotFound/>);
+    result = TestUtils.renderIntoDocument(
+      <NotFound
+        localizedStrings={{notFound:{notFound:"Not Found"}}}/>
+    );
   });
 
   it('renders a not found message', function() {
