@@ -52,7 +52,7 @@ const select = (state, props) => {
     // answerIds: answers feedback applies to
     questionResults : questionResults(state, props),
 
-    //TODO document
+    // User facing strings of the language specified by the 'locale' setting 
     localizedStrings: localizeStrings(state, props),
 
     // TODO

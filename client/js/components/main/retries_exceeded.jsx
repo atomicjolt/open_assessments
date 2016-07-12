@@ -5,7 +5,7 @@ import { localizeStrings }  from '../../selectors/localize';
 
 const select = (state, props) => {
   return {
-    //TODO document
+    // User facing strings of the language specified by the 'locale' setting
     localizedStrings: localizeStrings(state, props)
   };
 };

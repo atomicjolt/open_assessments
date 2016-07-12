@@ -10,6 +10,7 @@ const select = (state, props) => {
   return {
     title            : state.assessment.title,
     assessment_kind  : state.settings.assessment_kind,
+    // User facing strings of the language specified by the 'locale' setting 
     localizedStrings : localizeStrings(state, props)
   };
 };

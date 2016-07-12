@@ -7,6 +7,8 @@ const select = (state, props) => {
   return {
     assessmentProgress: state.assessmentProgress.toJS(),
     items: state.assessment.items,
+    
+    // User facing strings of the language specified by the 'locale' setting
     localizedStrings: localizeStrings(state, props)
   }
 }
