@@ -9,7 +9,7 @@ export default {
     assessmentComplete: {
       complete: "Quiz Complete"
     },
-    two_button_nav:{
+    twoButtonNav:{
       previousButton: "Previous", // Text on previous questions button
       nextButton: "Next",
       checkAnswerButton: "Check Answer",

@@ -47,7 +47,7 @@ export default class TwoButtonNav extends React.Component{
     // PRIMARY_ACTION.
     primaryAction: React.PropTypes.string.isRequired,
 
-    //TODO document
+    // User facing strings of the language specified by the 'locale' setting
     localizedStrings: React.PropTypes.object.isRequired
   };
 

@@ -52,7 +52,7 @@ const select = (state, props) => {
     // answerIds: answers feedback applies to
     questionResults : questionResults(state, props),
 
-    // User facing strings of the language specified by the 'locale' setting 
+    // User facing strings of the language specified by the 'locale' setting
     localizedStrings: localizeStrings(state, props),
 
     // TODO
@@ -360,7 +360,7 @@ export class Assessment extends React.Component{
         {warning}
         {content}
         <TwoButtonNav
-          localizedStrings={this.props.localizedStrings.two_button_nav}
+          localizedStrings={this.props.localizedStrings.twoButtonNav}
           goToNextQuestions={(e) => this.nextButtonClicked(e)}
           goToPreviousQuestions={(e) => this.previousButtonClicked(e)}
           checkAnswers={(e) => this.checkAnswersButtonClicked(e)}

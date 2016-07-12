@@ -26,7 +26,7 @@ export default class Item extends React.Component{
 
     selectAnswer      : React.PropTypes.func.isRequired,
 
-    //TODO document
+    // User facing strings of the language specified by the 'locale' setting
     localizedStrings: React.PropTypes.object.isRequired
   };
 
