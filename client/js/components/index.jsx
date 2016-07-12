@@ -12,7 +12,7 @@ const select = (state) => {
   return {
     maxAttempts: state.settings.max_attempts,
     userAttempts: state.settings.userAttempts,
-    enableStart: state.settings.enableStart
+    enableStart: state.settings.enable_start
   };
 };
 
@@ -41,9 +41,7 @@ export class Index extends React.Component {
   }
 
   render(){
-    let strings = new LocalizedStrings(locales());
     return <div>
-      <p>{/*strings.assessments.new*/}</p>
       {this.props.children}
     </div>;
   }

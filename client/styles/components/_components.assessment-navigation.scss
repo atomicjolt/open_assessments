@@ -19,6 +19,7 @@
     display: inline-block;
     height: 100%;
     line-height: 3rem;
+    @include transition(all 0.1s ease);
   }
 
   svg {
@@ -94,3 +95,36 @@
       color: $btn-primary-text-hover;
     }
   }
+
+  a.c-btn--loading, .c-btn--loading{
+    background: $btn-primary-background-hover;
+    border-color: $btn-primary-border-hover;
+    pointer-events: none;
+
+    span{
+      opacity: 0;
+    }
+    svg{
+      width: 2.4rem;
+      height: 2.4rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include transform(translate(-50%, -50%));
+      animation: spin 0.5s linear infinite;
+      -webkit-animation: spin 0.5s linear infinite;
+
+      path{
+        fill: $accent;
+      }
+    }
+  }
+
+@keyframes spin {
+  0%{
+    @include transform(translate(-50%, -50%) rotate(0));
+  }
+  100%{
+    @include transform(translate(-50%, -50%) rotate(360deg));
+  }
+}

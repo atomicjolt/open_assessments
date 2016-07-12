@@ -2,7 +2,7 @@ import React              from 'react';
 import ReactDOM           from 'react-dom';
 import Immutable          from 'immutable';
 import TestUtils          from 'react/lib/ReactTestUtils';
-
+import {localizeStrings}  from '../../selectors/localize';
 import { Start }              from './start';
 
 describe('start', function() {
@@ -15,7 +15,8 @@ describe('start', function() {
   beforeEach(()=>{
     props = {
       title:"Test Title",
-      assessment_kind:"SUMMATIVE"
+      assessment_kind:"SUMMATIVE",
+      localizedStrings: localizeStrings({settings:{locale:"en"}})
     };
 
     result = TestUtils.renderIntoDocument(<Start {...props} /> );

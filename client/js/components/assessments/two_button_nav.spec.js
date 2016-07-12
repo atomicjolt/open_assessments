@@ -2,6 +2,7 @@ import React                                  from 'react';
 import ReactDOM                               from 'react-dom';
 import TestUtils                              from 'react/lib/ReactTestUtils';
 
+import { localizeStrings }                    from "../../selectors/localize";
 import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
 import TwoButtonNav                           from "../assessments/two_button_nav";
 
@@ -14,6 +15,7 @@ describe('Two Button Nav', () => {
 
     beforeEach(() => {
       props = {
+        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
         goToPreviousQuestions: () => {},
         secondaryAction: SECONDARY_ACTION.PREV
       };
@@ -52,7 +54,9 @@ describe('Two Button Nav', () => {
     var props;
 
     beforeEach(() => {
-      props = {};
+      props = {
+        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
+      };
     });
 
     var render = () => {
@@ -62,6 +66,7 @@ describe('Two Button Nav', () => {
 
     it('renders next button when enabled', () => {
       props = {
+        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
         goToNextQuestions: () => {},
         primaryAction: PRIMARY_ACTION.NEXT
       };
@@ -72,6 +77,7 @@ describe('Two Button Nav', () => {
 
     it('calls onClick when next button is clicked', () => {
       props = {
+        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
         goToNextQuestions: () => {},
         primaryAction: PRIMARY_ACTION.NEXT
       };
@@ -85,6 +91,7 @@ describe('Two Button Nav', () => {
 
     it('renders submit button when enabled', () => {
       props = {
+        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
         submitAssessment: () => {},
         primaryAction: PRIMARY_ACTION.SUBMIT
       };
@@ -95,6 +102,7 @@ describe('Two Button Nav', () => {
 
     it('calls onClick when submit button is clicked', () => {
       props = {
+        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
         submitAssessment: () => {},
         primaryAction: PRIMARY_ACTION.SUBMIT
       };
@@ -108,6 +116,7 @@ describe('Two Button Nav', () => {
 
     it('renders check answer button when enabled', () => {
       props = {
+        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
         checkAnswers: () => {},
         primaryAction: PRIMARY_ACTION.CHECK_ANSWERS
       };
@@ -118,6 +127,7 @@ describe('Two Button Nav', () => {
 
     it('calls onClick when answer button is clicked', () => {
       props = {
+        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
         checkAnswers: () => {},
         primaryAction: PRIMARY_ACTION.CHECK_ANSWERS
       };

@@ -11,20 +11,21 @@ export default (state = initialState, action) => {
 
   switch(action.type){
     case AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE:
-      if(!state.hasIn(['questionResults', action.questionIndex])) {
+      if(!action.error){
+        if(!state.hasIn(['questionResults', action.questionIndex])) {
+          state = state.setIn(
+            ['questionResults', action.questionIndex],
+            Immutable.List()
+          );
+        }
+
         state = state.setIn(
           ['questionResults', action.questionIndex],
-          Immutable.List()
+          state.getIn(
+            ['questionResults', action.questionIndex]
+          ).unshift(action.payload)
         );
       }
-
-      state = state.setIn(
-        ['questionResults', action.questionIndex],
-        state.getIn(
-          ['questionResults', action.questionIndex]
-        ).unshift(action.payload)
-      );
-
       break;
     default:
 

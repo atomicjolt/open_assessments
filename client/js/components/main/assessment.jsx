@@ -6,13 +6,20 @@ import { connect }                            from "react-redux";
 import * as CommunicationActions              from "../../actions/communications";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
 import appHistory                             from "../../history";
+import { localizeStrings }                    from "../../selectors/localize";
 import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
 import TwoButtonNav                           from "../assessments/two_button_nav";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import ProgressDropdown                       from "../common/progress_dropdown";
 import { questionResults }                    from "../../selectors/assessment";
-import { questionCount, questions, outcomes, assessmentLoaded}  from "../../selectors/assessment";
+import {
+  questionCount,
+  questions,
+  outcomes,
+  isCheckingAnswer,
+  assessmentLoaded
+}  from "../../selectors/assessment";
 
 const select = (state, props) => {
   return {
@@ -49,10 +56,17 @@ const select = (state, props) => {
     // Array containing all assessment Items
     allQuestions    : questions(state, props),
 
+    // Returns true if any api calls to check answers have not yet returned,
+    // false otherwise.
+    isCheckingAnswer: isCheckingAnswer(state, props),
+
     // Array of graded user response objects containing keys
     // correct:true/false, feedback:"Answer feedback",
     // answerIds: answers feedback applies to
     questionResults : questionResults(state, props),
+
+    // User facing strings of the language specified by the 'locale' setting
+    localizedStrings: localizeStrings(state, props),
 
     // TODO
     outcomes        : outcomes(state, props)
@@ -169,6 +183,7 @@ export class Assessment extends React.Component{
 
     return (
       <Item
+          localizedStrings = {props.localizedStrings.item}
           key              = {index /* react uses this to distinguish children */}
           settings         = {props.settings}
           assessment       = {props.assessment}
@@ -252,7 +267,7 @@ export class Assessment extends React.Component{
     let unanswered = this.checkCompletion();
     let warning;
     if(unanswered === true && this.isLastPage()){
-      warning = <div>Warning There are unanswered questions</div>;
+      warning = <div>{this.props.localizedStrings.unansweredQuestionWarning}</div>;
     }
     return warning;
   }
@@ -289,8 +304,15 @@ export class Assessment extends React.Component{
   getCounter(){
     if(!this.props.assessmentLoaded){return;}
 
+    var strings = this.props.localizedStrings;
     if(this.props.questionsPerPage === 1){
-      return `Question ${this.props.currentItem + 1} of ${this.props.questionCount}`;
+      return (
+        strings.formatString(
+          strings.assessment.counterQuestion,
+          `${this.props.currentItem + 1}`,
+          `${this.props.questionCount}`
+        )
+      );
     } else {
       var currentPage = (
         Math.floor(this.props.currentItem / this.props.questionsPerPage) + 1
@@ -298,12 +320,18 @@ export class Assessment extends React.Component{
       var totalPages = (
         Math.floor(this.props.questionCount / this.props.questionsPerPage)
       );
-      return `Page ${currentPage} of ${totalPages}`;
+      return (
+        strings.formatString(
+          strings.assessment.counterPage,
+          `${this.props.currentItem + 1}`,
+          `${this.props.questionCount}`
+        )
+      );
     }
   }
 
   popup(){
-    return "Don’t leave!\n If you leave now your quiz won't be scored, but it will still count as an attempt.\n\n If you want to skip a question or return to a previous question, stay on this quiz and then use the \"Progress\" drop-down menu";
+    return this.props.localizedStrings.leavingQuizPopup;
   }
 
   checkProgress(current, total){
@@ -317,7 +345,7 @@ export class Assessment extends React.Component{
 
     let titleText =  this.props.assessment.title;
     let content = this.getContent();
-    let warning;// = this.getWarning(); NOTE Temporarily removed warning because we have no need for it yet, and it looks bad. 
+    let warning;// = this.getWarning(); NOTE Temporarily removed warning because we have no need for it yet, and it looks bad.
     let counter = this.getCounter();
 
     let nextUnlocked = this.getNextUnlocked(
@@ -336,11 +364,14 @@ export class Assessment extends React.Component{
       primaryAction = PRIMARY_ACTION.SUBMIT;
     } else if(nextUnlocked === true){
       primaryAction = PRIMARY_ACTION.NEXT;
+    } else if(this.props.isCheckingAnswer) {
+      primaryAction = PRIMARY_ACTION.SPINNER;
     }
 
     if(this.props.assessmentLoaded){
       var nav = (
         <TwoButtonNav
+          localizedStrings={this.props.localizedStrings.twoButtonNav}
           goToNextQuestions={(e) => this.nextButtonClicked(e)}
           goToPreviousQuestions={(e) => this.previousButtonClicked(e)}
           checkAnswers={(e) => this.checkAnswersButtonClicked(e)}

@@ -34,3 +34,9 @@ export const questionResults = makeDispatchingSelector("questionResults");
 
 // Returns true if assessment has loaded, false otherwise.
 export const assessmentLoaded = makeDispatchingSelector("assessmentLoaded");
+
+/*
+ * Returns true if api calls to check answers have not yet returned, false
+ * otherwise
+ */
+export const isCheckingAnswer = makeDispatchingSelector("isCheckingAnswer");
