@@ -289,11 +289,14 @@ export class Assessment extends React.Component{
    * Returns inner text for question counter
    */
   getCounter(){
-    var strings = this.props.localizedStrings.assessment;
+    var strings = this.props.localizedStrings;
     if(this.props.questionsPerPage === 1){
       return (
-        `${strings.counterQuestion} ${this.props.currentItem + 1}
-        ${strings.counterPreposition} ${this.props.questionCount}`
+        strings.formatString(
+          strings.assessment.counterQuestion,
+          `${this.props.currentItem + 1}`,
+          `${this.props.questionCount}`
+        )
       );
     } else {
       var currentPage = (
@@ -303,8 +306,11 @@ export class Assessment extends React.Component{
         Math.floor(this.props.questionCount / this.props.questionsPerPage)
       );
       return (
-        `${strings.counterPage} ${this.props.currentItem + 1}
-        ${strings.counterPreposition} ${this.props.questionCount}`
+        strings.formatString(
+          strings.assessment.counterPage,
+          `${this.props.currentItem + 1}`,
+          `${this.props.questionCount}`
+        )
       );
     }
   }

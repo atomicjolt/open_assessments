@@ -3,9 +3,8 @@ export default {
     assessment: {
       unansweredQuestionWarning: "Warning There are unanswered questions",
       leavingQuizPopup: "Don’t leave!",
-      counterQuestion: "Question",
-      counterPage: "Page",
-      counterPreposition: "of"
+      counterQuestion: "Question {0} of {1}",
+      counterPage: "Page {0} of {1}",
     },
     assessmentComplete: {
       complete: "Quiz Complete"
