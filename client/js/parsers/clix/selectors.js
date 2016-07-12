@@ -16,6 +16,11 @@ export function questionCount(state, props) {
   return state.assessment.items.length;
 }
 
+// Returns true if assessment has loaded, false otherwise.
+export function assessmentLoaded(state, props){
+  return !_.isEmpty(state.assessment);
+}
+
 /*
  * Returns true if api calls to check answers have not yet returned, false
  * otherwise

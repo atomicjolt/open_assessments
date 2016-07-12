@@ -12,8 +12,14 @@ import TwoButtonNav                           from "../assessments/two_button_na
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import ProgressDropdown                       from "../common/progress_dropdown";
-import { questionCount, questions, outcomes, isCheckingAnswer }  from "../../selectors/assessment";
 import { questionResults }                    from "../../selectors/assessment";
+import {
+  questionCount,
+  questions,
+  outcomes,
+  isCheckingAnswer,
+  assessmentLoaded
+}  from "../../selectors/assessment";
 
 const select = (state, props) => {
   return {
@@ -23,6 +29,9 @@ const select = (state, props) => {
 
     // Assessment to be rendered.
     assessment      : state.assessment,
+
+    // Returns true if assessment has loaded, false otherwise
+    assessmentLoaded: assessmentLoaded(state, props),
 
     // State of user-assessment interactions.
     assessmentProgress        : state.assessmentProgress.toJS(),
@@ -223,7 +232,7 @@ export class Assessment extends React.Component{
   getContent(){
     if(this.props.assessmentProgress.isSubmitted){
       return <Loading />;
-    } else if(!this.props.questionCount) {
+    } else if(!this.props.assessmentLoaded) {
       return <Loading />;
     } else {
       return this.getItems();
@@ -293,6 +302,8 @@ export class Assessment extends React.Component{
    * Returns inner text for question counter
    */
   getCounter(){
+    if(!this.props.assessmentLoaded){return;}
+
     var strings = this.props.localizedStrings;
     if(this.props.questionsPerPage === 1){
       return (
@@ -334,7 +345,7 @@ export class Assessment extends React.Component{
 
     let titleText =  this.props.assessment.title;
     let content = this.getContent();
-    let warning = this.getWarning();
+    let warning;// = this.getWarning(); NOTE Temporarily removed warning because we have no need for it yet, and it looks bad.
     let counter = this.getCounter();
 
     let nextUnlocked = this.getNextUnlocked(
@@ -357,14 +368,8 @@ export class Assessment extends React.Component{
       primaryAction = PRIMARY_ACTION.SPINNER;
     }
 
-    return (
-      <div className="o-assessment-container">
-        <div className="c-header">
-          <div className="c-header__title">{titleText}</div>
-          <div className="c-header__question-number">{counter}</div>
-        </div>
-        {warning}
-        {content}
+    if(this.props.assessmentLoaded){
+      var nav = (
         <TwoButtonNav
           localizedStrings={this.props.localizedStrings.twoButtonNav}
           goToNextQuestions={(e) => this.nextButtonClicked(e)}
@@ -373,6 +378,18 @@ export class Assessment extends React.Component{
           submitAssessment={(e) => this.submitButtonClicked(e)}
           secondaryAction={secondaryAction}
           primaryAction={primaryAction}/>
+      );
+    }
+
+    return (
+      <div className="o-assessment-container">
+        <div className="c-header">
+          <div className="c-header__title">{titleText}</div>
+          <div className="c-header__question-number">{counter}</div>
+        </div>
+        {warning}
+        {content}
+        {nav}
       </div>
     );
   }

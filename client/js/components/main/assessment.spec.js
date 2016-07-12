@@ -88,6 +88,7 @@ function reset(){
     allQuestions,
     assessment,
     assessmentViewed: () => {},
+    assessmentLoaded: true,
     questionResults,
     currentItem,
     hideLMSNavigation: () => {},
