@@ -11,13 +11,8 @@ import TwoButtonNav                           from "../assessments/two_button_na
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import ProgressDropdown                       from "../common/progress_dropdown";
-import {
-  questionCount,
-  questions,
-  outcomes,
-  assessmentLoaded
-}  from "../../selectors/assessment";
 import { questionResults }                    from "../../selectors/assessment";
+import { questionCount, questions, outcomes, assessmentLoaded}  from "../../selectors/assessment";
 
 const select = (state, props) => {
   return {
@@ -343,6 +338,18 @@ export class Assessment extends React.Component{
       primaryAction = PRIMARY_ACTION.NEXT;
     }
 
+    if(this.props.assessmentLoaded){
+      var nav = (
+        <TwoButtonNav
+          goToNextQuestions={(e) => this.nextButtonClicked(e)}
+          goToPreviousQuestions={(e) => this.previousButtonClicked(e)}
+          checkAnswers={(e) => this.checkAnswersButtonClicked(e)}
+          submitAssessment={(e) => this.submitButtonClicked(e)}
+          secondaryAction={secondaryAction}
+          primaryAction={primaryAction}/>
+      );
+    }
+
     return (
       <div className="o-assessment-container">
         <div className="c-header">
@@ -351,13 +358,7 @@ export class Assessment extends React.Component{
         </div>
         {warning}
         {content}
-        <TwoButtonNav
-          goToNextQuestions={(e) => this.nextButtonClicked(e)}
-          goToPreviousQuestions={(e) => this.previousButtonClicked(e)}
-          checkAnswers={(e) => this.checkAnswersButtonClicked(e)}
-          submitAssessment={(e) => this.submitButtonClicked(e)}
-          secondaryAction={secondaryAction}
-          primaryAction={primaryAction}/>
+        {nav}
       </div>
     );
   }
