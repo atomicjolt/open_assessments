@@ -42,14 +42,14 @@ export default class TwoButtonNav extends React.Component{
 
     // The state of the secondary action button. Should be a value included in
     // SECONDARY_ACTION.
-    secondaryAction: React.PropTypes.string.isRequired,
+    secondaryAction       : React.PropTypes.string.isRequired,
 
     // The state of the primary action button. Should be a value included in
     // PRIMARY_ACTION.
-    primaryAction: React.PropTypes.string.isRequired,
+    primaryAction         : React.PropTypes.string.isRequired,
 
     // User facing strings of the language specified by the 'locale' setting
-    localizedStrings: React.PropTypes.object.isRequired
+    localizedStrings      : React.PropTypes.object.isRequired
   };
 
 
