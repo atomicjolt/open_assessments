@@ -10,7 +10,7 @@ const select = (state, props) => {
   return {
     title            : state.assessment.title,
     assessment_kind  : state.settings.assessment_kind,
-    // User facing strings of the language specified by the 'locale' setting 
+    // User facing strings of the language specified by the 'locale' setting
     localizedStrings : localizeStrings(state, props)
   };
 };
@@ -25,7 +25,6 @@ export class Start extends React.Component{
       case "SUMMATIVE":
         // Get summative instructions
         instruction = <div>{strings.summativeInstruction}</div>;
-        // TODO display student progress
         break;
       case "FORMATIVE":
         // Get formative instructions
@@ -33,7 +32,6 @@ export class Start extends React.Component{
         break;
       case "SHOW_WHAT_YOU_KNOW":
         // Get show what you know instructions
-        // TODO display student progress student progress
         instruction = <div>{strings.showWhatYouKnowInstruction}</div>;
 
         break;

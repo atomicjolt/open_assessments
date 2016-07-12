@@ -254,7 +254,7 @@ export class Assessment extends React.Component{
     let unanswered = this.checkCompletion();
     let warning;
     if(unanswered === true && this.isLastPage()){
-      warning = <div>this.props.localizedStrings.unansweredQuestionWarning</div>;
+      warning = <div>{this.props.localizedStrings.unansweredQuestionWarning}</div>;
     }
     return warning;
   }
