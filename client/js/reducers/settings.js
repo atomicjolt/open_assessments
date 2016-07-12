@@ -5,7 +5,5 @@ export default (state = {}, action) => {
 };
 
 export function getInitialSettings(){
-  return _.merge({
-    locale: "en"
-  }, ...arguments); // Add default settings that can be overriden by values in serverSettings
+  return _.merge({}, ...arguments); // Add default settings that can be overriden by values in serverSettings
 };
