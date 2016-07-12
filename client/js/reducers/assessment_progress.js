@@ -7,6 +7,9 @@ const initialState = Immutable.fromJS({
   isSubmitted: false,
   isStarted: false,
   currentItemIndex: 0,
+
+  // Number of 'check answer' api calls that have not yet returned
+  numQuestionsChecking: 0,
   selectedAnswerId: '',
   checkedResponses: [],
   responses: [],
@@ -57,23 +60,35 @@ export default (state = initialState, action) => {
       break;
 
     case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE:
+      if(!action.error){
+        var checkedResponses = Immutable.Map();
 
-      var checkedResponses = Immutable.Map();
+        // TODO Currently we are setting the same response for all choiceIds.
+        // When we have an example of multi answer feedback we should figure out
+        // how to assign feedback to each answer.
+        action.choiceIds.forEach((id) => {
+          var feedback = Immutable.Map(action.payload);
+          checkedResponses = checkedResponses.set(id,feedback);
+        });
 
-      // TODO Currently we are setting the same response for all choiceIds.
-      // When we have an example of multi answer feedback we should figure out
-      // how to assign feedback to each answer.
-      action.choiceIds.forEach((id) => {
-        var feedback = Immutable.Map(action.payload);
-        checkedResponses = checkedResponses.set(id,feedback);
-      });
+        state = state.setIn(
+          ['checkedResponses', `${action.questionIndex}`],
+          checkedResponses
+          );
+      }
 
-      state = state.setIn(
-        ['checkedResponses', `${action.questionIndex}`],
-        checkedResponses
-      );
+      // Decrement number of questions being checked
+      var checked = state.get('numQuestionsChecking');
+      if(checked <= 0){
+        throw "ASSESSMENT_CHECK_ANSWER_DONE dispatched when no answers were being checked";
+      }
+      state = state.set('numQuestionsChecking', checked - 1);
+      break;
 
-      state = state.setIn(['questionResults'], )
+    case AssessmentConstants.CHECK_QUESTIONS:
+      var checking = state.get('numQuestionsChecking');
+      state = state.set('numQuestionsChecking', action.numQuestions + checking);
+
       break;
 
     case AssessmentConstants.ASSESSMENT_SUBMITTED_DONE:

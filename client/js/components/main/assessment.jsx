@@ -12,7 +12,7 @@ import TwoButtonNav                           from "../assessments/two_button_na
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import ProgressDropdown                       from "../common/progress_dropdown";
-import { questionCount, questions, outcomes } from "../../selectors/assessment";
+import { questionCount, questions, outcomes, isCheckingAnswer }  from "../../selectors/assessment";
 import { questionResults }                    from "../../selectors/assessment";
 
 const select = (state, props) => {
@@ -46,6 +46,10 @@ const select = (state, props) => {
 
     // Array containing all assessment Items
     allQuestions    : questions(state, props),
+
+    // Returns true if any api calls to check answers have not yet returned,
+    // false otherwise.
+    isCheckingAnswer: isCheckingAnswer(state, props),
 
     // Array of graded user response objects containing keys
     // correct:true/false, feedback:"Answer feedback",
@@ -349,6 +353,8 @@ export class Assessment extends React.Component{
       primaryAction = PRIMARY_ACTION.SUBMIT;
     } else if(nextUnlocked === true){
       primaryAction = PRIMARY_ACTION.NEXT;
+    } else if(this.props.isCheckingAnswer) {
+      primaryAction = PRIMARY_ACTION.SPINNER;
     }
 
     return (
