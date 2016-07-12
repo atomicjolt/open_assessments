@@ -2,17 +2,15 @@
 
 import React              from "react";
 import { connect }        from "react-redux";
-
-import LocalizedStrings from 'react-localization';
-import locales          from '../../locales/locales';
+import { localizeStrings }   from '../../selectors/localize';
 import History                from "../../history";
 import * as AssessmentActions from "../../actions/assessment";
 
-const select = (state) => {
+const select = (state, props) => {
   return {
     title            : state.assessment.title,
     assessment_kind  : state.settings.assessment_kind,
-    localizedStrings : new LocalizedStrings(locales())
+    localizedStrings : localizeStrings(state, props)
   };
 };
 

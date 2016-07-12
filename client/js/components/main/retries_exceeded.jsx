@@ -1,10 +1,20 @@
 import React            from 'react';
-import LocalizedStrings from 'react-localization';
-import locales          from '../../locales/locales';
+import { connect }      from "react-redux";
 
-export default class RetriesExceeded extends React.Component{
+import { localizeStrings }  from '../../selectors/localize';
+
+const select = (state, props) => {
+  return {
+    //TODO document
+    localizedStrings: localizeStrings(state, props)
+  };
+};
+
+export class RetriesExceeded extends React.Component{
   render() {
-    var strings = new LocalizedStrings(locales());
-    return <div>strings.retriesExceeded.triesExceeded</div>;
+    var strings = this.props.localizedStrings;
+    return <div>{strings.retriesExceeded.triesExceeded}</div>;
   }
 }
+
+export default connect(select)(RetriesExceeded);

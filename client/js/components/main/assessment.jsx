@@ -6,8 +6,7 @@ import { connect }                            from "react-redux";
 import * as CommunicationActions              from "../../actions/communications";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
 import appHistory                             from "../../history";
-import LocalizedStrings                       from 'react-localization';
-import locales                                from '../../locales/locales';
+import { localizeStrings }                    from "../../selectors/localize";
 import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
 import TwoButtonNav                           from "../assessments/two_button_nav";
 import Item                                   from "../assessments/item";
@@ -54,7 +53,7 @@ const select = (state, props) => {
     questionResults : questionResults(state, props),
 
     //TODO document
-    localizedStrings: new LocalizedStrings(locales()),
+    localizedStrings: localizeStrings(state, props),
 
     // TODO
     outcomes        : outcomes(state, props)

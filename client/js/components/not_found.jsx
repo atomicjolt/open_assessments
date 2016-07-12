@@ -1,13 +1,21 @@
 "use strict";
 
 import React            from 'react';
-import LocalizedStrings from 'react-localization';
-import locales          from '../locales/locales';
+import { connect }           from "react-redux";
 
-export default class NotFound extends React.Component{
+import { localizeStrings }   from '../selectors/localize';
+
+const select = (state, props) => {
+  return {
+    //TODO document
+    localizedStrings: localizeStrings(state, props)
+  };
+};
+
+export class NotFound extends React.Component{
   render(){
-    var strings = new LocalizedStrings(locales());
-    return <h2>strings.notFound.notFound</h2>;
+    return <h2>{this.props.localizedStrings.notFound.notFound}</h2>;
   }
 };
-module.export = NotFound;
+
+export default connect(select)(NotFound);

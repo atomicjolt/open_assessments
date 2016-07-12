@@ -7,6 +7,9 @@ export default {
       counterPage: "Page",
       counterPreposition: "of"
     },
+    assessmentComplete: {
+      complete: "Quiz Complete"
+    },
     two_button_nav:{
       previousButton: "Previous", // Text on previous questions button
       nextButton: "Next",
@@ -28,6 +31,9 @@ export default {
     },
     notFound: {
       notFound: "Not Found"
+    },
+    about: {
+      title:"Open Assessments"
     }
   }
 };
