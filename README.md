@@ -59,7 +59,6 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     enable_start                 - Whether to show the assessment start screen before starting the assessment. This helps with calculating accurate timing. ie the timer won't start until the user presses start.
     icon                         -
     theme                        -
-    view                         - How many questions should be displayed at at time. SHOW_ONE, SHOW_THREE, SHOW_SECTION.
 
     // Functional settings
     max_attempts                 - The maximum number of attempts the assessment can be taken
@@ -69,6 +68,7 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     shuffle_question_answers     - Shuffle the answers for each question.
     unlock_next                  - When the next set of items should be available to user. ON_CORRECT (Next questions are available when all currently visible questions have been answered correctly), ON_ANSWER_CHECK (When all answers have been checked), or ALWAYS (Next items are always available).
     confidence_levels            - Whether or not to show confidence controls
+    locale                       - Sets player language. Languages currently supported: "en"
 
     // User settings
     role                         - The current user's role. This will control if certain controls show up. The server is still responsible for security.

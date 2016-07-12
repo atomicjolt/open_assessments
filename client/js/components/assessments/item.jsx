@@ -25,17 +25,10 @@ export default class Item extends React.Component{
     questionResult   : React.PropTypes.object.isRequired,
 
     selectAnswer      : React.PropTypes.func.isRequired,
-  };
 
-  getCounter(){
-    if(this.props.shouldShowCounter){
-      return (
-        <span className="counter">
-          {this.props.currentItemIndex + 1} of {this.props.questionCount}
-        </span>
-      );
-    }
-  }
+    // User facing strings of the language specified by the 'locale' setting
+    localizedStrings: React.PropTypes.object.isRequired
+  };
 
   getFeedback(){
     var response = this.props.questionResult;
@@ -69,13 +62,11 @@ export default class Item extends React.Component{
   }
 
   render() {
-    var counter = this.getCounter();
-
     var questionDirections;
     if(this.props.question.question_type == "multiple_answers_question"){
-      questionDirections = <div>Choose <b>ALL</b> that apply.</div>;
+      questionDirections = this.props.localizedStrings.questionDirectionMany;
     } else {
-      questionDirections = <div>Choose the <b>BEST</b> answer.</div>;
+      questionDirections = this.props.localizedStrings.questionDirectionAll;
     }
 
     return (
