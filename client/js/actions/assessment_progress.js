@@ -6,7 +6,8 @@ const constants = [
   "QUESTION_SELECTED",
   "LEVEL_SELECTED",
   "RETAKE_ASSESSMENT",
-  "ASSESSMENT_VIEWED"
+  "ASSESSMENT_VIEWED",
+  "CHECK_QUESTIONS"
 ];
 
 const requests = [
