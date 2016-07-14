@@ -10,6 +10,7 @@ import CheckBox             from "../common/checkbox";
 import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
+import AudioUpload          from "../common/audio_upload";
 
 export const CORRECT = "CORRECT";
 export const INCORRECT = "INCORRECT";
@@ -67,6 +68,8 @@ export default class UniversalInput extends React.Component{
     var item = props.item;
     var answerInputs;
 
+    item.question_type = 'audio_upload';
+    
     switch(item.question_type){
       case "edx_multiple_choice":
       case "multiple_choice_question":
@@ -139,6 +142,10 @@ export default class UniversalInput extends React.Component{
         answerInputs = item.answers.map((answer)=>{
           return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />;
         });
+        break;
+
+      case "audio_upload":
+        answerInputs = <AudioUpload />;
         break;
     }
 
