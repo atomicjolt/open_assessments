@@ -39,10 +39,7 @@ export default class Recorder extends React.Component{
   }
 
   startRecorder(){
-    var _this = this;
-    if(this.state.recorder && !this.state.recorder.recording){
-      this.state.recorder.record();
-    } else {
+    if(!this.state.recorder){
       // Older browsers might not implement mediaDevices at all, so we set
       // an empty object first
       if(navigator.mediaDevices === undefined) {
@@ -57,31 +54,32 @@ export default class Recorder extends React.Component{
       }
 
       navigator.mediaDevices.getUserMedia({audio:true})
-      .then(function(stream) {
-        window.AudioContext = window.AudioContext || window.webkitAudioContext;
-        var audioContext = new AudioContext();
-        var input = audioContext.createMediaStreamSource(stream);
-        var recorder = new Record(input);
-        _this.setState({audioContext, recorder, stream});
-        recorder.record();
-      })
+      .then((stream) => this.handleStream(stream))
       .catch(function(err) {
         console.error(err);
       });
     }
   }
 
+  handleStream(stream) {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioContext = new AudioContext();
+    var input = audioContext.createMediaStreamSource(stream);
+    var recorder = new Record(input);
+    this.setState({audioContext, recorder, stream});
+    recorder.record();
+  }
+
   stopRecorder(){
     if(this.state.recorder && this.state.recorder.recording){
-      var _this = this;
       this.state.recorder.stop();
       this.state.recorder.exportWAV(
         (blob) => {
           this.props.onStop(blob);
-          _this.state.recorder.clear();
-          _this.state.audioContext.close();
-          _this.state.stream.getTracks().forEach((t) => t.stop());
-          _this.setState({recorder:null, audioContext:null, stream:null});
+          this.state.recorder.clear();
+          this.state.audioContext.close();
+          this.state.stream.getTracks().forEach((t) => t.stop());
+          this.setState({recorder:null, audioContext:null, stream:null});
         }
       );
     }
