@@ -14,9 +14,7 @@ export default class Recorder extends React.Component{
 
   constructor(){
     super();
-    this.state = {
-      command:'stop'
-    };
+    this.state = {};
   }
 
   /**
@@ -45,7 +43,6 @@ export default class Recorder extends React.Component{
     if(this.state.recorder && !this.state.recorder.recording){
       this.state.recorder.record();
     } else {
-
       // Older browsers might not implement mediaDevices at all, so we set
       // an empty object first
       if(navigator.mediaDevices === undefined) {
@@ -62,10 +59,10 @@ export default class Recorder extends React.Component{
       navigator.mediaDevices.getUserMedia({audio:true})
       .then(function(stream) {
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
-        var context = new AudioContext();
-        var input = context.createMediaStreamSource(stream);
+        var audioContext = new AudioContext();
+        var input = audioContext.createMediaStreamSource(stream);
         var recorder = new Record(input);
-        _this.setState({recorder});
+        _this.setState({audioContext, recorder, stream});
         recorder.record();
       })
       .catch(function(err) {
@@ -82,6 +79,9 @@ export default class Recorder extends React.Component{
         (blob) => {
           this.props.onStop(blob);
           _this.state.recorder.clear();
+          _this.state.audioContext.close();
+          _this.state.stream.getTracks().forEach((t) => t.stop());
+          _this.setState({recorder:null, audioContext:null, stream:null});
         }
       );
     }
