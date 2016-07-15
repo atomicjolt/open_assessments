@@ -37,10 +37,9 @@ export default class Api{
         case NetworkConstants.POST:
           if(attachment) {
             debugger;
-            request = Request.post(fullUrl).attach('submission', attachment).send(body);//TODO make better
-            debugger;
+            request = Request.post(fullUrl).set('Content-Type', 'multipart/form-data').attach('submission', attachment).send(body);//TODO make better
           }
-          else{ request = Request.post(fullUrl).send(body);} //TODO
+          else{request = Request.post(fullUrl).send(body);}
           break;
         case NetworkConstants.PUT:
           request = Request.put(fullUrl).send(body);

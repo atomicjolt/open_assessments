@@ -22,7 +22,7 @@ class AudioUpload extends React.Component {
     var audioURL = window.URL.createObjectURL(blob);
     console.log(audioURL);
     this.setState({audioURL});
-    this.props.selectAnswer(audioURL);
+    this.props.selectAnswer(blob);
   }
 
   toggle(){

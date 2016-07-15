@@ -38,30 +38,25 @@ function checkAnswers(store, action) {
     }
 
     var choiceIds = [];
-    var multipartUploads = [];
+    var multipartUpload;
 
     // Seperate file uploads from student answer selections
     selections.forEach((selection) => {
-      debugger;
-      // if(selection instanceof Blob){
-      //   multipartUploads.push(selection);
-      // } else {
-      //   choiceIds.push(selection);
-      // }
+      if(selection instanceof Blob){
+        if(multipartUpload){console.error("Only one upload is currently supported");}
+        multipartUpload = new FormData();
+        multipartUpload.append('submission', selection);
+      } else {
+        choiceIds.push(selection);
+      }
     });
-
-    multipartUploads.push(selections[0]); //HACK
-
 
     const body = {
       type,
       choiceIds
     };
 
-    // multipartData TODO move to post parameter?
-    //TODO blob submission
-
-    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid }, multipartUploads[0]);
+    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid }, multipartUpload);
     if(promise){
       promise.then((response) => {
         const payload = {
