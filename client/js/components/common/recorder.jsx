@@ -1,5 +1,5 @@
 import React     from 'react';
-import Record    from '../../libs/recorder';
+import Record    from 'recorderjs';
 
 export default class Recorder extends React.Component{
 
