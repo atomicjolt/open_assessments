@@ -17,10 +17,7 @@ class AudioUpload extends React.Component {
 
   onStop(blob){
     // Do something with the blob file of the recording
-    console.log("Recorder stopped");
-    console.log(blob);
     var audioURL = window.URL.createObjectURL(blob);
-    console.log(audioURL);
     this.setState({audioURL});
     this.props.selectAnswer(blob);
   }
@@ -28,10 +25,8 @@ class AudioUpload extends React.Component {
   toggle(){
     if(this.state.recorder === "stop"){
       this.setState({recorder:"start"});
-      console.log("Start recorder");
     } else if(this.state.recorder === "start") {
       this.setState({recorder:"stop"});
-      console.log("Stop recorder");
     }
   }
 
