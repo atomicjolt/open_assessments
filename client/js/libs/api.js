@@ -14,8 +14,8 @@ export default class Api{
     return Api.execRequest(NetworkConstants.GET, url, apiUrl, jwt, csrf, params, null, headers);
   }
 
-  static post(url, apiUrl, jwt, csrf, params, body, headers){
-    return Api.execRequest(NetworkConstants.POST, url, apiUrl, jwt, csrf, params, body, headers);
+  static post(url, apiUrl, jwt, csrf, params, body, headers, attachment){
+    return Api.execRequest(NetworkConstants.POST, url, apiUrl, jwt, csrf, params, body, headers, attachment);
   }
 
   static put(url, apiUrl, jwt, csrf, params, body, headers){
@@ -26,7 +26,7 @@ export default class Api{
     return Api.execRequest(NetworkConstants.DEL, url, apiUrl, jwt, csrf, params, null, headers);
   }
 
-  static execRequest(method, url, apiUrl, jwt, csrf, params, body, headers){
+  static execRequest(method, url, apiUrl, jwt, csrf, params, body, headers, attachment){
     return Api._doRequest(Api._makeUrl(`${url}${Api.queryStringFrom(params)}`, apiUrl), (fullUrl) => {
       var request;
 
@@ -35,7 +35,12 @@ export default class Api{
           request = Request.get(fullUrl);
           break;
         case NetworkConstants.POST:
-          request = Request.post(fullUrl).send(body);
+          if(attachment) {
+            debugger;
+            request = Request.post(fullUrl).attach('submission', attachment).send(body);//TODO make better
+            debugger;
+          }
+          else{ request = Request.post(fullUrl).send(body);} //TODO
           break;
         case NetworkConstants.PUT:
           request = Request.put(fullUrl).send(body);

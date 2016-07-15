@@ -23,7 +23,7 @@ function checkAnswers(store, action) {
 
   return _.map(questionIndexes, (questionIndex) => {
     const question = state.assessment.items[questionIndex];
-    const choiceIds = state.assessmentProgress.getIn(
+    const selections = state.assessmentProgress.getIn(
       ["responses", `${questionIndex}`],
       Immutable.List()
     ).toJS();
@@ -37,12 +37,31 @@ function checkAnswers(store, action) {
       console.error("Couldn't get the question type");
     }
 
+    var choiceIds = [];
+    var multipartUploads = [];
+
+    // Seperate file uploads from student answer selections
+    selections.forEach((selection) => {
+      debugger;
+      // if(selection instanceof Blob){
+      //   multipartUploads.push(selection);
+      // } else {
+      //   choiceIds.push(selection);
+      // }
+    });
+
+    multipartUploads.push(selections[0]); //HACK
+
+
     const body = {
       type,
       choiceIds
     };
 
-    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
+    // multipartData TODO move to post parameter?
+    //TODO blob submission
+
+    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid }, multipartUploads[0]);
     if(promise){
       promise.then((response) => {
         const payload = {
@@ -70,6 +89,7 @@ function checkAnswers(store, action) {
 
       return promise;
     }
+
   });
 }
 

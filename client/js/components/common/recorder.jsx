@@ -4,7 +4,7 @@ import Record    from '../../libs/recorder';
 export default class Recorder extends React.Component{
 
   static propTypes = {
-
+    //TODO document
   };
 
   constructor(){
