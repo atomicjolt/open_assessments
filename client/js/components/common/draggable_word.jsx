@@ -2,15 +2,12 @@ import React            from "react";
 import { DragSource }   from "react-dnd";
 
 import Word             from "./word";
-
-export const ItemTypes = {
-  WORD: "word"
-}
+import ItemTypes        from "./draggable_item_types";
 
 const wordSource = {
   beginDrag(props) {
     return {
-      wordId: props.id
+      itemId: props.id
     };
   }
 };
@@ -29,10 +26,11 @@ export class DraggableWord extends React.Component {
   };
 
   render() {
-    const { connectDragSource, isDragging } = this.props;
+    const { style, connectDragSource, isDragging } = this.props;
+    const baseStyle = { display: "inline-block", opacity: isDragging ? 0 : 1, cursor: 'move' };
 
     return connectDragSource(
-      <div style={{ opacity: isDragging ? 0 : 1, cursor: 'move' }}>
+      <div className="draggable-word" style={{ ...style, ...baseStyle}}>
         <Word>
           {this.props.children}
         </Word>

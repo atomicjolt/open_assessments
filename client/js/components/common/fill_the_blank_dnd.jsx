@@ -2,7 +2,7 @@ import React                from 'react'
 import { DragDropContext }  from 'react-dnd';
 import HTML5Backend         from 'react-dnd-html5-backend';
 
-import Dropzone             from "./dropzone";
+import { Dropzone }         from "./drop_zones";
 import DraggableWord        from "./draggable_word";
 import Word                 from "./word";
 
@@ -11,6 +11,9 @@ const Words = {
   1: "fdsa",
   2: "asdffdsa"
 }
+
+// TODO: switch from maintaining the blank in the state to getting it from props,
+//       and getting the answer from props as well.
 
 export class FillTheBlankDnd extends React.Component {
   constructor() {
@@ -41,7 +44,7 @@ export class FillTheBlankDnd extends React.Component {
       </div>
       <div>
         <span>Fill in the blank:
-          <Dropzone dropWord={(wordId) => { this.dropWord(wordId) }}>
+          <Dropzone dropItem={(wordId) => { this.dropWord(wordId) }}>
             <span>{blank}</span>
           </Dropzone>
         </span>
