@@ -38,14 +38,14 @@ function checkAnswers(store, action) {
     }
 
     var choiceIds = [];
-    var multipartUpload;
+    var formData;
 
     // Seperate file uploads from student answer selections
     selections.forEach((selection) => {
       if(selection instanceof Blob){
-        if(multipartUpload){console.error("Only one upload is currently supported");}
-        multipartUpload = new FormData();
-        multipartUpload.append('submission', selection);
+        if(formData){console.error("Only one upload is currently supported");}
+        formData = new FormData();
+        formData.append('submission', selection);
       } else {
         choiceIds.push(selection);
       }
@@ -56,7 +56,7 @@ function checkAnswers(store, action) {
       choiceIds
     };
 
-    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid }, multipartUpload);
+    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid }, formData);
     if(promise){
       promise.then((response) => {
         const payload = {
