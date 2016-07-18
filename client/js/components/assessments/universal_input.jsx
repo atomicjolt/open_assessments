@@ -10,6 +10,7 @@ import CheckBox             from "../common/checkbox";
 import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
+import ShortAnswer          from "../common/short_answer";
 
 export const CORRECT = "CORRECT";
 export const INCORRECT = "INCORRECT";
@@ -107,7 +108,13 @@ export default class UniversalInput extends React.Component{
         });
         break;
       case "text_only_question":
-        answerInputs = <TextArea />;
+      case "short_answer_question":
+        var selectShortAnswer = _.curryRight(props.selectAnswer);
+        answerInputs = (
+          <li>
+            <ShortAnswer selectAnswer={selectShortAnswer(true)} />
+          </li>
+        );
         break;
       case "multiple_answers_question":
         answerInputs = item.answers.map((answer) => {
