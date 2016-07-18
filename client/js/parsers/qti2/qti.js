@@ -3,8 +3,15 @@ import _   from "lodash";
 
 export function transformItem(itemXml) {
   const xml         = $(itemXml);
-  const select_one  = xml.find("choiceInteraction[maxChoices=1]");
   const material    = $("<div></div>");
+
+  function getQuestionType(xml){
+    if(xml.find("choiceInteraction[maxChoices=1]").length > 0){
+      return "multiple_choice_question";
+    } else if(xml.find("uploadInteraction").length > 0) {
+      return "audio_upload";
+    }
+  }
 
   // If we don't .clone(), then .appendTo() *moves* the elements out of the
   // original, and on subsequent calls they will be missing.
@@ -17,7 +24,7 @@ export function transformItem(itemXml) {
   })).get();
 
   return {
-    question_type: select_one ? "multiple_choice_question" : "UNKNOWN",
+    question_type: getQuestionType(xml),
     material: material.html(),
     isHtml: true,
     answers

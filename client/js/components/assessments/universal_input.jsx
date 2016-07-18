@@ -68,7 +68,6 @@ export default class UniversalInput extends React.Component{
     var item = props.item;
     var answerInputs;
 
-    item.question_type = 'audio_upload'; //HACK
 
     switch(item.question_type){
       case "edx_multiple_choice":
