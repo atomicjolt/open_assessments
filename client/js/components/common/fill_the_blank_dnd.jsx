@@ -16,14 +16,6 @@ const Words = {
 //       and getting the answer from props as well.
 
 export class FillTheBlankDnd extends React.Component {
-<<<<<<< HEAD
-  constructor() {
-    super();
-    this.state = {
-      filledWord: null
-    };
-  }
-
   dropWord(answerId) {
     this.props.selectAnswer(answerId);
   }
