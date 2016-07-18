@@ -30,6 +30,7 @@ export default class WordChain extends React.Component {
 
           return <DraggableGroupWord
             id={answerId}
+            wordType={this.props.answersById[answerId].wordType}
             key={answerId}
             isGroupDragging={this.state.dragging && index >= this.state.draggingIndex}
             draggableWords={draggableWords}

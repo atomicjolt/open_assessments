@@ -31,7 +31,7 @@ export class DraggableWord extends React.Component {
 
     return connectDragSource(
       <div className="draggable-word" style={{ ...style, ...baseStyle}}>
-        <Word>
+        <Word wordType={this.props.wordType}>
           {this.props.children}
         </Word>
       </div>

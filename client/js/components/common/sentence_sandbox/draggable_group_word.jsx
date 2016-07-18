@@ -43,7 +43,7 @@ export class DraggableGroupWord extends React.Component {
 
     return connectDragSource(
       <div className="draggable-group-word" style={{ display: "inline-block", opacity: isGroupDragging ? 0 : 1, cursor: 'move' }}>
-        <Word>
+        <Word wordType={this.props.wordType}>
           {this.props.children}
         </Word>
       </div>

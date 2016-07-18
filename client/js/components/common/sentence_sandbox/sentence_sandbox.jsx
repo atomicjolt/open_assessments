@@ -26,7 +26,7 @@ export class SentenceSandbox extends React.Component {
       if(_.includes(this.props.wordChain, answerId)) {
         this.props.selectAnswer(answerId);
       }
-    })
+    });
 
     let answerPositions = _.cloneDeep(this.state.answerPositions);
 
@@ -34,9 +34,9 @@ export class SentenceSandbox extends React.Component {
       answerPositions[answerId] = {
         top: dropOffset.y,
         left: dropOffset.x + index * 60
-      }
+      };
 
-      this.setState({answerPositions})
+      this.setState({answerPositions});
     });
   }
 
@@ -56,12 +56,18 @@ export class SentenceSandbox extends React.Component {
       if(this.state.answerPositions[answer.id]) {
         style = {position: "absolute", ...this.state.answerPositions[answer.id]}
       }
-      return <DraggableWord style={style} key={answer.id} id={answer.id}>{answer.text}</DraggableWord>
+      return <DraggableWord
+        wordType={answer.wordType}
+        style={style}
+        key={answer.id}
+        id={answer.id}
+      >
+        {answer.text}
+      </DraggableWord>
     });
 
     return <div>
       <GroupDropZone
-        ref="asdf"
         dropItem={(answerIds, dropOffset) => {this.dropWordsInCloud(answerIds, dropOffset)}}
         style={{width: 500, height: 200, border: "1px solid grey"}}
       >
