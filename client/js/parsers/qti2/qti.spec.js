@@ -18,7 +18,7 @@ describe('QTI 2 Functions', () => {
       const data = readFixtures("qti2/choice.xml");
       const settings = Immutable.fromJS({ assessmentId: 1 });
       const assessment = parse(settings, data);
-      const props = transformItem(assessment);
+      const props = transformItem(assessment.item.xml);
 
       expect(props.isHtml).toEqual(true);
     });
