@@ -7,7 +7,5 @@ const style = {
 }
 
 export default (props) => {
-  return <div style={style}>
-    {props.children}
-  </div>
+  return <div style={style} dangerouslySetInnerHTML={{__html: props.material}} />
 }

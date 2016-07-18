@@ -31,7 +31,7 @@ export class DraggableGroupWord extends React.Component {
     connectDragSource: React.PropTypes.func.isRequired,
     connectDragPreview: React.PropTypes.func.isRequired,
     id: React.PropTypes.any.isRequired,
-    isGroupDragging: React.PropTypes.bool.isRequired
+    isGroupDragging: React.PropTypes.bool
   };
 
   componentDidMount() {
@@ -39,13 +39,11 @@ export class DraggableGroupWord extends React.Component {
   }
 
   render() {
-    const { connectDragSource, isGroupDragging } = this.props;
+    const { connectDragSource, isGroupDragging, material } = this.props;
 
     return connectDragSource(
       <div className="draggable-group-word" style={{ display: "inline-block", opacity: isGroupDragging ? 0 : 1, cursor: 'move' }}>
-        <Word>
-          {this.props.children}
-        </Word>
+        <Word material={material} />
       </div>
     );
   }

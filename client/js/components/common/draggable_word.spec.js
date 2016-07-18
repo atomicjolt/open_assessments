@@ -10,7 +10,8 @@ describe('draggable word', () => {
     props = {
       id: 1,
       isDragging: true,
-      style: {}
+      style: {},
+      material: "child"
     };
     WrappedComponent = wrapInDndContext(DraggableWord);
     result = TestUtils.renderIntoDocument(<WrappedComponent {...props} />);
@@ -24,10 +25,6 @@ describe('draggable word', () => {
   });
 
   it('renders the children', () => {
-    result = TestUtils.renderIntoDocument(
-      <WrappedComponent {...props}><div>child</div></WrappedComponent>
-    );
-
     expect(ReactDOM.findDOMNode(result).textContent).toContain("child");
   });
 });

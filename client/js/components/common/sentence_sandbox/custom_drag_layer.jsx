@@ -2,6 +2,7 @@ import React          from 'react';
 import { DragLayer }  from 'react-dnd';
 
 import ItemTypes      from '../draggable_item_types';
+import Word           from '../word';
 
 const layerStyles = {
   position: 'fixed',
@@ -59,11 +60,7 @@ export class CustomDragLayer extends React.Component{
     switch (type) {
       case ItemTypes.WORD_GROUP:
         return _.map(item.words, (word) => {
-          return <span
-            style={{background: "green", padding: "5px 5px", margin: "5px 5px"}}
-            key={word.id}>
-            {word.text}
-          </span>
+          return <Word key={word.id} material={word.material} />
         });
       default:
         return <div></div>
@@ -71,7 +68,6 @@ export class CustomDragLayer extends React.Component{
   }
 
   render() {
-    console.log('rendered');
     const { item, itemType, isDragging } = this.props;
 
     if (!isDragging) {

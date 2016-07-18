@@ -9,7 +9,8 @@ describe('draggable group word', () => {
   beforeEach(() => {
     props = {
       id: 1,
-      isGroupDragging: false
+      isGroupDragging: false,
+      material: "child"
     };
     WrappedComponent = wrapInDndContext(DraggableGroupWord);
     result = TestUtils.renderIntoDocument(<WrappedComponent {...props} />);
@@ -29,7 +30,7 @@ describe('draggable group word', () => {
 
   it('renders the children', () => {
     result = TestUtils.renderIntoDocument(
-      <WrappedComponent {...props}><div>child</div></WrappedComponent>
+      <WrappedComponent {...props} />
     );
 
     expect(ReactDOM.findDOMNode(result).textContent).toContain("child");

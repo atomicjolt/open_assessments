@@ -143,18 +143,14 @@ export default class UniversalInput extends React.Component{
           return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />;
         });
         break;
+      case "drag_and_drop":
+      var selectAnswer = _.curryRight(props.selectAnswer);
+        answerInputs = <FillTheBlankDnd
+          currentAnswer={this.props.response}j
+          selectAnswer={selectAnswer(false)}
+        />
+        break;
       case "sentence_sandbox":
-        // TODO: Right now we're assuming that the words are going to be all that
-        // is in item.answers. Change this when we get an actual example from
-        // qbank.
-        item = {
-          answers: [
-            {text: "the bags", id: "0"},
-            {text: "the bus", id: "1"},
-            {text: "on", id: "2"},
-            {text: "are", id: "3"}
-          ]
-        }
         var selectAnswer = _.curryRight(props.selectAnswer);
         answerInputs = <SentenceSandbox
           answers={item.answers}

@@ -60,9 +60,8 @@ export class SentenceSandbox extends React.Component {
         style={style}
         key={answer.id}
         id={answer.id}
-      >
-        {answer.text}
-      </DraggableWord>
+        material={answer.material}
+      />
     });
 
     return <div>

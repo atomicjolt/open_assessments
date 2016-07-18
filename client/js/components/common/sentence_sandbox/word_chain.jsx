@@ -34,9 +34,9 @@ export default class WordChain extends React.Component {
             isGroupDragging={this.state.dragging && index >= this.state.draggingIndex}
             draggableWords={draggableWords}
             beginDragging={() => { this.beginDragging(index) }}
-            endDragging={() => { this.endDragging() }}>
-            <span>{this.props.answersById[answerId].text}</span>
-          </DraggableGroupWord>
+            endDragging={() => { this.endDragging() }}
+            material={answer.material}
+          />
         })
       }
       <WordDropZone style={{ display: "inline-block" }} dropItem={(answerId) => { this.props.linkWord(answerId) }}>

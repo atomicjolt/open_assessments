@@ -12,7 +12,7 @@ describe('word chain', () => {
       answersById: {
         1: {
           id: 1,
-          text: "asdf"
+          material: "asdf"
         }
       },
       linkWord: () => {}
