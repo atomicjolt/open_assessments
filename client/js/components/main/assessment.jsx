@@ -267,7 +267,7 @@ export class Assessment extends React.Component{
     let unanswered = this.checkCompletion();
     let warning;
     if(unanswered === true && this.isLastPage()){
-      warning = <div>{this.props.localizedStrings.unansweredQuestionWarning}</div>;
+      warning = <div>{this.props.localizedStrings.assessment.unansweredQuestionWarning}</div>;
     }
     return warning;
   }
@@ -331,7 +331,8 @@ export class Assessment extends React.Component{
   }
 
   popup(){
-    return this.props.localizedStrings.leavingQuizPopup;
+    console.log(this);
+    return this.props.localizedStrings.assessment.leavingQuizPopup;
   }
 
   checkProgress(current, total){
@@ -340,7 +341,7 @@ export class Assessment extends React.Component{
 
   render(){
     if(this.props.settings.assessment_kind === "SUMMATIVE"){
-      window.onbeforeunload = this.popup;
+      window.onbeforeunload = () => this.popup();
     }
 
     let titleText =  this.props.assessment.title;
