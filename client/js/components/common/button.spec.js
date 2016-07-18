@@ -8,24 +8,25 @@ describe('button', () => {
 
   it('calls onClick when button is clicked', () => {
     var props = {
-      onClick:() => {}
+      onClick:() => {},
+      buttonClass: "myBtn"
     };
     spyOn(props, "onClick");
     var result = TestUtils.renderIntoDocument(<Button {...props} />);
-    var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn');
+    var button = TestUtils.findRenderedDOMComponentWithClass(result, 'myBtn');
     TestUtils.Simulate.click(button);
 
     expect(props.onClick).toHaveBeenCalled();
   });
 
-  it('appends button type to class string', () => {
+  it('adds button class', () => {
     var props = {
-      buttonType:"test-type"
+      buttonClass:"test-type"
     };
     var result = TestUtils.renderIntoDocument(<Button {...props} />);
     var subject = ReactDOM.findDOMNode(result);
 
-    expect(subject.outerHTML).toContain('c-btn c-btn--test-type');
+    expect(subject.outerHTML).toContain('test-type');
   });
 
   it('renders button text', () => {

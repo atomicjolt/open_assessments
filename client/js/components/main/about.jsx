@@ -1,12 +1,26 @@
 "use strict";
 
-import React from 'react';
+import React                 from 'react';
+import { connect }           from "react-redux";
 
-export default class About extends React.Component{
+import { localizeStrings }   from '../../selectors/localize';
+
+const select = (state, props) => {
+  return {
+    // user facing strings of the language specified by the 'locale' setting
+    localizedStrings: localizeStrings(state, props)
+  };
+};
+
+export class About extends React.Component{
   render(){
-    return <div>
-      <h2>Open Assessments</h2>
-    </div>;
+    var strings = this.props.localizedStrings;
+    return (
+      <div>
+       <h2>{strings.about.title}</h2>
+     </div>
+    );
   }
 };
-module.export = About;
+
+export default connect(select)(About);

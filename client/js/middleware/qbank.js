@@ -15,6 +15,12 @@ function checkAnswers(store, action) {
   const currentItemIndex = state.assessmentProgress.get("currentItemIndex");
   const questionIndexes = _.range(currentItemIndex, currentItemIndex + state.settings.questions_per_page);
 
+  // Let progress reducer know how many questions are being checked
+  store.dispatch({
+    type: AssessmentProgressConstants.CHECK_QUESTIONS,
+    numQuestions: questionIndexes.length
+  });
+
   return _.map(questionIndexes, (questionIndex) => {
     const question = state.assessment.items[questionIndex];
     const choiceIds = state.assessmentProgress.getIn(
@@ -55,6 +61,10 @@ function checkAnswers(store, action) {
         });
       },
       (error) => {
+        store.dispatch({
+          type: AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
+          error
+        });
         console.error(error);
       });
 

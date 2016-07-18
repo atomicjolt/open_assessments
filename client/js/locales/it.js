@@ -1,4 +1,5 @@
 export default {
+
   it: {
     how: "Come vuoi il tuo uovo oggi?",
     boiledEgg: "Uovo sodo",

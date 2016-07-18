@@ -3,6 +3,7 @@ import ReactDOM                from "react-dom";
 import TestUtils               from "react/lib/ReactTestUtils";
 import Helper                  from "../../../specs_support/helper";
 
+import { localizeStrings }     from "../../selectors/localize";
 import appHistory              from "../../history";
 import { Assessment }          from "./assessment";
 import * as AssessmentActions  from "../../actions/assessment";
@@ -11,12 +12,13 @@ import * as AssessmentActions  from "../../actions/assessment";
 var props;
 var allQuestions,
   assessment,
-  assessmentViewed,
-  questionResults,
-  currentItem,
-  previousQuestions,
   assessmentProgress,
+  assessmentViewed,
+  currentItem,
+  localizedStrings,
+  previousQuestions,
   questionCount,
+  questionResults,
   questionsPerPage,
   responses,
   result,
@@ -26,6 +28,8 @@ var allQuestions,
 
 var result;
 var subject;
+
+
 
 function reset(){
   allQuestions = [{
@@ -66,6 +70,8 @@ function reset(){
     currentItemIndex:0
   };
 
+  localizedStrings = localizeStrings({settings:{locale:"en"}});
+
   questionCount = 10;
 
   responses = [];
@@ -82,9 +88,11 @@ function reset(){
     allQuestions,
     assessment,
     assessmentViewed: () => {},
+    assessmentLoaded: true,
     questionResults,
     currentItem,
     hideLMSNavigation: () => {},
+    localizedStrings,
     nextQuestions: () => {},
     previousQuestions: () => {},
     assessmentProgress,

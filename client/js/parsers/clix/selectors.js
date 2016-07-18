@@ -16,6 +16,19 @@ export function questionCount(state, props) {
   return state.assessment.items.length;
 }
 
+// Returns true if assessment has loaded, false otherwise.
+export function assessmentLoaded(state, props){
+  return !_.isEmpty(state.assessment);
+}
+
+/*
+ * Returns true if api calls to check answers have not yet returned, false
+ * otherwise
+ */
+export function isCheckingAnswer(state, props){
+  return state.assessmentProgress.get('numQuestionsChecking', 0) > 0;
+}
+
 export function questionResults(state, props) {
 
   // TODO Currently we are setting the same response for all choiceIds.
