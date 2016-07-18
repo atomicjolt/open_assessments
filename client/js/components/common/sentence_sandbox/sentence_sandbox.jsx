@@ -57,7 +57,6 @@ export class SentenceSandbox extends React.Component {
         style = {position: "absolute", ...this.state.answerPositions[answer.id]}
       }
       return <DraggableWord
-        wordType={answer.wordType}
         style={style}
         key={answer.id}
         id={answer.id}
