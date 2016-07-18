@@ -10,6 +10,7 @@ import CheckBox             from "../common/checkbox";
 import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
+import SentenceSandbox      from "../common/sentence_sandbox/sentence_sandbox";
 
 export const CORRECT = "CORRECT";
 export const INCORRECT = "INCORRECT";
@@ -68,6 +69,8 @@ export default class UniversalInput extends React.Component{
     var answerInputs;
 
     switch(item.question_type){
+    // switch("sentence_sandbox"){
+
       case "edx_multiple_choice":
       case "multiple_choice_question":
       case "true_false_question":
@@ -140,6 +143,20 @@ export default class UniversalInput extends React.Component{
           return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />;
         });
         break;
+      case "drag_and_drop":
+      var selectAnswer = _.curryRight(props.selectAnswer);
+        answerInputs = <FillTheBlankDnd
+          currentAnswer={this.props.response}j
+          selectAnswer={selectAnswer(false)}
+        />
+        break;
+      case "sentence_sandbox":
+        var selectAnswer = _.curryRight(props.selectAnswer);
+        answerInputs = <SentenceSandbox
+          answers={item.answers}
+          selectAnswer={selectAnswer(false)}
+          wordChain={props.response}
+        />
     }
 
     return (
