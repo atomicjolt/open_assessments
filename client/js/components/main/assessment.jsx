@@ -339,7 +339,7 @@ export class Assessment extends React.Component{
   }
 
   render(){
-    if(this.props.settings.assessment_kind === "SUMMATIVE"){
+    if(this.props.settings.assessment_kind === "SUMMATIVE" && !__DEV__){
       window.onbeforeunload = this.popup;
     }
 
