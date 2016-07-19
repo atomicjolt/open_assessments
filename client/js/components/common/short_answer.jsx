@@ -18,7 +18,8 @@ export default class TextArea extends React.Component{
 
   render(){
     return(
-  			<textarea
+      <input
+          type="text"
           rows="1"
           onBlur={() => this.props.selectAnswer(this.state.input)}
           onChange={(e) => this.handleChange(e)} />
