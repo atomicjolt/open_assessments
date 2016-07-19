@@ -1,7 +1,7 @@
 "use strict";
 
 import React							from 'react';
-import DropZone						from './drop_zone';
+import DropZone						from './old_drop_zone';
 import Draggable					from './draggable';
 import DropZoneIndex			from './drop_zone_index';
 
