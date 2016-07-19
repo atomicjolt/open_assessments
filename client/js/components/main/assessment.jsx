@@ -90,11 +90,15 @@ export class Assessment extends React.Component{
     this.props.hideLMSNavigation();
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.props.sendSize();
     this.props.scrollParentToTop();
     if(this.props.assessmentProgress.isSubmitted) {
       appHistory.push("assessment-complete");
+    }
+
+    if(this.props.assessmentProgress.currentItemIndex != prevProps.assessmentProgress.currentItemIndex) {
+      window.scrollTo(0, 0);
     }
   }
 
