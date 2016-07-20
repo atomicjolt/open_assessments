@@ -69,7 +69,6 @@ export default class UniversalInput extends React.Component{
     var answerInputs;
 
     switch(item.question_type){
-    // switch("sentence_sandbox"){
 
       case "edx_multiple_choice":
       case "multiple_choice_question":
@@ -110,7 +109,14 @@ export default class UniversalInput extends React.Component{
         });
         break;
       case "text_only_question":
-        answerInputs = <TextArea />;
+      case "short_answer_question":
+        answerInputs = (
+          <li>
+            <textarea
+              rows={parseInt(props.item.question_meta.expectedLines) || 1}
+              onBlur={(e) => props.selectAnswer(e.target.value, true)} />
+          </li>
+        );
         break;
       case "multiple_answers_question":
         answerInputs = item.answers.map((answer) => {
@@ -144,9 +150,9 @@ export default class UniversalInput extends React.Component{
         });
         break;
       case "drag_and_drop":
-      var selectAnswer = _.curryRight(props.selectAnswer);
+        var selectAnswer = _.curryRight(props.selectAnswer);
         answerInputs = <FillTheBlankDnd
-          currentAnswer={this.props.response}j
+          currentAnswer={this.props.response}
           selectAnswer={selectAnswer(false)}
         />
         break;
