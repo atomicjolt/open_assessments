@@ -31,7 +31,7 @@ export function isCheckingAnswer(state, props){
 
 export function questionResults(state, props) {
 
-  // TODO Currently we are setting the same response for all choiceIds.
+  // TODO Currently we are setting the same response for all userInput.
   // When we have an example of multi answer feedback we should figure out
   // how to assign feedback to each answer.
   const questionIndexes = _.range(
@@ -46,7 +46,7 @@ export function questionResults(state, props) {
     if(response) {
       questionResponses[index] = {};
       questionResponses[index].correct = response.correct;
-      questionResponses[index].answerIds = response.choiceIds;
+      questionResponses[index].answerIds = response.userInput;
       questionResponses[index].feedback = response.feedback;
     }
   });

@@ -47,7 +47,7 @@ function checkAnswers(store, action) {
 
   return _.map(questionIndexes, (questionIndex) => {
     const question = state.assessment.items[questionIndex];
-    const choiceIds = state.assessmentProgress.getIn(
+    const userInput = state.assessmentProgress.getIn(
       ["responses", `${questionIndex}`],
       Immutable.List()
     ).toJS();
@@ -67,7 +67,7 @@ function checkAnswers(store, action) {
       state.jwt,
       state.settings.csrf_token,
       {},
-      getBody(choiceIds, question),
+      getBody(userInput, question),
       { "X-Api-Proxy": state.settings.eid }
     );
 
@@ -76,14 +76,14 @@ function checkAnswers(store, action) {
         const payload = {
           correct  : response.body.correct,
           feedback : parseFeedback(response.body.feedback),
-          choiceIds
+          userInput
         };
 
         store.dispatch({
           type: AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
           payload,
           questionIndex,
-          choiceIds,
+          userInput,
           original: action,
           response
         });
