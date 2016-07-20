@@ -26,6 +26,20 @@ function getBody(userInput, question){
         text: userInput.reduce((prev, current) => prev + current )
       };
       break;
+
+    case "audio_upload_question":
+      var formData;
+
+      userInput.forEach((input) => {
+        if(formData){console.error("Only one upload is currently supported");}
+        formData = new FormData();
+        formData.append('submission', input);
+      });
+
+      return formData;
+
+      break;
+
     default:
       return {
         type,
@@ -54,35 +68,6 @@ function checkAnswers(store, action) {
 
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${question.json.id}/submit`;
 
-    let type = question.json.genusTypeId;
-    if(type && type.startsWith("question")) {
-      type = type.replace("question", "answer");
-    } else {
-      console.error("Couldn't get the question type");
-    }
-
-// <<<<<<< HEAD
-//     var choiceIds = [];
-//     var formData;
-//
-//     // Seperate file uploads from student answer selections
-//     selections.forEach((selection) => {
-//       if(selection instanceof Blob){
-//         if(formData){console.error("Only one upload is currently supported");}
-//         formData = new FormData();
-//         formData.append('submission', selection);
-//       } else {
-//         choiceIds.push(selection);
-//       }
-//     });
-//
-//     const body = {
-//       type,
-//       choiceIds
-//     };
-//
-//     const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid }, formData);
-// =======
     const promise = api.post(
       url,
       state.settings.api_url,
@@ -93,7 +78,6 @@ function checkAnswers(store, action) {
       { "X-Api-Proxy": state.settings.eid }
     );
 
-// >>>>>>> 67040bbd43ba324fae133790fdca6659b1815df5
     if(promise){
       promise.then((response) => {
         const payload = {

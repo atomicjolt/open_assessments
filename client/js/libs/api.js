@@ -14,8 +14,8 @@ export default class Api{
     return Api.execRequest(NetworkConstants.GET, url, apiUrl, jwt, csrf, params, null, headers);
   }
 
-  static post(url, apiUrl, jwt, csrf, params, body, headers, formData){
-    return Api.execRequest(NetworkConstants.POST, url, apiUrl, jwt, csrf, params, body, headers, formData);
+  static post(url, apiUrl, jwt, csrf, params, body, headers){
+    return Api.execRequest(NetworkConstants.POST, url, apiUrl, jwt, csrf, params, body, headers);
   }
 
   static put(url, apiUrl, jwt, csrf, params, body, headers){
@@ -26,7 +26,7 @@ export default class Api{
     return Api.execRequest(NetworkConstants.DEL, url, apiUrl, jwt, csrf, params, null, headers);
   }
 
-  static execRequest(method, url, apiUrl, jwt, csrf, params, body, headers, formData){
+  static execRequest(method, url, apiUrl, jwt, csrf, params, body, headers){
     return Api._doRequest(Api._makeUrl(`${url}${Api.queryStringFrom(params)}`, apiUrl), (fullUrl) => {
       var request;
 
@@ -35,11 +35,7 @@ export default class Api{
           request = Request.get(fullUrl);
           break;
         case NetworkConstants.POST:
-          if(formData) {
-            formData.append('body', body); //TODO is this the best way to do this?
-            request = Request.post(fullUrl).send(formData);
-          }
-          else{request = Request.post(fullUrl).send(body);}
+          request = Request.post(fullUrl).send(body);
           break;
         case NetworkConstants.PUT:
           request = Request.put(fullUrl).send(body);

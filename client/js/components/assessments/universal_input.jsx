@@ -69,7 +69,6 @@ export default class UniversalInput extends React.Component{
     var item = props.item;
     var answerInputs;
 
-
     switch(item.question_type){
 
       case "edx_multiple_choice":
@@ -152,7 +151,7 @@ export default class UniversalInput extends React.Component{
         });
         break;
 
-      case "audio_upload":
+      case "audio_upload_question":
         var selectAudioAnswer = _.curryRight(props.selectAnswer);
         answerInputs = (
           <AudioUpload

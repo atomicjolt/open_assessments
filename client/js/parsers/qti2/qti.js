@@ -3,18 +3,6 @@ import _   from "lodash";
 
 export function transformItem(itemXml) {
   const xml         = $(itemXml);
-// <<<<<<< HEAD
-//   const material    = $("<div></div>");
-//
-//   function getQuestionType(xml){
-//     if(xml.find("choiceInteraction[maxChoices=1]").length > 0){
-//       return "multiple_choice_question";
-//     } else if(xml.find("uploadInteraction").length > 0) {
-//       return "audio_upload";
-//     }
-//   }
-//
-// =======
   const allNodes    = xml.find("*");
   const material    = $("<div></div>");
 
@@ -67,6 +55,10 @@ export function getQuestionType(interaction) {
 
     case "extendedTextInteraction":
       return "short_answer_question";
+      break;
+
+    case "uploadInteraction":
+      return "audio_upload_question"
       break;
 
     default:
