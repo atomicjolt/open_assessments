@@ -335,7 +335,6 @@ export class Assessment extends React.Component{
   }
 
   popup(){
-    console.log(this);
     return this.props.localizedStrings.assessment.leavingQuizPopup;
   }
 
