@@ -104,7 +104,7 @@ describe('assessment reducer', () => {
     const action = {
       type: AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE,
       payload:{correct:true, feedback:"You win!"},
-      choiceIds:['a'],
+      userInput:['a'],
       questionIndex:3
     };
     it("it returns feedback", () => {

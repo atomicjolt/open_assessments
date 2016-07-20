@@ -38,7 +38,8 @@ export default class CheckBox extends React.Component{
     if(this.props.feedback){
       return (
         <div className="c-answer-feedback">
-          <p>{this.props.feedback}</p>
+            <div
+              dangerouslySetInnerHTML={{__html:this.props.feedback}}/>
         </div>
       );
     }

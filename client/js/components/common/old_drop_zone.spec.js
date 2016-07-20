@@ -2,7 +2,7 @@
 
 import React				from 'react';
 import TestUtils    from 'react/lib/ReactTestUtils';
-import DropZone			from './drop_zone';
+import DropZone			from './old_drop_zone';
 
 describe('Drop Zone', ()=>{
 	var instance;

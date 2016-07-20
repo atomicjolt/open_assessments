@@ -8,7 +8,31 @@ import { Constants as AssessmentMetaConstants }     from "../actions/assessment_
 import { DONE }                                     from "../constants/wrapper";
 import { parseFeedback }                            from "../parsers/clix/parser";
 import { parse }                                    from "../parsers/assessment";
+import { transformItem } from "../parsers/clix/clix";
 
+function getBody(userInput, question){
+  var type = question.json.genusTypeId;
+  if(type && type.startsWith("question")) {
+    type = type.replace("question", "answer");
+  } else {
+    console.error("Couldn't get the question type");
+  }
+
+  var item = transformItem(question);
+  switch (item.question_type) {
+    case "short_answer_question":
+      return {
+        type,
+        text: userInput.reduce((prev, current) => prev + current )
+      };
+      break;
+    default:
+      return {
+        type,
+        choiceIds: userInput,
+      };
+  }
+}
 
 function checkAnswers(store, action) {
   const state = store.getState();
@@ -23,7 +47,7 @@ function checkAnswers(store, action) {
 
   return _.map(questionIndexes, (questionIndex) => {
     const question = state.assessment.items[questionIndex];
-    const selections = state.assessmentProgress.getIn(
+    const userInput = state.assessmentProgress.getIn(
       ["responses", `${questionIndex}`],
       Immutable.List()
     ).toJS();
@@ -37,39 +61,52 @@ function checkAnswers(store, action) {
       console.error("Couldn't get the question type");
     }
 
-    var choiceIds = [];
-    var formData;
+// <<<<<<< HEAD
+//     var choiceIds = [];
+//     var formData;
+//
+//     // Seperate file uploads from student answer selections
+//     selections.forEach((selection) => {
+//       if(selection instanceof Blob){
+//         if(formData){console.error("Only one upload is currently supported");}
+//         formData = new FormData();
+//         formData.append('submission', selection);
+//       } else {
+//         choiceIds.push(selection);
+//       }
+//     });
+//
+//     const body = {
+//       type,
+//       choiceIds
+//     };
+//
+//     const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid }, formData);
+// =======
+    const promise = api.post(
+      url,
+      state.settings.api_url,
+      state.jwt,
+      state.settings.csrf_token,
+      {},
+      getBody(userInput, question),
+      { "X-Api-Proxy": state.settings.eid }
+    );
 
-    // Seperate file uploads from student answer selections
-    selections.forEach((selection) => {
-      if(selection instanceof Blob){
-        if(formData){console.error("Only one upload is currently supported");}
-        formData = new FormData();
-        formData.append('submission', selection);
-      } else {
-        choiceIds.push(selection);
-      }
-    });
-
-    const body = {
-      type,
-      choiceIds
-    };
-
-    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid }, formData);
+// >>>>>>> 67040bbd43ba324fae133790fdca6659b1815df5
     if(promise){
       promise.then((response) => {
         const payload = {
           correct  : response.body.correct,
           feedback : parseFeedback(response.body.feedback),
-          choiceIds
+          userInput
         };
 
         store.dispatch({
           type: AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
           payload,
           questionIndex,
-          choiceIds,
+          userInput,
           original: action,
           response
         });

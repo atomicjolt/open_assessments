@@ -11,6 +11,7 @@ import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
 import AudioUpload          from "../common/audio_upload";
+import SentenceSandbox      from "../common/sentence_sandbox/sentence_sandbox";
 
 export const CORRECT = "CORRECT";
 export const INCORRECT = "INCORRECT";
@@ -70,6 +71,7 @@ export default class UniversalInput extends React.Component{
 
 
     switch(item.question_type){
+
       case "edx_multiple_choice":
       case "multiple_choice_question":
       case "true_false_question":
@@ -109,7 +111,14 @@ export default class UniversalInput extends React.Component{
         });
         break;
       case "text_only_question":
-        answerInputs = <TextArea />;
+      case "short_answer_question":
+        answerInputs = (
+          <li>
+            <textarea
+              rows={parseInt(props.item.question_meta.expectedLines) || 1}
+              onBlur={(e) => props.selectAnswer(e.target.value, true)} />
+          </li>
+        );
         break;
       case "multiple_answers_question":
         answerInputs = item.answers.map((answer) => {
@@ -150,6 +159,20 @@ export default class UniversalInput extends React.Component{
             selectAnswer={selectAudioAnswer(true)} />
         );
         break;
+      case "drag_and_drop":
+        var selectAnswer = _.curryRight(props.selectAnswer);
+        answerInputs = <FillTheBlankDnd
+          currentAnswer={this.props.response}
+          selectAnswer={selectAnswer(false)}
+        />
+        break;
+      case "sentence_sandbox":
+        var selectAnswer = _.curryRight(props.selectAnswer);
+        answerInputs = <SentenceSandbox
+          answers={item.answers}
+          selectAnswer={selectAnswer(false)}
+          wordChain={props.response}
+        />
     }
 
     return (
