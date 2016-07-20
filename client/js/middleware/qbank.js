@@ -8,7 +8,31 @@ import { Constants as AssessmentMetaConstants }     from "../actions/assessment_
 import { DONE }                                     from "../constants/wrapper";
 import { parseFeedback }                            from "../parsers/clix/parser";
 import { parse }                                    from "../parsers/assessment";
+import { transformItem } from "../parsers/clix/clix";
 
+function getBody(userInput, question){
+  var type = question.json.genusTypeId;
+  if(type && type.startsWith("question")) {
+    type = type.replace("question", "answer");
+  } else {
+    console.error("Couldn't get the question type");
+  }
+
+  var item = transformItem(question);
+  switch (item.question_type) {
+    case "short_answer_question":
+      return {
+        type,
+        text: userInput.reduce((prev, current) => prev + current )
+      };
+      break;
+    default:
+      return {
+        type,
+        choiceIds: userInput,
+      };
+  }
+}
 
 function checkAnswers(store, action) {
   const state = store.getState();
@@ -37,12 +61,16 @@ function checkAnswers(store, action) {
       console.error("Couldn't get the question type");
     }
 
-    const body = {
-      type,
-      choiceIds
-    };
+    const promise = api.post(
+      url,
+      state.settings.api_url,
+      state.jwt,
+      state.settings.csrf_token,
+      {},
+      getBody(choiceIds, question),
+      { "X-Api-Proxy": state.settings.eid }
+    );
 
-    const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
     if(promise){
       promise.then((response) => {
         const payload = {
