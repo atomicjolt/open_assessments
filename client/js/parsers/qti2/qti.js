@@ -22,11 +22,21 @@ export function transformItem(itemXml) {
   })).get();
 
   return {
+    question_meta: getQuestionMeta(interaction),
     question_type: getQuestionType(interaction),
     material: material.html(),
     isHtml: true,
     answers
   };
+}
+
+export function getQuestionMeta(interaction){
+  var attributes = {};
+  _.range(0, interaction.attributes.length).forEach((i) => {
+    var attr = interaction.attributes.item(i);
+    attributes[attr.name] = attr.value;
+  });
+  return attributes;
 }
 
 export function getQuestionType(interaction) {
