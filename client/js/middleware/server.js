@@ -9,12 +9,13 @@ export default {
     method : Network.GET,
     url    : (action) => ( `api/sessions/${action.userId}` )
   },
-
-  [AssessmentConstants.LOAD_ASSESSMENT] : {
-    method : Network.GET,
-    url    : (action) => ( action.settings.src_url )
+  [AssessmentConstants.LOAD_ASSESSMENT] : (store, action) => {
+    const state = store.getState();
+    return {
+      method : Network.GET,
+      url    : (action) => ( state.settings.src_url )
+    }
   },
-
   [AssessmentConstants.ASSESSMENT_POST_ANALYTICS] : {
     method : Network.POST,
     url    : (action) => { `api/assessment_results/${action.resultsId}/send?external_user_id=${action.userId}&external_context_id=${action.contextId}`; },

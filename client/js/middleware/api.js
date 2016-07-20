@@ -2,9 +2,9 @@ import api         from "../libs/api";
 import { DONE }    from "../constants/wrapper";
 
 // import the map of constants that maps methods and urls for the appropriate backend.
-// import callMap     from "./rails";
+import callMap     from "./rails";
 // import callMap     from "./oea";
-import callMap     from "./qbank";
+// import callMap     from "./qbank";
 
 const API = store => next => action => {
 
