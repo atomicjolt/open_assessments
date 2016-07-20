@@ -10,7 +10,6 @@ import CheckBox             from "../common/checkbox";
 import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
-import ShortAnswer          from "../common/short_answer";
 import SentenceSandbox      from "../common/sentence_sandbox/sentence_sandbox";
 
 export const CORRECT = "CORRECT";
@@ -111,12 +110,11 @@ export default class UniversalInput extends React.Component{
         break;
       case "text_only_question":
       case "short_answer_question":
-        var selectShortAnswer = _.curryRight(props.selectAnswer);
         answerInputs = (
           <li>
-            <ShortAnswer
-              rows={parseInt(props.item.question_meta.expectedLines)}
-              selectAnswer={selectShortAnswer(true)} />
+            <textarea
+              rows={parseInt(props.item.question_meta.expectedLines) || 1}
+              onBlur={(e) => props.selectAnswer(e.target.value, true)} />
           </li>
         );
         break;
