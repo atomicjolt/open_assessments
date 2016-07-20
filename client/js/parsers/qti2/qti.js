@@ -40,11 +40,15 @@ export function getQuestionType(interaction) {
       break;
 
     case "orderInteraction":
-      return "sentence_sandbox"
+      return "sentence_sandbox";
+      break;
+
+    case "extendedTextInteraction":
+      return "short_answer_question";
       break;
 
     default:
-      return "UNKNOWN"
+      return "UNKNOWN";
   }
 }
 
