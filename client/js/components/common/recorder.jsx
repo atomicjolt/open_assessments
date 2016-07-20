@@ -57,7 +57,7 @@ export default class Recorder extends React.Component{
       .then((stream) => this.handleStream(stream))
       .catch(function(err) {
         console.error(err);
-      });
+      }); 
     }
   }
 
