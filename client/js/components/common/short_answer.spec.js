@@ -3,7 +3,7 @@ import ReactDOM           from 'react-dom';
 import TestUtils          from 'react/lib/ReactTestUtils';
 import ShortAnswer        from './short_answer';
 
-fdescribe('short_answer', function() {
+describe('short_answer', function() {
   var props = {
     selectAnswer : () => {},
   };
