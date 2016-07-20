@@ -32,7 +32,10 @@ export default {
       notFound: "Not Found" // Text displayed when a page is not found
     },
     about: {
-      title:"Open Assessments" // About page title 
+      title:"Open Assessments" // About page title
+    },
+    loading: {
+      loading: "Loading..."
     }
   }
 };
