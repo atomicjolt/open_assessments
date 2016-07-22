@@ -44,7 +44,7 @@ const select = (state, props) => {
 
     // How many questions to display at a time. Default to show all questions
     // in a section if not specified
-    questionsPerPage: state.settings.questions_per_page || questionCount(state, props),
+    questionsPerPage: parseInt(state.settings.questions_per_page) || questionCount(state, props),
 
     // When the next question should be unlocked. Should be either "ON_CORRECT",
     // "ON_ANSWER_CHECK", or "ALWAYS"
