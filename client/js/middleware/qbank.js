@@ -21,9 +21,10 @@ function getBody(userInput, question){
   var item = transformItem(question);
   switch (item.question_type) {
     case "short_answer_question":
+      var text = userInput.length > 0? userInput.reduce((prev, current) => prev + current ) : "";
       return {
         type,
-        text: userInput.reduce((prev, current) => prev + current )
+        text
       };
       break;
     default:
