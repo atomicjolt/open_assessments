@@ -23,13 +23,13 @@ export default (state = initialState, action) => {
   switch(action.type){
     case AssessmentConstants.ASSESSMENT_NEXT_QUESTIONS:
       var currentItemIndex = state.get("currentItemIndex");
-      var increment = action.pageSize;
+      var increment = parseInt(action.pageSize);
       state = state.set("currentItemIndex", currentItemIndex + increment);
       break;
 
     case AssessmentConstants.ASSESSMENT_PREVIOUS_QUESTIONS:
       var currentItemIndex = state.get("currentItemIndex");
-      var decrement = action.pageSize;
+      var decrement = parseInt(action.pageSize);
       state = state.set("currentItemIndex", currentItemIndex - decrement);
       break;
 
