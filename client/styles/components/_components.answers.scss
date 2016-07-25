@@ -132,7 +132,7 @@
       width: 100%;
     }
   }
-  
+
   .c-record{
     padding: 2rem 3rem 1rem;
     @include display-flex;
@@ -179,10 +179,21 @@
     }
 
     &.c-btn--stop{
+      span{
+        color: $white;
+        &:before{
+          background: $white;
+        }
+      }
+      background: $incorrect;
       span:before{
         animation: blink 2s linear infinite;
         -webkit-animation: blink 2s linear infinite;
       }
+    }
+    &.c-btn--stop:active{
+      background: darken($incorrect, 15%);
+      border-color: darken($incorrect, 15%);
     }
   }
 
