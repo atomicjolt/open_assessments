@@ -12,7 +12,6 @@ export function getInitialSettings(){
   _.each(integerSettings, (setting) => {
     if(settings[setting]){settings[setting] = parseInt(settings[setting]);}
   });
-  debugger;
 
   return settings;
 };
