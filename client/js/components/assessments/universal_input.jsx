@@ -10,6 +10,7 @@ import CheckBox             from "../common/checkbox";
 import MappedImage          from "../common/mapped_image";
 import Matching             from "../common/matching";
 import DragAndDrop          from "../common/drag_and_drop";
+import AudioUpload          from "../common/audio_upload";
 import SentenceSandbox      from "../common/sentence_sandbox/sentence_sandbox";
 
 export const CORRECT = "CORRECT";
@@ -29,6 +30,9 @@ export default class UniversalInput extends React.Component{
 
     // Array of selected answer IDs
     response: React.PropTypes.array,
+
+    // User facing strings of the language specified by the 'locale' setting
+    localizedStrings: React.PropTypes.object.isRequired,
 
     // Graded user response object containing keys
     // correct:true/false, feedback:"Answer feedback"
@@ -148,6 +152,17 @@ export default class UniversalInput extends React.Component{
         answerInputs = item.answers.map((answer)=>{
           return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />;
         });
+        break;
+
+      case "audio_upload_question":
+        var selectAudioAnswer = _.curryRight(props.selectAnswer);
+        answerInputs = (
+          <li>
+            <AudioUpload
+              localizedStrings={this.props.localizedStrings.audioUpload}
+              selectAnswer={selectAudioAnswer(true)} />
+          </li>
+        );
         break;
       case "drag_and_drop":
         var selectAnswer = _.curryRight(props.selectAnswer);

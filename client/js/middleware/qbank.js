@@ -26,6 +26,20 @@ function getBody(userInput, question){
         text: userInput.reduce((prev, current) => prev + current )
       };
       break;
+
+    case "audio_upload_question":
+      var formData;
+
+      userInput.forEach((input) => {
+        if(formData){console.error("Only one upload is currently supported");}
+        formData = new FormData();
+        formData.append('submission', input);
+      });
+
+      return formData;
+
+      break;
+
     default:
       return {
         type,
@@ -53,13 +67,6 @@ function checkAnswers(store, action) {
     ).toJS();
 
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${question.json.id}/submit`;
-
-    let type = question.json.genusTypeId;
-    if(type && type.startsWith("question")) {
-      type = type.replace("question", "answer");
-    } else {
-      console.error("Couldn't get the question type");
-    }
 
     const promise = api.post(
       url,
@@ -98,6 +105,7 @@ function checkAnswers(store, action) {
 
       return promise;
     }
+
   });
 }
 

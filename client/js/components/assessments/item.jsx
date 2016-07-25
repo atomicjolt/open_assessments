@@ -64,9 +64,9 @@ export default class Item extends React.Component{
   render() {
     var questionDirections;
     if(this.props.question.question_type == "multiple_answers_question"){
-      questionDirections = this.props.localizedStrings.questionDirectionMany;
+      questionDirections = this.props.localizedStrings.item.questionDirectionMany;
     } else {
-      questionDirections = this.props.localizedStrings.questionDirectionAll;
+      questionDirections = this.props.localizedStrings.item.questionDirectionAll;
     }
 
     return (
@@ -83,7 +83,8 @@ export default class Item extends React.Component{
               isResult={false}
               selectAnswer={this.props.selectAnswer}
               response={this.props.response}
-              questionResult={this.props.questionResult}/>
+              questionResult={this.props.questionResult}
+              localizedStrings={this.props.localizedStrings}/>
           </div>
           {this.getFeedback()}
         </div>
