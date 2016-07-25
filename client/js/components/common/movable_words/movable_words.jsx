@@ -8,7 +8,7 @@ import { GroupDropZone }    from "../drop_zones";
 import WordChain            from "./word_chain";
 import CustomDragLayer      from "./custom_drag_layer";
 
-export class SentenceSandbox extends React.Component {
+export class MovableWords extends React.Component {
   static propTypes = {
     answers: React.PropTypes.array,
     wordChain: React.PropTypes.array,
@@ -30,10 +30,13 @@ export class SentenceSandbox extends React.Component {
 
     let answerPositions = _.cloneDeep(this.state.answerPositions);
 
+    const groupDropZone = ReactDOM.findDOMNode(this.groupDropZone);
+    const groupDropZonePosition = groupDropZone.getBoundingClientRect();
+
     _.each(answerIds, (answerId, index) => {
       answerPositions[answerId] = {
-        top: dropOffset.y,
-        left: dropOffset.x + index * 60
+        top: dropOffset.y - groupDropZonePosition.top,
+        left: dropOffset.x + index * 60 - groupDropZonePosition.left
       };
 
       this.setState({answerPositions});
@@ -66,15 +69,15 @@ export class SentenceSandbox extends React.Component {
 
     return <div>
       <GroupDropZone
+        ref={(ref) => this.groupDropZone = ref}
         dropItem={(answerIds, dropOffset) => {this.dropWordsInCloud(answerIds, dropOffset)}}
-        style={{width: 500, height: 200, border: "1px solid grey"}}
+        style={{width: 500, height: 200, border: "1px solid grey", position: "relative"}}
       >
         <h1>Word Cloud</h1>
         {availableWords}
       </GroupDropZone>
       <div>
-        <span>Start: </span>
-        <div style={{height: 500, width: 500, background: "light-grey"}}>
+        <div style={{padding: "10px 10px"}}>
           <WordChain
             linkWord={(answerId) => { this.linkWord(answerId); }}
             answersById={answersById}
@@ -87,4 +90,4 @@ export class SentenceSandbox extends React.Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(SentenceSandbox);
+export default DragDropContext(HTML5Backend)(MovableWords);

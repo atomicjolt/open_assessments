@@ -2,7 +2,7 @@ import React                from 'react';
 import ReactDOM             from 'react-dom';
 import TestUtils            from 'react/lib/ReactTestUtils';
 
-import SentenceSandbox      from './sentence_sandbox';
+import SentenceSandbox      from './movable_words';
 
 describe('sentence sandbox', () => {
   var result, props;
