@@ -4,7 +4,7 @@ import Recorder  from "./recorder";
 class AudioUpload extends React.Component {
 
   static propTypes = {
-    selectAnswer: React.PropTypes.func.isRequired,
+    selectAnswer: React.PropTypes.func,
   };
 
   constructor(){
@@ -19,7 +19,7 @@ class AudioUpload extends React.Component {
     // Do something with the blob file of the recording
     var audioURL = window.URL.createObjectURL(blob);
     this.setState({audioURL});
-    this.props.selectAnswer(blob);
+    if(this.props.selectAnswer){this.props.selectAnswer(blob);}
   }
 
   toggle(){
