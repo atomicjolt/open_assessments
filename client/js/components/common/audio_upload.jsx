@@ -5,6 +5,9 @@ class AudioUpload extends React.Component {
 
   static propTypes = {
     selectAnswer: React.PropTypes.func,
+
+    // User facing strings of the language specified by the 'locale' setting
+    localizedStrings: React.PropTypes.object.isRequired
   };
 
   constructor(){
@@ -33,9 +36,9 @@ class AudioUpload extends React.Component {
   render(){
     if(this.state.recorder == "start"){
       var buttonClass = "c-btn--stop";
-      var buttonText = "Stop";
+      var buttonText = this.props.localizedStrings.stop;
     } else {
-      var buttonText = "Record";
+      var buttonText = this.props.localizedStrings.record;
     }
     return (
       <div className="c-record">

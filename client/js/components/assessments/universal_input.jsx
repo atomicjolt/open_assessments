@@ -31,6 +31,9 @@ export default class UniversalInput extends React.Component{
     // Array of selected answer IDs
     response: React.PropTypes.array,
 
+    // User facing strings of the language specified by the 'locale' setting
+    localizedStrings: React.PropTypes.object.isRequired,
+
     // Graded user response object containing keys
     // correct:true/false, feedback:"Answer feedback"
     questionResult: React.PropTypes.object
@@ -156,6 +159,7 @@ export default class UniversalInput extends React.Component{
         answerInputs = (
           <li>
             <AudioUpload
+              localizedStrings={this.props.localizedStrings.audioUpload}
               selectAnswer={selectAudioAnswer(true)} />
           </li>
         );

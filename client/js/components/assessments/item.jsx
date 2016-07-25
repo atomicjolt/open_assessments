@@ -83,7 +83,8 @@ export default class Item extends React.Component{
               isResult={false}
               selectAnswer={this.props.selectAnswer}
               response={this.props.response}
-              questionResult={this.props.questionResult}/>
+              questionResult={this.props.questionResult}
+              localizedStrings={this.props.localizedStrings}/>
           </div>
           {this.getFeedback()}
         </div>
