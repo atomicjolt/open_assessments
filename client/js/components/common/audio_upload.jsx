@@ -31,11 +31,21 @@ class AudioUpload extends React.Component {
   }
 
   render(){
+    if(this.state.recorder == "start"){
+      var buttonClass = "c-btn--stop";
+      var buttonText = "Stop";
+    } else {
+      var buttonText = "Record";
+    }
     return (
-      <div>
+      <div className="c-record">
+        <a
+          onClick={() => {this.toggle();}}
+          className={`c-btn  c-btn--record ${buttonClass || ''}`}>
+            <span>{buttonText}</span>
+        </a>
+        <audio src={this.state.audioURL} type="audio/wav" controls />
         <Recorder command={this.state.recorder} onStop={(blob) => this.onStop(blob)} />
-        <button onClick={() => this.toggle()}>Recorder</button>
-        <audio src={this.state.audioURL} controls/>
       </div>
     );
   }
