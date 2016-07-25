@@ -132,3 +132,84 @@
       width: 100%;
     }
   }
+  
+  .c-record{
+    padding: 2rem 3rem 1rem;
+    @include display-flex;
+    @include align-items(center);
+
+    audio{
+      @include flex(1);
+      margin-left: 1rem;
+    }
+  }
+
+  .c-btn--record{
+    border-color: $incorrect;
+    width: 10.5rem;
+    @include transition(all 0.1s ease);
+
+    &:hover{
+      background: $incorrect;
+
+      span{
+        color: $white;
+        &:before{
+          background: $white;
+        }
+      }
+    }
+
+    span{
+      padding-left: 1.7rem;
+      color: $incorrect;
+      position: relative;
+      @include transition(all 0.1s ease);
+
+      &:before{
+        content: '';
+        position: absolute;
+        left: -0.5rem;
+        top: 0.9rem;
+        width: 1.2rem;
+        height: 1.2rem;
+        border-radius: 50%;
+        background: $incorrect;
+      }
+    }
+
+    &.c-btn--stop{
+      span:before{
+        animation: blink 2s linear infinite;
+        -webkit-animation: blink 2s linear infinite;
+      }
+    }
+  }
+
+  @keyframes blink {
+    0%{
+      opacity: 1;
+    }
+    50%{
+      opacity: 0;
+    }
+    100%{
+      opacity: 1;
+    }
+  }
+
+  .c-text-answer{
+    padding: 2rem 3rem 1rem;
+
+    textarea{
+      border: 0.1rem solid $light-gray;
+      border-radius: $radius;
+      // min-height: 10rem;
+      width: 100%;
+      resize: none;
+      padding: 0.5rem 1rem;
+      @include regular;
+      font-size: 1.4rem;
+      color: $text-color;
+    }
+  }
