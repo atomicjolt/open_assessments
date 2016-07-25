@@ -1,6 +1,11 @@
 import React     from 'react';
 import Record    from 'recorderjs';
 
+export const RecorderCommands = {
+  start: "start",
+  stop: "stop"
+};
+
 export default class Recorder extends React.Component{
 
   static propTypes = {
@@ -57,7 +62,7 @@ export default class Recorder extends React.Component{
       .then((stream) => this.handleStream(stream))
       .catch(function(err) {
         console.error(err);
-      }); 
+      });
     }
   }
 

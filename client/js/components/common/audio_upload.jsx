@@ -1,5 +1,5 @@
 import React     from "react";
-import Recorder  from "./recorder";
+import Recorder, { RecorderCommands}  from "./recorder";
 
 class AudioUpload extends React.Component {
 
@@ -13,7 +13,7 @@ class AudioUpload extends React.Component {
   constructor(){
     super();
     this.state = {
-      recorder: "stop",
+      recorder: RecorderCommands.stop,
       audioURL:""
     };
   }
@@ -26,10 +26,10 @@ class AudioUpload extends React.Component {
   }
 
   toggle(){
-    if(this.state.recorder === "stop"){
-      this.setState({recorder:"start"});
-    } else if(this.state.recorder === "start") {
-      this.setState({recorder:"stop"});
+    if(this.state.recorder === RecorderCommands.stop){
+      this.setState({recorder: RecorderCommands.start});
+    } else if(this.state.recorder === RecorderCommands.start) {
+      this.setState({recorder:RecorderCommands.stop});
     }
   }
 
