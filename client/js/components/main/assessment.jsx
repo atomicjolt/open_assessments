@@ -167,10 +167,10 @@ export class Assessment extends React.Component{
         return !response.correct;
       });
 
-      return _.isUndefined(incorrectResponse) && _.compact(_.values(questionResponses)).length == questionsPerPage;
+      return _.isUndefined(incorrectResponse) && _.compact(_.values(questionResponses)).length === questionsPerPage;
     } else if(unlockNext === "ON_ANSWER_CHECK") {
 
-      return _.compact(_.values(questionResponses)).length == questionsPerPage;
+      return _.compact(_.values(questionResponses)).length === questionsPerPage;
     }
     return true;
   }
