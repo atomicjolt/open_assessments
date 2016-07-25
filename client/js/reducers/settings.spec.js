@@ -29,6 +29,11 @@ describe('settings reducer', () => {
       expect(settings.bar).toEqual(2);
     });
 
+    it("Parses integer fields to ints", () => {
+      const serverSettings = { questions_per_page: "1" };
+      const settings = getInitialSettings(serverSettings);
+      expect(settings.questions_per_page).toEqual(1);
+    });
   });
 
 });
