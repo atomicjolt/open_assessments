@@ -154,8 +154,10 @@ export default class UniversalInput extends React.Component{
       case "audio_upload_question":
         var selectAudioAnswer = _.curryRight(props.selectAnswer);
         answerInputs = (
-          <AudioUpload
-            selectAnswer={selectAudioAnswer(true)} />
+          <li>
+            <AudioUpload
+              selectAnswer={selectAudioAnswer(true)} />
+          </li>
         );
         break;
       case "drag_and_drop":
