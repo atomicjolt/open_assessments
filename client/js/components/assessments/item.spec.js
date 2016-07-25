@@ -24,7 +24,7 @@ describe('item', function() {
       currentItemIndex={currentItemIndex}
       questionCount={questionCount}
       assessment={assessment}
-      localizedStrings={localizeStrings({settings:{locale:"en"}}).item}
+      localizedStrings={localizeStrings({settings:{locale:"en"}})}
     />);
     subject = ReactDOM.findDOMNode(result);
   };
