@@ -7,7 +7,9 @@ class AudioUpload extends React.Component {
     selectAnswer: React.PropTypes.func,
 
     // User facing strings of the language specified by the 'locale' setting
-    localizedStrings: React.PropTypes.object.isRequired
+    localizedStrings: React.PropTypes.object.isRequired,
+
+    timeout: React.PropTypes.number
   };
 
   constructor(){
@@ -30,14 +32,14 @@ class AudioUpload extends React.Component {
       this.setState({recorder: RecorderCommands.start});
       window.setTimeout(() => {
         this.setState({recorder: RecorderCommands.stop});
-      }, 1000);
+      }, this.props.timeout * 1000 || 1000000);
     } else if(this.state.recorder === RecorderCommands.start) {
       this.setState({recorder:RecorderCommands.stop});
     }
   }
 
   render(){
-    if(this.state.recorder == "start"){ //TODO use RecorderCommands
+    if(this.state.recorder == RecorderCommands.start){ //TODO use RecorderCommands
       var buttonClass = "c-btn--stop";
       var buttonText = this.props.localizedStrings.stop;
     } else {

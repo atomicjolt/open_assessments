@@ -9,6 +9,7 @@ export default class Item extends React.Component{
 
   static propTypes = {
 
+    //TODO document
     settings          : React.PropTypes.object,
 
     // Item to be displayed
@@ -82,6 +83,7 @@ export default class Item extends React.Component{
           </div>
           <div className="c-answers">
             <UniversalInput
+              settings={this.props.settings}
               item={this.props.question}
               isResult={false}
               selectAnswer={this.props.selectAnswer}

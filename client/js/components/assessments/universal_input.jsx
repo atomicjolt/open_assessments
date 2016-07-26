@@ -20,6 +20,9 @@ export const UNGRADED = "UNGRADED";
 export default class UniversalInput extends React.Component{
 
   static propTypes = {
+    //TODO document
+    settings: React.PropTypes.object,
+
     // Item to be displayed
     item: React.PropTypes.object.isRequired,
 
@@ -161,7 +164,8 @@ export default class UniversalInput extends React.Component{
           <li>
             <AudioUpload
               localizedStrings={this.props.localizedStrings.audioUpload}
-              selectAnswer={selectAudioAnswer(true)} />
+              selectAnswer={selectAudioAnswer(true)}
+              timeout={this.props.settings.audio_recorder_timeout} />
           </li>
         );
         break;
