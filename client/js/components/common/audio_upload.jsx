@@ -33,7 +33,7 @@ class AudioUpload extends React.Component {
       this.setState({recorder: RecorderCommands.start});
       window.setTimeout(() => {
         this.setState({recorder: RecorderCommands.stop});
-      }, this.props.timeout * 1000 || 1000000);
+      }, this.props.timeout * 1000); // Convert millisecods to seconds
     } else if(this.state.recorder === RecorderCommands.start) {
       this.setState({recorder:RecorderCommands.stop});
     }
