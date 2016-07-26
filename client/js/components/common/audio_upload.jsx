@@ -17,7 +17,8 @@ class AudioUpload extends React.Component {
     super();
     this.state = {
       recorder: RecorderCommands.stop,
-      audioURL:""
+      audioURL:"",
+      timeoutId: null
     };
   }
 
@@ -29,18 +30,30 @@ class AudioUpload extends React.Component {
   }
 
   toggle(){
+    //TODO save timeout id and kill recorder on didUnmount
+
     if(this.state.recorder === RecorderCommands.stop){
-      this.setState({recorder: RecorderCommands.start});
-      window.setTimeout(() => {
-        this.setState({recorder: RecorderCommands.stop});
+      var timeoutId = window.setTimeout(() => {
+        this.setState({
+          recorder: RecorderCommands.stop,
+          timeoutId: null
+        });
       }, this.props.timeout * 1000); // Convert seconds to milliseconds
+      this.setState({
+        recorder: RecorderCommands.start,
+        timeoutId
+      });
     } else if(this.state.recorder === RecorderCommands.start) {
-      this.setState({recorder:RecorderCommands.stop});
+      window.clearTimeout(this.state.timeoutId);
+      this.setState({
+        recorder:RecorderCommands.stop,
+        timeoutId: null
+      });
     }
   }
 
   render(){
-    if(this.state.recorder == RecorderCommands.start){ 
+    if(this.state.recorder == RecorderCommands.start){
       var buttonClass = "c-btn--stop";
       var buttonText = this.props.localizedStrings.stop;
     } else {

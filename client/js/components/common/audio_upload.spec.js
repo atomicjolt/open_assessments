@@ -29,18 +29,39 @@ describe('audio upload', () => {
     AudioUploadRewireApi.__ResetDependency__('Recorder');
   });
 
-  it('toggles recorder', () => {
-    result.setState({recorder:'start'});
-    result.toggle();
+  describe('toggle recorder', () => {
+    it('toggles recorder', () => {
+      result.setState({recorder:'start'});
+      result.toggle();
 
-    expect(result.state.recorder).toEqual('stop');
-  });
+      expect(result.state.recorder).toEqual('stop');
+    });
 
-  it('toggles recorder', () => {
-    result.setState({recorder:'stop'});
-    result.toggle();
+    it('toggles recorder', () => {
+      result.setState({recorder:'stop'});
+      result.toggle();
 
-    expect(result.state.recorder).toEqual('start');
+      expect(result.state.recorder).toEqual('start');
+    });
+
+    it('sets stop recording timeout on start', () => {
+      spyOn(window, 'setTimeout');
+      result.setState({recorder:'stop'});
+      result.toggle();
+
+      expect(result.state.timeoutId).not.toEqual(null);
+      expect(window.setTimeout).toHaveBeenCalled();
+    });
+
+    it('removes stop recording timeout on stop', () => {
+      spyOn(window, 'clearTimeout');
+      result.setState({recorder:'start'});
+      var timeoutId = result.state.timeoutId;
+      result.toggle();
+
+      expect(result.state.timeoutId).toEqual(null);
+      expect(window.clearTimeout).toHaveBeenCalledWith(timeoutId);
+    });
   });
 
 });
