@@ -67,12 +67,19 @@ export default class UniversalInput extends React.Component{
     }
   }
 
+  /**
+   * Divides array of answers into groups of two surrounded by <ul> tags
+   * for two column answer layout.
+   *
+   * param answerMap - function to be passed to map function. Should have
+   * signature of map callback function. function answerMap(answer, index, array)
+   */
   answerColumns(answerMap){
     return function(answer, i, arr){
       if(i % 2 > 0) {return;}
       var row = arr.slice(i, i+2);
       return (
-        <ul className="o-grid">
+        <ul key={i} className="o-grid">
           {row.map(answerMap)}
         </ul>
       );
@@ -90,7 +97,7 @@ export default class UniversalInput extends React.Component{
       case "multiple_choice_question":
       case "true_false_question":
 
-        function getAnswer(answer){
+        function multipleChoiceAnswer(answer){
           var selectRadio = _.curryRight(props.selectAnswer);
           var id = item.id + "_" + answer.id;
           var gradeState = this.getGradeState(answer.id, props.questionResult);
@@ -111,10 +118,7 @@ export default class UniversalInput extends React.Component{
           );
         };
 
-
-
-        answerInputs = item.answers.map(this.answerColumns(getAnswer.bind(this)));
-
+        answerInputs = item.answers.map(this.answerColumns(multipleChoiceAnswer.bind(this)));
         break;
       case "edx_dropdown":
         answerInputs = item.answers.map((answer) => {
