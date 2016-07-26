@@ -8,6 +8,9 @@ import UniversalInput          from "./universal_input";
 export default class Item extends React.Component{
 
   static propTypes = {
+
+    settings          : React.PropTypes.object,
+
     // Item to be displayed
     question          : React.PropTypes.object.isRequired,
 

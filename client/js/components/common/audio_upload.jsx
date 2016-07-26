@@ -28,13 +28,16 @@ class AudioUpload extends React.Component {
   toggle(){
     if(this.state.recorder === RecorderCommands.stop){
       this.setState({recorder: RecorderCommands.start});
+      window.setTimeout(() => {
+        this.setState({recorder: RecorderCommands.stop});
+      }, 1000);
     } else if(this.state.recorder === RecorderCommands.start) {
       this.setState({recorder:RecorderCommands.stop});
     }
   }
 
   render(){
-    if(this.state.recorder == "start"){
+    if(this.state.recorder == "start"){ //TODO use RecorderCommands
       var buttonClass = "c-btn--stop";
       var buttonText = this.props.localizedStrings.stop;
     } else {
