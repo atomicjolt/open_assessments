@@ -100,6 +100,9 @@ export default class Recorder extends React.Component{
     }
   }
 
+  componentWillUnmount(){
+    this.stopRecorder();
+  }
 
   render(){
     if(this.props.command == 'start'){
