@@ -137,15 +137,14 @@ export default class UniversalInput extends React.Component{
       case "text_only_question":
       case "short_answer_question":
         answerInputs = (
-          <li>
-            <textarea
-              rows={parseInt(props.item.question_meta.expectedLines) || 1}
-              onBlur={(e) => props.selectAnswer(e.target.value, true)} />
-          </li>
+          <textarea
+            rows={parseInt(props.item.question_meta.expectedLines) || 1}
+            onBlur={(e) => props.selectAnswer(e.target.value, true)} />
         );
         break;
       case "multiple_answers_question":
-        answerInputs = item.answers.map((answer) => {
+
+        function multipleAnswer(answer, i, arr){
           var selectCheckbox = _.curryRight(props.selectAnswer);
           var id = item.id + "_" + answer.id;
           var gradeState = this.getGradeState(answer.id, props.questionResult);
@@ -163,7 +162,9 @@ export default class UniversalInput extends React.Component{
                 feedback={feedback}
                 selectAnswer={selectCheckbox(false)} />
           );
-        });
+        }
+
+        answerInputs = item.answers.map(this.answerColumns(multipleAnswer.bind(this)));
         break;
       case "edx_image_mapped_input":
         answerInputs = item.answers.map((answer)=>{
@@ -179,11 +180,9 @@ export default class UniversalInput extends React.Component{
       case "audio_upload_question":
         var selectAudioAnswer = _.curryRight(props.selectAnswer);
         answerInputs = (
-          <li>
-            <AudioUpload
-              localizedStrings={this.props.localizedStrings.audioUpload}
-              selectAnswer={selectAudioAnswer(true)} />
-          </li>
+          <AudioUpload
+            localizedStrings={this.props.localizedStrings.audioUpload}
+            selectAnswer={selectAudioAnswer(true)} />
         );
         break;
       case "drag_and_drop":
@@ -204,9 +203,7 @@ export default class UniversalInput extends React.Component{
 
     return (
       <div>
-        <ul>
-          {answerInputs}
-        </ul>
+        {answerInputs}
       </div>
     );
   }
