@@ -29,11 +29,10 @@ function getBody(userInput, question){
       break;
 
     case "audio_upload_question":
-      var formData;
+      var formData = new FormData();
 
-      userInput.forEach((input) => {
-        if(formData){console.error("Only one upload is currently supported");}
-        formData = new FormData();
+      userInput.forEach((input, i) => {
+        if(i > 0){throw new Error("Only one upload is currently supported");}
         formData.append('submission', input);
       });
 
