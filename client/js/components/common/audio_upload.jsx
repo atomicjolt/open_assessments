@@ -9,6 +9,7 @@ class AudioUpload extends React.Component {
     // User facing strings of the language specified by the 'locale' setting
     localizedStrings: React.PropTypes.object.isRequired,
 
+    // Maximum audio recording length in seconds
     timeout: React.PropTypes.number
   };
 

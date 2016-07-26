@@ -8,8 +8,7 @@ import UniversalInput          from "./universal_input";
 export default class Item extends React.Component{
 
   static propTypes = {
-
-    //TODO document
+    // Assessment configuration settings. these should never be modified.
     settings          : React.PropTypes.object,
 
     // Item to be displayed
