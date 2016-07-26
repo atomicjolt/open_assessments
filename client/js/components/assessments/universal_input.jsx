@@ -115,11 +115,12 @@ export default class UniversalInput extends React.Component{
       case "text_only_question":
       case "short_answer_question":
         answerInputs = (
-          <li>
+          <div className="c-text-answer">
             <textarea
-              rows={parseInt(props.item.question_meta.expectedLines) || 1}
-              onBlur={(e) => props.selectAnswer(e.target.value, true)} />
-          </li>
+              placeholder="Enter answer here..."
+              onBlur={(e) => props.selectAnswer(e.target.value, true)}
+              rows={parseInt(props.item.question_meta.expectedLines) || 1} />
+          </div>
         );
         break;
       case "multiple_answers_question":
