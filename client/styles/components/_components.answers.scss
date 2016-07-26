@@ -2,34 +2,41 @@
   padding: 0 3rem;
 }
 
-.c-answer-container{
-  @include answer-styling;
-  border-radius: $radius;
-  min-height: 3.5rem;
-  position: relative;
-  padding: 0.8rem 0.8rem 0;
-  margin-bottom: 1rem;
-  cursor: pointer;
-  @include transition(all 0.1s ease);
+.o-grid{
+  @include display-flex;
+  @include justify-content(space-between);
+  @include align-items(stretch);
+}
 
-  &:hover{
-    @include answer-hover;
-  }
+  .c-answer-container{
+    @include flex(0 0 49%);
+    @include answer-styling;
+    border-radius: $radius;
+    min-height: 3.5rem;
+    position: relative;
+    padding: 0.8rem 0.8rem 0;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    @include transition(all 0.1s ease);
 
-  &.is-clicked{
-    @include answer-clicked;
+    &:hover{
+      @include answer-hover;
+    }
 
-    .c-answer-container__content{
-      p{
-        color: $answer-text-clicked;
+    &.is-clicked{
+      @include answer-clicked;
+
+      .c-answer-container__content{
+        p{
+          color: $answer-text-clicked;
+        }
+      }
+
+      .c-feedback{
+        background: $answer-result-background-clicked;
       }
     }
-
-    .c-feedback{
-      background: $answer-result-background-clicked;
-    }
   }
-}
 
   .c-answer-container__radio{
     width: 2rem;

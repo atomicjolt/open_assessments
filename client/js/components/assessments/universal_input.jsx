@@ -80,7 +80,8 @@ export default class UniversalInput extends React.Component{
       case "edx_multiple_choice":
       case "multiple_choice_question":
       case "true_false_question":
-        answerInputs = item.answers.map((answer) => {
+
+        const multipleChoiceAnswer = (answer) => {
           var selectRadio = _.curryRight(props.selectAnswer);
           var id = item.id + "_" + answer.id;
           var gradeState = this.getGradeState(answer.id, props.questionResult);
@@ -99,7 +100,16 @@ export default class UniversalInput extends React.Component{
                 feedback={feedback}
                 selectAnswer={selectRadio(true)}/>
           );
+        };
+
+        answerInputs = _.chunk(item.answers, 2).map((row, index) => {
+          return (
+            <ul key={index} className="o-grid">
+              {row.map(multipleChoiceAnswer)}
+            </ul>
+          );
         });
+
         break;
       case "edx_dropdown":
         answerInputs = item.answers.map((answer) => {
@@ -127,7 +137,8 @@ export default class UniversalInput extends React.Component{
         );
         break;
       case "multiple_answers_question":
-        answerInputs = item.answers.map((answer) => {
+
+        const multipleAnswer = (answer) => {
           var selectCheckbox = _.curryRight(props.selectAnswer);
           var id = item.id + "_" + answer.id;
           var gradeState = this.getGradeState(answer.id, props.questionResult);
@@ -145,6 +156,14 @@ export default class UniversalInput extends React.Component{
                 feedback={feedback}
                 selectAnswer={selectCheckbox(false)} />
           );
+        };
+
+        answerInputs = _.chunk(item.answers, 2).map((row, index) => {
+          return (
+            <ul key={index} className="o-grid">
+              {row.map(multipleAnswer)}
+            </ul>
+          );
         });
         break;
       case "edx_image_mapped_input":
@@ -161,12 +180,10 @@ export default class UniversalInput extends React.Component{
       case "audio_upload_question":
         var selectAudioAnswer = _.curryRight(props.selectAnswer);
         answerInputs = (
-          <li>
-            <AudioUpload
-              localizedStrings={this.props.localizedStrings.audioUpload}
-              selectAnswer={selectAudioAnswer(true)}
-              timeout={this.props.settings.audio_recorder_timeout} />
-          </li>
+          <AudioUpload
+            localizedStrings={this.props.localizedStrings.audioUpload}
+            selectAnswer={selectAudioAnswer(true)}
+            timeout={this.props.settings.audio_recorder_timeout} />
         );
         break;
       case "drag_and_drop":
@@ -187,9 +204,7 @@ export default class UniversalInput extends React.Component{
 
     return (
       <div>
-        <ul>
-          {answerInputs}
-        </ul>
+        {answerInputs}
       </div>
     );
   }
