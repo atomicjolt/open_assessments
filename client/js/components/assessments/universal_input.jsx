@@ -124,6 +124,7 @@ export default class UniversalInput extends React.Component{
           return <TextField isDisabled={props.isResult} key={item.id + "_" + answer.id} item={answer} name="answer-text"/>;
         });
         break;
+      case "text_input_question":
       case "text_only_question":
       case "short_answer_question":
         answerInputs = (
