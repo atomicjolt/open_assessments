@@ -12,6 +12,9 @@ export function transformItem(item) {
     case "question-type%3Aqti-order-interaction-mw-sandbox%40ODL.MIT.EDU" :
       question_type = "movable_words_sandbox";
       break;
+    case "question-type%3Aqti-order-interaction-object-manipulation%40ODL.MIT.EDU" :
+      question_type = "movable_object_chain";
+      break;
   }
 
   return _.merge({}, qti, { title: item.title, question_type });
