@@ -18,18 +18,19 @@ describe('fill the blank', () => {
       selectAnswer: () => {}
     };
 
-    FillTheBlankRewireApi.__Rewire__('WordDropZone', () => { return <div>WordDropZone</div>; })
     FillTheBlankRewireApi.__Rewire__('FillTheBlankWordChain', () => { return <div>WordChain</div>; })
 
     WrappedComponent = wrapInDndContext(FillTheBlank);
     result = TestUtils.renderIntoDocument(<WrappedComponent {...props} />);
   });
 
-  it('renders the word chain', () => {
-    expect(ReactDOM.findDOMNode(result).textContent).toContain("WordChain");
-
+  afterEach(() => {
+    FillTheBlankRewireApi.__ResetDependency__('FillTheBlankWordChain');
   });
 
+  it('renders the word chain', () => {
+    expect(ReactDOM.findDOMNode(result).textContent).toContain("WordChain");
+  });
 
 
   it('renders the word cloud', () => {
