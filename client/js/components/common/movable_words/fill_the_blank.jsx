@@ -55,12 +55,16 @@ export class FillTheBlank extends React.Component {
       answersById[answer.id] = answer
     })
 
-    // We split the question on the interactions, then render dropzones instead.
-    // Alternatively we could render invisible dropzones over the top of styled
-    // placeholders, but that would require checking if anything has changed
-    // in componentDidUpdate, and if so finding the dropzones after rendering
-    // then absolutely positioning an invisible dropzone over the styled
-    // placeholder.
+    /* We split the question on the interaction placeholders, then render
+       dropzones where the interactions would be.
+
+       Alternatively we could render invisible dropzones over the top of styled
+       placeholders, but that would require checking if anything has changed
+       in componentDidUpdate, and if so finding the placeholders after rendering
+       then absolutely positioning an invisible dropzone over the styled
+       placeholder.
+    */
+
     const sentenceChunks = this.props.question.split("<div class=\"interaction-placeholder\"></div>")
 
     // range is times two minus 1 so that we have the correct spaces for the dropzones.
@@ -80,7 +84,7 @@ export class FillTheBlank extends React.Component {
       return <WordDropZone key={index} style={{ display: "inline-block" }} dropItem={(answerId) => { this.linkWord(answerId) }}>
         <div className="end-drop-zone" style={{display: "inline-block", height: 23, width: 50, background: "grey"}}/>
       </WordDropZone>
-    })
+    });
 
     const availableWords = _.map(_.omit(answersById, this.props.selectedAnswer), (answer) => {
       let style = {}
