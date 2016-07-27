@@ -29,12 +29,11 @@ function getBody(userInput, question){
       break;
 
     case "audio_upload_question":
-      var formData = new FormData();
-      userInput.forEach((input, i) => {
-        if(i > 0){throw new Error("Only one upload is currently supported");}
-        formData.append('submission', input);
-      });
+      if(_.isEmpty(userInput)){return;}
 
+      var formData = new FormData();
+      formData.append('submission', userInput[0]);
+      if(userInput.length > 1){console.error('Only one form submission is supported!');}
       return formData;
 
       break;
@@ -62,7 +61,7 @@ function checkAnswers(store, action) {
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${question.json.id}/submit`;
 
     var body = getBody(userInput, question);
-    if(body === undefined){return;} // If we have no body, don't send anything to qbank
+    if(_.isUndefined(body)){return;} // If we have no body, don't send anything to qbank
 
     // Let progress reducer know how many questions are being checked
     store.dispatch({
