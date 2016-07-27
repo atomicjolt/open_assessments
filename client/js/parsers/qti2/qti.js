@@ -57,6 +57,9 @@ export function getQuestionType(interaction) {
       return "short_answer_question";
       break;
 
+    case "textEntryInteraction":
+      return "text_input_question";
+      break;
     case "uploadInteraction":
       return "audio_upload_question"
       break;

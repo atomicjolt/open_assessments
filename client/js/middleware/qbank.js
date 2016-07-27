@@ -28,6 +28,13 @@ function getBody(userInput, question){
       };
       break;
 
+    case "text_input_question":
+      return {
+        type,
+        [item.question_meta.responseIdentifier]: userInput[0] || ""
+      };
+      break;
+
     case "audio_upload_question":
       if(_.isEmpty(userInput)){return;}
 
