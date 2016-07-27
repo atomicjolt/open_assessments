@@ -29,14 +29,11 @@ function getBody(userInput, question){
       break;
 
     case "audio_upload_question":
-      var formData;
+      if(_.isEmpty(userInput)){return;}
 
-      userInput.forEach((input) => {
-        if(formData){console.error("Only one upload is currently supported");}
-        formData = new FormData();
-        formData.append('submission', input);
-      });
-
+      var formData = new FormData();
+      formData.append('submission', userInput[0]);
+      if(userInput.length > 1){console.error('Only one form submission is supported!');}
       return formData;
 
       break;
@@ -54,12 +51,6 @@ function checkAnswers(store, action) {
   const currentItemIndex = state.assessmentProgress.get("currentItemIndex");
   const questionIndexes = _.range(currentItemIndex, currentItemIndex + state.settings.questions_per_page);
 
-  // Let progress reducer know how many questions are being checked
-  store.dispatch({
-    type: AssessmentProgressConstants.CHECK_QUESTIONS,
-    numQuestions: questionIndexes.length
-  });
-
   return _.map(questionIndexes, (questionIndex) => {
     const question = state.assessment.items[questionIndex];
     const userInput = state.assessmentProgress.getIn(
@@ -69,13 +60,22 @@ function checkAnswers(store, action) {
 
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${question.json.id}/submit`;
 
+    var body = getBody(userInput, question);
+    if(_.isUndefined(body)){return;} // If we have no body, don't send anything to qbank
+
+    // Let progress reducer know how many questions are being checked
+    store.dispatch({
+      type: AssessmentProgressConstants.CHECK_QUESTIONS,
+      numQuestions: questionIndexes.length
+    });
+
     const promise = api.post(
       url,
       state.settings.api_url,
       state.jwt,
       state.settings.csrf_token,
       {},
-      getBody(userInput, question),
+      body,
       { "X-Api-Proxy": state.settings.eid }
     );
 
