@@ -186,45 +186,37 @@ export default class UniversalInput extends React.Component{
         break;
       case "drag_and_drop":
         var selectAnswer = _.curryRight(props.selectAnswer);
-        answerInputs = <li>
-          <FillTheBlankDnd
+        answerInputs = <FillTheBlankDnd
             currentAnswer={this.props.response}
             selectAnswer={selectAnswer(false)}
           />
-        </li>
         break;
       case "movable_words_sentence":
         var selectAnswer = _.curryRight(props.selectAnswer);
-        answerInputs = <li>
-          <MovableWords
+        answerInputs = <MovableWords
             answers={item.answers}
             selectAnswer={selectAnswer(false)}
             wordChain={props.response}
           />
-        </li>
         break;
       case "movable_words_sandbox":
         var selectAnswer = _.curryRight(props.selectAnswer);
-        answerInputs = <li>
-          <SentenceSandbox
+        answerInputs = <SentenceSandbox
             answers={item.answers}
             selectAnswer={selectAnswer(false)}
             wordChain={props.response}
           />
-        </li>
         break;
 
       case "fill_the_blank_question":
         const selectAnswer = _.curryRight(props.selectAnswer);
 
-        answerInputs = <li>
-          <MovableWordsFillTheBlank
+        answerInputs = <MovableWordsFillTheBlank
             answers={item.answers}
             question={item.question_meta.fillTheBlankQuestion}
             selectAnswer={selectAnswer(false)}
             selectedAnswer={props.response}
           />
-        </li>
     }
 
     return (
