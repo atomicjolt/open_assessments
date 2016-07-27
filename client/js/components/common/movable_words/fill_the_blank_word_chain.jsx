@@ -1,47 +1,25 @@
-import React               from 'react';
-import { WordDropZone }    from '../drop_zones';
-import DraggableWord       from '../draggable_word';
+import React            from 'react';
 
-export default class WordChain extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      draggingIndex: null
-    }
-  }
+import DraggableWord    from '../draggable_word';
+import { WordDropZone } from '../drop_zones';
 
-  beginDragging(wordIndex) {
-    this.setState({dragging: true, draggingIndex: wordIndex});
-  }
-
-  endDragging() {
-    this.setState({dragging: false, draggingIndex: null});
-  }
-
-  render() {
-    return <div style={{display: "inline-block"}}>
-      <div className="start-block" style={{display: "inline-block", width: 10, height: 23, background: "black"}} />
-      {_.map(this.props.wordChain, (answerId, index) => {
-          const answer = this.props.answersById[answerId];
-
-          const draggableWords = _.map(this.props.wordChain.slice(index), (draggableAnswerId) => {
-            return this.props.answersById[draggableAnswerId];
-          });
-
-          return <DraggableWord
-            id={answerId}
-            key={answerId}
-            isGroupDragging={this.state.dragging && index >= this.state.draggingIndex}
-            draggableWords={draggableWords}
-            beginDragging={() => { this.beginDragging(index) }}
-            endDragging={() => { this.endDragging() }}
-            material={answer.material}
-          />
-        })
+export default (props) => {
+  // range is times two minus 1 so that we have the correct spaces for the dropzones.
+  return <div>
+    {_.map(_.range(0, (props.sentenceChunks.length * 2) - 1), (index) => {
+      if(index % 2 == 0) {
+        return <div key={index} dangerouslySetInnerHTML={{__html: props.sentenceChunks[index / 2]}}></div>
+      } else if(!_.isEmpty(props.selectedAnswer)) {
+        return <DraggableWord
+          key={`${props.selectedAnswer.id}-${index}`}
+          id={props.selectedAnswer.id}
+          material={props.selectedAnswer.material}
+        />
       }
-      <WordDropZone style={{ display: "inline-block" }} dropItem={(answerId) => { this.props.linkWord(answerId) }}>
+
+      return <WordDropZone key={index} style={{ display: "inline-block" }} dropItem={(answerId) => { props.linkWord(answerId) }}>
         <div className="end-drop-zone" style={{display: "inline-block", height: 23, width: 50, background: "grey"}}/>
       </WordDropZone>
-    </div>
-  }
+    })}
+  </div>
 }

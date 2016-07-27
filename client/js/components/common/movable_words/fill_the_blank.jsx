@@ -5,16 +5,16 @@ import HTML5Backend           from 'react-dnd-html5-backend';
 
 import DraggableWord          from "../draggable_word";
 import { GroupDropZone }      from "../drop_zones";
-import { WordDropZone }      from "../drop_zones";
-import FillTheBlankWordChain  from "./fill_the_blank_word_chain";
+import { WordDropZone }       from "../drop_zones";
 import CustomDragLayer        from "./custom_drag_layer";
-
+import FillTheBlankWordChain  from "./fill_the_blank_word_chain";
 export class FillTheBlank extends React.Component {
   static propTypes = {
     answers: React.PropTypes.array,
-    wordChain: React.PropTypes.array,
+    selectedAnswer: React.PropTypes.array,
     selectAnswer: React.PropTypes.func.isRequired,
   }
+
   constructor() {
     super();
     this.state = {
@@ -67,25 +67,6 @@ export class FillTheBlank extends React.Component {
 
     const sentenceChunks = this.props.question.split("<div class=\"interaction-placeholder\"></div>")
 
-    // range is times two minus 1 so that we have the correct spaces for the dropzones.
-    const wordChain = _.map(_.range(0, (sentenceChunks.length * 2) - 1), (index) => {
-      if(index % 2 == 0) {
-        return <div key={index} dangerouslySetInnerHTML={{__html: sentenceChunks[index / 2]}}></div>
-      } else if(!_.isEmpty(this.props.selectedAnswer)) {
-        const answer = answersById[this.props.selectedAnswer[0]];
-
-        return <DraggableWord
-          key={`${answer.id}-${index}`}
-          id={answer.id}
-          material={answer.material}
-        />
-      }
-
-      return <WordDropZone key={index} style={{ display: "inline-block" }} dropItem={(answerId) => { this.linkWord(answerId) }}>
-        <div className="end-drop-zone" style={{display: "inline-block", height: 23, width: 50, background: "grey"}}/>
-      </WordDropZone>
-    });
-
     const availableWords = _.map(_.omit(answersById, this.props.selectedAnswer), (answer) => {
       let style = {}
       if(this.state.answerPositions[answer.id]) {
@@ -109,7 +90,11 @@ export class FillTheBlank extends React.Component {
         {availableWords}
       </GroupDropZone>
       <div>
-        {wordChain}
+        <FillTheBlankWordChain
+          sentenceChunks={sentenceChunks}
+          selectedAnswer={answersById[_.first(this.props.selectedAnswer)]}
+          linkWord={(answerId) => { linkWord(answerId); }}
+        />
       </div>
       <CustomDragLayer />
     </div>
