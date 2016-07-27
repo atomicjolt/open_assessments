@@ -104,7 +104,7 @@ export function getQuestionMaterial(xml, interactionName) {
       return item.children();
   }
 
-  return xml.find(`itemBody > *:not(${interactionName})`)
+  return xml.find(`itemBody > *:not(${interactionName})`).clone()
 }
 
 export function getItems(sections, perSec) {
