@@ -62,6 +62,15 @@ describe('audio upload', () => {
       expect(result.state.timeoutId).toEqual(null);
       expect(window.clearTimeout).toHaveBeenCalledWith(timeoutId);
     });
+
+    it('removes timeout on componentWillUnmount', () => {
+      spyOn(window, 'clearTimeout');
+      result.toggle();
+      var timeoutId = result.state.timeoutId;
+      result.componentWillUnmount();
+
+      expect(window.clearTimeout).toHaveBeenCalledWith(timeoutId);
+    });
   });
 
 });

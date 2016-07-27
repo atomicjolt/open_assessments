@@ -30,8 +30,6 @@ class AudioUpload extends React.Component {
   }
 
   toggle(){
-    //TODO save timeout id and kill recorder on didUnmount
-
     if(this.state.recorder === RecorderCommands.stop){
       var timeoutId = window.setTimeout(() => {
         this.setState({
@@ -49,6 +47,12 @@ class AudioUpload extends React.Component {
         recorder:RecorderCommands.stop,
         timeoutId: null
       });
+    }
+  }
+
+  componentWillUnmount(){
+    if(this.state.timeoutId){
+      window.clearTimeout(this.state.timeoutId);
     }
   }
 
