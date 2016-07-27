@@ -36,6 +36,10 @@ export default {
     },
     loading: {
       loading: "Loading..."
+    },
+    audioUpload: {
+      record: "Record",
+      stop: "Stop"
     }
   }
 };

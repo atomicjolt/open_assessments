@@ -79,9 +79,12 @@ export function getQuestionType(interaction = {}) {
     case "extendedTextInteraction":
       return "short_answer_question";
       break;
-
     case "inlineChoiceInteraction":
       return "fill_the_blank_question"
+      break;
+
+    case "uploadInteraction":
+      return "audio_upload_question"
       break;
 
     default:

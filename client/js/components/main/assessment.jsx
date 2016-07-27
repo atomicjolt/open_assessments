@@ -187,7 +187,7 @@ export class Assessment extends React.Component{
 
     return (
       <Item
-          localizedStrings = {props.localizedStrings.item}
+          localizedStrings = {props.localizedStrings}
           key              = {index /* react uses this to distinguish children */}
           settings         = {props.settings}
           assessment       = {props.assessment}
