@@ -10,19 +10,30 @@ export function transformItem(itemXml) {
     return node.nodeName.match(/Interaction$/)
   });
 
-  const interactionName = interaction.nodeName
-  // If we don't .clone(), then .appendTo() *moves* the elements out of the
-  // original, and on subsequent calls they will be missing.
-  xml.find(`itemBody > *:not(${interactionName})`).clone().appendTo(material);
+  let answers = []
 
-  const answers = $(interaction).find("simpleChoice").map((i, t) => ({
-    id: t.getAttribute("identifier"),
-    material: $(t).html(),
-    xml: t
-  })).get();
+  if(interaction) {
+    const interactionName = interaction.nodeName
+
+    // If we don't .clone(), then .appendTo() *moves* the elements out of the
+    // original, and on subsequent calls they will be missing.
+
+    let questionMaterial = getQuestionMaterial(xml, interactionName)
+    questionMaterial.appendTo(material);
+
+    const answerNodes = _.filter($(interaction).find("*"), (node) => {
+      return node.nodeName.match(/Choice$/)
+    });
+
+    answers = answerNodes.map((node) => ({
+      id: node.getAttribute("identifier"),
+      material: $(node).html(),
+      xml: node
+    }));
+  }
 
   return {
-    question_meta: getQuestionMeta(interaction),
+    question_meta: getQuestionMeta(interaction, xml),
     question_type: getQuestionType(interaction),
     material: material.html(),
     isHtml: true,
@@ -30,16 +41,28 @@ export function transformItem(itemXml) {
   };
 }
 
-export function getQuestionMeta(interaction){
+export function getQuestionMeta(interaction, xml){
   var attributes = {};
   _.range(0, interaction.attributes.length).forEach((i) => {
     var attr = interaction.attributes.item(i);
     attributes[attr.name] = attr.value;
   });
+
+  switch(interaction.nodeName) {
+    case "inlineChoiceInteraction":
+      // We wrap the sentence in a div, because calling html on it directly
+      // doesn't output valid html. <div></div> becomes <div />
+
+      let sentence = xml.find(interaction.nodeName).parent().clone();
+      sentence.find(interaction.nodeName).replaceWith('<div class="interaction-placeholder"></div>');
+      const sentenceHtml = $('<div></div>').html(sentence).html()
+      attributes["fillTheBlankQuestion"] = sentenceHtml;
+  }
+
   return attributes;
 }
 
-export function getQuestionType(interaction) {
+export function getQuestionType(interaction = {}) {
   switch(interaction.nodeName) {
     case "choiceInteraction":
       if(interaction.attributes["maxChoices"].value === "1") {
@@ -56,6 +79,9 @@ export function getQuestionType(interaction) {
     case "extendedTextInteraction":
       return "short_answer_question";
       break;
+    case "inlineChoiceInteraction":
+      return "fill_the_blank_question"
+      break;
 
     case "textEntryInteraction":
       return "text_input_question";
@@ -67,6 +93,18 @@ export function getQuestionType(interaction) {
     default:
       return "UNKNOWN";
   }
+}
+
+export function getQuestionMaterial(xml, interactionName) {
+
+  switch(interactionName) {
+    case "inlineChoiceInteraction":
+      let item = xml.find("itemBody").clone();
+      item.find(interactionName).parent().remove();
+      return item.children();
+  }
+
+  return xml.find(`itemBody > *:not(${interactionName})`)
 }
 
 export function getItems(sections, perSec) {

@@ -1,17 +1,19 @@
 "use strict";
 
-import React                from "react";
+import React                          from "react";
 
-import RadioButton          from "../common/radio_button";
-import Option               from "../common/option";
-import TextField            from "../common/text_field";
-import TextArea             from "../common/text_area";
-import CheckBox             from "../common/checkbox";
-import MappedImage          from "../common/mapped_image";
-import Matching             from "../common/matching";
-import DragAndDrop          from "../common/drag_and_drop";
+import RadioButton                    from "../common/radio_button";
+import Option                         from "../common/option";
+import TextField                      from "../common/text_field";
+import TextArea                       from "../common/text_area";
+import CheckBox                       from "../common/checkbox";
+import MappedImage                    from "../common/mapped_image";
+import Matching                       from "../common/matching";
+import DragAndDrop                    from "../common/drag_and_drop";
 import AudioUpload          from "../common/audio_upload";
-import SentenceSandbox      from "../common/sentence_sandbox/sentence_sandbox";
+import MovableWords                   from "../common/movable_words/movable_words";
+import SentenceSandbox                from "../common/sentence_sandbox";
+import MovableWordsFillTheBlank       from "../common/movable_words/fill_the_blank";
 
 export const CORRECT = "CORRECT";
 export const INCORRECT = "INCORRECT";
@@ -190,17 +192,36 @@ export default class UniversalInput extends React.Component{
       case "drag_and_drop":
         var selectAnswer = _.curryRight(props.selectAnswer);
         answerInputs = <FillTheBlankDnd
-          currentAnswer={this.props.response}
-          selectAnswer={selectAnswer(false)}
-        />
+            currentAnswer={this.props.response}
+            selectAnswer={selectAnswer(false)}
+          />
         break;
-      case "sentence_sandbox":
+      case "movable_words_sentence":
+        var selectAnswer = _.curryRight(props.selectAnswer);
+        answerInputs = <MovableWords
+            answers={item.answers}
+            selectAnswer={selectAnswer(false)}
+            wordChain={props.response}
+          />
+        break;
+      case "movable_words_sandbox":
         var selectAnswer = _.curryRight(props.selectAnswer);
         answerInputs = <SentenceSandbox
-          answers={item.answers}
-          selectAnswer={selectAnswer(false)}
-          wordChain={props.response}
-        />
+            answers={item.answers}
+            selectAnswer={selectAnswer(false)}
+            wordChain={props.response}
+          />
+        break;
+
+      case "fill_the_blank_question":
+        const selectAnswer = _.curryRight(props.selectAnswer);
+
+        answerInputs = <MovableWordsFillTheBlank
+            answers={item.answers}
+            question={item.question_meta.fillTheBlankQuestion}
+            selectAnswer={selectAnswer(false)}
+            selectedAnswer={props.response}
+          />
     }
 
     return (

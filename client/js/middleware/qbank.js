@@ -8,7 +8,7 @@ import { Constants as AssessmentMetaConstants }     from "../actions/assessment_
 import { DONE }                                     from "../constants/wrapper";
 import { parseFeedback }                            from "../parsers/clix/parser";
 import { parse }                                    from "../parsers/assessment";
-import { transformItem } from "../parsers/clix/clix";
+import { transformItem }                            from "../parsers/clix/clix";
 
 function getBody(userInput, question){
   var type = question.json.genusTypeId;
@@ -19,6 +19,7 @@ function getBody(userInput, question){
   }
 
   var item = transformItem(question);
+
   switch (item.question_type) {
     case "short_answer_question":
       var text = _.isEmpty(userInput)? "" : userInput.reduce((prev, current) => prev + current );
@@ -26,6 +27,17 @@ function getBody(userInput, question){
         type,
         text
       };
+      break;
+
+    case "fill_the_blank_question":
+      return {
+        type,
+        inlineRegions: {
+          [item.question_meta.responseIdentifier]: {
+            choiceIds: userInput
+          }
+        }
+      }
       break;
 
     case "text_input_question":

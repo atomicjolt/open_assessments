@@ -1,10 +1,10 @@
 import React                from 'react';
 import ReactDOM             from 'react-dom';
 import TestUtils            from 'react/lib/ReactTestUtils';
+import wrapInDndContext     from '../../../../specs_support/dnd_wrapper';
+import { MovableWords }     from './movable_words';
 
-import SentenceSandbox      from './sentence_sandbox';
-
-describe('sentence sandbox', () => {
+describe('movable words', () => {
   var result, props;
   beforeEach(() => {
     props = {
@@ -16,7 +16,8 @@ describe('sentence sandbox', () => {
       selectAnswer: () => {}
     };
 
-    result = TestUtils.renderIntoDocument(<SentenceSandbox {...props} />);
+    const WrappedComponent = wrapInDndContext(MovableWords);
+    result = TestUtils.renderIntoDocument(<WrappedComponent {...props} />);
   });
 
   it('renders the word chain', () => {
