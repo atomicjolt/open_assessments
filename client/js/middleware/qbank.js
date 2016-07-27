@@ -31,7 +31,7 @@ function getBody(userInput, question){
     case "text_input_question":
       return {
         type,
-        [item.question_meta.responseIdentifier]: userInput[0]
+        [item.question_meta.responseIdentifier]: userInput[0] || ""
       };
       break;
 
