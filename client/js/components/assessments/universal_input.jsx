@@ -20,6 +20,9 @@ export const UNGRADED = "UNGRADED";
 export default class UniversalInput extends React.Component{
 
   static propTypes = {
+    // Assessment configuration settings. these should never be modified.
+    settings: React.PropTypes.object,
+
     // Item to be displayed
     item: React.PropTypes.object.isRequired,
 
@@ -180,7 +183,8 @@ export default class UniversalInput extends React.Component{
         answerInputs = (
           <AudioUpload
             localizedStrings={this.props.localizedStrings.audioUpload}
-            selectAnswer={selectAudioAnswer(true)} />
+            selectAnswer={selectAudioAnswer(true)}
+            timeout={this.props.settings.audio_recorder_timeout} />
         );
         break;
       case "drag_and_drop":

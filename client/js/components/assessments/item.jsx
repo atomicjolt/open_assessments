@@ -8,6 +8,9 @@ import UniversalInput          from "./universal_input";
 export default class Item extends React.Component{
 
   static propTypes = {
+    // Assessment configuration settings. these should never be modified.
+    settings          : React.PropTypes.object,
+
     // Item to be displayed
     question          : React.PropTypes.object.isRequired,
 
@@ -79,6 +82,7 @@ export default class Item extends React.Component{
           </div>
           <div className="c-answers">
             <UniversalInput
+              settings={this.props.settings}
               item={this.props.question}
               isResult={false}
               selectAnswer={this.props.selectAnswer}

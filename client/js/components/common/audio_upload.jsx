@@ -7,14 +7,18 @@ class AudioUpload extends React.Component {
     selectAnswer: React.PropTypes.func,
 
     // User facing strings of the language specified by the 'locale' setting
-    localizedStrings: React.PropTypes.object.isRequired
+    localizedStrings: React.PropTypes.object.isRequired,
+
+    // Maximum audio recording length in seconds
+    timeout: React.PropTypes.number
   };
 
   constructor(){
     super();
     this.state = {
       recorder: RecorderCommands.stop,
-      audioURL:""
+      audioURL:"",
+      timeoutId: null
     };
   }
 
@@ -27,14 +31,33 @@ class AudioUpload extends React.Component {
 
   toggle(){
     if(this.state.recorder === RecorderCommands.stop){
-      this.setState({recorder: RecorderCommands.start});
+      var timeoutId = window.setTimeout(() => {
+        this.setState({
+          recorder: RecorderCommands.stop,
+          timeoutId: null
+        });
+      }, this.props.timeout * 1000); // Convert seconds to milliseconds
+      this.setState({
+        recorder: RecorderCommands.start,
+        timeoutId
+      });
     } else if(this.state.recorder === RecorderCommands.start) {
-      this.setState({recorder:RecorderCommands.stop});
+      window.clearTimeout(this.state.timeoutId);
+      this.setState({
+        recorder:RecorderCommands.stop,
+        timeoutId: null
+      });
+    }
+  }
+
+  componentWillUnmount(){
+    if(this.state.timeoutId){
+      window.clearTimeout(this.state.timeoutId);
     }
   }
 
   render(){
-    if(this.state.recorder == "start"){
+    if(this.state.recorder == RecorderCommands.start){
       var buttonClass = "c-btn--stop";
       var buttonText = this.props.localizedStrings.stop;
     } else {

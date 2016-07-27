@@ -69,6 +69,7 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     unlock_next                  - When the next set of items should be available to user. ON_CORRECT (Next questions are available when all currently visible questions have been answered correctly), ON_ANSWER_CHECK (When all answers have been checked), or ALWAYS (Next items are always available).
     confidence_levels            - Whether or not to show confidence controls
     locale                       - Sets player language. Languages currently supported: "en"
+    audio_recorder_timeout       - Maximum allowed audio recording length, should be a value of seconds.
 
     // User settings
     role                         - The current user's role. This will control if certain controls show up. The server is still responsible for security.
