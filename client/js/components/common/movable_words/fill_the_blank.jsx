@@ -93,7 +93,7 @@ export class FillTheBlank extends React.Component {
         <FillTheBlankWordChain
           sentenceChunks={sentenceChunks}
           selectedAnswer={answersById[_.first(this.props.selectedAnswer)]}
-          linkWord={(answerId) => { linkWord(answerId); }}
+          linkWord={(answerId) => { this.linkWord(answerId); }}
         />
       </div>
       <CustomDragLayer />
