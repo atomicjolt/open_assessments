@@ -196,6 +196,7 @@ export default class UniversalInput extends React.Component{
             selectAnswer={selectAnswer(false)}
           />
         break;
+      case "movable_object_chain":
       case "movable_words_sentence":
         var selectAnswer = _.curryRight(props.selectAnswer);
         answerInputs = <MovableWords
