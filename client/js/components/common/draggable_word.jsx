@@ -1,13 +1,15 @@
-import React            from "react";
-import { DragSource }   from "react-dnd";
+import React             from "react";
+import { DragSource }    from "react-dnd";
+import { getEmptyImage } from 'react-dnd-html5-backend';
 
-import Word             from "./word";
-import ItemTypes        from "./draggable_item_types";
+import Word              from "./word";
+import ItemTypes         from "./draggable_item_types";
 
 const wordSource = {
   beginDrag(props) {
     return {
-      itemId: props.id
+      itemId: props.id,
+      material: props.material
     };
   }
 };
@@ -15,15 +17,21 @@ const wordSource = {
 function collect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
+    isDragging: monitor.isDragging(),
+    connectDragPreview: connect.dragPreview()
   }
 }
 
 export class DraggableWord extends React.Component {
   static propTypes = {
     connectDragSource: React.PropTypes.func.isRequired,
+    connectDragPreview: React.PropTypes.func.isRequired,
     isDragging: React.PropTypes.bool.isRequired
   };
+
+  componentDidMount() {
+    this.props.connectDragPreview(getEmptyImage());
+  }
 
   render() {
     const { style, connectDragSource, isDragging } = this.props;
@@ -31,7 +39,7 @@ export class DraggableWord extends React.Component {
 
     return connectDragSource(
       <div className="draggable-word" style={{ ...style, ...baseStyle}}>
-        <Word material={this.props.material} />
+        <Word hide={this.props.hide} material={this.props.material} />
       </div>
     );
   }

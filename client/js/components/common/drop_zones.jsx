@@ -41,7 +41,7 @@ export class Dropzone extends React.Component {
   render() {
     const { connectDropTarget } = this.props;
     return connectDropTarget(
-      <div style={this.props.style}>
+      <div className={this.props.className} style={this.props.style}>
         {this.props.children}
       </div>
     );

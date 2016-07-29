@@ -54,37 +54,35 @@ export class MovableWords extends React.Component {
       answersById[answer.id] = answer
     })
 
-    const availableWords = _.map(_.omit(answersById, this.props.wordChain), (answer) => {
-      let style = {}
-      if(this.state.answerPositions[answer.id]) {
-        style = {position: "absolute", ...this.state.answerPositions[answer.id]}
-      }
+    const availableWords = _.map(answersById, (answer) => {
+      // let style = {}
+      // if(this.state.answerPositions[answer.id]) {
+      //   style = {position: "absolute", ...this.state.answerPositions[answer.id]}
+      // }
+      
       return <DraggableWord
-        style={style}
         key={answer.id}
         id={answer.id}
         material={answer.material}
+        hide={_.includes(this.props.wordChain, answer.id)}
       />
     });
 
     return <div>
-      <GroupDropZone
-        ref={(ref) => this.groupDropZone = ref}
-        dropItem={(answerIds, dropOffset) => {this.dropWordsInCloud(answerIds, dropOffset)}}
-        style={{width: 500, height: 200, border: "1px solid grey", position: "relative"}}
-      >
-        <h1>Word Cloud</h1>
-        {availableWords}
-      </GroupDropZone>
-      <div>
-        <div style={{padding: "10px 10px"}}>
-          <WordChain
-            linkWord={(answerId) => { this.linkWord(answerId); }}
-            answersById={answersById}
-            wordChain={this.props.wordChain}
-          />
-        </div>
+      <div className="c-word-box">
+        <GroupDropZone
+          ref={(ref) => this.groupDropZone = ref}
+          dropItem={(answerIds, dropOffset) => {this.dropWordsInCloud(answerIds, dropOffset)}}
+          className="c-word-box__contain"
+        >
+          {availableWords}
+        </GroupDropZone>
       </div>
+      <WordChain
+        linkWord={(answerId) => { this.linkWord(answerId); }}
+        answersById={answersById}
+        wordChain={this.props.wordChain}
+      />
       <CustomDragLayer />
     </div>
   }

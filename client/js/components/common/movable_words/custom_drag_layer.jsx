@@ -62,6 +62,8 @@ export class CustomDragLayer extends React.Component{
         return _.map(item.words, (word) => {
           return <Word key={word.id} material={word.material} />
         });
+      case ItemTypes.WORD:
+        return <Word key={item.itemId} material={item.material} />
       default:
         return <div></div>
     }
