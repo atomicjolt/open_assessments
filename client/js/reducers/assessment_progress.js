@@ -64,7 +64,7 @@ export default (state = initialState, action) => {
       if(!action.error){
         var checkedResponses = Immutable.Map();
 
-        // TODO Currently we are setting the same response for all userInput.
+        // TODO: Currently we are setting the same response for all userInput.
         // When we have an example of multi answer feedback we should figure out
         // how to assign feedback to each answer.
         action.userInput.forEach((id) => {
