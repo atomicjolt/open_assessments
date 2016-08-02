@@ -4,18 +4,19 @@ import Immutable  from 'immutable';
 import { Constants as AssessmentConstants }   from '../actions/assessment_progress';
 
 const initialState = Immutable.fromJS({
-  isSubmitted: false,
-  isStarted: false,
-  currentItemIndex: 0,
+  isSubmitted:           false,
+  isStarted:             false,
+  currentItemIndex:      0,
 
   // Number of 'check answer' api calls that have not yet returned
-  numQuestionsChecking: 0,
-  selectedAnswerId: '',
-  checkedResponses: [],
-  responses: [],
-  startedAt: 0,
-  finishedAt: 0,
-  assessmentResult:null
+  numQuestionsChecking:  0,
+
+  selectedAnswerId:      '',
+  checkedResponses:      [],
+  responses:             [],
+  startedAt:             0,
+  finishedAt:            0,
+  assessmentResult:      null
 });
 
 export default (state = initialState, action) => {
