@@ -5,7 +5,7 @@ import Immutable  from 'immutable';
 import { Constants }  from '../actions/assessment_progress';
 
 const initialState = Immutable.fromJS({
-  questionResults: {}
+  questionResults: []
 });
 
 export default (state = initialState, action) => {
