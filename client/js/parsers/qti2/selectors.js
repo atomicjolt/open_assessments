@@ -66,8 +66,9 @@ export function questionResults(state, props) {
   let questionResponses = {};
 
   _.each(questionIndexes, (index) => {
-    const response = state.assessmentResults.getIn(['questionResults', index, 0]);
-    if(response) {
+    const result = state.assessmentResults.questionResults[index];
+    if(result !== undefined) {
+      const response = result[0];
       questionResponses[index] = {
         correct:    response.correct,
         answerIds:  response.userInput,
