@@ -59,6 +59,7 @@
   height: 4.5rem;
   margin: 1rem 0;
   position: relative;
+  @include display-flex;
 
   .c-word:after{
     background: $primary;
@@ -92,6 +93,8 @@
   }
 }
 .c-word-answers--split-bottom{
+  padding-left: 2.3rem;
+
   &:before{
     content: '';
     width: 1.5rem;
@@ -139,8 +142,56 @@
   color: $accent;
 }
 
-.c-word-blank{
-  height: 4.5rem;
+.c-blank-answers{
   margin: 1rem 0;
   position: relative;
+  overflow: hidden;
+
+  .c-word.c-word--fill{
+    padding: 0 0.2rem;
+    margin: 0.5rem 0;
+    pointer-events: none;
+    @include regular;
+    & > *{
+      color: $text-color;
+    }
+    &:after{
+      width: 0;
+    }
+    &:before{
+      width: 0;
+    }
+  }
+}
+
+.c-word--blank{
+  padding: 0 0.8rem;
+  &:after{
+    width: 0;
+  }
+  &:before{
+    width: 0;
+  }
+}
+
+.c-blank-drop-zone{
+  background: $primary;
+  padding: 0.5rem;
+  height: 4.5rem;
+  margin: 0 0.4rem;
+  position: relative;
+  float: left;
+}
+
+.c-drop-zone{
+  @include flex(1);
+}
+
+.c-blank{
+  width: 7rem;
+  margin: 0 0.8rem;
+  height: 0.2rem;
+  background: $white;
+  position: relative;
+  top: 2.3rem;
 }

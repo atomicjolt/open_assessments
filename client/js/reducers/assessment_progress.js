@@ -74,7 +74,7 @@ export default (state = initialState, action) => {
         state = state.setIn(
           ['checkedResponses', `${action.questionIndex}`],
           checkedResponses
-          );
+        );
       }
 
       // Decrement number of questions being checked
