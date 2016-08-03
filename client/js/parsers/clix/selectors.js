@@ -3,7 +3,7 @@ import { createSelector }  from "reselect";
 
 import { transformItem }  from "./clix";
 import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../../components/assessments/two_button_nav";
-import { isFirstPage, isLastPage, isNextUnlocked } from "../../selectors/assessment";
+import { isFirstPage, isLastPage, isNextUnlocked, currentItems } from "../../selectors/assessment";
 
 export function questions(state, props) {
   return state.assessment.items.map(transformItem);
@@ -58,6 +58,7 @@ export function questionResults(state, props) {
 export function primaryActionState(state){
   const nextUnlocked = isNextUnlocked(state);
   const lastPage = isLastPage(state);
+  const items = currentItems(state);
 
   if(nextUnlocked === true && lastPage === true){
     return PRIMARY_ACTION.SUBMIT;
@@ -66,7 +67,22 @@ export function primaryActionState(state){
   } else if(isCheckingAnswer(state)) {
     return PRIMARY_ACTION.SPINNER;
   } else {
-    return PRIMARY_ACTION.CHECK_ANSWERS;
+    // We haven't discussed how to handle making nav decisions when we are
+    // rendering more than one question. So for now, just choose the first one.
+    let item = items[0];
+    switch(item.question_type){
+      case "text_input_question":
+      case "text_only_question":
+      case "short_answer_question":
+        return PRIMARY_ACTION.SAVE_ANSWERS;
+        break;
+
+      case "audio_upload_question":
+        return PRIMARY_ACTION.SAVE_FILE;
+        break;
+      default:
+        return PRIMARY_ACTION.CHECK_ANSWERS;
+    }
   }
 }
 
