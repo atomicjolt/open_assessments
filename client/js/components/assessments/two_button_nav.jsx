@@ -12,8 +12,8 @@ export const SECONDARY_ACTION = {
 export const PRIMARY_ACTION = {
   NEXT          : "NEXT",
   CHECK_ANSWERS : "CHECK_ANSWERS",
-  SAVE_FILE     : "SAVE_FILE",
-  SAVE_ANSWER   : "SAVE_ANSWER",
+  SAVE_FILES    : "SAVE_FILES",
+  SAVE_ANSWERS  : "SAVE_ANSWERS",
   SUBMIT        : "SUBMIT",
   SPINNER       : "SPINNER"
 };
