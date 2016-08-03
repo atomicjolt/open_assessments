@@ -50,3 +50,4 @@ export class Dropzone extends React.Component {
 
 export const GroupDropZone = DropTarget([ItemTypes.WORD_GROUP, ItemTypes.WORD], groupWordTarget, collect)(Dropzone);
 export const WordDropZone = DropTarget(ItemTypes.WORD, wordTarget, collect)(Dropzone);
+export const FillTheBlankWordDropZone = DropTarget(ItemTypes.FILL_BLANK_WORD, wordTarget, collect)(Dropzone);

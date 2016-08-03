@@ -34,15 +34,19 @@ export class DraggableWord extends React.Component {
   }
 
   render() {
-    const { style, connectDragSource, isDragging } = this.props;
-    const baseStyle = { display: "inline-block", opacity: isDragging ? 0 : 1, cursor: 'move' };
-
+    const { connectDragSource, isDragging } = this.props;
+    
     return connectDragSource(
-      <div className="draggable-word" style={{ ...style, ...baseStyle}}>
-        <Word hide={this.props.hide} material={this.props.material} />
+      <div style={{ display: "inline-block" }}>
+        <Word
+          hide={this.props.hide || isDragging}
+          material={this.props.material}
+          className={this.props.wordClassName}
+        />
       </div>
     );
   }
 }
 
 export default DragSource(ItemTypes.WORD, wordSource, collect)(DraggableWord);
+export const FillTheBlankDraggableWord = DragSource(ItemTypes.FILL_BLANK_WORD, wordSource, collect)(DraggableWord);

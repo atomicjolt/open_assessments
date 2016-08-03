@@ -3,7 +3,6 @@ import ReactDOM            from 'react-dom';
 
 import { WordDropZone }    from '../drop_zones';
 import DraggableGroupWord  from './draggable_group_word';
-import StartWord           from './start_word';
 
 const beginWrap = <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
   <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
@@ -73,6 +72,7 @@ export default class WordChain extends React.Component {
         const draggableWords = _.at(this.props.answersById, this.props.wordChain.slice(wordIndex + wrapIndex));
 
         return <DraggableGroupWord
+          wordClassName="c-word"
           id={answerId}
           key={answerId}
           isGroupDragging={this.state.dragging && (wordIndex + wrapIndex) >= this.state.draggingIndex}

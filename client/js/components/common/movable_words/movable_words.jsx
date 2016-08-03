@@ -6,7 +6,7 @@ import HTML5Backend         from 'react-dnd-html5-backend';
 import DraggableWord        from "../draggable_word";
 import { GroupDropZone }    from "../drop_zones";
 import WordChain            from "./word_chain";
-import CustomDragLayer      from "./custom_drag_layer";
+import CustomDragLayer      from "../custom_drag_layer";
 
 export class MovableWords extends React.Component {
   static propTypes = {
@@ -27,20 +27,6 @@ export class MovableWords extends React.Component {
         this.props.selectAnswer(answerId);
       }
     });
-
-    let answerPositions = _.cloneDeep(this.state.answerPositions);
-
-    const groupDropZone = ReactDOM.findDOMNode(this.groupDropZone);
-    const groupDropZonePosition = groupDropZone.getBoundingClientRect();
-
-    _.each(answerIds, (answerId, index) => {
-      answerPositions[answerId] = {
-        top: dropOffset.y - groupDropZonePosition.top,
-        left: dropOffset.x + index * 60 - groupDropZonePosition.left
-      };
-
-      this.setState({answerPositions});
-    });
   }
 
   linkWord(answerId) {
@@ -55,16 +41,12 @@ export class MovableWords extends React.Component {
     })
 
     const availableWords = _.map(answersById, (answer) => {
-      // let style = {}
-      // if(this.state.answerPositions[answer.id]) {
-      //   style = {position: "absolute", ...this.state.answerPositions[answer.id]}
-      // }
-      
       return <DraggableWord
         key={answer.id}
         id={answer.id}
         material={answer.material}
         hide={_.includes(this.props.wordChain, answer.id)}
+        wordClassName="c-word"
       />
     });
 
@@ -89,3 +71,26 @@ export class MovableWords extends React.Component {
 }
 
 export default DragDropContext(HTML5Backend)(MovableWords);
+// This is code to absolutely position words in the word cloud when they are dragged.
+// We are not sure that MIT wants this, currently we are just hiding the words
+// and displaying all of them inline-block
+
+// let answerPositions = _.cloneDeep(this.state.answerPositions);
+//
+// const dropZone = ReactDOM.findDOMNode(this.FillTheBlankWordDropZone);
+// const dropZonePosition = dropZone.getBoundingClientRect();
+//
+// _.each(answerIds, (answerId, index) => {
+//   answerPositions[answerId] = {
+//     top: dropOffset.y - dropZonePosition.top,
+//     left: dropOffset.x + index * 60 - dropZonePosition.left
+//   };
+//
+//   this.setState({answerPositions});
+// });
+
+// To apply the position styles to the words, style them like so:
+// let style = {}
+// if(this.state.answerPositions[answer.id]) {
+//   style = {position: "absolute", ...this.state.answerPositions[answer.id]}
+// }
