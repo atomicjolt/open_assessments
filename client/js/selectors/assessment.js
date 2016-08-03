@@ -40,3 +40,6 @@ export const assessmentLoaded = makeDispatchingSelector("assessmentLoaded");
  * otherwise
  */
 export const isCheckingAnswer = makeDispatchingSelector("isCheckingAnswer");
+
+export const primaryActionState = makeDispatchingSelector("primaryActionState");
+export const secondaryActionState = makeDispatchingSelector("secondaryActionState");

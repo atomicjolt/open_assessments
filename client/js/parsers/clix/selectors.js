@@ -2,7 +2,7 @@ import $                   from "jquery";
 import { createSelector }  from "reselect";
 
 import { transformItem }  from "./clix";
-
+import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../../components/assessments/two_button_nav";
 
 export function questions(state, props) {
   return state.assessment.items.map(transformItem);
@@ -52,4 +52,11 @@ export function questionResults(state, props) {
   });
 
   return questionResponses;
+}
+
+export function primaryActionState(){
+  return PRIMARY_ACTION.CHECK_ANSWERS;
+}
+export function secondaryActionState(){
+  return SECONDARY_ACTION.PREV;
 }
