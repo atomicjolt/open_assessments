@@ -211,6 +211,8 @@ export default class UniversalInput extends React.Component{
             answers={item.answers}
             selectAnswer={selectAnswer(false)}
             wordChain={props.response}
+            localizedStrings={this.props.localizedStrings.audioUpload}
+            timeout={this.props.settings.audio_recorder_timeout}
           />
         break;
 
