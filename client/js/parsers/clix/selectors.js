@@ -3,6 +3,7 @@ import { createSelector }  from "reselect";
 
 import { transformItem }  from "./clix";
 import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../../components/assessments/two_button_nav";
+import { isFirstPage, isLastPage, isNextUnlocked } from "../../selectors/assessment";
 
 export function questions(state, props) {
   return state.assessment.items.map(transformItem);
@@ -54,9 +55,22 @@ export function questionResults(state, props) {
   return questionResponses;
 }
 
-export function primaryActionState(){
-  return PRIMARY_ACTION.CHECK_ANSWERS;
+export function primaryActionState(state){
+  const nextUnlocked = isNextUnlocked(state);
+  const lastPage = isLastPage(state);
+
+  if(nextUnlocked === true && lastPage === true){
+    return PRIMARY_ACTION.SUBMIT;
+  } else if(nextUnlocked === true){
+    return PRIMARY_ACTION.NEXT;
+  } else if(isCheckingAnswer(state)) {
+    return PRIMARY_ACTION.SPINNER;
+  } else {
+    return PRIMARY_ACTION.CHECK_ANSWERS;
+  }
 }
-export function secondaryActionState(){
+
+export function secondaryActionState(state){
+  if(isFirstPage(state) === true){return SECONDARY_ACTION.NONE;}
   return SECONDARY_ACTION.PREV;
 }
