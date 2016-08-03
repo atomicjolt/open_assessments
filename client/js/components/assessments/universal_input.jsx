@@ -10,7 +10,8 @@ import CheckBox                       from "../common/checkbox";
 import MappedImage                    from "../common/mapped_image";
 import Matching                       from "../common/matching";
 import DragAndDrop                    from "../common/drag_and_drop";
-import AudioUpload          from "../common/audio_upload";
+import AudioUpload                    from "../common/audio_upload";
+import FileUpload                     from "../common/file_upload";
 import MovableWords                   from "../common/movable_words/movable_words";
 import SentenceSandbox                from "../common/sentence_sandbox";
 import MovableWordsFillTheBlank       from "../common/movable_words/fill_the_blank";
@@ -179,7 +180,11 @@ export default class UniversalInput extends React.Component{
           return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />;
         });
         break;
-
+      case "file_upload_question":
+        answerInputs = (
+          <FileUpload />
+        );
+        break;
       case "audio_upload_question":
         var selectAudioAnswer = _.curryRight(props.selectAnswer);
         answerInputs = (
