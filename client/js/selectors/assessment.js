@@ -1,3 +1,4 @@
+import _                   from 'lodash';
 import { AssessmentFormats }  from "../parsers/assessment";
 import * as ClixSelectors  from "../parsers/clix/selectors";
 import * as EdxSelectors   from "../parsers/edX/selectors";
@@ -43,3 +44,17 @@ export const isCheckingAnswer = makeDispatchingSelector("isCheckingAnswer");
 
 export const primaryActionState = makeDispatchingSelector("primaryActionState");
 export const secondaryActionState = makeDispatchingSelector("secondaryActionState");
+
+export function isFirstPage(state, props){
+  return state.assessmentProgress.get('currentItemIndex') === 0;
+}
+
+export function isLastPage(state, props){
+  const currentItemIndex = state.assessmentProgress.get('currentItemIndex', 0);
+  const numItems = questionCount(state, props);
+  const totalPages = Math.ceil(numItems / state.settings.questions_per_page);
+  const currentPage = Math.floor(currentItemIndex / state.settings.questions_per_page);
+  if(_.isUndefined(currentPage) || _.isUndefined(totalPages)){return false;}
+  return currentPage >= totalPages;
+  // return TODO add a spec
+}
