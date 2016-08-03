@@ -58,3 +58,21 @@ export function isLastPage(state, props){
   return currentPage >= totalPages;
   // return TODO add a spec
 }
+
+//TODO add a spec
+export function nextUnlocked(state){
+  const unlockNext = state.settings.unlock_next;
+  const questionResponses = questionResults(state);
+  const questionsPerPage = state.settings.questions_per_page;
+
+  if(unlockNext === "ON_CORRECT") {
+    const incorrectResponse = _.find(questionResponses, (response) => {
+      return !response.correct;
+    });
+    return _.isUndefined(incorrectResponse) && _.compact(_.values(questionResponses)).length === questionsPerPage;
+  } else if(unlockNext === "ON_ANSWER_CHECK") {
+
+    return _.compact(_.values(questionResponses)).length === questionsPerPage;
+  }
+  return true;
+}
