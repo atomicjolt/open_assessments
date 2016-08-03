@@ -18,7 +18,9 @@ import {
   questions,
   outcomes,
   isCheckingAnswer,
-  assessmentLoaded
+  assessmentLoaded,
+  primaryActionState,
+  secondaryActionState,
 }  from "../../selectors/assessment";
 
 const select = (state, props) => {
@@ -67,6 +69,9 @@ const select = (state, props) => {
 
     // User facing strings of the language specified by the 'locale' setting
     localizedStrings: localizeStrings(state, props),
+
+    primaryActionState: primaryActionState(state),
+    secondaryActionState: secondaryActionState(state),
 
     // TODO
     outcomes        : outcomes(state, props)
@@ -352,26 +357,6 @@ export class Assessment extends React.Component{
     let warning;// = this.getWarning(); NOTE Temporarily removed warning because we have no need for it yet, and it looks bad.
     let counter = this.getCounter();
 
-    let nextUnlocked = this.getNextUnlocked(
-      this.props.unlockNext,
-      this.props.questionsPerPage,
-      this.props.questionResults,
-    );
-
-    let secondaryAction = SECONDARY_ACTION.PREV;
-    let primaryAction = PRIMARY_ACTION.CHECK_ANSWERS;
-
-    // Figure out which nav buttons to render
-    if(this.isFirstPage() === true){secondaryAction = SECONDARY_ACTION.NONE;}
-
-    if(nextUnlocked === true && this.isLastPage() === true){
-      primaryAction = PRIMARY_ACTION.SUBMIT;
-    } else if(nextUnlocked === true){
-      primaryAction = PRIMARY_ACTION.NEXT;
-    } else if(this.props.isCheckingAnswer) {
-      primaryAction = PRIMARY_ACTION.SPINNER;
-    }
-
     if(this.props.assessmentLoaded){
       var nav = (
         <TwoButtonNav
@@ -380,8 +365,8 @@ export class Assessment extends React.Component{
           goToPreviousQuestions={(e) => this.previousButtonClicked(e)}
           checkAnswers={(e) => this.checkAnswersButtonClicked(e)}
           submitAssessment={(e) => this.submitButtonClicked(e)}
-          secondaryAction={secondaryAction}
-          primaryAction={primaryAction}/>
+          secondaryAction={this.props.secondaryActionState}
+          primaryAction={this.props.primaryActionState}/>
       );
     }
 
