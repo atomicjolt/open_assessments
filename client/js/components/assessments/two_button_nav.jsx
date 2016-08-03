@@ -12,6 +12,8 @@ export const SECONDARY_ACTION = {
 export const PRIMARY_ACTION = {
   NEXT          : "NEXT",
   CHECK_ANSWERS : "CHECK_ANSWERS",
+  SAVE_FILE     : "SAVE_FILE",
+  SAVE_ANSWER   : "SAVE_ANSWER",
   SUBMIT        : "SUBMIT",
   SPINNER       : "SPINNER"
 };
@@ -93,6 +95,20 @@ export default class TwoButtonNav extends React.Component{
         <Button
           buttonClass="c-btn c-btn--check-answer"
           buttonText={this.props.localizedStrings.checkAnswerButton}
+          onClick={this.props.checkAnswers} />
+      );
+    } else if(this.props.primaryAction === PRIMARY_ACTION.SAVE_FILE) {
+      primaryButton = (
+        <Button
+          buttonClass="c-btn c-btn--check-answer"
+          buttonText={this.props.localizedStrings.saveFileButton}
+          onClick={this.props.checkAnswers} />
+      );
+    } else if(this.props.primaryAction === PRIMARY_ACTION.SAVE_FILE) {
+      primaryButton = (
+        <Button
+          buttonClass="c-btn c-btn--check-answer"
+          buttonText={this.props.localizedStrings.saveAnswerButton}
           onClick={this.props.checkAnswers} />
       );
     } else if(this.props.primaryAction === PRIMARY_ACTION.SPINNER){
