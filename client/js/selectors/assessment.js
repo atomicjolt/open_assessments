@@ -60,7 +60,7 @@ export function isLastPage(state, props){
 }
 
 //TODO add a spec
-export function nextUnlocked(state){
+export function isNextUnlocked(state){
   const unlockNext = state.settings.unlock_next;
   const questionResponses = questionResults(state);
   const questionsPerPage = state.settings.questions_per_page;
@@ -75,4 +75,13 @@ export function nextUnlocked(state){
     return _.compact(_.values(questionResponses)).length === questionsPerPage;
   }
   return true;
+}
+
+//TODO write spec
+export function currentItems(state){
+  if(!assessmentLoaded(state)){return;}
+  const allQuestions = questions(state);
+  const currentItemIndex = state.assessmentProgress.get('currentItemIndex', 0);
+  const questionsPerPage = state.settings.questions_per_page;
+  return allQuestions.slice(currentItemIndex, currentItemIndex + questionsPerPage);
 }
