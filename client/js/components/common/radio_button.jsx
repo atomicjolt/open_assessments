@@ -2,9 +2,6 @@
 
 import React                             from "react";
 
-import { CORRECT, INCORRECT, UNGRADED }  from "../assessments/universal_input";
-import * as AssessmentActions            from "../../actions/assessment";
-
 export default class RadioButton extends React.Component{
 
   static propTypes = {
