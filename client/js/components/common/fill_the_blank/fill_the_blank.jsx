@@ -61,8 +61,6 @@ export class FillTheBlank extends React.Component {
       />
     });
 
-    console.log(answersById);
-
     return <div>
       <div className="c-word-box">
         <FillTheBlankWordDropZone
