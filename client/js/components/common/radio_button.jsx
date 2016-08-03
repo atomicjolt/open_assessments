@@ -61,7 +61,6 @@ export default class RadioButton extends React.Component{
   render() {
     const props = this.props;
     var containerStyle = "";
-    var feedback = this.getFeedback();
 
     if(this.props.checked === true){containerStyle = "is-clicked";}
 
