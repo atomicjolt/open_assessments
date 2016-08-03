@@ -181,8 +181,10 @@ export default class UniversalInput extends React.Component{
         });
         break;
       case "file_upload_question":
+        var selectFileUploadAnswer = _.curryRight(props.selectAnswer);
         answerInputs = (
-          <FileUpload />
+          <FileUpload
+            selectAnswer={selectFileUploadAnswer(true)}/>
         );
         break;
       case "audio_upload_question":

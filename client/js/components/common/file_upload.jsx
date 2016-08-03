@@ -10,7 +10,6 @@ export default class FileUpload extends React.Component {
   }
 
   handleChange(e){
-    console.log(e.target.files); // TODO remove
     if(_.isFunction(this.props.selectAnswer)){
       this.props.selectAnswer(e.target.files[0]);
     }
