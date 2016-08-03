@@ -1,4 +1,4 @@
-import React     from "react";
+import React from "react";
 
 export default class FileUpload extends React.Component {
 
@@ -6,7 +6,7 @@ export default class FileUpload extends React.Component {
     selectAnswer: React.PropTypes.func,
 
     // User facing strings of the language specified by the 'locale' setting
-    // localizedStrings: React.PropTypes.object.isRequired TODO
+    // localizedStrings: React.PropTypes.object.isRequired TODO when we add styles, we should localize strings
   };
 
   handleChange(e){
