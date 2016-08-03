@@ -2,9 +2,6 @@
 
 import React from "react";
 
-import { CORRECT, INCORRECT, UNGRADED } from "../assessments/universal_input";
-import FeedbackIcon from "./feedback_icon";
-
 export default class CheckBox extends React.Component{
 
   static propTypes = {
@@ -19,10 +16,6 @@ export default class CheckBox extends React.Component{
 
     selectAnswer: React.PropTypes.func.isRequired,
 
-    // Whether answer is correct, incorrect, or has not been graded.
-    // Should be one of CORRECT, INCORRECT, UNGRADED.
-    gradeState: React.PropTypes.string.isRequired,
-
     // Whether or not input should be disabled
     isDisabled: React.PropTypes.bool,
 
@@ -32,17 +25,6 @@ export default class CheckBox extends React.Component{
 
   selectAnswer(){
     this.props.selectAnswer(this.props.item.id);
-  }
-
-  getFeedback(){
-    if(this.props.feedback){
-      return (
-        <div className="c-answer-feedback">
-            <div
-              dangerouslySetInnerHTML={{__html:this.props.feedback}}/>
-        </div>
-      );
-    }
   }
 
   renderMaterial(material, isHtml) {
@@ -61,13 +43,11 @@ export default class CheckBox extends React.Component{
   render() {
     const props = this.props;
     var containerStyle = "";
-    var feedback = this.getFeedback();
 
     if(this.props.checked === true){containerStyle = "is-clicked";}
 
     return (
       <li className={`c-answer-container ${containerStyle}`}>
-        <FeedbackIcon gradeState={props.gradeState} />
         <label
           htmlFor={props.id}>
           <div className="c-answer-container__radio">
@@ -87,7 +67,6 @@ export default class CheckBox extends React.Component{
             {this.renderMaterial(props.item.material, props.isHtml)}
           </div>
         </label>
-        {feedback}
       </li>
     );
   }
