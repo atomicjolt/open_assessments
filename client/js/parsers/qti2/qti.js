@@ -86,10 +86,6 @@ export function getQuestionType(interaction = {}) {
     case "textEntryInteraction":
       return "text_input_question";
       break;
-    case "uploadInteraction":
-      return "audio_upload_question"
-      break;
-
     default:
       return "UNKNOWN";
   }
