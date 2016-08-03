@@ -7,13 +7,13 @@ export function transformItem(itemXml) {
   const material    = $("<div></div>");
 
   const interaction = _.find(allNodes, (node) => {
-    return node.nodeName.match(/Interaction$/)
+    return node.nodeName.match(/Interaction$/);
   });
 
-  let answers = []
+  let answers = [];
 
   if(interaction) {
-    const interactionName = interaction.nodeName
+    const interactionName = interaction.nodeName;
 
     // If we don't .clone(), then .appendTo() *moves* the elements out of the
     // original, and on subsequent calls they will be missing.
@@ -22,7 +22,7 @@ export function transformItem(itemXml) {
     questionMaterial.appendTo(material);
 
     const answerNodes = _.filter($(interaction).find("*"), (node) => {
-      return node.nodeName.match(/Choice$/)
+      return node.nodeName.match(/Choice$/);
     });
 
     answers = answerNodes.map((node) => ({
@@ -50,13 +50,22 @@ export function getQuestionMeta(interaction, xml){
 
   switch(interaction.nodeName) {
     case "inlineChoiceInteraction":
-      // We wrap the sentence in a div, because calling html on it directly
-      // doesn't output valid html. <div></div> becomes <div />
+      // We replace the interacdtion with a placeholder, then create an array of
+      // words containing the html for each word.
 
       let sentence = xml.find(interaction.nodeName).parent().clone();
-      sentence.find(interaction.nodeName).replaceWith('<div class="interaction-placeholder"></div>');
-      const sentenceHtml = $('<div></div>').html(sentence).html()
-      attributes["fillTheBlankQuestion"] = sentenceHtml;
+      sentence.find(interaction.nodeName).replaceWith('<p class="interaction-placeholder"></p>');
+
+      let words = _.filter(sentence.find("p"), (node) => {
+        return node.getAttribute('class');
+      }).map(word => $("<div></div>").html(word).html());
+
+      // This gets any text in the sentence that isn't contained in a p tag
+      // _.filter(sentence.contents(), (node) => {
+      //   return node.nodeType === Node.TEXT_NODE && !_.isEmpty(node.textContent.trim());
+      // });
+
+      attributes["fillTheBlankSentence"] = words;
   }
 
   return attributes;

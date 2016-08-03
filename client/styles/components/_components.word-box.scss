@@ -1,0 +1,197 @@
+.c-word-box{
+  padding: 0 3rem;
+}
+
+.c-word-box__contain{
+  background: $lightest-gray;
+  padding: 1rem;
+  border-radius: $radius;
+  overflow: hidden;
+
+  .c-word{
+    margin: 1rem 2rem;
+  }
+}
+
+.c-word{
+  height: 3.5rem;
+  padding: 0 1.5rem 0 0.8rem;
+  background: $white;
+  @include semi-bold;
+  font-size: 1.4rem;
+  float: left;
+  position: relative;
+  margin: 0 0.1rem 0 0;
+  cursor: move;
+
+  & > *{
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    line-height: 3.3rem;
+  }
+
+  &:before{
+    content: '';
+    position: absolute;
+    width: 0.7rem;
+    height: 1.3rem;
+    background: $white;
+    top: 1.1rem;
+    left: -0.7rem;
+    z-index: 2;
+  }
+  &:after{
+    content: '';
+    position: absolute;
+    width: 0.7rem;
+    height: 1.5rem;
+    background: $lightest-gray;
+    top: 1rem;
+    right: 0rem;
+    z-index: 1;
+  }
+}
+
+.c-word-answers{
+  background: $primary;
+  padding: 0.5rem;
+  height: 4.5rem;
+  margin: 1rem 0;
+  position: relative;
+  @include display-flex;
+
+  .c-word:after{
+    background: $primary;
+  }
+}
+
+.c-word-answers--split-top{
+  &:after{
+    content: '';
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    right: -0.7rem;
+    top: 1.5rem;
+    background: $primary;
+    z-index: 1;
+    transform: rotate(-45deg);
+  }
+  svg{
+    z-index: 2;
+    position: absolute;
+    right: -1.4rem;
+    top: 0.8rem;
+    width: 2.9rem;
+    height: 2.9rem;
+    transform: rotate(-90deg);
+
+    path{
+      fill: $white;
+    }
+  }
+}
+.c-word-answers--split-bottom{
+  padding-left: 2.3rem;
+
+  &:before{
+    content: '';
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    left: -0.7rem;
+    top: 1.5rem;
+    background: $white;
+    z-index: 1;
+    transform: rotate(-45deg);
+  }
+  svg{
+    z-index: 2;
+    position: absolute;
+    left: -1.4rem;
+    top: 0.8rem;
+    width: 2.9rem;
+    height: 2.9rem;
+    transform: rotate(-90deg);
+
+    path{
+      fill: $primary;
+    }
+  }
+}
+
+.c-word--starter{
+  padding: 0 0.8rem 0 0.9rem;
+  pointer-events: none;
+  &:before{
+    width: 0;
+  }
+}
+
+.adverb{
+  color: $primary;
+}
+.noun{
+  color: $color1;
+}
+.verb{
+  color: $color2;
+}
+.prep{
+  color: $accent;
+}
+
+.c-blank-answers{
+  margin: 1rem 0;
+  position: relative;
+  overflow: hidden;
+
+  .c-word.c-word--fill{
+    padding: 0 0.2rem;
+    margin: 0.6rem 0;
+    pointer-events: none;
+    @include regular;
+    & > *{
+      color: $text-color;
+    }
+    &:after{
+      width: 0;
+    }
+    &:before{
+      width: 0;
+    }
+  }
+}
+
+.c-word--blank{
+  padding: 0 0.8rem;
+  &:after{
+    width: 0;
+  }
+  &:before{
+    width: 0;
+  }
+}
+
+.c-blank-drop-zone{
+  background: $primary;
+  padding: 0.5rem;
+  height: 4.5rem;
+  margin: 0.1rem 0.4rem;
+  position: relative;
+  float: left;
+}
+
+.c-drop-zone{
+  @include flex(1);
+}
+
+.c-blank{
+  width: 7rem;
+  margin: 0 0.8rem;
+  height: 0.2rem;
+  background: $white;
+  position: relative;
+  top: 2.3rem;
+}

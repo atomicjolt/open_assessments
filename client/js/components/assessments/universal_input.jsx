@@ -13,7 +13,7 @@ import DragAndDrop                    from "../common/drag_and_drop";
 import AudioUpload          from "../common/audio_upload";
 import MovableWords                   from "../common/movable_words/movable_words";
 import SentenceSandbox                from "../common/sentence_sandbox";
-import MovableWordsFillTheBlank       from "../common/movable_words/fill_the_blank";
+import MovableWordsFillTheBlank       from "../common/fill_the_blank/fill_the_blank";
 
 export const CORRECT = "CORRECT";
 export const INCORRECT = "INCORRECT";
@@ -44,7 +44,7 @@ export default class UniversalInput extends React.Component{
     questionResult: React.PropTypes.object
   }
 
-  wasSelected(id){
+  wasSelected(id) {
     if(this.props.response){
       return this.props.response.indexOf(id) > -1;
     } else {
@@ -221,7 +221,7 @@ export default class UniversalInput extends React.Component{
 
         answerInputs = <MovableWordsFillTheBlank
             answers={item.answers}
-            question={item.question_meta.fillTheBlankQuestion}
+            sentenceWithBlank={item.question_meta.fillTheBlankSentence}
             selectAnswer={selectAnswer(false)}
             selectedAnswer={props.response}
           />
