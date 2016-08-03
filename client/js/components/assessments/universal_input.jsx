@@ -52,26 +52,6 @@ export default class UniversalInput extends React.Component{
     }
   }
 
-  getGradeState(id, questionResult){
-    if(!questionResult){return UNGRADED;}
-
-    if(_.includes(questionResult.answerIds, id) && questionResult.correct){
-      return CORRECT;
-    } else if(_.includes(questionResult.answerIds, id) && !questionResult.correct) {
-      return INCORRECT;
-    }
-
-    return UNGRADED;
-  }
-
-  getFeedback(id, questionResult){
-    if(!questionResult){return;}
-
-    if(_.includes(questionResult.answerIds, id)){
-      return questionResult.feedback;
-    }
-  }
-
   render(){
     var props = this.props;
     var item = props.item;
@@ -86,8 +66,6 @@ export default class UniversalInput extends React.Component{
         const multipleChoiceAnswer = (answer) => {
           var selectRadio = _.curryRight(props.selectAnswer);
           var id = item.id + "_" + answer.id;
-          var gradeState = this.getGradeState(answer.id, props.questionResult);
-          var feedback = this.getFeedback(answer.id, props.questionResult);
 
           return (
             <RadioButton
@@ -98,8 +76,6 @@ export default class UniversalInput extends React.Component{
                 isHtml={item.isHtml}
                 name="answer-radio"
                 checked={this.wasSelected(answer.id)}
-                gradeState={gradeState}
-                feedback={feedback}
                 selectAnswer={selectRadio(true)}/>
           );
         };
@@ -144,8 +120,6 @@ export default class UniversalInput extends React.Component{
         const multipleAnswer = (answer) => {
           var selectCheckbox = _.curryRight(props.selectAnswer);
           var id = item.id + "_" + answer.id;
-          var gradeState = this.getGradeState(answer.id, props.questionResult);
-          var feedback = this.getFeedback(answer.id, props.questionResult);
 
           return (
             <CheckBox
@@ -155,8 +129,6 @@ export default class UniversalInput extends React.Component{
                 item={answer}
                 isHtml={item.isHtml}
                 checked={this.wasSelected(answer.id)}
-                gradeState={gradeState}
-                feedback={feedback}
                 selectAnswer={selectCheckbox(false)} />
           );
         };
