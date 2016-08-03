@@ -37,11 +37,7 @@ export default class UniversalInput extends React.Component{
     response: React.PropTypes.array,
 
     // User facing strings of the language specified by the 'locale' setting
-    localizedStrings: React.PropTypes.object.isRequired,
-
-    // Graded user response object containing keys
-    // correct:true/false, feedback:"Answer feedback"
-    questionResult: React.PropTypes.object
+    localizedStrings: React.PropTypes.object.isRequired
   }
 
   wasSelected(id){
