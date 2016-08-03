@@ -97,14 +97,14 @@ export default class TwoButtonNav extends React.Component{
           buttonText={this.props.localizedStrings.checkAnswerButton}
           onClick={this.props.checkAnswers} />
       );
-    } else if(this.props.primaryAction === PRIMARY_ACTION.SAVE_FILE) {
+    } else if(this.props.primaryAction === PRIMARY_ACTION.SAVE_FILES) {
       primaryButton = (
         <Button
           buttonClass="c-btn c-btn--check-answer"
           buttonText={this.props.localizedStrings.saveFileButton}
           onClick={this.props.checkAnswers} />
       );
-    } else if(this.props.primaryAction === PRIMARY_ACTION.SAVE_FILE) {
+    } else if(this.props.primaryAction === PRIMARY_ACTION.SAVE_ANSWERS) {
       primaryButton = (
         <Button
           buttonClass="c-btn c-btn--check-answer"

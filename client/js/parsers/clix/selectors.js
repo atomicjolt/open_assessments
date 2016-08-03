@@ -78,7 +78,7 @@ export function primaryActionState(state){
         break;
 
       case "audio_upload_question":
-        return PRIMARY_ACTION.SAVE_FILE;
+        return PRIMARY_ACTION.SAVE_FILES;
         break;
       default:
         return PRIMARY_ACTION.CHECK_ANSWERS;
