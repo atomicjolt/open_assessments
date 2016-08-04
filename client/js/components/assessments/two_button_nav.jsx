@@ -61,17 +61,38 @@ export default class TwoButtonNav extends React.Component{
       buttonText: "",
       buttonClick:null,
     };
-    var buttonContents;
+    var buttonContents = [];
     switch (props.buttonState) {
       case PRIMARY_ACTION.SUBMIT:
+        buttonClass += "c-btn--finish";
+        buttonText = this.props.localizedStrings.submitButton;
+        buttonClick = this.props.submitAssessment;
         break;
+
       case PRIMARY_ACTION.NEXT:
+        buttonClass += "c-btn--next";
+        buttonText = this.props.localizedStrings.nextButton;
+        buttonClick = this.props.goToNextQuestions;
+        buttonContents.push(
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+             <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
+          </svg>
+        );
         break;
       case PRIMARY_ACTION.CHECK_ANSWERS:
+        buttonClass += "c-btn--check-answer";
+        buttonText = this.props.localizedStrings.checkAnswerButton;
+        buttonClick = this.props.checkAnswers;
         break;
       case PRIMARY_ACTION.SAVE_FILES:
+        buttonClass += "c-btn--check-answer";
+        buttonText = this.props.localizedStrings.saveFileButton;
+        buttonClick = this.props.checkAnswers;
         break;
       case PRIMARY_ACTION.SAVE_ANSWERS:
+        buttonClass += "c-btn--check-answer";
+        buttonText = this.props.localizedStrings.saveAnswerButton;
+        buttonClick = this.props.checkAnswers;
         break;
 
       default:
