@@ -79,3 +79,9 @@ export function questionResults(state, props) {
 
   return questionResponses;
 }
+
+export function correctItemCount(state, props) {
+  const results = state.assessmentResults.questionResults;
+  const hits = results.map((r) => (r[0] && r[0].correct ? 1 : 0));
+  return hits.reduce((a, b) => (a + b));
+}

@@ -20,6 +20,7 @@ import {
   isCheckingAnswer,
   assessmentLoaded
 }  from "../../selectors/assessment";
+import { correctItemCount }  from "../../parsers/qti2/selectors";
 
 const select = (state, props) => {
   return {
