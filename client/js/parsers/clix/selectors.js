@@ -55,12 +55,19 @@ export function questionResults(state, props) {
   return questionResponses;
 }
 
-export function primaryActionState(state){
+/**
+ * Returns an object containing the state of the nav primary action button
+ * in the form {spinner: boolean, buttonState: PRIMARY_ACTION[*]}
+ * Where buttonState is the current state of the primary button
+ * e.g.(PRIMARY_ACTION.NEXT, PRIMARY_ACTION.SUBMIT), and spinner
+ * is whether or not a spinner should be applied to the button.
+ */
+export function primaryActionState(state, props){
   const nextUnlocked = isNextUnlocked(state);
   const lastPage = isLastPage(state);
   const items = currentItems(state);
   const item = items[0];
-  var primaryActionState = {spinner: false}; //TODO document
+  var primaryActionState = {spinner: false}; // Spinner defaults to false
 
   if(nextUnlocked === true && lastPage === true){
     primaryActionState.buttonState = PRIMARY_ACTION.SUBMIT;
@@ -68,6 +75,7 @@ export function primaryActionState(state){
     primaryActionState.buttonState = PRIMARY_ACTION.NEXT;
   } else {
 
+    // If we are checking an answer, then set spinner to true
     if(isCheckingAnswer(state)){primaryActionState.spinner = true;}
 
     // We haven't discussed how to handle making nav decisions when we are
@@ -90,7 +98,13 @@ export function primaryActionState(state){
   return primaryActionState;
 }
 
-export function secondaryActionState(state){
+ /**
+  * Returns an object containing the state of the nav secondary action button
+  * in the form {buttonState: PRIMARY_ACTION[*]}
+  * Where buttonState is the current state of the secondary button.
+  * e.g.(SECONDARY_ACTION.NONE, SECONDARY_ACTION.PREV).
+  */
+export function secondaryActionState(state, props){
   if(isFirstPage(state) === true){return {buttonState: SECONDARY_ACTION.NONE};}
   return {buttonState: SECONDARY_ACTION.PREV};
 }
