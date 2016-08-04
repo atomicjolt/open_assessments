@@ -7,7 +7,7 @@ import { localizeStrings }     from "../../selectors/localize";
 import appHistory              from "../../history";
 import { Assessment }          from "./assessment";
 import * as AssessmentActions  from "../../actions/assessment";
-
+import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
 
 var props;
 var allQuestions,
@@ -95,11 +95,13 @@ function reset(){
     localizedStrings,
     nextQuestions: () => {},
     previousQuestions: () => {},
+    primaryActionState: {spinner:false, buttonState: PRIMARY_ACTION.NEXT},
     assessmentProgress,
     questionCount,
     questionsPerPage,
     responses,
     scrollParentToTop: () => {},
+    secondaryActionState: {spinner: false, buttonState: SECONDARY_ACTION.PREV},
     sendSize: () => {},
     settings,
     submitAssessment: () => {}
