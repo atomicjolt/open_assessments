@@ -12,14 +12,8 @@ import TwoButtonNav                           from "../assessments/two_button_na
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import ProgressDropdown                       from "../common/progress_dropdown";
-import { correctItemCount, questionResults }  from "../../selectors/assessment";
-import {
-  questionCount,
-  questions,
-  outcomes,
-  isCheckingAnswer,
-  assessmentLoaded
-}  from "../../selectors/assessment";
+import * as selectors                         from "../../selectors/assessment";
+
 
 const select = (state, props) => {
   return {
@@ -31,7 +25,7 @@ const select = (state, props) => {
     assessment      : state.assessment,
 
     // Returns true if assessment has loaded, false otherwise
-    assessmentLoaded: assessmentLoaded(state, props),
+    assessmentLoaded: selectors.assessmentLoaded(state, props),
 
     // State of user-assessment interactions.
     assessmentProgress        : state.assessmentProgress.toJS(),
@@ -44,34 +38,34 @@ const select = (state, props) => {
 
     // How many questions to display at a time. Default to show all questions
     // in a section if not specified
-    questionsPerPage: state.settings.questions_per_page || questionCount(state, props),
+    questionsPerPage: state.settings.questions_per_page || selectors.questionCount(state, props),
 
     // When the next question should be unlocked. Should be either "ON_CORRECT",
     // "ON_ANSWER_CHECK", or "ALWAYS"
     unlockNext: state.settings.unlock_next,
 
     // How many Items are in the assessment
-    questionCount   : questionCount(state, props),
+    questionCount   : selectors.questionCount(state, props),
 
     // Array containing all assessment Items
-    allQuestions    : questions(state, props),
+    allQuestions    : selectors.questions(state, props),
 
     // Returns true if any api calls to check answers have not yet returned,
     // false otherwise.
-    isCheckingAnswer: isCheckingAnswer(state, props),
+    isCheckingAnswer: selectors.isCheckingAnswer(state, props),
 
     // Array of graded user response objects containing keys
     // correct:true/false, feedback:"Answer feedback",
     // answerIds: answers feedback applies to
-    questionResults : questionResults(state, props),
+    questionResults : selectors.questionResults(state, props),
 
     // User facing strings of the language specified by the 'locale' setting
     localizedStrings: localizeStrings(state, props),
 
     // TODO
-    outcomes        : outcomes(state, props),
+    outcomes        : selectors.outcomes(state, props),
 
-    correctItemCount: correctItemCount(state, props)
+    correctItemCount: selectors.correctItemCount(state, props)
   };
 };
 

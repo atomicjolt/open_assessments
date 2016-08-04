@@ -12,11 +12,11 @@ const SELECTORS_MAP = {
   [AssessmentFormats.Qti2]: Qti2Selectors
 };
 
-function getSelectors (standard) {
+function getSelectors(standard) {
   return SELECTORS_MAP[standard];
 }
 
-function makeDispatchingSelector(name){
+function makeDispatchingSelector(name) {
   return (state, props) => {
     var selectors = getSelectors(state.assessment.standard);
     if(selectors === undefined){return;} // Handle no assessment loaded
