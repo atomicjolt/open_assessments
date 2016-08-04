@@ -70,7 +70,9 @@ const select = (state, props) => {
     localizedStrings: localizeStrings(state, props),
 
     // TODO
-    outcomes        : outcomes(state, props)
+    outcomes        : outcomes(state, props),
+
+    correctItemCount: correctItemCount(state, props)
   };
 };
 
@@ -390,7 +392,7 @@ export class Assessment extends React.Component{
       <div className="o-assessment-container">
         <div className="c-header">
           <div className="c-header__title">{titleText}</div>
-          <div className="c-header__question-number">{counter}</div>
+          <div className="c-header__question-number">({this.props.correctItemCount}) {counter}</div>
         </div>
         {warning}
         {content}
