@@ -65,6 +65,7 @@ const select = (state, props) => {
     // TODO
     outcomes        : selectors.outcomes(state, props),
 
+    // How many items the student has given correct responses for
     correctItemCount: selectors.correctItemCount(state, props)
   };
 };
