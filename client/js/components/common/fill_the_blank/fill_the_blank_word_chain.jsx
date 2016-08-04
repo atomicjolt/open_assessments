@@ -4,7 +4,7 @@ import ReactDOM                         from 'react-dom';
 import { FillTheBlankDraggableWord }    from '../draggable_word';
 import { FillTheBlankWordDropZone }     from '../drop_zones';
 import Word                             from '../word';
-import { beginWrap, endWrap }           from '../movable_words/word_chain';
+import { beginWrap, endWrap }           from '../../../constants/icons';
 
 export default class FillTheBlankWordChain extends React.Component {
   static propTypes = {
@@ -25,12 +25,12 @@ export default class FillTheBlankWordChain extends React.Component {
 
   componentDidMount() {
     // We are doing this because for some reason the words have not finished
-    // rendering when componentDidMount is called. A 1ms set timeout is enough time.
+    // rendering when componentDidMount is called, so we cannot correctly
+    // calculate the widths of the words. A 10ms set timeout is enough time.
     setTimeout(() => { this.wrapLines() }, 10);
   }
 
   componentDidUpdate() {
-    // setTimeout(() => { this.wrapLines() }, 10);
     this.wrapLines();
   }
 

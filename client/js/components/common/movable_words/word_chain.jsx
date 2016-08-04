@@ -1,16 +1,9 @@
-import React               from 'react';
-import ReactDOM            from 'react-dom';
+import React                    from 'react';
+import ReactDOM                 from 'react-dom';
 
-import { WordDropZone }    from '../drop_zones';
-import DraggableGroupWord  from './draggable_group_word';
-
-export const beginWrap = <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-  <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
-</svg>
-
-export const endWrap = <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-    <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
-</svg>
+import { WordDropZone }         from '../drop_zones';
+import DraggableGroupWord       from './draggable_group_word';
+import { beginWrap, endWrap }   from '../../../constants/icons';
 
 export default class WordChain extends React.Component {
   static propTypes = {
