@@ -49,10 +49,12 @@ export const isCheckingAnswer = makeDispatchingSelector("isCheckingAnswer");
 export const primaryActionState = makeDispatchingSelector("primaryActionState");
 export const secondaryActionState = makeDispatchingSelector("secondaryActionState");
 
-export function isFirstPage(state, props){
-  return state.assessmentProgress.get('currentItemIndex') === 0;
-}
-
+export const isFirstPage = createSelector(
+  currentItemIndex,
+  (currentItemIndex) => {
+    return currentItemIndex === 0;
+  }
+);
 
 export function _isLastPage(currentItemIndex, numItems, itemsPerPage){
   const totalPages = Math.ceil(numItems / itemsPerPage);
