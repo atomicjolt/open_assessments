@@ -67,6 +67,19 @@ export function _isLastPage(currentItemIndex, numItems, itemsPerPage){
   return currentPage >= totalPages;
 }
 
+export function _isNextUnlocked(unlockNext, questionResults, questionsPerPage){
+  if(unlockNext === "ON_CORRECT") {
+    const incorrectResponse = _.find(questionResults, (response) => {
+      return !response.correct;
+    });
+    return _.isUndefined(incorrectResponse) && _.compact(_.values(questionResults)).length === questionsPerPage;
+  } else if(unlockNext === "ON_ANSWER_CHECK") {
+
+    return _.compact(_.values(questionResults)).length === questionsPerPage;
+  }
+  return true;
+}
+
 //TODO add a spec
 export function isNextUnlocked(state){
   const unlockNext = state.settings.unlock_next;
