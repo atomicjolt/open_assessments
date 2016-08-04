@@ -14,8 +14,7 @@ export const PRIMARY_ACTION = {
   CHECK_ANSWERS : "CHECK_ANSWERS",
   SAVE_FILES    : "SAVE_FILES",
   SAVE_ANSWERS  : "SAVE_ANSWERS",
-  SUBMIT        : "SUBMIT",
-  SPINNER       : "SPINNER"
+  SUBMIT        : "SUBMIT"
 };
 
 
