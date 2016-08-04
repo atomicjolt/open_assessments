@@ -1,6 +1,8 @@
 import React            from "react";
 
-export default (props) => {
-  const className = props.hide ? props.className + " u-hide" : props.className;
-  return <div className={className} dangerouslySetInnerHTML={{__html: props.material}} />
+export default class Word extends React.Component {
+  render() {
+    const className = this.props.hide ? this.props.className + " u-hide" : this.props.className;
+    return <div className={className} dangerouslySetInnerHTML={{__html: this.props.material}} />
+  }
 }

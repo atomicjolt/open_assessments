@@ -4,15 +4,21 @@ import ReactDOM            from 'react-dom';
 import { WordDropZone }    from '../drop_zones';
 import DraggableGroupWord  from './draggable_group_word';
 
-const beginWrap = <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+export const beginWrap = <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
   <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
 </svg>
 
-const endWrap = <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+export const endWrap = <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
     <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
 </svg>
 
 export default class WordChain extends React.Component {
+  static propTypes = {
+    linkWord: React.PropTypes.func.isRequired,
+    wordChain: React.PropTypes.array.isRequired,
+    answersById: React.PropTypes.object.isRequired
+  }
+
   constructor() {
     super();
 
@@ -54,8 +60,8 @@ export default class WordChain extends React.Component {
     this.setState({dragging: false, draggingIndex: null});
   }
 
-  render() {
-    const lines = _.map(this.state.wrapIndexes, (wrapIndex, index) => {
+  getLines() {
+    return _.map(this.state.wrapIndexes, (wrapIndex, index) => {
       // Get the index of the first word on the next line
       let endWordIndex = this.props.wordChain.length;
       if(this.state.wrapIndexes[index + 1]) {
@@ -113,6 +119,10 @@ export default class WordChain extends React.Component {
       </div>
 
     });
+  }
+
+  render() {
+    const lines = this.getLines();
 
     return <div className="c-answers">
       { lines }

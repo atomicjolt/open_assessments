@@ -23,6 +23,7 @@
   position: relative;
   margin: 0 0.1rem 0 0;
   cursor: move;
+  white-space: nowrap;
 
   & > *{
     margin: 0;
@@ -176,9 +177,8 @@
 
 .c-blank-drop-zone{
   background: $primary;
-  padding: 0.5rem;
-  height: 4.5rem;
-  margin: 0.1rem 0.4rem;
+  padding: 0rem 0.5rem;
+  margin: 0rem 0.4rem;
   position: relative;
   float: left;
 }

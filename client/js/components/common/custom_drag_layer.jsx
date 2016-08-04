@@ -62,12 +62,9 @@ export class CustomDragLayer extends React.Component{
         return _.map(item.words, (word) => {
           return <Word key={word.id} material={word.material} className="c-word"/>
         });
+      case ItemTypes.FILL_BLANK_WORD:
       case ItemTypes.WORD:
         return <Word key={item.itemId} material={item.material} className="c-word"/>
-      case ItemTypes.FILL_BLANK_WORD:
-        return <div style={{display: "inline-block"}}>
-          <Word key={item.itemId} material={item.material} className="c-word c-word--blank"/>
-        </div>
       default:
         return <div></div>
     }
