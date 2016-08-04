@@ -82,6 +82,7 @@ export function primaryActionState(state){
       case "audio_upload_question":
         primaryActionState.buttonState = PRIMARY_ACTION.SAVE_FILES;
         break;
+
       default:
         primaryActionState.buttonState = PRIMARY_ACTION.CHECK_ANSWERS;
     }

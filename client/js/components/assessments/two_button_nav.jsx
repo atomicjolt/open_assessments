@@ -96,7 +96,7 @@ export default class TwoButtonNav extends React.Component{
         break;
     }
 
-    if(props.spinner){
+    if(props.primaryAction.spinner){
       buttonProps.buttonClass += " c-btn--loading";
       buttonContents.push(
         <svg key={buttonContents.length} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 92">
