@@ -53,6 +53,13 @@ export function isFirstPage(state, props){
   return state.assessmentProgress.get('currentItemIndex') === 0;
 }
 
+
+export function _isLastPage(currentItemIndex, numItems, itemsPerPage){
+  const totalPages = Math.ceil(numItems / itemsPerPage);
+  const currentPage = Math.floor(currentItemIndex / itemsPerPage) + 1;
+  return currentPage >= totalPages;
+}
+
 //TODO document
 export const isLastPage = createSelector(
   currentItemIndex,
@@ -60,12 +67,6 @@ export const isLastPage = createSelector(
   itemsPerPage,
   _isLastPage
 );
-
-export function _isLastPage(currentItemIndex, numItems, itemsPerPage){
-  const totalPages = Math.ceil(numItems / itemsPerPage);
-  const currentPage = Math.floor(currentItemIndex / itemsPerPage) + 1;
-  return currentPage >= totalPages;
-}
 
 export function _isNextUnlocked(unlockNext, questionResults, questionsPerPage){
   if(unlockNext === "ON_CORRECT") {
@@ -80,23 +81,13 @@ export function _isNextUnlocked(unlockNext, questionResults, questionsPerPage){
   return true;
 }
 
-//TODO add a spec
-export function isNextUnlocked(state){
-  const unlockNext = state.settings.unlock_next;
-  const questionResponses = questionResults(state);
-  const questionsPerPage = state.settings.questions_per_page;
+export const isNextUnlocked = createSelector(
+  (state) => state.settings.unlock_next,
+  questionResults,
+  itemsPerPage,
+  _isNextUnlocked
+);
 
-  if(unlockNext === "ON_CORRECT") {
-    const incorrectResponse = _.find(questionResponses, (response) => {
-      return !response.correct;
-    });
-    return _.isUndefined(incorrectResponse) && _.compact(_.values(questionResponses)).length === questionsPerPage;
-  } else if(unlockNext === "ON_ANSWER_CHECK") {
-
-    return _.compact(_.values(questionResponses)).length === questionsPerPage;
-  }
-  return true;
-}
 
 //TODO write spec
 export function currentItems(state){
