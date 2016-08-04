@@ -3,16 +3,16 @@
 import React                                  from "react";
 import { connect }                            from "react-redux";
 
-import * as CommunicationActions              from "../../actions/communications";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
+import * as CommunicationActions              from "../../actions/communications";
 import appHistory                             from "../../history";
+import * as selectors                         from "../../selectors/assessment";
 import { localizeStrings }                    from "../../selectors/localize";
-import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
-import TwoButtonNav                           from "../assessments/two_button_nav";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
+import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
+import TwoButtonNav                           from "../assessments/two_button_nav";
 import ProgressDropdown                       from "../common/progress_dropdown";
-import * as selectors                         from "../../selectors/assessment";
 
 
 const select = (state, props) => {
