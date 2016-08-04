@@ -59,34 +59,37 @@ export function primaryActionState(state){
   const nextUnlocked = isNextUnlocked(state);
   const lastPage = isLastPage(state);
   const items = currentItems(state);
+  const item = items[0];
+  var primaryActionState = {spinner: false}; //TODO document
 
   if(nextUnlocked === true && lastPage === true){
-    return PRIMARY_ACTION.SUBMIT;
+    primaryActionState.buttonState = PRIMARY_ACTION.SUBMIT;
   } else if(nextUnlocked === true){
-    return PRIMARY_ACTION.NEXT;
-  } else if(isCheckingAnswer(state)) {
-    return PRIMARY_ACTION.SPINNER;
+    primaryActionState.buttonState = PRIMARY_ACTION.NEXT;
   } else {
+
+    if(isCheckingAnswer(state)){primaryActionState.spinner = true;}
+
     // We haven't discussed how to handle making nav decisions when we are
     // rendering more than one question. So for now, just choose the first one.
-    let item = items[0];
     switch(item.question_type){
       case "text_input_question":
       case "text_only_question":
       case "short_answer_question":
-        return PRIMARY_ACTION.SAVE_ANSWERS;
+        primaryActionState.buttonState = PRIMARY_ACTION.SAVE_ANSWERS;
         break;
 
       case "audio_upload_question":
-        return PRIMARY_ACTION.SAVE_FILES;
+        primaryActionState.buttonState = PRIMARY_ACTION.SAVE_FILES;
         break;
       default:
-        return PRIMARY_ACTION.CHECK_ANSWERS;
+        primaryActionState.buttonState = PRIMARY_ACTION.CHECK_ANSWERS;
     }
   }
+  return primaryActionState;
 }
 
 export function secondaryActionState(state){
-  if(isFirstPage(state) === true){return SECONDARY_ACTION.NONE;}
-  return SECONDARY_ACTION.PREV;
+  if(isFirstPage(state) === true){return {buttonState: SECONDARY_ACTION.NONE};}
+  return {buttonState: SECONDARY_ACTION.PREV};
 }
