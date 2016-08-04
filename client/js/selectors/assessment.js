@@ -1,15 +1,16 @@
 import { AssessmentFormats }  from "../parsers/assessment";
-import * as ClixSelectors  from "../parsers/clix/selectors";
-import * as EdxSelectors   from "../parsers/edX/selectors";
-import * as Qti1Selectors  from "../parsers/qti1/selectors";
-import * as Qti2Selectors  from "../parsers/qti2/selectors";
+import * as ClixSelectors     from "../parsers/clix/selectors";
+import * as EdxSelectors      from "../parsers/edX/selectors";
+import * as Qti1Selectors     from "../parsers/qti1/selectors";
+import * as Qti2Selectors     from "../parsers/qti2/selectors";
 
 
-const SELECTORS_MAP = {};
-SELECTORS_MAP[AssessmentFormats.CLIx] = ClixSelectors;
-SELECTORS_MAP[AssessmentFormats.EdX] = EdxSelectors;
-SELECTORS_MAP[AssessmentFormats.Qti1] = Qti1Selectors;
-SELECTORS_MAP[AssessmentFormats.Qti2] = Qti2Selectors;
+const SELECTORS_MAP = {
+  [AssessmentFormats.CLIx]: ClixSelectors,
+  [AssessmentFormats.EdX]:  EdxSelectors,
+  [AssessmentFormats.Qti1]: Qti1Selectors,
+  [AssessmentFormats.Qti2]: Qti2Selectors
+};
 
 function getSelectors (standard) {
   return SELECTORS_MAP[standard];
