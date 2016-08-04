@@ -88,12 +88,15 @@ export const isNextUnlocked = createSelector(
   _isNextUnlocked
 );
 
-
-//TODO write spec
-export function currentItems(state){
-  if(!assessmentLoaded(state)){return;}
-  const allQuestions = questions(state);
-  const currentItemIndex = state.assessmentProgress.get('currentItemIndex', 0);
-  const questionsPerPage = state.settings.questions_per_page;
+export function _currentItems(allQuestions, currentItemIndex, questionsPerPage, assessmentLoaded){
+  if(!assessmentLoaded){return [];}
   return allQuestions.slice(currentItemIndex, currentItemIndex + questionsPerPage);
 }
+
+export const currentItems = createSelector(
+  questions,
+  currentItemIndex,
+  itemsPerPage,
+  assessmentLoaded,
+  _currentItems
+);
