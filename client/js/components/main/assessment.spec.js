@@ -112,6 +112,7 @@ function reset(){
   subject = ReactDOM.findDOMNode(result);
 };
 
+//TODO remove old specs
 
 describe("assessment", function() {
 
