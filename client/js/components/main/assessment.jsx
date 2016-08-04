@@ -12,7 +12,7 @@ import TwoButtonNav                           from "../assessments/two_button_na
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
 import ProgressDropdown                       from "../common/progress_dropdown";
-import { questionResults }                    from "../../selectors/assessment";
+import { correctItemCount, questionResults }  from "../../selectors/assessment";
 import {
   questionCount,
   questions,
@@ -20,7 +20,6 @@ import {
   isCheckingAnswer,
   assessmentLoaded
 }  from "../../selectors/assessment";
-import { correctItemCount }  from "../../parsers/clix/selectors";
 
 const select = (state, props) => {
   return {
