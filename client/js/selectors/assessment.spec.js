@@ -77,7 +77,7 @@ describe('isNextUnlocked', () => {
     });
   });
 
-  fdescribe('unlockNext is ON_ANSWER_CHECK', () => {
+  describe('unlockNext is ON_ANSWER_CHECK', () => {
     var nextUnlocked, responses, questionsPerPage;
     beforeEach(() => {
       nextUnlocked = "ON_ANSWER_CHECK";
@@ -97,7 +97,19 @@ describe('isNextUnlocked', () => {
     });
   });
 
-  describe('ALWAYS', () => {});
+  describe('ALWAYS', () => {
+    var nextUnlocked, responses, questionsPerPage;
+    beforeEach(() => {
+      nextUnlocked = "ALWAYS";
+      responses = {};
+      questionsPerPage = 12;
+    });
+
+    it('should return true if no questions are answered', () => {
+      const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage);
+      expect(result).toEqual(true);
+    });
+  });
 });
 
 describe('currentItems', () => {});
