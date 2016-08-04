@@ -112,4 +112,21 @@ describe('isNextUnlocked', () => {
   });
 });
 
-describe('currentItems', () => {});
+describe('currentItems', () => {
+  var allQuestions, currentItemIndex, questionsPerPage, assessmentLoaded;
+  beforeEach(() => {
+    allQuestions = [{id:0}, {id:1}, {id:2}, {id:3}, {id:4}, {id:5}, {id:6}, {id:7}, {id:8}, {id:9}, {id:10}];
+    currentItemIndex = 6;
+    questionsPerPage = 3;
+    assessmentLoaded = true;
+  });
+  it('returns all items on current page', () => {
+    const result = AssessmentSelectors._currentItems(allQuestions, currentItemIndex, questionsPerPage, assessmentLoaded);
+    expect(result).toEqual([{id:6}, {id:7}, {id:8}]);
+  });
+  it('returns empty array if the assessment hasnt loaded', () => {
+    assessmentLoaded = false;
+    const result = AssessmentSelectors._currentItems(allQuestions, currentItemIndex, questionsPerPage, assessmentLoaded);
+    expect(result).toEqual([]);
+  });
+});
