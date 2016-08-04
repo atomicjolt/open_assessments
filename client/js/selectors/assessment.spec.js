@@ -50,7 +50,7 @@ describe('isNextUnlocked', () => {
       feedback:"<p>Feedbac</p>"
     }
   }
-  fdescribe('unlockNext is ON_CORRECT', () => {
+  describe('unlockNext is ON_CORRECT', () => {
     var nextUnlocked, responses, questionsPerPage;
     beforeEach(() => {
       nextUnlocked = "ON_CORRECT";
@@ -77,7 +77,26 @@ describe('isNextUnlocked', () => {
     });
   });
 
-  describe('unlockNext is ON_ANSWER_CHECK', () => {});
+  fdescribe('unlockNext is ON_ANSWER_CHECK', () => {
+    var nextUnlocked, responses, questionsPerPage;
+    beforeEach(() => {
+      nextUnlocked = "ON_ANSWER_CHECK";
+      responses = {};
+      questionsPerPage = 12;
+      _.range(12).forEach((i) =>{createResponse(i, responses)}); //TODO doc
+    });
+
+    it('should return true when all answers have been checked', () => {
+      const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage);
+      expect(result).toEqual(true);
+    });
+    it('should return false otherwise', () => {
+      delete responses[2];
+      const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage);
+      expect(result).toEqual(false);
+    });
+  });
+
   describe('ALWAYS', () => {});
 });
 
