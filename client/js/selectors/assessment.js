@@ -1,3 +1,5 @@
+"use strict";
+
 import { AssessmentFormats }  from "../parsers/assessment";
 import * as ClixSelectors     from "../parsers/clix/selectors";
 import * as EdxSelectors      from "../parsers/edX/selectors";
