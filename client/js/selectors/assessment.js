@@ -1,4 +1,5 @@
 import _                   from 'lodash';
+import { createSelector }  from "reselect";
 import { AssessmentFormats }  from "../parsers/assessment";
 import * as ClixSelectors  from "../parsers/clix/selectors";
 import * as EdxSelectors   from "../parsers/edX/selectors";
@@ -25,6 +26,9 @@ function makeDispatchingSelector(name){
   };
 }
 
+const currentItemIndex = (state) => state.assessmentProgress.get('currentItemIndex');
+const itemsPerPage = (state) => state.settings.questions_per_page;
+
 // Selectors that will interact with the assessment data.
 // All of these take state and props as parameters and just
 // wrap a call to the selectors native to the assessment.
@@ -49,14 +53,18 @@ export function isFirstPage(state, props){
   return state.assessmentProgress.get('currentItemIndex') === 0;
 }
 
-export function isLastPage(state, props){
-  const currentItemIndex = state.assessmentProgress.get('currentItemIndex', 0);
-  const numItems = questionCount(state, props);
-  const totalPages = Math.ceil(numItems / state.settings.questions_per_page);
-  const currentPage = Math.floor(currentItemIndex / state.settings.questions_per_page);
-  if(_.isUndefined(currentPage) || _.isUndefined(totalPages)){return false;}
+//TODO document
+export const isLastPage = createSelector(
+  currentItemIndex,
+  questionCount,
+  itemsPerPage,
+  _isLastPage
+);
+
+export function _isLastPage(currentItemIndex, numItems, itemsPerPage){
+  const totalPages = Math.ceil(numItems / itemsPerPage);
+  const currentPage = Math.floor(currentItemIndex / itemsPerPage) + 1;
   return currentPage >= totalPages;
-  // return TODO add a spec
 }
 
 //TODO add a spec
