@@ -1,8 +1,9 @@
 import $                   from "jquery";
+import _                   from "lodash";
 import { createSelector }  from "reselect";
 
-import { questionResults as qtiQuestionResults }  from "../qti2/selectors";
-import { transformItem }                          from "./clix";
+import * as qtiSelectors  from "../qti2/selectors";
+import { transformItem }  from "./clix";
 
 
 export function questions(state, props) {
@@ -31,5 +32,9 @@ export function isCheckingAnswer(state, props){
 }
 
 export function questionResults(state, props) {
-  return qtiQuestionResults(state, props);
+  return qtiSelectors.questionResults(state, props);
+}
+
+export function correctItemCount(state, props) {
+  return qtiSelectors.correctItemCount(state, props);
 }

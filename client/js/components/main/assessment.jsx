@@ -20,7 +20,7 @@ import {
   isCheckingAnswer,
   assessmentLoaded
 }  from "../../selectors/assessment";
-import { correctItemCount }  from "../../parsers/qti2/selectors";
+import { correctItemCount }  from "../../parsers/clix/selectors";
 
 const select = (state, props) => {
   return {
