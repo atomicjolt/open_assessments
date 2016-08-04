@@ -26,9 +26,6 @@ function makeDispatchingSelector(name){
   };
 }
 
-const currentItemIndex = (state) => state.assessmentProgress.get('currentItemIndex');
-const itemsPerPage = (state) => state.settings.questions_per_page;
-
 // Selectors that will interact with the assessment data.
 // All of these take state and props as parameters and just
 // wrap a call to the selectors native to the assessment.
@@ -49,6 +46,15 @@ export const isCheckingAnswer = makeDispatchingSelector("isCheckingAnswer");
 export const primaryActionState = makeDispatchingSelector("primaryActionState");
 export const secondaryActionState = makeDispatchingSelector("secondaryActionState");
 
+// Selectors that interact with abstracted assessment data that has come from the
+// format specific selectors. This logic can be shared by all assessment backends. 
+const currentItemIndex = (state) => state.assessmentProgress.get('currentItemIndex');
+const itemsPerPage = (state) => state.settings.questions_per_page;
+
+/**
+ * Returns true if the current page of items is the first page of items,
+ * false otherwise
+ */
 export const isFirstPage = createSelector(
   currentItemIndex,
   (currentItemIndex) => {
@@ -56,13 +62,19 @@ export const isFirstPage = createSelector(
   }
 );
 
+/**
+ * Internal logic to determine if we are on the last page. This function should
+ * only be used by the isLastPage selector, and is exported for testing purposes.
+ */
 export function _isLastPage(currentItemIndex, numItems, itemsPerPage){
   const totalPages = Math.ceil(numItems / itemsPerPage);
   const currentPage = Math.floor(currentItemIndex / itemsPerPage) + 1;
   return currentPage >= totalPages;
 }
 
-//TODO document
+/**
+ * Returns true if the current page of items is the last page, false otherwise.
+ */
 export const isLastPage = createSelector(
   currentItemIndex,
   questionCount,
@@ -70,6 +82,11 @@ export const isLastPage = createSelector(
   _isLastPage
 );
 
+/**
+ * Internal logic to determine if the next set of questions should be unlocked.
+ * This function should only be used by the isNextUnlocked selector, and is exported
+ * for testing purposes.
+ */
 export function _isNextUnlocked(unlockNext, questionResults, questionsPerPage){
   if(unlockNext === "ON_CORRECT") {
     const incorrectResponse = _.find(questionResults, (response) => {
@@ -83,6 +100,9 @@ export function _isNextUnlocked(unlockNext, questionResults, questionsPerPage){
   return true;
 }
 
+/**
+ * Determine if user should be allowed to go to next questions or not
+ */
 export const isNextUnlocked = createSelector(
   (state) => state.settings.unlock_next,
   questionResults,
@@ -90,6 +110,11 @@ export const isNextUnlocked = createSelector(
   _isNextUnlocked
 );
 
+/**
+ * Internal logic to calculate the current page of questions. This function
+ * should only be used by the currentItems selector, and is exported
+ * for testing purposes.
+ */
 export function _currentItems(allQuestions, currentItemIndex, questionsPerPage, assessmentLoaded){
   if(!assessmentLoaded){return [];}
   return allQuestions.slice(currentItemIndex, currentItemIndex + questionsPerPage);
