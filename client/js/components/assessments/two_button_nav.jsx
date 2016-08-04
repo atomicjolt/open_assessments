@@ -43,11 +43,11 @@ export default class TwoButtonNav extends React.Component{
     submitAssessment      : React.PropTypes.func.isRequired,
 
     // The state of the secondary action button. Should be a value included in
-    // SECONDARY_ACTION.
-    secondaryAction       : React.PropTypes.string.isRequired,
+    // SECONDARY_ACTION. TODO update docs
+    secondaryAction       : React.PropTypes.object.isRequired,
 
     // The state of the primary action button. Should be a value included in
-    // PRIMARY_ACTION.
+    // PRIMARY_ACTION. TODO update doc
     primaryAction         : React.PropTypes.object.isRequired, //Maybe accept object?
 
     // User facing strings of the language specified by the 'locale' setting
