@@ -17,10 +17,6 @@ export default {
       saveAnswerButton: "Save Answer", // Text displayed on save answer button
       submitButton: "Finish Quiz" // Text displayed on submit button
     },
-    item:{
-      questionDirectionMany:"Choose ALL that apply.", // Question direction for multi answer question
-      questionDirectionAll:"Choose the BEST answer." // Question direction for single answer question
-    },
     retriesExceeded: {
       triesExceeded: "Too many tries" // Text displayed when a student has run out of quiz attempts
     },

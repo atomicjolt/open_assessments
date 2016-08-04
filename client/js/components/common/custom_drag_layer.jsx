@@ -1,8 +1,8 @@
 import React          from 'react';
 import { DragLayer }  from 'react-dnd';
 
-import ItemTypes      from '../draggable_item_types';
-import Word           from '../word';
+import ItemTypes      from './draggable_item_types';
+import Word           from './word';
 
 const layerStyles = {
   position: 'fixed',
@@ -60,8 +60,14 @@ export class CustomDragLayer extends React.Component{
     switch (type) {
       case ItemTypes.WORD_GROUP:
         return _.map(item.words, (word) => {
-          return <Word key={word.id} material={word.material} />
+          return <Word key={word.id} material={word.material} className="c-word"/>
         });
+      case ItemTypes.WORD:
+        return <Word key={item.itemId} material={item.material} className="c-word"/>
+      case ItemTypes.FILL_BLANK_WORD:
+        return <div style={{display: "inline-block"}}>
+          <Word key={item.itemId} material={item.material} className="c-word c-word--blank"/>
+        </div>
       default:
         return <div></div>
     }

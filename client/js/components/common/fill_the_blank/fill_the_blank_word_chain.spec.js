@@ -10,28 +10,32 @@ describe('fill the blank word chain', () => {
   var result, props, WrappedComponent;
   beforeEach(() => {
     props = {
-      sentenceChunks: [
+      sentenceWords: [
         "<p>word1</p>",
-        "<p>word2</p>"
+        "<p>word2</p>",
+        "<p class='interaction-placeholder'></p>"
       ],
       selectAnswer: () => {}
     };
 
-    WordChainRewireAPI.__Rewire__('WordDropZone', () => { return <div>WordDropZone</div>; })
-    WordChainRewireAPI.__Rewire__('DraggableWord', () => { return <div>DraggableWord</div>; })
+    WordChainRewireAPI.__Rewire__('FillTheBlankWordDropZone', () => { return <div>WordDropZone</div>; })
+    WordChainRewireAPI.__Rewire__('FillTheBlankDraggableWord', () => { return <div>DraggableWord</div>; })
 
     WrappedComponent = wrapInDndContext(FillTheBlankWordChain);
     result = TestUtils.renderIntoDocument(<WrappedComponent {...props} />);
   });
 
   afterEach(() => {
-    WordChainRewireAPI.__ResetDependency__('WordDropZone');
-    WordChainRewireAPI.__ResetDependency__('DraggableWord');
+    WordChainRewireAPI.__ResetDependency__('FillTheBlankWordDropZone');
+    WordChainRewireAPI.__ResetDependency__('FillTheBlankDraggableWord');
   });
 
-  it('renders the word chain', () => {
+  it('renders the sentence words', () => {
     expect(ReactDOM.findDOMNode(result).textContent).toContain("word1");
     expect(ReactDOM.findDOMNode(result).textContent).toContain("word2");
+  });
+
+  it('renders the dropzone', () => {
     expect(ReactDOM.findDOMNode(result).textContent).toContain("WordDropZone");
   });
 
