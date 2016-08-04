@@ -2,7 +2,7 @@ import Immutable                 from 'immutable';
 import * as AssessmentSelectors  from "./assessment";
 
 
-fdescribe('isFirstPage', () => {
+describe('isFirstPage', () => {
   it('should return true on first question', () => {
     const state = {
       assessmentProgress: Immutable.fromJS({currentItemIndex: 0})
@@ -22,9 +22,23 @@ fdescribe('isFirstPage', () => {
   });
 });
 
-describe('isLastPage', () => {
-  it('should return true on last question', () => {});
-  it('should return false otherwise', () => {});
+fdescribe('isLastPage', () => {
+  it('should return true on last question', () => {
+    const currentItemIndex = 8;
+    const numItems = 10;
+    const itemsPerPage = 2;
+    const result = AssessmentSelectors._isLastPage(currentItemIndex, numItems, itemsPerPage);
+
+    expect(result).toEqual(true);
+  });
+  it('should return false otherwise', () => {
+    const currentItemIndex = 7;
+    const numItems = 10;
+    const itemsPerPage = 2;
+    const result = AssessmentSelectors._isLastPage(currentItemIndex, numItems, itemsPerPage);
+
+    expect(result).toEqual(false);
+  });
 });
 
 describe('isNextUnlocked', () => {});
