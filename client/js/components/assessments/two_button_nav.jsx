@@ -62,17 +62,17 @@ export default class TwoButtonNav extends React.Component{
       onClick:null,
     };
     var buttonContents = [];
-    switch (props.buttonState) {
+    switch (props.primaryAction.buttonState) {
       case PRIMARY_ACTION.SUBMIT:
         buttonProps.buttonClass += "c-btn--finish";
-        buttonProps.buttonText = this.props.localizedStrings.submitButton;
-        buttonProps.onClick = this.props.submitAssessment;
+        buttonProps.buttonText = props.localizedStrings.submitButton;
+        buttonProps.onClick = props.submitAssessment;
         break;
 
       case PRIMARY_ACTION.NEXT:
         buttonProps.buttonClass += "c-btn--next";
-        buttonProps.buttonText = this.props.localizedStrings.nextButton;
-        buttonProps.onClick = this.props.goToNextQuestions;
+        buttonProps.buttonText = props.localizedStrings.nextButton;
+        buttonProps.onClick = props.goToNextQuestions;
         buttonContents.push(
           <svg key={buttonContents.length} xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
              <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
@@ -81,18 +81,18 @@ export default class TwoButtonNav extends React.Component{
         break;
       case PRIMARY_ACTION.CHECK_ANSWERS:
         buttonProps.buttonClass += "c-btn--check-answer";
-        buttonProps.buttonText = this.props.localizedStrings.checkAnswerButton;
-        buttonProps.onClick = this.props.checkAnswers;
+        buttonProps.buttonText = props.localizedStrings.checkAnswerButton;
+        buttonProps.onClick = props.checkAnswers;
         break;
       case PRIMARY_ACTION.SAVE_FILES:
         buttonProps.buttonClass += "c-btn--check-answer";
-        buttonProps.buttonText = this.props.localizedStrings.saveFileButton;
-        buttonProps.onClick = this.props.checkAnswers;
+        buttonProps.buttonText = props.localizedStrings.saveFileButton;
+        buttonProps.onClick = props.checkAnswers;
         break;
       case PRIMARY_ACTION.SAVE_ANSWERS:
         buttonProps.buttonClass += "c-btn--check-answer";
-        buttonProps.buttonText = this.props.localizedStrings.saveAnswerButton;
-        buttonProps.onClick = this.props.checkAnswers;
+        buttonProps.buttonText = props.localizedStrings.saveAnswerButton;
+        buttonProps.onClick = props.checkAnswers;
         break;
     }
 
@@ -113,7 +113,7 @@ export default class TwoButtonNav extends React.Component{
   }
 
   secondaryButton(props){
-    if(props.secondaryAction === SECONDARY_ACTION.PREV){
+    if(props.secondaryAction.buttonState === SECONDARY_ACTION.PREV){
       return(
         <Button
           buttonClass="c-btn c-btn--previous"
@@ -131,7 +131,7 @@ export default class TwoButtonNav extends React.Component{
     return (
       <div className="c-assessment-navigation">
         {this.secondaryButton(this.props)}
-        {this.primaryButton(this.props.primaryAction)}
+        {this.primaryButton(this.props)}
       </div>
     );
   }
