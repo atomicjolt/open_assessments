@@ -42,12 +42,22 @@ export default class TwoButtonNav extends React.Component{
     // Function to be called when submit button is clicked
     submitAssessment      : React.PropTypes.func.isRequired,
 
-    // The state of the secondary action button. Should be a value included in
-    // SECONDARY_ACTION. TODO update docs
+
+    /**
+     * Object containing the state of the nav secondary action button
+     * in the form {buttonState: PRIMARY_ACTION[*]}
+     * Where buttonState is the current state of the secondary button.
+     * e.g.(SECONDARY_ACTION.NONE, SECONDARY_ACTION.PREV).
+     */
     secondaryAction       : React.PropTypes.object.isRequired,
 
-    // The state of the primary action button. Should be a value included in
-    // PRIMARY_ACTION. TODO update doc
+    /**
+     * Object containing the state of the nav primary action button
+     * in the form {spinner: boolean, buttonState: PRIMARY_ACTION[*]}
+     * Where buttonState is the current state of the primary button
+     * e.g.(PRIMARY_ACTION.NEXT, PRIMARY_ACTION.SUBMIT), and spinner
+     * is whether or not a spinner should be applied to the button.
+     */
     primaryAction         : React.PropTypes.object.isRequired, //Maybe accept object?
 
     // User facing strings of the language specified by the 'locale' setting
@@ -59,7 +69,7 @@ export default class TwoButtonNav extends React.Component{
     var buttonProps = {
       buttonClass: "c-btn ",
       buttonText: "",
-      onClick:null,
+      onClick:() => {},
     };
     var buttonContents = [];
     switch (props.primaryAction.buttonState) {
