@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="en" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>CLIx</title>
+  <link rel="stylesheet" href="../Styles/style.css"/>
+  <script src="../Misc/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../Misc/video.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../Misc/photo-zoom.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+<!-- begin header -->
+
+  <header class="group span_10_of_12">
+    <small>this is small header text</small>
+
+    <h1 title="Activity 01 - act name here">Act name here </h1>
+
+    <hr/>
+
+    <p>Oat cake cookie croissant jelly beans. I love brownie pie. Cotton candy donut <strong>I love I love strong text</strong>. Caramels biscuit powder croissant danish topping I love.</p>
+
+    <hr/>
+  </header>
+
+<!-- end header --><!-- begin main -->
+
+  <main class="group span_10_of_12"><!-- begin text section -->
+
+  <section epub:type="chapter">
+    <h2 id="sigil_toc_id_1" class="sigil_not_in_toc">Heading 2</h2>
+
+    <p>Gummies macaroon macaroon biscuit jelly beans tiramisu I love jelly wafer. Croissant tiramisu chupa chups bear claw I love chupa chups. <em>I love gingerbread chocolate emphasis text</em> icing cake. Sesame snaps I love sesame snaps I love <a href="#">Here is a link.</a> tiramisu candy oat cake.</p>
+  </section>
+
+<!-- end text section --><!-- begin dialog div, needed for page w image popup -->
+
+  <div>
+    <dialog id="zoom01"><h3 class="zoom-label sigil_not_in_toc">Here's the title of a zoomed photo</h3>
+
+<img src="" alt="" class="modal-photo"/>
+
+    <form method="dialog"><button value="close">Back to lesson</button></form></dialog>
+  </div>
+
+<!-- end dialog div, needed for page w image popup --><!-- begin 1up photo section -->
+
+  <section epub:type="chapter">
+    <h2 id="sigil_toc_id_2" class="sigil_not_in_toc">Heading 2. Oat cake cookie croissant jelly beans. I love brownie pie. And a 1up photo.</h2>
+
+    <article>
+      <img src="../Images/image_608x229.jpg" alt="description of photo" class="photo-01up zoom-but-lg"/>
+    </article>
+  </section>
+
+<!-- end 1up photo section --><!-- begin 2up photo section -->
+
+  <section epub:type="chapter">
+    <h2 id="sigil_toc_id_3" class="sigil_not_in_toc">Heading 2. Oat cake cookie. And 2 photos in a row.</h2>
+
+    <article class="group">
+      <figure class="row span_6_of_12">
+        <img src="../Images/image_304x215.jpg" alt="description of photo" class="photo-02up zoom-but-md"/>
+
+        <figcaption><h5 class="sigil_not_in_toc">click to zoom</h5></figcaption>
+      </figure>
+
+      <figure class="row span_6_of_12">
+        <img src="../Images/image_304x215.jpg" alt="description of photo" class="photo-02up zoom-but-md"/>
+
+        <figcaption><h5 class="sigil_not_in_toc">click to zoom</h5></figcaption>
+      </figure>
+    </article>
+  </section>
+
+<!-- end 2up photo section --></main>
+
+<!-- end main --><!-- begin footer -->
+
+  <footer class="group span_10_of_12">
+    <hr/>
+
+    <small>CLIx Release version: [day month year, [00:00]am/pm [3-letter time zone] </small>
+  </footer>
+
+<!-- end footer -->
+</body>
+</html>

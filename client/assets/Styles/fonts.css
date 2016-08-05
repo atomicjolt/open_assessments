@@ -1,0 +1,59 @@
+@font-face {
+    font-family: 'open_sansbold';
+    src: url('../Fonts/OpenSans-Bold-webfont.woff') format('woff'),
+         url('../Fonts/OpenSans-Bold-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'open_sansbold_italic';
+    src: url('../Fonts/OpenSans-BoldItalic-webfont.woff') format('woff'),
+         url('../Fonts/OpenSans-BoldItalic-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'open_sansitalic';
+    src: url('../Fonts/OpenSans-Italic-webfont.woff') format('woff'),
+         url('../Fonts/OpenSans-Italic-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'open_sanslight';
+    src: url('../Fonts/OpenSans-Light-webfont.woff') format('woff'),
+         url('../Fonts/OpenSans-Light-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'open_sanslight_italic';
+    src: url('../Fonts/OpenSans-LightItalic-webfont.woff') format('woff'),
+         url('../Fonts/OpenSans-LightItalic-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'open_sansregular';
+    src: url('../Fonts/OpenSans-Regular-webfont.woff') format('woff'),
+         url('../Fonts/OpenSans-Regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'varela_round_regular';
+  src: url('../Fonts/VarelaRound-Regular-webfont.woff') format('woff'),
+       url('../Fonts/varela_round_regular.ttf') format('truetype');
+}

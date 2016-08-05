@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package version="3.0" unique-identifier="BookId" xmlns="http://www.idpf.org/2007/opf">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:language>en</dc:language>
+    <dc:title id="subj-lesson">[Subject] - [Lesson #]</dc:title>
+    <meta refines="#subj-lesson" property="title-type">main</meta>
+    <dc:title id="grd-unit">Grade [x] - Unit [y]</dc:title>
+    <meta refines="#grd-unit" property="title-type">subtitle</meta>
+    <dc:identifier id="BookId">urn:uuid:38814b71-091e-4f78-b561-d9f01ef2bbc5</dc:identifier>
+    <meta name="Sigil version" content="0.9.6" />
+    <meta property="dcterms:modified">2016-08-04T13:53:22Z</meta>
+  </metadata>
+  <manifest>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml"/>
+    <item id="Section0003.xhtml" href="Text/Section0003.xhtml" media-type="application/xhtml+xml" properties="scripted"/>
+    <item id="nav.xhtml" href="Text/nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>
+    <item id="html5reset.css" href="Styles/html5reset.css" media-type="text/css"/>
+    <item id="responsive.css" href="Styles/responsive.css" media-type="text/css"/>
+    <item id="style.css" href="Styles/style.css" media-type="text/css"/>
+    <item id="aud-play-icon.png" href="Images/aud-play-icon.png" media-type="image/png"/>
+    <item id="OpenSans-Bold-webfont.ttf" href="Fonts/OpenSans-Bold-webfont.ttf" media-type="application/x-font-ttf"/>
+    <item id="OpenSans-Bold-webfont.woff" href="Fonts/OpenSans-Bold-webfont.woff" media-type="application/font-woff"/>
+    <item id="OpenSans-BoldItalic-webfont.ttf" href="Fonts/OpenSans-BoldItalic-webfont.ttf" media-type="application/x-font-ttf"/>
+    <item id="OpenSans-BoldItalic-webfont.woff" href="Fonts/OpenSans-BoldItalic-webfont.woff" media-type="application/font-woff"/>
+    <item id="OpenSans-Italic-webfont.ttf" href="Fonts/OpenSans-Italic-webfont.ttf" media-type="application/x-font-ttf"/>
+    <item id="OpenSans-Italic-webfont.woff" href="Fonts/OpenSans-Italic-webfont.woff" media-type="application/font-woff"/>
+    <item id="OpenSans-Light-webfont.ttf" href="Fonts/OpenSans-Light-webfont.ttf" media-type="application/x-font-ttf"/>
+    <item id="OpenSans-Light-webfont.woff" href="Fonts/OpenSans-Light-webfont.woff" media-type="application/font-woff"/>
+    <item id="OpenSans-Light.ttf" href="Fonts/OpenSans-Light.ttf" media-type="application/x-font-ttf"/>
+    <item id="OpenSans-LightItalic-webfont.ttf" href="Fonts/OpenSans-LightItalic-webfont.ttf" media-type="application/x-font-ttf"/>
+    <item id="OpenSans-LightItalic-webfont.woff" href="Fonts/OpenSans-LightItalic-webfont.woff" media-type="application/font-woff"/>
+    <item id="OpenSans-Regular-webfont.ttf" href="Fonts/OpenSans-Regular-webfont.ttf" media-type="application/x-font-ttf"/>
+    <item id="OpenSans-Regular-webfont.woff" href="Fonts/OpenSans-Regular-webfont.woff" media-type="application/font-woff"/>
+    <item id="varela_round_regular.ttf" href="Fonts/varela_round_regular.ttf" media-type="application/x-font-ttf"/>
+    <item id="U1L1ST01.mp3" href="Audio/U1L1ST01.mp3" media-type="audio/mpeg"/>
+    <item id="photo-zoom.js" href="Misc/photo-zoom.js" media-type="text/javascript"/>
+    <item id="jquery-3.0.0.min.js" href="Misc/jquery-3.0.0.min.js" media-type="text/javascript"/>
+    <item id="VideoJS.ttf" href="Fonts/VideoJS.ttf" media-type="application/x-font-ttf"/>
+    <item id="VideoJS.woff" href="Fonts/VideoJS.woff" media-type="application/font-woff"/>
+    <item id="VarelaRound-Regular-webfont.woff" href="Fonts/VarelaRound-Regular-webfont.woff" media-type="application/font-woff"/>
+    <item id="VideoJS.svg" href="Images/VideoJS.svg" media-type="image/svg+xml"/>
+    <item id="fonts.css" href="Styles/fonts.css" media-type="text/css"/>
+    <item id="video-js-test.mp4" href="Video/video-js-test.mp4" media-type="video/mp4"/>
+    <item id="video-js-test-te.vtt" href="Video/video-js-test-te.vtt" media-type="text/vtt"/>
+    <item id="video-js-test-hi.vtt" href="Video/video-js-test-hi.vtt" media-type="text/vtt"/>
+    <item id="video-js-test-en.vtt" href="Video/video-js-test-en.vtt" media-type="text/vtt"/>
+    <item id="VideoJS.eot" href="Misc/VideoJS.eot" media-type="text/plain"/>
+    <item id="videojs-skin-colors.css" href="Styles/videojs-skin-colors.css" media-type="text/css"/>
+    <item id="play-arrow.svg" href="Images/play-arrow.svg" media-type="image/svg+xml"/>
+    <item id="image_201x141.jpg" href="Images/image_201x141.jpg" media-type="image/jpeg"/>
+    <item id="image_304x215.jpg" href="Images/image_304x215.jpg" media-type="image/jpeg"/>
+    <item id="image_608x229.jpg" href="Images/image_608x229.jpg" media-type="image/jpeg"/>
+    <item id="d76e4c69-a2f5-4baf-a6e2-c822613bca89" href="Text/Section0001.xhtml" media-type="application/xhtml+xml" properties="scripted"/>
+    <item id="Section0002.xhtml" href="Text/Section0002.xhtml" media-type="application/xhtml+xml" properties="scripted"/>
+    <item id="video-js.css" href="Styles/video-js.css" media-type="text/css"/>
+    <item id="video.js" href="Misc/video.js" media-type="text/javascript"/>
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="nav.xhtml" linear="no"/>
+    <itemref idref="d76e4c69-a2f5-4baf-a6e2-c822613bca89"/>
+    <itemref idref="Section0002.xhtml"/>
+    <itemref idref="Section0003.xhtml"/>
+  </spine>
+  <guide>
+    <reference type="toc" title="Table of Content" href="Text/nav.xhtml"/>
+  </guide>
+</package>
