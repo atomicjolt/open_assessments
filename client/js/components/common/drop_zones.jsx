@@ -41,7 +41,7 @@ export class Dropzone extends React.Component {
   render() {
     const { connectDropTarget } = this.props;
     return connectDropTarget(
-      <div style={this.props.style}>
+      <div className={this.props.className} style={this.props.style}>
         {this.props.children}
       </div>
     );
@@ -50,3 +50,4 @@ export class Dropzone extends React.Component {
 
 export const GroupDropZone = DropTarget([ItemTypes.WORD_GROUP, ItemTypes.WORD], groupWordTarget, collect)(Dropzone);
 export const WordDropZone = DropTarget(ItemTypes.WORD, wordTarget, collect)(Dropzone);
+export const FillTheBlankWordDropZone = DropTarget(ItemTypes.FILL_BLANK_WORD, wordTarget, collect)(Dropzone);

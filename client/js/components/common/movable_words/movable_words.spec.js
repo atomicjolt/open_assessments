@@ -2,7 +2,7 @@ import React                from 'react';
 import ReactDOM             from 'react-dom';
 import TestUtils            from 'react/lib/ReactTestUtils';
 import wrapInDndContext     from '../../../../specs_support/dnd_wrapper';
-import { MovableWords }     from './movable_words';
+import { MovableWords, __RewireAPI__ as RewireAPI }     from './movable_words';
 
 describe('movable words', () => {
   var result, props;
@@ -11,22 +11,21 @@ describe('movable words', () => {
       wordChain: [1],
       answers: [{
         id: 1,
-        text: "asdf"
+        material: "asdf"
       }],
       selectAnswer: () => {}
     };
 
     const WrappedComponent = wrapInDndContext(MovableWords);
+    RewireAPI.__Rewire__('WordChain', () => { return <div>WordChain</div>});
     result = TestUtils.renderIntoDocument(<WrappedComponent {...props} />);
   });
 
   it('renders the word chain', () => {
-    var startBlock = TestUtils.findRenderedDOMComponentWithClass(result, 'start-block');
-
-    expect(startBlock).toBeDefined();
+    expect(ReactDOM.findDOMNode(result).textContent).toContain("WordChain");
   });
 
   it('renders the word cloud', () => {
-    expect(ReactDOM.findDOMNode(result).textContent).toContain("Word Cloud");
+    expect(ReactDOM.findDOMNode(result).textContent).toContain("asdf");
   });
 });

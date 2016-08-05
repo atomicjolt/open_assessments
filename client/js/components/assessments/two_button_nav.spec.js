@@ -17,7 +17,8 @@ describe('Two Button Nav', () => {
       props = {
         localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
         goToPreviousQuestions: () => {},
-        secondaryAction: SECONDARY_ACTION.PREV
+        secondaryAction: {buttonState: SECONDARY_ACTION.PREV},
+        primaryAction: {}
       };
     });
 
@@ -56,6 +57,10 @@ describe('Two Button Nav', () => {
     beforeEach(() => {
       props = {
         localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
+        secondaryAction: {},
+        goToNextQuestions: () => {},
+        submitAssessment: () => {},
+        checkAnswers: () => {}
       };
     });
 
@@ -65,22 +70,15 @@ describe('Two Button Nav', () => {
     };
 
     it('renders next button when enabled', () => {
-      props = {
-        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
-        goToNextQuestions: () => {},
-        primaryAction: PRIMARY_ACTION.NEXT
-      };
+      props.primaryAction = {buttonState: PRIMARY_ACTION.NEXT};
       render();
 
       expect(subject.innerHTML).toContain('Next');
     });
 
     it('calls onClick when next button is clicked', () => {
-      props = {
-        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
-        goToNextQuestions: () => {},
-        primaryAction: PRIMARY_ACTION.NEXT
-      };
+      props.primaryAction = {buttonState: PRIMARY_ACTION.NEXT};
+
       spyOn(props, 'goToNextQuestions');
       render();
       var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--next');
@@ -90,22 +88,14 @@ describe('Two Button Nav', () => {
     });
 
     it('renders submit button when enabled', () => {
-      props = {
-        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
-        submitAssessment: () => {},
-        primaryAction: PRIMARY_ACTION.SUBMIT
-      };
+      props.primaryAction = {buttonState: PRIMARY_ACTION.SUBMIT};
       render();
 
       expect(subject.innerHTML).toContain('Finish Quiz');
     });
 
     it('calls onClick when submit button is clicked', () => {
-      props = {
-        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
-        submitAssessment: () => {},
-        primaryAction: PRIMARY_ACTION.SUBMIT
-      };
+      props.primaryAction = {buttonState: PRIMARY_ACTION.SUBMIT};
       spyOn(props, 'submitAssessment');
       render();
       var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--finish');
@@ -115,22 +105,14 @@ describe('Two Button Nav', () => {
     });
 
     it('renders check answer button when enabled', () => {
-      props = {
-        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
-        checkAnswers: () => {},
-        primaryAction: PRIMARY_ACTION.CHECK_ANSWERS
-      };
+      props.primaryAction = {buttonState: PRIMARY_ACTION.CHECK_ANSWERS};
       render();
 
       expect(subject.innerHTML).toContain('Check Answer');
     });
 
     it('calls onClick when answer button is clicked', () => {
-      props = {
-        localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
-        checkAnswers: () => {},
-        primaryAction: PRIMARY_ACTION.CHECK_ANSWERS
-      };
+      props.primaryAction = {buttonState: PRIMARY_ACTION.CHECK_ANSWERS};
       spyOn(props, 'checkAnswers');
       render();
       var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--check-answer');

@@ -33,3 +33,8 @@ a, a:link, a:visited{
 p{
   margin: 0;
 }
+
+.u-hide{
+  opacity: 0 !important;
+  pointer-events: none;
+}

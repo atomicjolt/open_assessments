@@ -1,10 +1,19 @@
 .c-assessment-navigation{
+  display: table;
   padding: 2rem 3rem 3rem;
-  @include clearfix;
+
+  .c-button-slot {
+    display: table-cell;
+    padding-left: 1.5em;
+  }
+
+  .c-button-slot:first-child {
+    padding-left: 0;
+    width: 100%;
+  }
 }
 
 .c-btn{
-  display: inline-block;
   padding: 0 1.5rem;
   height: 3.5rem;
   border-radius: $radius;
@@ -14,6 +23,7 @@
   @include bold;
   font-size: 1.4rem;
   position: relative;
+  white-space: nowrap;
 
   span{
     display: inline-block;
@@ -86,7 +96,6 @@
     background: $btn-primary-background;
     color: $btn-primary-text;
     border-color: $btn-primary-border;
-    float: right;
     @include transition(all 0.2s ease);
 
     &:hover{

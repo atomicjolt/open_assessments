@@ -26,7 +26,7 @@ class AudioUpload extends React.Component {
     // Do something with the blob file of the recording
     var audioURL = window.URL.createObjectURL(blob);
     this.setState({audioURL});
-    if(this.props.selectAnswer){this.props.selectAnswer(blob);}
+    if(_.isFunction(this.props.selectAnswer)){this.props.selectAnswer(blob);}
   }
 
   toggle(){

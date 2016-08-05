@@ -1,11 +1,6 @@
 "use strict";
 
-import React                  from "react";
-
-import { CORRECT, INCORRECT, UNGRADED } from "../assessments/universal_input";
-import * as AssessmentActions from "../../actions/assessment";
-import FeedbackIcon from "./feedback_icon";
-
+import React                             from "react";
 
 export default class RadioButton extends React.Component{
 
@@ -20,10 +15,6 @@ export default class RadioButton extends React.Component{
     isHtml: React.PropTypes.bool,
 
     selectAnswer: React.PropTypes.func.isRequired,
-
-    // Whether answer is correct, incorrect, or has not been graded.
-    // Should be one of CORRECT, INCORRECT, UNGRADED.
-    gradeState: React.PropTypes.string.isRequired,
 
     // Whether or not input should be disabled
     isDisabled: React.PropTypes.bool,
@@ -51,17 +42,6 @@ export default class RadioButton extends React.Component{
     return checked;
   }
 
-  getFeedback(){
-    if(this.props.feedback){
-      return (
-        <div className="c-answer-feedback">
-          <div
-            dangerouslySetInnerHTML={{__html:this.props.feedback}}/>
-        </div>
-      );
-    }
-  }
-
   renderMaterial(material, isHtml) {
     if(isHtml) {
       return <div className="c-answer-container__content"
@@ -78,13 +58,11 @@ export default class RadioButton extends React.Component{
   render() {
     const props = this.props;
     var containerStyle = "";
-    var feedback = this.getFeedback();
 
     if(this.props.checked === true){containerStyle = "is-clicked";}
 
     return (
       <li className={`c-answer-container ${containerStyle}`}>
-        <FeedbackIcon gradeState={props.gradeState} />
         <label
           htmlFor={props.id}>
           <div className="c-answer-container__radio">
@@ -104,7 +82,6 @@ export default class RadioButton extends React.Component{
             {this.renderMaterial(props.item.material, props.isHtml)}
           </div>
         </label>
-        {feedback}
       </li>
     );
   }

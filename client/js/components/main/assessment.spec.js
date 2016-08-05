@@ -7,7 +7,7 @@ import { localizeStrings }     from "../../selectors/localize";
 import appHistory              from "../../history";
 import { Assessment }          from "./assessment";
 import * as AssessmentActions  from "../../actions/assessment";
-
+import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
 
 var props;
 var allQuestions,
@@ -95,11 +95,13 @@ function reset(){
     localizedStrings,
     nextQuestions: () => {},
     previousQuestions: () => {},
+    primaryActionState: {spinner:false, buttonState: PRIMARY_ACTION.NEXT},
     assessmentProgress,
     questionCount,
     questionsPerPage,
     responses,
     scrollParentToTop: () => {},
+    secondaryActionState: {spinner: false, buttonState: SECONDARY_ACTION.PREV},
     sendSize: () => {},
     settings,
     submitAssessment: () => {}
@@ -109,7 +111,6 @@ function reset(){
   result = TestUtils.renderIntoDocument(<Assessment {...props} />);
   subject = ReactDOM.findDOMNode(result);
 };
-
 
 describe("assessment", function() {
 
@@ -161,120 +162,4 @@ describe("assessment", function() {
 
     expect(appHistory.push).toHaveBeenCalledWith("assessment-result");
   });
-
-  it('isLastPage should return true on last question', () => {
-    props.currentItem = 9;
-
-    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
-    expect(result.isLastPage()).toEqual(true);
-  });
-
-  it('isLastPage should not return true otherwise', () =>{
-    props.currentItem = 8;
-
-    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
-    expect(result.isLastPage()).toEqual(false);
-  });
-
-  it('isFirstPage should return true on first question', () => {
-    props.currentItem = 0;
-
-    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
-    expect(result.isFirstPage()).toEqual(true);
-  });
-
-  it('isFirstPage should not return true otherwise', () =>{
-    props.currentItem = 1;
-
-    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
-    expect(result.isFirstPage()).toEqual(false);
-  });
-
-
-  describe('getNextUnlocked', () => {
-    beforeEach(() => { reset(); });
-
-    describe('when unlockNext is ON_CORRECT', () => {
-      var checkedResponse = () => ({correct:true, feedback:"Correct Answer"});
-      var unlockNext = "ON_CORRECT";
-      var currentItem = 0;
-      var questionsPerPage = 10;
-      var questionResults = {};
-      var responses = [];
-      for(var i = 0; i < 10; i++){
-        questionResults[i] = checkedResponse();
-        responses.push('a');
-      }
-
-      it('should return true when all answers in current page are correct', () => {
-        var subject = result.getNextUnlocked;
-
-        expect(subject(unlockNext, questionsPerPage, questionResults)).toEqual(true);
-      });
-
-      it('should return false when there is an incorrect answer in current page', () => {
-        var subject = result.getNextUnlocked;
-        var incorrectResponses = {};
-        for(var i = 0; i < 10; i++){ incorrectResponses[i] = checkedResponse(); }
-        incorrectResponses[9].correct = false;
-
-        expect(subject(unlockNext, questionsPerPage, incorrectResponses)).toEqual(false);
-      });
-
-      it('should return false when there is an unanswered question in current page', () => {
-        var subject = result.getNextUnlocked;
-        var gradedResponses = {};
-        for(var i = 0; i < 5; i++){
-          gradedResponses[i] = checkedResponse();
-        }
-
-        expect(subject(unlockNext, questionsPerPage, gradedResponses)).toEqual(false);
-      });
-    });
-
-    describe('when unlockNext is ON_ANSWER_CHECK', () => {
-      var checkedResponse = () => ({correct:false, feedback:"Correct Answer"});
-      var unlockNext = "ON_ANSWER_CHECK";
-      var currentItem = 0;
-      var questionsPerPage = 10;
-      var questionResults = {};
-      var responses = [];
-      for(var i = 0; i < 10; i++){
-        questionResults[i] = checkedResponse();
-        responses.push('a');
-      }
-
-      it('should return true when all questions have been checked in current page', () => {
-        var subject = result.getNextUnlocked;
-
-        expect(subject(unlockNext, questionsPerPage, questionResults)).toEqual(true);
-      });
-
-      it('should return false when all questions have not been answered in current page', () => {
-        var subject = result.getNextUnlocked;
-        var incompleteResponses = {};
-        for(var i = 0; i < 5; i++){
-          incompleteResponses[i] = checkedResponse();
-        }
-        expect(subject(unlockNext, questionsPerPage, incompleteResponses)).toEqual(false);
-      });
-    });
-
-    describe(' when unlockNext is on ALWAYS', () => {
-      var checkedResponse = () => ({correct:false, feedback:"Correct Answer"});
-      var unlockNext = "ALWAYS";
-      var currentItem = 0;
-      var questionsPerPage = 10;
-      var questionResults = {};
-      var responses = [];
-
-      it('should return true if no questions are answered', () => {
-        var subject = result.getNextUnlocked;
-
-        expect(subject(unlockNext, questionsPerPage, questionResults)).toEqual(true);
-
-      });
-    });
-  });
-
 });
