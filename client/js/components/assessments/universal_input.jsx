@@ -165,12 +165,24 @@ export default class UniversalInput extends React.Component{
           />
         break;
       case "movable_object_chain":
+        var selectAnswer = _.curryRight(props.selectAnswer);
+        answerInputs = <MovableWords
+            answers={item.answers}
+            selectAnswer={selectAnswer(false)}
+            wordChain={props.response}
+            itemClassName="c-object"
+            answerBoxClassName="c-object-answers"
+            noStartBlock={true}
+          />
+        break;
       case "movable_words_sentence":
         var selectAnswer = _.curryRight(props.selectAnswer);
         answerInputs = <MovableWords
             answers={item.answers}
             selectAnswer={selectAnswer(false)}
             wordChain={props.response}
+            itemClassName="c-word"
+            answerBoxClassName="c-word-answers"
           />
         break;
       case "movable_words_sandbox":
@@ -181,6 +193,8 @@ export default class UniversalInput extends React.Component{
             wordChain={props.response}
             localizedStrings={this.props.localizedStrings.audioUpload}
             timeout={this.props.settings.audio_recorder_timeout}
+            itemClassName="c-word"
+            answerBoxClassName="c-word-answers"
           />
         break;
 
