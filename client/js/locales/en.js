@@ -12,12 +12,10 @@ export default {
     twoButtonNav:{
       previousButton: "Previous", // Text displayed on previous questions button
       nextButton: "Next", // Text displayed on next questions button
-      checkAnswerButton: "Check Answer", // Text displayed on next questions button
+      checkAnswerButton: "Check Answer", // Text displayed on next questions button,
+      saveFileButton: "Save File", // Text displayed on save file button
+      saveAnswerButton: "Save Answer", // Text displayed on save answer button
       submitButton: "Finish Quiz" // Text displayed on submit button
-    },
-    item:{
-      questionDirectionMany:"Choose ALL that apply.", // Question direction for multi answer question
-      questionDirectionAll:"Choose the BEST answer." // Question direction for single answer question
     },
     retriesExceeded: {
       triesExceeded: "Too many tries" // Text displayed when a student has run out of quiz attempts

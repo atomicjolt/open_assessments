@@ -12,20 +12,21 @@ describe('fill the blank', () => {
     props = {
       answers: [{
         id: 1,
-        text: "asdf"
+        text: "Word1"
       }],
       question: "<p>word1</p><div class=\"interaction-placeholder\"></div><p>word2</p>",
       selectAnswer: () => {}
     };
 
     FillTheBlankRewireApi.__Rewire__('FillTheBlankWordChain', () => { return <div>WordChain</div>; })
-
+    FillTheBlankRewireApi.__Rewire__('FillTheBlankWordDropZone', () => { return <div>WordCloud</div>; })
     WrappedComponent = wrapInDndContext(FillTheBlank);
     result = TestUtils.renderIntoDocument(<WrappedComponent {...props} />);
   });
 
   afterEach(() => {
     FillTheBlankRewireApi.__ResetDependency__('FillTheBlankWordChain');
+    FillTheBlankRewireApi.__ResetDependency__('FillTheBlankWordDropZone');
   });
 
   it('renders the word chain', () => {
@@ -34,6 +35,6 @@ describe('fill the blank', () => {
 
 
   it('renders the word cloud', () => {
-    expect(ReactDOM.findDOMNode(result).textContent).toContain("Word Cloud");
+    expect(ReactDOM.findDOMNode(result).textContent).toContain("WordCloud");
   });
 });

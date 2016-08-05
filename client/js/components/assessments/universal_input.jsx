@@ -13,7 +13,7 @@ import DragAndDrop                    from "../common/drag_and_drop";
 import AudioUpload          from "../common/audio_upload";
 import MovableWords                   from "../common/movable_words/movable_words";
 import SentenceSandbox                from "../common/sentence_sandbox";
-import MovableWordsFillTheBlank       from "../common/movable_words/fill_the_blank";
+import MovableWordsFillTheBlank       from "../common/fill_the_blank/fill_the_blank";
 
 export const CORRECT = "CORRECT";
 export const INCORRECT = "INCORRECT";
@@ -37,38 +37,14 @@ export default class UniversalInput extends React.Component{
     response: React.PropTypes.array,
 
     // User facing strings of the language specified by the 'locale' setting
-    localizedStrings: React.PropTypes.object.isRequired,
-
-    // Graded user response object containing keys
-    // correct:true/false, feedback:"Answer feedback"
-    questionResult: React.PropTypes.object
+    localizedStrings: React.PropTypes.object.isRequired
   }
 
-  wasSelected(id){
+  wasSelected(id) {
     if(this.props.response){
       return this.props.response.indexOf(id) > -1;
     } else {
       return null;
-    }
-  }
-
-  getGradeState(id, questionResult){
-    if(!questionResult){return UNGRADED;}
-
-    if(_.includes(questionResult.answerIds, id) && questionResult.correct){
-      return CORRECT;
-    } else if(_.includes(questionResult.answerIds, id) && !questionResult.correct) {
-      return INCORRECT;
-    }
-
-    return UNGRADED;
-  }
-
-  getFeedback(id, questionResult){
-    if(!questionResult){return;}
-
-    if(_.includes(questionResult.answerIds, id)){
-      return questionResult.feedback;
     }
   }
 
@@ -86,8 +62,6 @@ export default class UniversalInput extends React.Component{
         const multipleChoiceAnswer = (answer) => {
           var selectRadio = _.curryRight(props.selectAnswer);
           var id = item.id + "_" + answer.id;
-          var gradeState = this.getGradeState(answer.id, props.questionResult);
-          var feedback = this.getFeedback(answer.id, props.questionResult);
 
           return (
             <RadioButton
@@ -98,8 +72,6 @@ export default class UniversalInput extends React.Component{
                 isHtml={item.isHtml}
                 name="answer-radio"
                 checked={this.wasSelected(answer.id)}
-                gradeState={gradeState}
-                feedback={feedback}
                 selectAnswer={selectRadio(true)}/>
           );
         };
@@ -144,8 +116,6 @@ export default class UniversalInput extends React.Component{
         const multipleAnswer = (answer) => {
           var selectCheckbox = _.curryRight(props.selectAnswer);
           var id = item.id + "_" + answer.id;
-          var gradeState = this.getGradeState(answer.id, props.questionResult);
-          var feedback = this.getFeedback(answer.id, props.questionResult);
 
           return (
             <CheckBox
@@ -155,8 +125,6 @@ export default class UniversalInput extends React.Component{
                 item={answer}
                 isHtml={item.isHtml}
                 checked={this.wasSelected(answer.id)}
-                gradeState={gradeState}
-                feedback={feedback}
                 selectAnswer={selectCheckbox(false)} />
           );
         };
@@ -211,6 +179,8 @@ export default class UniversalInput extends React.Component{
             answers={item.answers}
             selectAnswer={selectAnswer(false)}
             wordChain={props.response}
+            localizedStrings={this.props.localizedStrings.audioUpload}
+            timeout={this.props.settings.audio_recorder_timeout}
           />
         break;
 
@@ -219,7 +189,7 @@ export default class UniversalInput extends React.Component{
 
         answerInputs = <MovableWordsFillTheBlank
             answers={item.answers}
-            question={item.question_meta.fillTheBlankQuestion}
+            sentenceWithBlank={item.question_meta.fillTheBlankSentence}
             selectAnswer={selectAnswer(false)}
             selectedAnswer={props.response}
           />

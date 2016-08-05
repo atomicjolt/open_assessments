@@ -1,13 +1,15 @@
-import React            from "react";
-import { DragSource }   from "react-dnd";
+import React             from "react";
+import { DragSource }    from "react-dnd";
+import { getEmptyImage } from 'react-dnd-html5-backend';
 
-import Word             from "./word";
-import ItemTypes        from "./draggable_item_types";
+import Word              from "./word";
+import ItemTypes         from "./draggable_item_types";
 
 const wordSource = {
   beginDrag(props) {
     return {
-      itemId: props.id
+      itemId: props.id,
+      material: props.material
     };
   }
 };
@@ -15,26 +17,36 @@ const wordSource = {
 function collect(connect, monitor) {
   return {
     connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging()
+    isDragging: monitor.isDragging(),
+    connectDragPreview: connect.dragPreview()
   }
 }
 
 export class DraggableWord extends React.Component {
   static propTypes = {
     connectDragSource: React.PropTypes.func.isRequired,
+    connectDragPreview: React.PropTypes.func.isRequired,
     isDragging: React.PropTypes.bool.isRequired
   };
 
-  render() {
-    const { style, connectDragSource, isDragging } = this.props;
-    const baseStyle = { display: "inline-block", opacity: isDragging ? 0 : 1, cursor: 'move' };
+  componentDidMount() {
+    this.props.connectDragPreview(getEmptyImage());
+  }
 
+  render() {
+    const { connectDragSource, isDragging } = this.props;
+    
     return connectDragSource(
-      <div className="draggable-word" style={{ ...style, ...baseStyle}}>
-        <Word material={this.props.material} />
+      <div style={{ display: "inline-block" }}>
+        <Word
+          hide={this.props.hide || isDragging}
+          material={this.props.material}
+          className={this.props.wordClassName}
+        />
       </div>
     );
   }
 }
 
 export default DragSource(ItemTypes.WORD, wordSource, collect)(DraggableWord);
+export const FillTheBlankDraggableWord = DragSource(ItemTypes.FILL_BLANK_WORD, wordSource, collect)(DraggableWord);
