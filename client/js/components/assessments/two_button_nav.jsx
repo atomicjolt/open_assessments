@@ -109,8 +109,12 @@ export default class TwoButtonNav extends React.Component{
 
     return (
       <div className="c-assessment-navigation">
-        {secondaryButton}
-        {primaryButton}
+        <div className="c-button-slot">
+          {secondaryButton}
+        </div>
+        <div className="c-button-slot">
+          {primaryButton}
+        </div>
       </div>
     );
   }
