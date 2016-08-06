@@ -96,24 +96,9 @@ export function primaryActionState(state, props){
   } else {
 
     // If we are checking an answer, then set spinner to true
-    if(isCheckingAnswer(state)){primaryActionState.spinner = true;}
+    if(isCheckingAnswer(state)) { primaryActionState.spinner = true; }
 
-    // We haven't discussed how to handle making nav decisions when we are
-    // rendering more than one question. So for now, just choose the first one.
-    switch(item.question_type){
-      case "text_input_question":
-      case "text_only_question":
-      case "short_answer_question":
-        primaryActionState.buttonState = PRIMARY_ACTION.CHECK_ANSWERS;
-        break;
-
-      case "audio_upload_question":
-        primaryActionState.buttonState = PRIMARY_ACTION.CHECK_ANSWERS;
-        break;
-
-      default:
-        primaryActionState.buttonState = PRIMARY_ACTION.CHECK_ANSWERS;
-    }
+    primaryActionState.buttonState = PRIMARY_ACTION.CHECK_ANSWERS;
   }
   return primaryActionState;
 }
