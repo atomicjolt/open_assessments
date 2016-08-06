@@ -2,7 +2,8 @@
 
 import React from "react";
 
-import Button from "../common/button";
+import Button      from "../common/button";
+import NextButton  from "./next_button";
 
 export const SECONDARY_ACTION = {
   PREV : "PREV",
@@ -79,25 +80,20 @@ export default class TwoButtonNav extends React.Component{
         break;
 
       case PRIMARY_ACTION.NEXT:
-        buttonProps.buttonClass += "c-btn--next";
-        buttonProps.buttonText = props.localizedStrings.nextButton;
-        buttonProps.onClick = props.goToNextQuestions;
-        buttonContents.push(
-          <svg key={buttonContents.length} xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-             <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
-          </svg>
-        );
-        break;
+        return <NextButton />;
+
       case PRIMARY_ACTION.CHECK_ANSWERS:
         buttonProps.buttonClass += "c-btn--check-answer";
         buttonProps.buttonText = props.localizedStrings.checkAnswerButton;
         buttonProps.onClick = props.checkAnswers;
         break;
+
       case PRIMARY_ACTION.SAVE_FILES:
         buttonProps.buttonClass += "c-btn--check-answer";
         buttonProps.buttonText = props.localizedStrings.saveFileButton;
         buttonProps.onClick = props.checkAnswers;
         break;
+
       case PRIMARY_ACTION.SAVE_ANSWERS:
         buttonProps.buttonClass += "c-btn--check-answer";
         buttonProps.buttonText = props.localizedStrings.saveAnswerButton;
