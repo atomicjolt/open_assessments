@@ -2,9 +2,10 @@
 
 import React from "react";
 
-import Button      from "../common/button";
-import NextButton  from "./next_button";
-import PrevButton  from "./prev_button";
+import Button       from "../common/button";
+import CheckButton  from "./check_button";
+import NextButton   from "./next_button";
+import PrevButton   from "./prev_button";
 
 export const SECONDARY_ACTION = {
   PREV : "PREV",
@@ -30,9 +31,6 @@ export const PRIMARY_ACTION = {
 export default class TwoButtonNav extends React.Component{
 
   static propTypes = {
-
-    // Function to be called when check answer button is clicked
-    checkAnswers          : React.PropTypes.func.isRequired,
 
     // Function to be called when submit button is clicked
     submitAssessment      : React.PropTypes.func.isRequired,
@@ -78,22 +76,9 @@ export default class TwoButtonNav extends React.Component{
         return <NextButton/>;
 
       case PRIMARY_ACTION.CHECK_ANSWERS:
-        buttonProps.buttonClass += "c-btn--check-answer";
-        buttonProps.buttonText = props.localizedStrings.checkAnswerButton;
-        buttonProps.onClick = props.checkAnswers;
-        break;
-
       case PRIMARY_ACTION.SAVE_FILES:
-        buttonProps.buttonClass += "c-btn--check-answer";
-        buttonProps.buttonText = props.localizedStrings.saveFileButton;
-        buttonProps.onClick = props.checkAnswers;
-        break;
-
       case PRIMARY_ACTION.SAVE_ANSWERS:
-        buttonProps.buttonClass += "c-btn--check-answer";
-        buttonProps.buttonText = props.localizedStrings.saveAnswerButton;
-        buttonProps.onClick = props.checkAnswers;
-        break;
+        return <CheckButton/>;
     }
 
     if(props.primaryAction.spinner){

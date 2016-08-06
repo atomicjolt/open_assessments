@@ -225,17 +225,6 @@ export class Assessment extends React.Component{
     this.props.submitAssessment();
   }
 
-  checkAnswersButtonClicked(e){
-    e.preventDefault();
-
-    const questionIndexes = _.range(
-      this.props.assessmentProgress.currentItemIndex,
-      this.props.assessmentProgress.currentItemIndex + this.props.questionsPerPage
-    );
-
-    this.props.checkAnswer(questionIndexes);
-  }
-
   /**
    * Returns inner text for question counter
    */
@@ -290,7 +279,6 @@ export class Assessment extends React.Component{
       var nav = (
         <TwoButtonNav
           localizedStrings={this.props.localizedStrings.twoButtonNav}
-          checkAnswers={(e) => this.checkAnswersButtonClicked(e)}
           submitAssessment={(e) => this.submitButtonClicked(e)}
           secondaryAction={this.props.secondaryActionState}
           primaryAction={this.props.primaryActionState}/>

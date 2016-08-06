@@ -1,9 +1,11 @@
 import $                   from "jquery";
+import _                   from "lodash";
 import { createSelector }  from "reselect";
 
-import { transformItem }  from "./clix";
-import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../../components/assessments/two_button_nav";
-import { isFirstPage, isLastPage, isNextUnlocked, currentItems } from "../../selectors/assessment";
+import { SECONDARY_ACTION, PRIMARY_ACTION }                       from "../../components/assessments/two_button_nav";
+import { isFirstPage, isLastPage, isNextUnlocked, currentItems }  from "../../selectors/assessment";
+import { localizeStrings }                                        from "../../selectors/localize";
+import { transformItem }                                          from "./clix";
 
 export function questions(state, props) {
   return state.assessment.items.map(transformItem);
@@ -53,6 +55,24 @@ export function questionResults(state, props) {
   });
 
   return questionResponses;
+}
+
+export function checkButtonText(state, props) {
+  const localizedStrings = localizeStrings(state, props).twoButtonNav;
+  const item = currentItems(state)[0];
+
+  switch(item.question_type) {
+    case "text_input_question":
+    case "text_only_question":
+    case "short_answer_question":
+      return localizedStrings.saveAnswerButton;
+
+    case "audio_upload_question":
+      return localizedStrings.saveFileButton;
+
+    default:
+      return localizedStrings.checkAnswerButton;
+  }
 }
 
 /**
