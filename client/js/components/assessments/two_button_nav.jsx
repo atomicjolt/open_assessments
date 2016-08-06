@@ -2,10 +2,9 @@
 
 import React from "react";
 
-import Button       from "../common/button";
-import CheckButton  from "./check_button";
-import NextButton   from "./next_button";
-import PrevButton   from "./prev_button";
+import Button                    from "../common/button";
+import CheckButton               from "./check_button";
+import {NextButton, PrevButton}  from "./nav_buttons";
 
 export const SECONDARY_ACTION = {
   PREV : "PREV",
