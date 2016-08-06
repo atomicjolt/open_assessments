@@ -61,7 +61,7 @@ export default class TwoButtonNav extends React.Component{
       buttonText: "",
       onClick:() => {},
     };
-    var buttonContents = [];
+
     switch (props.primaryAction.buttonState) {
       case PRIMARY_ACTION.SUBMIT:
         buttonProps.buttonClass += "c-btn--finish";
@@ -76,11 +76,7 @@ export default class TwoButtonNav extends React.Component{
         return <CheckButton/>;
     }
 
-    return (
-      <Button {...buttonProps}>
-        {buttonContents}
-      </Button>
-    );
+    return <Button {...buttonProps}/>;
   }
 
   secondaryButton(props){
