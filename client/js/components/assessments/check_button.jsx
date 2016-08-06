@@ -17,8 +17,8 @@ const select = (state, props) => {
 };
 
 /**
- * A button to navigate to the previous Item or set of Items.  It's already
- * connected to the application.
+ * A button to check the responses to the current Items.  It's already connected
+ * to the application.
  */
 class CheckButton extends React.Component {
 
