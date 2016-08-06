@@ -104,11 +104,11 @@ export function primaryActionState(state, props){
       case "text_input_question":
       case "text_only_question":
       case "short_answer_question":
-        primaryActionState.buttonState = PRIMARY_ACTION.SAVE_ANSWERS;
+        primaryActionState.buttonState = PRIMARY_ACTION.CHECK_ANSWERS;
         break;
 
       case "audio_upload_question":
-        primaryActionState.buttonState = PRIMARY_ACTION.SAVE_FILES;
+        primaryActionState.buttonState = PRIMARY_ACTION.CHECK_ANSWERS;
         break;
 
       default:

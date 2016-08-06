@@ -15,8 +15,6 @@ export const SECONDARY_ACTION = {
 export const PRIMARY_ACTION = {
   NEXT          : "NEXT",
   CHECK_ANSWERS : "CHECK_ANSWERS",
-  SAVE_FILES    : "SAVE_FILES",
-  SAVE_ANSWERS  : "SAVE_ANSWERS",
   SUBMIT        : "SUBMIT"
 };
 
@@ -76,8 +74,6 @@ export default class TwoButtonNav extends React.Component{
         return <NextButton/>;
 
       case PRIMARY_ACTION.CHECK_ANSWERS:
-      case PRIMARY_ACTION.SAVE_FILES:
-      case PRIMARY_ACTION.SAVE_ANSWERS:
         return <CheckButton/>;
     }
 
