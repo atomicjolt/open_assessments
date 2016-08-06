@@ -47,7 +47,7 @@ export default class TwoButtonNav extends React.Component {
      * e.g.(PRIMARY_ACTION.NEXT, PRIMARY_ACTION.SUBMIT), and spinner
      * is whether or not a spinner should be applied to the button.
      */
-    primaryAction         : React.PropTypes.object.isRequired, //Maybe accept object?
+    primaryAction         : React.PropTypes.string.isRequired,
 
     // User facing strings of the language specified by the 'locale' setting
     localizedStrings      : React.PropTypes.object.isRequired
@@ -55,7 +55,7 @@ export default class TwoButtonNav extends React.Component {
 
 
   primaryButton(props) {
-    switch (props.primaryAction.buttonState) {
+    switch (props.primaryAction) {
       case PRIMARY_ACTION.NEXT:
         return <NextButton/>;
 

@@ -18,7 +18,7 @@ describe('Two Button Nav', () => {
         localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
         goToPreviousQuestions: () => {},
         secondaryAction: {buttonState: SECONDARY_ACTION.PREV},
-        primaryAction: {}
+        primaryAction: null
       };
     });
 
@@ -70,14 +70,14 @@ describe('Two Button Nav', () => {
     };
 
     it('renders next button when enabled', () => {
-      props.primaryAction = {buttonState: PRIMARY_ACTION.NEXT};
+      props.primaryAction = PRIMARY_ACTION.NEXT;
       render();
 
       expect(subject.innerHTML).toContain('Next');
     });
 
     it('calls onClick when next button is clicked', () => {
-      props.primaryAction = {buttonState: PRIMARY_ACTION.NEXT};
+      props.primaryAction = PRIMARY_ACTION.NEXT;
 
       spyOn(props, 'goToNextQuestions');
       render();
@@ -88,14 +88,14 @@ describe('Two Button Nav', () => {
     });
 
     it('renders submit button when enabled', () => {
-      props.primaryAction = {buttonState: PRIMARY_ACTION.SUBMIT};
+      props.primaryAction = PRIMARY_ACTION.SUBMIT;
       render();
 
       expect(subject.innerHTML).toContain('Finish Quiz');
     });
 
     it('calls onClick when submit button is clicked', () => {
-      props.primaryAction = {buttonState: PRIMARY_ACTION.SUBMIT};
+      props.primaryAction = PRIMARY_ACTION.SUBMIT;
       spyOn(props, 'submitAssessment');
       render();
       var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--finish');
@@ -105,14 +105,14 @@ describe('Two Button Nav', () => {
     });
 
     it('renders check answer button when enabled', () => {
-      props.primaryAction = {buttonState: PRIMARY_ACTION.CHECK_ANSWERS};
+      props.primaryAction = PRIMARY_ACTION.CHECK_ANSWERS;
       render();
 
       expect(subject.innerHTML).toContain('Check Answer');
     });
 
     it('calls onClick when answer button is clicked', () => {
-      props.primaryAction = {buttonState: PRIMARY_ACTION.CHECK_ANSWERS};
+      props.primaryAction = PRIMARY_ACTION.CHECK_ANSWERS;
       spyOn(props, 'checkAnswers');
       render();
       var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--check-answer');

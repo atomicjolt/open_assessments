@@ -95,7 +95,7 @@ function reset(){
     localizedStrings,
     nextQuestions: () => {},
     previousQuestions: () => {},
-    primaryActionState: {buttonState: PRIMARY_ACTION.NEXT},
+    primaryActionState: PRIMARY_ACTION.NEXT,
     assessmentProgress,
     questionCount,
     questionsPerPage,

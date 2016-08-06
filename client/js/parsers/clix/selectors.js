@@ -85,16 +85,14 @@ export function checkButtonText(state, props) {
 export function primaryActionState(state, props) {
   const nextUnlocked = isNextUnlocked(state);
   const lastPage = isLastPage(state);
-  var primaryActionState = {};
 
   if(nextUnlocked === true && lastPage === true){
-    primaryActionState.buttonState = PRIMARY_ACTION.SUBMIT;
+    return PRIMARY_ACTION.SUBMIT;
   } else if(nextUnlocked === true){
-    primaryActionState.buttonState = PRIMARY_ACTION.NEXT;
+    return PRIMARY_ACTION.NEXT;
   } else {
-    primaryActionState.buttonState = PRIMARY_ACTION.CHECK_ANSWERS;
+    return PRIMARY_ACTION.CHECK_ANSWERS;
   }
-  return primaryActionState;
 }
 
  /**
