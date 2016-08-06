@@ -30,9 +30,6 @@ export default class TwoButtonNav extends React.Component{
 
   static propTypes = {
 
-    // Function to be called when next button is clicked
-    goToNextQuestions     : React.PropTypes.func.isRequired,
-
     // Function to be called when previous button is clicked
     goToPreviousQuestions : React.PropTypes.func.isRequired,
 
