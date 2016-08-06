@@ -15,6 +15,12 @@ const select = (state, props) => {
   };
 };
 
+const svg = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+    <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
+  </svg>
+);
+
 /**
  * A button to navigate to the next Item or set of Items.  It's already
  * connected to the application.
@@ -30,9 +36,7 @@ class _NextButton extends React.Component {
       <Button buttonClass="c-btn c-btn--next"
               buttonText={this.props.localizedStrings.nextButton}
               onClick={() => this.click()}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-          <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
-        </svg>
+        {svg}
       </Button>
     );
   }
@@ -53,9 +57,7 @@ class _PrevButton extends React.Component {
       <Button buttonClass="c-btn c-btn--previous"
               buttonText={this.props.localizedStrings.previousButton}
               onClick={() => this.click()}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-          <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
-        </svg>
+        {svg}
       </Button>
     );
   }
