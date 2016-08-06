@@ -26,7 +26,7 @@ export const PRIMARY_ACTION = {
  * will either render previous questions button, or nothing at all if no
  * previous questions are available.
  */
-export default class TwoButtonNav extends React.Component{
+export default class TwoButtonNav extends React.Component {
 
   static propTypes = {
 
@@ -57,28 +57,26 @@ export default class TwoButtonNav extends React.Component{
 
   primaryButton(props) {
     switch (props.primaryAction.buttonState) {
-      case PRIMARY_ACTION.SUBMIT:
-        break;
-
       case PRIMARY_ACTION.NEXT:
         return <NextButton/>;
 
       case PRIMARY_ACTION.CHECK_ANSWERS:
         return <CheckButton/>;
-    }
 
-    return <Button buttonClass="c-btn c-btn--finish"
-                   buttonText={props.localizedStrings.submitButton}
-                   onClick={props.submitAssessment}/>;
+      case PRIMARY_ACTION.SUBMIT:
+        return <Button buttonClass="c-btn c-btn--finish"
+                       buttonText={props.localizedStrings.submitButton}
+                       onClick={props.submitAssessment}/>;
+    }
   }
 
-  secondaryButton(props){
-    if(props.secondaryAction.buttonState === SECONDARY_ACTION.PREV){
+  secondaryButton(props) {
+    if(props.secondaryAction.buttonState === SECONDARY_ACTION.PREV) {
       return <PrevButton/>;
     }
   }
 
-  render(){
+  render() {
     return (
       <div className="c-assessment-navigation">
         <div className="c-button-slot">
