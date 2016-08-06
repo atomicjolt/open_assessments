@@ -41,11 +41,8 @@ export default class TwoButtonNav extends React.Component {
     secondaryAction       : React.PropTypes.object.isRequired,
 
     /**
-     * Object containing the state of the nav primary action button
-     * in the form {spinner: boolean, buttonState: PRIMARY_ACTION[*]}
-     * Where buttonState is the current state of the primary button
-     * e.g.(PRIMARY_ACTION.NEXT, PRIMARY_ACTION.SUBMIT), and spinner
-     * is whether or not a spinner should be applied to the button.
+     * The current state of the primary button e.g.(PRIMARY_ACTION.NEXT,
+     * PRIMARY_ACTION.SUBMIT).
      */
     primaryAction         : React.PropTypes.string.isRequired,
 
