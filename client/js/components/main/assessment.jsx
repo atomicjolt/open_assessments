@@ -220,11 +220,6 @@ export class Assessment extends React.Component{
     return warning;
   }
 
-  previousButtonClicked(e){
-    e.preventDefault();
-    this.props.previousQuestions(this.props.questionsPerPage);
-  }
-
   submitButtonClicked(e){
     e.preventDefault();
     this.props.submitAssessment();
@@ -295,7 +290,6 @@ export class Assessment extends React.Component{
       var nav = (
         <TwoButtonNav
           localizedStrings={this.props.localizedStrings.twoButtonNav}
-          goToPreviousQuestions={(e) => this.previousButtonClicked(e)}
           checkAnswers={(e) => this.checkAnswersButtonClicked(e)}
           submitAssessment={(e) => this.submitButtonClicked(e)}
           secondaryAction={this.props.secondaryActionState}

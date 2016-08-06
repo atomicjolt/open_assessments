@@ -4,6 +4,7 @@ import React from "react";
 
 import Button      from "../common/button";
 import NextButton  from "./next_button";
+import PrevButton  from "./prev_button";
 
 export const SECONDARY_ACTION = {
   PREV : "PREV",
@@ -29,9 +30,6 @@ export const PRIMARY_ACTION = {
 export default class TwoButtonNav extends React.Component{
 
   static propTypes = {
-
-    // Function to be called when previous button is clicked
-    goToPreviousQuestions : React.PropTypes.func.isRequired,
 
     // Function to be called when check answer button is clicked
     checkAnswers          : React.PropTypes.func.isRequired,
@@ -116,16 +114,7 @@ export default class TwoButtonNav extends React.Component{
 
   secondaryButton(props){
     if(props.secondaryAction.buttonState === SECONDARY_ACTION.PREV){
-      return(
-        <Button
-          buttonClass="c-btn c-btn--previous"
-          buttonText={props.localizedStrings.previousButton}
-          onClick={props.goToPreviousQuestions}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-             <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
-          </svg>
-        </Button>
-      );
+      return <PrevButton/>;
     }
   }
 
