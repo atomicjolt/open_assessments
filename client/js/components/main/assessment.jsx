@@ -309,6 +309,8 @@ export class Assessment extends React.Component{
       <div className="o-assessment-container">
         <div className="c-header">
           <div className="c-header__title">{titleText}</div>
+          {/* TODO: Temporarily, this displays how many items have been answered
+          correctly.  It is part of the N-of-M work. */}
           <div className="c-header__question-number">({this.props.correctItemCount}) {counter}</div>
         </div>
         {warning}
