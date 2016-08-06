@@ -220,8 +220,7 @@ export class Assessment extends React.Component{
     return warning;
   }
 
-  submitButtonClicked(e){
-    e.preventDefault();
+  submitButtonClicked(){
     this.props.submitAssessment();
   }
 
@@ -279,7 +278,7 @@ export class Assessment extends React.Component{
       var nav = (
         <TwoButtonNav
           localizedStrings={this.props.localizedStrings.twoButtonNav}
-          submitAssessment={(e) => this.submitButtonClicked(e)}
+          submitAssessment={() => this.submitButtonClicked()}
           secondaryAction={this.props.secondaryActionState}
           primaryAction={this.props.primaryActionState}/>
       );
