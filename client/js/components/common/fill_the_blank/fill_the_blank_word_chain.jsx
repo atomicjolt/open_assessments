@@ -18,7 +18,7 @@ export default class FillTheBlankWordChain extends React.Component {
 
     this.state = {
       wrapIndexes: [0]
-    }
+    };
 
     this.wordRefs = {};
   }
@@ -27,7 +27,7 @@ export default class FillTheBlankWordChain extends React.Component {
     // We are doing this because for some reason the words have not finished
     // rendering when componentDidMount is called, so we cannot correctly
     // calculate the widths of the words. A 10ms set timeout is enough time.
-    setTimeout(() => { this.wrapLines() }, 10);
+    setTimeout(() => { this.wrapLines(); }, 10);
   }
 
   componentDidUpdate() {
@@ -35,7 +35,7 @@ export default class FillTheBlankWordChain extends React.Component {
   }
 
   wrapLines() {
-    const lastWord = this.refs[`word-${this.props.sentenceWords.length - 1}`]
+    const lastWord = this.refs[`word-${this.props.sentenceWords.length - 1}`];
     const lastWordDOMNode = ReactDOM.findDOMNode(lastWord);
     const answerBox = ReactDOM.findDOMNode(this.refs["answer-box"]);
     const lastWordRight = lastWordDOMNode.getBoundingClientRect().right;
@@ -68,63 +68,70 @@ export default class FillTheBlankWordChain extends React.Component {
       words = words.map((wordHtml, wordIndex) => {
         if(wordHtml.indexOf("interaction-placeholder") >= 0) {
           if(!_.isEmpty(this.props.selectedAnswer)) {
-            return <div key={`${this.props.selectedAnswer.id}-${wordIndex + wrapIndex}`} className="c-blank-drop-zone">
-              <FillTheBlankDraggableWord
-                ref={`word-${wordIndex + wrapIndex}`}
-                id={this.props.selectedAnswer.id}
-                material={this.props.selectedAnswer.material}
-                wordClassName="c-word"
-              />
-            </div>
+            return (
+              <div key={`${this.props.selectedAnswer.id}-${wordIndex + wrapIndex}`} className="c-blank-drop-zone">
+                <FillTheBlankDraggableWord
+                    ref={`word-${wordIndex + wrapIndex}`}
+                    id={this.props.selectedAnswer.id}
+                    material={this.props.selectedAnswer.material}
+                    wordClassName="c-word"
+                />
+              </div>
+            );
           } else {
-            return <FillTheBlankWordDropZone
-                ref={`word-${wordIndex + wrapIndex}`}
-                className="c-blank-drop-zone"
-                key={wordIndex + wrapIndex}
-                dropItem={(answerId) => { this.props.linkWord(answerId) }}
-              >
+            return (
+              <FillTheBlankWordDropZone
+                  ref={`word-${wordIndex + wrapIndex}`}
+                  className="c-blank-drop-zone"
+                  key={wordIndex + wrapIndex}
+                  dropItem={(answerId) => { this.props.linkWord(answerId); }}>
                 <div className="c-blank" />
               </FillTheBlankWordDropZone>
+            );
           }
         } else
 
-        return <Word
-          ref={`word-${wordIndex + wrapIndex}`}
-          className="c-word"
-          key={wordIndex + wrapIndex} material={wordHtml}
-        />
+        return (
+          <Word
+              ref={`word-${wordIndex + wrapIndex}`}
+              className="c-word"
+              key={wordIndex + wrapIndex} material={wordHtml} />
+        );
       });
 
       // We are assuming we will only wrap onto two lines at most
       let lineClassName = "c-word-answers";
       let startBlockClassName = "c-word c-word--starter";
-      let svg = <div></div>
+      let svg = <div></div>;
       let answerBoxRef = "answer-box";
       if(this.state.wrapIndexes.length > 1) {
         if(index === 0) {
           svg = beginWrap;
           lineClassName += " c-word-answers--split-top";
-          answerBoxRef = "answer-box-line-1"
+          answerBoxRef = "answer-box-line-1";
         } else {
           svg = endWrap;
           startBlockClassName += " u-hide";
           lineClassName += " c-word-answers--split-bottom";
-          answerBoxRef = "answer-box"
+          answerBoxRef = "answer-box";
         }
       }
 
-      return <div ref={answerBoxRef} key={wrapIndex} className={lineClassName}>
-        {svg}
-        <div className={startBlockClassName} />
-        {words}
-      </div>
-
+      return (
+        <div ref={answerBoxRef} key={wrapIndex} className={lineClassName}>
+          {svg}
+          <div className={startBlockClassName} />
+          {words}
+        </div>
+      );
     });
   }
 
   render() {
-    return <div className="c-answers">
-      {this.getLines()}
-    </div>
+    return (
+      <div className="c-answers">
+        {this.getLines()}
+      </div>
+    );
   }
 }
