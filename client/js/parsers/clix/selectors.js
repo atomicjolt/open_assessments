@@ -82,22 +82,18 @@ export function checkButtonText(state, props) {
  * e.g.(PRIMARY_ACTION.NEXT, PRIMARY_ACTION.SUBMIT), and spinner
  * is whether or not a spinner should be applied to the button.
  */
-export function primaryActionState(state, props){
+export function primaryActionState(state, props) {
   const nextUnlocked = isNextUnlocked(state);
   const lastPage = isLastPage(state);
   const items = currentItems(state);
   const item = items[0];
-  var primaryActionState = {spinner: false}; // Spinner defaults to false
+  var primaryActionState = {};
 
   if(nextUnlocked === true && lastPage === true){
     primaryActionState.buttonState = PRIMARY_ACTION.SUBMIT;
   } else if(nextUnlocked === true){
     primaryActionState.buttonState = PRIMARY_ACTION.NEXT;
   } else {
-
-    // If we are checking an answer, then set spinner to true
-    if(isCheckingAnswer(state)) { primaryActionState.spinner = true; }
-
     primaryActionState.buttonState = PRIMARY_ACTION.CHECK_ANSWERS;
   }
   return primaryActionState;
