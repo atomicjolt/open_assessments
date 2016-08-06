@@ -19,7 +19,7 @@ const select = (state, props) => {
  * A button to navigate to the next Item or set of Items.  It's already
  * connected to the application.
  */
-class NextButton extends Button {
+class NextButton extends React.Component {
 
   click() {
     this.props.nextQuestions(this.props.questionsPerPage);

@@ -80,7 +80,7 @@ export default class TwoButtonNav extends React.Component{
         break;
 
       case PRIMARY_ACTION.NEXT:
-        return <NextButton />;
+        return <NextButton/>;
 
       case PRIMARY_ACTION.CHECK_ANSWERS:
         buttonProps.buttonClass += "c-btn--check-answer";
