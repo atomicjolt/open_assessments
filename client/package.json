@@ -42,9 +42,7 @@
     "recorderjs": "git+https://github.com/nick-benoit14/Recorderjs.git",
     "redux": "3.5.2",
     "reselect": "^2.5.1",
-    "superagent": "2.0.0",
-    "uuid": "2.0.2",
-    "videojs": "^1.0.0"
+    "superagent": "2.0.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "3.2.0",
