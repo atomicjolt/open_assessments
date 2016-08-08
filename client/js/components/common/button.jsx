@@ -6,7 +6,7 @@ import React from "react";
  * Component to render a generic button. Can optionally wrap child components to
  * to be displayed. I.E. <Button><svg /><Button />
  */
-export default class Button extends React.Component{
+export default class Button extends React.Component {
 
   static propTypes = {
 
@@ -23,12 +23,12 @@ export default class Button extends React.Component{
 
   render(){
     return (
-      <a
-        className={`${this.props.buttonClass}`}
-        onClick={(e) => {this.props.onClick(e);}}>
+      <button
+          className={`${this.props.buttonClass}`}
+          onClick={(e) => {this.props.onClick(e);}}>
         <span>{this.props.buttonText}</span>
         {this.props.children}
-      </a>
+      </button>
     );
   }
-  };
+};

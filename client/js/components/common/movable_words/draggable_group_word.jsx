@@ -10,7 +10,8 @@ const wordSource = {
     props.beginDragging();
     return {
       itemId: props.id,
-      words: props.draggableWords
+      words: props.draggableWords,
+      wordClassName: props.wordClassName
     };
   },
   endDrag(props, monitor) {

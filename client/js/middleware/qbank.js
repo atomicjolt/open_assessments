@@ -47,6 +47,7 @@ function getBody(userInput, question){
       };
       break;
 
+    case "file_upload_question":
     case "audio_upload_question":
       if(_.isEmpty(userInput)){return;}
 

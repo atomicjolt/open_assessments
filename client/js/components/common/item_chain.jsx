@@ -1,18 +1,17 @@
-import React               from 'react';
-import ReactDOM            from 'react-dom';
+import React                    from 'react';
+import ReactDOM                 from 'react-dom';
 
-import { WordDropZone }    from '../drop_zones';
-import DraggableGroupWord  from './draggable_group_word';
+import { WordDropZone }         from './drop_zones';
+import DraggableGroupWord       from './movable_words/draggable_group_word';
+import { beginWrap, endWrap }   from '../../constants/icons';
 
-const beginWrap = <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-  <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
-</svg>
+export default class ItemChain extends React.Component {
+  static propTypes = {
+    linkWord: React.PropTypes.func.isRequired,
+    wordChain: React.PropTypes.array.isRequired,
+    answersById: React.PropTypes.object.isRequired
+  }
 
-const endWrap = <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-    <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
-</svg>
-
-export default class WordChain extends React.Component {
   constructor() {
     super();
 
@@ -54,8 +53,8 @@ export default class WordChain extends React.Component {
     this.setState({dragging: false, draggingIndex: null});
   }
 
-  render() {
-    const lines = _.map(this.state.wrapIndexes, (wrapIndex, index) => {
+  getLines() {
+    return _.map(this.state.wrapIndexes, (wrapIndex, index) => {
       // Get the index of the first word on the next line
       let endWordIndex = this.props.wordChain.length;
       if(this.state.wrapIndexes[index + 1]) {
@@ -72,7 +71,7 @@ export default class WordChain extends React.Component {
         const draggableWords = _.at(this.props.answersById, this.props.wordChain.slice(wordIndex + wrapIndex));
 
         return <DraggableGroupWord
-          wordClassName="c-word"
+          wordClassName={this.props.itemClassName}
           id={answerId}
           key={answerId}
           isGroupDragging={this.state.dragging && (wordIndex + wrapIndex) >= this.state.draggingIndex}
@@ -84,13 +83,14 @@ export default class WordChain extends React.Component {
       });
 
       // We are assuming we will only wrap onto two lines at most
-      let lineClassName = "c-word-answers";
+      let lineClassName = this.props.answerBoxClassName;
       let startBlockClassName = "c-word c-word--starter";
       let svg = <div></div>
       let wordDropZone = <WordDropZone
         className="c-drop-zone"
         ref={(ref) => { this.WordDropZone = ref; }}
         dropItem={(answerId) => { this.props.linkWord(answerId) }}
+        overClassName="c-over-drop-zone"
       />
 
       if(this.state.wrapIndexes.length > 1) {
@@ -105,16 +105,26 @@ export default class WordChain extends React.Component {
         }
       }
 
+      let startBlock = <div className={startBlockClassName} />;
+
+      if(this.props.noStartBlock) {
+        startBlock = <div></div>;
+      }
+
       return <div key={wrapIndex} className={lineClassName}>
         {svg}
-        <div className={startBlockClassName} />
+        {startBlock}
         {words}
         {wordDropZone}
       </div>
 
     });
+  }
 
-    return <div className="c-answers">
+  render() {
+    const lines = this.getLines();
+
+    return <div>
       { lines }
     </div>
   }

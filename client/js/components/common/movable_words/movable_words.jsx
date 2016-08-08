@@ -5,7 +5,7 @@ import HTML5Backend         from 'react-dnd-html5-backend';
 
 import DraggableWord        from "../draggable_word";
 import { GroupDropZone }    from "../drop_zones";
-import WordChain            from "./word_chain";
+import ItemChain            from "../item_chain";
 import CustomDragLayer      from "../custom_drag_layer";
 
 export class MovableWords extends React.Component {
@@ -46,7 +46,7 @@ export class MovableWords extends React.Component {
         id={answer.id}
         material={answer.material}
         hide={_.includes(this.props.wordChain, answer.id)}
-        wordClassName="c-word"
+        wordClassName={this.props.itemClassName}
       />
     });
 
@@ -60,10 +60,13 @@ export class MovableWords extends React.Component {
           {availableWords}
         </GroupDropZone>
       </div>
-      <WordChain
+      <ItemChain
         linkWord={(answerId) => { this.linkWord(answerId); }}
         answersById={answersById}
         wordChain={this.props.wordChain}
+        itemClassName={this.props.itemClassName}
+        answerBoxClassName={this.props.answerBoxClassName}
+        noStartBlock={this.props.noStartBlock}
       />
       <CustomDragLayer />
     </div>
