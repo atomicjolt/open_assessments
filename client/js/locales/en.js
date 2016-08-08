@@ -38,6 +38,9 @@ export default {
     audioUpload: {
       record: "Record",
       stop: "Stop"
+    },
+    fileUpload: {
+      chooseFile: "Choose a File to Upload"
     }
   }
 };

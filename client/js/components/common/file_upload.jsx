@@ -6,7 +6,7 @@ export default class FileUpload extends React.Component {
     selectAnswer: React.PropTypes.func,
 
     // User facing strings of the language specified by the 'locale' setting
-    // localizedStrings: React.PropTypes.object.isRequired TODO when we add styles, we should localize strings
+    localizedStrings: React.PropTypes.object.isRequired //TODO when we add styles, we should localize strings
   };
 
   handleChange(e){
@@ -20,7 +20,10 @@ export default class FileUpload extends React.Component {
 
   render(){
     return (
-      <input onChange={(e) => this.handleChange(e)} type="file" />
+      <label className="c-file-upload">
+        <input onChange={(e) => this.handleChange(e)} type="file"/>
+        <span>{this.props.localizedStrings.chooseFile}</span>
+      </label>
     );
   }
 };

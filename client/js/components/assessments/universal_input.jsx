@@ -152,6 +152,7 @@ export default class UniversalInput extends React.Component{
         var selectFileUploadAnswer = _.curryRight(props.selectAnswer)(true);
         answerInputs = (
           <FileUpload
+            localizedStrings={this.props.localizedStrings.fileUpload}
             selectAnswer={selectFileUploadAnswer}/>
         );
         break;

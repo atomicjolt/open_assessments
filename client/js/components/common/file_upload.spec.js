@@ -8,7 +8,10 @@ var fileUpload, subject, props;
 describe('file upload', () => {
   beforeEach(() => {
     props = {
-      selectAnswer: () => {}
+      selectAnswer: () => {},
+      localizedStrings: {
+        uploadFile: "Upload file"
+      }
     };
     spyOn(props, 'selectAnswer');
     fileUpload = TestUtils.renderIntoDocument(<FileUpload {...props} />);
@@ -16,7 +19,7 @@ describe('file upload', () => {
   });
 
   it('calls select answer on change', () => {
-    TestUtils.Simulate.change(subject);
+    TestUtils.Simulate.change(subject.childNodes[0]);
     expect(props.selectAnswer).toHaveBeenCalled();
   });
 
