@@ -33,6 +33,7 @@
   cursor: pointer;
   font-size: 1.2rem;
   text-transform: uppercase;
+  width: 145px;
 }
 
 .toggle-me:hover {
@@ -60,6 +61,11 @@
 #toggler:checked ~ .transcript  {
   height: 250px;
   opacity: 1;
+}
+
+.transcript p {
+  font-size: .875em;
+  line-height: 1.4;
 }
 
 .arrow-toggle {
