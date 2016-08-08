@@ -16,7 +16,8 @@ describe('file upload', () => {
   });
 
   it('calls select answer on change', () => {
-    TestUtils.Simulate.change(subject);
+    debugger;
+    TestUtils.Simulate.change(subject.childNodes[0]);
     expect(props.selectAnswer).toHaveBeenCalled();
   });
 
