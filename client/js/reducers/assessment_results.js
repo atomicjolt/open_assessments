@@ -1,34 +1,27 @@
 "use strict";
 
 import Immutable  from 'immutable';
-import { Constants as AssessmentProgressConstants }   from '../actions/assessment_progress';
 
-const initialState = Immutable.fromJS({
-  questionResults: {}
+import { Constants }  from '../actions/assessment_progress';
+
+const initialState = Object.freeze({
+  questionResults: Object.freeze([])
 });
 
 export default (state = initialState, action) => {
 
-  switch(action.type){
-    case AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE:
-      if(!action.error){
-        if(!state.hasIn(['questionResults', action.questionIndex])) {
-          state = state.setIn(
-            ['questionResults', action.questionIndex],
-            Immutable.List()
-          );
-        }
+  switch(action.type) {
+    case Constants.ASSESSMENT_CHECK_ANSWER_DONE:
+      if(action.error) break;
 
-        state = state.setIn(
-          ['questionResults', action.questionIndex],
-          state.getIn(
-            ['questionResults', action.questionIndex]
-          ).unshift(action.payload)
-        );
-      }
+      const idx = action.questionIndex;
+      let questionResults = Array.from(state.questionResults);
+      let responses = questionResults[idx] || [];
+      questionResults[idx] = Object.freeze([action.payload].concat(responses));
+      Object.freeze(questionResults);
+      state = Object.freeze(Object.assign({}, state, {questionResults}));
       break;
-    default:
-
   }
+
   return state;
 };
