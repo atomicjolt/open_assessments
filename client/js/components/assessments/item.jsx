@@ -4,6 +4,7 @@ import React  from "react";
 
 import * as AssessmentActions  from "../../actions/assessment";
 import UniversalInput          from "./universal_input";
+import videojs from 'video.js';
 
 export default class Item extends React.Component{
 
@@ -32,6 +33,13 @@ export default class Item extends React.Component{
     // User facing strings of the language specified by the 'locale' setting
     localizedStrings: React.PropTypes.object.isRequired
   };
+
+  componentDidMount(){
+    if(!_.isFunction(videojs)){return;}
+    // Look for videos that should be using videojs.
+    var videoJSElements = document.querySelectorAll('video.video-js');
+    _.each(videoJSElements,(element) => videojs(element));
+  }
 
   getFeedback(){
     var response = this.props.questionResult;

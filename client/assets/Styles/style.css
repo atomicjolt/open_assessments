@@ -1,0 +1,169 @@
+@import 'video-js.css' screen;
+@import 'videojs-skin-colors.css' screen;
+
+
+
+/* Color palette */
+
+:root {
+  --white: #ececec;
+  --berry: #a61680;
+  --french-blue: #4671a6;
+  --white-three: #ffffff;
+  --cool-blue: #5387c6;
+  --blueberry: #573d8f;
+  --dark-hot-pink: #e5007e;
+  --white-two: #dddddd;
+  --greyish-brown: #4a4a4a;
+  --warm-grey: #777;
+  --white-four: #f7f6f6;
+}
+
+
+/*TRANSCRIPT TOGGLE*/
+
+.toggle-me {
+  display: block;
+  height: 30px;
+  margin: 0;
+  padding: 6px 16px 2px;
+  background: radial-gradient(hsla(259, 40%, 40%, 1), hsla(259, 40%,30%, 1));
+  border-radius: 0 0 5px 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  width: 145px;
+}
+
+.toggle-me:hover {
+  background-color: #666;
+  background: radial-gradient(hsla(259, 40%, 30%, 1), hsla(259, 40%,20%, 1));
+}
+
+.toggle-me:active {
+  background: radial-gradient(#f37f2f, #f54b32);
+}
+
+#toggler {
+  display: none;
+}
+
+#toggler ~ .transcript  {
+  height: 0;
+  padding: 0 0 10px;
+  border-bottom: 2px solid #ddd;
+  opacity: 0;
+  overflow-y: scroll;
+  transition: all 1s ease-in-out;
+}
+
+#toggler:checked ~ .transcript  {
+  height: 250px;
+  opacity: 1;
+}
+
+.transcript p {
+  font-size: .875em;
+  line-height: 1.4;
+}
+
+.arrow-toggle {
+  BACKGROUND: RED;
+  color: #fff;
+  fill: currentColor;
+  transform: rotate(0deg);
+  transition: transform 1s;
+}
+
+#toggler:checked ~ .arrow-toggle {
+  transform: rotate(180deg);
+}
+
+.vidbak {
+  background-color: #efefef;
+  border-bottom: 3px solid #fff;
+}
+
+.video-js {
+  margin: .5rem auto 0;
+}
+
+figure {
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  background: rgba(229,0, 126, 1);
+}
+
+figure img {
+  max-width: 100%;
+  display: block;
+  position: relative;
+  backface-visibility: hidden;
+  transition: opacity 1s, transform .4s;
+}
+
+figcaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-radius: 2px;
+  display: inline-block;
+  background: hsla(327,100%, 45%, 1);
+  color: #fff;
+  height: 6px;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: transform 0.4s, opacity 0.3s 0.3s;
+}
+
+figcaption h5 {
+  width: 100%;
+  text-align: center;
+  padding: 7px;
+/*  border-radius: 2px;*/
+  display: inline-block;
+  background: hsla(327,100%, 35%, 1);
+  color: #fff;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+figure:hover img {
+  opacity: 1;
+  transform: scale3d(1.1,1.1,1);
+}
+
+
+
+figure:hover figcaption {
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 0.4s, opacity 0.1s;
+}
+
+#zoom01 button {
+  margin: 10px 0;
+  padding: 10px;
+  background: radial-gradient(hsla(259, 40%, 40%, 1), hsla(259, 40%,30%, 1));
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+
+#zoom01 button:hover {
+  background-color: #666;
+  background: radial-gradient(hsla(259, 40%, 30%, 1), hsla(259, 40%,20%, 1));
+}
+
+#zoom01 button:active {
+  background: radial-gradient(#f37f2f, #f54b32);
+}
