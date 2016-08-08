@@ -231,3 +231,44 @@
       color: $text-color;
     }
   }
+
+.c-file-upload{
+   margin: 1rem 0;
+   display: inline-block;
+   padding: 0 1.5rem;
+   height: 3.5rem;
+   border-radius: $radius;
+   border-width: 0.2rem;
+   border-style: solid;
+   text-transform: uppercase;
+   @include bold;
+   font-size: 1.4rem;
+   position: relative;
+   @include center(horizontal);
+   background: $primary;
+   color: $white;
+   border-color: $primary;
+   cursor: pointer;
+   @include transition(all 0.1s ease);
+
+ &:hover{
+   background: $white;
+   color: $primary;
+ }
+
+ span{
+   display: inline-block;
+   height: 100%;
+   line-height: 3rem;
+   @include transition(all 0.1s ease);
+ }
+
+ input[type="file"]{
+   width: 0.1px;
+     height: 0.1px;
+     opacity: 0;
+     overflow: hidden;
+     position: absolute;
+     z-index: -1;
+ }
+}

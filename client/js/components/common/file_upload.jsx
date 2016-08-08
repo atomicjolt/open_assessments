@@ -20,7 +20,10 @@ export default class FileUpload extends React.Component {
 
   render(){
     return (
-      <input onChange={(e) => this.handleChange(e)} type="file" />
+      <label className="c-file-upload">
+        <input onChange={(e) => this.handleChange(e)} type="file"/>
+        <span>Choose a File to Upload</span>
+      </label>
     );
   }
 };
