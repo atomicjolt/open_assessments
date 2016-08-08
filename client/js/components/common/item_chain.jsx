@@ -1,11 +1,11 @@
 import React                    from 'react';
 import ReactDOM                 from 'react-dom';
 
-import { WordDropZone }         from '../drop_zones';
-import DraggableGroupWord       from './draggable_group_word';
-import { beginWrap, endWrap }   from '../../../constants/icons';
+import { WordDropZone }         from './drop_zones';
+import DraggableGroupWord       from './movable_words/draggable_group_word';
+import { beginWrap, endWrap }   from '../../constants/icons';
 
-export default class WordChain extends React.Component {
+export default class ItemChain extends React.Component {
   static propTypes = {
     linkWord: React.PropTypes.func.isRequired,
     wordChain: React.PropTypes.array.isRequired,
@@ -71,7 +71,7 @@ export default class WordChain extends React.Component {
         const draggableWords = _.at(this.props.answersById, this.props.wordChain.slice(wordIndex + wrapIndex));
 
         return <DraggableGroupWord
-          wordClassName="c-word"
+          wordClassName={this.props.itemClassName}
           id={answerId}
           key={answerId}
           isGroupDragging={this.state.dragging && (wordIndex + wrapIndex) >= this.state.draggingIndex}
@@ -83,13 +83,14 @@ export default class WordChain extends React.Component {
       });
 
       // We are assuming we will only wrap onto two lines at most
-      let lineClassName = "c-word-answers";
+      let lineClassName = this.props.answerBoxClassName;
       let startBlockClassName = "c-word c-word--starter";
       let svg = <div></div>
       let wordDropZone = <WordDropZone
         className="c-drop-zone"
         ref={(ref) => { this.WordDropZone = ref; }}
         dropItem={(answerId) => { this.props.linkWord(answerId) }}
+        overClassName="c-over-drop-zone"
       />
 
       if(this.state.wrapIndexes.length > 1) {
@@ -104,9 +105,15 @@ export default class WordChain extends React.Component {
         }
       }
 
+      let startBlock = <div className={startBlockClassName} />;
+
+      if(this.props.noStartBlock) {
+        startBlock = <div></div>;
+      }
+
       return <div key={wrapIndex} className={lineClassName}>
         {svg}
-        <div className={startBlockClassName} />
+        {startBlock}
         {words}
         {wordDropZone}
       </div>
@@ -117,7 +124,7 @@ export default class WordChain extends React.Component {
   render() {
     const lines = this.getLines();
 
-    return <div className="c-answers">
+    return <div>
       { lines }
     </div>
   }

@@ -216,30 +216,8 @@ export class Assessment extends React.Component{
     return warning;
   }
 
-  nextButtonClicked(e){
-    e.preventDefault();
-    this.props.nextQuestions(this.props.questionsPerPage);
-  }
-
-  previousButtonClicked(e){
-    e.preventDefault();
-    this.props.previousQuestions(this.props.questionsPerPage);
-  }
-
-  submitButtonClicked(e){
-    e.preventDefault();
+  submitButtonClicked(){
     this.props.submitAssessment();
-  }
-
-  checkAnswersButtonClicked(e){
-    e.preventDefault();
-
-    const questionIndexes = _.range(
-      this.props.assessmentProgress.currentItemIndex,
-      this.props.assessmentProgress.currentItemIndex + this.props.questionsPerPage
-    );
-
-    this.props.checkAnswer(questionIndexes);
   }
 
   /**
@@ -296,10 +274,7 @@ export class Assessment extends React.Component{
       var nav = (
         <TwoButtonNav
           localizedStrings={this.props.localizedStrings.twoButtonNav}
-          goToNextQuestions={(e) => this.nextButtonClicked(e)}
-          goToPreviousQuestions={(e) => this.previousButtonClicked(e)}
-          checkAnswers={(e) => this.checkAnswersButtonClicked(e)}
-          submitAssessment={(e) => this.submitButtonClicked(e)}
+          submitAssessment={() => this.submitButtonClicked()}
           secondaryAction={this.props.secondaryActionState}
           primaryAction={this.props.primaryActionState}/>
       );

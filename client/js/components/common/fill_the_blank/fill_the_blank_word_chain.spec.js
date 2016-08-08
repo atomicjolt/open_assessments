@@ -6,6 +6,18 @@ import wrapInDndContext                             from '../../../../specs_supp
 import FillTheBlankWordChain                        from './fill_the_blank_word_chain';
 import { __RewireAPI__ as WordChainRewireAPI }      from './fill_the_blank_word_chain';
 
+class WordDropZoneMock extends React.Component {
+  render() {
+    return <div>WordDropZone</div>
+  }
+}
+
+class DraggableWordMock extends React.Component {
+  render() {
+    return <div>DraggableWord</div>
+  }
+}
+
 describe('fill the blank word chain', () => {
   var result, props, WrappedComponent;
   beforeEach(() => {
@@ -18,8 +30,8 @@ describe('fill the blank word chain', () => {
       selectAnswer: () => {}
     };
 
-    WordChainRewireAPI.__Rewire__('FillTheBlankWordDropZone', () => { return <div>WordDropZone</div>; })
-    WordChainRewireAPI.__Rewire__('FillTheBlankDraggableWord', () => { return <div>DraggableWord</div>; })
+    WordChainRewireAPI.__Rewire__('FillTheBlankWordDropZone', WordDropZoneMock)
+    WordChainRewireAPI.__Rewire__('FillTheBlankDraggableWord', DraggableWordMock)
 
     WrappedComponent = wrapInDndContext(FillTheBlankWordChain);
     result = TestUtils.renderIntoDocument(<WrappedComponent {...props} />);

@@ -60,11 +60,11 @@ export class CustomDragLayer extends React.Component{
     switch (type) {
       case ItemTypes.WORD_GROUP:
         return _.map(item.words, (word) => {
-          return <Word key={word.id} material={word.material} className="c-word"/>
+          return <Word key={word.id} material={word.material} className={item.wordClassName}/>
         });
       case ItemTypes.FILL_BLANK_WORD:
       case ItemTypes.WORD:
-        return <Word key={item.itemId} material={item.material} className="c-word"/>
+        return <Word key={item.itemId} material={item.material} className={item.wordClassName}/>
       default:
         return <div></div>
     }
