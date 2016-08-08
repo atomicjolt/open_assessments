@@ -2,18 +2,19 @@
 
 import React                          from "react";
 
-import RadioButton                    from "../common/radio_button";
-import Option                         from "../common/option";
-import TextField                      from "../common/text_field";
-import TextArea                       from "../common/text_area";
+import AudioUpload                    from "../common/audio_upload";
 import CheckBox                       from "../common/checkbox";
+import DragAndDrop                    from "../common/drag_and_drop";
+import FileUpload                     from "../common/file_upload";
+import MovableWordsFillTheBlank       from "../common/fill_the_blank/fill_the_blank";
 import MappedImage                    from "../common/mapped_image";
 import Matching                       from "../common/matching";
-import DragAndDrop                    from "../common/drag_and_drop";
-import AudioUpload          from "../common/audio_upload";
 import MovableWords                   from "../common/movable_words/movable_words";
+import Option                         from "../common/option";
+import RadioButton                    from "../common/radio_button";
 import SentenceSandbox                from "../common/sentence_sandbox";
-import MovableWordsFillTheBlank       from "../common/fill_the_blank/fill_the_blank";
+import TextField                      from "../common/text_field";
+import TextArea                       from "../common/text_area";
 
 export const CORRECT = "CORRECT";
 export const INCORRECT = "INCORRECT";
@@ -147,7 +148,13 @@ export default class UniversalInput extends React.Component{
           return <DragAndDrop key={item.id + "_" + answer.id} item={answer} />;
         });
         break;
-
+      case "file_upload_question":
+        var selectFileUploadAnswer = _.curryRight(props.selectAnswer)(true);
+        answerInputs = (
+          <FileUpload
+            selectAnswer={selectFileUploadAnswer}/>
+        );
+        break;
       case "audio_upload_question":
         var selectAudioAnswer = _.curryRight(props.selectAnswer);
         answerInputs = (

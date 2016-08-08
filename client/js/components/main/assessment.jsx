@@ -3,23 +3,16 @@
 import React                                  from "react";
 import { connect }                            from "react-redux";
 
-import * as CommunicationActions              from "../../actions/communications";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
+import * as CommunicationActions              from "../../actions/communications";
 import appHistory                             from "../../history";
+import * as selectors                         from "../../selectors/assessment";
 import { localizeStrings }                    from "../../selectors/localize";
-import TwoButtonNav                           from "../assessments/two_button_nav";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
+import TwoButtonNav                           from "../assessments/two_button_nav";
 import ProgressDropdown                       from "../common/progress_dropdown";
-import { questionResults }                    from "../../selectors/assessment";
-import {
-  questionCount,
-  questions,
-  outcomes,
-  assessmentLoaded,
-  primaryActionState,
-  secondaryActionState,
-}  from "../../selectors/assessment";
+
 
 const select = (state, props) => {
   return {
@@ -31,7 +24,7 @@ const select = (state, props) => {
     assessment      : state.assessment,
 
     // Returns true if assessment has loaded, false otherwise
-    assessmentLoaded: assessmentLoaded(state, props),
+    assessmentLoaded: selectors.assessmentLoaded(state, props),
 
     // State of user-assessment interactions.
     assessmentProgress        : state.assessmentProgress.toJS(),
@@ -44,30 +37,33 @@ const select = (state, props) => {
 
     // How many questions to display at a time. Default to show all questions
     // in a section if not specified
-    questionsPerPage: state.settings.questions_per_page || questionCount(state, props),
+    questionsPerPage: state.settings.questions_per_page || selectors.questionCount(state, props),
 
     // How many Items are in the assessment
-    questionCount   : questionCount(state, props),
+    questionCount   : selectors.questionCount(state, props),
 
     // Array containing all assessment Items
-    allQuestions    : questions(state, props),
+    allQuestions    : selectors.questions(state, props),
 
     // Array of graded user response objects containing keys
     // correct:true/false, feedback:"Answer feedback",
     // answerIds: answers feedback applies to
-    questionResults : questionResults(state, props),
+    questionResults : selectors.questionResults(state, props),
 
     // User facing strings of the language specified by the 'locale' setting
     localizedStrings: localizeStrings(state, props),
 
     // State of the nav primary action button. e.g. (PRIMARY_ACTION.SUBMIT)
-    primaryActionState: primaryActionState(state),
+    primaryActionState: selectors.primaryActionState(state),
 
     // State of the nav secondary action button. e.g. (SECONDARY_ACTION.PREV)
-    secondaryActionState: secondaryActionState(state),
+    secondaryActionState: selectors.secondaryActionState(state),
 
     // TODO
-    outcomes        : outcomes(state, props)
+    outcomes        : selectors.outcomes(state, props),
+
+    // How many items the student has given correct responses for
+    correctItemCount: selectors.correctItemCount(state, props)
   };
 };
 
@@ -288,7 +284,9 @@ export class Assessment extends React.Component{
       <div className="o-assessment-container">
         <div className="c-header">
           <div className="c-header__title">{titleText}</div>
-          <div className="c-header__question-number">{counter}</div>
+          {/* TODO: Temporarily, this displays how many items have been answered
+          correctly.  It is part of the N-of-M work. */}
+          <div className="c-header__question-number">({this.props.correctItemCount}) {counter}</div>
         </div>
         {warning}
         {content}

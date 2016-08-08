@@ -1,3 +1,5 @@
+"use strict";
+
 import $                   from "jquery";
 import { createSelector }  from "reselect";
 
@@ -66,14 +68,22 @@ export function questionResults(state, props) {
   let questionResponses = {};
 
   _.each(questionIndexes, (index) => {
-    const response = state.assessmentResults.getIn(['questionResults', index, 0]);
-    if(response) {
-      questionResponses[index] = {};
-      questionResponses[index].correct = response.correct;
-      questionResponses[index].answerIds = response.userInput;
-      questionResponses[index].feedback = response.feedback;
+    const result = state.assessmentResults.questionResults[index];
+    if(result !== undefined) {
+      const response = result[0];
+      questionResponses[index] = {
+        correct:    response.correct,
+        answerIds:  response.userInput,
+        feedback:   response.feedback
+      };
     }
   });
 
   return questionResponses;
+}
+
+export function correctItemCount(state, props) {
+  const results = state.assessmentResults.questionResults;
+  const hits = results.map((r) => (r[0] && r[0].correct ? 1 : 0));
+  return hits.reduce((a, b) => (a + b), 0);
 }

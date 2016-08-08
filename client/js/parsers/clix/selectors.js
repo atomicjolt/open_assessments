@@ -5,6 +5,7 @@ import { createSelector }  from "reselect";
 import { SECONDARY_ACTION, PRIMARY_ACTION }                       from "../../components/assessments/two_button_nav";
 import { isFirstPage, isLastPage, isNextUnlocked, currentItems }  from "../../selectors/assessment";
 import { localizeStrings }                                        from "../../selectors/localize";
+import * as qtiSelectors                                          from "../qti2/selectors";
 import { transformItem }                                          from "./clix";
 
 export function questions(state, props) {
@@ -33,28 +34,11 @@ export function isCheckingAnswer(state, props){
 }
 
 export function questionResults(state, props) {
+  return qtiSelectors.questionResults(state, props);
+}
 
-  // TODO Currently we are setting the same response for all userInput.
-  // When we have an example of multi answer feedback we should figure out
-  // how to assign feedback to each answer.
-  const questionIndexes = _.range(
-    state.assessmentProgress.get('currentItemIndex'),
-    state.assessmentProgress.get('currentItemIndex') + state.settings.questions_per_page
-  );
-
-  let questionResponses = {};
-
-  _.each(questionIndexes, (index) => {
-    const response = state.assessmentResults.getIn(['questionResults', index, 0]);
-    if(response) {
-      questionResponses[index] = {};
-      questionResponses[index].correct = response.correct;
-      questionResponses[index].answerIds = response.userInput;
-      questionResponses[index].feedback = response.feedback;
-    }
-  });
-
-  return questionResponses;
+export function correctItemCount(state, props) {
+  return qtiSelectors.correctItemCount(state, props);
 }
 
 export function checkButtonText(state, props) {
