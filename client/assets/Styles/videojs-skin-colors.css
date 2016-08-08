@@ -32,6 +32,7 @@
 .vjs-skin-colors-clix .vjs-menu-button ul li {
   background-color: hsla(316, 88%, 26%, .3);
   color: #fff;
+  font-family: 'open_sansregular', Arial, sans-serif;
 }
 .vjs-skin-colors-clix .vjs-menu-button ul li.vjs-selected {
   background: radial-gradient(hsla(316, 77%, 37%, 1), hsla(316, 88%, 26%, 1));
