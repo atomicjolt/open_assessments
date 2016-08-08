@@ -112,6 +112,16 @@ export default class UniversalInput extends React.Component{
           </div>
         );
         break;
+      case "numerical_input_question":
+        answerInputs = (
+          <div className="c-text-answer">
+            <textarea
+              placeholder="Enter answer here..."
+              onBlur={(e) => props.selectAnswer(e.target.value, true)}
+              rows={parseInt(props.item.question_meta.expectedLines) || 1} />
+          </div>
+        );
+        break;
       case "multiple_answers_question":
 
         const multipleAnswer = (answer) => {
