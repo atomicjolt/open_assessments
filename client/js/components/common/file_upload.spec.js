@@ -8,7 +8,10 @@ var fileUpload, subject, props;
 describe('file upload', () => {
   beforeEach(() => {
     props = {
-      selectAnswer: () => {}
+      selectAnswer: () => {},
+      localizedStrings: {
+        uploadFile: "Upload file"
+      }
     };
     spyOn(props, 'selectAnswer');
     fileUpload = TestUtils.renderIntoDocument(<FileUpload {...props} />);
