@@ -61,7 +61,7 @@ export default class UniversalInput extends React.Component{
       case "true_false_question":
 
         const multipleChoiceAnswer = (answer) => {
-          var selectRadio = _.curryRight(props.selectAnswer);
+          var selectRadio = _.partialRight(props.selectAnswer, true);
           var id = item.id + "_" + answer.id;
 
           return (
@@ -73,7 +73,7 @@ export default class UniversalInput extends React.Component{
                 isHtml={item.isHtml}
                 name="answer-radio"
                 checked={this.wasSelected(answer.id)}
-                selectAnswer={selectRadio(true)}/>
+                selectAnswer={selectRadio}/>
           );
         };
 
@@ -115,7 +115,7 @@ export default class UniversalInput extends React.Component{
       case "multiple_answers_question":
 
         const multipleAnswer = (answer) => {
-          var selectCheckbox = _.curryRight(props.selectAnswer);
+          var selectCheckbox = _.partialRight(props.selectAnswer, false);
           var id = item.id + "_" + answer.id;
 
           return (
@@ -126,7 +126,7 @@ export default class UniversalInput extends React.Component{
                 item={answer}
                 isHtml={item.isHtml}
                 checked={this.wasSelected(answer.id)}
-                selectAnswer={selectCheckbox(false)} />
+                selectAnswer={selectCheckbox} />
           );
         };
 
@@ -156,48 +156,62 @@ export default class UniversalInput extends React.Component{
         );
         break;
       case "audio_upload_question":
-        var selectAudioAnswer = _.curryRight(props.selectAnswer);
+        var selectAudioAnswer = _.partialRight(props.selectAnswer, true);
         answerInputs = (
           <AudioUpload
             localizedStrings={this.props.localizedStrings.audioUpload}
-            selectAnswer={selectAudioAnswer(true)}
+            selectAnswer={selectAudioAnswer}
             timeout={this.props.settings.audio_recorder_timeout} />
         );
         break;
       case "drag_and_drop":
-        var selectAnswer = _.curryRight(props.selectAnswer);
+        var selectAnswer = _.partialRight(props.selectAnswer, false);
         answerInputs = <FillTheBlankDnd
             currentAnswer={this.props.response}
-            selectAnswer={selectAnswer(false)}
+            selectAnswer={selectAnswer}
           />
         break;
       case "movable_object_chain":
-      case "movable_words_sentence":
-        var selectAnswer = _.curryRight(props.selectAnswer);
+        var selectAnswer = _.partialRight(props.selectAnswer, false);
         answerInputs = <MovableWords
             answers={item.answers}
-            selectAnswer={selectAnswer(false)}
+            selectAnswer={selectAnswer}
             wordChain={props.response}
+            itemClassName="c-object"
+            answerBoxClassName="c-object-answers"
+            noStartBlock={true}
+          />
+        break;
+      case "movable_words_sentence":
+        var selectAnswer = _.partialRight(props.selectAnswer, false);
+        answerInputs = <MovableWords
+            answers={item.answers}
+            selectAnswer={selectAnswer}
+            wordChain={props.response}
+            itemClassName="c-word"
+            answerBoxClassName="c-word-answers"
           />
         break;
       case "movable_words_sandbox":
-        var selectAnswer = _.curryRight(props.selectAnswer);
+        var selectAnswer = _.partialRight(props.selectAnswer, false);
         answerInputs = <SentenceSandbox
             answers={item.answers}
-            selectAnswer={selectAnswer(false)}
+            selectAnswer={selectAnswer}
             wordChain={props.response}
             localizedStrings={this.props.localizedStrings.audioUpload}
             timeout={this.props.settings.audio_recorder_timeout}
+            itemClassName="c-word"
+            answerBoxClassName="c-word-answers"
           />
         break;
 
       case "fill_the_blank_question":
-        const selectAnswer = _.curryRight(props.selectAnswer);
+        const selectAnswer = _.partialRight(props.selectAnswer, false);
 
         answerInputs = <MovableWordsFillTheBlank
             answers={item.answers}
             sentenceWithBlank={item.question_meta.fillTheBlankSentence}
-            selectAnswer={selectAnswer(false)}
+            selectAnswer={selectAnswer}
             selectedAnswer={props.response}
           />
     }

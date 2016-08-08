@@ -123,7 +123,7 @@ export default class FillTheBlankWordChain extends React.Component {
   }
 
   render() {
-    return <div className="c-answers">
+    return <div>
       {this.getLines()}
     </div>
   }

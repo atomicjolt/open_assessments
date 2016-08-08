@@ -17,7 +17,7 @@ describe('movable words', () => {
     };
 
     const WrappedComponent = wrapInDndContext(MovableWords);
-    RewireAPI.__Rewire__('WordChain', () => { return <div>WordChain</div>});
+    RewireAPI.__Rewire__('ItemChain', () => { return <div>WordChain</div>});
     result = TestUtils.renderIntoDocument(<WrappedComponent {...props} />);
   });
 
