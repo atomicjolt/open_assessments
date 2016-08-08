@@ -2,10 +2,11 @@ import $                   from "jquery";
 import _                   from "lodash";
 import { createSelector }  from "reselect";
 
-import * as qtiSelectors  from "../qti2/selectors";
-import { transformItem }  from "./clix";
-import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../../components/assessments/two_button_nav";
-import { isFirstPage, isLastPage, isNextUnlocked, currentItems } from "../../selectors/assessment";
+import { SECONDARY_ACTION, PRIMARY_ACTION }                       from "../../components/assessments/two_button_nav";
+import { isFirstPage, isLastPage, isNextUnlocked, currentItems }  from "../../selectors/assessment";
+import { localizeStrings }                                        from "../../selectors/localize";
+import * as qtiSelectors                                          from "../qti2/selectors";
+import { transformItem }                                          from "./clix";
 
 export function questions(state, props) {
   return state.assessment.items.map(transformItem);
@@ -40,6 +41,24 @@ export function correctItemCount(state, props) {
   return qtiSelectors.correctItemCount(state, props);
 }
 
+export function checkButtonText(state, props) {
+  const localizedStrings = localizeStrings(state, props).twoButtonNav;
+  const item = currentItems(state)[0];
+
+  switch(item.question_type) {
+    case "text_input_question":
+    case "text_only_question":
+    case "short_answer_question":
+      return localizedStrings.saveAnswerButton;
+
+    case "audio_upload_question":
+      return localizedStrings.saveFileButton;
+
+    default:
+      return localizedStrings.checkAnswerButton;
+  }
+}
+
 /**
  * Returns an object containing the state of the nav primary action button
  * in the form {spinner: boolean, buttonState: PRIMARY_ACTION[*]}
@@ -47,40 +66,17 @@ export function correctItemCount(state, props) {
  * e.g.(PRIMARY_ACTION.NEXT, PRIMARY_ACTION.SUBMIT), and spinner
  * is whether or not a spinner should be applied to the button.
  */
-export function primaryActionState(state, props){
+export function primaryActionState(state, props) {
   const nextUnlocked = isNextUnlocked(state);
   const lastPage = isLastPage(state);
-  const items = currentItems(state);
-  const item = items[0];
-  var primaryActionState = {spinner: false}; // Spinner defaults to false
 
   if(nextUnlocked === true && lastPage === true){
-    primaryActionState.buttonState = PRIMARY_ACTION.SUBMIT;
+    return PRIMARY_ACTION.SUBMIT;
   } else if(nextUnlocked === true){
-    primaryActionState.buttonState = PRIMARY_ACTION.NEXT;
+    return PRIMARY_ACTION.NEXT;
   } else {
-
-    // If we are checking an answer, then set spinner to true
-    if(isCheckingAnswer(state)){primaryActionState.spinner = true;}
-
-    // We haven't discussed how to handle making nav decisions when we are
-    // rendering more than one question. So for now, just choose the first one.
-    switch(item.question_type){
-      case "text_input_question":
-      case "text_only_question":
-      case "short_answer_question":
-        primaryActionState.buttonState = PRIMARY_ACTION.SAVE_ANSWERS;
-        break;
-
-      case "audio_upload_question":
-        primaryActionState.buttonState = PRIMARY_ACTION.SAVE_FILES;
-        break;
-
-      default:
-        primaryActionState.buttonState = PRIMARY_ACTION.CHECK_ANSWERS;
-    }
+    return PRIMARY_ACTION.CHECK_ANSWERS;
   }
-  return primaryActionState;
 }
 
  /**

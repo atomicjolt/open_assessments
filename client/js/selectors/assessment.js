@@ -54,6 +54,12 @@ export const assessmentLoaded = makeDispatchingSelector("assessmentLoaded");
  */
 export const isCheckingAnswer = makeDispatchingSelector("isCheckingAnswer");
 
+/**
+ * The text to display to the user on the "Check Answer" button.  The text
+ * depends on what time of Interactions are displayed.
+ */
+export const checkButtonText = makeDispatchingSelector("checkButtonText");
+
 export const primaryActionState = makeDispatchingSelector("primaryActionState");
 export const secondaryActionState = makeDispatchingSelector("secondaryActionState");
 
