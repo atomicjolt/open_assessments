@@ -4,18 +4,19 @@ import Immutable  from 'immutable';
 import { Constants as AssessmentConstants }   from '../actions/assessment_progress';
 
 const initialState = Immutable.fromJS({
-  isSubmitted: false,
-  isStarted: false,
-  currentItemIndex: 0,
+  isSubmitted:           false,
+  isStarted:             false,
+  currentItemIndex:      0,
 
   // Number of 'check answer' api calls that have not yet returned
-  numQuestionsChecking: 0,
-  selectedAnswerId: '',
-  checkedResponses: [],
-  responses: [],
-  startedAt: 0,
-  finishedAt: 0,
-  assessmentResult:null
+  numQuestionsChecking:  0,
+
+  selectedAnswerId:      '',
+  checkedResponses:      [],
+  responses:             [],
+  startedAt:             0,
+  finishedAt:            0,
+  assessmentResult:      null
 });
 
 export default (state = initialState, action) => {
@@ -63,7 +64,7 @@ export default (state = initialState, action) => {
       if(!action.error){
         var checkedResponses = Immutable.Map();
 
-        // TODO Currently we are setting the same response for all userInput.
+        // TODO: Currently we are setting the same response for all userInput.
         // When we have an example of multi answer feedback we should figure out
         // how to assign feedback to each answer.
         action.userInput.forEach((id) => {
@@ -74,7 +75,7 @@ export default (state = initialState, action) => {
         state = state.setIn(
           ['checkedResponses', `${action.questionIndex}`],
           checkedResponses
-          );
+        );
       }
 
       // Decrement number of questions being checked

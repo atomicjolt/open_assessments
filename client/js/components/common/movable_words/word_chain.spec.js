@@ -22,8 +22,8 @@ describe('word chain', () => {
   });
 
   it('renders the word chain', () => {
-    var startBlock = TestUtils.findRenderedDOMComponentWithClass(result, 'start-block');
-    var endDropZone = TestUtils.findRenderedDOMComponentWithClass(result, 'end-drop-zone');
+    var startBlock = TestUtils.findRenderedDOMComponentWithClass(result, 'c-word--starter');
+    var endDropZone = TestUtils.findRenderedDOMComponentWithClass(result, 'c-drop-zone');
 
     expect(endDropZone).toBeDefined();
     expect(startBlock).toBeDefined();

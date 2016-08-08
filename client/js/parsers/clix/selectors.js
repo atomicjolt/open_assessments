@@ -1,8 +1,11 @@
 import $                   from "jquery";
+import _                   from "lodash";
 import { createSelector }  from "reselect";
 
+import * as qtiSelectors  from "../qti2/selectors";
 import { transformItem }  from "./clix";
-
+import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../../components/assessments/two_button_nav";
+import { isFirstPage, isLastPage, isNextUnlocked, currentItems } from "../../selectors/assessment";
 
 export function questions(state, props) {
   return state.assessment.items.map(transformItem);
@@ -30,26 +33,63 @@ export function isCheckingAnswer(state, props){
 }
 
 export function questionResults(state, props) {
+  return qtiSelectors.questionResults(state, props);
+}
 
-  // TODO Currently we are setting the same response for all userInput.
-  // When we have an example of multi answer feedback we should figure out
-  // how to assign feedback to each answer.
-  const questionIndexes = _.range(
-    state.assessmentProgress.get('currentItemIndex'),
-    state.assessmentProgress.get('currentItemIndex') + state.settings.questions_per_page
-  );
+export function correctItemCount(state, props) {
+  return qtiSelectors.correctItemCount(state, props);
+}
 
-  let questionResponses = {};
+/**
+ * Returns an object containing the state of the nav primary action button
+ * in the form {spinner: boolean, buttonState: PRIMARY_ACTION[*]}
+ * Where buttonState is the current state of the primary button
+ * e.g.(PRIMARY_ACTION.NEXT, PRIMARY_ACTION.SUBMIT), and spinner
+ * is whether or not a spinner should be applied to the button.
+ */
+export function primaryActionState(state, props){
+  const nextUnlocked = isNextUnlocked(state);
+  const lastPage = isLastPage(state);
+  const items = currentItems(state);
+  const item = items[0];
+  var primaryActionState = {spinner: false}; // Spinner defaults to false
 
-  _.each(questionIndexes, (index) => {
-    const response = state.assessmentResults.getIn(['questionResults', index, 0]);
-    if(response) {
-      questionResponses[index] = {};
-      questionResponses[index].correct = response.correct;
-      questionResponses[index].answerIds = response.userInput;
-      questionResponses[index].feedback = response.feedback;
+  if(nextUnlocked === true && lastPage === true){
+    primaryActionState.buttonState = PRIMARY_ACTION.SUBMIT;
+  } else if(nextUnlocked === true){
+    primaryActionState.buttonState = PRIMARY_ACTION.NEXT;
+  } else {
+
+    // If we are checking an answer, then set spinner to true
+    if(isCheckingAnswer(state)){primaryActionState.spinner = true;}
+
+    // We haven't discussed how to handle making nav decisions when we are
+    // rendering more than one question. So for now, just choose the first one.
+    switch(item.question_type){
+      case "text_input_question":
+      case "text_only_question":
+      case "short_answer_question":
+        primaryActionState.buttonState = PRIMARY_ACTION.SAVE_ANSWERS;
+        break;
+
+      case "audio_upload_question":
+        primaryActionState.buttonState = PRIMARY_ACTION.SAVE_FILES;
+        break;
+
+      default:
+        primaryActionState.buttonState = PRIMARY_ACTION.CHECK_ANSWERS;
     }
-  });
+  }
+  return primaryActionState;
+}
 
-  return questionResponses;
+ /**
+  * Returns an object containing the state of the nav secondary action button
+  * in the form {buttonState: PRIMARY_ACTION[*]}
+  * Where buttonState is the current state of the secondary button.
+  * e.g.(SECONDARY_ACTION.NONE, SECONDARY_ACTION.PREV).
+  */
+export function secondaryActionState(state, props){
+  if(isFirstPage(state) === true){return {buttonState: SECONDARY_ACTION.NONE};}
+  return {buttonState: SECONDARY_ACTION.PREV};
 }

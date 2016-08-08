@@ -1,11 +1,8 @@
 import React            from "react";
-const style = {
-  display: "inline-block",
-  background: "green",
-  padding: "5px 5px",
-  margin: "5px 5px"
-}
 
-export default (props) => {
-  return <div style={style} dangerouslySetInnerHTML={{__html: props.material}} />
+export default class Word extends React.Component {
+  render() {
+    const className = this.props.hide ? this.props.className + " u-hide" : this.props.className;
+    return <div className={className} dangerouslySetInnerHTML={{__html: this.props.material}} />
+  }
 }

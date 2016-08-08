@@ -3,23 +3,16 @@
 import React                                  from "react";
 import { connect }                            from "react-redux";
 
-import * as CommunicationActions              from "../../actions/communications";
 import * as AssessmentProgress                from "../../actions/assessment_progress";
+import * as CommunicationActions              from "../../actions/communications";
 import appHistory                             from "../../history";
+import * as selectors                         from "../../selectors/assessment";
 import { localizeStrings }                    from "../../selectors/localize";
-import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
-import TwoButtonNav                           from "../assessments/two_button_nav";
 import Item                                   from "../assessments/item";
 import Loading                                from "../assessments/loading";
+import TwoButtonNav                           from "../assessments/two_button_nav";
 import ProgressDropdown                       from "../common/progress_dropdown";
-import { questionResults }                    from "../../selectors/assessment";
-import {
-  questionCount,
-  questions,
-  outcomes,
-  isCheckingAnswer,
-  assessmentLoaded
-}  from "../../selectors/assessment";
+
 
 const select = (state, props) => {
   return {
@@ -31,7 +24,7 @@ const select = (state, props) => {
     assessment      : state.assessment,
 
     // Returns true if assessment has loaded, false otherwise
-    assessmentLoaded: assessmentLoaded(state, props),
+    assessmentLoaded: selectors.assessmentLoaded(state, props),
 
     // State of user-assessment interactions.
     assessmentProgress        : state.assessmentProgress.toJS(),
@@ -44,32 +37,33 @@ const select = (state, props) => {
 
     // How many questions to display at a time. Default to show all questions
     // in a section if not specified
-    questionsPerPage: state.settings.questions_per_page || questionCount(state, props),
-
-    // When the next question should be unlocked. Should be either "ON_CORRECT",
-    // "ON_ANSWER_CHECK", or "ALWAYS"
-    unlockNext: state.settings.unlock_next,
+    questionsPerPage: state.settings.questions_per_page || selectors.questionCount(state, props),
 
     // How many Items are in the assessment
-    questionCount   : questionCount(state, props),
+    questionCount   : selectors.questionCount(state, props),
 
     // Array containing all assessment Items
-    allQuestions    : questions(state, props),
-
-    // Returns true if any api calls to check answers have not yet returned,
-    // false otherwise.
-    isCheckingAnswer: isCheckingAnswer(state, props),
+    allQuestions    : selectors.questions(state, props),
 
     // Array of graded user response objects containing keys
     // correct:true/false, feedback:"Answer feedback",
     // answerIds: answers feedback applies to
-    questionResults : questionResults(state, props),
+    questionResults : selectors.questionResults(state, props),
 
     // User facing strings of the language specified by the 'locale' setting
     localizedStrings: localizeStrings(state, props),
 
+    // State of the nav primary action button. e.g. (PRIMARY_ACTION.SUBMIT)
+    primaryActionState: selectors.primaryActionState(state),
+
+    // State of the nav secondary action button. e.g. (SECONDARY_ACTION.PREV)
+    secondaryActionState: selectors.secondaryActionState(state),
+
     // TODO
-    outcomes        : outcomes(state, props)
+    outcomes        : selectors.outcomes(state, props),
+
+    // How many items the student has given correct responses for
+    correctItemCount: selectors.correctItemCount(state, props)
   };
 };
 
@@ -143,40 +137,6 @@ export class Assessment extends React.Component{
   }
 
   /**
-   * Determine if user should be allowed to go to next questions or not
-   *
-   * unlockNext - Global setting controlling when next button should
-   * be available to the user. Should be one of "ON_CORRECT", "ON_ANSWER_CHECK",
-   * "ALWAYS"
-   *
-   * currentItem - The index of the current item in the array of items
-   *
-   * questionsPerPage - Global setting controller how many items should be
-   * displayed at once.
-   *
-   * questionResponses - Array of all graded responses
-   *
-   * responses - Array of question responses for displayed questions
-   *
-   * return - True if user is allowed to move onto next set of
-   * questions. False otherwise.
-   */
-  getNextUnlocked(unlockNext, questionsPerPage, questionResponses){
-    if(unlockNext === "ON_CORRECT") {
-      const incorrectResponse = _.find(questionResponses, (response) => {
-        return !response.correct;
-      });
-
-      return _.isUndefined(incorrectResponse) && _.compact(_.values(questionResponses)).length === questionsPerPage;
-    } else if(unlockNext === "ON_ANSWER_CHECK") {
-
-      return _.compact(_.values(questionResponses)).length === questionsPerPage;
-    }
-    return true;
-  }
-
-
-  /**
    * Return an item for a given index in props.allQuestions
    */
   getItem(index){
@@ -243,26 +203,6 @@ export class Assessment extends React.Component{
     }
   }
 
-  /**
-   * Returns true if the current page of items is the last page, false otherwise.
-   */
-  isLastPage(){
-    var questionsPerPage = this.props.questionsPerPage;
-    var currentPage = Math.floor(this.props.currentItem / questionsPerPage);
-    var lastPage = Math.floor((this.props.questionCount - 1) / questionsPerPage);
-    return currentPage === lastPage;
-  }
-
-  /**
-   * Returns true if the current page of items is the first page of items,
-   * false otherwise
-   */
-  isFirstPage(){
-    var questionsPerPage = this.props.questionsPerPage;
-    var currentPage = Math.floor(this.props.currentItem / questionsPerPage);
-    return currentPage === 0;
-  }
-
 /**
  * Returns a warning if there are unanswered questions and we are on the
  * last question.
@@ -270,7 +210,7 @@ export class Assessment extends React.Component{
   getWarning(){
     let unanswered = this.checkCompletion();
     let warning;
-    if(unanswered === true && this.isLastPage()){
+    if(unanswered === true && this.props.isLastPage){
       warning = <div>{this.props.localizedStrings.assessment.unansweredQuestionWarning}</div>;
     }
     return warning;
@@ -352,26 +292,6 @@ export class Assessment extends React.Component{
     let warning;// = this.getWarning(); NOTE Temporarily removed warning because we have no need for it yet, and it looks bad.
     let counter = this.getCounter();
 
-    let nextUnlocked = this.getNextUnlocked(
-      this.props.unlockNext,
-      this.props.questionsPerPage,
-      this.props.questionResults,
-    );
-
-    let secondaryAction = SECONDARY_ACTION.PREV;
-    let primaryAction = PRIMARY_ACTION.CHECK_ANSWERS;
-
-    // Figure out which nav buttons to render
-    if(this.isFirstPage() === true){secondaryAction = SECONDARY_ACTION.NONE;}
-
-    if(nextUnlocked === true && this.isLastPage() === true){
-      primaryAction = PRIMARY_ACTION.SUBMIT;
-    } else if(nextUnlocked === true){
-      primaryAction = PRIMARY_ACTION.NEXT;
-    } else if(this.props.isCheckingAnswer) {
-      primaryAction = PRIMARY_ACTION.SPINNER;
-    }
-
     if(this.props.assessmentLoaded){
       var nav = (
         <TwoButtonNav
@@ -380,8 +300,8 @@ export class Assessment extends React.Component{
           goToPreviousQuestions={(e) => this.previousButtonClicked(e)}
           checkAnswers={(e) => this.checkAnswersButtonClicked(e)}
           submitAssessment={(e) => this.submitButtonClicked(e)}
-          secondaryAction={secondaryAction}
-          primaryAction={primaryAction}/>
+          secondaryAction={this.props.secondaryActionState}
+          primaryAction={this.props.primaryActionState}/>
       );
     }
 
@@ -389,7 +309,9 @@ export class Assessment extends React.Component{
       <div className="o-assessment-container">
         <div className="c-header">
           <div className="c-header__title">{titleText}</div>
-          <div className="c-header__question-number">{counter}</div>
+          {/* TODO: Temporarily, this displays how many items have been answered
+          correctly.  It is part of the N-of-M work. */}
+          <div className="c-header__question-number">({this.props.correctItemCount}) {counter}</div>
         </div>
         {warning}
         {content}
