@@ -138,7 +138,8 @@ module.exports = function(stage){
     },
     plugins: plugins,
     module: {
-      loaders: loaders
+      loaders: loaders,
+      noParse: [/node_modules[\/]video\.js[\/]/]
     },
     devServer: {
       stats: {

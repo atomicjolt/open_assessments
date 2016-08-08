@@ -4,6 +4,7 @@ import React  from "react";
 
 import * as AssessmentActions  from "../../actions/assessment";
 import UniversalInput          from "./universal_input";
+import videojs from 'video.js';
 
 export default class Item extends React.Component{
 
