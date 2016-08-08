@@ -33,6 +33,14 @@ export default class Item extends React.Component{
     localizedStrings: React.PropTypes.object.isRequired
   };
 
+  componentDidMount(){
+    // Look for videos that should be using videojs.
+    var videoJSElements = document.querySelectorAll('video.video-js');
+    for (var i = 0; i < videoJSElements.length; i++){
+      if(_.isFunction(videojs)){videojs(videoJSElements[i]);}
+    }
+  }
+
   getFeedback(){
     var response = this.props.questionResult;
 
