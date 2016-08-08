@@ -41,8 +41,7 @@ export class Dropzone extends React.Component {
 	}
   render() {
     const { connectDropTarget, isOver, overClassName, className } = this.props;
-    const zoneClassName = isOver && overClassName ? className + " " + overClassName : className;
-
+    const zoneClassName = className + (isOver && overClassName ? " " + overClassName : "");
     return connectDropTarget(
       <div className={zoneClassName} style={this.props.style}>
         {this.props.children}
