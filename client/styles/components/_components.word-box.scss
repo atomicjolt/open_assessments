@@ -1,7 +1,3 @@
-.c-word-box{
-  padding: 0 3rem;
-}
-
 .c-word-box__contain{
   background: $lightest-gray;
   padding: 1rem;
@@ -10,6 +6,29 @@
 
   .c-word{
     margin: 1rem 2rem;
+  }
+
+  .c-object {
+    margin: 0.5rem 1rem;
+  }
+}
+
+.c-object {
+  padding: 0.5rem 0.5rem;
+  background: $white;
+  cursor: move;
+  float: left;
+  position: relative;
+  height: 11rem;
+
+  & > *{
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    line-height: 3.3rem;
+    img {
+      display: inline-block;
+    }
   }
 }
 
@@ -64,6 +83,27 @@
 
   .c-word:after{
     background: $primary;
+  }
+
+  .c-over-drop-zone {
+    border: 2px solid white;
+  }
+}
+
+.c-object-answers {
+  background: $primary;
+  padding: 0.5rem;
+  height: 12rem;
+  margin: 1rem 0;
+  position: relative;
+  @include display-flex;
+
+  .c-object {
+    margin-right: 0.1rem;
+  }
+
+  .c-over-drop-zone {
+    border: 2px solid white;
   }
 }
 

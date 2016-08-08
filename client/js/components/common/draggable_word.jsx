@@ -9,7 +9,8 @@ const wordSource = {
   beginDrag(props) {
     return {
       itemId: props.id,
-      material: props.material
+      material: props.material,
+      wordClassName: props.wordClassName
     };
   }
 };
@@ -35,7 +36,7 @@ export class DraggableWord extends React.Component {
 
   render() {
     const { connectDragSource, isDragging } = this.props;
-    
+
     return connectDragSource(
       <div style={{ display: "inline-block" }}>
         <Word

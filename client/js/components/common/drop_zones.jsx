@@ -30,7 +30,8 @@ const wordTarget = {
 
 function collect(connect, monitor) {
   return {
-    connectDropTarget: connect.dropTarget()
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
   };
 }
 
@@ -39,9 +40,10 @@ export class Dropzone extends React.Component {
 		connectDropTarget: React.PropTypes.func.isRequired
 	}
   render() {
-    const { connectDropTarget } = this.props;
+    const { connectDropTarget, isOver, overClassName, className } = this.props;
+    const zoneClassName = className + (isOver && overClassName ? " " + overClassName : "");
     return connectDropTarget(
-      <div className={this.props.className} style={this.props.style}>
+      <div className={zoneClassName} style={this.props.style}>
         {this.props.children}
       </div>
     );

@@ -1,10 +1,13 @@
 import React                                  from 'react';
-import ReactDOM                               from 'react-dom';
 import TestUtils                              from 'react/lib/ReactTestUtils';
+import ReactDOM                               from 'react-dom';
+import { Provider }                           from 'react-redux';
 
 import { localizeStrings }                    from "../../selectors/localize";
+import configureStore                         from "../../store/configure_store";
 import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
 import TwoButtonNav                           from "../assessments/two_button_nav";
+
 
 describe('Two Button Nav', () => {
 
@@ -18,12 +21,16 @@ describe('Two Button Nav', () => {
         localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
         goToPreviousQuestions: () => {},
         secondaryAction: {buttonState: SECONDARY_ACTION.PREV},
-        primaryAction: {}
+        primaryAction: null
       };
     });
 
     var render = () => {
-      result = TestUtils.renderIntoDocument(<TwoButtonNav {...props}/>);
+      result = TestUtils.renderIntoDocument(
+        <Provider store={configureStore()}>
+          <TwoButtonNav {...props} />
+        </Provider>
+      );
       subject = ReactDOM.findDOMNode(result);
     };
 
@@ -38,14 +45,6 @@ describe('Two Button Nav', () => {
       render();
 
       expect(subject.innerHTML).not.toContain('Previous');
-    });
-    it('calls onClick when previous button clicked', () => {
-      spyOn(props, 'goToPreviousQuestions');
-      render();
-      var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--previous');
-      TestUtils.Simulate.click(button);
-
-      expect(props.goToPreviousQuestions).toHaveBeenCalled();
     });
   });
 
@@ -65,37 +64,30 @@ describe('Two Button Nav', () => {
     });
 
     var render = () => {
-      result = TestUtils.renderIntoDocument(<TwoButtonNav {...props}/>);
+      result = TestUtils.renderIntoDocument(
+        <Provider store={configureStore()}>
+          <TwoButtonNav {...props} />
+        </Provider>
+      );
       subject = ReactDOM.findDOMNode(result);
     };
 
     it('renders next button when enabled', () => {
-      props.primaryAction = {buttonState: PRIMARY_ACTION.NEXT};
+      props.primaryAction = PRIMARY_ACTION.NEXT;
       render();
 
       expect(subject.innerHTML).toContain('Next');
     });
 
-    it('calls onClick when next button is clicked', () => {
-      props.primaryAction = {buttonState: PRIMARY_ACTION.NEXT};
-
-      spyOn(props, 'goToNextQuestions');
-      render();
-      var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--next');
-      TestUtils.Simulate.click(button);
-
-      expect(props.goToNextQuestions).toHaveBeenCalled();
-    });
-
     it('renders submit button when enabled', () => {
-      props.primaryAction = {buttonState: PRIMARY_ACTION.SUBMIT};
+      props.primaryAction = PRIMARY_ACTION.SUBMIT;
       render();
 
       expect(subject.innerHTML).toContain('Finish Quiz');
     });
 
     it('calls onClick when submit button is clicked', () => {
-      props.primaryAction = {buttonState: PRIMARY_ACTION.SUBMIT};
+      props.primaryAction = PRIMARY_ACTION.SUBMIT;
       spyOn(props, 'submitAssessment');
       render();
       var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--finish');
@@ -105,20 +97,10 @@ describe('Two Button Nav', () => {
     });
 
     it('renders check answer button when enabled', () => {
-      props.primaryAction = {buttonState: PRIMARY_ACTION.CHECK_ANSWERS};
+      props.primaryAction = PRIMARY_ACTION.CHECK_ANSWERS;
       render();
 
-      expect(subject.innerHTML).toContain('Check Answer');
-    });
-
-    it('calls onClick when answer button is clicked', () => {
-      props.primaryAction = {buttonState: PRIMARY_ACTION.CHECK_ANSWERS};
-      spyOn(props, 'checkAnswers');
-      render();
-      var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--check-answer');
-      TestUtils.Simulate.click(button);
-
-      expect(props.checkAnswers).toHaveBeenCalled();
+      expect(subject.innerHTML).toContain("c-btn--check-answer");
     });
   });
 });

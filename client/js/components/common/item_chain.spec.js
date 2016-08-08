@@ -1,10 +1,10 @@
 import React                from 'react';
 import ReactDOM             from 'react-dom';
 import TestUtils            from 'react/lib/ReactTestUtils';
-import wrapInDndContext     from '../../../../specs_support/dnd_wrapper';
-import WordChain            from './word_chain';
+import wrapInDndContext     from '../../../specs_support/dnd_wrapper';
+import ItemChain            from './item_chain';
 
-describe('word chain', () => {
+describe('item chain', () => {
   var result, props, WrappedComponent;
   beforeEach(() => {
     props = {
@@ -17,7 +17,7 @@ describe('word chain', () => {
       },
       linkWord: () => {}
     };
-    WrappedComponent = wrapInDndContext(WordChain);
+    WrappedComponent = wrapInDndContext(ItemChain);
     result = TestUtils.renderIntoDocument(<WrappedComponent {...props} />);
   });
 
