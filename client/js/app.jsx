@@ -17,6 +17,7 @@ import jwt                     from './loaders/jwt';
 import QueryString             from './utils/query_string';
 import { htmlDecodeWithRoot }  from './utils/utils';
 import { getInitialSettings }  from './reducers/settings';
+// import VideoJS from 'videojs';
 
 // Polyfill es6 promises for IE
 es6Promise.polyfill();
