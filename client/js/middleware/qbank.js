@@ -39,7 +39,7 @@ function getBody(userInput, question){
         }
       }
       break;
-
+    case "numerical_input_question":
     case "text_input_question":
       return {
         type,
