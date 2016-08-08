@@ -37,11 +37,9 @@ export default class Item extends React.Component{
   componentDidMount(){
     // Look for videos that should be using videojs.
     var videoJSElements = document.querySelectorAll('video.video-js');
-    for (var i = 0; i < videoJSElements.length; i++){
-      _.each(videoJSElements,(element) => {
-        if(_.isFunction(videojs)){videojs(element);}
-      });
-    }
+    _.each(videoJSElements,(element) => {
+      if(_.isFunction(videojs)){videojs(element);}
+    });
   }
 
   getFeedback(){
