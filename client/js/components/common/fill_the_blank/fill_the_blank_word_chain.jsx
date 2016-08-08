@@ -37,7 +37,6 @@ export default class FillTheBlankWordChain extends React.Component {
   wrapLines() {
     const lastWord = this.refs[`word-${this.props.sentenceWords.length - 1}`];
     const lastWordDOMNode = ReactDOM.findDOMNode(lastWord);
-    // TODO: What needs to happen here to accommodate our test suite?
     const answerBox = ReactDOM.findDOMNode(this.refs["answer-box"]);
     const lastWordRight = lastWordDOMNode.getBoundingClientRect().right;
     const answerBoxRight = answerBox.getBoundingClientRect().right;
