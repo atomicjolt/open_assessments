@@ -1,10 +1,13 @@
 import React                                  from 'react';
-import ReactDOM                               from 'react-dom';
 import TestUtils                              from 'react/lib/ReactTestUtils';
+import ReactDOM                               from 'react-dom';
+import { Provider }                           from 'react-redux';
 
 import { localizeStrings }                    from "../../selectors/localize";
+import configureStore                         from "../../store/configure_store";
 import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
 import TwoButtonNav                           from "../assessments/two_button_nav";
+
 
 describe('Two Button Nav', () => {
 
@@ -23,7 +26,11 @@ describe('Two Button Nav', () => {
     });
 
     var render = () => {
-      result = TestUtils.renderIntoDocument(<TwoButtonNav {...props}/>);
+      result = TestUtils.renderIntoDocument(
+        <Provider store={configureStore()}>
+          <TwoButtonNav {...props} />
+        </Provider>
+      );
       subject = ReactDOM.findDOMNode(result);
     };
 
@@ -38,14 +45,6 @@ describe('Two Button Nav', () => {
       render();
 
       expect(subject.innerHTML).not.toContain('Previous');
-    });
-    it('calls onClick when previous button clicked', () => {
-      spyOn(props, 'goToPreviousQuestions');
-      render();
-      var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--previous');
-      TestUtils.Simulate.click(button);
-
-      expect(props.goToPreviousQuestions).toHaveBeenCalled();
     });
   });
 
@@ -65,7 +64,11 @@ describe('Two Button Nav', () => {
     });
 
     var render = () => {
-      result = TestUtils.renderIntoDocument(<TwoButtonNav {...props}/>);
+      result = TestUtils.renderIntoDocument(
+        <Provider store={configureStore()}>
+          <TwoButtonNav {...props} />
+        </Provider>
+      );
       subject = ReactDOM.findDOMNode(result);
     };
 
@@ -74,17 +77,6 @@ describe('Two Button Nav', () => {
       render();
 
       expect(subject.innerHTML).toContain('Next');
-    });
-
-    it('calls onClick when next button is clicked', () => {
-      props.primaryAction = PRIMARY_ACTION.NEXT;
-
-      spyOn(props, 'goToNextQuestions');
-      render();
-      var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--next');
-      TestUtils.Simulate.click(button);
-
-      expect(props.goToNextQuestions).toHaveBeenCalled();
     });
 
     it('renders submit button when enabled', () => {
@@ -108,17 +100,7 @@ describe('Two Button Nav', () => {
       props.primaryAction = PRIMARY_ACTION.CHECK_ANSWERS;
       render();
 
-      expect(subject.innerHTML).toContain('Check Answer');
-    });
-
-    it('calls onClick when answer button is clicked', () => {
-      props.primaryAction = PRIMARY_ACTION.CHECK_ANSWERS;
-      spyOn(props, 'checkAnswers');
-      render();
-      var button = TestUtils.findRenderedDOMComponentWithClass(result, 'c-btn--check-answer');
-      TestUtils.Simulate.click(button);
-
-      expect(props.checkAnswers).toHaveBeenCalled();
+      expect(subject.innerHTML).toContain("c-btn--check-answer");
     });
   });
 });

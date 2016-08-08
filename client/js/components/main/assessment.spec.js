@@ -1,13 +1,15 @@
 import React                   from "react";
-import ReactDOM                from "react-dom";
 import TestUtils               from "react/lib/ReactTestUtils";
-import Helper                  from "../../../specs_support/helper";
+import ReactDOM                from "react-dom";
+import { Provider }            from 'react-redux';
 
-import { localizeStrings }     from "../../selectors/localize";
-import appHistory              from "../../history";
-import { Assessment }          from "./assessment";
+import Helper                  from "../../../specs_support/helper";
 import * as AssessmentActions  from "../../actions/assessment";
-import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
+import appHistory              from "../../history";
+import { localizeStrings }     from "../../selectors/localize";
+import configureStore          from '../../store/configure_store';
+import { SECONDARY_ACTION, PRIMARY_ACTION } from "../assessments/two_button_nav";
+import { Assessment }          from "./assessment";
 
 var props;
 var allQuestions,
@@ -21,9 +23,7 @@ var allQuestions,
   questionResults,
   questionsPerPage,
   responses,
-  result,
   settings,
-  subject,
   submitAssessment;
 
 var result;
@@ -67,7 +67,7 @@ function reset(){
   questionsPerPage = 1;
 
   assessmentProgress = {
-    currentItemIndex:0
+    currentItemIndex: 0
   };
 
   localizedStrings = localizeStrings({settings:{locale:"en"}});
@@ -107,8 +107,11 @@ function reset(){
     submitAssessment: () => {}
   };
 
-
-  result = TestUtils.renderIntoDocument(<Assessment {...props} />);
+  result = TestUtils.renderIntoDocument(
+    <Provider store={configureStore({settings})}>
+      <Assessment {...props} />
+    </Provider>
+  );
   subject = ReactDOM.findDOMNode(result);
 };
 
@@ -128,24 +131,6 @@ describe("assessment", function() {
     jasmine.Ajax.uninstall();
   });
 
-  it("Calls nextQuestions when the next button is clicked", () => {
-    spyOn(props, "nextQuestions");
-    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
-    let button = TestUtils.findRenderedDOMComponentWithClass(result, "c-btn--next");
-    TestUtils.Simulate.click(button);
-
-    expect(props.nextQuestions).toHaveBeenCalled();
-  });
-
-  it("Calls previousQuestions when the previous button is clicked", () => {
-    spyOn(props, "previousQuestions");
-    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
-    let button = TestUtils.findRenderedDOMComponentWithClass(result, "c-btn--previous");
-    TestUtils.Simulate.click(button);
-
-    expect(props.previousQuestions).toHaveBeenCalled();
-  });
-
   it("renders the assessment", () => {
     expect(subject).toBeDefined();
   });
@@ -157,7 +142,11 @@ describe("assessment", function() {
   it("redirects to assessment result when assessment has been submitted", () => {
     spyOn(appHistory, "push");
     props.assessmentProgress.assessmentResult = "done";
-    result = TestUtils.renderIntoDocument(<Assessment {...props} />);
+    result = TestUtils.renderIntoDocument(
+      <Provider store={configureStore({settings})}>
+        <Assessment {...props} />
+      </Provider>
+    );
     subject = ReactDOM.findDOMNode(result);
 
     expect(appHistory.push).toHaveBeenCalledWith("assessment-result");
