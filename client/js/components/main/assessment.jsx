@@ -204,10 +204,10 @@ export class Assessment extends React.Component{
     }
   }
 
-/**
- * Returns a warning if there are unanswered questions and we are on the
- * last question.
- */
+  /**
+   * Returns a warning if there are unanswered questions and we are on the last
+   * question.
+   */
   getWarning(){
     let unanswered = this.checkCompletion();
     let warning;
@@ -271,14 +271,26 @@ export class Assessment extends React.Component{
     let warning;// = this.getWarning(); NOTE Temporarily removed warning because we have no need for it yet, and it looks bad.
     let counter = this.getCounter();
 
-    if(this.props.assessmentLoaded){
-      var nav = (
-        <ThreeButtonNav
-            localizedStrings={this.props.localizedStrings.twoButtonNav}
-            submitAssessment={() => this.submitButtonClicked()}
-            secondaryAction={this.props.secondaryActionState}
-            primaryAction={this.props.primaryActionState}/>
-      );
+    if(this.props.assessmentLoaded) {
+      var nav;
+      console.log(this);
+      if(this.props.settings.require_n_answers === undefined) {
+        nav = (
+          <TwoButtonNav
+              localizedStrings={this.props.localizedStrings.twoButtonNav}
+              submitAssessment={() => this.submitButtonClicked()}
+              secondaryAction={this.props.secondaryActionState}
+              primaryAction={this.props.primaryActionState}/>
+        );
+      } else {
+        nav = (
+          <ThreeButtonNav
+              localizedStrings={this.props.localizedStrings.twoButtonNav}
+              submitAssessment={() => this.submitButtonClicked()}
+              secondaryAction={this.props.secondaryActionState}
+              primaryAction={this.props.primaryActionState}/>
+        );
+      }
     }
 
     return (
