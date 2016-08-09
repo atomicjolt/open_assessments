@@ -158,7 +158,7 @@ export class Assessment extends React.Component{
     // operator, NaN will fall through with no text assigned.  Otherwise, with a
     // bare else, we'd render a string containing "NaN".
 
-    return <div class="c-remaining">{text}</div>;
+    return <div className="c-remaining">{text}</div>;
   }
 
   /**
