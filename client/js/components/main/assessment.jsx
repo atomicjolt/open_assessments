@@ -150,9 +150,13 @@ export class Assessment extends React.Component{
       text = strings.remaining.done;
     } else if(remaining == 1) {
       text = strings.remaining.one_left;
-    } else {
+    } else if(remaining >= 2) {
       text = strings.formatString(strings.remaining.many_left, remaining);
     }
+    // If require_n_answers is set, but we haven't loaded the assessment yet,
+    // remaining will be NaN.  By guarding every clause in with a comparison
+    // operator, NaN will fall through with no text assigned.  Otherwise, we'd
+    // render a string containing "NaN".
 
     return <div class="c-remaining">{text}</div>;
   }
