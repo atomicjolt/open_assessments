@@ -14,7 +14,9 @@ const select = (state, props) => {
     questionsPerPage:   state.settings.questions_per_page || selectors.questionCount(state, props),
     questionResults:    selectors.questionResults(state, props),
     isCheckingAnswer:   selectors.isCheckingAnswer(state, props),
-    unlockNext:         state.settings.unlock_next
+    unlockNext:         state.settings.unlock_next,
+    requireNAnswers:    state.settings.require_n_answers,
+    correctItemCount:   selectors.correctItemCount(state, props)
   };
 };
 
@@ -25,6 +27,13 @@ const select = (state, props) => {
 class CheckButton extends React.Component {
 
   shouldEnable() {
+    const required = this.props.requireNAnswers;
+    if(required !== undefined) {
+      const correct = this.props.correctItemCount;
+      const remaining = required - correct;
+      if(remaining == 0) return false;
+    }
+
     const questionResults = this.props.questionResults;
     const questionsPerPage = this.props.questionsPerPage;
 
