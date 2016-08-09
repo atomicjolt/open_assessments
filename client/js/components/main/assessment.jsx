@@ -1,17 +1,18 @@
 "use strict";
 
-import React                                  from "react";
-import { connect }                            from "react-redux";
+import React        from "react";
+import { connect }  from "react-redux";
 
-import * as AssessmentProgress                from "../../actions/assessment_progress";
-import * as CommunicationActions              from "../../actions/communications";
-import appHistory                             from "../../history";
-import * as selectors                         from "../../selectors/assessment";
-import { localizeStrings }                    from "../../selectors/localize";
-import Item                                   from "../assessments/item";
-import Loading                                from "../assessments/loading";
-import TwoButtonNav                           from "../assessments/two_button_nav";
-import ProgressDropdown                       from "../common/progress_dropdown";
+import * as AssessmentProgress    from "../../actions/assessment_progress";
+import * as CommunicationActions  from "../../actions/communications";
+import appHistory                 from "../../history";
+import * as selectors             from "../../selectors/assessment";
+import { localizeStrings }        from "../../selectors/localize";
+import Item                       from "../assessments/item";
+import Loading                    from "../assessments/loading";
+import ThreeButtonNav             from "../assessments/three_button_nav";
+import TwoButtonNav               from "../assessments/two_button_nav";
+import ProgressDropdown           from "../common/progress_dropdown";
 
 
 const select = (state, props) => {
@@ -272,11 +273,11 @@ export class Assessment extends React.Component{
 
     if(this.props.assessmentLoaded){
       var nav = (
-        <TwoButtonNav
-          localizedStrings={this.props.localizedStrings.twoButtonNav}
-          submitAssessment={() => this.submitButtonClicked()}
-          secondaryAction={this.props.secondaryActionState}
-          primaryAction={this.props.primaryActionState}/>
+        <ThreeButtonNav
+            localizedStrings={this.props.localizedStrings.twoButtonNav}
+            submitAssessment={() => this.submitButtonClicked()}
+            secondaryAction={this.props.secondaryActionState}
+            primaryAction={this.props.primaryActionState}/>
       );
     }
 

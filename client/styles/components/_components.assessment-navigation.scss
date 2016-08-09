@@ -25,11 +25,16 @@
   position: relative;
   white-space: nowrap;
 
+  &[disabled] {
+    visibility: hidden;
+  }
+
   span{
     display: inline-block;
     height: 100%;
     line-height: 3rem;
     @include transition(all 0.1s ease);
+    @include transition(visibility 0s);
   }
 
   svg {
@@ -40,6 +45,7 @@
 
     path{
       @include transition(all 0.2s ease);
+      @include transition(visibility 0s);
     }
   }
 }
@@ -49,6 +55,7 @@
     color: $btn-secondary-text;
     border-color: $btn-secondary-border;
     @include transition(all 0.2s ease);
+    @include transition(visibility 0s);
     padding-left: 3rem;
 
     &:hover{
@@ -97,6 +104,7 @@
     color: $btn-primary-text;
     border-color: $btn-primary-border;
     @include transition(all 0.2s ease);
+    @include transition(visibility 0s);
 
     &:hover{
       border-color: $btn-primary-border-hover;

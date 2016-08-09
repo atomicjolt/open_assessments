@@ -104,17 +104,20 @@ export const isLastPage = createSelector(
  * This function should only be used by the isNextUnlocked selector, and is exported
  * for testing purposes.
  */
-export function _isNextUnlocked(unlockNext, questionResults, questionsPerPage){
-  if(unlockNext === "ON_CORRECT") {
-    const incorrectResponse = _.find(questionResults, (response) => {
-      return !response.correct;
-    });
-    return _.isUndefined(incorrectResponse) && _.compact(_.values(questionResults)).length === questionsPerPage;
-  } else if(unlockNext === "ON_ANSWER_CHECK") {
+export function _isNextUnlocked(unlockNext, questionResults, questionsPerPage, requireNAnswers) {
+  if(requireNAnswers !== undefined) return true;
 
-    return _.compact(_.values(questionResults)).length === questionsPerPage;
+  switch(unlockNext) {
+    case "ON_CORRECT":
+      const incorrectResponse = _.find(questionResults, (response) => !response.correct);
+      return _.isUndefined(incorrectResponse) && _.compact(_.values(questionResults)).length === questionsPerPage;
+
+    case "ON_ANSWER_CHECK":
+      return _.compact(_.values(questionResults)).length === questionsPerPage;
+
+    default:
+      return true;
   }
-  return true;
 }
 
 /**
@@ -124,8 +127,23 @@ export const isNextUnlocked = createSelector(
   (state) => state.settings.unlock_next,
   questionResults,
   itemsPerPage,
+  (state) => state.settings.require_n_answers,
   _isNextUnlocked
 );
+
+/**
+ * Internal logic to determine if the next set of questions should be unlocked.
+ * This function should only be used by the isNextUnlocked selector, and is exported
+ * for testing purposes.
+ */
+export function _isPrevUnlocked() {
+  return true;
+}
+
+/**
+ * Determine if user should be allowed to go to next questions or not
+ */
+export const isPrevUnlocked = createSelector(_isPrevUnlocked);
 
 /**
  * Internal logic to calculate the current page of questions. This function

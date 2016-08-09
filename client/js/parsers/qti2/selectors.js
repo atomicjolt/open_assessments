@@ -1,6 +1,7 @@
 "use strict";
 
 import $                   from "jquery";
+import _                   from "lodash";
 import { createSelector }  from "reselect";
 
 import { getItems, loadOutcomes, transformItem }  from "./qti";
