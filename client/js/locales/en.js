@@ -4,7 +4,12 @@ export default {
       unansweredQuestionWarning: "Warning There are unanswered questions", // Warning displayed on last question if there are unanswered questions
       leavingQuizPopup: "Don’t leave!", // Text displayed on javascript window alert when a student navigates away from summative quiz
       counterQuestion: "Question {0} of {1}", // Counter for when only a single question is displayed at a time
-      counterPage: "Page {0} of {1}", // Counter for when many questions are displayed at a time
+      counterPage: "Page {0} of {1}" // Counter for when many questions are displayed at a time
+    },
+    remaining: {
+      one_left: "Answer 1 more question.",
+      many_left: "Answer {0} more questions.",
+      done: "Well done!"
     },
     assessmentComplete: {
       complete: "Quiz Complete" // Text displayed when quiz is completed

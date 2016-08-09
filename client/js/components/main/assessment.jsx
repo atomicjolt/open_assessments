@@ -138,17 +138,23 @@ export class Assessment extends React.Component{
   }
 
   renderRemainingStatus() {
-    let required = this.props.settings.require_n_answers;
+    const required = this.props.settings.require_n_answers;
     if(required === undefined) return;
 
-    let correct = this.props.correctItemCount;
-    let remaining = required - correct;
+    const correct = this.props.correctItemCount;
+    const remaining = required - correct;
+    const strings = this.props.localizedStrings;
+    let text;
 
-    if(remaining > 0) {
-      return <div class="c-remaining">Answer {remaining} more questions.</div>;
+    if(remaining == 0) {
+      text = strings.remaining.done;
+    } else if(remaining == 1) {
+      text = strings.remaining.one_left;
     } else {
-      return <div class="c-remaining">Well done!</div>;
+      text = strings.formatString(strings.remaining.many_left, remaining);
     }
+
+    return <div class="c-remaining">{text}</div>;
   }
 
   /**
