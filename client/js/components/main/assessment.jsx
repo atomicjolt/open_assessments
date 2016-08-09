@@ -293,7 +293,6 @@ export class Assessment extends React.Component{
 
     if(this.props.assessmentLoaded) {
       var nav;
-      console.log(this);
       if(this.props.settings.require_n_answers === undefined) {
         nav = (
           <TwoButtonNav
