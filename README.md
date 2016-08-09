@@ -70,6 +70,7 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     confidence_levels            - Whether or not to show confidence controls
     locale                       - Sets player language. Languages currently supported: "en"
     audio_recorder_timeout       - Maximum allowed audio recording length, should be a value of seconds.
+    require_n_answers            - Require only N answers to be submitted, not all answers.
 
     // User settings
     role                         - The current user's role. This will control if certain controls show up. The server is still responsible for security.

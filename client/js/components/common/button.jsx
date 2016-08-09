@@ -18,14 +18,18 @@ export default class Button extends React.Component {
     onClick: React.PropTypes.func,
 
     // Text to be displayed by button
-    buttonText: React.PropTypes.string
+    buttonText: React.PropTypes.string,
+
+    // Whether the button is disabled
+    disabled: React.PropTypes.boolean
   };
 
-  render(){
+  render() {
     return (
       <button
           className={`${this.props.buttonClass}`}
-          onClick={(e) => {this.props.onClick(e);}}>
+          onClick={(e) => {this.props.onClick(e);}}
+          disabled={this.props.disabled}>
         <span>{this.props.buttonText}</span>
         {this.props.children}
       </button>

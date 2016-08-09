@@ -12,7 +12,11 @@ const select = (state, props) => {
     assessmentProgress: state.assessmentProgress.toJS(),
     checkButtonText:    selectors.checkButtonText(state, props),
     questionsPerPage:   state.settings.questions_per_page || selectors.questionCount(state, props),
-    isCheckingAnswer:   selectors.isCheckingAnswer(state, props)
+    questionResults:    selectors.questionResults(state, props),
+    isCheckingAnswer:   selectors.isCheckingAnswer(state, props),
+    unlockNext:         state.settings.unlock_next,
+    requireNAnswers:    state.settings.require_n_answers,
+    correctItemCount:   selectors.correctItemCount(state, props)
   };
 };
 
@@ -21,6 +25,30 @@ const select = (state, props) => {
  * to the application.
  */
 class CheckButton extends React.Component {
+
+  shouldEnable() {
+    const required = this.props.requireNAnswers;
+    if(required !== undefined) {
+      const correct = this.props.correctItemCount;
+      const remaining = required - correct;
+      if(remaining == 0) return false;
+    }
+
+    const questionResults = this.props.questionResults;
+    const questionsPerPage = this.props.questionsPerPage;
+
+    switch(this.props.unlockNext) {
+      case "ON_CORRECT":
+        const incorrectResponse = _.find(questionResults, (response) => !response.correct);
+        return !_.isUndefined(incorrectResponse) || _.compact(_.values(questionResults)).length !== questionsPerPage;
+
+      case "ON_ANSWER_CHECK":
+        return _.compact(_.values(questionResults)).length !== questionsPerPage;
+
+      default:
+        return false;
+    }
+  }
 
   click() {
     const questionIndexes = _.range(
@@ -47,6 +75,7 @@ class CheckButton extends React.Component {
     return (
       <Button buttonClass={"c-btn c-btn--check-answer" + extraClass}
               buttonText={this.props.checkButtonText}
+              disabled={!this.shouldEnable()}
               onClick={() => this.click()}>
         {spinner}
       </Button>

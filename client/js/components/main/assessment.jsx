@@ -1,17 +1,18 @@
 "use strict";
 
-import React                                  from "react";
-import { connect }                            from "react-redux";
+import React        from "react";
+import { connect }  from "react-redux";
 
-import * as AssessmentProgress                from "../../actions/assessment_progress";
-import * as CommunicationActions              from "../../actions/communications";
-import appHistory                             from "../../history";
-import * as selectors                         from "../../selectors/assessment";
-import { localizeStrings }                    from "../../selectors/localize";
-import Item                                   from "../assessments/item";
-import Loading                                from "../assessments/loading";
-import TwoButtonNav                           from "../assessments/two_button_nav";
-import ProgressDropdown                       from "../common/progress_dropdown";
+import * as AssessmentProgress    from "../../actions/assessment_progress";
+import * as CommunicationActions  from "../../actions/communications";
+import appHistory                 from "../../history";
+import * as selectors             from "../../selectors/assessment";
+import { localizeStrings }        from "../../selectors/localize";
+import Item                       from "../assessments/item";
+import Loading                    from "../assessments/loading";
+import ThreeButtonNav             from "../assessments/three_button_nav";
+import TwoButtonNav               from "../assessments/two_button_nav";
+import ProgressDropdown           from "../common/progress_dropdown";
 
 
 const select = (state, props) => {
@@ -136,6 +137,30 @@ export class Assessment extends React.Component{
     // return true;
   }
 
+  renderRemainingStatus() {
+    const required = this.props.settings.require_n_answers;
+    if(required === undefined) return;
+
+    const correct = this.props.correctItemCount;
+    const remaining = required - correct;
+    const strings = this.props.localizedStrings;
+    let text;
+
+    if(remaining == 0) {
+      text = strings.remaining.done;
+    } else if(remaining == 1) {
+      text = strings.remaining.one_left;
+    } else if(remaining >= 2) {
+      text = strings.formatString(strings.remaining.many_left, remaining);
+    }
+    // If require_n_answers is set, but we haven't loaded the assessment yet,
+    // remaining will be NaN.  By guarding every clause with a comparison
+    // operator, NaN will fall through with no text assigned.  Otherwise, with a
+    // bare else, we'd render a string containing "NaN".
+
+    return <div class="c-remaining">{text}</div>;
+  }
+
   /**
    * Return an item for a given index in props.allQuestions
    */
@@ -203,10 +228,10 @@ export class Assessment extends React.Component{
     }
   }
 
-/**
- * Returns a warning if there are unanswered questions and we are on the
- * last question.
- */
+  /**
+   * Returns a warning if there are unanswered questions and we are on the last
+   * question.
+   */
   getWarning(){
     let unanswered = this.checkCompletion();
     let warning;
@@ -270,23 +295,29 @@ export class Assessment extends React.Component{
     let warning;// = this.getWarning(); NOTE Temporarily removed warning because we have no need for it yet, and it looks bad.
     let counter = this.getCounter();
 
-    if(this.props.assessmentLoaded){
-      var nav = (
-        <TwoButtonNav
-          localizedStrings={this.props.localizedStrings.twoButtonNav}
-          submitAssessment={() => this.submitButtonClicked()}
-          secondaryAction={this.props.secondaryActionState}
-          primaryAction={this.props.primaryActionState}/>
-      );
+    if(this.props.assessmentLoaded) {
+      var nav;
+      if(this.props.settings.require_n_answers === undefined) {
+        nav = (
+          <TwoButtonNav
+              localizedStrings={this.props.localizedStrings.twoButtonNav}
+              submitAssessment={() => this.submitButtonClicked()}
+              secondaryAction={this.props.secondaryActionState}
+              primaryAction={this.props.primaryActionState}/>
+        );
+      } else {
+        nav = (
+          <ThreeButtonNav/>
+        );
+      }
     }
 
     return (
       <div className="o-assessment-container">
         <div className="c-header">
+          {this.renderRemainingStatus()}
           <div className="c-header__title">{titleText}</div>
-          {/* TODO: Temporarily, this displays how many items have been answered
-          correctly.  It is part of the N-of-M work. */}
-          <div className="c-header__question-number">({this.props.correctItemCount}) {counter}</div>
+          <div className="c-header__question-number">{counter}</div>
         </div>
         {warning}
         {content}

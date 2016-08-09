@@ -4,14 +4,18 @@ import React      from "react";
 import {connect}  from "react-redux";
 
 import {nextQuestions, previousQuestions}  from "../../actions/assessment_progress";
-import {questionCount}                     from "../../selectors/assessment";
+import {isFirstPage, isNextUnlocked, isPrevUnlocked, isLastPage, questionCount} from "../../selectors/assessment";
 import {localizeStrings}                   from "../../selectors/localize";
 import Button                              from "../common/button";
 
 const select = (state, props) => {
   return {
     localizedStrings: localizeStrings(state, props).twoButtonNav,
-    questionsPerPage: state.settings.questions_per_page || questionCount(state, props)
+    questionsPerPage: state.settings.questions_per_page || questionCount(state, props),
+    isNextUnlocked:   isNextUnlocked(state, props),
+    isPrevUnlocked:   isPrevUnlocked(state, props),
+    isFirstPage:      isFirstPage(state, props),
+    isLastPage:       isLastPage(state, props)
   };
 };
 
@@ -32,9 +36,12 @@ class _NextButton extends React.Component {
   }
 
   render() {
+    let p = this.props;
+    let disabled = !p.isNextUnlocked || p.isLastPage;
     return (
       <Button buttonClass="c-btn c-btn--next"
               buttonText={this.props.localizedStrings.nextButton}
+              disabled={disabled}
               onClick={() => this.click()}>
         {svg}
       </Button>
@@ -53,9 +60,12 @@ class _PrevButton extends React.Component {
   }
 
   render() {
+    let p = this.props;
+    let disabled = !p.isPrevUnlocked || p.isFirstPage;
     return (
       <Button buttonClass="c-btn c-btn--previous"
               buttonText={this.props.localizedStrings.previousButton}
+              disabled={disabled}
               onClick={() => this.click()}>
         {svg}
       </Button>

@@ -25,6 +25,14 @@
   position: relative;
   white-space: nowrap;
 
+  &[disabled] {
+    visibility: hidden;
+    @include transition(all 0s);
+    * {
+      @include transition(all 0s);
+    }
+  }
+
   span{
     display: inline-block;
     height: 100%;

@@ -79,12 +79,12 @@ export function primaryActionState(state, props) {
   }
 }
 
- /**
-  * Returns an object containing the state of the nav secondary action button
-  * in the form {buttonState: PRIMARY_ACTION[*]}
-  * Where buttonState is the current state of the secondary button.
-  * e.g.(SECONDARY_ACTION.NONE, SECONDARY_ACTION.PREV).
-  */
+/**
+ * Returns an object containing the state of the nav secondary action button in
+ * the form {buttonState: PRIMARY_ACTION[*]} Where buttonState is the current
+ * state of the secondary button.  e.g.(SECONDARY_ACTION.NONE,
+ * SECONDARY_ACTION.PREV).
+ */
 export function secondaryActionState(state, props){
   if(isFirstPage(state) === true){return {buttonState: SECONDARY_ACTION.NONE};}
   return {buttonState: SECONDARY_ACTION.PREV};
