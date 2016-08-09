@@ -132,16 +132,16 @@ export const isNextUnlocked = createSelector(
 );
 
 /**
- * Internal logic to determine if the next set of questions should be unlocked.
- * This function should only be used by the isNextUnlocked selector, and is exported
- * for testing purposes.
+ * Internal logic to determine if the previous set of questions should be
+ * unlocked.  This function should only be used by the isPrevUnlocked selector,
+ * and is exported for testing purposes.
  */
 export function _isPrevUnlocked() {
   return true;
 }
 
 /**
- * Determine if user should be allowed to go to next questions or not
+ * Determine if user should be allowed to go to previous questions or not.
  */
 export const isPrevUnlocked = createSelector(_isPrevUnlocked);
 
