@@ -307,11 +307,7 @@ export class Assessment extends React.Component{
         );
       } else {
         nav = (
-          <ThreeButtonNav
-              localizedStrings={this.props.localizedStrings.twoButtonNav}
-              submitAssessment={() => this.submitButtonClicked()}
-              secondaryAction={this.props.secondaryActionState}
-              primaryAction={this.props.primaryActionState}/>
+          <ThreeButtonNav/>
         );
       }
     }
