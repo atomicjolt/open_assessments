@@ -69,7 +69,7 @@ export default class FillTheBlankWordChain extends React.Component {
         if(wordHtml.indexOf("interaction-placeholder") >= 0) {
           if(!_.isEmpty(this.props.selectedAnswer)) {
             return (
-              <div key={`${this.props.selectedAnswer.id}-${wordIndex + wrapIndex}`} className="c-blank-drop-zone">
+              <div key={`${this.props.selectedAnswer.id}-${wordIndex + wrapIndex}`}>
                 <FillTheBlankDraggableWord
                     ref={`word-${wordIndex + wrapIndex}`}
                     id={this.props.selectedAnswer.id}
