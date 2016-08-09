@@ -137,6 +137,20 @@ export class Assessment extends React.Component{
     // return true;
   }
 
+  renderRemainingStatus() {
+    let required = this.props.settings.require_n_answers;
+    if(required === undefined) return;
+
+    let correct = this.props.correctItemCount;
+    let remaining = required - correct;
+
+    if(remaining > 0) {
+      return <div class="c-remaining">Answer {remaining} more questions.</div>;
+    } else {
+      return <div class="c-remaining">Well done!</div>;
+    }
+  }
+
   /**
    * Return an item for a given index in props.allQuestions
    */
@@ -296,10 +310,9 @@ export class Assessment extends React.Component{
     return (
       <div className="o-assessment-container">
         <div className="c-header">
+          {this.renderRemainingStatus()}
           <div className="c-header__title">{titleText}</div>
-          {/* TODO: Temporarily, this displays how many items have been answered
-          correctly.  It is part of the N-of-M work. */}
-          <div className="c-header__question-number">({this.props.correctItemCount}) {counter}</div>
+          <div className="c-header__question-number">{counter}</div>
         </div>
         {warning}
         {content}
