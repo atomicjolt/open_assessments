@@ -5,6 +5,14 @@
   border-bottom: .2rem solid $header-border;
 }
 
+  .c-header__remaining{
+    color: $primary;
+    @include bold;
+    font-size: 2rem;
+    float: left;
+    line-height: 4.6rem;
+  }
+
   .c-header__title{
     color: $primary;
     @include bold;
