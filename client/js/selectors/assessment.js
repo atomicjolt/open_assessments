@@ -56,7 +56,7 @@ export const isCheckingAnswer = makeDispatchingSelector("isCheckingAnswer");
 
 /**
  * The text to display to the user on the "Check Answer" button.  The text
- * depends on what time of Interactions are displayed.
+ * depends on what type of Interactions are displayed.
  */
 export const checkButtonText = makeDispatchingSelector("checkButtonText");
 
