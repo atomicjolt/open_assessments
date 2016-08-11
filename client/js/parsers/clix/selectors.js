@@ -51,6 +51,7 @@ export function checkButtonText(state, props) {
     case "short_answer_question":
       return localizedStrings.saveAnswerButton;
 
+    case "file_upload_question":
     case "audio_upload_question":
     case "movable_words_sandbox":
       return localizedStrings.saveFileButton;
