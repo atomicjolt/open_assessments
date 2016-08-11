@@ -10,12 +10,12 @@ export default class {
   sendSize(){
 
     const height = Math.max(
-            document.body.clientHeight,
-            document.body.scrollHeight,
-            document.body.offsetHeight,
-            document.documentElement.clientHeight,
-            document.documentElement.scrollHeight,
-            document.documentElement.offsetHeight);
+      document.body.clientHeight,
+      document.body.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.clientHeight,
+      document.documentElement.scrollHeight,
+      document.documentElement.offsetHeight);
 
     const width = Math.max(
       document.body.clientWidth,              /* width of <body> */
