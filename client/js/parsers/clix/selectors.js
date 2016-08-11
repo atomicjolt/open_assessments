@@ -85,7 +85,9 @@ export function primaryActionState(state, props) {
  * state of the secondary button.  e.g.(SECONDARY_ACTION.NONE,
  * SECONDARY_ACTION.PREV).
  */
-export function secondaryActionState(state, props){
-  if(isFirstPage(state) === true){return {buttonState: SECONDARY_ACTION.NONE};}
-  return {buttonState: SECONDARY_ACTION.PREV};
+export function secondaryActionState(state, props) {
+  var hide = isFirstPage(state);
+  return {
+    buttonState: hide ? SECONDARY_ACTION.NONE : SECONDARY_ACTION.PREV
+  };
 }
