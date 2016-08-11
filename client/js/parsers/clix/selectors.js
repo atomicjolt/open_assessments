@@ -52,6 +52,7 @@ export function checkButtonText(state, props) {
       return localizedStrings.saveAnswerButton;
 
     case "audio_upload_question":
+    case "movable_words_sandbox":
       return localizedStrings.saveFileButton;
 
     default:
