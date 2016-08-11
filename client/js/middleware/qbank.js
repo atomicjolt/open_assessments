@@ -58,6 +58,14 @@ function getBody(userInput, question){
 
       break;
 
+    case "movable_words_sandbox":
+      const audioFiles = userInput.filter((item) => item instanceof Blob);
+      var formData = new FormData();
+      formData.append('submission', audioFiles.slice(-1));
+      return formData;
+
+      break;
+
     default:
       return {
         type,
