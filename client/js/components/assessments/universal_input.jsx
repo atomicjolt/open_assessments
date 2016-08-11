@@ -205,10 +205,14 @@ export default class UniversalInput extends React.Component{
         break;
       case "movable_words_sandbox":
         var selectAnswer = _.partialRight(props.selectAnswer, false);
+
+        // Moveable words sandbox stores both audio files, and word id's in global
+        // state. Grab only the word id's for the word chain.
+        const words = props.response.filter((item) => typeof item === 'string');
         answerInputs = <SentenceSandbox
             answers={item.answers}
             selectAnswer={selectAnswer}
-            wordChain={props.response}
+            wordChain={words}
             localizedStrings={this.props.localizedStrings.audioUpload}
             timeout={this.props.settings.audio_recorder_timeout}
             itemClassName="c-word"
