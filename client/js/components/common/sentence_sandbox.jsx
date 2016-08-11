@@ -10,6 +10,7 @@ export default class SentenceSandbox extends React.Component {
       <AudioUpload
         timeout={this.props.timeout}
         localizedStrings={this.props.localizedStrings}
+        selectAnswer={this.props.selectAnswer}
       />
     </div>
   }
