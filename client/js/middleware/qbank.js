@@ -74,6 +74,9 @@ function getBody(userInput, question){
   }
 }
 
+/**
+ * Sends a post request to qbank with qbank specific fields already set. 
+ */
 function postQbank(state, url, body = {}, headers = {}, params={}){
   const defaultHeaders = {
     "X-Api-Proxy": state.settings.eid,
