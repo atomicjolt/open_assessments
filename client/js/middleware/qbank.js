@@ -77,7 +77,7 @@ function getBody(userInput, question){
 function postQbank(state, url, body = {}, headers = {}, params={}){
   const defaultHeaders = {
     "X-Api-Proxy": state.settings.eid,
-    "X-API-LOCALE": state.settings.locale
+    // "X-API-LOCALE": state.settings.locale TODO enable when supported by qbank
   };
   return api.post(
     url,
@@ -112,17 +112,6 @@ function checkAnswers(store, action) {
       type: AssessmentProgressConstants.CHECK_QUESTIONS,
       numQuestions: questionIndexes.length
     });
-
-    // const promise = api.post(
-    //   url,
-    //   state.settings.api_url,
-    //   state.jwt,
-    //   state.settings.csrf_token,
-    //   {},
-    //   body,
-    //   { "X-Api-Proxy": state.settings.eid }
-    // );
-
 
     const promise = postQbank(state, url, body);
     if(promise){
@@ -172,7 +161,6 @@ export default {
       sessionId: state.settings.eid
     };
 
-    // const metaPromise = api.post(metaUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
     const metaPromise = postQbank(state, metaUrl, body);
 
     if(metaPromise){
@@ -271,7 +259,6 @@ export default {
 
       const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
 
-      // const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {}, { "X-Api-Proxy": state.settings.eid });
       const promise = postQbank(state, url);
 
       if(promise){
