@@ -75,12 +75,12 @@ function getBody(userInput, question){
 }
 
 /**
- * Sends a post request to qbank with qbank specific fields already set. 
+ * Sends a post request to qbank with qbank specific fields already set.
  */
 function postQbank(state, url, body = {}, headers = {}, params={}){
   const defaultHeaders = {
     "X-Api-Proxy": state.settings.eid,
-    // "X-API-LOCALE": state.settings.locale TODO enable when supported by qbank
+    "X-API-LOCALE": state.settings.locale
   };
   return api.post(
     url,
