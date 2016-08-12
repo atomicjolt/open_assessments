@@ -74,6 +74,22 @@ function getBody(userInput, question){
   }
 }
 
+function postQbank(url, body = {}, headers = {}, params={}){
+  const defaultHeaders = {
+    "X-Api-Proxy": state.settings.eid,
+    "X-API-LOCALE": state.settings.locale
+  };
+  return api.post(
+    url,
+    state.settings.api_url,
+    state.jwt,
+    state.settings.csrf_token,
+    params,
+    body,
+    _.merge(defaultHeaders, headers)
+  );
+};
+
 function checkAnswers(store, action) {
   const state = store.getState();
   const currentItemIndex = state.assessmentProgress.get("currentItemIndex");
@@ -97,15 +113,17 @@ function checkAnswers(store, action) {
       numQuestions: questionIndexes.length
     });
 
-    const promise = api.post(
-      url,
-      state.settings.api_url,
-      state.jwt,
-      state.settings.csrf_token,
-      {},
-      body,
-      { "X-Api-Proxy": state.settings.eid }
-    );
+    // const promise = api.post(
+    //   url,
+    //   state.settings.api_url,
+    //   state.jwt,
+    //   state.settings.csrf_token,
+    //   {},
+    //   body,
+    //   { "X-Api-Proxy": state.settings.eid }
+    // );
+
+    const promise = postQbank(url, body);
 
     if(promise){
       promise.then((response) => {
@@ -154,7 +172,9 @@ export default {
       sessionId: state.settings.eid
     };
 
-    const metaPromise = api.post(metaUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
+    // const metaPromise = api.post(metaUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
+    const metaPromise = postQbank(metaUrl, body);
+
     if(metaPromise){
       metaPromise.then((response, error) => {
         store.dispatch({
@@ -251,7 +271,8 @@ export default {
 
       const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
 
-      const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {}, { "X-Api-Proxy": state.settings.eid });
+      // const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {}, { "X-Api-Proxy": state.settings.eid });
+      const promise = postQbank(url);
       if(promise){
         promise.then((response, error) => {
           store.dispatch({
