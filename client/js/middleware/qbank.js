@@ -74,10 +74,10 @@ function getBody(userInput, question){
   }
 }
 
-function postQbank(url, body = {}, headers = {}, params={}){
+function postQbank(state, url, body = {}, headers = {}, params={}){
   const defaultHeaders = {
     "X-Api-Proxy": state.settings.eid,
-    "X-API-LOCALE": state.settings.locale
+    // "X-API-LOCALE": state.settings.locale
   };
   return api.post(
     url,
@@ -123,7 +123,7 @@ function checkAnswers(store, action) {
     //   { "X-Api-Proxy": state.settings.eid }
     // );
 
-    const promise = postQbank(url, body);
+    const promise = postQbank(state, url, body);
 
     if(promise){
       promise.then((response) => {
@@ -173,7 +173,7 @@ export default {
     };
 
     // const metaPromise = api.post(metaUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, body, { "X-Api-Proxy": state.settings.eid });
-    const metaPromise = postQbank(metaUrl, body);
+    const metaPromise = postQbank(state, metaUrl, body);
 
     if(metaPromise){
       metaPromise.then((response, error) => {
@@ -272,7 +272,7 @@ export default {
       const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/finish`;
 
       // const promise = api.post(url, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, {}, { "X-Api-Proxy": state.settings.eid });
-      const promise = postQbank(url);
+      const promise = postQbank(state, url);
       if(promise){
         promise.then((response, error) => {
           store.dispatch({
