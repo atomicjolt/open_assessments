@@ -64,7 +64,7 @@ export const primaryActionState = makeDispatchingSelector("primaryActionState");
 export const secondaryActionState = makeDispatchingSelector("secondaryActionState");
 
 // Selectors that interact with abstracted assessment data that has come from the
-// format specific selectors. This logic can be shared by all assessment backends. 
+// format specific selectors. This logic can be shared by all assessment backends.
 const currentItemIndex = (state) => state.assessmentProgress.get('currentItemIndex');
 const itemsPerPage = (state) => state.settings.questions_per_page;
 
@@ -105,7 +105,7 @@ export const isLastPage = createSelector(
  * for testing purposes.
  */
 export function _isNextUnlocked(unlockNext, questionResults, questionsPerPage, requireNAnswers) {
-  if(requireNAnswers !== undefined) return true;
+  if(requireNAnswers !== -1) return true;
 
   switch(unlockNext) {
     case "ON_CORRECT":
@@ -127,7 +127,7 @@ export const isNextUnlocked = createSelector(
   (state) => state.settings.unlock_next,
   questionResults,
   itemsPerPage,
-  (state) => state.settings.require_n_answers,
+  (state) => state.assessment.requireNAnswers,
   _isNextUnlocked
 );
 

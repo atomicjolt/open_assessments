@@ -15,7 +15,7 @@ const select = (state, props) => {
     questionResults:    selectors.questionResults(state, props),
     isCheckingAnswer:   selectors.isCheckingAnswer(state, props),
     unlockNext:         state.settings.unlock_next,
-    requireNAnswers:    state.settings.require_n_answers,
+    requireNAnswers:    state.assessment.requireNAnswers,
     correctItemCount:   selectors.correctItemCount(state, props)
   };
 };
@@ -28,7 +28,7 @@ class CheckButton extends React.Component {
 
   shouldEnable() {
     const required = this.props.requireNAnswers;
-    if(required !== undefined) {
+    if(required !== -1) {
       const correct = this.props.correctItemCount;
       const remaining = required - correct;
       if(remaining == 0) return false;
