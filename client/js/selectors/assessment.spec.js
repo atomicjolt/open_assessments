@@ -48,8 +48,8 @@ describe('isNextUnlocked', () => {
       answerIds:["1", "2"],
       correct:true,
       feedback:"<p>Feedbac</p>"
-    }
-  }
+    };
+  };
   describe('unlockNext is ON_CORRECT', () => {
     var nextUnlocked, responses, questionsPerPage;
     beforeEach(() => {
@@ -57,7 +57,7 @@ describe('isNextUnlocked', () => {
       responses = {};
       questionsPerPage = 12;
       _.range(12).forEach((i) =>{createResponse(i, responses)}); //TODO doc
-    })
+    });
 
     it('should return true when all answers in current page are correct', () => {
       const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage, -1);
