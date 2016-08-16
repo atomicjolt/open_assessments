@@ -21,7 +21,7 @@ export default class Button extends React.Component {
     buttonText: React.PropTypes.string,
 
     // Whether the button is disabled
-    disabled: React.PropTypes.boolean
+    disabled: React.PropTypes.bool
   };
 
   render() {
