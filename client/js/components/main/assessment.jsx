@@ -138,8 +138,8 @@ export class Assessment extends React.Component{
   }
 
   renderRemainingStatus() {
-    const required = this.props.settings.require_n_answers;
-    if(required === undefined) return;
+    const required = this.props.assessment.requireNAnswers;
+    if(required === -1) return;
 
     const correct = this.props.correctItemCount;
     const remaining = required - correct;
@@ -153,10 +153,6 @@ export class Assessment extends React.Component{
     } else if(remaining >= 2) {
       text = strings.formatString(strings.remaining.many_left, remaining);
     }
-    // If require_n_answers is set, but we haven't loaded the assessment yet,
-    // remaining will be NaN.  By guarding every clause with a comparison
-    // operator, NaN will fall through with no text assigned.  Otherwise, with a
-    // bare else, we'd render a string containing "NaN".
 
     return <div className="c-header__remaining">{text}</div>;
   }
@@ -297,7 +293,7 @@ export class Assessment extends React.Component{
 
     if(this.props.assessmentLoaded) {
       var nav;
-      if(this.props.settings.require_n_answers === undefined) {
+      if(this.props.assessment.requireNAnswers === -1) {
         nav = (
           <TwoButtonNav
               localizedStrings={this.props.localizedStrings.twoButtonNav}

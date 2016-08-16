@@ -17,6 +17,7 @@ export default class Parser {
     return {
       standard: AssessmentFormats.CLIx,
       id: assessmentId,
+      requireNAnswers: json.nOfM,
       items
     };
   }

@@ -48,31 +48,31 @@ describe('isNextUnlocked', () => {
       answerIds:["1", "2"],
       correct:true,
       feedback:"<p>Feedbac</p>"
-    }
-  }
+    };
+  };
   describe('unlockNext is ON_CORRECT', () => {
     var nextUnlocked, responses, questionsPerPage;
     beforeEach(() => {
       nextUnlocked = "ON_CORRECT";
       responses = {};
       questionsPerPage = 12;
-      _.range(12).forEach((i) =>{createResponse(i, responses)}); //TODO doc
-    })
+      _.range(12).forEach((i) =>{ createResponse(i, responses); }); //TODO doc
+    });
 
     it('should return true when all answers in current page are correct', () => {
-      const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage);
+      const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage, -1);
       expect(result).toEqual(true);
     });
 
     it('should return false when there is an incorrect answer', () => {
       responses[3].correct = false;
-      const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage);
+      const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage, -1);
       expect(result).toEqual(false);
     });
 
     it('should return false when there is an unanswered question', () => {
       delete responses[4];
-      const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage);
+      const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage, -1);
       expect(result).toEqual(false);
     });
   });
@@ -83,16 +83,16 @@ describe('isNextUnlocked', () => {
       nextUnlocked = "ON_ANSWER_CHECK";
       responses = {};
       questionsPerPage = 12;
-      _.range(12).forEach((i) =>{createResponse(i, responses)}); //TODO doc
+      _.range(12).forEach((i) =>{ createResponse(i, responses); }); //TODO doc
     });
 
     it('should return true when all answers have been checked', () => {
-      const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage);
+      const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage, -1);
       expect(result).toEqual(true);
     });
     it('should return false otherwise', () => {
       delete responses[2];
-      const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage);
+      const result = AssessmentSelectors._isNextUnlocked(nextUnlocked, responses, questionsPerPage, -1);
       expect(result).toEqual(false);
     });
   });
