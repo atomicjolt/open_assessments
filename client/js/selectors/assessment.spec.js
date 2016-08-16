@@ -56,7 +56,7 @@ describe('isNextUnlocked', () => {
       nextUnlocked = "ON_CORRECT";
       responses = {};
       questionsPerPage = 12;
-      _.range(12).forEach((i) =>{createResponse(i, responses)}); //TODO doc
+      _.range(12).forEach((i) =>{ createResponse(i, responses); }); //TODO doc
     });
 
     it('should return true when all answers in current page are correct', () => {
@@ -83,7 +83,7 @@ describe('isNextUnlocked', () => {
       nextUnlocked = "ON_ANSWER_CHECK";
       responses = {};
       questionsPerPage = 12;
-      _.range(12).forEach((i) =>{createResponse(i, responses)}); //TODO doc
+      _.range(12).forEach((i) =>{ createResponse(i, responses); }); //TODO doc
     });
 
     it('should return true when all answers have been checked', () => {
