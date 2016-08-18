@@ -309,7 +309,9 @@ export class Assessment extends React.Component{
     }
 
     return (
-      <div className="o-assessment-container">
+      <div className="o-assessment-container"
+           lang={this.props.settings.locale}
+           dir={this.props.localizedStrings.dir}>
         <div className="c-header">
           {this.renderRemainingStatus()}
           <div className="c-header__title">{titleText}</div>
