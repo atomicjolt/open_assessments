@@ -1,5 +1,6 @@
 export default {
   en: {
+    dir: "ltr",
     assessment: {
       unansweredQuestionWarning: "Warning There are unanswered questions", // Warning displayed on last question if there are unanswered questions
       leavingQuizPopup: "Don’t leave!", // Text displayed on javascript window alert when a student navigates away from summative quiz

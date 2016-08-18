@@ -1,10 +1,11 @@
 export default {
   te: {
+    dir: "ltr",
     assessment: {
       unansweredQuestionWarning: "హెచ్చరిక జవాబు లేని ప్రశ్నలు ఉన్నాయి", // Warning displayed on last question if there are unanswered questions
       leavingQuizPopup: "వదలొద్దు!", // Text displayed on javascript window alert when a student navigates away from summative quiz
       counterQuestion: "ప్రశ్న {0} యొక్క {1}", // Counter for when only a single question is displayed at a time
-      counterPage: "పేజీ {0} యొక్క {1}", // Counter for when many questions are displayed at a time
+      counterPage: "పేజీ {0} యొక్క {1}" // Counter for when many questions are displayed at a time
     },
     remaining: {
       one_left: "Answer 1 more question.",
