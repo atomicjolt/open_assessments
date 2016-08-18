@@ -1,10 +1,15 @@
 "use strict";
 
 import en     from './en';
-import it     from './it';
-import te     from './te';
+import he     from './he';
 import hi     from './hi';
+import te     from './te';
 
 export default () => {
-  return {...en, ...it, ...te, ...hi};
+  return {
+      ...en,
+      ...he,
+      ...hi,
+      ...te
+  };
 };

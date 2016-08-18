@@ -1,5 +1,6 @@
 export default {
   hi: {
+    dir: "ltr",
     assessment: {
       unansweredQuestionWarning: "चेतावनी! कुछ सवालों के जवाब नहीं हैं", // Warning displayed on last question if there are unanswered questions
       leavingQuizPopup: "ठहरिए!", // Text displayed on javascript window alert when a student navigates away from summative quiz

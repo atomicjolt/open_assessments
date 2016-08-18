@@ -37,39 +37,40 @@ export class MovableWords extends React.Component {
     const answersById = {};
 
     _.each(this.props.answers, (answer) => {
-      answersById[answer.id] = answer
-    })
-
-    const availableWords = _.map(answersById, (answer) => {
-      return <DraggableWord
-        key={answer.id}
-        id={answer.id}
-        material={answer.material}
-        hide={_.includes(this.props.wordChain, answer.id)}
-        wordClassName={this.props.itemClassName}
-      />
+      answersById[answer.id] = answer;
     });
 
-    return <div>
-      <div className="c-word-box">
-        <GroupDropZone
-          ref={(ref) => this.groupDropZone = ref}
-          dropItem={(answerIds, dropOffset) => {this.dropWordsInCloud(answerIds, dropOffset)}}
-          className="c-word-box__contain"
-        >
-          {availableWords}
-        </GroupDropZone>
+    const availableWords = _.map(answersById, (answer) => {
+      return (
+        <DraggableWord
+            key={answer.id}
+            id={answer.id}
+            material={answer.material}
+            hide={_.includes(this.props.wordChain, answer.id)}
+            wordClassName={this.props.itemClassName}/>
+      );
+    });
+
+    return (
+      <div dir="ltr">
+        <div className="c-word-box">
+          <GroupDropZone
+              ref={(ref) => this.groupDropZone = ref}
+              dropItem={(answerIds, dropOffset) => { this.dropWordsInCloud(answerIds, dropOffset); }}
+              className="c-word-box__contain">
+            {availableWords}
+          </GroupDropZone>
+        </div>
+        <ItemChain
+            linkWord={(answerId) => { this.linkWord(answerId); }}
+            answersById={answersById}
+            wordChain={this.props.wordChain}
+            itemClassName={this.props.itemClassName}
+            answerBoxClassName={this.props.answerBoxClassName}
+            noStartBlock={this.props.noStartBlock}/>
+        <CustomDragLayer/>
       </div>
-      <ItemChain
-        linkWord={(answerId) => { this.linkWord(answerId); }}
-        answersById={answersById}
-        wordChain={this.props.wordChain}
-        itemClassName={this.props.itemClassName}
-        answerBoxClassName={this.props.answerBoxClassName}
-        noStartBlock={this.props.noStartBlock}
-      />
-      <CustomDragLayer />
-    </div>
+    );
   }
 }
 

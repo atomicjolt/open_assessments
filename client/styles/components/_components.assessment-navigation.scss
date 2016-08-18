@@ -57,7 +57,6 @@
     color: $btn-secondary-text;
     border-color: $btn-secondary-border;
     @include transition(all 0.2s ease);
-    padding-left: 3rem;
 
     &:hover{
       border-color: $btn-secondary-border-hover;
@@ -70,9 +69,6 @@
     }
 
     svg {
-      left: .3rem;
-      @include transform(rotate(90deg));
-
       path{
         fill: $btn-secondary-text;
       }
@@ -80,8 +76,6 @@
   }
 
   a.c-btn--next, .c-btn--next{
-    padding-right: 3rem;
-
     &:hover{
       svg path{
         fill: $btn-primary-text-hover;
@@ -89,14 +83,44 @@
     }
 
     svg {
-      right: .3rem;
-      @include transform(rotate(-90deg));
-
       path{
         fill: $btn-primary-text;
       }
     }
   }
+
+  [dir="ltr"] .c-btn--previous{
+    padding-left: 3rem;
+    svg {
+      left: .3rem;
+      @include transform(rotate(90deg));
+    }
+  }
+
+  [dir="ltr"] .c-btn--next{
+    padding-right: 3rem;
+    svg {
+      right: .3rem;
+      @include transform(rotate(-90deg));
+    }
+  }
+
+  [dir="rtl"] .c-btn--previous{
+    padding-right: 3rem;
+    svg {
+      right: .3rem;
+      @include transform(rotate(-90deg));
+    }
+  }
+
+  [dir="rtl"] .c-btn--next{
+    padding-left: 3rem;
+    svg {
+      left: .3rem;
+      @include transform(rotate(90deg));
+    }
+  }
+
 
   a.c-btn--check-answer, .c-btn--check-answer,
   a.c-btn--finish, .c-btn--finish,
