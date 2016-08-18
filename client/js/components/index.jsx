@@ -5,7 +5,6 @@ import { connect }                      from "react-redux";
 import { loadAssessment }               from "../actions/assessment";
 import * as CommunicationActions        from "../actions/communications";
 import LocalizedStrings                 from 'react-localization';
-import locales                          from '../locales/locales';
 import appHistory                       from "../history";
 
 const select = (state) => {
