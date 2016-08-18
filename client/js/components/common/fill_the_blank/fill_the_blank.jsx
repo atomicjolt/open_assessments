@@ -1,3 +1,4 @@
+import _                              from "lodash";
 import React                          from "react";
 import ReactDOM                       from "react-dom";
 import { DragDropContext }            from 'react-dnd';
@@ -38,48 +39,48 @@ export class FillTheBlank extends React.Component {
     const answersById = {};
 
     _.each(this.props.answers, (answer) => {
-      answersById[answer.id] = answer
+      answersById[answer.id] = answer;
     });
 
-    /* We split the question on the interaction placeholders, then render
-       dropzones where the interactions would be.
-
-       Alternatively we could render invisible dropzones over the top of styled
-       placeholders, but that would require checking if anything has changed
-       in componentDidUpdate, and if so finding the placeholders after rendering
-       then absolutely positioning an invisible dropzone over the styled
-       placeholder.
-    */
+    /*
+     * We split the question on the interaction placeholders, then render
+     * dropzones where the interactions would be.
+     *
+     * Alternatively we could render invisible dropzones over the top of styled
+     * placeholders, but that would require checking if anything has changed in
+     * componentDidUpdate, and if so finding the placeholders after rendering
+     * then absolutely positioning an invisible dropzone over the styled
+     * placeholder.
+     */
 
     const availableWords = _.map(answersById, (answer) => {
       return <FillTheBlankDraggableWord
-        key={answer.id}
-        id={answer.id}
-        material={answer.material}
-        hide={_.includes(this.props.selectedAnswer, answer.id)}
-        wordClassName="c-word"
-      />
+                 key={answer.id}
+                 id={answer.id}
+                 material={answer.material}
+                 hide={_.includes(this.props.selectedAnswer, answer.id)}
+                 wordClassName="c-word"/>;
     });
 
-    return <div>
-      <div className="c-word-box">
-        <FillTheBlankWordDropZone
-          ref={(ref) => this.FillTheBlankWordDropZone = ref}
-          dropItem={(answerId, dropOffset) => {this.dropWordInCloud(answerId, dropOffset)}}
-          className="c-word-box__contain"
-        >
-          {availableWords}
-        </FillTheBlankWordDropZone>
+    return (
+      <div dir="ltr">
+        <div className="c-word-box">
+          <FillTheBlankWordDropZone
+              ref={(ref) => this.FillTheBlankWordDropZone = ref}
+              dropItem={(answerId, dropOffset) => { this.dropWordInCloud(answerId, dropOffset); }}
+              className="c-word-box__contain">
+            {availableWords}
+          </FillTheBlankWordDropZone>
+        </div>
+        <div>
+          <FillTheBlankWordChain
+              sentenceWords={this.props.sentenceWithBlank}
+              selectedAnswer={answersById[_.first(this.props.selectedAnswer)]}
+              linkWord={(answerId) => { this.linkWord(answerId); }}/>
+        </div>
+        <CustomDragLayer/>
       </div>
-      <div>
-        <FillTheBlankWordChain
-          sentenceWords={this.props.sentenceWithBlank}
-          selectedAnswer={answersById[_.first(this.props.selectedAnswer)]}
-          linkWord={(answerId) => { this.linkWord(answerId); }}
-        />
-      </div>
-      <CustomDragLayer />
-    </div>
+    );
   }
 }
 
