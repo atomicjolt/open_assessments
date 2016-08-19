@@ -19,7 +19,10 @@ const select = (state) => {
 export class Index extends React.Component {
 
   componentWillMount() {
-    console.log(availableLocales());
+    parent.postMessage({
+      open_assessments_msg: "open_assessments_available_locales",
+      available_locales: availableLocales()
+    }, "*");
 
     this.props.loadAssessment();
 
