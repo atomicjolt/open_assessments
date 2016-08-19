@@ -191,12 +191,12 @@ export default {
             });
           },
           (error) => {
-            store.dispatch(displayError(error.message));
+            store.dispatch(displayError("There was a problem getting the assessment from QBank", error));
           });
         }
       },
       (error) => {
-        store.dispatch(displayError(error.message));
+        store.dispatch(displayError("There was a problem creating the assessmentstaken in QBank", error));
       });
     }
   },

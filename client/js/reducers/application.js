@@ -7,7 +7,8 @@ export default (state = initialState, action) => {
   switch(action.type){
     case Constants.APP_DISPLAY_ERROR:
       return {
-        error: action.message
+        error: action.error,
+        error_message: action.message
       };
     default:
       return state;

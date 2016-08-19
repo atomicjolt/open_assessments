@@ -22,7 +22,7 @@ const select = (state, props) => {
     settings        : state.settings,
 
     // If a vital API call(get assessment, etc) fails the error will be put here.
-    applicationError: state.application.error,
+    application     : state.application,
 
     // Assessment to be rendered.
     assessment      : state.assessment,
@@ -218,8 +218,11 @@ export class Assessment extends React.Component{
    * or loading bar should be rendered
    */
   getContent(){
-    if(this.props.applicationError) {
-      return <p className="c-player-error">{this.props.applicationError}</p>;
+    if(this.props.application.error_message) {
+      return <div className="c-player-error">
+        <p>{this.props.application.error_message}:</p>
+        <blockquote>{this.props.application.error.message}</blockquote>
+      </div>;
     } else if(this.props.assessmentProgress.isSubmitted){
       return <Loading />;
     } else if(!this.props.assessmentLoaded) {
