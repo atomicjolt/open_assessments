@@ -1,11 +1,12 @@
 "use strict";
 
-import React                            from "react";
-import { connect }                      from "react-redux";
-import { loadAssessment }               from "../actions/assessment";
-import * as CommunicationActions        from "../actions/communications";
-import LocalizedStrings                 from 'react-localization';
-import appHistory                       from "../history";
+import React        from "react";
+import { connect }  from "react-redux";
+
+import { loadAssessment }         from "../actions/assessment";
+import * as CommunicationActions  from "../actions/communications";
+import appHistory                 from "../history";
+import { availableLocales }       from "../locales/locales";
 
 const select = (state) => {
   return {
@@ -17,34 +18,36 @@ const select = (state) => {
 
 export class Index extends React.Component {
 
-  componentWillMount(){
-    // Load the assessment
+  componentWillMount() {
+    console.log(availableLocales());
+
     this.props.loadAssessment();
 
     if(this.props.userAttempts &&
-      this.props.userAttempts >= this.props.maxAttempts) {
+       this.props.userAttempts >= this.props.maxAttempts) {
       appHistory.push("retries-exceeded");
     } else if(!this.props.enableStart) {
       appHistory.push("assessment");
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.sendSize();
     this.props.scrollParentToTop();
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     this.props.sendSize();
     this.props.scrollParentToTop();
   }
 
-  render(){
-    return <div>
-      {this.props.children}
-    </div>;
+  render() {
+    return (
+      <div>
+        {this.props.children}
+      </div>
+    );
   }
-
 }
 
-export default connect(select, { loadAssessment, ...CommunicationActions }, null, { withRefs: true })(Index);
+export default connect(select, {loadAssessment, ...CommunicationActions}, null, {withRefs: true})(Index);

@@ -1,5 +1,6 @@
 export default {
   hi: {
+    name: "Hindi",
     dir: "ltr",
     assessment: {
       unansweredQuestionWarning: "चेतावनी! कुछ सवालों के जवाब नहीं हैं", // Warning displayed on last question if there are unanswered questions
