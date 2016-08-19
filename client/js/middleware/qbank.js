@@ -9,6 +9,7 @@ import { DONE }                                     from "../constants/wrapper";
 import { parseFeedback }                            from "../parsers/clix/parser";
 import { parse }                                    from "../parsers/assessment";
 import { transformItem }                            from "../parsers/clix/clix";
+import { displayError }                             from "../actions/application";
 
 function getBody(userInput, question){
   var type = question.json.genusTypeId;
@@ -188,8 +189,14 @@ export default {
               response,
               error
             });
+          },
+          (error) => {
+            store.dispatch(displayError(error.message));
           });
         }
+      },
+      (error) => {
+        store.dispatch(displayError(error.message));
       });
     }
   },
