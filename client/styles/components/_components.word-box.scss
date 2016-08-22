@@ -215,10 +215,11 @@
   }
 }
 
-.c-blank-drop-zone{
+.c-blank-drop-zone {
   background: $primary;
-  padding: 0rem 0.5rem;
-  margin: 0rem 0.4rem;
+  padding: 0.5rem;
+  height: 4.5rem;
+  margin: 0 0.4rem;
   position: relative;
   float: left;
 }
