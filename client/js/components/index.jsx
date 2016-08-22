@@ -5,6 +5,7 @@ import { connect }  from "react-redux";
 
 import { loadAssessment }         from "../actions/assessment";
 import * as CommunicationActions  from "../actions/communications";
+import { setLocale }              from "../actions/locale";
 import appHistory                 from "../history";
 import { availableLocales }       from "../locales/locales";
 
@@ -37,11 +38,23 @@ export class Index extends React.Component {
   componentDidMount() {
     this.props.sendSize();
     this.props.scrollParentToTop();
+    window.addEventListener("message", (message) => this.onMessage(message), false);
   }
 
   componentDidUpdate() {
     this.props.sendSize();
     this.props.scrollParentToTop();
+  }
+
+  onMessage(message) {
+    const data = message.data;
+    const type = data.open_assessments_msg;
+
+    switch(type) {
+      case "open_assessments_set_locale":
+        this.props.setLocale(data.locale);
+        break;
+    }
   }
 
   render() {
@@ -53,4 +66,4 @@ export class Index extends React.Component {
   }
 }
 
-export default connect(select, {loadAssessment, ...CommunicationActions}, null, {withRefs: true})(Index);
+export default connect(select, {loadAssessment, setLocale, ...CommunicationActions}, null, {withRefs: true})(Index);
