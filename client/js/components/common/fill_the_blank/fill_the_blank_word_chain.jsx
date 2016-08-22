@@ -38,7 +38,7 @@ export default class FillTheBlankWordChain extends React.Component {
             </FillTheBlankWordDropZone>
           );
         }
-      } else
+      }
 
       return (
         <Word
