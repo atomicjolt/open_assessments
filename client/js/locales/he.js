@@ -1,5 +1,6 @@
 export default {
   he: {
+    name: "Hebrew",
     dir: "rtl",
     assessment: {
       unansweredQuestionWarning: "Warning There are unanswered questions", // Warning displayed on last question if there are unanswered questions

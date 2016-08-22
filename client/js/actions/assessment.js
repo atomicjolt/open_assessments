@@ -29,7 +29,7 @@ export const assessmentPostAnalytics = (resultsId, userId='', contextId='') => (
 
 export const assessmentPostLtiOutcome = (resultsId) => ({
   type:Constants.ASSESSMENT_POST_LTI_OUTCOME,
-  resultsId,
+  resultsId
 });
 
 export const assessmentViewed = () => ({

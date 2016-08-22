@@ -1,5 +1,6 @@
 export default {
   te: {
+    name: "Telugu",
     dir: "ltr",
     assessment: {
       unansweredQuestionWarning: "హెచ్చరిక జవాబు లేని ప్రశ్నలు ఉన్నాయి", // Warning displayed on last question if there are unanswered questions
