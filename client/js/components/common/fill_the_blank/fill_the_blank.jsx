@@ -59,7 +59,7 @@ export class FillTheBlank extends React.Component {
                  id={answer.id}
                  material={answer.material}
                  hide={_.includes(this.props.selectedAnswer, answer.id)}
-                 wordClassName="c-word"/>;
+                 wordClassName="c-word c-word--blank"/>;
     });
 
     return (
