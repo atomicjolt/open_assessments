@@ -3,7 +3,7 @@
 import {Constants}  from "../actions/locale";
 
 
-const initialState = "en";
+const initialState = null;
 
 export default (state=initialState, action) => {
 
