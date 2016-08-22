@@ -104,7 +104,8 @@ function reset(){
     secondaryActionState: {buttonState: SECONDARY_ACTION.PREV},
     sendSize: () => {},
     settings,
-    submitAssessment: () => {}
+    submitAssessment: () => {},
+    application: {}
   };
 
   result = TestUtils.renderIntoDocument(
