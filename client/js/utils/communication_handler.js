@@ -5,28 +5,37 @@ export default class {
 
   constructor(){
     Communicator.enableListener(this);
+    this.height =
   }
 
-  sendSize(){
-
-    const height = Math.max(
+  getHeight(){
+    return Math.max(
       document.body.clientHeight,
       document.body.scrollHeight,
       document.body.offsetHeight,
       document.documentElement.clientHeight,
       document.documentElement.scrollHeight,
-      document.documentElement.offsetHeight);
-
-    const width = Math.max(
+      document.documentElement.offsetHeight,
+      document.scrollingElement.scrollHeight
+    );
+  }
+  getWidth(){
+    return Math.max(
       document.body.clientWidth,              /* width of <body> */
       document.documentElement.clientWidth,   /* width of <html> */
-      window.innerWidth);
+      document.scrollingElement.scrollWidth,
+      window.innerWidth
+    );
+  }
 
+  sendSize(){
+    const height = this.getHeight();
+    const width = this.getWidth();
     const payload = {
       height,
       width
     };
-
+    debugger;
     const ltiPayload = {
       subject: "lti.frameResize",
       height
