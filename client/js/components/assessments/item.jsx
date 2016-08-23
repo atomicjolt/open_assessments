@@ -47,7 +47,7 @@ export default class Item extends React.Component{
       // loadElements are elements we expect to change the size of the DOM when
       // they load, and that support the 'load' event.
       var loadElements = Array.from(material.querySelectorAll('img, object'));
-      Elements.forEach((e) => {
+      loadElements.forEach((e) => {
         e.addEventListener('load', () => this.props.sendSize());
       });
 
@@ -93,7 +93,6 @@ export default class Item extends React.Component{
   }
 
   render() {
-    // debugger;
     return (
         <div className="c-question">
           <div className="c-question-prompt">
