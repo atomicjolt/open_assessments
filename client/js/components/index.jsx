@@ -45,17 +45,11 @@ export class Index extends React.Component {
     }
   }
 
-  handleSizeChange(){
-    this.props.sendSize();
-    this.props.scrollParentToTop();
-  }
-
   componentDidMount() {
     this.props.sendSize();
     this.props.scrollParentToTop();
     window.addEventListener("message", (message) => this.onMessage(message), false);
   }
-
 
   componentDidUpdate() {
     this.props.sendSize();

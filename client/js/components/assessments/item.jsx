@@ -1,7 +1,6 @@
 "use strict";
 
 import React  from "react";
-import ReactDOM from "react-dom";
 
 import * as AssessmentActions  from "../../actions/assessment";
 import UniversalInput          from "./universal_input";
