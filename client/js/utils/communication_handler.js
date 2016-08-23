@@ -34,12 +34,14 @@ export default class {
     const width = this.getWidth();
 
     if(height == this.prevHeight && width == this.prevWidth) {return;}
+    this.prevHeight = height;
+    this.prevWidth = width;
 
     const payload = {
       height,
       width
     };
-    debugger;
+
     const ltiPayload = {
       subject: "lti.frameResize",
       height
@@ -50,7 +52,6 @@ export default class {
 
     // Let the LMS (Canvas) know about a resize
     Communicator.broadcastMsg(ltiPayload);
-
   }
 
   // get rid of LMS module navigation
