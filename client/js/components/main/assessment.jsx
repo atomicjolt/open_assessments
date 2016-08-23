@@ -182,6 +182,7 @@ export class Assessment extends React.Component{
           questionResult   = {props.questionResults[index] || {}}
           allQuestions     = {props.allQuestions}
           outcomes         = {props.outcomes || {}}
+          sendSize         = {props.sendSize}
           selectAnswer     = {
             (answerId, exclusive) =>
               {this.props.answerSelected(index, answerId, exclusive);}}/>

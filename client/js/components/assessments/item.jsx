@@ -39,6 +39,25 @@ export default class Item extends React.Component{
     // Look for videos that should be using videojs.
     var videoJSElements = document.querySelectorAll('video.video-js');
     _.each(videoJSElements,(element) => videojs(element));
+
+
+    var material = document.getElementsByClassName("c-question")[0];
+    if(material !== undefined){
+      // loadElements are elements we expect to change the size of the DOM when
+      // they load, and that support the 'load' event.
+      var loadElements = Array.from(material.querySelectorAll('img, object'));
+      loadElements.forEach((e) => {
+        e.addEventListener('load', () => this.props.sendSize());
+      });
+
+      // mediaElements are elements that could change the size of the DOM, and
+      // support media element events like 'loadstart', and 'loadedmetadata'.
+      var mediaElements = Array.from(material.querySelectorAll('video, audio'));
+      mediaElements.forEach((e) => {
+        e.addEventListener('loadstart', () => this.props.sendSize());
+        e.addEventListener('loadedmetadata', () => this.props.sendSize());
+      });
+    }
   }
 
   getFeedback(){
@@ -74,7 +93,7 @@ export default class Item extends React.Component{
 
   render() {
     return (
-        <div>
+        <div className="c-question">
           <div className="c-question-prompt">
             <div dangerouslySetInnerHTML={
               {__html: this.props.question.material}}>

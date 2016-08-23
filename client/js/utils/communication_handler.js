@@ -5,22 +5,36 @@ export default class {
 
   constructor(){
     Communicator.enableListener(this);
+    this.prevHeight = this.getHeight();
+    this.prevWidth = this.getWidth();
   }
 
-  sendSize(){
-
-    const height = Math.max(
+  getHeight(){
+    return Math.max(
       document.body.clientHeight,
       document.body.scrollHeight,
       document.body.offsetHeight,
       document.documentElement.clientHeight,
       document.documentElement.scrollHeight,
-      document.documentElement.offsetHeight);
-
-    const width = Math.max(
+      document.documentElement.offsetHeight
+    );
+  }
+  getWidth(){
+    return Math.max(
       document.body.clientWidth,              /* width of <body> */
       document.documentElement.clientWidth,   /* width of <html> */
-      window.innerWidth);
+      document.documentElement.scrollingWidth,
+      window.innerWidth
+    );
+  }
+
+  sendSize(){
+    const height = this.getHeight();
+    const width = this.getWidth();
+
+    if(height == this.prevHeight && width == this.prevWidth) {return;}
+    this.prevHeight = height;
+    this.prevWidth = width;
 
     const payload = {
       height,
@@ -37,7 +51,6 @@ export default class {
 
     // Let the LMS (Canvas) know about a resize
     Communicator.broadcastMsg(ltiPayload);
-
   }
 
   // get rid of LMS module navigation
