@@ -16,15 +16,14 @@ export default class {
       document.body.offsetHeight,
       document.documentElement.clientHeight,
       document.documentElement.scrollHeight,
-      document.documentElement.offsetHeight,
-      document.scrollingElement.scrollHeight
+      document.documentElement.offsetHeight
     );
   }
   getWidth(){
     return Math.max(
       document.body.clientWidth,              /* width of <body> */
       document.documentElement.clientWidth,   /* width of <html> */
-      document.scrollingElement.scrollWidth,
+      document.documentElement.scrollingWidth,
       window.innerWidth
     );
   }
