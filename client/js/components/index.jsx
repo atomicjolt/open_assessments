@@ -17,6 +17,33 @@ const select = (state) => {
   };
 };
 
+class ResizeWatcher{
+  constructor(handleChange){
+    this.width = document.scrollingElement.scrollWidth;
+    this.height = document.scrollingElement.scrollHeight;
+    if(_.isFunction(handleChange)){this.handleChange = handleChange;}
+    this.interval = window.setInterval(() => this.checkResize(), 100);
+  }
+
+  checkResize(){
+    var newWidth = document.scrollingElement.scrollWidth;
+    var newHeight = document.scrollingElement.scrollHeight;
+    if(this.width != newWidth){
+      this.width = newWidth;
+      var changed = true;
+    }
+    if(this.height != newHeight){
+      this.height = newHeight;
+      var changed = true;
+    }
+    if(changed === true){this.handleChange(this.width, this.height);}
+  }
+
+  stop(){
+    window.clearInterval(this.interval);
+  }
+};
+
 export class Index extends React.Component {
 
   componentWillMount() {
@@ -45,15 +72,26 @@ export class Index extends React.Component {
     }
   }
 
-  componentDidMount() {
+  handleSizeChange(){
     this.props.sendSize();
     this.props.scrollParentToTop();
-    window.addEventListener("message", (message) => this.onMessage(message), false);
   }
+
+  componentDidMount() {
+    window.addEventListener("message", (message) => this.onMessage(message), false);
+    this.props.sendSize();
+    this.props.scrollParentToTop();
+    this.resizeWatcher = new ResizeWatcher((width, height) => this.handleSizeChange(width, height));
+  }
+
 
   componentDidUpdate() {
     this.props.sendSize();
     this.props.scrollParentToTop();
+  }
+
+  componentWillUnmount(){
+    this.resizeWatcher.stop();
   }
 
   onMessage(message) {
