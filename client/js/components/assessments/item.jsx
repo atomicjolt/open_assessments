@@ -41,6 +41,7 @@ export default class Item extends React.Component{
     var videoJSElements = document.querySelectorAll('video.video-js');
     _.each(videoJSElements,(element) => videojs(element));
 
+    //TODO document
     var material = document.getElementsByClassName("c-question")[0];
     var elements = Array.from(material.querySelectorAll('img, object'));
     elements.forEach((e) => {
