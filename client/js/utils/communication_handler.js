@@ -5,7 +5,8 @@ export default class {
 
   constructor(){
     Communicator.enableListener(this);
-    this.height =
+    this.prevHeight = this.getHeight();
+    this.prevWidth = this.getWidth();
   }
 
   getHeight(){
@@ -31,6 +32,9 @@ export default class {
   sendSize(){
     const height = this.getHeight();
     const width = this.getWidth();
+
+    if(height == this.prevHeight && width == this.prevWidth) {return;}
+
     const payload = {
       height,
       width
