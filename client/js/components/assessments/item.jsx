@@ -1,6 +1,7 @@
 "use strict";
 
 import React  from "react";
+import ReactDOM from "react-dom";
 
 import * as AssessmentActions  from "../../actions/assessment";
 import UniversalInput          from "./universal_input";
@@ -39,6 +40,18 @@ export default class Item extends React.Component{
     // Look for videos that should be using videojs.
     var videoJSElements = document.querySelectorAll('video.video-js');
     _.each(videoJSElements,(element) => videojs(element));
+
+    var material = document.getElementsByClassName("c-question")[0];
+    var elements = Array.from(material.querySelectorAll('img, object'));
+    elements.forEach((e) => {
+      e.addEventListener('load', () => this.props.sendSize());
+    });
+
+    var mediaElements = Array.from(material.querySelectorAll('video, audio'));
+    mediaElements.forEach((e) => {
+      e.addEventListener('loadstart', () => this.props.sendSize());
+      e.addEventListener('loadedmetadata', () => this.props.sendSize());
+    });
   }
 
   getFeedback(){
@@ -73,8 +86,9 @@ export default class Item extends React.Component{
   }
 
   render() {
+    // debugger;
     return (
-        <div>
+        <div className="c-question">
           <div className="c-question-prompt">
             <div dangerouslySetInnerHTML={
               {__html: this.props.question.material}}>
