@@ -13,14 +13,6 @@ export const Constants = wrapper([],[
   "VIDEO_STOP"
 ]);
 
-export function mediaEvent(mediaTime, mediaId) {
-  return {
-    type: Constants.MEDIA_EVENT,
-    mediaTime,
-    mediaId
-  };
-}
-
 export function audioPlay(mediaTime, mediaId) {
   return {
     type: Constants.AUDIO_PLAY,
