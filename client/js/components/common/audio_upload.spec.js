@@ -19,7 +19,9 @@ describe('audio upload', () => {
   beforeEach(() => {
     props = {
       selectAnswer: () => {},
-      localizedStrings: localizeStrings({settings:{locale:"en"}})
+      localizedStrings: localizeStrings({settings:{locale:"en"}}),
+      audioRecordStart: () => {},
+      audioRecordStop: () => {}
     };
     AudioUploadRewireApi.__Rewire__('Recorder', FakeRecorder);
     result = TestUtils.renderIntoDocument(<AudioUpload {...props} />);

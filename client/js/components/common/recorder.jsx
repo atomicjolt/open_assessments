@@ -80,7 +80,7 @@ export default class Recorder extends React.Component{
       this.state.recorder.stop();
       this.state.recorder.exportWAV(
         (blob) => {
-          this.props.onStop(blob);
+          this.props.onStop(blob, this.state.audioContext.currentTime);
           this.state.recorder.clear();
 
           // Older browsers don't support audioContext.close()

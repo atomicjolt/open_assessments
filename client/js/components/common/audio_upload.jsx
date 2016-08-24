@@ -10,7 +10,11 @@ class AudioUpload extends React.Component {
     localizedStrings: React.PropTypes.object.isRequired,
 
     // Maximum audio recording length in seconds
-    timeout: React.PropTypes.number
+    timeout: React.PropTypes.number,
+
+    // Actions to call when recording is started or stopped
+    audioRecordStart: React.PropTypes.func.isRequired,
+    audioRecordStop: React.PropTypes.func.isRequired
   };
 
   constructor(){
@@ -22,11 +26,12 @@ class AudioUpload extends React.Component {
     };
   }
 
-  onStop(blob){
+  onStop(blob, stopTime){
     // Do something with the blob file of the recording
     var audioURL = window.URL.createObjectURL(blob);
     this.setState({audioURL});
     if(_.isFunction(this.props.selectAnswer)){this.props.selectAnswer(blob);}
+    this.props.audioRecordStop(stopTime);
   }
 
   toggle(){
@@ -37,6 +42,7 @@ class AudioUpload extends React.Component {
           timeoutId: null
         });
       }, this.props.timeout * 1000); // Convert seconds to milliseconds
+      this.props.audioRecordStart();
       this.setState({
         recorder: RecorderCommands.start,
         timeoutId
@@ -71,7 +77,9 @@ class AudioUpload extends React.Component {
             <span>{buttonText}</span>
         </a>
         <audio src={this.state.audioURL} type="audio/wav" controls />
-        <Recorder command={this.state.recorder} onStop={(blob) => this.onStop(blob)} />
+        <Recorder
+          command={this.state.recorder}
+          onStop={(blob, stopTime) => this.onStop(blob, stopTime)} />
       </div>
     );
   }

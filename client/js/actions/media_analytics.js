@@ -7,72 +7,69 @@ export const Constants = wrapper([],[
   "AUDIO_RECORD_START",
   "AUDIO_RECORD_STOP",
   "AUDIO_PAUSE",
-  "AUDIO_STOP",
+  "AUDIO_ENDED",
   "VIDEO_PLAY",
   "VIDEO_PAUSE",
-  "VIDEO_STOP"
+  "VIDEO_ENDED"
 ]);
 
-export function audioPlay(mediaTime, mediaId) {
+export function audioPlay(mediaId, mediaTime) {
   return {
     type: Constants.AUDIO_PLAY,
-    mediatTime,
+    mediaTime,
     mediaId
   };
 }
 
-export function audioRecordStart(mediaId) {
-  return {
-    type: Constants.AUDIO_RECORD_START,
-    mediatTime,
-    mediaId
-  };
-}
-
-export function audioRecordStop(mediaId) {
-  return {
-    type: Constants.AUDIO_RECORD_STOP,
-    mediatTime,
-    mediaId
-  };
-}
-
-export function audioPause(mediaTime, mediaId) {
+export function audioPause(mediaId, mediaTime) {
   return {
     type: Constants.AUDIO_PAUSE,
-    mediatTime,
+    mediaTime,
     mediaId
   };
 }
 
-export function audioStop(mediaTime, mediaId) {
+export function audioEnded(mediaId, mediaTime) {
   return {
-    type: Constants.AUDIO_STOP,
-    mediatTime,
+    type: Constants.AUDIO_ENDED,
+    mediaTime,
     mediaId
   };
 }
 
-export function videoPlay(mediaTime, mediaId) {
+export function videoPlay(mediaId, mediaTime) {
   return {
     type: Constants.VIDEO_PLAY,
-    mediatTime,
+    mediaTime,
     mediaId
   };
 }
 
-export function videoPause(mediaTime, mediaId) {
+export function videoPause(mediaId, mediaTime) {
   return {
     type: Constants.VIDEO_PAUSE,
-    mediatTime,
+    mediaTime,
     mediaId
   };
 }
 
-export function videoStop(mediaTime, mediaId) {
+export function videoEnded(mediaId, mediaTime) {
   return {
-    type: Constants.VIDEO_STOP,
-    mediatTime,
+    type: Constants.VIDEO_ENDED,
+    mediaTime,
     mediaId
+  };
+}
+
+export function audioRecordStart() {
+  return {
+    type: Constants.AUDIO_RECORD_START
+  };
+}
+
+export function audioRecordStop(mediaTime) {
+  return {
+    type: Constants.AUDIO_RECORD_STOP,
+    mediaTime
   };
 }

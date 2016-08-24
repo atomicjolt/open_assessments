@@ -26,12 +26,20 @@ export default class Item extends React.Component{
 
     // Graded user response object containing keys
     // correct:true/false, feedback:"Answer feedback"
-    questionResult   : React.PropTypes.object.isRequired,
+    questionResult    : React.PropTypes.object.isRequired,
 
     selectAnswer      : React.PropTypes.func.isRequired,
 
     // User facing strings of the language specified by the 'locale' setting
-    localizedStrings: React.PropTypes.object.isRequired
+    localizedStrings  : React.PropTypes.object.isRequired,
+
+    // Actions to call when media events occur
+    videoPlay         : React.PropTypes.func.isRequired,
+    videoPause        : React.PropTypes.func.isRequired,
+    audioPlay         : React.PropTypes.func.isRequired,
+    audioPause        : React.PropTypes.func.isRequired,
+    audioRecordStart  : React.PropTypes.func.isRequired,
+    audioRecordStop   : React.PropTypes.func.isRequired
   };
 
   componentDidMount(){
@@ -39,7 +47,6 @@ export default class Item extends React.Component{
     // Look for videos that should be using videojs.
     var videoJSElements = document.querySelectorAll('video.video-js');
     _.each(videoJSElements,(element) => videojs(element));
-
 
     var material = document.getElementsByClassName("c-question")[0];
     if(material !== undefined){
@@ -58,6 +65,28 @@ export default class Item extends React.Component{
         e.addEventListener('loadedmetadata', () => this.props.sendSize());
       });
     }
+
+    let videoElements = document.querySelectorAll('video');
+    _.each(videoElements, (element) => {
+      element.addEventListener('play', (e) => {
+        this.props.videoPlay(e.target.id || e.target.src, e.target.currentTime);
+      }, false);
+
+      element.addEventListener('pause', (e) => {
+        this.props.videoPause(e.target.id || e.target.src, e.target.currentTime);
+      }, false);
+    });
+
+    let audioElements = document.querySelectorAll('audio');
+    _.each(audioElements, (element) => {
+      element.addEventListener('play', (e) => {
+        this.props.audioPlay(e.target.id || e.target.src, e.target.currentTime);
+      }, false);
+
+      element.addEventListener('pause', (e) => {
+        this.props.audioPause(e.target.id || e.target.src, e.target.currentTime);
+      }, false);
+    });
   }
 
   getFeedback(){
@@ -107,7 +136,9 @@ export default class Item extends React.Component{
               selectAnswer={this.props.selectAnswer}
               response={this.props.response}
               questionResult={this.props.questionResult}
-              localizedStrings={this.props.localizedStrings}/>
+              localizedStrings={this.props.localizedStrings}
+              audioRecordStart={this.props.audioRecordStart}
+              audioRecordStop={this.props.audioRecordStop}/>
           </div>
           {this.getFeedback()}
         </div>

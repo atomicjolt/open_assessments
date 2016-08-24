@@ -5,6 +5,7 @@ import { connect }  from "react-redux";
 
 import * as AssessmentProgress    from "../../actions/assessment_progress";
 import * as CommunicationActions  from "../../actions/communications";
+import * as MediaAnalyticsActions from "../../actions/media_analytics";
 import appHistory                 from "../../history";
 import * as selectors             from "../../selectors/assessment";
 import { localizeStrings }        from "../../selectors/localize";
@@ -183,9 +184,16 @@ export class Assessment extends React.Component{
           allQuestions     = {props.allQuestions}
           outcomes         = {props.outcomes || {}}
           sendSize         = {props.sendSize}
+          videoPlay        = {props.videoPlay}
+          videoPause       = {props.videoPause}
+          audioPlay        = {props.audioPlay}
+          audioPause       = {props.audioPause}
+          audioRecordStart = {props.audioRecordStart}
+          audioRecordStop  = {props.audioRecordStop}
           selectAnswer     = {
             (answerId, exclusive) =>
-              {this.props.answerSelected(index, answerId, exclusive);}}/>
+              {this.props.answerSelected(index, answerId, exclusive);}}
+          />
     );
   }
 
@@ -335,4 +343,4 @@ export class Assessment extends React.Component{
 
 }
 
-export default connect(select, {...AssessmentProgress, ...CommunicationActions})(Assessment);
+export default connect(select, {...AssessmentProgress, ...CommunicationActions, ...MediaAnalyticsActions})(Assessment);

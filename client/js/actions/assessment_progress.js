@@ -28,8 +28,7 @@ export const answerSelected = (questionIndex, answerId, exclusive) => ({
   type: Constants.ANSWER_SELECTED,
   questionIndex,
   answerId,
-  exclusive,
-  apiCall: true
+  exclusive
 });
 
 export const selectQuestion = (index) => ({

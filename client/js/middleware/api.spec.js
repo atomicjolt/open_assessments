@@ -1,4 +1,4 @@
-import { apiHandler }                   from "./api";
+import api                              from "./api";
 import Network                          from "../constants/network";
 import Helper                           from "../../specs_support/helper";
 import * as AssessmentActions           from "../actions/assessment";
@@ -13,11 +13,11 @@ describe('api middleware', function() {
 
   it('implements Redux middleware interface', () => {
     const store = { getState: () => {} };
-    const middleware = apiHandler(store);
+    const middleware = api(store);
     const nextHandler = () => {};
     const actionHandler = middleware(nextHandler);
 
-    expect(apiHandler.length).toBe(1);                     // api middleware takes one arg
+    expect(api.length).toBe(1);                     // api middleware takes one arg
     expect(typeof middleware).toBe("function");     // api middleware must return a function to handle next
     expect(middleware.length).toBe(1);              // next handler returned by api middleware must take one argument
     expect(typeof actionHandler).toBe("function");  // next handler must return a function to handle action
@@ -29,7 +29,7 @@ describe('api middleware', function() {
     const action = {
       type: "TEST"
     };
-    const nextHandler = apiHandler(store);
+    const nextHandler = api(store);
     const next = (actionPassed) => {
       expect(actionPassed).toBe(action);
     };
@@ -43,14 +43,14 @@ describe('api middleware', function() {
       method: Network.GET,
       url: "http://www.example.com/api/stuff.json"
     };
-    const middleware = apiHandler(Helper.makeStore());
+    const middleware = api(Helper.makeStore());
     const nextHandler = () => {};
     const actionHandler = middleware(nextHandler);
     actionHandler(action);
   });
 
   it("throws an exception if the constant isn't handled", () => {
-    const middleware = apiHandler(Helper.makeStore());
+    const middleware = api(Helper.makeStore());
     const nextHandler = () => {};
     const actionHandler = middleware(nextHandler);
     const actionType = "NOT_HANDLED";
@@ -62,7 +62,7 @@ describe('api middleware', function() {
   });
 
   it("handles known actions", () => {
-    const middleware = apiHandler(Helper.makeStore());
+    const middleware = api(Helper.makeStore());
     const nextHandler = () => {};
     const actionHandler = middleware(nextHandler);
     const actions = {

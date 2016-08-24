@@ -146,9 +146,9 @@ export default {
     postAnalytics(store, data);
   },
 
-  [MediaAnalyticsConstants.AUDIO_STOP] : (store, action) => {
+  [MediaAnalyticsConstants.AUDIO_PAUSE] : (store, action) => {
     const data = {
-      action: "stop audio",
+      action: "pause audio",
       mediaTime: action.mediaTime,
       mediaId: action.mediaId
     };
@@ -158,7 +158,8 @@ export default {
 
   [MediaAnalyticsConstants.AUDIO_RECORD_STOP] : (store, action) => {
     const data = {
-      action: "record audio",
+      action: "record audio stop",
+      mediaTime: action.mediaTime
     };
 
     postAnalytics(store, data);
@@ -174,13 +175,13 @@ export default {
     postAnalytics(store, data);
   },
 
-  [MediaAnalyticsConstants.VIDEO_STOP] : (store, action) => {
+  [MediaAnalyticsConstants.VIDEO_PAUSE] : (store, action) => {
     const data = {
-      action: "record audio",
+      action: "pause video",
       mediaTime: action.mediaTime,
       mediaId: action.mediaId
     };
 
     postAnalytics(store, data);
-  }
+  },
 };
