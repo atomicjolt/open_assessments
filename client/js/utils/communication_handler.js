@@ -5,8 +5,6 @@ export default class {
 
   constructor(){
     Communicator.enableListener(this);
-    this.prevHeight = this.getHeight();
-    this.prevWidth = this.getWidth();
   }
 
   getHeight(){
@@ -23,7 +21,7 @@ export default class {
     return Math.max(
       document.body.clientWidth,              /* width of <body> */
       document.documentElement.clientWidth,   /* width of <html> */
-      document.documentElement.scrollingWidth,
+      document.documentElement.scrollWidth,
       window.innerWidth
     );
   }
