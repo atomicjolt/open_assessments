@@ -42,7 +42,18 @@ const handler = (callMap, required = true) => {
       } else if(required) {
         throw `No handler implemented for ${action.type}`;
       }
-
+    } else if(action.analyticsApiCall) {
+      const handler = callMap[action.type];
+      if(_.isFunction(handler)){
+        handler(store, action);
+      } else if(_.isObject(handler)){
+        request(
+          handler.method,
+          handler.url(action),
+          handler.params ? handler.params(params) : action.params,
+          handler.body ? handler.body(action) : action.body
+        );
+      }
     }
 
     // call the next middleWare

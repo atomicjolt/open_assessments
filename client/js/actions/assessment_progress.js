@@ -29,7 +29,7 @@ export const answerSelected = (questionIndex, answerId, exclusive) => ({
   questionIndex,
   answerId,
   exclusive,
-  apiCall: true
+  analyticsApiCall: true
 });
 
 export const selectQuestion = (index) => ({

@@ -11,7 +11,9 @@ export default class SentenceSandbox extends React.Component {
         timeout={this.props.timeout}
         localizedStrings={this.props.localizedStrings}
         selectAnswer={this.props.selectAnswer}
+        audioRecordStart={this.props.audioRecordStart}
+        audioRecordStop={this.props.audioRecordStop}
       />
-    </div>
+    </div>;
   }
 }

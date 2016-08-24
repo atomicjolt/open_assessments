@@ -38,7 +38,11 @@ export default class UniversalInput extends React.Component{
     response: React.PropTypes.array,
 
     // User facing strings of the language specified by the 'locale' setting
-    localizedStrings: React.PropTypes.object.isRequired
+    localizedStrings: React.PropTypes.object.isRequired,
+
+    // Actions to trigger when recordings are started or stopped
+    audioRecordStart: React.PropTypes.func.isRequired,
+    audioRecordStop: React.PropTypes.func.isRequired
   }
 
   wasSelected(id) {
@@ -172,7 +176,9 @@ export default class UniversalInput extends React.Component{
           <AudioUpload
             localizedStrings={this.props.localizedStrings.audioUpload}
             selectAnswer={selectAudioAnswer}
-            timeout={this.props.settings.audio_recorder_timeout} />
+            timeout={this.props.settings.audio_recorder_timeout}
+            audioRecordStart={this.props.audioRecordStart}
+            audioRecordStop={this.props.audioRecordStop}/>
         );
         break;
       case "drag_and_drop":
@@ -180,7 +186,7 @@ export default class UniversalInput extends React.Component{
         answerInputs = <FillTheBlankDnd
             currentAnswer={this.props.response}
             selectAnswer={selectAnswer}
-          />
+          />;
         break;
       case "movable_object_chain":
         var selectAnswer = _.partialRight(props.selectAnswer, false);
@@ -191,7 +197,7 @@ export default class UniversalInput extends React.Component{
             itemClassName="c-object"
             answerBoxClassName="c-object-answers"
             noStartBlock={true}
-          />
+          />;
         break;
       case "movable_words_sentence":
         var selectAnswer = _.partialRight(props.selectAnswer, false);
@@ -201,7 +207,7 @@ export default class UniversalInput extends React.Component{
             wordChain={props.response}
             itemClassName="c-word"
             answerBoxClassName="c-word-answers"
-          />
+          />;
         break;
       case "movable_words_sandbox":
         var selectAnswer = _.partialRight(props.selectAnswer, false);
@@ -217,7 +223,9 @@ export default class UniversalInput extends React.Component{
             timeout={this.props.settings.audio_recorder_timeout}
             itemClassName="c-word"
             answerBoxClassName="c-word-answers"
-          />
+            audioRecordStart={this.props.audioRecordStart}
+            audioRecordStop={this.props.audioRecordStop}
+          />;
         break;
 
       case "fill_the_blank_question":
@@ -228,7 +236,7 @@ export default class UniversalInput extends React.Component{
             sentenceWithBlank={item.question_meta.fillTheBlankSentence}
             selectAnswer={selectAnswer}
             selectedAnswer={props.response}
-          />
+          />;
     }
 
     return (
