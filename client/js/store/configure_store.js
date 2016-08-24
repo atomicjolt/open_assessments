@@ -1,12 +1,22 @@
-import { createStore, applyMiddleware, compose } from 'redux';
-import { persistState }                          from 'redux-devtools';
-import rootReducer                               from '../reducers';
-import DevTools                                  from '../dev/dev_tools.jsx';
-import API                                       from '../middleware/api';
-import AssessmentLoader                          from '../middleware/assessment_loader';
-import Communications                            from '../middleware/communications';
+import {
+  createStore,
+  applyMiddleware,
+  compose
+}                                       from 'redux';
+import { persistState }                 from 'redux-devtools';
 
-let middleware = [ API, AssessmentLoader, Communications ];
+import rootReducer                      from '../reducers';
+import DevTools                         from '../dev/dev_tools.jsx';
+import { analyticsHandler, apiHandler } from '../middleware/api';
+import AssessmentLoader                 from '../middleware/assessment_loader';
+import Communications                   from '../middleware/communications';
+
+let middleware = [
+  apiHandler,
+  analyticsHandler,
+  AssessmentLoader,
+  Communications
+];
 
 let enhancers = [
   applyMiddleware(...middleware)

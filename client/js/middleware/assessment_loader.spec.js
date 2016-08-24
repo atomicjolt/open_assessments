@@ -1,4 +1,4 @@
-import api                      from "./api";
+import { apiHandler }           from "./api";
 import Network                  from "../constants/network";
 import Helper                   from '../../specs_support/helper';
 import { Constants as AssessmentConstants } from "../actions/assessment";
@@ -9,11 +9,11 @@ describe('assessment loader middleware', function() {
 
   it('implements Redux middleware interface', () => {
     const store = { getState: () => {} };
-    const middleware = api(store);
+    const middleware = apiHandler(store);
     const nextHandler = () => {};
     const actionHandler = middleware(nextHandler);
 
-    expect(api.length).toBe(1);                     // api middleware takes one arg
+    expect(apiHandler.length).toBe(1);                     // api middleware takes one arg
     expect(typeof middleware).toBe("function");     // api middleware must return a function to handle next
     expect(middleware.length).toBe(1);              // next handler returned by api middleware must take one argument
     expect(typeof actionHandler).toBe("function");  // next handler must return a function to handle action
@@ -25,7 +25,7 @@ describe('assessment loader middleware', function() {
     const action = {
       type: "TEST"
     };
-    const nextHandler = api(store);
+    const nextHandler = apiHandler(store);
     const next = (actionPassed) => {
       expect(actionPassed).toBe(action);
     };
@@ -37,7 +37,7 @@ describe('assessment loader middleware', function() {
     const action = {
       type: AssessmentConstants.LOAD_ASSESSMENT
     };
-    const middleware = api(Helper.makeStore());
+    const middleware = apiHandler(Helper.makeStore());
     const nextHandler = () => {};
     const actionHandler = middleware(nextHandler);
     actionHandler(action);
@@ -47,7 +47,7 @@ describe('assessment loader middleware', function() {
     const action = {
       type: AssessmentConstants.LOAD_ASSESSMENT
     };
-    const middleware = api(Helper.makeStore());
+    const middleware = apiHandler(Helper.makeStore());
     const nextHandler = () => {};
     const actionHandler = middleware(nextHandler);
     actionHandler(action);

@@ -38,7 +38,7 @@ function getBody(userInput, question){
             choiceIds: userInput
           }
         }
-      }
+      };
       break;
     case "numerical_input_question":
     case "text_input_question":
@@ -78,7 +78,7 @@ function getBody(userInput, question){
 /**
  * Sends a post request to qbank with qbank specific fields already set.
  */
-function postQbank(state, url, body = {}, headers = {}, params={}){
+export function postQbank(state, url, body = {}, headers = {}, params={}){
   const defaultHeaders = {
     "X-Api-Proxy": state.settings.eid,
     "X-API-LOCALE": state.settings.locale
@@ -201,23 +201,6 @@ export default {
     }
   },
 
-  [AssessmentConstants.ASSESSMENT_POST_ANALYTICS] : {
-    method : Network.POST,
-    url    : (action) => { `api/assessment_results/${action.resultsId}/send?external_user_id=${action.userId}&external_context_id=${action.contextId}`; },
-    body   : (action) => {
-      return {
-        results_id : action.resultsId,
-        user_id    : action.userId,
-        context_id : action.contextId
-      };
-    }
-  },
-
-  [AssessmentConstants.ASSESSMENT_POST_LTI_OUTCOME] : {
-    method : Network.POST,
-    url    : (action) => { `api/assessment_results/${action.resultsId}/lti_outcome`; }
-  },
-
   [AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER]: (store, action) => {
     checkAnswers(store, action);
   },
@@ -230,6 +213,10 @@ export default {
   },
 
   [AssessmentProgressConstants.ASSESSMENT_PREVIOUS_QUESTIONS]: (store, action) => {
+
+  },
+
+  [AssessmentProgressConstants.ANSWER_SELECTED]: (store, action) => {
 
   },
 

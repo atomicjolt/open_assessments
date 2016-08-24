@@ -2,7 +2,6 @@ import wrapper from '../constants/wrapper';
 
 const constants = [
   "ASSESSMENT_START",
-  "ANSWER_SELECTED",
   "QUESTION_SELECTED",
   "LEVEL_SELECTED",
   "RETAKE_ASSESSMENT",
@@ -12,6 +11,7 @@ const constants = [
 
 const requests = [
   "ASSESSMENT_SUBMITTED",
+  "ANSWER_SELECTED",
   "ASSESSMENT_CHECK_ANSWER",
   "ASSESSMENT_NEXT_QUESTIONS",
   "ASSESSMENT_PREVIOUS_QUESTIONS"
@@ -28,7 +28,8 @@ export const answerSelected = (questionIndex, answerId, exclusive) => ({
   type: Constants.ANSWER_SELECTED,
   questionIndex,
   answerId,
-  exclusive
+  exclusive,
+  apiCall: true
 });
 
 export const selectQuestion = (index) => ({
