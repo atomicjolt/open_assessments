@@ -17,8 +17,7 @@ export function audioPlay(mediaId, mediaTime) {
   return {
     type: Constants.AUDIO_PLAY,
     mediaTime,
-    mediaId,
-    analyticsApiCall: true
+    mediaId
   };
 }
 
@@ -26,8 +25,7 @@ export function audioPause(mediaId, mediaTime) {
   return {
     type: Constants.AUDIO_PAUSE,
     mediaTime,
-    mediaId,
-    analyticsApiCall: true
+    mediaId
   };
 }
 
@@ -35,8 +33,7 @@ export function audioEnded(mediaId, mediaTime) {
   return {
     type: Constants.AUDIO_ENDED,
     mediaTime,
-    mediaId,
-    analyticsApiCall: true
+    mediaId
   };
 }
 
@@ -44,8 +41,7 @@ export function videoPlay(mediaId, mediaTime) {
   return {
     type: Constants.VIDEO_PLAY,
     mediaTime,
-    mediaId,
-    analyticsApiCall: true
+    mediaId
   };
 }
 
@@ -53,8 +49,7 @@ export function videoPause(mediaId, mediaTime) {
   return {
     type: Constants.VIDEO_PAUSE,
     mediaTime,
-    mediaId,
-    analyticsApiCall: true
+    mediaId
   };
 }
 
@@ -62,21 +57,19 @@ export function videoEnded(mediaId, mediaTime) {
   return {
     type: Constants.VIDEO_ENDED,
     mediaTime,
-    mediaId,
-    analyticsApiCall: true
+    mediaId
   };
 }
 
 export function audioRecordStart() {
   return {
-    type: Constants.AUDIO_RECORD_START,
+    type: Constants.AUDIO_RECORD_START
   };
 }
 
 export function audioRecordStop(mediaTime) {
   return {
     type: Constants.AUDIO_RECORD_STOP,
-    mediaTime,
-    analyticsApiCall: true
+    mediaTime
   };
 }
