@@ -1,3 +1,5 @@
+import Immutable                                    from "immutable";
+
 import { Constants as MediaAnalyticsConstants }     from "../actions/media_analytics";
 import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
 import { postQbank }                                from "./qbank";
@@ -6,19 +8,20 @@ import { transformItem }                            from "../parsers/clix/clix";
 function postAnalytics(store, analyticsData) {
   const state = store.getState();
 
-  const logId = state.settings.bank.replace(/^assessment\.Bank/, "logging.Log");
-  const url = `logging/logs/${logId}/logentries`;
+  const url = `logging/logs/${state.settings.bank}/logentries`;
 
   const currentQuestionIndex = state.assessmentProgress.get("currentItemIndex");
   const questionId = state.assessment.items[currentQuestionIndex].json.id;
 
   let body = {
-    assessmentOfferedId: state.settings.assessmentOfferedId,
-    questionId,
-    ...analyticsData
+    data: {
+      assessmentOfferedId: state.settings.assessment_offered_id,
+      questionId,
+      ...analyticsData
+    }
   };
 
-  // postQbank(state, url, body);
+  postQbank(state, url, body);
 }
 
 function getAnswerSelectedData(store, action) {
@@ -29,25 +32,79 @@ function getAnswerSelectedData(store, action) {
     answersById[answer.id] = answer;
   });
 
-  const currentAnswers = state.assessmentProgress.getIn(['responses', `${action.questionIndex}`]);
+  let currentAnswers = state.assessmentProgress.getIn(['responses', `${action.questionIndex}`]);
+  currentAnswers = currentAnswers || Immutable.List();
 
-  debugger;
   switch(question.question_type) {
     case "movable_words_sentence":
     case "movable_words_sandbox":
-    case "movable_object_chain":
-      if(!currentAnswers.includes(action.answerId)) {
+      if(currentAnswers.includes(action.answerId)) {
+        return {
+          action: "disconnect word",
+          targetWord: answersById[action.answerId].material,
+          currentSentence: currentAnswers.map((answerId) => (answersById[answerId].material))
+        };
+      } else {
         return {
           action: "connect word",
-          currentSentence: currentAnswers.map((answerId) => answersById[answerId].text)
+          targetWord: answersById[action.answerId].material,
+          currentSentence: currentAnswers.map((answerId) => (answersById[answerId].material))
         };
       }
       break;
-  }
-  if(action.exclusive || !currentAnswers.includes(action.answerId)) {
-    return "select answer";
-  } else {
-    return "deselect answer";
+
+    case "movable_object_chain":
+      if(currentAnswers.includes(action.answerId)) {
+        return {
+          action: "disconnect object",
+          targetObject: answersById[action.answerId].material,
+          currentObjectChain: currentAnswers.map((answerId) => (answersById[answerId].material))
+        };
+      } else {
+        return {
+          action: "connect object",
+          targetObject: answersById[action.answerId].material,
+          currentObjectChain: currentAnswers.map((answerId) => (answersById[answerId].material))
+        };
+      }
+      break;
+
+    case "fill_the_blank_question":
+      if(_.isEmpty(currentAnswers)) {
+        return {
+          action: "connect word",
+          targetWord: answersById[action.answerId].material
+        };
+      } else {
+        return {
+          action: "disconnect word",
+          targetWord: answersById[action.answerId].material
+        };
+      }
+      break;
+
+    case "multiple_choice_question":
+      return {
+        action: "select answer",
+        targetAnswer: answersById[action.answerId].material
+      };
+      break;
+
+    case "multiple_answers_question":
+      if(currentAnswers.includes(action.answerId)) {
+        return {
+          action: "deselect answer",
+          targetAnswer: answersById[action.answerId].material,
+          currentAnswers: currentAnswers.map((answerId) => (answersById[answerId].material))
+        };
+      } else {
+        return {
+          action: "select answer",
+          targetAnswer: answersById[action.answerId].material,
+          currentAnswers: currentAnswers.map((answerId) => (answersById[answerId].material))
+        };
+      }
+      break;
   }
 }
 
@@ -73,60 +130,57 @@ export default {
   },
 
   [AssessmentProgressConstants.ANSWER_SELECTED] : (store, action) => {
-    const analyticsAction = getAnswerSelectedAction(store, action);
-
-    const analyticsData = {
-      action: "click next button"
-    };
-
-    postAnalytics(store, analyticsData);
+    const analyticsData = getAnswerSelectedData(store, action);
+    if(analyticsData !== undefined) {
+      postAnalytics(store, analyticsData);
+    }
   },
 
   [MediaAnalyticsConstants.AUDIO_PLAY] : (store, action) => {
-    let body = {
+    const data = {
       action: "play audio",
       mediaTime: action.mediaTime,
       mediaId: action.mediaId
     };
 
-    postAnalytics(store, body);
+    postAnalytics(store, data);
   },
 
   [MediaAnalyticsConstants.AUDIO_STOP] : (store, action) => {
-    let body = {
+    const data = {
       action: "stop audio",
       mediaTime: action.mediaTime,
       mediaId: action.mediaId
     };
 
-    postAnalytics(store, body);
+    postAnalytics(store, data);
   },
 
   [MediaAnalyticsConstants.AUDIO_RECORD_STOP] : (store, action) => {
-    let body = {
+    const data = {
       action: "record audio",
     };
 
-    postAnalytics(store, body);
+    postAnalytics(store, data);
   },
 
   [MediaAnalyticsConstants.VIDEO_PLAY] : (store, action) => {
-    let body = {
+    const data = {
       action: "play video",
       mediaTime: action.mediaTime,
       mediaId: action.mediaId
     };
 
-    postAnalytics(store, body);
+    postAnalytics(store, data);
   },
 
   [MediaAnalyticsConstants.VIDEO_STOP] : (store, action) => {
-    let body = {
+    const data = {
       action: "record audio",
       mediaTime: action.mediaTime,
       mediaId: action.mediaId
     };
 
-    postAnalytics(store, body);
+    postAnalytics(store, data);
   }
 };
