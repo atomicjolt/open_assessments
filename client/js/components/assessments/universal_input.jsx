@@ -63,7 +63,7 @@ export default class UniversalInput extends React.Component{
       case "edx_multiple_choice":
       case "multiple_choice_question":
       case "true_false_question":
-
+      case "survey_question":
         const multipleChoiceAnswer = (answer) => {
           var selectRadio = _.partialRight(props.selectAnswer, true);
           var id = item.id + "_" + answer.id;
