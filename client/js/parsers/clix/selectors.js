@@ -61,6 +61,10 @@ export function checkButtonText(state, props) {
   }
 }
 
+export function isNofM(state) {
+  return state.assessment.requireNAnswers !== -1;
+}
+
 /**
  * Returns an object containing the state of the nav primary action button
  * in the form {spinner: boolean, buttonState: PRIMARY_ACTION[*]}
@@ -88,7 +92,7 @@ export function primaryActionState(state, props) {
  * SECONDARY_ACTION.PREV).
  */
 export function secondaryActionState(state, props) {
-  var hide = isFirstPage(state);
+  var hide = !(isNofM(state)) || isFirstPage(state);
   return {
     buttonState: hide ? SECONDARY_ACTION.NONE : SECONDARY_ACTION.PREV
   };
