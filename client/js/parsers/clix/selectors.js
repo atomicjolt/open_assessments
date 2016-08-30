@@ -49,6 +49,7 @@ export function checkButtonText(state, props) {
     case "text_input_question":
     case "text_only_question":
     case "short_answer_question":
+    case "survey_question":
       return localizedStrings.saveAnswerButton;
 
     case "file_upload_question":
