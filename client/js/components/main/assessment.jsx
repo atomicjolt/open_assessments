@@ -91,12 +91,13 @@ export class Assessment extends React.Component{
 
   componentDidUpdate(prevProps) {
     this.props.sendSize();
-    this.props.scrollParentToTop();
+    
     if(this.props.assessmentProgress.isSubmitted) {
       appHistory.push("assessment-complete");
     }
 
     if(this.props.assessmentProgress.currentItemIndex != prevProps.assessmentProgress.currentItemIndex) {
+      this.props.scrollParentToTop(); // Scroll to top when we get a new question
       window.scrollTo(0, 0);
     }
   }
