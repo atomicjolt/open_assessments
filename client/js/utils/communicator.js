@@ -19,7 +19,16 @@ export default class Communicator{
   }
 
   static broadcastMsg(payload){
-    parent.postMessage(JSON.stringify(payload), "*");
+    // Post up the entire chain of parent windows.  This supports our use case
+    // of the assessment-player being embedded in dumb content which is then
+    // embedded in another controller that can understand this message.
+    let parents = new Set();
+    let p = parent;
+    while(!parents.has(p)) {
+      p.postMessage(JSON.stringify(payload), "*");
+      parents.add(p);
+      p = p.parent;
+    }
   }
 
 };
