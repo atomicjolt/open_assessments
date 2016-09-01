@@ -9,7 +9,8 @@ const constants = [
   "LTI_NAVIGATE_NEXT",
   "LTI_NAVIGATE_PREVIOUS",
   "HIDE_LMS_NAVIGATION",
-  "SHOW_LMS_NAVIGATION"
+  "SHOW_LMS_NAVIGATION",
+  "AVAILABLE_LOCALES"
 ];
 
 const requests = [];
@@ -55,5 +56,11 @@ export const hideLMSNavigation = () => {
 export const showLMSNavigation = () => {
   return {
     type: Constants.SHOW_LMS_NAVIGATION
+  };
+};
+
+export const availableLocales = () => {
+  return {
+    type: Constants.AVAILABLE_LOCALES
   };
 };

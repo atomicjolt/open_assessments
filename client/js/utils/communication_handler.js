@@ -1,5 +1,6 @@
 import Communicator                                       from './communicator';
 import { CommunicatorResizeMsg, CommunicatorSizeRequest } from './communicator';
+import { availableLocales }                               from "../locales/locales";
 
 export default class {
 
@@ -90,6 +91,13 @@ export default class {
     Communicator.broadcastMsg({
       subject: "lti.navigation",
       location
+    });
+  }
+
+  availableLocales(){
+    Communicator.broadcastMsg({
+      open_assessments_msg: "open_assessments_available_locales",
+      available_locales: availableLocales()
     });
   }
 

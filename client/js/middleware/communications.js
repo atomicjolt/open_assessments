@@ -35,6 +35,9 @@ const Communications = store => next => action => {
     case CommunicationConstants.HIDE_LMS_NAVIGATION:
       communicationHandler.broadcast({subject: "lti.showModuleNavigation", show: false});
       break;
+    case CommunicationConstants.AVAILABLE_LOCALES:
+      communicationHandler.availableLocales();
+      break;
   }
 
   // call the next middleWare

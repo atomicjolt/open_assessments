@@ -19,7 +19,16 @@ export default class Communicator{
   }
 
   static broadcastMsg(payload){
-    parent.postMessage(JSON.stringify(payload), "*");
+    // debugger;
+    // console.log("updated", "broadcast: ", payload);
+    // debugger;
+    let parents = new Set();
+    let p = parent;
+    while(!parents.has(p)) {
+      p.postMessage(JSON.stringify(payload), "*");
+      parents.add(p);
+      p = p.parent;
+    }
   }
 
 };
