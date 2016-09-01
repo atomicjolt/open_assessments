@@ -38,18 +38,20 @@ function getAnswerSelectedData(store, action) {
   switch(question.question_type) {
     case "movable_words_sentence":
     case "movable_words_sandbox":
-      if(currentAnswers.includes(action.answerId)) {
-        return {
-          action: "disconnect word",
-          targetWord: answersById[action.answerId].material,
-          currentSentence: currentAnswers.map((answerId) => (answersById[answerId].material))
-        };
-      } else {
-        return {
-          action: "connect word",
-          targetWord: answersById[action.answerId].material,
-          currentSentence: currentAnswers.map((answerId) => (answersById[answerId].material))
-        };
+      if(action.answerId instanceof String){
+        if(currentAnswers.includes(action.answerId)) {
+          return {
+            action: "disconnect word",
+            targetWord: answersById[action.answerId].material,
+            currentSentence: currentAnswers.map((answerId) => (answersById[answerId].material))
+          };
+        } else {
+          return {
+            action: "connect word",
+            targetWord: answersById[action.answerId].material,
+            currentSentence: currentAnswers.map((answerId) => (answersById[answerId].material))
+          };
+        }
       }
       break;
 

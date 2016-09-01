@@ -60,9 +60,9 @@ function getBody(userInput, question){
       break;
 
     case "movable_words_sandbox":
-      const audioFiles = userInput.filter((item) => item instanceof Blob);
+      const audioFiles = userInput.filter((item) => { return item instanceof Blob; });
       var formData = new FormData();
-      formData.append('submission', audioFiles.slice(-1));
+      formData.append('submission', _.last(audioFiles));
       return formData;
 
       break;
