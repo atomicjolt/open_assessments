@@ -71,7 +71,7 @@ export default class {
   // Tell the parent iFrame to scroll to top
   scrollParentToTop() {
     Communicator.broadcastMsg({
-      subject: "lti.scrollToTop"
+      open_assessments_msg: "scrollToTop",
     });
   }
 
