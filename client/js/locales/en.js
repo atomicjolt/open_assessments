@@ -48,6 +48,9 @@ export default {
     },
     fileUpload: {
       chooseFile: "Choose a File to Upload"
+    },
+    item: {
+      mustSelectAnswer: "Please select a valid answer" // Text displayed when a user tries to check an answer without selecing one first
     }
   }
 };
