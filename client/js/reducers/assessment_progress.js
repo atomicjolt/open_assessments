@@ -16,7 +16,8 @@ const initialState = Immutable.fromJS({
   responses:             [],
   startedAt:             0,
   finishedAt:            0,
-  assessmentResult:      null
+  assessmentResult:      null,
+  feedback: []
 });
 
 export default (state = initialState, action) => {
@@ -58,6 +59,7 @@ export default (state = initialState, action) => {
       }
 
       state = state.setIn(["responses", `${action.questionIndex}`], responses);
+      state = state.setIn(["feedback", `${action.questionIndex}`], ""); //TODO document
       break;
 
     case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE:
@@ -95,6 +97,9 @@ export default (state = initialState, action) => {
     case AssessmentConstants.ASSESSMENT_SUBMITTED_DONE:
       state = state.set("finishedAt", Date.now());
       state = state.set("isSubmitted", true);
+      break;
+    case AssessmentConstants.INVALID_ANSWER_CHECK:
+      state = state.setIn(["feedback", action.index], action.feedback); //TODO use translated string
       break;
 
     default:
