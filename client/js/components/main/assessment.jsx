@@ -55,6 +55,8 @@ const select = (state, props) => {
     // answerIds: answers feedback applies to
     questionResults : selectors.questionResults(state, props),
 
+    questionFeedback: selectors.questionFeedback(state, props),
+
     // User facing strings of the language specified by the 'locale' setting
     localizedStrings: localizeStrings(state, props),
 
@@ -91,7 +93,7 @@ export class Assessment extends React.Component{
 
   componentDidUpdate(prevProps) {
     this.props.sendSize();
-    
+
     if(this.props.assessmentProgress.isSubmitted) {
       appHistory.push("assessment-complete");
     }
@@ -181,7 +183,7 @@ export class Assessment extends React.Component{
           response         = {props.responses[index] || []}
           currentItemIndex = {index}
           questionCount    = {props.questionCount}
-          questionResult   = {props.questionResults[index] || {}}
+          questionFeedback = {props.questionFeedback[index] || props.questionResults[index] || {}}
           allQuestions     = {props.allQuestions}
           outcomes         = {props.outcomes || {}}
           sendSize         = {props.sendSize}
