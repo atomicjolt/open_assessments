@@ -5,11 +5,13 @@ import { Constants as JwtConstants }                from "../actions/jwt";
 import { Constants as AssessmentConstants }         from "../actions/assessment";
 import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
 import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta.js";
+import { invalidAnswerCheck }                       from "../actions/assessment_progress";
 import { DONE }                                     from "../constants/wrapper";
 import { parseFeedback }                            from "../parsers/clix/parser";
 import { parse }                                    from "../parsers/assessment";
 import { transformItem }                            from "../parsers/clix/clix";
 import { displayError }                             from "../actions/application";
+import { localizeStrings }                          from "../selectors/localize";
 
 function getBody(userInput, question){
   var type = question.json.genusTypeId;
@@ -105,6 +107,12 @@ function checkAnswers(store, action) {
       ["responses", `${questionIndex}`],
       Immutable.List()
     ).toJS();
+
+    // check for empty TODO document
+    if(_.isEmpty(userInput)){
+      store.dispatch(invalidAnswerCheck(questionIndex, `<p>${localizeStrings(state).item.mustSelectAnswer}</p>`));
+      return;
+    }
 
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${question.json.id}/submit`;
 
