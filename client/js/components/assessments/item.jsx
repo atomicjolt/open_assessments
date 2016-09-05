@@ -26,7 +26,7 @@ export default class Item extends React.Component{
 
     // Graded user response object containing keys
     // correct:true/false, feedback:"Answer feedback"
-    questionResult    : React.PropTypes.object.isRequired,
+    questionFeedback    : React.PropTypes.object.isRequired,
 
     selectAnswer      : React.PropTypes.func.isRequired,
 
@@ -90,9 +90,9 @@ export default class Item extends React.Component{
   }
 
   getFeedback(){
-    var response = this.props.questionResult;
+    var response = this.props.questionFeedback;
 
-    if(response){
+    if(!_.isEmpty(response)){
 
       if(response.correct === true){
         return (
@@ -105,7 +105,7 @@ export default class Item extends React.Component{
             </div>
           </div>
         );
-      } else if(response.correct === false) {
+      } else if(response.correct === false){
         return (
           <div className="c-question-feedback  c-feedback--incorrect">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
@@ -135,7 +135,6 @@ export default class Item extends React.Component{
               isResult={false}
               selectAnswer={this.props.selectAnswer}
               response={this.props.response}
-              questionResult={this.props.questionResult}
               localizedStrings={this.props.localizedStrings}
               audioRecordStart={this.props.audioRecordStart}
               audioRecordStop={this.props.audioRecordStop}/>
