@@ -3,6 +3,7 @@
 import $                   from "jquery";
 import _                   from "lodash";
 import { createSelector }  from "reselect";
+import Immutable           from "immutable";
 
 import { getItems, loadOutcomes, transformItem }  from "./qti";
 
@@ -28,6 +29,16 @@ import { getItems, loadOutcomes, transformItem }  from "./qti";
 //   [ questions ],
 //   (questions) => questions.length
 // );
+
+/**
+ * Returns array of question indexes that are currently being displayed 
+ */
+function currentQuestionIndexes(state, props){
+  return _.range(
+    state.assessmentProgress.get('currentItemIndex'),
+    state.assessmentProgress.get('currentItemIndex') + state.settings.questions_per_page
+  );
+}
 
 export function questions(state, props) {
   const item = state.assessment.item;
@@ -61,10 +72,7 @@ export function questionResults(state, props) {
   // TODO Currently we are setting the same response for all userInput.
   // When we have an example of multi answer feedback we should figure out
   // how to assign feedback to each answer.
-  const questionIndexes = _.range(
-    state.assessmentProgress.get('currentItemIndex'),
-    state.assessmentProgress.get('currentItemIndex') + state.settings.questions_per_page
-  );
+  const questionIndexes = currentQuestionIndexes(state, props);
 
   let questionResponses = {};
 
@@ -81,6 +89,21 @@ export function questionResults(state, props) {
   });
 
   return questionResponses;
+}
+
+export function questionFeedback(state, props){
+  const indices = currentQuestionIndexes(state, props);
+  let questionFeedback = {};
+  _.each(indices, (i) => {
+    const feedback = state.assessmentProgress.getIn(['feedback', i]);
+    if(feedback){
+      questionFeedback[i] = {
+        feedback,
+        correct: false
+      };
+    }
+  });
+  return questionFeedback;
 }
 
 export function correctItemCount(state, props) {
