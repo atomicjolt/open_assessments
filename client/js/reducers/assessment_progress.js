@@ -17,7 +17,6 @@ const initialState = Immutable.fromJS({
   startedAt:             0,
   finishedAt:            0,
   assessmentResult:      null,
-  feedback: []
 });
 
 export default (state = initialState, action) => {
@@ -95,10 +94,6 @@ export default (state = initialState, action) => {
     case AssessmentConstants.ASSESSMENT_SUBMITTED_DONE:
       state = state.set("finishedAt", Date.now());
       state = state.set("isSubmitted", true);
-      break;
-
-    case AssessmentConstants.ANSWER_FEEDBACK:
-      state = state.setIn(["feedback", action.index], action.feedback);
       break;
 
     default:

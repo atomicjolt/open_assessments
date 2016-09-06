@@ -6,8 +6,7 @@ const constants = [
   "LEVEL_SELECTED",
   "RETAKE_ASSESSMENT",
   "ASSESSMENT_VIEWED",
-  "CHECK_QUESTIONS",
-  "ANSWER_FEEDBACK"
+  "CHECK_QUESTIONS"
 ];
 
 const requests = [
@@ -80,12 +79,6 @@ export const assessmentViewed = (settings, assessment) => ({
   type: Constants.ASSESSMENT_VIEWED,
   settings,
   assessment
-});
-
-export const answerFeedback = (index, feedback) => ({
-  type: Constants.ANSWER_FEEDBACK,
-  index,
-  feedback
 });
 
 // { TODO andd functionality to component

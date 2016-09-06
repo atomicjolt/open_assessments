@@ -142,16 +142,6 @@ function checkAnswers(store, action) {
       Immutable.List()
     ).toJS();
 
-    // If the user answered hasn't given an answer yet, we need to display
-    // feedback telling the user to do so, and not send any information to qbank.
-    if(!isAnswered(userInput)){
-      store.dispatch(answerFeedback(questionIndex, `<p>${getFeedback(question, state)}</p>`));
-      return;
-    } else {
-      // There is a valid answer, so we need to clear out any feedback that could have been previously set
-      store.dispatch(answerFeedback(questionIndex, ""));
-    }
-
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${question.json.id}/submit`;
 
     var body = getBody(userInput, question);
@@ -162,6 +152,26 @@ function checkAnswers(store, action) {
       type: AssessmentProgressConstants.CHECK_QUESTIONS,
       numQuestions: questionIndexes.length
     });
+
+    // If the user answered hasn't given an answer yet, we need to display
+    // feedback telling the user to do so, and not send any information to qbank.
+    if(!isAnswered(userInput)){
+
+      const payload = {
+        feedback: `<p>${getFeedback(question, state)}</p>`,
+        correct: false,
+        userInput
+      };
+      store.dispatch({
+        type: AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
+        payload,
+        userInput,
+        questionIndex,
+        original: action
+      });
+
+      return;
+    }
 
     const promise = postQbank(state, url, body);
     if(promise){
