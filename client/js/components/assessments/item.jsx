@@ -105,7 +105,7 @@ export default class Item extends React.Component{
             </div>
           </div>
         );
-      } else if(response.correct === false){
+      } else if(response.correct === false) {
         return (
           <div className="c-question-feedback  c-feedback--incorrect">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">

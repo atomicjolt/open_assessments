@@ -13,10 +13,17 @@ import { transformItem }                            from "../parsers/clix/clix";
 import { displayError }                             from "../actions/application";
 import { localizeStrings }                          from "../selectors/localize";
 
+/**
+ * Determines whether or not a question has been answered or not based on the input
+ */
 function isAnswered(userInput) {
   return userInput.some((item) => !_.isEmpty(item) || item instanceof Blob);
 }
 
+/**
+ * Returns unanswered question feedback for an unanswered question based upon its
+ * question type 
+ */
 function getFeedback(question, state){
   var item = transformItem(question);
   const localizedStrings = localizeStrings(state);

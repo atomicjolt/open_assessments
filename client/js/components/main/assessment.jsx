@@ -183,7 +183,10 @@ export class Assessment extends React.Component{
           response         = {props.responses[index] || []}
           currentItemIndex = {index}
           questionCount    = {props.questionCount}
-          questionFeedback = {props.questionFeedback[index] || props.questionResults[index] || {}}
+          questionFeedback = {
+            // Question feedback should take precedence over questionResults
+            props.questionFeedback[index] || props.questionResults[index] || {}
+          }
           allQuestions     = {props.allQuestions}
           outcomes         = {props.outcomes || {}}
           sendSize         = {props.sendSize}
