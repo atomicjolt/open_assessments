@@ -31,9 +31,9 @@ import { getItems, loadOutcomes, transformItem }  from "./qti";
 // );
 
 /**
- * Returns array of question indexes that are currently being displayed 
+ * Returns array of question indexes that are currently being displayed
  */
-function currentQuestionIndexes(state, props){
+function currentQuestionIndexes(state){
   return _.range(
     state.assessmentProgress.get('currentItemIndex'),
     state.assessmentProgress.get('currentItemIndex') + state.settings.questions_per_page
@@ -72,7 +72,7 @@ export function questionResults(state, props) {
   // TODO Currently we are setting the same response for all userInput.
   // When we have an example of multi answer feedback we should figure out
   // how to assign feedback to each answer.
-  const questionIndexes = currentQuestionIndexes(state, props);
+  const questionIndexes = currentQuestionIndexes(state);
 
   let questionResponses = {};
 
@@ -89,21 +89,6 @@ export function questionResults(state, props) {
   });
 
   return questionResponses;
-}
-
-export function questionFeedback(state, props){
-  const indices = currentQuestionIndexes(state, props);
-  let questionFeedback = {};
-  _.each(indices, (i) => {
-    const feedback = state.assessmentProgress.getIn(['feedback', i]);
-    if(feedback){
-      questionFeedback[i] = {
-        feedback,
-        correct: false
-      };
-    }
-  });
-  return questionFeedback;
 }
 
 export function correctItemCount(state, props) {

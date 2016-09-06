@@ -37,10 +37,6 @@ export function questionResults(state, props) {
   return qtiSelectors.questionResults(state, props);
 }
 
-export function questionFeedback(state, props){
-  return qtiSelectors.questionFeedback(state, props);
-}
-
 export function correctItemCount(state, props) {
   return qtiSelectors.correctItemCount(state, props);
 }

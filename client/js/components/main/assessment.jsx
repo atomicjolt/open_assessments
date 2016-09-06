@@ -55,8 +55,6 @@ const select = (state, props) => {
     // answerIds: answers feedback applies to
     questionResults : selectors.questionResults(state, props),
 
-    questionFeedback: selectors.questionFeedback(state, props),
-
     // User facing strings of the language specified by the 'locale' setting
     localizedStrings: localizeStrings(state, props),
 
@@ -183,10 +181,7 @@ export class Assessment extends React.Component{
           response         = {props.responses[index] || []}
           currentItemIndex = {index}
           questionCount    = {props.questionCount}
-          questionFeedback = {
-            // Question feedback should take precedence over questionResults
-            props.questionFeedback[index] || props.questionResults[index] || {}
-          }
+          questionResults  = {props.questionResults[index] || {}}
           allQuestions     = {props.allQuestions}
           outcomes         = {props.outcomes || {}}
           sendSize         = {props.sendSize}

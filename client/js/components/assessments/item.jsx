@@ -26,7 +26,7 @@ export default class Item extends React.Component{
 
     // Graded user response object containing keys
     // correct:true/false, feedback:"Answer feedback"
-    questionFeedback    : React.PropTypes.object.isRequired,
+    questionResults   : React.PropTypes.object.isRequired,
 
     selectAnswer      : React.PropTypes.func.isRequired,
 
@@ -90,7 +90,7 @@ export default class Item extends React.Component{
   }
 
   getFeedback(){
-    var response = this.props.questionFeedback;
+    var response = this.props.questionResults;
 
     if(!_.isEmpty(response)){
 

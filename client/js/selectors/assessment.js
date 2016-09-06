@@ -38,7 +38,6 @@ export const questions        = makeDispatchingSelector("questions");
 export const outcomes         = makeDispatchingSelector("outcomes");
 export const questionCount    = makeDispatchingSelector("questionCount");
 export const questionResults  = makeDispatchingSelector("questionResults");
-export const questionFeedback = makeDispatchingSelector("questionFeedback");
 
 /**
  * How many Items the student has answered correctly, whether those Items have
