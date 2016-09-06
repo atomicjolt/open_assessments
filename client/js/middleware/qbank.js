@@ -13,6 +13,10 @@ import { transformItem }                            from "../parsers/clix/clix";
 import { displayError }                             from "../actions/application";
 import { localizeStrings }                          from "../selectors/localize";
 
+function isAnswered(userInput) {
+  return userInput.some((item) => !_.isEmpty(item) || item instanceof Blob);
+}
+
 function getBody(userInput, question){
   var type = question.json.genusTypeId;
   if(type && type.startsWith("question")) {
@@ -108,8 +112,9 @@ function checkAnswers(store, action) {
       Immutable.List()
     ).toJS();
 
-    // check for empty TODO document
-    if(_.isEmpty(userInput)){
+    // If the user answered hasn't given an answer yet, we need to display
+    // feedback telling the user to do so.
+    if(!isAnswered(userInput)){
       store.dispatch(invalidAnswerCheck(questionIndex, `<p>${localizeStrings(state).item.mustSelectAnswer}</p>`));
       return;
     }
