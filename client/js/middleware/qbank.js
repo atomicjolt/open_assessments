@@ -5,7 +5,7 @@ import { Constants as JwtConstants }                from "../actions/jwt";
 import { Constants as AssessmentConstants }         from "../actions/assessment";
 import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
 import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta.js";
-import { invalidAnswerCheck }                       from "../actions/assessment_progress";
+import { answerFeedback }                           from "../actions/assessment_progress";
 import { DONE }                                     from "../constants/wrapper";
 import { parseFeedback }                            from "../parsers/clix/parser";
 import { parse }                                    from "../parsers/assessment";
@@ -22,7 +22,7 @@ function isAnswered(userInput) {
 
 /**
  * Returns unanswered question feedback for an unanswered question based upon its
- * question type 
+ * question type
  */
 function getFeedback(question, state){
   var item = transformItem(question);
@@ -143,10 +143,13 @@ function checkAnswers(store, action) {
     ).toJS();
 
     // If the user answered hasn't given an answer yet, we need to display
-    // feedback telling the user to do so.
+    // feedback telling the user to do so, and not send any information to qbank.
     if(!isAnswered(userInput)){
-      store.dispatch(invalidAnswerCheck(questionIndex, `<p>${getFeedback(question, state)}</p>`));
+      store.dispatch(answerFeedback(questionIndex, `<p>${getFeedback(question, state)}</p>`));
       return;
+    } else {
+      // There is a valid answer, so we need to clear out any feedback that could have been previously set
+      store.dispatch(answerFeedback(questionIndex, ""));
     }
 
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${question.json.id}/submit`;

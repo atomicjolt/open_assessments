@@ -59,11 +59,6 @@ export default (state = initialState, action) => {
       }
 
       state = state.setIn(["responses", `${action.questionIndex}`], responses);
-
-      // Question feedback is the result of clicking the check answer button
-      // without a selected answer. If they select an answer then we can remove
-      // that feedback.
-      state = state.setIn(["feedback", `${action.questionIndex}`], "");
       break;
 
     case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE:
@@ -95,14 +90,14 @@ export default (state = initialState, action) => {
     case AssessmentConstants.CHECK_QUESTIONS:
       var checking = state.get('numQuestionsChecking');
       state = state.set('numQuestionsChecking', action.numQuestions + checking);
-
       break;
 
     case AssessmentConstants.ASSESSMENT_SUBMITTED_DONE:
       state = state.set("finishedAt", Date.now());
       state = state.set("isSubmitted", true);
       break;
-    case AssessmentConstants.INVALID_ANSWER_CHECK:
+
+    case AssessmentConstants.ANSWER_FEEDBACK:
       state = state.setIn(["feedback", action.index], action.feedback);
       break;
 

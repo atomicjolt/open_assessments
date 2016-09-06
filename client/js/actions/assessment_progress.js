@@ -7,7 +7,7 @@ const constants = [
   "RETAKE_ASSESSMENT",
   "ASSESSMENT_VIEWED",
   "CHECK_QUESTIONS",
-  "INVALID_ANSWER_CHECK"
+  "ANSWER_FEEDBACK"
 ];
 
 const requests = [
@@ -82,8 +82,8 @@ export const assessmentViewed = (settings, assessment) => ({
   assessment
 });
 
-export const invalidAnswerCheck = (index, feedback) => ({
-  type: Constants.INVALID_ANSWER_CHECK,
+export const answerFeedback = (index, feedback) => ({
+  type: Constants.ANSWER_FEEDBACK,
   index,
   feedback
 });
