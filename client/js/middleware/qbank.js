@@ -17,6 +17,29 @@ function isAnswered(userInput) {
   return userInput.some((item) => !_.isEmpty(item) || item instanceof Blob);
 }
 
+function getFeedback(question, state){
+  var item = transformItem(question);
+  const localizedStrings = localizeStrings(state);
+
+  switch(item.question_type) {
+    case "text_input_question":
+    case "text_only_question":
+    case "short_answer_question":
+    case "survey_question":
+    case "numerical_input_question":
+      return localizedStrings.middleware.mustEnterAnswer;
+
+    case "file_upload_question":
+      return localizedStrings.middleware.mustUploadFile;
+
+    case "audio_upload_question":
+      return localizedStrings.middleware.mustRecordFile;
+
+    default:
+      return localizedStrings.middleware.mustSelectAnswer;
+  }
+}
+
 function getBody(userInput, question){
   var type = question.json.genusTypeId;
   if(type && type.startsWith("question")) {
@@ -115,7 +138,7 @@ function checkAnswers(store, action) {
     // If the user answered hasn't given an answer yet, we need to display
     // feedback telling the user to do so.
     if(!isAnswered(userInput)){
-      store.dispatch(invalidAnswerCheck(questionIndex, `<p>${localizeStrings(state).item.mustSelectAnswer}</p>`));
+      store.dispatch(invalidAnswerCheck(questionIndex, `<p>${getFeedback(question, state)}</p>`));
       return;
     }
 

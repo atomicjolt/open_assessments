@@ -49,8 +49,11 @@ export default {
     fileUpload: {
       chooseFile: "Choose a File to Upload"
     },
-    item: {
-      mustSelectAnswer: "Please select a valid answer" // Text displayed when a user tries to check an answer without selecing one first
+    middleware: {
+      mustSelectAnswer: "Please select a valid answer", // Text displayed when a user tries to check an answer without selecing one first
+      mustEnterAnswer: "Please enter a valid answer",
+      mustUploadFile: "Please upload a file",
+      mustRecordFile: "Please record an audio sample"
     }
   }
 };
