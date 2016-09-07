@@ -10,13 +10,12 @@ const initialState = Immutable.fromJS({
 
   // Number of 'check answer' api calls that have not yet returned
   numQuestionsChecking:  0,
-
   selectedAnswerId:      '',
   checkedResponses:      [],
   responses:             [],
   startedAt:             0,
   finishedAt:            0,
-  assessmentResult:      null,
+  assessmentResult:      null
 });
 
 export default (state = initialState, action) => {
