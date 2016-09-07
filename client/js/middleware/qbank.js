@@ -137,15 +137,15 @@ function checkAnswers(store, action) {
 
   return _.map(questionIndexes, (questionIndex) => {
     const question = state.assessment.items[questionIndex];
-    const userInput = state.assessmentProgress.getIn(
-      ["responses", `${questionIndex}`],
-      Immutable.List()
-    ).toJS();
+    // If an Immutable list index is set to undefined (as opposed to not being
+    // assigned anything), then the getIn() will still return undefined instead
+    //  of the default return value. We need to see if it
+    // is actually undefined before calling toJS()
+    var userInput = state.assessmentProgress.getIn(["responses", `${questionIndex}`]);
+    userInput = userInput ? userInput.toJS() : [];
 
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${question.json.id}/submit`;
-
     var body = getBody(userInput, question);
-    if(_.isUndefined(body)){return;} // If we have no body, don't send anything to qbank
 
     // Let progress reducer know how many questions are being checked
     store.dispatch({
