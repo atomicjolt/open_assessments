@@ -75,25 +75,31 @@ export default class Recorder extends React.Component{
     recorder.record();
   }
 
+  /**
+   * Free system audio resources
+   */
+  cleanupAudioResources(){
+    this.state.recorder.clear();
+
+    // Older browsers don't support audioContext.close()
+    if(this.state.audioContext.close){this.state.audioContext.close();}
+
+    if(this.state.stream.stop){
+      // Older browsers stop recording by calling stop on the stream
+      this.state.stream.stop();
+    } else {
+      // Newer browswers require stopping each track
+      this.state.stream.getAudioTracks().forEach((t) => t.stop());
+    }
+  }
+
   stopRecorder(){
     if(this.state.recorder && this.state.recorder.recording){
       this.state.recorder.stop();
       this.state.recorder.exportWAV(
         (blob) => {
           this.props.onStop(blob, this.state.audioContext.currentTime);
-          this.state.recorder.clear();
-
-          // Older browsers don't support audioContext.close()
-          if(this.state.audioContext.close){this.state.audioContext.close();}
-
-          if(this.state.stream.stop){
-            // Older browsers stop recording by calling stop on the stream
-            this.state.stream.stop();
-          } else {
-            // Newer browswers require stopping each track
-            this.state.stream.getAudioTracks().forEach((t) => t.stop());
-          }
-
+          this.cleanupAudioResources();
           this.setState({recorder:null, audioContext:null, stream:null});
         }
       );
@@ -101,7 +107,10 @@ export default class Recorder extends React.Component{
   }
 
   componentWillUnmount(){
-    this.stopRecorder();
+    if(this.state.recorder && this.state.recorder.recording){
+      this.state.recorder.stop();
+      this.cleanupAudioResources();
+    }
   }
 
   render(){
