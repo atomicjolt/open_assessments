@@ -48,6 +48,27 @@ export default {
     },
     fileUpload: {
       chooseFile: "Choose a File to Upload"
+    },
+    middleware: {
+      // Text displayed when a user tries to check an answer without
+      // selecting one first (Applies to questions that presents discrete number
+      // of choices for the user to choose from).
+      mustSelectAnswer: "Please select a valid answer",
+
+      // Text displayed when a user tries to check an answer without
+      // selecting one first (Applies when the question expects user input in a
+      // text box).
+      mustEnterAnswer: "Please enter a valid answer",
+
+      // Text displayed when a user tries to check an answer without
+      // selecting one first (Applies when the question expects user to upload
+      // a file).
+      mustUploadFile: "Please upload a file",
+
+      // Text displayed when a user tries to check an answer without
+      // selecting one first (Applies when the question expects user use the audio
+      // recorder to record an audio sample).
+      mustRecordFile: "Please record an audio sample"
     }
   }
 };

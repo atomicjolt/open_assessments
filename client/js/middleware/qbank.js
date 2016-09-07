@@ -5,11 +5,47 @@ import { Constants as JwtConstants }                from "../actions/jwt";
 import { Constants as AssessmentConstants }         from "../actions/assessment";
 import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
 import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta.js";
+import { answerFeedback }                           from "../actions/assessment_progress";
 import { DONE }                                     from "../constants/wrapper";
 import { parseFeedback }                            from "../parsers/clix/parser";
 import { parse }                                    from "../parsers/assessment";
 import { transformItem }                            from "../parsers/clix/clix";
 import { displayError }                             from "../actions/application";
+import { localizeStrings }                          from "../selectors/localize";
+
+/**
+ * Determines whether or not a question has been answered or not based on the input
+ */
+function isAnswered(userInput) {
+  return userInput.some((item) => !_.isEmpty(item) || item instanceof Blob);
+}
+
+/**
+ * Returns unanswered question feedback for an unanswered question based upon its
+ * question type
+ */
+function getFeedback(question, state){
+  var item = transformItem(question);
+  const localizedStrings = localizeStrings(state);
+
+  switch(item.question_type) {
+    case "text_input_question":
+    case "text_only_question":
+    case "short_answer_question":
+    case "survey_question":
+    case "numerical_input_question":
+      return localizedStrings.middleware.mustEnterAnswer;
+
+    case "file_upload_question":
+      return localizedStrings.middleware.mustUploadFile;
+
+    case "audio_upload_question":
+      return localizedStrings.middleware.mustRecordFile;
+
+    default:
+      return localizedStrings.middleware.mustSelectAnswer;
+  }
+}
 
 function getBody(userInput, question){
   var type = question.json.genusTypeId;
@@ -101,21 +137,41 @@ function checkAnswers(store, action) {
 
   return _.map(questionIndexes, (questionIndex) => {
     const question = state.assessment.items[questionIndex];
-    const userInput = state.assessmentProgress.getIn(
-      ["responses", `${questionIndex}`],
-      Immutable.List()
-    ).toJS();
+    // If an Immutable list index is set to undefined (as opposed to not being
+    // assigned anything), then the getIn() will still return undefined instead
+    //  of the default return value. We need to see if it
+    // is actually undefined before calling toJS()
+    var userInput = state.assessmentProgress.getIn(["responses", `${questionIndex}`]);
+    userInput = userInput ? userInput.toJS() : [];
 
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${question.json.id}/submit`;
-
     var body = getBody(userInput, question);
-    if(_.isUndefined(body)){return;} // If we have no body, don't send anything to qbank
 
     // Let progress reducer know how many questions are being checked
     store.dispatch({
       type: AssessmentProgressConstants.CHECK_QUESTIONS,
       numQuestions: questionIndexes.length
     });
+
+    // If the user answered hasn't given an answer yet, we need to display
+    // feedback telling the user to do so, and not send any information to qbank.
+    if(!isAnswered(userInput)){
+
+      const payload = {
+        feedback: `<p>${getFeedback(question, state)}</p>`,
+        correct: false,
+        userInput
+      };
+      store.dispatch({
+        type: AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
+        payload,
+        userInput,
+        questionIndex,
+        original: action
+      });
+
+      return;
+    }
 
     const promise = postQbank(state, url, body);
     if(promise){

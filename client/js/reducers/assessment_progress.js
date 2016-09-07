@@ -10,7 +10,6 @@ const initialState = Immutable.fromJS({
 
   // Number of 'check answer' api calls that have not yet returned
   numQuestionsChecking:  0,
-
   selectedAnswerId:      '',
   checkedResponses:      [],
   responses:             [],
@@ -89,7 +88,6 @@ export default (state = initialState, action) => {
     case AssessmentConstants.CHECK_QUESTIONS:
       var checking = state.get('numQuestionsChecking');
       state = state.set('numQuestionsChecking', action.numQuestions + checking);
-
       break;
 
     case AssessmentConstants.ASSESSMENT_SUBMITTED_DONE:

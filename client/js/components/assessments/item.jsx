@@ -135,7 +135,6 @@ export default class Item extends React.Component{
               isResult={false}
               selectAnswer={this.props.selectAnswer}
               response={this.props.response}
-              questionResult={this.props.questionResult}
               localizedStrings={this.props.localizedStrings}
               audioRecordStart={this.props.audioRecordStart}
               audioRecordStop={this.props.audioRecordStop}/>

@@ -91,7 +91,7 @@ export class Assessment extends React.Component{
 
   componentDidUpdate(prevProps) {
     this.props.sendSize();
-    
+
     if(this.props.assessmentProgress.isSubmitted) {
       appHistory.push("assessment-complete");
     }
