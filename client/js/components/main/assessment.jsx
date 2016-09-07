@@ -181,7 +181,7 @@ export class Assessment extends React.Component{
           response         = {props.responses[index] || []}
           currentItemIndex = {index}
           questionCount    = {props.questionCount}
-          questionResults  = {props.questionResults[index] || {}}
+          questionResult   = {props.questionResults[index] || {}}
           allQuestions     = {props.allQuestions}
           outcomes         = {props.outcomes || {}}
           sendSize         = {props.sendSize}

@@ -17,7 +17,8 @@ describe('index', function() {
     props = {
       loadAssessment: () => {},
       scrollParentToTop: () => { scrollParentToTopCalled = true; },
-      sendSize: () => { sendSizeCalled = true; }
+      sendSize: () => { sendSizeCalled = true; },
+      availableLocales: () => {}
     };
 
     result = TestUtils.renderIntoDocument(<Index {...props} />);
