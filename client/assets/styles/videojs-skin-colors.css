@@ -45,6 +45,11 @@
   background: radial-gradient(hsla(327, 100%, 45%, 1), hsla(327, 100%, 35%, 1));
 }
 .vjs-skin-colors-clix .vjs-menu-button ul li:active,
-vjs-skin-colors-clix .vjs-menu-button ul li.vjs-selected:active {
+.vjs-skin-colors-clix .vjs-menu-button ul li.vjs-selected:active {
   background: radial-gradient(hsla(327, 100%, 38%, 1), hsla(327, 100%, 23%, 1));
+}
+
+::cue {
+  font-size: 1.5em;
+  line-height: 1.8;
 }
