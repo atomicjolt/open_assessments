@@ -15,7 +15,7 @@ export default class ItemChain extends React.Component {
   constructor() {
     super();
 
-    // wrapIndexs is an array of wrapping indexes, one for each line.
+    // wrapIndexes is an array of wrapping indexes, one for each line.
     // The start is the index of the first block that line renders from
     // this.props.wordChain
 
@@ -42,6 +42,18 @@ export default class ItemChain extends React.Component {
 
         this.setState({ wrapIndexes });
       }
+    }
+  }
+
+  componentDidUpdate() {
+    // When we update, we need to check if the dropzone is now too small, and
+    // if it is wrap to a new line.
+    const dropZone = ReactDOM.findDOMNode(this.WordDropZone);
+    const dimensions = dropZone.getBoundingClientRect();
+
+    if(dimensions.right - dimensions.left < 10) {
+      const wrapIndex = this.props.wordChain.length;
+      this.setState({ wrapIndexes: this.state.wrapIndexes.concat(wrapIndex) });
     }
   }
 
