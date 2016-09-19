@@ -14,7 +14,7 @@ export default {
       done: "Well done!"
     },
     assessmentComplete: {
-      complete: "Quiz Complete" // Text displayed when quiz is completed
+      complete: "Thank you" // Text displayed when quiz is completed
     },
     twoButtonNav:{
       previousButton: "Previous", // Text displayed on previous questions button
@@ -22,7 +22,7 @@ export default {
       checkAnswerButton: "Check Answer", // Text displayed on next questions button,
       saveFileButton: "Save File", // Text displayed on save file button
       saveAnswerButton: "Save Answer", // Text displayed on save answer button
-      submitButton: "Finish Quiz" // Text displayed on submit button
+      submitButton: "Finish" // Text displayed on submit button
     },
     retriesExceeded: {
       triesExceeded: "Too many tries" // Text displayed when a student has run out of quiz attempts
