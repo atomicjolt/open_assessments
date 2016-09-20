@@ -1,0 +1,8 @@
+.assessment-complete {
+  @include regular;
+
+  font-size: 1.8rem;
+  color: $text-color;
+  text-align: center;
+  padding: 100px;
+}

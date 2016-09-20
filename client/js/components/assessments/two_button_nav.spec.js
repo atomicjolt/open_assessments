@@ -83,7 +83,7 @@ describe('Two Button Nav', () => {
       props.primaryAction = PRIMARY_ACTION.SUBMIT;
       render();
 
-      expect(subject.innerHTML).toContain('Finish Quiz');
+      expect(subject.innerHTML).toContain('Finish');
     });
 
     it('calls onClick when submit button is clicked', () => {
