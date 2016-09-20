@@ -14,7 +14,7 @@ export default {
       done: "शाबाश!"
     },
     assessmentComplete: {
-      complete: "प्रश्नोतरी समाप्त" // Text displayed when quiz is completed
+      complete: "धन्यवाद" // Text displayed when quiz is completed (Quiz completed => प्रश्नोतरी समाप्त) (Thank you => धन्यवाद)
     },
     twoButtonNav:{
       previousButton: "पिछला", // Text displayed on previous questions button
@@ -22,7 +22,7 @@ export default {
       checkAnswerButton: "जवाब की जांच करो", // Text displayed on next questions button,
       saveFileButton: "फाइल सुरक्षित करें", // Text displayed on save file button
       saveAnswerButton: "उत्तर सेव करें", // Text displayed on save answer button
-      submitButton: "प्रश्नोतरी समाप्त करें" // Text displayed on submit button
+      submitButton: "समाप्त" // Text displayed on submit button (Quiz completed => प्रश्नोतरी समाप्त कर) (Finish => समाप्त)
     },
     item:{
       questionDirectionMany:"लागू होने वाले प्रत्येक को चुनें", // Question direction for multi answer question
@@ -52,6 +52,27 @@ export default {
     },
     fileUpload: {
       chooseFile: "अपलोड करने के लिए एक फाइल चुनें"
+    },
+    middleware: {
+      // Text displayed when a user tries to check an answer without
+      // selecting one first (Applies to questions that presents discrete number
+      // of choices for the user to choose from).
+      mustSelectAnswer: "कृप्या एक मान्य उत्तर चुनें",
+
+      // Text displayed when a user tries to check an answer without
+      // selecting one first (Applies when the question expects user input in a
+      // text box).
+      mustEnterAnswer: "कृप्या एक मान्य उत्तर दर्ज करें",
+
+      // Text displayed when a user tries to check an answer without
+      // selecting one first (Applies when the question expects user to upload
+      // a file).
+      mustUploadFile: "कृप्या एक फाइल अपलोड कीजिए",
+
+      // Text displayed when a user tries to check an answer without
+      // selecting one first (Applies when the question expects user use the audio
+      // recorder to record an audio sample).
+      mustRecordFile: "कृप्या एक ऑडियो नमूना रिकॉर्ड कीजिए"
     }
   }
 };
