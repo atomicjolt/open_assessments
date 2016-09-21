@@ -23,7 +23,7 @@ function isAnswered(userInput) {
 function defaultHeaders(state) {
   return {
     "X-Api-Proxy": state.settings.eid,
-    "X-API-LOCALE": state.settings.locale
+    "X-API-LOCALE": state.locale || state.settings.locale
   };
 }
 
@@ -237,14 +237,13 @@ export default {
         });
 
         const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${response.body.id}/questions?qti`;
-
         const assessmentPromise = api.get(
           assessmentUrl,
           state.settings.api_url,
           state.jwt,
           state.settings.csrf_token,
           {},
-          defaultHeaders(state)
+          defaultHeaders(store.getState())
         );
         if(assessmentPromise) {
           assessmentPromise.then((assessmentResponse, error) => {
