@@ -20,6 +20,13 @@ function isAnswered(userInput) {
   return userInput.some((item) => !_.isEmpty(item) || item instanceof Blob);
 }
 
+function defaultHeaders(state) {
+  return {
+    "X-Api-Proxy": state.settings.eid,
+    "X-API-LOCALE": state.settings.locale
+  };
+}
+
 /**
  * Returns unanswered question feedback for an unanswered question based upon its
  * question type
@@ -115,10 +122,6 @@ function getBody(userInput, question){
  * Sends a post request to qbank with qbank specific fields already set.
  */
 export function postQbank(state, url, body = {}, headers = {}, params={}){
-  const defaultHeaders = {
-    "X-Api-Proxy": state.settings.eid,
-    "X-API-LOCALE": state.settings.locale
-  };
   return api.post(
     url,
     state.settings.api_url,
@@ -126,7 +129,7 @@ export function postQbank(state, url, body = {}, headers = {}, params={}){
     state.settings.csrf_token,
     params,
     body,
-    _.merge(defaultHeaders, headers)
+    _.merge(defaultHeaders(state), headers)
   );
 };
 
@@ -235,7 +238,14 @@ export default {
 
         const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${response.body.id}/questions?qti`;
 
-        const assessmentPromise = api.get(assessmentUrl, state.settings.api_url, state.jwt, state.settings.csrf_token, {}, { "X-Api-Proxy": state.settings.eid });
+        const assessmentPromise = api.get(
+          assessmentUrl,
+          state.settings.api_url,
+          state.jwt,
+          state.settings.csrf_token,
+          {},
+          defaultHeaders(state)
+        );
         if(assessmentPromise) {
           assessmentPromise.then((assessmentResponse, error) => {
             store.dispatch({
