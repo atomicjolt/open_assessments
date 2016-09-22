@@ -5,6 +5,7 @@ import { Constants as JwtConstants }                from "../actions/jwt";
 import { Constants as AssessmentConstants }         from "../actions/assessment";
 import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
 import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta.js";
+import { Constants as LocaleConstants }             from "../actions/locale";
 import { answerFeedback }                           from "../actions/assessment_progress";
 import { DONE }                                     from "../constants/wrapper";
 import { parseFeedback }                            from "../parsers/clix/parser";
@@ -208,8 +209,39 @@ function checkAnswers(store, action) {
   });
 }
 
+function loadQuestions(store, action){
+  const state = store.getState();
+  const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions?qti`;
+  const assessmentPromise = api.get(
+    assessmentUrl,
+    state.settings.api_url,
+    state.jwt,
+    state.settings.csrf_token,
+    {},
+    defaultHeaders(state)
+  );
+  if(assessmentPromise) {
+    assessmentPromise.then((assessmentResponse, error) => {
+      store.dispatch({
+        type:     action.type + DONE,
+        payload:  parse(state.settings, assessmentResponse.text),
+        original: action,
+        assessmentResponse,
+        error
+      });
+    },
+    (error) => {
+      store.dispatch(displayError("There was a problem getting the assessment from QBank", error));
+    });
+  }
+}
+
 export default {
 
+  [LocaleConstants.LOCALE_SET] : (store, action) => {
+    debugger;
+    //TODO if meta is set then get questions again
+  },
   [JwtConstants.REFRESH_JWT] : {
     method : Network.GET,
     url    : (action) => ( `api/sessions/${action.userId}` )
@@ -235,30 +267,7 @@ export default {
           response,
           error
         });
-
-        const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${response.body.id}/questions?qti`;
-        const assessmentPromise = api.get(
-          assessmentUrl,
-          state.settings.api_url,
-          state.jwt,
-          state.settings.csrf_token,
-          {},
-          defaultHeaders(store.getState())
-        );
-        if(assessmentPromise) {
-          assessmentPromise.then((assessmentResponse, error) => {
-            store.dispatch({
-              type:     action.type + DONE,
-              payload:  parse(state.settings, assessmentResponse.text),
-              original: action,
-              response,
-              error
-            });
-          },
-          (error) => {
-            store.dispatch(displayError("There was a problem getting the assessment from QBank", error));
-          });
-        }
+        loadQuestions(store, action);
       },
       (error) => {
         store.dispatch(displayError("There was a problem creating the assessmentstaken in QBank", error));
