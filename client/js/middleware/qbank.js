@@ -209,7 +209,7 @@ function checkAnswers(store, action) {
   });
 }
 
-function loadQuestions(store, action){
+function loadQuestions(store, action) {
   const state = store.getState();
   const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions?qti`;
   const assessmentPromise = api.get(
@@ -220,10 +220,11 @@ function loadQuestions(store, action){
     {},
     defaultHeaders(state, action)
   );
+  
   if(assessmentPromise) {
     assessmentPromise.then((assessmentResponse, error) => {
       store.dispatch({
-        type:  AssessmentConstants.LOAD_ASSESSMENT + DONE,
+        type:     AssessmentConstants.LOAD_ASSESSMENT + DONE,
         payload:  parse(state.settings, assessmentResponse.text),
         original: action,
         assessmentResponse,
@@ -238,17 +239,17 @@ function loadQuestions(store, action){
 
 export default {
 
-  [LocaleConstants.LOCALE_SET] : (store, action) => {
+  [LocaleConstants.LOCALE_SET]: (store, action) => {
     const state = store.getState();
-    if(_.isEmpty(state.assessmentMeta)){ return; }
+    if(_.isEmpty(state.assessmentMeta)) { return; }
     loadQuestions(store, action);
   },
-  [JwtConstants.REFRESH_JWT] : {
+  [JwtConstants.REFRESH_JWT]: {
     method : Network.GET,
     url    : (action) => ( `api/sessions/${action.userId}` )
   },
 
-  [AssessmentConstants.LOAD_ASSESSMENT] : (store, action) => {
+  [AssessmentConstants.LOAD_ASSESSMENT]: (store, action) => {
     const state = store.getState();
 
     const metaUrl = `assessment/banks/${state.settings.bank}/assessmentsoffered/${state.settings.assessment_offered_id}/assessmentstaken`;
@@ -295,7 +296,7 @@ export default {
 
   },
 
-  [AssessmentProgressConstants.ASSESSMENT_GRADED] : {
+  [AssessmentProgressConstants.ASSESSMENT_GRADED]: {
     method : Network.POST,
     url    : (action) => { 'api/grades'; },
     body   : (action) => {
@@ -325,7 +326,7 @@ export default {
     }
   },
 
-  [AssessmentProgressConstants.ASSESSMENT_SUBMITTED] : (store, action) => {
+  [AssessmentProgressConstants.ASSESSMENT_SUBMITTED]: (store, action) => {
     Promise.all(checkAnswers(store, action)).then(() => {
       const state = store.getState();
 
