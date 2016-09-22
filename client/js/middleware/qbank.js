@@ -5,6 +5,7 @@ import { Constants as JwtConstants }                from "../actions/jwt";
 import { Constants as AssessmentConstants }         from "../actions/assessment";
 import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
 import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta.js";
+import { Constants as LocaleConstants }             from "../actions/locale";
 import { answerFeedback }                           from "../actions/assessment_progress";
 import { DONE }                                     from "../constants/wrapper";
 import { parseFeedback }                            from "../parsers/clix/parser";
@@ -20,10 +21,10 @@ function isAnswered(userInput) {
   return userInput.some((item) => !_.isEmpty(item) || item instanceof Blob);
 }
 
-function defaultHeaders(state) {
+function defaultHeaders(state, action = {}) {
   return {
     "X-Api-Proxy": state.settings.eid,
-    "X-API-LOCALE": state.locale || state.settings.locale
+    "X-API-LOCALE": action.locale || state.locale || state.settings.locale
   };
 }
 
@@ -208,14 +209,47 @@ function checkAnswers(store, action) {
   });
 }
 
+function loadQuestions(store, action) {
+  const state = store.getState();
+  const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions?qti`;
+  const assessmentPromise = api.get(
+    assessmentUrl,
+    state.settings.api_url,
+    state.jwt,
+    state.settings.csrf_token,
+    {},
+    defaultHeaders(state, action)
+  );
+  
+  if(assessmentPromise) {
+    assessmentPromise.then((assessmentResponse, error) => {
+      store.dispatch({
+        type:     AssessmentConstants.LOAD_ASSESSMENT + DONE,
+        payload:  parse(state.settings, assessmentResponse.text),
+        original: action,
+        assessmentResponse,
+        error
+      });
+    },
+    (error) => {
+      store.dispatch(displayError("There was a problem getting the assessment from QBank", error));
+    });
+  }
+}
+
 export default {
 
-  [JwtConstants.REFRESH_JWT] : {
+  [LocaleConstants.LOCALE_SET]: (store, action) => {
+    const state = store.getState();
+    if(_.isEmpty(state.assessmentMeta)) { return; }
+    loadQuestions(store, action);
+  },
+  [JwtConstants.REFRESH_JWT]: {
     method : Network.GET,
     url    : (action) => ( `api/sessions/${action.userId}` )
   },
 
-  [AssessmentConstants.LOAD_ASSESSMENT] : (store, action) => {
+  [AssessmentConstants.LOAD_ASSESSMENT]: (store, action) => {
     const state = store.getState();
 
     const metaUrl = `assessment/banks/${state.settings.bank}/assessmentsoffered/${state.settings.assessment_offered_id}/assessmentstaken`;
@@ -235,30 +269,7 @@ export default {
           response,
           error
         });
-
-        const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${response.body.id}/questions?qti`;
-        const assessmentPromise = api.get(
-          assessmentUrl,
-          state.settings.api_url,
-          state.jwt,
-          state.settings.csrf_token,
-          {},
-          defaultHeaders(store.getState())
-        );
-        if(assessmentPromise) {
-          assessmentPromise.then((assessmentResponse, error) => {
-            store.dispatch({
-              type:     action.type + DONE,
-              payload:  parse(state.settings, assessmentResponse.text),
-              original: action,
-              response,
-              error
-            });
-          },
-          (error) => {
-            store.dispatch(displayError("There was a problem getting the assessment from QBank", error));
-          });
-        }
+        loadQuestions(store, action);
       },
       (error) => {
         store.dispatch(displayError("There was a problem creating the assessmentstaken in QBank", error));
@@ -285,7 +296,7 @@ export default {
 
   },
 
-  [AssessmentProgressConstants.ASSESSMENT_GRADED] : {
+  [AssessmentProgressConstants.ASSESSMENT_GRADED]: {
     method : Network.POST,
     url    : (action) => { 'api/grades'; },
     body   : (action) => {
@@ -315,7 +326,7 @@ export default {
     }
   },
 
-  [AssessmentProgressConstants.ASSESSMENT_SUBMITTED] : (store, action) => {
+  [AssessmentProgressConstants.ASSESSMENT_SUBMITTED]: (store, action) => {
     Promise.all(checkAnswers(store, action)).then(() => {
       const state = store.getState();
 
