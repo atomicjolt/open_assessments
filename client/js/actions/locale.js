@@ -19,6 +19,7 @@ export const Constants = wrapper(constants, requests);
 export function setLocale(locale) {
   return {
     type: Constants.LOCALE_SET,
+    apiCall:true,
     locale
   };
 };

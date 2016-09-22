@@ -21,10 +21,10 @@ function isAnswered(userInput) {
   return userInput.some((item) => !_.isEmpty(item) || item instanceof Blob);
 }
 
-function defaultHeaders(state) {
+function defaultHeaders(state, action = {}) {
   return {
     "X-Api-Proxy": state.settings.eid,
-    "X-API-LOCALE": state.locale || state.settings.locale
+    "X-API-LOCALE": action.locale || state.locale || state.settings.locale
   };
 }
 
@@ -218,12 +218,12 @@ function loadQuestions(store, action){
     state.jwt,
     state.settings.csrf_token,
     {},
-    defaultHeaders(state)
+    defaultHeaders(state, action)
   );
   if(assessmentPromise) {
     assessmentPromise.then((assessmentResponse, error) => {
       store.dispatch({
-        type:     action.type + DONE,
+        type:  AssessmentConstants.LOAD_ASSESSMENT + DONE,
         payload:  parse(state.settings, assessmentResponse.text),
         original: action,
         assessmentResponse,
@@ -239,8 +239,9 @@ function loadQuestions(store, action){
 export default {
 
   [LocaleConstants.LOCALE_SET] : (store, action) => {
-    debugger;
-    //TODO if meta is set then get questions again
+    const state = store.getState();
+    if(_.isEmpty(state.assessmentMeta)){ return; }
+    loadQuestions(store, action);
   },
   [JwtConstants.REFRESH_JWT] : {
     method : Network.GET,
