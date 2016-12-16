@@ -24,6 +24,27 @@ This code based has was originally developed in partnership with MIT and Atomic 
 -----------------------
 Open Assessments supports both QTI 1.x and 2.x
 
+###Question Types
+-----------------------
+The Open Assessments Client supports the following question types:
+
+1. multiple choice
+2. true false
+3. survey
+4. matching
+5. text input
+6. text only
+7. short answer
+8. numerical input
+9. multiple answers
+10. file upload
+11. audio upload
+12. drag and drop
+13. movable object chain
+14. movable words sentence
+15. movable words sandbox
+16. fill the blank
+
 ####edX Support
 -----------------------
 Development of edX support has been paused. Open Assessments did supports the drag and drop and multiple choice question types from edX
