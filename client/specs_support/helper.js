@@ -20,7 +20,7 @@ export default class Helper {
       jwt      : "fake_jwt_token",
       settings : _.assign({
                     csrf     : "csrf_token",
-                    apiUrl   : "http://www.example.com"
+                    api_url  : "http://www.example.com"
                   }, settings)
     };
     return configureStore(initialState);

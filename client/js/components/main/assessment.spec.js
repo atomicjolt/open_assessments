@@ -129,7 +129,6 @@ describe("assessment", function() {
 
   afterEach(() => {
     jasmine.clock().uninstall();
-    jasmine.Ajax.uninstall();
   });
 
   it("renders the assessment", () => {
