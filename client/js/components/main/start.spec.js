@@ -1,7 +1,7 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
 import Immutable          from 'immutable';
-import TestUtils          from 'react/lib/ReactTestUtils';
+import TestUtils          from 'react-addons-test-utils';
 import {localizeStrings}  from '../../selectors/localize';
 import { Start }              from './start';
 

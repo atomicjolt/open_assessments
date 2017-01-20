@@ -24,7 +24,7 @@ This code based has was originally developed in partnership with MIT and Atomic 
 -----------------------
 Open Assessments supports both QTI 1.x and 2.x
 
-###Question Types
+###Question types
 -----------------------
 The Open Assessments Client supports the following question types:
 

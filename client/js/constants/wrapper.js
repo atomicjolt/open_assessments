@@ -1,21 +1,19 @@
-"use strict";
+import _ from 'lodash';
 
-import _ from "lodash";
+export const DONE = '_DONE';
 
-export const DONE = "_DONE";
+export default function (actionTypes, asyncActionTypes) {
 
-export default function(actionTypes, asyncActionTypes){
+  let types = _.reduce(actionTypes, (result, key) => ({
+    ...result,
+    [key]: key
+  }), {});
 
-  var types = _.reduce(actionTypes, (result, key) => {
-    result[key] = key;
-    return result;
-  }, {});
-
-  types = _.reduce(asyncActionTypes, (result, key) => {
-    result[key] = key;
-    result[`${key}${DONE}`] = `${key}${DONE}`;
-    return result;
-  }, types);
+  types = _.reduce(asyncActionTypes, (result, key) => ({
+    ...result,
+    [key]             : key,
+    [`${key}${DONE}`] : `${key}${DONE}`
+  }), types);
 
   types.DONE = DONE;
 

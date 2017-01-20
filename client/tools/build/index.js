@@ -107,12 +107,13 @@ function buildContents(inputPath, outputPath, webpackConfig, webpackStats, stage
 function build(isHot){
   return new Promise(function(resolve, reject){
 
-    fs.emptydir(outputPath, function(){ // Delete everything in the output path
+    // Delete everything in the output path
+    fs.emptydir(outputPath, function(){
 
       // Copy static files to build directory
       try {
-        var stats = fs.statSync(settings.staticDir); // This will raise an exception if staticDir doesn't exist.
-        console.log("Copying static files in " + settings.staticDir + " to  " + outputPath);
+        var stats = fs.statSync(settings.staticDir);
+        console.log("Copying static files in " + settings.staticDir);
         fs.copySync(settings.staticDir, outputPath);
       }
       catch(err) {
