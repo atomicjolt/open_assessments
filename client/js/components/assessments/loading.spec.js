@@ -1,6 +1,6 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
-import TestUtils          from 'react/lib/ReactTestUtils';
+import TestUtils          from 'react-addons-test-utils';
 import { Loading }        from './loading';
 
 describe('loading', function() {

@@ -44,7 +44,9 @@ export default class Item extends React.Component{
 
   componentDidMount(){
 
-    MathJax.Hub.Queue(new Array('Typeset', MathJax.Hub));
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(new Array('Typeset', MathJax.Hub));
+    }
 
     if(!_.isFunction(videojs)){return;}
     // Look for videos that should be using videojs.

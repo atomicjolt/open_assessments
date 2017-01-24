@@ -1,4 +1,4 @@
-import _  from "lodash";
+import _ from 'lodash';
 
 // These player settings should be numbers. Change them once here and be done with it.
 export const integerSettings = [ "user_id", "max_attempts", "questions_per_section", "questions_per_page", "audio_recorder_timeout"];
