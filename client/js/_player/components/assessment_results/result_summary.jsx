@@ -3,7 +3,6 @@
 import React                 from "react";
 import _                     from "lodash";
 
-import AssessmentStore       from "../../stores/assessment";
 import ReviewAssessmentStore from "../../stores/review_assessment";
 import ItemResult            from "./item_result";
 

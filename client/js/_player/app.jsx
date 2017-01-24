@@ -4,16 +4,13 @@ import es6Promise              from 'es6-promise';
 import React                   from 'react';
 import ReactDOM                from 'react-dom';
 import { Provider }            from 'react-redux';
-import Immutable               from 'immutable';
-import _                       from 'lodash';
-import $                       from 'jquery';
 
 import routes                  from './routes';
-import DevTools                from './dev/dev_tools';
+import DevTools                from '../dev/dev_tools';
 import configureStore          from './store/configure_store';
 import jwt                     from './loaders/jwt';
-import QueryString             from './utils/query_string';
-import { htmlDecodeWithRoot }  from './utils/utils';
+import QueryString             from '../utils/query_string';
+import { htmlDecodeWithRoot }  from '../utils/utils';
 import { getInitialSettings }  from './reducers/settings';
 
 // Polyfill es6 promises for IE
