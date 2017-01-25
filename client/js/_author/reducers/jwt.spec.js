@@ -4,10 +4,9 @@ import jwt                           from './jwt';
 describe('jwt reducer', () => {
   describe('initial state', () => {
     it('has a jwt token', () => {
-      const initial = { jwt: 'asdf' };
-      const initialState = initial;
+      const initialState  = { jwt: 'asdf' };
       const state = jwt(initialState, {});
-      expect(state.jwt).toEqual(initial.jwt);
+      expect(state.jwt).toEqual(initialState.jwt);
     });
   });
 

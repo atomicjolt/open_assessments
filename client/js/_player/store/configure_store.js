@@ -15,7 +15,6 @@ const middleware = [
   api,
   analytics,
   AssessmentLoader,
-  Communications
 ];
 
 let enhancers = [
