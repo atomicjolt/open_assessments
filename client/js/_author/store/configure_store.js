@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistState }                          from 'redux-devtools';
 import rootReducer                               from '../reducers';
-import DevTools                                  from '../dev/dev_tools';
-import API                                       from '../middleware/api';
+import DevTools                                  from '../../dev/dev_tools';
+import API                                       from '../../middleware/api';
 
 const middleware = [API];
 

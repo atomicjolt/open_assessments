@@ -1,18 +1,17 @@
-import Immutable                                    from "immutable";
-import api                                          from "../libs/api";
-import Network                                      from "../constants/network";
-import { Constants as JwtConstants }                from "../actions/jwt";
-import { Constants as AssessmentConstants }         from "../actions/assessment";
-import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
-import { Constants as AssessmentMetaConstants }     from "../actions/assessment_meta.js";
-import { Constants as LocaleConstants }             from "../actions/locale";
-import { answerFeedback }                           from "../actions/assessment_progress";
-import { DONE }                                     from "../constants/wrapper";
-import { parseFeedback }                            from "../parsers/clix/parser";
-import { parse }                                    from "../parsers/assessment";
-import { transformItem }                            from "../parsers/clix/clix";
-import { displayError }                             from "../actions/application";
-import { localizeStrings }                          from "../selectors/localize";
+import _                                            from 'lodash';
+import api                                          from '../../libs/api';
+import Network                                      from '../../constants/network';
+import { Constants as JwtConstants }                from '../../actions/jwt';
+import { Constants as AssessmentConstants }         from '../actions/assessment';
+import { Constants as AssessmentProgressConstants } from '../actions/assessment_progress';
+import { Constants as AssessmentMetaConstants }     from '../actions/assessment_meta';
+import { Constants as LocaleConstants }             from '../actions/locale';
+import { DONE }                                     from '../../constants/wrapper';
+import { parseFeedback }                            from '../../parsers/clix/parser';
+import { parse }                                    from '../../parsers/assessment';
+import { transformItem }                            from '../../parsers/clix/clix';
+import { displayError }                             from '../actions/application';
+import { localizeStrings }                          from '../selectors/localize';
 
 /**
  * Determines whether or not a question has been answered or not based on the input
@@ -23,8 +22,8 @@ function isAnswered(userInput) {
 
 function defaultHeaders(state, action = {}) {
   return {
-    "X-Api-Proxy": state.settings.eid,
-    "X-API-LOCALE": action.locale || state.locale || state.settings.locale
+    'X-Api-Proxy'  : state.settings.eid,
+    'X-API-LOCALE' : action.locale || state.locale || state.settings.locale
   };
 }
 
@@ -32,22 +31,22 @@ function defaultHeaders(state, action = {}) {
  * Returns unanswered question feedback for an unanswered question based upon its
  * question type
  */
-function getFeedback(question, state){
-  var item = transformItem(question);
+function getFeedback(question, state) {
+  const item = transformItem(question);
   const localizedStrings = localizeStrings(state);
 
-  switch(item.question_type) {
-    case "text_input_question":
-    case "text_only_question":
-    case "short_answer_question":
-    case "survey_question":
-    case "numerical_input_question":
+  switch (item.question_type) {
+    case 'text_input_question':
+    case 'text_only_question':
+    case 'short_answer_question':
+    case 'survey_question':
+    case 'numerical_input_question':
       return localizedStrings.middleware.mustEnterAnswer;
 
-    case "file_upload_question":
+    case 'file_upload_question':
       return localizedStrings.middleware.mustUploadFile;
 
-    case "audio_upload_question":
+    case 'audio_upload_question':
       return localizedStrings.middleware.mustRecordFile;
 
     default:
@@ -55,26 +54,26 @@ function getFeedback(question, state){
   }
 }
 
-function getBody(userInput, question){
-  var type = question.json.genusTypeId;
-  if(type && type.startsWith("question")) {
-    type = type.replace("question", "answer");
+function getBody(userInput, question) {
+  let type = question.json.genusTypeId;
+  if (type && type.startsWith('question')) {
+    type = type.replace('question', 'answer');
   } else {
     console.error("Couldn't get the question type");
   }
 
-  var item = transformItem(question);
+  let item = transformItem(question);
 
   switch (item.question_type) {
-    case "short_answer_question":
-      var text = _.isEmpty(userInput)? "" : userInput.reduce((prev, current) => prev + current );
+    case 'short_answer_question':
+      const text = _.isEmpty(userInput) ? '' : userInput.reduce((prev, current) => prev + current);
       return {
         type,
         text
       };
       break;
 
-    case "fill_the_blank_question":
+    case 'fill_the_blank_question':
       return {
         type,
         inlineRegions: {
@@ -84,26 +83,26 @@ function getBody(userInput, question){
         }
       };
       break;
-    case "numerical_input_question":
-    case "text_input_question":
+    case 'numerical_input_question':
+    case 'text_input_question':
       return {
         type,
         [item.question_meta.responseIdentifier]: userInput[0] || ""
       };
       break;
 
-    case "file_upload_question":
-    case "audio_upload_question":
-      if(_.isEmpty(userInput)){return;}
+    case 'file_upload_question':
+    case 'audio_upload_question':
+      if (_.isEmpty(userInput)) { return null; }
 
       var formData = new FormData();
       formData.append('submission', userInput[0]);
-      if(userInput.length > 1){console.error('Only one form submission is supported!');}
+      if (userInput.length > 1){ console.error('Only one form submission is supported!'); }
       return formData;
 
       break;
 
-    case "movable_words_sandbox":
+    case 'movable_words_sandbox':
       const audioFiles = userInput.filter((item) => { return item instanceof Blob; });
       var formData = new FormData();
       formData.append('submission', _.last(audioFiles));
@@ -122,7 +121,7 @@ function getBody(userInput, question){
 /**
  * Sends a post request to qbank with qbank specific fields already set.
  */
-export function postQbank(state, url, body = {}, headers = {}, params={}){
+export function postQbank(state, url, body = {}, headers = {}, params = {}) {
   return api.post(
     url,
     state.settings.api_url,
@@ -132,11 +131,11 @@ export function postQbank(state, url, body = {}, headers = {}, params={}){
     body,
     _.merge(defaultHeaders(state), headers)
   );
-};
+}
 
 function checkAnswers(store, action) {
   const state = store.getState();
-  const currentItemIndex = state.assessmentProgress.get("currentItemIndex");
+  const currentItemIndex = state.assessmentProgress.get('currentItemIndex');
   const questionIndexes = _.range(currentItemIndex, currentItemIndex + state.settings.questions_per_page);
 
   return _.map(questionIndexes, (questionIndex) => {
@@ -145,40 +144,40 @@ function checkAnswers(store, action) {
     // assigned anything), then the getIn() will still return undefined instead
     //  of the default return value. We need to see if it
     // is actually undefined before calling toJS()
-    var userInput = state.assessmentProgress.getIn(["responses", `${questionIndex}`]);
+    let userInput = state.assessmentProgress.getIn(['responses', `${questionIndex}`]);
     userInput = userInput ? userInput.toJS() : [];
 
     const url = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions/${question.json.id}/submit`;
-    var body = getBody(userInput, question);
+    const body = getBody(userInput, question);
 
     // Let progress reducer know how many questions are being checked
     store.dispatch({
-      type: AssessmentProgressConstants.CHECK_QUESTIONS,
-      numQuestions: questionIndexes.length
+      type         : AssessmentProgressConstants.CHECK_QUESTIONS,
+      numQuestions : questionIndexes.length
     });
 
     // If the user answered hasn't given an answer yet, we need to display
     // feedback telling the user to do so, and not send any information to qbank.
-    if(!isAnswered(userInput)){
+    if (!isAnswered(userInput)) {
 
       const payload = {
-        feedback: `<p>${getFeedback(question, state)}</p>`,
-        correct: false,
+        feedback : `<p>${getFeedback(question, state)}</p>`,
+        correct  : false,
         userInput
       };
       store.dispatch({
-        type: AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
+        type     : AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
         payload,
         userInput,
         questionIndex,
-        original: action
+        original : action
       });
 
       return;
     }
 
     const promise = postQbank(state, url, body);
-    if(promise){
+    if (promise) {
       promise.then((response) => {
         const payload = {
           correct  : response.body.correct,
@@ -187,11 +186,11 @@ function checkAnswers(store, action) {
         };
 
         store.dispatch({
-          type: AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
+          type     : AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
           payload,
           questionIndex,
           userInput,
-          original: action,
+          original : action,
           response
         });
       },
@@ -202,7 +201,6 @@ function checkAnswers(store, action) {
         });
         console.error(error);
       });
-
       return promise;
     }
 
@@ -220,19 +218,19 @@ function loadQuestions(store, action) {
     {},
     defaultHeaders(state, action)
   );
-  
-  if(assessmentPromise) {
+
+  if (assessmentPromise) {
     assessmentPromise.then((assessmentResponse, error) => {
       store.dispatch({
-        type:     AssessmentConstants.LOAD_ASSESSMENT + DONE,
-        payload:  parse(state.settings, assessmentResponse.text),
-        original: action,
+        type     :     AssessmentConstants.LOAD_ASSESSMENT + DONE,
+        payload  :  parse(state.settings, assessmentResponse.text),
+        original : action,
         assessmentResponse,
         error
       });
     },
     (error) => {
-      store.dispatch(displayError("There was a problem getting the assessment from QBank", error));
+      store.dispatch(displayError('There was a problem getting the assessment from QBank', error));
     });
   }
 }
@@ -241,12 +239,12 @@ export default {
 
   [LocaleConstants.LOCALE_SET]: (store, action) => {
     const state = store.getState();
-    if(_.isEmpty(state.assessmentMeta)) { return; }
+    if (_.isEmpty(state.assessmentMeta)) { return; }
     loadQuestions(store, action);
   },
   [JwtConstants.REFRESH_JWT]: {
     method : Network.GET,
-    url    : (action) => ( `api/sessions/${action.userId}` )
+    url    : (action) => (`api/sessions/${action.userId}`)
   },
 
   [AssessmentConstants.LOAD_ASSESSMENT]: (store, action) => {
@@ -260,19 +258,19 @@ export default {
 
     const metaPromise = postQbank(state, metaUrl, body);
 
-    if(metaPromise){
+    if (metaPromise) {
       metaPromise.then((response, error) => {
         store.dispatch({
-          type:     AssessmentMetaConstants.LOAD_ASSESSMENT_META_DONE,
-          payload:  response.body,
-          original: action,
+          type     : AssessmentMetaConstants.LOAD_ASSESSMENT_META_DONE,
+          payload  : response.body,
+          original : action,
           response,
           error
         });
         loadQuestions(store, action);
       },
       (error) => {
-        store.dispatch(displayError("There was a problem creating the assessmentstaken in QBank", error));
+        store.dispatch(displayError('There was a problem creating the assessmentstaken in QBank', error));
       });
     }
   },
@@ -283,7 +281,7 @@ export default {
 
   [AssessmentProgressConstants.ASSESSMENT_NEXT_QUESTIONS]: (store, action) => {
     const state = store.getState();
-    if(state.settings.unlock_next == "ALWAYS") {
+    if (state.settings.unlock_next === 'ALWAYS') {
       checkAnswers(store, action);
     }
   },
@@ -314,7 +312,7 @@ export default {
       });
 
       return {
-        item_to_grade : {
+        item_to_grade: {
           assessment_id : action.assessmentId,
           questions,
           answers       : action.answers,
@@ -334,12 +332,12 @@ export default {
 
       const promise = postQbank(state, url);
 
-      if(promise){
+      if (promise) {
         promise.then((response, error) => {
           store.dispatch({
-            type:     action.type + DONE,
-            payload: response.body,
-            original: action,
+            type     :     action.type + DONE,
+            payload  : response.body,
+            original : action,
             response,
             error
           });

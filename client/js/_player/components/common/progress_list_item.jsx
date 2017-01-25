@@ -1,8 +1,6 @@
-"use strict";
-
-import React                  from "react";
-import * as AssessmentActions from "../../actions/assessment";
-import AssessmentStore        from "../../stores/assessment";
+import React                  from 'react';
+import * as AssessmentActions from '../../actions/assessment';
+// import AssessmentStore        from '../../stores/assessment';
 
 export default class ProgressListItem extends React.Component{
 
@@ -10,22 +8,22 @@ export default class ProgressListItem extends React.Component{
     super(props, context);
   }
 
-  mouseOver(e){
-    this.setState({hovered: true});
+  mouseOver(e) {
+    this.setState({ hovered: true });
   }
 
-  mouseOut(e){
-    this.setState({hovered: false});
+  mouseOut(e) {
+    this.setState({ hovered: false });
   }
 
-  selectQuestion(){
-    if(AssessmentStore.isStarted()){
-      AssessmentActions.selectQuestion(this.props.index);
-      this.props.toggle();
-    }
+  selectQuestion() {
+    // if (AssessmentStore.isStarted()) {
+    //   AssessmentActions.selectQuestion(this.props.index);
+    //   this.props.toggle();
+    // }
   }
 
-  getStyles(theme, hovered){
+  getStyles(theme, hovered) {
     return {
       li: {
         backgroundColor: hovered ? "grey" : "white",
@@ -38,7 +36,7 @@ export default class ProgressListItem extends React.Component{
     };
   }
 
-  render(){
+  render() {
     var hovered = (this.state && this.state.hovered);
     var styles = this.getStyles(this.context.theme, hovered);
     var tabIndex = this.props.expanded ? "0" : null;

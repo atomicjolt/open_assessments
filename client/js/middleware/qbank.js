@@ -1,6 +1,6 @@
 import Network                                          from '../constants/network';
 import server                                           from './server';
-import { Constants as BankConstants }                   from '../actions/banks';
+import { Constants as BankConstants }                   from '../actions/qbank/banks';
 
 const qbank = {
   [BankConstants.GET_BANKS]: {

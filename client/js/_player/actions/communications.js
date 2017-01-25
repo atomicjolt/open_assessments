@@ -1,16 +1,14 @@
-"use strict";
-
-import wrapper from '../constants/wrapper';
+import wrapper from '../../constants/wrapper';
 
 const constants = [
-  "SEND_SIZE",
-  "SCROLL_PARENT_TO_TOP",
-  "LTI_NAVIGATE_HOME",
-  "LTI_NAVIGATE_NEXT",
-  "LTI_NAVIGATE_PREVIOUS",
-  "HIDE_LMS_NAVIGATION",
-  "SHOW_LMS_NAVIGATION",
-  "AVAILABLE_LOCALES"
+  'SEND_SIZE',
+  'SCROLL_PARENT_TO_TOP',
+  'LTI_NAVIGATE_HOME',
+  'LTI_NAVIGATE_NEXT',
+  'LTI_NAVIGATE_PREVIOUS',
+  'HIDE_LMS_NAVIGATION',
+  'SHOW_LMS_NAVIGATION',
+  'AVAILABLE_LOCALES'
 ];
 
 const requests = [];

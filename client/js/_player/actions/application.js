@@ -1,6 +1,4 @@
-"use strict";
-
-import wrapper from "../constants/wrapper";
+import wrapper from '../../constants/wrapper';
 
 export const Constants = wrapper(["APP_DISPLAY_ERROR"], []);
 

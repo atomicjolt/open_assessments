@@ -1,4 +1,4 @@
-import { Constants as JwtConstants } from '../actions/jwt';
+import { Constants as JwtConstants } from '../../actions/jwt';
 
 const initialState = null;
 

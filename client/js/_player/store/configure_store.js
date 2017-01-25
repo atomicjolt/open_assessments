@@ -6,13 +6,13 @@ import {
 import { persistState }   from 'redux-devtools';
 
 import rootReducer        from '../reducers';
-import DevTools           from '../dev/dev_tools.jsx';
+import DevTools           from '../../dev/dev_tools';
 import api                from '../middleware/api';
 import analytics          from '../middleware/analytics';
 import AssessmentLoader   from '../middleware/assessment_loader';
 import Communications     from '../middleware/communications';
 
-let middleware = [
+const middleware = [
   api,
   analytics,
   AssessmentLoader,

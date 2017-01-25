@@ -1,12 +1,8 @@
-"use strict";
-
 import React                      from 'react';
-import { connect }                from "react-redux";
-import * as AssessmentActions     from "../../actions/assessment";
-import * as CommunicationActions   from "../../actions/communications";
-import FormativeResult            from "./formative_result.jsx";
-import SummativeResult            from "./summative_result.jsx";
-import { questions, outcomes }    from "../../selectors/assessment";
+import { connect }                from 'react-redux';
+import * as AssessmentActions     from '../../actions/assessment';
+import * as CommunicationActions  from '../../actions/communications';
+import { questions, outcomes }    from '../../selectors/assessment';
 
 const select = (state) => {
   return {
@@ -21,13 +17,13 @@ const select = (state) => {
 
 export class AssessmentResult extends React.Component{
 
-  constructor(props, context){
+  constructor(props, context) {
     super(props, context);
     this.sendLtiOutcome();
     this.sendAnalytics();
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.sendSize();
     this.props.showLMSNavigation();
   }
@@ -36,30 +32,30 @@ export class AssessmentResult extends React.Component{
     this.props.sendSize();
   }
 
-  sendAnalytics(){
-    if(this.props.assessmentResult && this.props.assessmentResult.assessment_results_id) {
+  sendAnalytics() {
+    if (this.props.assessmentResult && this.props.assessmentResult.assessment_results_id) {
       this.props.assessmentPostAnalytics(this.props.assessmentResult.assessment_results_id, this.props.settings.externalUserId, this.props.settings.external_context_id);
     }
   }
-  sendLtiOutcome(){
-    if(this.isSummative() && this.props.assessmentResult.assessment_results_id){
+  sendLtiOutcome() {
+    if (this.isSummative() && this.props.assessmentResult.assessment_results_id){
       this.props.assessmentPostLtiOutcome(this.props.assessmentResult.assessment_results_id);
     }
   }
 
-  isSummative(){
+  isSummative() {
     return this.props.settings.assessment_kind == "SUMMATIVE";
   }
 
-  isFormative(){
+  isFormative() {
     return this.props.settings.assessment_kind == "FORMATIVE";
   }
 
-  render(){
-    if(this.props.assessmentResult == null){
+  render() {
+    if (this.props.assessmentResult == null) {
       return <div />;
     }
-    if(this.isFormative()){
+    if (this.isFormative()) {
       return <FormativeResult
         assessmentResult={this.props.assessmentResult}
         settings={this.props.settings}
@@ -82,6 +78,6 @@ export class AssessmentResult extends React.Component{
       />;
     }
   }
-};
+}
 
-export default connect(select, {...AssessmentActions, ...CommunicationActions})(AssessmentResult);
+export default connect(select, { ...AssessmentActions, ...CommunicationActions })(AssessmentResult);

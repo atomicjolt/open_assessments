@@ -1,19 +1,21 @@
-import request          from "./middleware_request";
-import { DONE }         from "../constants/wrapper";
+import _                from 'lodash';
+import request          from './middleware_request';
+import { DONE }         from '../../constants/wrapper';
+
 
 // import the map of constants that maps methods and urls for the appropriate backend.
-// import callMap       from "./rails";
-// import callMap       from "./oea";
-import callMap          from "./qbank";
+// import callMap       from './rails';
+// import callMap       from './oea';
+import callMap          from './qbank';
 
 export default store => next => action => {
-  if (action.method){
+  if (action.method) {
     request(store, action, action.method, action.url, action.params, action.body);
-  } else if(action.apiCall){
+  } else if (action.apiCall) {
     const handler = callMap[action.type];
-    if(_.isFunction(handler)){
+    if (_.isFunction(handler)) {
       handler(store, action);
-    } else if(_.isObject(handler)){
+    } else if (_.isObject(handler)) {
       request(
         store,
         action,

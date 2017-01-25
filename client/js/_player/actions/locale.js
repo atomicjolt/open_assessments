@@ -1,10 +1,8 @@
-"use strict";
-
-import wrapper from '../constants/wrapper';
+import wrapper from '../../constants/wrapper';
 
 
 const constants = [
-  "LOCALE_SET"
+  'LOCALE_SET'
 ];
 
 const requests = [];
@@ -18,8 +16,8 @@ export const Constants = wrapper(constants, requests);
  */
 export function setLocale(locale) {
   return {
-    type: Constants.LOCALE_SET,
-    apiCall: true,
+    type    : Constants.LOCALE_SET,
+    apiCall : true,
     locale
   };
-};
+}

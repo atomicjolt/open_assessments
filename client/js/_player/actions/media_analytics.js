@@ -1,16 +1,14 @@
-"use strict";
+import wrapper from '../../constants/wrapper';
 
-import wrapper from "../constants/wrapper";
-
-export const Constants = wrapper([],[
-  "AUDIO_PLAY",
-  "AUDIO_RECORD_START",
-  "AUDIO_RECORD_STOP",
-  "AUDIO_PAUSE",
-  "AUDIO_ENDED",
-  "VIDEO_PLAY",
-  "VIDEO_PAUSE",
-  "VIDEO_ENDED"
+export const Constants = wrapper([], [
+  'AUDIO_PLAY',
+  'AUDIO_RECORD_START',
+  'AUDIO_RECORD_STOP',
+  'AUDIO_PAUSE',
+  'AUDIO_ENDED',
+  'VIDEO_PLAY',
+  'VIDEO_PAUSE',
+  'VIDEO_ENDED'
 ]);
 
 export function audioPlay(mediaId, mediaTime) {

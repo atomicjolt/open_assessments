@@ -1,8 +1,8 @@
 import React            from 'react';
 import { connect }      from 'react-redux';
 import _                from 'lodash';
-import * as BankActions from '../actions/banks';
-import assets           from '../libs/assets';
+import * as BankActions from '../../actions/qbank/banks';
+import assets           from '../../libs/assets';
 
 const select = state => ({
   banks: state.banks,

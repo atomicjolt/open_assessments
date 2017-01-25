@@ -1,6 +1,4 @@
-"use strict";
-
-import React from "react";
+import React from 'react';
 
 /**
  * Component to render a generic button. Can optionally wrap child components to
@@ -35,4 +33,4 @@ export default class Button extends React.Component {
       </button>
     );
   }
-};
+}

@@ -1,4 +1,5 @@
-import api from "../libs/api";
+import api              from '../../libs/api';
+import { DONE }         from '../../constants/wrapper';
 
 export default function request(store, action, method, url, params, body) {
   const state = store.getState();
@@ -12,12 +13,12 @@ export default function request(store, action, method, url, params, body) {
     body
   );
 
-  if(promise){
+  if (promise) {
     promise.then((response, error) => {
       store.dispatch({
-        type:     action.type + DONE,
-        payload:  response.body,
-        original: action,
+        type     : action.type + DONE,
+        payload  : response.body,
+        original : action,
         response,
         error
       }); // Dispatch the new data

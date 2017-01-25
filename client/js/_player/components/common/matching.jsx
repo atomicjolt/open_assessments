@@ -1,19 +1,17 @@
-"use strict";
+import React              from 'react';
+import { connect }        from 'react-redux';
+import _                  from 'lodash';
 
-import React              from "react";
-import { connect }        from "react-redux";
-import _                  from "lodash";
+import { answerSelected } from '../../actions/assessment';
+import { makeId }         from '../../../utils/utils';
 
-import { answerSelected } from "../../actions/assessment";
-import { makeId }         from "../../utils/utils";
-
-export class Matching extends React.Component{
+export class Matching extends React.Component {
 
   static propTypes = {
     item: React.PropTypes.object.isRequired
   }
 
-  answerSelected(e, key){
+  answerSelected(e, key) {
     var target = e.target.parentNode.firstChild.textContent;
     var selectedAnswer = e.currentTarget.value;
     var answerNumber = e.currentTarget.name;

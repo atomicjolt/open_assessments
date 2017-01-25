@@ -1,19 +1,20 @@
-import Immutable                                    from "immutable";
+import Immutable                                    from 'immutable';
+import _                                            from 'lodash';
 
-import { Constants as MediaAnalyticsConstants }     from "../actions/media_analytics";
-import { Constants as AssessmentProgressConstants } from "../actions/assessment_progress";
-import { postQbank }                                from "./qbank";
-import { transformItem }                            from "../parsers/clix/clix";
+import { Constants as MediaAnalyticsConstants }     from '../actions/media_analytics';
+import { Constants as AssessmentProgressConstants } from '../actions/assessment_progress';
+import { postQbank }                                from './qbank';
+import { transformItem }                            from '../../parsers/clix/clix';
 
 function postAnalytics(store, analyticsData) {
   const state = store.getState();
 
   const url = `logging/logs/${state.settings.bank}/logentries`;
 
-  const currentQuestionIndex = state.assessmentProgress.get("currentItemIndex");
+  const currentQuestionIndex = state.assessmentProgress.get('currentItemIndex');
   const questionId = state.assessment.items[currentQuestionIndex].json.id;
 
-  let body = {
+  const body = {
     data: {
       assessmentOfferedId: state.settings.assessment_offered_id,
       questionId,
@@ -35,153 +36,157 @@ function getAnswerSelectedData(store, action) {
   let currentAnswers = state.assessmentProgress.getIn(['responses', `${action.questionIndex}`]);
   currentAnswers = currentAnswers || Immutable.List();
 
-  switch(question.question_type) {
-    case "movable_words_sentence":
-    case "movable_words_sandbox":
-      if(action.answerId instanceof String){
-        if(currentAnswers.includes(action.answerId)) {
+  switch (question.question_type) {
+    case 'movable_words_sentence':
+    case 'movable_words_sandbox':
+      if (action.answerId instanceof String) {
+        if (currentAnswers.includes(action.answerId)) {
           return {
-            action: "disconnect word",
-            targetWord: answersById[action.answerId].material,
-            currentSentence: currentAnswers.map((answerId) => (answersById[answerId].material))
+            action          : 'disconnect word',
+            targetWord      : answersById[action.answerId].material,
+            currentSentence : currentAnswers.map((answerId) => (answersById[answerId].material))
           };
         } else {
           return {
-            action: "connect word",
-            targetWord: answersById[action.answerId].material,
-            currentSentence: currentAnswers.map((answerId) => (answersById[answerId].material))
+            action          : 'connect word',
+            targetWord      : answersById[action.answerId].material,
+            currentSentence : currentAnswers.map((answerId) => (answersById[answerId].material))
           };
         }
       }
       break;
 
-    case "movable_object_chain":
-      if(currentAnswers.includes(action.answerId)) {
+    case 'movable_object_chain':
+      if (currentAnswers.includes(action.answerId)) {
         return {
-          action: "disconnect object",
-          targetObject: answersById[action.answerId].material,
-          currentObjectChain: currentAnswers.map((answerId) => (answersById[answerId].material))
+          action             : 'disconnect object',
+          targetObject       : answersById[action.answerId].material,
+          currentObjectChain : currentAnswers.map((answerId) => (answersById[answerId].material))
         };
       } else {
         return {
-          action: "connect object",
-          targetObject: answersById[action.answerId].material,
-          currentObjectChain: currentAnswers.map((answerId) => (answersById[answerId].material))
+          action             : 'connect object',
+          targetObject       : answersById[action.answerId].material,
+          currentObjectChain : currentAnswers.map((answerId) => (answersById[answerId].material))
         };
       }
       break;
 
-    case "fill_the_blank_question":
-      if(_.isEmpty(currentAnswers)) {
+    case 'fill_the_blank_question':
+      if (_.isEmpty(currentAnswers)) {
         return {
-          action: "connect word",
-          targetWord: answersById[action.answerId].material
+          action     : 'connect word',
+          targetWord : answersById[action.answerId].material
         };
       } else {
         return {
-          action: "disconnect word",
-          targetWord: answersById[action.answerId].material
+          action     : 'disconnect word',
+          targetWord : answersById[action.answerId].material
         };
       }
       break;
 
-    case "multiple_choice_question":
+    case 'multiple_choice_question':
       return {
-        action: "select answer",
-        targetAnswer: answersById[action.answerId].material
+        action       : 'select answer',
+        targetAnswer : answersById[action.answerId].material
       };
       break;
 
-    case "multiple_answers_question":
-      if(currentAnswers.includes(action.answerId)) {
+    case 'multiple_answers_question':
+      if (currentAnswers.includes(action.answerId)) {
         return {
-          action: "deselect answer",
-          targetAnswer: answersById[action.answerId].material,
-          currentAnswers: currentAnswers.map((answerId) => (answersById[answerId].material))
+          action         : 'deselect answer',
+          targetAnswer   : answersById[action.answerId].material,
+          currentAnswers : currentAnswers.map((answerId) => (answersById[answerId].material))
         };
       } else {
         return {
-          action: "select answer",
-          targetAnswer: answersById[action.answerId].material,
-          currentAnswers: currentAnswers.map((answerId) => (answersById[answerId].material))
+          action         : 'select answer',
+          targetAnswer   : answersById[action.answerId].material,
+          currentAnswers : currentAnswers.map((answerId) => (answersById[answerId].material))
         };
       }
       break;
+
+    default:
+      break;
   }
+  return null;
 }
 
 export default {
-  [AssessmentProgressConstants.ASSESSMENT_NEXT_QUESTIONS] : (store, action) => {
+  [AssessmentProgressConstants.ASSESSMENT_NEXT_QUESTIONS]: (store, action) => {
     const analyticsData = {
-      action: "click next button"
+      action: 'click next button'
     };
 
     postAnalytics(store, analyticsData);
   },
 
-  [AssessmentProgressConstants.ASSESSMENT_PREVIOUS_QUESTIONS] : (store, action) => {
+  [AssessmentProgressConstants.ASSESSMENT_PREVIOUS_QUESTIONS]: (store, action) => {
     const state = store.getState();
 
-    if(state.assessment.requireNAnswers !== -1) {
+    if (state.assessment.requireNAnswers !== -1) {
       const analyticsData = {
-        action: "click previous button"
+        action: 'click previous button'
       };
 
       postAnalytics(store, analyticsData);
     }
   },
 
-  [AssessmentProgressConstants.ANSWER_SELECTED] : (store, action) => {
+  [AssessmentProgressConstants.ANSWER_SELECTED]: (store, action) => {
     const analyticsData = getAnswerSelectedData(store, action);
-    if(analyticsData !== undefined) {
+    if (analyticsData !== undefined) {
       postAnalytics(store, analyticsData);
     }
   },
 
-  [MediaAnalyticsConstants.AUDIO_PLAY] : (store, action) => {
+  [MediaAnalyticsConstants.AUDIO_PLAY]: (store, action) => {
     const data = {
-      action: "play audio",
-      mediaTime: action.mediaTime,
-      mediaId: action.mediaId
+      action    : 'play audio',
+      mediaTime : action.mediaTime,
+      mediaId   : action.mediaId
     };
 
     postAnalytics(store, data);
   },
 
-  [MediaAnalyticsConstants.AUDIO_PAUSE] : (store, action) => {
+  [MediaAnalyticsConstants.AUDIO_PAUSE]: (store, action) => {
     const data = {
-      action: "pause audio",
-      mediaTime: action.mediaTime,
-      mediaId: action.mediaId
+      action    : 'pause audio',
+      mediaTime : action.mediaTime,
+      mediaId   : action.mediaId
     };
 
     postAnalytics(store, data);
   },
 
-  [MediaAnalyticsConstants.AUDIO_RECORD_STOP] : (store, action) => {
+  [MediaAnalyticsConstants.AUDIO_RECORD_STOP]: (store, action) => {
     const data = {
-      action: "record audio stop",
-      mediaTime: action.mediaTime
+      action    : 'record audio stop',
+      mediaTime : action.mediaTime
     };
 
     postAnalytics(store, data);
   },
 
-  [MediaAnalyticsConstants.VIDEO_PLAY] : (store, action) => {
+  [MediaAnalyticsConstants.VIDEO_PLAY]: (store, action) => {
     const data = {
-      action: "play video",
-      mediaTime: action.mediaTime,
-      mediaId: action.mediaId
+      action    : 'play video',
+      mediaTime : action.mediaTime,
+      mediaId   : action.mediaId
     };
 
     postAnalytics(store, data);
   },
 
-  [MediaAnalyticsConstants.VIDEO_PAUSE] : (store, action) => {
+  [MediaAnalyticsConstants.VIDEO_PAUSE]: (store, action) => {
     const data = {
-      action: "pause video",
-      mediaTime: action.mediaTime,
-      mediaId: action.mediaId
+      action    : 'pause video',
+      mediaTime : action.mediaTime,
+      mediaId   : action.mediaId
     };
 
     postAnalytics(store, data);

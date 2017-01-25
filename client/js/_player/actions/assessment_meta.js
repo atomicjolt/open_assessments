@@ -1,4 +1,4 @@
-import wrapper from '../constants/wrapper';
+import wrapper from '../../constants/wrapper';
 
 const constants = [
 ];

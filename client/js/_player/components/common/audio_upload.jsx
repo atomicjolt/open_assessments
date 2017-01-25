@@ -1,5 +1,5 @@
-import React     from "react";
-import Recorder, { RecorderCommands}  from "./recorder";
+import React     from 'react';
+import Recorder, { RecorderCommands }  from './recorder';
 
 class AudioUpload extends React.Component {
 

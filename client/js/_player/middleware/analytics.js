@@ -1,16 +1,15 @@
-"use strict";
-import request          from "./middleware_request";
-
-import callMap          from "./qbank_analytics";
+import _                from 'lodash'
+import request          from './middleware_request';
+import callMap          from './qbank_analytics';
 
 export default store => next => action => {
-  if(action.method){
+  if (action.method) {
     request(store, action, action.method, action.url, action.params, action.body);
   } else {
     const handler = callMap[action.type];
-    if(_.isFunction(handler)){
+    if (_.isFunction(handler)) {
       handler(store, action);
-    } else if(_.isObject(handler)){
+    } else if (_.isObject(handler)) {
       request(
         store,
         action,
