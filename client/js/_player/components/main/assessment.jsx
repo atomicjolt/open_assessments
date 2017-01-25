@@ -1,19 +1,16 @@
-"use strict";
+import React        from 'react';
+import { connect }  from 'react-redux';
 
-import React        from "react";
-import { connect }  from "react-redux";
-
-import * as AssessmentProgress    from "../../actions/assessment_progress";
-import * as CommunicationActions  from "../../actions/communications";
-import * as MediaAnalyticsActions from "../../actions/media_analytics";
-import appHistory                 from "../../history";
-import * as selectors             from "../../selectors/assessment";
-import { localizeStrings }        from "../../selectors/localize";
-import Item                       from "../assessments/item";
-import Loading                    from "../assessments/loading";
-import ThreeButtonNav             from "../assessments/three_button_nav";
-import TwoButtonNav               from "../assessments/two_button_nav";
-import ProgressDropdown           from "../common/progress_dropdown";
+import * as AssessmentProgress    from '../../actions/assessment_progress';
+import * as CommunicationActions  from '../../actions/communications';
+import * as MediaAnalyticsActions from '../../actions/media_analytics';
+import appHistory                 from '../../history';
+import * as selectors             from '../../selectors/assessment';
+import localizeStrings           from '../../selectors/localize';
+import Item                       from '../assessments/item';
+import Loading                    from '../assessments/loading';
+import ThreeButtonNav             from '../assessments/three_button_nav';
+import TwoButtonNav               from '../assessments/two_button_nav';
 
 
 const select = (state, props) => {
@@ -53,7 +50,7 @@ const select = (state, props) => {
     // Array of graded user response objects containing keys
     // correct:true/false, feedback:"Answer feedback",
     // answerIds: answers feedback applies to
-    questionResults : selectors.questionResults(state, props),
+    questionResults: selectors.questionResults(state, props),
 
     // User facing strings of the language specified by the 'locale' setting
     localizedStrings: localizeStrings(state, props),
@@ -65,22 +62,22 @@ const select = (state, props) => {
     secondaryActionState: selectors.secondaryActionState(state),
 
     // TODO
-    outcomes        : selectors.outcomes(state, props),
+    outcomes: selectors.outcomes(state, props),
 
     // How many items the student has given correct responses for
     correctItemCount: selectors.correctItemCount(state, props)
   };
 };
 
-export class Assessment extends React.Component{
+export class Assessment extends React.Component {
 
-  componentWillMount(){
-    if(this.props.assessmentProgress.assessmentResult != null){
-      appHistory.push("assessment-result");
+  componentWillMount() {
+    if (this.props.assessmentProgress.assessmentResult != null) {
+      appHistory.push('assessment-result');
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     // Trigger action to indicate the assessment was viewed
     this.props.assessmentViewed(this.props.settings, this.props.assessment);
 
@@ -92,11 +89,11 @@ export class Assessment extends React.Component{
   componentDidUpdate(prevProps) {
     this.props.sendSize();
 
-    if(this.props.assessmentProgress.isSubmitted) {
+    if (this.props.assessmentProgress.isSubmitted) {
       appHistory.push("assessment-complete");
     }
 
-    if(this.props.assessmentProgress.currentItemIndex != prevProps.assessmentProgress.currentItemIndex) {
+    if (this.props.assessmentProgress.currentItemIndex != prevProps.assessmentProgress.currentItemIndex) {
       this.props.scrollParentToTop(); // Scroll to top when we get a new question
       window.scrollTo(0, 0);
     }
@@ -106,9 +103,9 @@ export class Assessment extends React.Component{
    * Will check if assessment is completed and then dispatch submit assessment
    * action
    */
-  submitAssessment(){
+  submitAssessment() {
     var complete = this.checkCompletion();
-    if(complete === true){
+    if (complete === true) {
       window.onbeforeunload = null;
       this.props.submitAssessment(
         this.props.assessment.id,
@@ -126,7 +123,7 @@ export class Assessment extends React.Component{
   /**
    * Returns true if all questions have been answered, false otherwise.
    */
-  checkCompletion(){
+  checkCompletion() {
     return true;
     //TODO calculate number of unanswered questions
     // var questionsNotAnswered = [];
@@ -144,18 +141,18 @@ export class Assessment extends React.Component{
 
   renderRemainingStatus() {
     const required = this.props.assessment.requireNAnswers;
-    if(required === -1) return;
+    if (required === -1) return;
 
     const correct = this.props.correctItemCount;
     const remaining = required - correct;
     const strings = this.props.localizedStrings;
     let text;
 
-    if(remaining == 0) {
+    if (remaining === 0) {
       text = strings.remaining.done;
-    } else if(remaining == 1) {
+    } else if (remaining === 1) {
       text = strings.remaining.one_left;
-    } else if(remaining >= 2) {
+    } else if (remaining >= 2) {
       text = strings.formatString(strings.remaining.many_left, remaining);
     }
 
@@ -165,7 +162,7 @@ export class Assessment extends React.Component{
   /**
    * Return an item for a given index in props.allQuestions
    */
-  getItem(index){
+  getItem(index) {
     const props = this.props;
     if(props.questionCount === undefined || index >= props.questionCount || index < 0){
       return <div></div>;

@@ -11,7 +11,7 @@ import { parseFeedback }                            from '../../parsers/clix/par
 import { parse }                                    from '../../parsers/assessment';
 import { transformItem }                            from '../../parsers/clix/clix';
 import { displayError }                             from '../actions/application';
-import { localizeStrings }                          from '../selectors/localize';
+import localizeStrings                              from '../selectors/localize';
 
 /**
  * Determines whether or not a question has been answered or not based on the input

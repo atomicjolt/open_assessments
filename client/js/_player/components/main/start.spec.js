@@ -2,8 +2,8 @@ import React              from 'react';
 import ReactDOM           from 'react-dom';
 import Immutable          from 'immutable';
 import TestUtils          from 'react-addons-test-utils';
-import {localizeStrings}  from '../../selectors/localize';
-import { Start }              from './start';
+import localizeStrings    from '../../selectors/localize';
+import { Start }          from './start';
 
 describe('start', function() {
   var result;

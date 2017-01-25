@@ -1,18 +1,14 @@
-"use strict";
-
 import React                 from 'react';
-import { connect }           from "react-redux";
+import { connect }           from 'react-redux';
 
-import { localizeStrings }   from '../../selectors/localize';
+import localizeStrings       from '../../selectors/localize';
 
-const select = (state, props) => {
-  return {
+const select = (state, props) => ({
     // user facing strings of the language specified by the 'locale' setting
-    localizedStrings: localizeStrings(state, props)
-  };
-};
+  localizedStrings: localizeStrings(state, props)
+});
 
-export class Loading extends React.Component{
+export class Loading extends React.Component {
 
   render() {
     return (

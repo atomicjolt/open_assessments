@@ -15,7 +15,7 @@ const select = (state) => {
   };
 };
 
-export class AssessmentResult extends React.Component{
+export class AssessmentResult extends React.Component {
 
   constructor(props, context) {
     super(props, context);

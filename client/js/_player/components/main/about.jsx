@@ -1,9 +1,7 @@
-"use strict";
-
 import React                 from 'react';
-import { connect }           from "react-redux";
+import { connect }           from 'react-redux';
 
-import { localizeStrings }   from '../../selectors/localize';
+import localizeStrings       from '../../selectors/localize';
 
 const select = (state, props) => {
   return {
@@ -12,15 +10,20 @@ const select = (state, props) => {
   };
 };
 
-export class About extends React.Component{
-  render(){
-    var strings = this.props.localizedStrings;
+export class About extends React.Component {
+
+  static propTypes = {
+    localizedStrings: React.PropTypes.func.isRequired,
+  }
+
+  render() {
+    const strings = this.props.localizedStrings;
     return (
       <div>
-       <h2>{strings.about.title}</h2>
-     </div>
+        <h2>{strings.about.title}</h2>
+      </div>
     );
   }
-};
+}
 
 export default connect(select)(About);

@@ -1,15 +1,13 @@
-import React                   from "react";
-import TestUtils               from "react-addons-test-utils";
-import ReactDOM                from "react-dom";
+import React                   from 'react';
+import TestUtils               from 'react-addons-test-utils';
+import ReactDOM                from 'react-dom';
 import { Provider }            from 'react-redux';
 
-import Helper                  from "../../../specs_support/helper";
-import * as AssessmentActions  from "../../actions/assessment";
-import appHistory              from "../../history";
-import { localizeStrings }     from "../../selectors/localize";
+import appHistory              from '../../history';
+import localizeStrings         from '../../selectors/localize';
 import configureStore          from '../../store/configure_store';
-import { SECONDARY_ACTION, PRIMARY_ACTION } from "../assessments/two_button_nav";
-import { Assessment }          from "./assessment";
+import { SECONDARY_ACTION, PRIMARY_ACTION } from '../assessments/two_button_nav';
+import { Assessment }          from './assessment';
 
 var props;
 var allQuestions,

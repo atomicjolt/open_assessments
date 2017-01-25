@@ -1,7 +1,7 @@
 import React            from 'react';
-import { connect }      from "react-redux";
+import { connect }      from 'react-redux';
 
-import { localizeStrings }  from '../../selectors/localize';
+import localizeStrings  from '../../selectors/localize';
 
 const select = (state, props) => {
   return {
@@ -10,9 +10,9 @@ const select = (state, props) => {
   };
 };
 
-export class RetriesExceeded extends React.Component{
+export class RetriesExceeded extends React.Component {
   render() {
-    var strings = this.props.localizedStrings;
+    const strings = this.props.localizedStrings;
     return <div>{strings.retriesExceeded.triesExceeded}</div>;
   }
 }

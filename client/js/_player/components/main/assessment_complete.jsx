@@ -1,7 +1,7 @@
 import React            from 'react';
 import { connect }      from 'react-redux';
 
-import { localizeStrings }  from '../../selectors/localize';
+import localizeStrings  from '../../selectors/localize';
 
 const select = (state, props) => {
   return {
@@ -10,7 +10,7 @@ const select = (state, props) => {
   };
 };
 
-export class AssessmentComplete extends React.Component{
+export class AssessmentComplete extends React.Component {
   render() {
     return (
       <div className="assessment-complete">

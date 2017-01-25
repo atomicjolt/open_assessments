@@ -2,7 +2,7 @@ import _                   from 'lodash';
 
 import { SECONDARY_ACTION, PRIMARY_ACTION }                       from '../../_player/components/assessments/two_button_nav';
 import { isFirstPage, isLastPage, isNextUnlocked, currentItems }  from '../../_player/selectors/assessment';
-import { localizeStrings }                                        from '../../_player/selectors/localize';
+import  localizeStrings                                      from '../../_player/selectors/localize';
 import * as qtiSelectors                                          from '../qti2/selectors';
 import { transformItem }                                          from './clix';
 

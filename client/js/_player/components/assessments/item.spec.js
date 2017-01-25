@@ -2,7 +2,7 @@ import React                from 'react';
 import ReactDOM             from 'react-dom';
 import TestUtils            from 'react-addons-test-utils';
 import Item                 from './item';
-import { localizeStrings }  from "../../selectors/localize";
+import localizeStrings      from '../../selectors/localize';
 
 describe('item', function() {
 
@@ -41,8 +41,6 @@ describe('item', function() {
 
     renderItem();
   });
-
-
 
   it('renders an item', () => {
     expect(subject.textContent).toContain("Test Question Material");

@@ -1,12 +1,10 @@
-"use strict";
+import React      from 'react';
+import { connect }  from 'react-redux';
 
-import React      from "react";
-import {connect}  from "react-redux";
-
-import {nextQuestions, previousQuestions}  from "../../actions/assessment_progress";
-import {isFirstPage, isNextUnlocked, isPrevUnlocked, isLastPage, questionCount} from "../../selectors/assessment";
-import {localizeStrings}                   from "../../selectors/localize";
-import Button                              from "../common/button";
+import {nextQuestions, previousQuestions}  from '../../actions/assessment_progress';
+import {isFirstPage, isNextUnlocked, isPrevUnlocked, isLastPage, questionCount} from '../../selectors/assessment';
+import localizeStrings                  from '../../selectors/localize';
+import Button                              from '../common/button';
 
 const select = (state, props) => {
   return {
@@ -21,7 +19,7 @@ const select = (state, props) => {
 
 const svg = (
   <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-    <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z"/>
+    <path d="M14.83 16.42l9.17 9.17 9.17-9.17 2.83 2.83-12 12-12-12z" />
   </svg>
 );
 
@@ -55,23 +53,20 @@ class _NextButton extends React.Component {
  */
 class _PrevButton extends React.Component {
 
-  click() {
-    this.props.previousQuestions(this.props.questionsPerPage);
-  }
-
   render() {
-    let p = this.props;
-    let disabled = !p.isPrevUnlocked || p.isFirstPage;
+    const { isPrevUnlocked, isFirstPage } = this.props;
+    let disabled = !isPrevUnlocked || isFirstPage;
     return (
-      <Button buttonClass="c-btn c-btn--previous"
-              buttonText={this.props.localizedStrings.previousButton}
-              disabled={disabled}
-              onClick={() => this.click()}>
-        {svg}
+      <Button
+        buttonClass="c-btn c-btn--previous"
+        buttonText={this.props.localizedStrings.previousButton}
+        disabled={disabled}
+        onClick={() => this.props.previousQuestions(this.props.questionsPerPage) }>
+        { svg }
       </Button>
     );
   }
-};
+}
 
 
 export const NextButton = connect(select, {nextQuestions})(_NextButton);

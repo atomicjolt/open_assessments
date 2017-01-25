@@ -3,10 +3,10 @@ import TestUtils                              from 'react-addons-test-utils';
 import ReactDOM                               from 'react-dom';
 import { Provider }                           from 'react-redux';
 
-import { localizeStrings }                    from "../../selectors/localize";
-import configureStore                         from "../../store/configure_store";
-import { SECONDARY_ACTION, PRIMARY_ACTION }   from "../assessments/two_button_nav";
-import TwoButtonNav                           from "../assessments/two_button_nav";
+import localizeStrings                        from '../../selectors/localize';
+import configureStore                         from '../../store/configure_store';
+import { SECONDARY_ACTION, PRIMARY_ACTION }   from '../assessments/two_button_nav';
+import TwoButtonNav                           from '../assessments/two_button_nav';
 
 
 describe('Two Button Nav', () => {
