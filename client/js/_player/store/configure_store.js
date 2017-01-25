@@ -10,7 +10,6 @@ import DevTools           from '../../dev/dev_tools';
 import api                from '../middleware/api';
 import analytics          from '../middleware/analytics';
 import AssessmentLoader   from '../middleware/assessment_loader';
-import Communications     from '../middleware/communications';
 
 const middleware = [
   api,
