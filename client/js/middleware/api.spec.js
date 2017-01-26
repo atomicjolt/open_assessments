@@ -7,8 +7,7 @@ import * as AssessmentProgressActions   from "../actions/assessment_progress";
 import * as CommunicationsActions       from "../actions/communications";
 import * as JwtActions                  from "../actions/jwt";
 
-describe('api middleware', function() {
-
+describe('api middleware', () => {
   Helper.stubAjax();
 
   it('implements Redux middleware interface', () => {
@@ -17,17 +16,22 @@ describe('api middleware', function() {
     const nextHandler = () => {};
     const actionHandler = middleware(nextHandler);
 
-    expect(api.length).toBe(1);                     // api middleware takes one arg
-    expect(typeof middleware).toBe("function");     // api middleware must return a function to handle next
-    expect(middleware.length).toBe(1);              // next handler returned by api middleware must take one argument
-    expect(typeof actionHandler).toBe("function");  // next handler must return a function to handle action
-    expect(actionHandler.length).toBe(1);           // action handler must take one argument
+    // api middleware takes one arg
+    expect(api.length).toBe(1);
+    // api middleware must return a function to handle next
+    expect(typeof middleware).toBe('function');
+    // next handler returned by api middleware must take one argument
+    expect(middleware.length).toBe(1);
+    // next handler must return a function to handle action
+    expect(typeof actionHandler).toBe('function');
+    // action handler must take one argument
+    expect(actionHandler.length).toBe(1);
   });
 
   it('passes action on to next middleware', () => {
     const store = { getState: () => {} };
     const action = {
-      type: "TEST"
+      type: 'TEST',
     };
     const nextHandler = api(store);
     const next = (actionPassed) => {
@@ -39,9 +43,9 @@ describe('api middleware', function() {
 
   it('calls the api library', () => {
     const action = {
-      type: "TEST",
+      type: 'TEST',
       method: Network.GET,
-      url: "http://www.example.com/api/stuff.json"
+      url: 'http://www.example.com/api/stuff.json',
     };
     const middleware = api(Helper.makeStore());
     const nextHandler = () => {};
@@ -80,5 +84,4 @@ describe('api middleware', function() {
       }
     });
   });
-
 });

@@ -1,5 +1,5 @@
 import React                   from "react";
-import TestUtils               from "react/lib/ReactTestUtils";
+import TestUtils               from "react-addons-test-utils";
 import ReactDOM                from "react-dom";
 import { Provider }            from 'react-redux';
 
@@ -129,7 +129,6 @@ describe("assessment", function() {
 
   afterEach(() => {
     jasmine.clock().uninstall();
-    jasmine.Ajax.uninstall();
   });
 
   it("renders the assessment", () => {

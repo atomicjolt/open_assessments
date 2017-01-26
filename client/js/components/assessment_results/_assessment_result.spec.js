@@ -1,6 +1,6 @@
 import React                  from 'react';
 import ReactDOM               from 'react-dom';
-import TestUtils              from 'react/lib/ReactTestUtils';
+import TestUtils              from 'react-addons-test-utils';
 import { AssessmentResult }   from './_assessment_result';
 import Rapper                 from '../../../specs_support/rapper';
 import configureStore         from '../../store/configure_store';

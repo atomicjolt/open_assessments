@@ -1,7 +1,7 @@
 "use strict";
 
 import React						from 'react';
-import TestUtils    		from 'react/lib/ReactTestUtils';
+import TestUtils    		from 'react-addons-test-utils';
 import DropZoneIndex		from './drop_zone_index';
 
 describe('Drop zone for index type', ()=>{
