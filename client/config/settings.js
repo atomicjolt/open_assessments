@@ -48,8 +48,8 @@ module.exports = {
   staticDir: `${clientAppPath}static`,
 
   entries: {
-    player     : `${clientAppPath}js/_player/app.jsx`,
-    author_app : `${clientAppPath}js/_author/app.jsx`,
+    player : `${clientAppPath}js/_player/app.jsx`,
+    author : `${clientAppPath}js/_author/app.jsx`,
   },
 
   cssEntries: {
