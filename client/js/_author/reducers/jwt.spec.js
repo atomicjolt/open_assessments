@@ -1,10 +1,10 @@
-import { Constants as JwtConstants } from '../actions/jwt';
+import { Constants as JwtConstants } from '../../actions/jwt';
 import jwt                           from './jwt';
 
 describe('jwt reducer', () => {
   describe('initial state', () => {
     it('has a jwt token', () => {
-      const initialState  = { jwt: 'asdf' };
+      const initialState = { jwt: 'asdf' };
       const state = jwt(initialState, {});
       expect(state.jwt).toEqual(initialState.jwt);
     });

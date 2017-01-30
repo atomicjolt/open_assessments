@@ -2,7 +2,7 @@ import React        from 'react';
 import TestUtils    from 'react-addons-test-utils';
 import { Provider } from 'react-redux';
 import Helper       from '../../../specs_support/helper';
-import Home         from './home';
+import HomePage     from './home';
 
 describe('home', () => {
   let result;
@@ -12,7 +12,7 @@ describe('home', () => {
     props = {};
     result = TestUtils.renderIntoDocument(
       <Provider store={Helper.makeStore()}>
-        <Home {...props} />
+        <HomePage {...props} />
       </Provider>,
     );
   });

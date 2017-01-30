@@ -6,4 +6,4 @@ export default function application(state = initialState, action) {
     default:
       return state;
   }
-};
+}
