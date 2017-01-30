@@ -1,5 +1,4 @@
-"use strict";
-import Communicator from "./communicator";
+import Communicator from './communicator';
 
 describe("Communicator", () => {
 

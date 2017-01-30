@@ -1,12 +1,10 @@
-import $                   from "jquery";
-import _                   from "lodash";
-import { createSelector }  from "reselect";
+import _                   from 'lodash';
 
-import { SECONDARY_ACTION, PRIMARY_ACTION }                       from "../../components/assessments/two_button_nav";
-import { isFirstPage, isLastPage, isNextUnlocked, currentItems }  from "../../selectors/assessment";
-import { localizeStrings }                                        from "../../selectors/localize";
-import * as qtiSelectors                                          from "../qti2/selectors";
-import { transformItem }                                          from "./clix";
+import { SECONDARY_ACTION, PRIMARY_ACTION }                       from '../../_player/components/assessments/two_button_nav';
+import { isFirstPage, isLastPage, isNextUnlocked, currentItems }  from '../../_player/selectors/assessment';
+import  localizeStrings                                      from '../../_player/selectors/localize';
+import * as qtiSelectors                                          from '../qti2/selectors';
+import { transformItem }                                          from './clix';
 
 export function questions(state, props) {
   return state.assessment.items.map(transformItem);
@@ -21,7 +19,7 @@ export function questionCount(state, props) {
 }
 
 // Returns true if assessment has loaded, false otherwise.
-export function assessmentLoaded(state, props){
+export function assessmentLoaded(state, props) {
   return !_.isEmpty(state.assessment);
 }
 
@@ -29,7 +27,7 @@ export function assessmentLoaded(state, props){
  * Returns true if api calls to check answers have not yet returned, false
  * otherwise
  */
-export function isCheckingAnswer(state, props){
+export function isCheckingAnswer(state, props) {
   return state.assessmentProgress.get('numQuestionsChecking', 0) > 0;
 }
 
@@ -45,16 +43,16 @@ export function checkButtonText(state, props) {
   const localizedStrings = localizeStrings(state, props).twoButtonNav;
   const item = currentItems(state)[0];
 
-  switch(item.question_type) {
-    case "text_input_question":
-    case "text_only_question":
-    case "short_answer_question":
-    case "survey_question":
+  switch (item.question_type) {
+    case 'text_input_question':
+    case 'text_only_question':
+    case 'short_answer_question':
+    case 'survey_question':
       return localizedStrings.saveAnswerButton;
 
-    case "file_upload_question":
-    case "audio_upload_question":
-    case "movable_words_sandbox":
+    case 'file_upload_question':
+    case 'audio_upload_question':
+    case 'movable_words_sandbox':
       return localizedStrings.saveFileButton;
 
     default:
@@ -77,9 +75,9 @@ export function primaryActionState(state, props) {
   const nextUnlocked = isNextUnlocked(state);
   const lastPage = isLastPage(state);
 
-  if(nextUnlocked === true && lastPage === true){
+  if (nextUnlocked === true && lastPage === true) {
     return PRIMARY_ACTION.SUBMIT;
-  } else if(nextUnlocked === true){
+  } else if (nextUnlocked === true) {
     return PRIMARY_ACTION.NEXT;
   } else {
     return PRIMARY_ACTION.CHECK_ANSWERS;

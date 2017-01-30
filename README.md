@@ -1,24 +1,31 @@
 #Open Assessments
-Open Assessments is a QTI client that can interpret QTI 1.x and 2.x.
+Open Assessments is a QTI client that can interpret QTI 1.x and 2.x as well as an authoring tool for generating
+QTI files. It currently works with MIT's QBank system.
 
 #Getting Started:
 -----------------------
 
-Make sure to install git and npm before you start then:
+Make sure to install git, npm and yarn before you start then:
 
-1. git clone https://github.com/atomicjolt/react_client_starter_app.git my_project_name
-2. Rename .env.example to .env. This file contains the port the server will use. The default 8080 should be fine, but you can also use a local domain or ngrok if you wish.
-3. npm install
+1. git clone https://github.com/atomicjolt/open_assessments my_project_name
+2. Rename .env.example to .env. This file contains the port the server will use.
+   The default 8080 should be fine, but you can also use a local domain or ngrok if you wish.
+3. Install packages with
+
+    `yarn`
+
 4. Start server with:
 
-  `npm run hot`
+  `yarn hot`
 
 then visit http://localhost:8080
 
 
 #Background
 -----------------------
-This code based has was originally developed in partnership with MIT and Atomic Jolt. It has since been adapted by Lumen Learning and again by MIT. It is currently use in production at institutions through the United States and Internationally.
+This code based has was originally developed in partnership with MIT and Atomic Jolt.
+It has since been adapted by Lumen Learning and again by MIT. It is currently use in
+production at institutions through the United States and Internationally.
 
 ###QTI
 -----------------------
@@ -91,7 +98,7 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     confidence_levels            - Whether or not to show confidence controls
     locale                       - Sets player language. Languages currently supported: "en"
     audio_recorder_timeout       - Maximum allowed audio recording length, should be a value of seconds.
-    
+
     // User settings
     role                         - The current user's role. This will control if certain controls show up. The server is still responsible for security.
 
