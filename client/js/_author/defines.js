@@ -5,6 +5,7 @@ export const colors = {
   lightBackground : '#fafafa',
   accentGrey      : '#e8e8e8',
   grey            : '#989898',
+  textGrey        : '#777',
   primaryPurple   : '#902e7c',
   accentPurple    : '#4c4283',
 };
@@ -17,7 +18,7 @@ export const buttonStyle = {
   textAlign       : 'center',
   textDecoration  : 'none',
   display         : 'inline-block',
-  fontSize        : '1.5em',
+  fontSize        : '1em',
   cursor          : 'pointer',
   borderRadius    : '3px',
   fontWeight      : 'bold'
