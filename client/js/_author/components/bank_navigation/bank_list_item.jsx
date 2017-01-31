@@ -67,10 +67,15 @@ export default class BankListItem extends React.Component {
         onMouseEnter={() => this.setState({ hovered: true })}
         onMouseLeave={() => this.setState({ hovered: false })}
       >
-        <div style={{ ...styles.halves, ...styles.name }}>
+        <div
+          style={{ ...styles.halves, ...styles.name }}
+          tabIndex="0"
+          onClick={() => this.props.getBankChildren(this.props.id)}
+        >
           <Icon type={this.props.type} />
           {this.props.displayName.text}
         </div>
+
         <div style={{ ...styles.halves, ...styles.options }}>
           <button style={{ ...buttonStyle, ...styles.publish }}>
             <Icon type="Publish" />

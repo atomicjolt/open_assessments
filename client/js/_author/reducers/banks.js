@@ -15,11 +15,11 @@ export default function banks(state = initialState, action) {
 
     case 'GET_ASSESSMENTS_DONE': {
       const newState = _.cloneDeep(state);
-      _.each(action.payload, (assessment) => {
-        if (!newState[assessment.bankId].assessments) {
-          newState[assessment.bankId].assessments = {};
+      _.each(action.payload, (child) => {
+        if (!newState[child.bankId].children) {
+          newState[child.bankId].children = {};
         }
-        newState[assessment.bankId].assessments[assessment.id] = assessment;
+        newState[child.bankId].children[child.id] = child;
       });
       return newState;
     }

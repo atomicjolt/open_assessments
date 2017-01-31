@@ -21,7 +21,7 @@ export function getBanks() {
   };
 }
 
-export function getAssessments(bankId) {
+export function getBankChildren(bankId) {
   return {
     bankId,
     apiCall : true,

@@ -9,13 +9,13 @@ export default function bankIcon(props) {
     verticalAlign: 'middle',
   };
 
-  console.log(props.type);
   switch (props.type) {
     case 'Bank':
       return <i className="material-icons" style={styles}>folder</i>;
     case 'Publish':
       return <i className="material-icons" style={cloudStyles}>cloud_upload</i>;
     default:
+      console.log(props.type);
       return null;
   }
 }

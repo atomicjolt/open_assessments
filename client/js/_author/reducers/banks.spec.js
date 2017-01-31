@@ -35,7 +35,7 @@ xdescribe('banks reducer', () => {
     // action.payload = banksData;
     state = banks(state, action);
 
-    action.type = 'GET_ASSESSMENTS_DONE';
+    action.type = 'GET_BANK_CHILDREN_DONE';
     // action.payload = assessmentData;
     // state = banks(state, action);
     expect(state['assessment.Bank%3A57867b0dc89cd93f9e22cc2f%40ODL.MIT.EDU'].assessments).toBeDefined();

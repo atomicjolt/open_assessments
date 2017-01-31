@@ -22,7 +22,11 @@ export default function bankList(props) {
       <Header />
       {
         _.map(props.banks, bank => (
-          <Item key={`bank_${bank.id}`} {...bank} />
+          <Item
+            key={`bank_${bank.id}`}
+            {...bank}
+            getBankChildren={props.getBankChildren}
+          />
         ))
       }
     </div>
@@ -30,5 +34,6 @@ export default function bankList(props) {
 }
 
 bankList.propTypes = {
-  banks: React.PropTypes.shape({}).isRequired,
+  banks           : React.PropTypes.shape({}).isRequired,
+  getBankChildren : React.PropTypes.func.isRequired,
 };

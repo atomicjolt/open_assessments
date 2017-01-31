@@ -11,7 +11,9 @@ const select = state => ({
 
 export class BankNavigator extends React.Component {
   static propTypes = {
-    banks: React.PropTypes.shape({}).isRequired,
+    banks           : React.PropTypes.shape({}).isRequired,
+    getBanks        : React.PropTypes.func.isRequired,
+    getBankChildren : React.PropTypes.func.isRequired,
   };
 
   componentWillMount() {
@@ -22,7 +24,10 @@ export class BankNavigator extends React.Component {
     return (
       <div>
         <NavBar view="banks" />
-        <BankList banks={this.props.banks} />
+        <BankList
+          banks={this.props.banks}
+          getBankChildren={this.props.getBankChildren}
+        />
       </div>
     );
   }

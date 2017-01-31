@@ -8,6 +8,11 @@ const qbank = {
     url    : () => 'https://qbank-clix-dev.mit.edu/api/v1/assessment/banks',
   },
 
+  [BankConstants.GET_BANK_CHILDREN]: {
+    method : Network.GET,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}`,
+  },
+
   [BankConstants.GET_ASSESSMENTS]: {
     method : Network.GET,
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments`,
