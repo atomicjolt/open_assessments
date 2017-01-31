@@ -14,6 +14,7 @@ secrets.js
 .idea/
 *.iml
 .env
+yarn-error.log
 
 config/secrets.js
 s3_website.yml
