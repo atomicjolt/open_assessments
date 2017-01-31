@@ -1,6 +1,5 @@
 import React            from 'react';
 import { connect }      from 'react-redux';
-import _                from 'lodash';
 import * as BankActions from '../../../actions/qbank/banks';
 import NavBar           from '../common/navigation_bar';
 import BankList         from './bank_list';
@@ -24,10 +23,11 @@ function select(state) {
 }
 export class BankNavigator extends React.Component {
   static propTypes = {
-    banks           : React.PropTypes.shape({}).isRequired,
-    path            : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
-    getBanks        : React.PropTypes.func.isRequired,
-    getBankChildren : React.PropTypes.func.isRequired,
+    banks              : React.PropTypes.shape({}).isRequired,
+    getBanks           : React.PropTypes.func.isRequired,
+    getBankAssessments : React.PropTypes.func.isRequired,
+    getBankItems       : React.PropTypes.func.isRequired,
+    getBankSubBanks    : React.PropTypes.func.isRequired,
   };
 
   componentWillMount() {
@@ -35,6 +35,12 @@ export class BankNavigator extends React.Component {
   }
 
   render() {
+    const actions = {
+      getBankAssessments : this.props.getBankAssessments,
+      getBankItems       : this.props.getBankItems,
+      getBankSubBanks    : this.props.getBankSubBanks,
+    };
+
     return (
       <div>
         <NavBar
@@ -43,7 +49,7 @@ export class BankNavigator extends React.Component {
         />
         <BankList
           banks={this.props.banks}
-          getBankChildren={this.props.getBankChildren}
+          getBankChildren={actions}
         />
       </div>
     );

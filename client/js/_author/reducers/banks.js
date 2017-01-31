@@ -24,6 +24,18 @@ export default function banks(state = initialState, action) {
       return newState;
     }
 
+    case 'GET_ITEMS_DONE': {
+      debugger;
+      const newState = _.cloneDeep(state);
+      _.each(action.payload, (child) => {
+        if (!newState[child.bankId].children) {
+          newState[child.bankId].children = {};
+        }
+        newState[child.bankId].children[child.id] = child;
+      });
+      return newState;
+    }
+
     default:
       return state;
   }

@@ -7,7 +7,11 @@ export default class BankListItem extends React.Component {
     displayName: React.PropTypes.shape({
       text: React.PropTypes.string,
     }).isRequired,
-    type: React.PropTypes.string,
+    type               : React.PropTypes.string.isRequired,
+    id                 : React.PropTypes.string.isRequired,
+    getBankAssessments : React.PropTypes.func.isRequired,
+    getBankItems       : React.PropTypes.func.isRequired,
+    // getBankSubBanks    : React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -58,6 +62,13 @@ export default class BankListItem extends React.Component {
     };
   }
 
+  getChildren() {
+    const bankId = this.props.id;
+    this.props.getBankAssessments(bankId);
+    this.props.getBankItems(bankId);
+    // this.props.getBankSubBanks(bankId);
+  }
+
   render() {
     const styles = this.getStyles();
 
@@ -70,7 +81,7 @@ export default class BankListItem extends React.Component {
         <div
           style={{ ...styles.halves, ...styles.name }}
           tabIndex="0"
-          onClick={() => this.props.getBankChildren(this.props.id)}
+          onClick={() => this.getChildren()}
         >
           <Icon type={this.props.type} />
           {this.props.displayName.text}

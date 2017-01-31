@@ -7,6 +7,8 @@ const actions = [];
 const requests = [
   'GET_BANKS',
   'GET_ASSESSMENTS',
+  'GET_ITEMS',
+  'GET_BANK_SUB_BANKS',
   'CREATE_ASSESSMENT',
   'DELETE_ASSESSMENT',
   'PUBLISH_ASSESSMENT',
@@ -21,11 +23,27 @@ export function getBanks() {
   };
 }
 
-export function getBankChildren(bankId) {
+export function getBankAssessments(bankId) {
   return {
     bankId,
     apiCall : true,
     type    : Constants.GET_ASSESSMENTS,
+  };
+}
+
+export function getBankItems(bankId) {
+  return {
+    bankId,
+    apiCall : true,
+    type    : Constants.GET_ITEMS,
+  };
+}
+
+export function getBankSubBanks(bankId) {
+  return {
+    bankId,
+    apiCall : true,
+    type    : Constants.GET_BANK_SUB_BANKS,
   };
 }
 
