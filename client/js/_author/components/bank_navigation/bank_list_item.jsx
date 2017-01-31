@@ -39,6 +39,10 @@ export default class BankListItem extends React.Component {
       options: {
         width: '35%',
       },
+      publish: {
+        color           : hovered ? colors.white : colors.grey,
+        backgroundColor : hovered ? colors.lightAccentPurple : colors.white,
+      },
       buttonContainer: {
         float   : 'right',
         display : hovered ? 'inline-block' : 'none',
@@ -68,7 +72,9 @@ export default class BankListItem extends React.Component {
           {this.props.displayName.text}
         </div>
         <div style={{ ...styles.halves, ...styles.options }}>
-          <Icon type="Publish" />
+          <button style={{ ...buttonStyle, ...styles.publish }}>
+            <Icon type="Publish" />
+          </button>
           <div style={{ ...styles.halves, ...styles.buttonContainer }}>
             <button style={{ ...buttonStyle, ...styles.button, ...styles.embed }}>
               EMBED CODE

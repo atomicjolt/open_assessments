@@ -5,12 +5,16 @@ export default function bankIcon(props) {
     verticalAlign : 'middle',
     padding       : '10px 20px',
   };
+  const cloudStyles = {
+    verticalAlign: 'middle',
+  };
+
   console.log(props.type);
   switch (props.type) {
     case 'Bank':
       return <i className="material-icons" style={styles}>folder</i>;
     case 'Publish':
-      return <i className="material-icons" style={styles}>cloud_upload</i>;
+      return <i className="material-icons" style={cloudStyles}>cloud_upload</i>;
     default:
       return null;
   }
