@@ -2,6 +2,7 @@ import React      from 'react';
 import _          from 'lodash';
 import { colors } from '../../defines';
 import Header     from './bank_list_header';
+import Item       from './bank_list_item';
 
 export default function bankList(props) {
   const styles = {
@@ -19,11 +20,15 @@ export default function bankList(props) {
   return (
     <div style={styles.container}>
       <Header />
-      list Items
+      {
+        _.map(props.banks, bank => (
+          <Item key={`bank_${bank.id}`} {...bank} />
+        ))
+      }
     </div>
   );
 }
 
 bankList.propTypes = {
-
+  banks: React.PropTypes.shape({}).isRequired,
 };

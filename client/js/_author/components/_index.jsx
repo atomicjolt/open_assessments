@@ -11,7 +11,7 @@ export default class Index extends React.Component {
     return {
       backgroundColor : colors.background,
       minHeight       : '100vh',
-      fontFamily      : 'Arial, Helvetica, sans-serif',
+      fontFamily      : 'Open Sans',
       fontSize        : '1.5em',
       color           : colors.textGrey,
     };

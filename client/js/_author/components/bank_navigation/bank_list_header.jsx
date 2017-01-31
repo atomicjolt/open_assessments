@@ -7,6 +7,7 @@ export default function (props) {
     bar: {
       backgroundColor : colors.lightBackground,
       borderBottom    : `1px solid ${colors.accentGrey}`,
+      position        : 'relative',
     },
     title: {
       color       : colors.textGrey,
