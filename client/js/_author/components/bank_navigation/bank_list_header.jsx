@@ -11,18 +11,18 @@ export default function (props) {
     },
     title: {
       color       : colors.textGrey,
-      fontSize    : '1.5em',
+      fontSize    : '1.3em',
       display     : 'inline-block',
       lineHeight  : '60px',
     },
     name: {
       display     : 'inline-block',
       paddingLeft : '30px',
-      width       : '45%',
+      width       : '65%',
     },
     publish: {
       display : 'inline-block',
-      width   : '20%',
+      width   : '35%',
     },
   };
 
@@ -36,7 +36,6 @@ export default function (props) {
         <div style={styles.title}>Publish</div>
         <SortButton />
       </div>
-      <div style={styles.title}>Embed</div>
     </div>
   );
 }

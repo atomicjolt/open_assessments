@@ -9,6 +9,8 @@ export default function bankIcon(props) {
   switch (props.type) {
     case 'Bank':
       return <i className="material-icons" style={styles}>folder</i>;
+    case 'Publish':
+      return <i className="material-icons" style={styles}>cloud_upload</i>;
     default:
       return null;
   }

@@ -21,6 +21,7 @@ export default function (props) {
       height          : '100%',
       verticalAlign   : 'middle',
       margin          : '7px 15px',
+      padding         : '5px 40px',
     }
   };
 

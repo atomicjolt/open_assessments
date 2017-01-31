@@ -11,11 +11,11 @@ export default function (props) {
     },
     top: {
       position : 'absolute',
-      top      : '10px',
+      top      : '6px',
     },
     bottom: {
       position : 'absolute',
-      bottom   : '24px',
+      bottom   : '6px',
     }
   };
 
