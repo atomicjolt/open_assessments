@@ -20,9 +20,9 @@ module.exports = () => {
     files: [
       './specs_support/mocks/*.js',
       './specs_support/spec_helper.js',
-      {pattern:'./specs_support/fixtures/**/*', included:false, served:true},
-      // './js/**/*.spec.js'         // Use webpack to build each test individually. If changed here, match the change in preprocessors
-      './webpack.tests.js'          // More performant but tests cannot be run individually
+      // Use webpack to build each test individually. If changed here, change in preprocessors
+      // './js/**/*.spec.js'
+      './webpack.tests.js',          // More performant but tests cannot be run individually
     ],
 
     // Transpile tests with the karma-webpack plugin

@@ -65,6 +65,63 @@ Just specify a src_url. CORS must be enabled on the server specified by src_url.
 
 http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest&src_url=https%253A%252F%252Fdl.dropboxusercontent.com%252Fu%252F7594429%252FedXCourse%252Fsequential%252F97cc2d1812204294b5fcbb91a1157368.xml
 
+
+## Assets
+-----------
+Any files added to the assets directory can be used by in code and assigned to a variable. This
+allows for referring to assets using dynamically generated strings. The assets will be built according to
+the rules specified in your webpack configuration. Typically, this means that in production the names will
+be changed to include a SHA.
+
+First importing the assets:
+  `import assets from '../libs/assets';`
+
+Then assign the assest to a variable:
+  `const img = assets("./images/atomicjolt.jpg");`
+
+The value can then be used when rendering:
+  `render(){
+    const img = assets("./images/atomicjolt.jpg");
+    return<div>
+    <img src={img} />
+    </div>;
+  }`
+
+
+## Static
+-----------
+Files added to the static directory will be copied directly into the build. These files will not be renamed.
+
+
+#Deploy to S3:
+-----------------------
+
+  1. Setup credentials. If you've already setup your Amazon credentials in ~/.aws/credentials
+  you will be able to do something similar to the following where "myprofile" is one of
+  the AWS profiles found in ~/.aws/credentials:
+
+    export AWS_DEFAULT_PROFILE=myprofile
+    export AWS_PROFILE=myprofile
+
+  You can also use a .env file. See the [s3-website](https://github.com/klaemo/s3-website) documentation for more options.
+
+  2. Edit configuration.
+
+    Open up .s3-website.json and set the desired bucket name
+
+  3. Configure the bucket as a website
+
+    `yarn create`
+
+  4. Deploy.
+
+    `yarn release`
+
+
+#Tests
+-----------
+Karma and Jasmine are used for testing. To run tests run:
+
 ####Settings - can be passed via window.DEFAULT_SETTINGS or url params
 -----------------------
 
@@ -178,4 +235,4 @@ We recommend using a GUID for the eid to prevent conflicts with other assessment
 -----------
 Karma and Jasmine are used for testing. To run tests run:
 
-  `npm run test`
+  `yarn test`

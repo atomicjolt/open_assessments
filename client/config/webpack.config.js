@@ -121,8 +121,8 @@ module.exports = function webpackConfig(stage) {
       pathinfo          : !production
     },
     resolve: {
-      extensions: ['', '.js', '.json', '.jsx'],
-      modulesDirectories: ['node_modules', 'vendor']
+      extensions         : ['', '.js', '.json', '.jsx'],
+      modulesDirectories : ['node_modules', 'vendor']
     },
     cache          : true,
     quiet          : false,
@@ -132,9 +132,7 @@ module.exports = function webpackConfig(stage) {
     devtool        : production ? false : 'eval',  // http://webpack.github.io/docs/configuration.html#devtool
     stats          : { colors: true },
     plugins,
-    module         : { 
-      loaders
-    },
+    module         : { loaders },
     devServer      : {
       stats: {
         cached  : false,
