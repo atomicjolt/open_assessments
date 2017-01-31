@@ -6,7 +6,6 @@ const initialState = {
 };
 
 export default function bankNavigation(state = initialState, action) {
-  console.log(action.type);
   switch (action.type) {
     case 'GET_BANKS': {
       return { ...state, ...{ loading: true } };
@@ -19,7 +18,9 @@ export default function bankNavigation(state = initialState, action) {
       return { ...state, ...{ loading: true } };
     }
     case 'GET_ASSESSMENTS_DONE': {
-      state.location.push(action.original.bankId);
+      state.location.push({
+        id: action.original.bankId,
+      });
       return { ...state, ...{ loading: false, location: state.location } };
     }
 

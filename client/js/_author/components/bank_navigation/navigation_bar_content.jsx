@@ -1,4 +1,5 @@
 import React                    from 'react';
+import _                        from 'lodash';
 import { colors, buttonStyle }  from '../../defines';
 
 export default function (props) {
@@ -30,7 +31,11 @@ export default function (props) {
       <i className="material-icons" style={styles.homeIcon} >
         home
       </i>
-      some/path/or/something
+      {
+        _.map(props.path, folder => (
+          <span key={`folder_${folder.id}`}>{folder.id}/</span>
+        ))
+      }
       <div style={styles.rightContent}>
         <span style={styles.spacer} />
         <button style={{ ...buttonStyle, ...styles.button }}>NEW</button>

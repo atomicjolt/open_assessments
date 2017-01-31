@@ -15,7 +15,7 @@ export default function navigationBar(props) {
     switch (props.view) {
       case 'banks':
         return (
-          <BanksView />
+          <BanksView {...props} />
         );
       default:
         return null;
