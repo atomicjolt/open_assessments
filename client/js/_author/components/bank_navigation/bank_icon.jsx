@@ -11,6 +11,7 @@ export default function bankIcon(props) {
 
   switch (props.type) {
     case 'Bank':
+    case 'OsidNode':
       return <i className="material-icons" style={styles}>folder</i>;
     case 'Assessment':
       return <i className="material-icons" style={styles}>description</i>;

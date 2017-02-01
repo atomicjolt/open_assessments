@@ -3,37 +3,19 @@ import _ from 'lodash';
 // Leave this empty. It will hold banks by id. IE `state[someId] = {a_bank}`
 const initialState = {};
 
+function addPathIds(bank, path) {
+  path = `${path}/${bank.id}`;
+  bank.pathId = path;
+  bank.childNodes.forEach((b) => { addPathIds(b, path); });
+}
+
 export default function banks(state = initialState, action) {
   switch (action.type) {
-    case 'GET_BANKS_DONE': {
-      const newState = _.cloneDeep(state);
-      _.each(action.payload, (bank) => {
-        newState[bank.id] = bank;
-      });
-      return newState;
-    }
 
-    case 'GET_ASSESSMENTS_DONE': {
-      const newState = _.cloneDeep(state);
-      _.each(action.payload, (child) => {
-        if (!newState[child.bankId].children) {
-          newState[child.bankId].children = {};
-        }
-        newState[child.bankId].children[child.id] = child;
-      });
-      return newState;
-    }
-
-    case 'GET_ITEMS_DONE': {
-      debugger;
-      const newState = _.cloneDeep(state);
-      _.each(action.payload, (child) => {
-        if (!newState[child.bankId].children) {
-          newState[child.bankId].children = {};
-        }
-        newState[child.bankId].children[child.id] = child;
-      });
-      return newState;
+    case 'GET_BANKS_HIERARCHY_DONE': {
+      const newBanks = action.payload;
+      _.forEach(newBanks, bank => addPathIds(bank, ''));
+      return newBanks;
     }
 
     default:

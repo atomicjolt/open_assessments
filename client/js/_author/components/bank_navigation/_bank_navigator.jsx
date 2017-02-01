@@ -1,4 +1,5 @@
 import React            from 'react';
+import _                from 'lodash';
 import { connect }      from 'react-redux';
 import * as BankActions from '../../../actions/qbank/banks';
 import NavBar           from '../common/navigation_bar';
@@ -9,13 +10,11 @@ function select(state) {
   let banks = state.banks;
 
   _.forEach(path, (folder) => {
-    if (!_.isUndefined(banks[folder.id])) {
-      banks = banks[folder.id].children;
-    } else if (!_.isUndefined(banks.children) && !_.isUndefined(banks.children[folder.id])) {
-      banks = banks.children[folder.id].children;
-    }
+    const currentBank = _.find(banks, { id: folder.id });
+    banks = currentBank.childNodes;
   });
 
+  console.log(banks);
   return {
     path,
     banks,
@@ -24,23 +23,23 @@ function select(state) {
 export class BankNavigator extends React.Component {
   static propTypes = {
     banks              : React.PropTypes.shape({}).isRequired,
+    updatePath         : React.PropTypes.func.isRequired,
     getBanks           : React.PropTypes.func.isRequired,
     getBankAssessments : React.PropTypes.func.isRequired,
     getBankItems       : React.PropTypes.func.isRequired,
-    getBankSubBanks    : React.PropTypes.func.isRequired,
   };
 
   componentWillMount() {
     this.props.getBanks();
   }
 
-  render() {
-    const actions = {
-      getBankAssessments : this.props.getBankAssessments,
-      getBankItems       : this.props.getBankItems,
-      getBankSubBanks    : this.props.getBankSubBanks,
-    };
+  getBankChildren(bank) {
+    this.props.updatePath(bank.id, bank.displayName.text);
+    this.props.getBankAssessments(bank.id);
+    // this.props.getBankItems(bank);
+  }
 
+  render() {
     return (
       <div>
         <NavBar
@@ -49,7 +48,7 @@ export class BankNavigator extends React.Component {
         />
         <BankList
           banks={this.props.banks}
-          getBankChildren={actions}
+          getBankChildren={id => this.getBankChildren(id)}
         />
       </div>
     );

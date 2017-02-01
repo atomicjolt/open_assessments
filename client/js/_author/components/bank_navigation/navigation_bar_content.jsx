@@ -33,7 +33,7 @@ export default function (props) {
       </i>
       {
         _.map(props.path, folder => (
-          <span key={`folder_${folder.id}`}>{folder.id}/</span>
+          <span key={`folder_${folder.id}`}>{folder.name} / </span>
         ))
       }
       <div style={styles.rightContent}>

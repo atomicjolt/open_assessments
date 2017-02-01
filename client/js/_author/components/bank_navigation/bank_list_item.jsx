@@ -4,14 +4,14 @@ import { colors, buttonStyle }  from '../../defines';
 
 export default class BankListItem extends React.Component {
   static propTypes = {
-    displayName: React.PropTypes.shape({
-      text: React.PropTypes.string,
+    bank: React.PropTypes.shape({
+      displayName: React.PropTypes.shape({
+        text: React.PropTypes.string,
+      }),
+      type  : React.PropTypes.string.isRequired,
+      id    : React.PropTypes.string.isRequired,
     }).isRequired,
-    type               : React.PropTypes.string.isRequired,
-    id                 : React.PropTypes.string.isRequired,
-    getBankAssessments : React.PropTypes.func.isRequired,
-    getBankItems       : React.PropTypes.func.isRequired,
-    // getBankSubBanks    : React.PropTypes.func.isRequired,
+    getBankChildren: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -62,15 +62,9 @@ export default class BankListItem extends React.Component {
     };
   }
 
-  getChildren() {
-    const bankId = this.props.id;
-    this.props.getBankAssessments(bankId);
-    this.props.getBankItems(bankId);
-    // this.props.getBankSubBanks(bankId);
-  }
-
   render() {
     const styles = this.getStyles();
+    const { bank } = this.props;
 
     return (
       <div
@@ -81,10 +75,10 @@ export default class BankListItem extends React.Component {
         <div
           style={{ ...styles.halves, ...styles.name }}
           tabIndex="0"
-          onClick={() => this.getChildren()}
+          onClick={() => this.props.getBankChildren(bank)}
         >
-          <Icon type={this.props.type} />
-          {this.props.displayName.text}
+          <Icon type={bank.type} />
+          {bank.displayName ? bank.displayName.text : null}
         </div>
 
         <div style={{ ...styles.halves, ...styles.options }}>

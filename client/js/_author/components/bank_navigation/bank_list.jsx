@@ -24,7 +24,7 @@ export default function bankList(props) {
         _.map(props.banks, bank => (
           <Item
             key={`bank_${bank.id}`}
-            {...bank}
+            bank={bank}
             getBankChildren={props.getBankChildren}
           />
         ))
