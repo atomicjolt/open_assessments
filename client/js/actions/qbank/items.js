@@ -11,9 +11,9 @@ const requests = [
 
 export const Constants = wrapper(actions, requests);
 
-export function getItems(bank) {
+export function getItems(bankId) {
   return {
-    bank,
+    bankId,
     apiCall : true,
     type    : Constants.GET_ITEMS,
   };

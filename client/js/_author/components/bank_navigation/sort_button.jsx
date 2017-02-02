@@ -2,7 +2,6 @@ import React      from 'react';
 import { colors } from '../../defines';
 
 export default function sortButton(props) {
-  console.log(props.order);
   const styles = {
     button: {
       display : 'inline-block',

@@ -13,7 +13,7 @@ const qbank = {
 
   [AssessmentConstants.GET_ASSESSMENTS]: {
     method : Network.GET,
-    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments`,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments?isolated`,
   },
 
   [AssessmentConstants.CREATE_ASSESSMENT]: {
