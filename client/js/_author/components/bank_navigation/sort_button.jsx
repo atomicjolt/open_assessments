@@ -1,7 +1,7 @@
 import React      from 'react';
 import { colors } from '../../defines';
 
-export default function (props) {
+export default function sortButton(props) {
   const styles = {
     button: {
       display : 'inline-block',
@@ -20,7 +20,13 @@ export default function (props) {
   };
 
   return (
-    <div style={styles.button} tabIndex="0" onClick={() => console.log('sort')}>
+    <div
+      style={styles.button}
+      tabIndex="0"
+      role="button"
+      aria-label="sort list"
+      onClick={() => props.sort()}
+    >
       <i className="material-icons" style={styles.top}>
         keyboard_arrow_up
       </i>
@@ -30,3 +36,7 @@ export default function (props) {
     </div>
   );
 }
+
+sortButton.propTypes = {
+  sort: React.PropTypes.func.isRequired,
+};

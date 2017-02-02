@@ -28,6 +28,7 @@ export default class BreadCrumb extends React.Component {
     return (
       <span
         tabIndex="0"
+        type="button"
         onClick={() => this.props.updatePath(id, name)}
         onMouseEnter={() => this.setState({ hovered: true })}
         onMouseLeave={() => this.setState({ hovered: false })}

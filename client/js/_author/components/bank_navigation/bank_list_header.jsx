@@ -26,6 +26,7 @@ export default function (props) {
     },
   };
 
+  // TODO: Sorting
   return (
     <div style={styles.bar}>
       <div style={styles.name}>

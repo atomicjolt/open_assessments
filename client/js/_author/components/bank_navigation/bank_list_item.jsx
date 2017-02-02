@@ -2,6 +2,7 @@ import React                    from 'react';
 import Icon                     from './bank_icon';
 import { colors, buttonStyle }  from '../../defines';
 
+// TODO: think about breaking this into smaller components
 export default class BankListItem extends React.Component {
   static propTypes = {
     bank: React.PropTypes.shape({
@@ -21,6 +22,7 @@ export default class BankListItem extends React.Component {
 
   getStyles() {
     const { hovered } = this.state;
+    const isAssessment = this.props.bank.type === 'Assessment';
 
     return {
       item: {
@@ -44,12 +46,13 @@ export default class BankListItem extends React.Component {
         width: '35%',
       },
       publish: {
+        display         : isAssessment ? 'inline-block' : 'none',
         color           : hovered ? colors.white : colors.grey,
         backgroundColor : hovered ? colors.lightAccentPurple : colors.white,
       },
       buttonContainer: {
         float   : 'right',
-        display : hovered ? 'inline-block' : 'none',
+        display : hovered && isAssessment ? 'inline-block' : 'none',
       },
       button: {
         backgroundColor : colors.lightAccentPurple,
@@ -60,6 +63,15 @@ export default class BankListItem extends React.Component {
         padding: '9px 15px',
       },
     };
+  }
+
+  selectItem() {
+    const { bank } = this.props;
+    if (bank.type === 'Assessment') {
+      // console.log(`take me to assessment ${bank.id}`);
+    } else {
+      this.props.getBankChildren(bank);
+    }
   }
 
   render() {
@@ -75,16 +87,19 @@ export default class BankListItem extends React.Component {
         <div
           style={{ ...styles.halves, ...styles.name }}
           tabIndex="0"
-          onClick={() => this.props.getBankChildren(bank)}
+          role="button"
+          onClick={() => this.selectItem()}
         >
           <Icon type={bank.type} />
           {bank.displayName ? bank.displayName.text : null}
         </div>
 
         <div style={{ ...styles.halves, ...styles.options }}>
+
           <button style={{ ...buttonStyle, ...styles.publish }}>
             <Icon type="Publish" />
           </button>
+
           <div style={{ ...styles.halves, ...styles.buttonContainer }}>
             <button style={{ ...buttonStyle, ...styles.button, ...styles.embed }}>
               EMBED CODE
@@ -98,6 +113,7 @@ export default class BankListItem extends React.Component {
             <button style={{ ...buttonStyle, ...styles.button }}>
               <i className="material-icons">delete</i>
             </button>
+
           </div>
         </div>
       </div>

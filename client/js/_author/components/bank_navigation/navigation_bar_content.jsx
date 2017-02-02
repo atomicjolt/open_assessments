@@ -43,6 +43,7 @@ export default function navigationBarContent(props) {
     <div>
       <i
         tabIndex="0"
+        role="button"
         className="material-icons"
         style={styles.homeIcon}
         onClick={() => props.updatePath(null)}

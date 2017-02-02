@@ -18,7 +18,7 @@ export default function bankIcon(props) {
     case 'Publish':
       return <i className="material-icons" style={cloudStyles}>cloud_upload</i>;
     default:
-      console.log(props.type);
+      // console.log(props.type);
       return null;
   }
 }

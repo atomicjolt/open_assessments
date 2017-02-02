@@ -7,7 +7,7 @@ export default class Index extends React.Component {
     children: React.PropTypes.node,
   };
 
-  getStyles() {
+  static getStyles() {
     return {
       backgroundColor : colors.background,
       minHeight       : '100vh',
@@ -18,7 +18,7 @@ export default class Index extends React.Component {
   }
 
   render() {
-    const styles = this.getStyles();
+    const styles = Index.getStyles();
 
     return (
       <div style={styles}>
