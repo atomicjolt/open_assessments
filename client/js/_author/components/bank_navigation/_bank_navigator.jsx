@@ -19,17 +19,22 @@ function select(state) {
 
   return {
     path,
+    currentBankId,
     banks: _.merge(state.assessments[currentBankId], banks),
   };
 }
 export class BankNavigator extends React.Component {
   static propTypes = {
-    banks              : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
+    banks: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.shape({})),
+      React.PropTypes.shape({})
+    ]).isRequired,
     path               : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
     updatePath         : React.PropTypes.func.isRequired,
     getBanks           : React.PropTypes.func.isRequired,
     getAssessments     : React.PropTypes.func.isRequired,
     getItems           : React.PropTypes.func.isRequired,
+    currentBankId      : React.PropTypes.string,
   };
 
   componentWillMount() {
@@ -48,6 +53,8 @@ export class BankNavigator extends React.Component {
         <NavBar
           view="banks"
           path={this.props.path}
+          currentBankId={this.props.currentBankId}
+          updatePath={this.props.updatePath}
         />
         <BankList
           banks={this.props.banks}

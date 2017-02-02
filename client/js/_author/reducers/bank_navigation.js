@@ -19,19 +19,29 @@ export default function bankNavigation(state = initialState, action) {
     }
     case 'GET_SUB_BANKS_DONE': {
       state.location.push({
-        id: action.original.bank.id,
-        name: 'sven',
+        id    : action.original.bank.id,
+        name  : 'sven',
       });
       return { ...state, ...{ loading: false, location: state.location } };
     }
 
     case 'UPDATE_PATH': {
-      // TODO: go back
-      state.location.push({
-        id    : action.id,
-        name  : action.name,
-      });
-      return { ...state, ...{ location: state.location } };
+      if (!action.id) {
+        return { ...state, ...{ location: [] } };
+      }
+
+      const pathIndex = _.findIndex(state.location, { id: action.id });
+      const newLocation = _.cloneDeep(state.location);
+
+      if (pathIndex > -1) {
+        newLocation.length = pathIndex + 1;
+      } else {
+        newLocation.push({
+          id    : action.id,
+          name  : action.name,
+        });
+      }
+      return { ...state, ...{ location: newLocation } };
     }
 
     default:

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 // Leave this empty. It will hold banks by id. IE `state[someId] = {a_bank}`
-const initialState = {};
+const initialState = [];
 
 export default function banks(state = initialState, action) {
   switch (action.type) {

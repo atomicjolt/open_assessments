@@ -34,6 +34,9 @@ export default function bankList(props) {
 }
 
 bankList.propTypes = {
-  banks           : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
-  getBankChildren : React.PropTypes.func.isRequired,
+  banks: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(React.PropTypes.shape({})),
+    React.PropTypes.shape({})
+  ]).isRequired,
+  getBankChildren: React.PropTypes.func.isRequired,
 };

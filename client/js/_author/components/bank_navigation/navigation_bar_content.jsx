@@ -1,12 +1,14 @@
 import React                    from 'react';
 import _                        from 'lodash';
 import { colors, buttonStyle }  from '../../defines';
+import Breadcrumb               from './breadcrumb';
 
-export default function (props) {
+export default function navigationBarContent(props) {
   const styles = {
     homeIcon: {
       color   : colors.grey,
-      padding : '10px 10px 10px 20px'
+      padding : '10px 10px 10px 20px',
+      cursor  : 'pointer',
     },
     rightContent: {
       float: 'right',
@@ -17,25 +19,42 @@ export default function (props) {
       borderLeft  : `2px solid ${colors.accentGrey}`,
       padding     : '0.7em',
     },
+    breadcrumbs: {
+      display       : 'inline-block',
+      verticalAlign : 'top',
+      lineHeight    : '45px',
+    },
     button: {
       backgroundColor : colors.primaryPurple,
       height          : '100%',
       verticalAlign   : 'middle',
       margin          : '7px 15px',
       padding         : '5px 40px',
-    }
+    },
   };
 
   return (
     <div>
-      <i className="material-icons" style={styles.homeIcon} >
+      <i
+        tabIndex="0"
+        className="material-icons"
+        style={styles.homeIcon}
+        onClick={() => props.updatePath(null)}
+      >
         home
       </i>
-      {
-        _.map(props.path, folder => (
-          <span key={`folder_${folder.id}`}>{folder.name} / </span>
-        ))
-      }
+      <div style={styles.breadcrumbs}>
+        {
+          _.map(props.path, folder => (
+            <Breadcrumb
+              key={`folder_${folder.id}`}
+              {...folder}
+              current={props.currentBankId === folder.id}
+              updatePath={props.updatePath}
+            />
+          ))
+        }
+      </div>
       <div style={styles.rightContent}>
         <span style={styles.spacer} />
         <button style={{ ...buttonStyle, ...styles.button }}>NEW</button>
@@ -43,3 +62,8 @@ export default function (props) {
     </div>
   );
 }
+
+navigationBarContent.propTypes = {
+  path        : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
+  updatePath  : React.PropTypes.func.isRequired,
+};
