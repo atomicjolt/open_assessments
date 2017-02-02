@@ -1,12 +1,15 @@
-import React            from 'react';
-import _                from 'lodash';
-import { connect }      from 'react-redux';
-import * as BankActions from '../../../actions/qbank/banks';
-import NavBar           from '../common/navigation_bar';
-import BankList         from './bank_list';
+import React                  from 'react';
+import _                      from 'lodash';
+import { connect }            from 'react-redux';
+import * as BankActions       from '../../../actions/qbank/banks';
+import * as AssessmentActions from '../../../actions/qbank/assessments';
+import * as ItemActions       from '../../../actions/qbank/items';
+import NavBar                 from '../common/navigation_bar';
+import BankList               from './bank_list';
 
 function select(state) {
   const path = state.bankNavigation.location;
+  const currentBankId = path.length ? path[path.length - 1].id : null;
   let banks = state.banks;
 
   _.forEach(path, (folder) => {
@@ -14,19 +17,19 @@ function select(state) {
     banks = currentBank.childNodes;
   });
 
-  console.log(banks);
   return {
     path,
-    banks,
+    banks: _.merge(state.assessments[currentBankId], banks),
   };
 }
 export class BankNavigator extends React.Component {
   static propTypes = {
-    banks              : React.PropTypes.shape({}).isRequired,
+    banks              : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
+    path               : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
     updatePath         : React.PropTypes.func.isRequired,
     getBanks           : React.PropTypes.func.isRequired,
-    getBankAssessments : React.PropTypes.func.isRequired,
-    getBankItems       : React.PropTypes.func.isRequired,
+    getAssessments     : React.PropTypes.func.isRequired,
+    getItems           : React.PropTypes.func.isRequired,
   };
 
   componentWillMount() {
@@ -35,8 +38,8 @@ export class BankNavigator extends React.Component {
 
   getBankChildren(bank) {
     this.props.updatePath(bank.id, bank.displayName.text);
-    this.props.getBankAssessments(bank.id);
-    // this.props.getBankItems(bank);
+    this.props.getAssessments(bank.id);
+    // this.props.getItems(bank.id);
   }
 
   render() {
@@ -48,11 +51,15 @@ export class BankNavigator extends React.Component {
         />
         <BankList
           banks={this.props.banks}
-          getBankChildren={id => this.getBankChildren(id)}
+          getBankChildren={bank => this.getBankChildren(bank)}
         />
       </div>
     );
   }
 }
 
-export default connect(select, BankActions)(BankNavigator);
+export default connect(select, {
+  ...BankActions,
+  ...AssessmentActions,
+  ...ItemActions
+})(BankNavigator);

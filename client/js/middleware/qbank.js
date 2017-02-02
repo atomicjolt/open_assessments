@@ -11,9 +11,9 @@ const qbank = {
     url    : () => 'https://4h8n6sg95j.execute-api.us-east-1.amazonaws.com/dev/proxy',
   },
 
-  [BankConstants.GET_ASSESSMENTS]: {
+  [AssessmentConstants.GET_ASSESSMENTS]: {
     method : Network.GET,
-    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bank.id}/assessments`,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments`,
   },
 
   [AssessmentConstants.CREATE_ASSESSMENT]: {
@@ -33,7 +33,7 @@ const qbank = {
 
   [ItemConstants.GET_ITEMS]: {
     method : Network.GET,
-    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bank.id}/items`,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items`,
   },
 };
 

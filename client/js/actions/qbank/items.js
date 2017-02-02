@@ -11,7 +11,7 @@ const requests = [
 
 export const Constants = wrapper(actions, requests);
 
-export function getBankItems(bank) {
+export function getItems(bank) {
   return {
     bank,
     apiCall : true,
