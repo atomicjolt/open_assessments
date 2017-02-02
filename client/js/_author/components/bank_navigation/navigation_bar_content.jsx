@@ -77,7 +77,6 @@ export default function navigationBarContent(props) {
 
 navigationBarContent.propTypes = {
   path              : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
-  updatePath        : React.PropTypes.func.isRequired,
   createAssessment  : React.PropTypes.func.isRequired,
   currentBankId     : React.PropTypes.string,
 };

@@ -6,11 +6,8 @@ import { colors, buttonStyle }  from '../../defines';
 export default class BankListItem extends React.Component {
   static propTypes = {
     bank: React.PropTypes.shape({
-      displayName: React.PropTypes.shape({
-        text: React.PropTypes.string,
-      }),
-      type  : React.PropTypes.string.isRequired,
-      id    : React.PropTypes.string.isRequired,
+      displayName : React.PropTypes.shape({}),
+      type        : React.PropTypes.string.isRequired,
     }).isRequired,
     getBankChildren: React.PropTypes.func.isRequired,
   };
