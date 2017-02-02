@@ -1,11 +1,6 @@
-import api                              from "./api";
-import Network                          from "../constants/network";
-import Helper                           from "../../specs_support/helper";
-import * as AssessmentActions           from "../actions/assessment";
-import * as AssessmentMetaActions       from "../actions/assessment_meta";
-import * as AssessmentProgressActions   from "../actions/assessment_progress";
-import * as CommunicationsActions       from "../actions/communications";
-import * as JwtActions                  from "../actions/jwt";
+import api     from './api';
+import Network from '../constants/network';
+import Helper  from '../../specs_support/helper';
 
 describe('api middleware', () => {
   Helper.stubAjax();
@@ -43,45 +38,13 @@ describe('api middleware', () => {
 
   it('calls the api library', () => {
     const action = {
-      type: 'TEST',
-      method: Network.GET,
-      url: 'http://www.example.com/api/stuff.json',
+      type    : 'TEST',
+      method  : Network.GET,
+      url     : 'http://www.example.com/api/stuff.json',
     };
     const middleware = api(Helper.makeStore());
     const nextHandler = () => {};
     const actionHandler = middleware(nextHandler);
     actionHandler(action);
-  });
-
-  it("throws an exception if the constant isn't handled", () => {
-    const middleware = api(Helper.makeStore());
-    const nextHandler = () => {};
-    const actionHandler = middleware(nextHandler);
-    const actionType = "NOT_HANDLED";
-    const action = {
-      type: actionType,
-      apiCall: true
-    };
-    expect(() => { actionHandler(action); }).toThrow(`No handler implemented for ${actionType}`);
-  });
-
-  it("handles known actions", () => {
-    const middleware = api(Helper.makeStore());
-    const nextHandler = () => {};
-    const actionHandler = middleware(nextHandler);
-    const actions = {
-      ...JwtActions,
-      ...AssessmentActions,
-      ...AssessmentMetaActions,
-      ...AssessmentProgressActions,
-      ...CommunicationsActions
-    };
-    const apiActions = _.filter(actions, _.isFunction);
-    _.each(apiActions, (func) => {
-      const action = func();
-      if(action.apiCall){
-        actionHandler(action);
-      }
-    });
   });
 });
