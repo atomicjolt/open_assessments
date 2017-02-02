@@ -1,6 +1,6 @@
 import React        from 'react';
-import assets      from '../../../libs/assets';
-import { colors }  from '../../defines';
+import assets       from '../../../libs/assets';
+import { colors }   from '../../defines';
 
 export default function heading() {
   const styles = {
