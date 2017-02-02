@@ -38,6 +38,14 @@ export class BankNavigator extends React.Component {
     currentBankId      : React.PropTypes.string,
   };
 
+  constructor() {
+    super();
+    this.state = {
+      sortName      : null,
+      sortPublished : null,
+    };
+  }
+
   componentWillMount() {
     this.props.getBanks();
   }
@@ -46,6 +54,43 @@ export class BankNavigator extends React.Component {
     this.props.updatePath(bank.id, bank.displayName.text);
     this.props.getAssessments(bank.id);
     this.props.getItems(bank.id);
+  }
+
+  sortByName() {
+    const { sortName } = this.state;
+    if (!sortName) {
+      this.setState({ sortName: 'asc' });
+    } else if (sortName === 'asc') {
+      this.setState({ sortName: 'desc' });
+    } else {
+      this.setState({ sortName: null });
+    }
+  }
+
+  sortByPublished() {
+    const { sortPublished } = this.state;
+    if (!sortPublished) {
+      this.setState({ sortPublished: 'asc' });
+    } else if (sortPublished === 'asc') {
+      this.setState({ sortPublished: 'desc' });
+    } else {
+      this.setState({ sortPublished: null });
+    }
+  }
+
+  sortBanks() {
+    const { sortName, sortPublished } = this.state;
+    if (!sortName && !sortPublished) { return this.props.banks; }
+
+    let sortedBanks = this.props.banks;
+    if (sortName) {
+      sortedBanks = _.orderBy(sortedBanks, bank => bank.displayName.text, sortName);
+    }
+    if (sortPublished) {
+      sortedBanks = _.orderBy(sortedBanks, bank => _.find(bank.assignedBankIds, { id: 'the publishedBankId' }), sortPublished);
+    }
+
+    return sortedBanks;
   }
 
   render() {
@@ -59,8 +104,12 @@ export class BankNavigator extends React.Component {
           updatePath={this.props.updatePath}
         />
         <BankList
-          banks={this.props.banks}
+          banks={this.sortBanks()}
           getBankChildren={bank => this.getBankChildren(bank)}
+          sortByName={() => this.sortByName()}
+          sortByPublished={() => this.sortByPublished()}
+          sortName={this.state.sortName}
+          sortPublished={this.state.sortPublished}
         />
       </div>
     );

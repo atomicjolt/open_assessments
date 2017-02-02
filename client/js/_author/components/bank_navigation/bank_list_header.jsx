@@ -2,7 +2,7 @@ import React        from 'react';
 import { colors }   from '../../defines';
 import SortButton   from './sort_button';
 
-export default function (props) {
+export default function bankListHeader(props) {
   const styles = {
     bar: {
       backgroundColor : colors.lightBackground,
@@ -31,12 +31,25 @@ export default function (props) {
     <div style={styles.bar}>
       <div style={styles.name}>
         <div style={styles.title}>Name</div>
-        <SortButton />
+        <SortButton
+          sort={props.sortByName}
+          order={props.sortName}
+        />
       </div>
       <div style={styles.publish}>
         <div style={styles.title}>Publish</div>
-        <SortButton />
+        <SortButton
+          sort={props.sortByPublished}
+          order={props.sortPublished}
+        />
       </div>
     </div>
   );
 }
+
+bankListHeader.propTypes = {
+  sortByName      : React.PropTypes.func.isRequired,
+  sortByPublished : React.PropTypes.func.isRequired,
+  sortName        : React.PropTypes.string,
+  sortPublished   : React.PropTypes.string,
+};

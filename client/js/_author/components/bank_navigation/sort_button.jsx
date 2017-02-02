@@ -2,20 +2,25 @@ import React      from 'react';
 import { colors } from '../../defines';
 
 export default function sortButton(props) {
+  console.log(props.order);
   const styles = {
     button: {
       display : 'inline-block',
       width   : '30px',
       padding : '10px',
       color   : colors.grey,
+      cursor  : 'pointer',
+      outline : 'none',
     },
     top: {
       position : 'absolute',
       top      : '6px',
+      color    : props.order === 'desc' ? colors.textGrey : '',
     },
     bottom: {
       position : 'absolute',
       bottom   : '6px',
+      color    : props.order === 'asc' ? colors.textGrey : '',
     }
   };
 
@@ -38,5 +43,6 @@ export default function sortButton(props) {
 }
 
 sortButton.propTypes = {
-  sort: React.PropTypes.func.isRequired,
+  sort  : React.PropTypes.func.isRequired,
+  order : React.PropTypes.string,
 };

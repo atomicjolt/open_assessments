@@ -19,7 +19,12 @@ export default function bankList(props) {
 
   return (
     <div style={styles.container}>
-      <Header />
+      <Header
+        sortByName={props.sortByName}
+        sortByPublished={props.sortByPublished}
+        sortName={props.sortName}
+        sortPublished={props.sortPublished}
+      />
       {
         _.map(props.banks, bank => (
           <Item
@@ -38,5 +43,9 @@ bankList.propTypes = {
     React.PropTypes.arrayOf(React.PropTypes.shape({})),
     React.PropTypes.shape({})
   ]).isRequired,
-  getBankChildren: React.PropTypes.func.isRequired,
+  getBankChildren : React.PropTypes.func.isRequired,
+  sortByName      : React.PropTypes.func.isRequired,
+  sortByPublished : React.PropTypes.func.isRequired,
+  sortName        : React.PropTypes.string,
+  sortPublished   : React.PropTypes.string,
 };
