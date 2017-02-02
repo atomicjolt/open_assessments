@@ -34,6 +34,7 @@ export class BankNavigator extends React.Component {
     getBanks           : React.PropTypes.func.isRequired,
     getAssessments     : React.PropTypes.func.isRequired,
     getItems           : React.PropTypes.func.isRequired,
+    createAssessment   : React.PropTypes.func.isRequired,
     currentBankId      : React.PropTypes.string,
   };
 
@@ -53,6 +54,7 @@ export class BankNavigator extends React.Component {
         <NavBar
           view="banks"
           path={this.props.path}
+          createAssessment={this.props.createAssessment}
           currentBankId={this.props.currentBankId}
           updatePath={this.props.updatePath}
         />
