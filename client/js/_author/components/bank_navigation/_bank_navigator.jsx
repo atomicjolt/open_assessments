@@ -57,7 +57,6 @@ export class BankNavigator extends React.Component {
   }
 
   sortBy(type) {
-    console.log(type, this.state);
     const sortVal = this.state[type];
     if (!sortVal) {
       this.setState({ [type]: 'asc' });
