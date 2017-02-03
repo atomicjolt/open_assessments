@@ -21,10 +21,10 @@ describe('recorder timer', () => {
     it('starts timer', () => {
       result.handleTimerCount();
       expect(result.state).toEqual({
-        minsCt: 0,
-        secsCt: 0,
-        secsStringCt: '00',
-        prcntCt: 0
+        minsCt       : 0,
+        secsCt       : 0,
+        secsStringCt : '00',
+        prcntCt      : 0
       });
     });
 
@@ -32,89 +32,89 @@ describe('recorder timer', () => {
       result.clearTimerCount();
 
       expect(result.state).toEqual({
-        minsCt: 0,
-        secsCt: 0,
-        secsStringCt: '00',
-        prcntCt: 0
+        minsCt       : 0,
+        secsCt       : 0,
+        secsStringCt : '00',
+        prcntCt      : 0
       });
     });
   });
 
   describe('count secs', () => {
-    let secsCt = 8;
+    let secCt = 8;
     it('counts from 08 to 09 as a string', () => {
       result.setState(
         {
-          minsCt: 0,
-          secsCt: secsCt,
-          secsStringCt: '0' + secsCt + 1,
-          prcntCt: result.state.prcntCt,
+          minsCt       : 0,
+          secsCt       : secCt,
+          secsStringCt : '0' + (secCt + 1),
+          prcntCt      : result.state.prcntCt,
         }
       );
-      result.tick(secsCt);
+      result.tick(secCt);
       expect(result.state).toEqual({
-        minsCt: 0,
-        secsCt: 9,
-        secsStringCt: '09',
-        prcntCt: result.state.prcntCt
+        minsCt       : 0,
+        secsCt       : 9,
+        secsStringCt : '09',
+        prcntCt      : result.state.prcntCt
       });
     });
     it('counts from 09 to 10, going from string back to number', () => {
-      secsCt = 9;
+      secCt = 9;
       result.setState(
         {
-          minsCt: 0,
-          secsCt: secsCt,
-          secsStringCt: '0' + secsCt + 1,
-          prcntCt: result.state.prcntCt,
+          minsCt       : 0,
+          secsCt       : secCt,
+          secsStringCt : '0' + (secCt + 1),
+          prcntCt      : result.state.prcntCt,
         }
       );
-      result.tick(secsCt);
+      result.tick(secCt);
       expect(result.state).toEqual({
-        minsCt: 0,
-        secsCt: 10,
-        secsStringCt: 10,
-        prcntCt: result.state.prcntCt
+        minsCt       : 0,
+        secsCt       : 10,
+        secsStringCt : 10,
+        prcntCt      : result.state.prcntCt
       });
     });
     it('counts from 59 to 00, going from number back to string', () => {
-      secsCt = 59;
+      secCt = 59;
       result.setState(
         {
-          minsCt: 0,
-          secsCt: secsCt,
-          secsStringCt: '59',
-          prcntCt: result.state.prcntCt,
+          minsCt       : 0,
+          secsCt       : secCt,
+          secsStringCt : '59',
+          prcntCt      : result.state.prcntCt,
         }
       );
-      result.tick(secsCt);
+      result.tick(secCt);
       expect(result.state).toEqual({
-        minsCt: 1,
-        secsCt: 0,
-        secsStringCt: '00',
-        prcntCt: result.state.prcntCt
+        minsCt       : 1,
+        secsCt       : 0,
+        secsStringCt : '00',
+        prcntCt      : result.state.prcntCt
       });
     });
   });
 
   describe('calc percentage', () => {
-    let secsCt = 49;
-    let prcntCt = 49;
+    const secCt = 49;
+    const prctCt = 49;
     it('calculates the percent', () => {
       result.setState(
         {
-          minsCt: 0,
-          secsCt: secsCt,
-          secsStringCt: 49,
-          prcntCt: prcntCt,
+          minsCt       : 0,
+          secsCt       : secCt,
+          secsStringCt : 49,
+          prcntCt      : prctCt,
         }
       );
-      result.tick(secsCt);
+      result.tick(secCt);
       expect(result.state).toEqual({
-        minsCt: 0,
-        secsCt: 50,
-        secsStringCt: 50,
-        prcntCt: 50
+        minsCt       : 0,
+        secsCt       : 50,
+        secsStringCt : 50,
+        prcntCt      : 50
       });
     });
   });

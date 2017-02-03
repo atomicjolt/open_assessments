@@ -10,10 +10,10 @@ class RecorderTimer extends React.Component {
   constructor() {
     super();
     this.state = {
-      minsCt: 0,
-      secsCt: 0,
-      secsStringCt: '00',
-      prcntCt: 0
+      minsCt       : 0,
+      secsCt       : 0,
+      secsStringCt : '00',
+      prcntCt      : 0
     };
   }
 
@@ -32,19 +32,19 @@ class RecorderTimer extends React.Component {
 
     if (this.state.secsCt < 9) {
       this.setState(prevState => ({
-        secsCt: prevState.secsCt + 1,
-        secsStringCt: '0' + (prevState.secsCt + 1),
+        secsCt       : prevState.secsCt + 1,
+        secsStringCt : '0' + (prevState.secsCt + 1),
       }));
     } else if (this.state.secsCt === 59) {
-      this.setState(prevState => ({
-        minsCt: 1,
-        secsCt: 0,
-        secsStringCt: '00',
-      }));
+      this.setState({
+        minsCt       : 1,
+        secsCt       : 0,
+        secsStringCt : '00',
+      });
     } else {
       this.setState(prevState => ({
-        secsCt: prevState.secsCt + 1,
-        secsStringCt: prevState.secsCt + 1,
+        secsCt       : prevState.secsCt + 1,
+        secsStringCt : prevState.secsCt + 1,
       }));
     }
   }
@@ -57,10 +57,10 @@ class RecorderTimer extends React.Component {
     clearInterval(this.interval);
     this.setState(
       {
-        minsCt: 0,
-        secsCt: 0,
-        secsStringCt: '00',
-        prcntCt: 0,
+        minsCt       : 0,
+        secsCt       : 0,
+        secsStringCt : '00',
+        prcntCt      : 0,
       }
       );
   };
