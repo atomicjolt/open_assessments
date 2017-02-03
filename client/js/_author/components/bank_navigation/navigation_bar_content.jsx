@@ -2,8 +2,6 @@ import React                    from 'react';
 import _                        from 'lodash';
 import { colors, buttonStyle }  from '../../defines';
 import Breadcrumb               from './breadcrumb';
-import history                  from '../../history';
-
 
 export default function navigationBarContent(props) {
   const styles = {
@@ -35,8 +33,6 @@ export default function navigationBarContent(props) {
     },
   };
 
-// TODO: make this into some sort of external component/modal to get information
-
   return (
     <div>
       <i
@@ -64,7 +60,6 @@ export default function navigationBarContent(props) {
         <span style={styles.spacer} />
         <button
           style={{ ...buttonStyle, ...styles.button }}
-          onClick={() =>  history.push(`new_assessment/${props.currentBankId}`)}
         >
         NEW
         </button>
@@ -75,6 +70,5 @@ export default function navigationBarContent(props) {
 
 navigationBarContent.propTypes = {
   path              : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
-  // createAssessment  : React.PropTypes.func.isRequired,
   currentBankId     : React.PropTypes.string,
 };

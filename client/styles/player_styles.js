@@ -1,4 +1,4 @@
 // This file exists to compile all css - less and scss - into one file
-require('./styles.less');
-require('./styles.scss');
+require('./_player/styles.less');
+require('./_player/styles.scss');
 require('../assets/styles/style.css');
