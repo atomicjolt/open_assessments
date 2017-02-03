@@ -4,4 +4,4 @@
 build/*
 !build/index.js
 
-client/styles/*
+client/styles/**/*
