@@ -120,9 +120,9 @@
 }
 
 .c-answer-container__content {
+  @include regular;
   width: 100%;
   padding-left: 3rem;
-  @include regular;
   font-size: 1.4rem;
   color: $answer-text;
 
@@ -142,13 +142,13 @@
 
 .c-record {
   @include display-flex;
-  padding: 2rem 3rem 1rem;
   @include align-items(center);
+  padding: 2rem 3rem 1rem;
 }
 
 .c-audio-holder {
   @include flex(1);
-  padding: .5rem 1.14rem .65rem 0;
+  padding: 0.5rem 1.14rem 0.65rem 0;
   margin-left: 1rem;
 
   audio {
@@ -158,7 +158,7 @@
 
 .c-audio-timer {
   @include light;
-  padding: .08rem 1.14rem .1rem 0;
+  padding: 0.08rem 1.14rem 0.1rem 0;
   color: #5a5a5a;
   font-size: 2.2rem;
 
@@ -186,10 +186,10 @@
   }
 
   span {
+    @include transition(all 0.1s ease);
     padding-left: 1.7rem;
     color: $incorrect;
     position: relative;
-    @include transition(all 0.1s ease);
 
     &::before {
       content: "";
