@@ -1,5 +1,7 @@
 import React     from 'react';
+import _ from 'lodash';
 import Recorder, { RecorderCommands }  from './recorder';
+import RecorderTimer from './recorder_timer';
 
 class AudioUpload extends React.Component {
 
@@ -63,11 +65,14 @@ class AudioUpload extends React.Component {
   }
 
   render(){
+    let audioEl; // handle toggling between viewing Recorder Timer and audio element
     if(this.state.recorder == RecorderCommands.start){
       var buttonClass = "c-btn--stop";
       var buttonText = this.props.localizedStrings.stop;
+      audioEl = <RecorderTimer timeout={this.props.timeout} />;  // show Recorder Timer
     } else {
       var buttonText = this.props.localizedStrings.record;
+      audioEl = <audio src={this.state.audioURL} type="audio/wav" controls />; // show audio element
     }
     return (
       <div className="c-record">
@@ -76,7 +81,7 @@ class AudioUpload extends React.Component {
           className={`c-btn  c-btn--record ${buttonClass || ''}`}>
             <span>{buttonText}</span>
         </a>
-        <audio src={this.state.audioURL} type="audio/wav" controls />
+        <span className="c-audio-holder">{audioEl}</span>
         <Recorder
           command={this.state.recorder}
           onStop={(blob, stopTime) => this.onStop(blob, stopTime)} />
