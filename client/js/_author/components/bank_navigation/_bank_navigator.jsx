@@ -9,7 +9,7 @@ import BankList               from './bank_list';
 
 function select(state) {
   const path = state.bankNavigation.location;
-  const currentBankId = path.length ? path[path.length - 1].id : null;
+  const currentBankId = !_.isEmpty(path) ? _.last(path).id : null;
   let banks = state.banks;
 
   _.forEach(path, (folder) => {
@@ -56,25 +56,15 @@ export class BankNavigator extends React.Component {
     this.props.getItems(bank.id);
   }
 
-  sortByName() {
-    const { sortName } = this.state;
-    if (!sortName) {
-      this.setState({ sortName: 'asc' });
-    } else if (sortName === 'asc') {
-      this.setState({ sortName: 'desc' });
+  sortBy(type) {
+    console.log(type, this.state);
+    const sortVal = this.state[type];
+    if (!sortVal) {
+      this.setState({ [type]: 'asc' });
+    } else if (sortVal === 'asc') {
+      this.setState({ [type]: 'desc' });
     } else {
-      this.setState({ sortName: null });
-    }
-  }
-
-  sortByPublished() {
-    const { sortPublished } = this.state;
-    if (!sortPublished) {
-      this.setState({ sortPublished: 'asc' });
-    } else if (sortPublished === 'asc') {
-      this.setState({ sortPublished: 'desc' });
-    } else {
-      this.setState({ sortPublished: null });
+      this.setState({ [type]: null });
     }
   }
 
@@ -106,8 +96,7 @@ export class BankNavigator extends React.Component {
         <BankList
           banks={this.sortBanks()}
           getBankChildren={bank => this.getBankChildren(bank)}
-          sortByName={() => this.sortByName()}
-          sortByPublished={() => this.sortByPublished()}
+          sortBy={type => this.sortBy(type)}
           sortName={this.state.sortName}
           sortPublished={this.state.sortPublished}
         />

@@ -20,8 +20,7 @@ export default function bankList(props) {
   return (
     <div style={styles.container}>
       <Header
-        sortByName={props.sortByName}
-        sortByPublished={props.sortByPublished}
+        sortBy={props.sortBy}
         sortName={props.sortName}
         sortPublished={props.sortPublished}
       />
@@ -44,8 +43,7 @@ bankList.propTypes = {
     React.PropTypes.shape({})
   ]).isRequired,
   getBankChildren : React.PropTypes.func.isRequired,
-  sortByName      : React.PropTypes.func.isRequired,
-  sortByPublished : React.PropTypes.func.isRequired,
+  sortBy          : React.PropTypes.func.isRequired,
   sortName        : React.PropTypes.string,
   sortPublished   : React.PropTypes.string,
 };

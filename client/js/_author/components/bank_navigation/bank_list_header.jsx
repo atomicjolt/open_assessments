@@ -26,20 +26,19 @@ export default function bankListHeader(props) {
     },
   };
 
-  // TODO: Sorting
   return (
     <div style={styles.bar}>
       <div style={styles.name}>
         <div style={styles.title}>Name</div>
         <SortButton
-          sort={props.sortByName}
+          sort={() => props.sortBy('sortName')}
           order={props.sortName}
         />
       </div>
       <div style={styles.publish}>
         <div style={styles.title}>Publish</div>
         <SortButton
-          sort={props.sortByPublished}
+          sort={() => props.sortBy('sortPublished')}
           order={props.sortPublished}
         />
       </div>
@@ -48,8 +47,7 @@ export default function bankListHeader(props) {
 }
 
 bankListHeader.propTypes = {
-  sortByName      : React.PropTypes.func.isRequired,
-  sortByPublished : React.PropTypes.func.isRequired,
+  sortBy          : React.PropTypes.func.isRequired,
   sortName        : React.PropTypes.string,
   sortPublished   : React.PropTypes.string,
 };
