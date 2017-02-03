@@ -58,8 +58,8 @@
     margin: 0.2rem;
   }
 
-  input[type="radio"]:checked + .c-radio-button__border:before {
-    content: '';
+  input[type="radio"]:checked + .c-radio-button__border::before {
+    content: "";
     width: .7rem;
     height: .7rem;
     background: $radio-selected;
@@ -94,7 +94,7 @@
     margin: 0.2rem;
   }
 
-  input[type="checkbox"]:checked + .c-checkbox__border:before {
+  input[type="checkbox"]:checked + .c-checkbox__border::before {
     content: '';
     width: 0.3rem;
     height: 0.8rem;
@@ -169,16 +169,17 @@
 }
 
 .c-btn--record {
+  @include transition(all 0.1s ease);
   border-color: $incorrect;
   width: 10.5rem;
-  @include transition(all 0.1s ease);
 
   &:hover {
     background: $incorrect;
 
     span {
       color: $white;
-      &:before {
+
+      &::before {
         background: $white;
       }
     }
@@ -190,8 +191,8 @@
     position: relative;
     @include transition(all 0.1s ease);
 
-    &:before {
-      content: '';
+    &::before {
+      content: "";
       position: absolute;
       left: -0.5rem;
       top: 0.9rem;
@@ -205,16 +206,19 @@
   &.c-btn--stop {
     span {
       color: $white;
-      &:before {
+
+      &::before {
         background: $white;
       }
     }
     background: $incorrect;
-    span:before {
+
+    span::before {
       animation: blink 2s linear infinite;
       -webkit-animation: blink 2s linear infinite;
     }
   }
+
   &.c-btn--stop:active {
     background: darken($incorrect, 15%);
     border-color: darken($incorrect, 15%);
@@ -225,9 +229,11 @@
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
