@@ -144,10 +144,27 @@
     padding: 2rem 3rem 1rem;
     @include display-flex;
     @include align-items(center);
+  }
+
+  .c-audio-holder{
+    padding: .5rem 1.14rem .65rem 0;
+    @include flex(1);
+    margin-left: 1rem;
 
     audio{
-      @include flex(1);
-      margin-left: 1rem;
+      width: 100%;
+    }
+  }
+
+  .c-audio-timer{
+    padding: .08rem 1.14rem .1rem 0;
+    @include light;
+    color: #5a5a5a;
+    font-size: 2.2rem;
+
+    small{
+      @include regular;
+      font-size: 1.3rem;
     }
   }
 
