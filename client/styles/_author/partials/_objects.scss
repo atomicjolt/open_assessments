@@ -1,0 +1,27 @@
+.o-contain{
+  max-width: 100rem;
+  margin: 0 auto;
+}
+
+.o-item{
+  margin-top: 2rem;
+  background-color: $white;
+  box-shadow: 0 0 0.6rem rgba(0,0,0,0.15);
+}
+
+  .o-item__top{
+    height: 5rem;
+    padding: 0 2.5rem;
+    background-color: $gray1;
+    border-bottom: 0.1rem solid $gray3;
+    @include display-flex;
+    @include align-items(center);
+    @include justify-content(space-between);
+    @include semi-bold;
+    font-size: 1.2rem;
+  }
+
+  .o-right, .o-left{
+    @include display-flex;
+    @include align-items(center);
+  }

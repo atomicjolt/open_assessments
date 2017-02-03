@@ -1,0 +1,35 @@
+.c-header{
+  background: $white;
+  box-shadow: 0 0.3rem 0.6rem rgba(0,0,0,0.15);
+}
+
+  .c-header-top{
+    height: 6rem;
+    background: $white;
+    padding: 0 2rem;
+    @include display-flex;
+    @include align-items(center);
+  }
+
+    .c-logo{
+      height: 3.4rem;
+    }
+
+  .c-header-bottom{
+    height: 5rem;
+    border-top: $border;
+    padding: 0 2rem;
+    background-color: $gray1;
+    @include display-flex;
+    @include align-items(center);
+    @include justify-content(space-between);
+  }
+
+    .c-header-bottom__left{
+
+    }
+
+    .c-header-bottom__right{
+      @include display-flex;
+      @include align-items(center);
+    }

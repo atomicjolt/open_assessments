@@ -53,7 +53,8 @@ module.exports = {
   },
 
   cssEntries: {
-    styles: `${clientAppPath}styles/styles.js`
+    styles        : `${clientAppPath}styles/player_styles.js`,
+    author_styles : `${clientAppPath}styles/author_styles.js`
   }
 
 };
