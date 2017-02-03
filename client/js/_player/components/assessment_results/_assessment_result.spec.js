@@ -39,7 +39,7 @@ describe('assessment result', function() {
 
   });
 
-  it('renders the assessment result', function(){
+  xit('renders the assessment result', function(){
     expect(ReactDOM.findDOMNode(result)).toBeDefined();
     var content = ReactDOM.findDOMNode(result).innerText;
     expect(content.length > 0).toBe(true);
