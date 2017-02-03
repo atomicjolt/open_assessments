@@ -1,7 +1,7 @@
-import api                      from "./api";
-import Network                  from "../constants/network";
-import Helper                   from '../../specs_support/helper';
-import { Constants as AssessmentConstants } from "../actions/assessment";
+import api                      from './api';
+import Network                  from '../../constants/network';
+import Helper                   from '../../../specs_support/helper';
+import { Constants as AssessmentConstants } from '../actions/assessment';
 
 describe('assessment loader middleware', function() {
 

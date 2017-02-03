@@ -2,7 +2,7 @@ import React                                        from 'react';
 import ReactDOM                                     from 'react-dom';
 import TestUtils                                    from 'react-addons-test-utils';
 
-import wrapInDndContext                              from '../../../../specs_support/dnd_wrapper';
+import wrapInDndContext                             from '../../../../../specs_support/dnd_wrapper';
 import { FillTheBlank }                             from './fill_the_blank';
 import { __RewireAPI__ as FillTheBlankRewireApi }   from './fill_the_blank';
 
