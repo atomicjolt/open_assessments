@@ -141,14 +141,14 @@
 }
 
 .c-record {
-  padding: 2rem 3rem 1rem;
   @include display-flex;
+  padding: 2rem 3rem 1rem;
   @include align-items(center);
 }
 
 .c-audio-holder {
-  padding: .5rem 1.14rem .65rem 0;
   @include flex(1);
+  padding: .5rem 1.14rem .65rem 0;
   margin-left: 1rem;
 
   audio {
