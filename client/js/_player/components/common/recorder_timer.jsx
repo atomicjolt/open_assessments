@@ -33,7 +33,7 @@ class RecorderTimer extends React.Component {
     if (this.state.secsCt < 9) {
       this.setState(prevState => ({
         secsCt       : prevState.secsCt + 1,
-        secsStringCt : '0' + (prevState.secsCt + 1),
+        secsStringCt : `0${prevState.secsCt + 1}`,
       }));
     } else if (this.state.secsCt === 59) {
       this.setState({

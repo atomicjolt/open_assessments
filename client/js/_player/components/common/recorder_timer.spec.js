@@ -47,7 +47,7 @@ describe('recorder timer', () => {
         {
           minsCt       : 0,
           secsCt       : secCt,
-          secsStringCt : '0' + (secCt + 1),
+          secsStringCt : `0${secCt + 1}`,
           prcntCt      : result.state.prcntCt,
         }
       );
@@ -65,7 +65,7 @@ describe('recorder timer', () => {
         {
           minsCt       : 0,
           secsCt       : secCt,
-          secsStringCt : '0' + (secCt + 1),
+          secsStringCt : `0${secCt + 1}`,
           prcntCt      : result.state.prcntCt,
         }
       );

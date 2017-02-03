@@ -157,8 +157,8 @@
 }
 
 .c-audio-timer {
-  padding: .08rem 1.14rem .1rem 0;
   @include light;
+  padding: .08rem 1.14rem .1rem 0;
   color: #5a5a5a;
   font-size: 2.2rem;
 
@@ -243,13 +243,13 @@
   padding: 2rem 3rem 1rem;
 
   textarea {
+    @include regular;
     border: 0.1rem solid $light-gray;
     border-radius: $radius;
     // min-height: 10rem;
     width: 100%;
     resize: none;
     padding: 0.5rem 1rem;
-    @include regular;
     font-size: 1.4rem;
     color: $text-color;
   }
