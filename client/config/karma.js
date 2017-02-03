@@ -20,6 +20,11 @@ module.exports = () => {
     files: [
       './specs_support/mocks/*.js',
       './specs_support/spec_helper.js',
+
+      // fixtures
+      { pattern: './specs_support/**/*.json', watched: true, served: true, included: false },
+      { pattern: './specs_support/**/*.xml', watched: true, served: true, included: false },
+
       // Use webpack to build each test individually. If changed here, change in preprocessors
       // './js/**/*.spec.js'
       './webpack.tests.js',          // More performant but tests cannot be run individually
