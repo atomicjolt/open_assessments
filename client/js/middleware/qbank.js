@@ -1,31 +1,39 @@
 import Network                                          from '../constants/network';
 import server                                           from './server';
 import { Constants as BankConstants }                   from '../actions/qbank/banks';
+import { Constants as AssessmentConstants }             from '../actions/qbank/assessments';
+import { Constants as ItemConstants }                   from '../actions/qbank/items';
 
+// TODO: extract out the https://qbank-clix-dev.mit.edu bit
 const qbank = {
-  [BankConstants.GET_BANKS]: {
+  [BankConstants.GET_BANKS_HIERARCHY]: {
     method : Network.GET,
-    url    : () => 'https://qbank-clix-dev.mit.edu/api/v1/assessment/banks',
+    url    : () => 'https://4h8n6sg95j.execute-api.us-east-1.amazonaws.com/dev/proxy',
   },
 
-  [BankConstants.GET_ASSESSMENTS]: {
+  [AssessmentConstants.GET_ASSESSMENTS]: {
     method : Network.GET,
-    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments`,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments?isolated`,
   },
 
-  [BankConstants.CREATE_ASSESSMENT]: {
+  [AssessmentConstants.CREATE_ASSESSMENT]: {
     method : Network.POST,
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments`,
   },
 
-  [BankConstants.DELETE_ASSESSMENT]: {
+  [AssessmentConstants.DELETE_ASSESSMENT]: {
     method : Network.DEL,
-    url    : action => `/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}`,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}`,
   },
 
-  [BankConstants.PUBLISH_ASSESSMENT]: {
+  [AssessmentConstants.PUBLISH_ASSESSMENT]: {
     method : Network.POST,
-    url    : action => `/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedBankIds`,
+    url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedBankIds`,
+  },
+
+  [ItemConstants.GET_ITEMS]: {
+    method : Network.GET,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items`,
   },
 };
 
