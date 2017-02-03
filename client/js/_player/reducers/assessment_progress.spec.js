@@ -1,8 +1,7 @@
-import Immutable                            from "immutable";
+import Immutable                            from 'immutable';
 
-import { Constants as AssessmentConstants } from "../actions/assessment_progress";
-import { parse }                            from '../parsers/assessment';
-import assessmentProgress                   from "./assessment_progress";
+import { Constants as AssessmentConstants } from '../actions/assessment_progress';
+import assessmentProgress                   from './assessment_progress';
 
 describe('assessment reducer', () => {
 
