@@ -1,4 +1,4 @@
-import { Constants as JwtConstants } from '../actions/jwt';
+import { Constants as JwtConstants } from '../../actions/jwt';
 import jwt                           from './jwt';
 
 describe('jwt reducer', () => {

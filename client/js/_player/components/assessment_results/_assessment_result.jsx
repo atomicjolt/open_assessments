@@ -64,18 +64,19 @@ export class AssessmentResult extends React.Component {
         context={this.context}
       />;
     } else {
-      return <SummativeResult
-        settings={this.props.settings}
-        assessmentResult={this.props.assessmentResult}
-        assessment={this.props.assessment}
-        questionResponses={this.props.questionResponses}
-        questions={this.props.questions}
-        timeSpent={this.props.timeSpent}
-        isSummative={this.isSummative()}
-        outcomes={this.props.outcomes}
-        showPostMessageNavigation={this.props.settings.showPostMessageNavigation}
-        navigateHome={() => { this.props.navigateHome() }}
-      />;
+      // return <SummativeResult
+      //   settings={this.props.settings}
+      //   assessmentResult={this.props.assessmentResult}
+      //   assessment={this.props.assessment}
+      //   questionResponses={this.props.questionResponses}
+      //   questions={this.props.questions}
+      //   timeSpent={this.props.timeSpent}
+      //   isSummative={this.isSummative()}
+      //   outcomes={this.props.outcomes}
+      //   showPostMessageNavigation={this.props.settings.showPostMessageNavigation}
+      //   navigateHome={() => { this.props.navigateHome() }}
+      // />;
+      return null;
     }
   }
 }
