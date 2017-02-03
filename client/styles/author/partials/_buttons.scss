@@ -1,0 +1,73 @@
+.c-btn{
+  border: none;
+  background: none;
+  @include bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: $radius;
+  @include display-flex;
+  @include align-items(center);
+  @include transition(all 0.1s ease);
+  outline: none;
+
+  &:active{
+    @include transform(scale(0.98));
+  }
+}
+
+.c-btn--sm{
+  height: 3rem;
+  padding: 0 2rem;
+
+  i{
+    margin-right: 0.8rem;
+    margin-left: -0.4rem;
+    font-size: 2rem;
+  }
+}
+
+.c-btn--md{
+
+}
+
+.c-btn--outline{
+  border: 0.2rem solid $maroon;
+  color: $maroon;
+
+  &:hover{
+    background-color: $maroon;
+    color: $white;
+  }
+}
+
+  .c-btn--back{
+    padding: 0 1.5rem;
+
+    i{
+      margin-right: 0.5rem;
+      margin-left: -1rem;
+    }
+  }
+
+.c-btn--green{
+  border: 0.2rem solid $green;
+  background-color: $green;
+  color: $white;
+
+  &:hover{
+    background-color: $white;
+    color: $green;
+  }
+}
+
+.c-btn--maroon{
+  border: 0.2rem solid $maroon;
+  background-color: $maroon;
+  color: $white;
+
+  &:hover{
+    background-color: $white;
+    color: $maroon;
+  }
+}
