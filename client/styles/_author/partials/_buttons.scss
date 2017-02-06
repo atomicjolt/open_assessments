@@ -144,7 +144,7 @@
     border: $border;
   }
 
-  &:last-of-type{
+  &.is-active{
     @include semi-bold;
     cursor: auto;
     pointer-events: none;

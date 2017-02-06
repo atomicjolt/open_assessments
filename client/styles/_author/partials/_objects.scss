@@ -42,3 +42,8 @@
 .o-flex-contain{
   @include display-flex;
 }
+
+.o-flex-center{
+  @include display-flex;
+  @include align-items(center);
+}
