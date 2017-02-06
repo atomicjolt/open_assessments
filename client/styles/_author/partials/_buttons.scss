@@ -8,7 +8,6 @@
   border-radius: $radius;
   @include display-flex;
   @include align-items(center);
-  @include transition(all 0.1s ease);
   outline: none;
 
   &:active{
@@ -28,12 +27,34 @@
 }
 
 .c-btn--md{
+  height: 4rem;
+  padding: 0 2rem;
+
+  i{
+    margin-right: 0.8rem;
+    margin-left: -0.4rem;
+    font-size: 2rem;
+  }
+}
+
+.c-btn--square{
+  height: 3rem;
+  width: 3rem;
+  text-align: center;
+
+  &:active{
+    @include transform(scale(0.96));
+  }
+}
+
+.c-btn--md{
 
 }
 
 .c-btn--outline{
   border: 0.2rem solid $maroon;
   color: $maroon;
+  @include transition(all 0.1s ease);
 
   &:hover{
     background-color: $maroon;
@@ -54,6 +75,7 @@
   border: 0.2rem solid $green;
   background-color: $green;
   color: $white;
+  @include transition(all 0.1s ease);
 
   &:hover{
     background-color: $white;
@@ -61,13 +83,91 @@
   }
 }
 
+.c-btn--gray{
+  border: 0.2rem solid $gray2;
+  background-color: $gray2;
+  color: $gray8;
+  @include transition(all 0.1s ease);
+
+  &:hover{
+    background-color: $white;
+    border-color: $gray4;
+    color: $text-color;
+  }
+}
+
+.c-btn--white{
+  border: 0.2rem solid $white;
+  background-color: $white;
+  color: $blue;
+  @include transition(all 0.1s ease);
+
+  &:hover{
+    background-color: transparent;
+    color: $white;
+  }
+}
+
 .c-btn--maroon{
   border: 0.2rem solid $maroon;
   background-color: $maroon;
   color: $white;
+  @include transition(all 0.1s ease);
 
   &:hover{
     background-color: $white;
     color: $maroon;
+  }
+}
+
+  .c-btn--new{
+    min-width: 15rem;
+    @include justify-content(center);
+  }
+
+.c-btn--breadcrumb{
+  text-transform: none;
+  font-size: 1.6rem;
+  @include regular;
+  color: $text-color;
+  border: 0.1rem solid transparent;
+  @include transition(all 0.1s ease);
+
+  i{
+    font-size: 2rem;
+    margin-right: 1rem;
+    color: $gray8;
+  }
+
+  &:hover{
+    background: $gray2;
+    border: $border;
+  }
+
+  &:last-of-type{
+    @include semi-bold;
+    cursor: auto;
+    pointer-events: none;
+  }
+}
+
+.c-btn--table{
+  background-color: $purple2;
+  margin-left: 1rem;
+  color: $white;
+  @include transition(all 0.1s ease);
+
+  i{
+    color: $white;
+    @include transition(color 0.1s ease);
+  }
+
+  &:hover{
+    background-color: $white;
+    color: $purple;
+
+    i{
+      color: $purple;
+    }
   }
 }
