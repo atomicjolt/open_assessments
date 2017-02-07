@@ -107,10 +107,12 @@ export default class BankListItem extends React.Component {
             <button style={{ ...buttonStyle, ...styles.button }}>
               <i className="material-icons">remove_red_eye</i>
             </button>
-            <button style={{ ...buttonStyle, ...styles.button }}>
+            <button
+              style={{ ...buttonStyle, ...styles.button }}
+              onClick={() => this.props.deleteAssessment(bank.bankId, bank.id)}
+            >
               <i className="material-icons">delete</i>
             </button>
-
           </div>
         </div>
       </div>

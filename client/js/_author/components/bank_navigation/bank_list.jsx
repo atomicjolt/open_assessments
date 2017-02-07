@@ -30,6 +30,7 @@ export default function bankList(props) {
             key={`bank_${bank.id}`}
             bank={bank}
             getBankChildren={props.getBankChildren}
+            deleteAssessment={props.deleteAssessment}
           />
         ))
       }
@@ -42,8 +43,9 @@ bankList.propTypes = {
     React.PropTypes.arrayOf(React.PropTypes.shape({})),
     React.PropTypes.shape({})
   ]).isRequired,
-  getBankChildren : React.PropTypes.func.isRequired,
-  sortBy          : React.PropTypes.func.isRequired,
-  sortName        : React.PropTypes.string,
-  sortPublished   : React.PropTypes.string,
+  getBankChildren  : React.PropTypes.func.isRequired,
+  sortBy           : React.PropTypes.func.isRequired,
+  sortName         : React.PropTypes.string,
+  sortPublished    : React.PropTypes.string,
+  deleteAssessment : React.PropTypes.func,
 };
