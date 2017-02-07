@@ -1,9 +1,8 @@
-import $                                    from "jquery";
-import Immutable                            from "immutable";
+import Immutable                            from 'immutable';
 
-import { Constants as AssessmentConstants } from "../actions/assessment";
-import { parse }                            from '../parsers/assessment';
-import assessment                           from "./assessment";
+import { Constants as AssessmentConstants } from '../actions/assessment';
+import { parse }                            from '../../parsers/assessment';
+import assessment                           from './assessment';
 
 describe('assessment reducer', () => {
 

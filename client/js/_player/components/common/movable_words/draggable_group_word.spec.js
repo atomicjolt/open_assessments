@@ -1,7 +1,7 @@
 import React                from 'react';
 import ReactDOM             from 'react-dom';
 import TestUtils            from 'react-addons-test-utils';
-import wrapInDndContext     from '../../../../specs_support/dnd_wrapper';
+import wrapInDndContext     from '../../../../../specs_support/dnd_wrapper';
 import DraggableGroupWord   from './draggable_group_word';
 
 describe('draggable group word', () => {

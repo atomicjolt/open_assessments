@@ -1,0 +1,202 @@
+
+
+.c-assessment-title{
+  padding: 3rem 2.5rem 4rem;
+}
+
+.c-question-settings{
+  display: none;
+  height: 5rem;
+  padding: 0 2.5rem;
+  border-bottom: $border;
+  @include align-items(center);
+  @include justify-content(space-between);
+}
+
+  .c-question__number{
+    color: $text-color;
+  }
+
+  .c-question__type{
+    color: $text-alt;
+  }
+
+.c-question-icons i{
+  display: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: $radius;
+  margin-left: 0.5rem;
+  text-align: center;
+  font-size: 2rem;
+  line-height: 3rem;
+  color: $gray9;
+  cursor: pointer;
+
+  &:hover{
+    color: $text-color;
+  }
+  &:active{
+    @include transform(scale(0.95));
+  }
+}
+
+.c-question{
+
+  &.is-active{
+    .c-question-settings{
+      @include display-flex;
+    }
+    .c-question-icons i{
+      display: inline-block;
+    }
+
+  }
+}
+
+  .c-question__content {
+    padding: 3rem 2.5rem 4rem;
+  }
+
+  .c-question__answers{
+    margin-top: 3rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .c-question__answers--maintain{
+    .c-answer{
+      padding-right: 13.5rem;
+    }
+  }
+
+    .c-answer{
+      padding: 0.75rem 5.5rem;
+      background: $white;
+      box-shadow: 0 0 0.6rem rgba(0,0,0,0.15);
+      min-height: 5rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+
+      &:hover{
+        .c-answer__icons .c-answer__icons__spacer:last-of-type i{
+          display: inline-block;
+        }
+
+        .c-input__bottom{
+          border-top: $border;
+        }
+      }
+
+      .c-answer__icons{
+        position: absolute;
+        width: 11rem;
+        height: 3rem;
+        right: -12rem;
+        top: 0.2rem;
+        cursor: pointer;
+
+        i{
+          display: none;
+          font-size: 3rem;
+          color: $gray8;
+
+          &:hover{
+            color: $blue;
+          }
+        }
+      }
+
+        .c-answer__icons__spacer{
+          width: 3rem;
+          height: 3rem;
+          margin-right: 1rem;
+          display: inline-block;
+
+          &:last-of-type{
+            margin: 0;
+            i{
+              color: $gray4;
+
+              &:hover{
+                color: $text-color;
+              }
+            }
+          }
+        }
+
+      .c-feedback{
+        display: none;
+      }
+
+      &.is-active{
+        .c-feedback{
+          @include display-flex;
+        }
+        .c-answer__icons i{
+          display: inline-block;
+        }
+      }
+    }
+
+    .c-answer--add{
+      box-shadow: none;
+      min-height: 5rem;
+      margin-bottom: 0;
+      border: 0.2rem dashed $gray3;
+      @include transition(background 0.1s ease, transform 0.1s ease);
+
+      &:hover{
+        background: $gray1;
+
+        .c-input__bottom{
+          border-color: $white;
+        }
+
+        .c-input .c-text-input{
+          color: $gray8;
+        }
+
+        .c-radio{
+
+          input[type="radio"] + label:before{
+            color: $gray8;
+          }
+        }
+
+        .c-checkbox{
+
+          input[type="checkbox"] + label:before{
+            color: $gray8;
+          }
+        }
+      }
+
+      &:active{
+        @include transform(scale(0.99));
+      }
+
+      .c-input{
+        pointer-events: none;
+
+        .c-text-input{
+          color: $gray4;
+          @include transition(color 0.1s ease);
+        }
+      }
+
+      .c-radio{
+
+        input[type="radio"] + label:before{
+          color: $gray3;
+          @include transition(color 0.1s ease);
+        }
+      }
+
+      .c-checkbox{
+
+        input[type="checkbox"] + label:before{
+          color: $gray3;
+          @include transition(color 0.1s ease);
+        }
+      }
+    }

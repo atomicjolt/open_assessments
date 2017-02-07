@@ -33,12 +33,6 @@ export default function navigationBarContent(props) {
     },
   };
 
-// TODO: make this into some sort of external component/modal to get information
-  const newAssessment = {
-    name        : 'Bens Brand New Assessment',
-    description : 'This is the description of this assessment. It exists because',
-  };
-
   return (
     <div>
       <i
@@ -66,7 +60,6 @@ export default function navigationBarContent(props) {
         <span style={styles.spacer} />
         <button
           style={{ ...buttonStyle, ...styles.button }}
-          onClick={() => props.createAssessment(props.currentBankId, newAssessment)}
         >
         NEW
         </button>
@@ -77,6 +70,5 @@ export default function navigationBarContent(props) {
 
 navigationBarContent.propTypes = {
   path              : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
-  createAssessment  : React.PropTypes.func.isRequired,
   currentBankId     : React.PropTypes.string,
 };
