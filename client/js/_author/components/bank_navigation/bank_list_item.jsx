@@ -54,6 +54,5 @@ export default function bankListItem(props) {
 bankListItem.propTypes = {
   bank: React.PropTypes.shape({
     displayName : React.PropTypes.shape({}),
-    type        : React.PropTypes.string,
   }).isRequired,
 };
