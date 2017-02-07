@@ -25,24 +25,43 @@ export default function bankListHeader(props) {
       width   : '35%',
     },
   };
+  //
+  // (
+  //   <div style={styles.bar}>
+  //     <div style={styles.name}>
+  //       <div style={styles.title}>Name</div>
+  //       <SortButton
+  //         sort={() => props.sortBy('sortName')}
+  //         order={props.sortName}
+  //       />
+  //     </div>
+  //     <div style={styles.publish}>
+  //       <div style={styles.title}>Publish</div>
+  //       <SortButton
+  //         sort={() => props.sortBy('sortPublished')}
+  //         order={props.sortPublished}
+  //       />
+  //     </div>
+  //   </div>
+  // );
 
   return (
-    <div style={styles.bar}>
-      <div style={styles.name}>
-        <div style={styles.title}>Name</div>
-        <SortButton
-          sort={() => props.sortBy('sortName')}
-          order={props.sortName}
-        />
-      </div>
-      <div style={styles.publish}>
-        <div style={styles.title}>Publish</div>
-        <SortButton
-          sort={() => props.sortBy('sortPublished')}
-          order={props.sortPublished}
-        />
-      </div>
-    </div>
+    <table className="c-table">
+      <thead>
+        <tr>
+          <th />
+          <th className="is-active">
+            <button onClick={() => props.sortBy('sortName')}>
+              Name
+              <i className="material-icons">keyboard_arrow_up</i>
+              <i className="material-icons">keyboard_arrow_down</i>
+            </button>
+          </th>
+          <th>Publish</th>
+          <th />
+        </tr>
+      </thead>
+    </table>
   );
 }
 
