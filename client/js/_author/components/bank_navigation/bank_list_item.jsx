@@ -42,9 +42,28 @@ export default function bankListItem(props) {
           <button className="c-btn c-btn--square c-btn--table">
             <i className="material-icons">remove_red_eye</i>
           </button>
-          <button className="c-btn c-btn--square c-btn--table">
+          <button
+            className="c-btn c-btn--square c-btn--table"
+            onClick={() => this.props.deleteAssessment(bank.bankId, bank.id)}
+          >
             <i className="material-icons">delete</i>
           </button>
+          <div style={{ ...styles.halves, ...styles.buttonContainer }}>
+            <button style={{ ...buttonStyle, ...styles.button, ...styles.embed }}>
+              EMBED CODE
+            </button>
+            <button style={{ ...buttonStyle, ...styles.button }}>
+              <i className="material-icons">mode_edit</i>
+            </button>
+            <button style={{ ...buttonStyle, ...styles.button }}>
+              <i className="material-icons">remove_red_eye</i>
+            </button>
+            <button
+              style={{ ...buttonStyle, ...styles.button }}
+            >
+              <i className="material-icons">delete</i>
+            </button>
+          </div>
         </div>
       </td>
     </tr>
