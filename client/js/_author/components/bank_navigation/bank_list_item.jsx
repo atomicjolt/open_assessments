@@ -1,6 +1,5 @@
 import React                    from 'react';
 import Icon                     from './bank_icon';
-import { colors, buttonStyle }  from '../../defines';
 
 // TODO: think about breaking this into smaller components
 export default class BankListItem extends React.Component {
@@ -12,53 +11,13 @@ export default class BankListItem extends React.Component {
     getBankChildren: React.PropTypes.func.isRequired,
   };
 
-  constructor() {
-    super();
-    this.state = { hovered: false };
-  }
-
   getStyles() {
-    const { hovered } = this.state;
     const isAssessment = this.props.bank.type === 'Assessment';
 
     return {
-      item: {
-        borderBottom    : `1px solid ${colors.accentGrey}`,
-        lineHeight      : '50px',
-        backgroundColor : hovered ? colors.accentPurple : '',
-        color           : hovered ? colors.white : '',
-      },
-      halves: {
-        display       : 'inline-block',
-        verticalAlign : 'top',
-        whiteSpace    : 'nowrap',
-      },
-      name: {
-        width         : '65%',
-        overflow      : 'hidden',
-        textOverflow  : 'ellipsis',
-        cursor        : 'pointer',
-      },
-      options: {
-        width: '35%',
-      },
-      publish: {
-        display         : isAssessment ? 'inline-block' : 'none',
-        color           : hovered ? colors.white : colors.grey,
-        backgroundColor : hovered ? colors.lightAccentPurple : colors.white,
-      },
       buttonContainer: {
-        float   : 'right',
-        display : hovered && isAssessment ? 'inline-block' : 'none',
-      },
-      button: {
-        backgroundColor : colors.lightAccentPurple,
-        verticalAlign   : 'middle',
-        margin          : '5px',
-      },
-      embed: {
-        padding: '9px 15px',
-      },
+        display: isAssessment ? '' : 'none',
+      }
     };
   }
 
@@ -76,44 +35,36 @@ export default class BankListItem extends React.Component {
     const { bank } = this.props;
 
     return (
-      <div
-        style={styles.item}
-        onMouseEnter={() => this.setState({ hovered: true })}
-        onMouseLeave={() => this.setState({ hovered: false })}
+      <tr
+        onClick={() => this.selectItem()}
+        tabIndex="0"
+        role="button"
+        aria-label={bank.displayName ? bank.displayName.text : 'bank item'}
       >
-        <div
-          style={{ ...styles.halves, ...styles.name }}
-          tabIndex="0"
-          role="button"
-          onClick={() => this.selectItem()}
-        >
-          <Icon type={bank.type} />
-          {bank.displayName ? bank.displayName.text : null}
-        </div>
-
-        <div style={{ ...styles.halves, ...styles.options }}>
-
-          <button style={{ ...buttonStyle, ...styles.publish }}>
-            <Icon type="Publish" />
+        <td><Icon type={bank.type} /></td>
+        <td>{bank.displayName ? bank.displayName.text : null}</td>
+        <td>
+          <button className="c-btn c-btn--square c-publish" style={styles.buttonContainer}>
+            <Icon type={bank.published ? 'Published' : 'Publish'} />
           </button>
-
-          <div style={{ ...styles.halves, ...styles.buttonContainer }}>
-            <button style={{ ...buttonStyle, ...styles.button, ...styles.embed }}>
-              EMBED CODE
+        </td>
+        <td>
+          <div className="c-table__icons" style={styles.buttonContainer}>
+            <button className="c-btn c-btn--sm c-btn--table">
+              embed code
             </button>
-            <button style={{ ...buttonStyle, ...styles.button }}>
-              <i className="material-icons">mode_edit</i>
+            <button className="c-btn c-btn--square c-btn--table">
+              <i className="material-icons">edit</i>
             </button>
-            <button style={{ ...buttonStyle, ...styles.button }}>
+            <button className="c-btn c-btn--square c-btn--table">
               <i className="material-icons">remove_red_eye</i>
             </button>
-            <button style={{ ...buttonStyle, ...styles.button }}>
+            <button className="c-btn c-btn--square c-btn--table">
               <i className="material-icons">delete</i>
             </button>
-
           </div>
-        </div>
-      </div>
+        </td>
+      </tr>
     );
   }
 }
