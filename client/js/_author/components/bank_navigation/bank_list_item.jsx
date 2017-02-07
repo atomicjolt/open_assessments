@@ -4,7 +4,7 @@ import Icon                     from './bank_icon';
 // TODO: think about breaking this into smaller components
 export default function bankListItem(props) {
   const { bank } = props;
-  const isAssessment = this.props.bank.type === 'Assessment';
+  const isAssessment = bank.type === 'Assessment';
   const buttonContainer = {
     display: isAssessment ? '' : 'none',
   };
@@ -13,7 +13,7 @@ export default function bankListItem(props) {
     if (bank.type === 'Assessment') {
       // console.log(`take me to assessment ${bank.id}`);
     } else {
-      this.props.getBankChildren(bank);
+      props.getBankChildren(bank);
     }
   };
 
@@ -54,5 +54,6 @@ export default function bankListItem(props) {
 bankListItem.propTypes = {
   bank: React.PropTypes.shape({
     displayName : React.PropTypes.shape({}),
+    type        : React.PropTypes.string,
   }).isRequired,
 };
