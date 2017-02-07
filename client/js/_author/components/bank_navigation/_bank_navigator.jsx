@@ -36,6 +36,7 @@ export class BankNavigator extends React.Component {
     getAssessments     : React.PropTypes.func.isRequired,
     getItems           : React.PropTypes.func.isRequired,
     createAssessment   : React.PropTypes.func.isRequired,
+    deleteAssessment   : React.PropTypes.func.isRequired,
     currentBankId      : React.PropTypes.string,
   };
 
@@ -83,6 +84,10 @@ export class BankNavigator extends React.Component {
     return sortedBanks;
   }
 
+  deleteAssessment(bankId, assessmentId) {
+    this.props.deleteAssessment(bankId, assessmentId);
+  }
+
   render() {
     return (
       <div>
@@ -99,6 +104,7 @@ export class BankNavigator extends React.Component {
           sortBy={type => this.sortBy(type)}
           sortName={this.state.sortName}
           sortPublished={this.state.sortPublished}
+          deleteAssessment={(bankId, assessmentId) => this.deleteAssessment(bankId, assessmentId)}
         />
       </div>
     );
