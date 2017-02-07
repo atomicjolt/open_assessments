@@ -1,5 +1,6 @@
 .c-input{
   position: relative;
+  width: 100%;
 }
 
   .c-input__contain{
@@ -75,6 +76,10 @@
   }
 }
 
+.c-input-label--large{
+  font-size: 1.6rem;
+}
+
 .c-dropdown{
   min-width: 20rem;
   position: relative;
@@ -89,6 +94,7 @@
     border-radius: 0;
     width: 100%;
     outline: none;
+    cursor: pointer;
   }
 
   &:before{
@@ -99,12 +105,25 @@
     position: absolute;
     top: 0.5rem;
     right: 1rem;
+    pointer-events: none;
   }
 }
 
 .c-dropdown--small select{
   font-size: 1.2rem;
   padding: 0 1rem;
+}
+
+.c-dropdown--medium {
+  select{
+    height: 4rem;
+    font-size: 1.6rem;
+    padding: 0 2rem;
+  }
+  &:before{
+    top: 1rem;
+    right: 2rem;
+  }
 }
 
 .c-checkbox{

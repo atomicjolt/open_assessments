@@ -7,22 +7,11 @@ const initialState = {
 
 export default function bankNavigation(state = initialState, action) {
   switch (action.type) {
-    case 'GET_BANKS': {
+    case 'GET_BANKS_HIERARCHY': {
       return { ...state, ...{ loading: true } };
     }
-    case 'GET_BANKS_DONE': {
+    case 'GET_BANKS_HIERARCHY_DONE': {
       return { ...state, ...{ loading: false } };
-    }
-
-    case 'GET_SUB_BANKS': {
-      return { ...state, ...{ loading: true } };
-    }
-    case 'GET_SUB_BANKS_DONE': {
-      state.location.push({
-        id    : action.original.bank.id,
-        name  : 'sven',
-      });
-      return { ...state, ...{ loading: false, location: state.location } };
     }
 
     case 'UPDATE_PATH': {
