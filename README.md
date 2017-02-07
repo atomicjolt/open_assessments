@@ -93,6 +93,20 @@ The value can then be used when rendering:
 Files added to the static directory will be copied directly into the build. These files will not be renamed.
 
 
+#Tests
+-----------
+Karma and Jasmine are used for testing. To run tests run:
+
+  `yarn test`
+
+
+#Check for updates
+-----------
+Inside the client directory run:
+
+  `npm-check-updates`
+
+
 #Deploy to S3:
 -----------------------
 
@@ -117,12 +131,16 @@ Files added to the static directory will be copied directly into the build. Thes
 
     `yarn release`
 
+#Production
+-----------------------
+If you want to see what your application will look like in production run
 
-#Tests
------------
-Karma and Jasmine are used for testing. To run tests run:
+  `yarn live`
 
-####Settings - can be passed via window.DEFAULT_SETTINGS or url params
+This will serve files from the build/prod directory.
+
+
+#Settings - can be passed via window.DEFAULT_SETTINGS or url params
 -----------------------
 
     ##### General
@@ -204,11 +222,11 @@ Karma and Jasmine are used for testing. To run tests run:
     bank                         - The id of the QBank bank. Looks something like: "assessment.Bank%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU"
     assessment_offered_id        - An identifier provided by QBank that uniquely identifies the assessment to be taken. Use this id to get an assessment taken id. Looks something like "assessment.AssessmentOffered%3A576d7ee94a40456f9a434e4d%40ODL.MIT.EDU"
 
-####Embed
+#Embed
 Open Assessments is embedded into the page via an iframe. Example:
     `<iframe id="openassessments_container" src="//www.openassessments.com/assessments/load?confidence_levels=true&src_url=http://www.openassessments.com/api/assessments/55.xml&results_end_point=http://www.openassessments.com/api&assessment_id=55&eid=ch15" frameborder="0" style="border:none;width:100%;height:100%;min-height:400px;"></iframe><script src="http://www.openassessments.com/assets/openassessments.js" type="text/javascript"></script>`
 
-####Stats
+#Stats
 -----------------------
 For assessments loaded into http://www.openassessments.com you simply need to browse to the assessment and click on the bar graph.
 Stats are available on the site, as json and as csv. Loading stats for an assessment that was loaded via a src_url is a bit trickier.
@@ -230,9 +248,3 @@ json:
 http://www.openassessments.com/assessment_results/0.json?eid=atest
 
 We recommend using a GUID for the eid to prevent conflicts with other assessments.
-
-#Tests
------------
-Karma and Jasmine are used for testing. To run tests run:
-
-  `yarn test`
