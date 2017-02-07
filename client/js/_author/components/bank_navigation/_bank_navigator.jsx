@@ -4,7 +4,7 @@ import { connect }            from 'react-redux';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
-import NavBar                 from '../common/navigation_bar';
+import Heading                from '../common/heading';
 import BankList               from './bank_list';
 
 function select(state) {
@@ -90,7 +90,7 @@ export class BankNavigator extends React.Component {
   render() {
     return (
       <div>
-        <NavBar
+        <Heading
           view="banks"
           path={this.props.path}
           createAssessment={this.props.createAssessment}
