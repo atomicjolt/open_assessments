@@ -1,22 +1,16 @@
 import React      from 'react';
 
 export default function bankIcon(props) {
-  const styles = {
-    verticalAlign : 'middle',
-    padding       : '10px 20px',
-  };
-  const cloudStyles = {
-    verticalAlign: 'middle',
-  };
-
   switch (props.type) {
     case 'Bank':
     case 'OsidNode':
-      return <i className="material-icons" style={styles}>folder</i>;
+      return <i className="material-icons">folder</i>;
     case 'Assessment':
-      return <i className="material-icons" style={styles}>description</i>;
+      return <i className="material-icons">description</i>;
     case 'Publish':
-      return <i className="material-icons" style={cloudStyles}>cloud_upload</i>;
+      return <i className="material-icons">cloud_upload</i>;
+    case 'Published':
+      return <i className="material-icons is-published">cloud_done</i>;
     default:
       // console.log(props.type);
       return null;

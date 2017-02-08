@@ -4,7 +4,7 @@ import { connect }            from 'react-redux';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
-import NavBar                 from '../common/navigation_bar';
+import Heading                from '../common/heading';
 import BankList               from './bank_list';
 
 function select(state) {
@@ -35,6 +35,7 @@ export class BankNavigator extends React.Component {
     getAssessments     : React.PropTypes.func.isRequired,
     getItems           : React.PropTypes.func.isRequired,
     createAssessment   : React.PropTypes.func.isRequired,
+    deleteAssessment   : React.PropTypes.func.isRequired,
     currentBankId      : React.PropTypes.string,
   };
 
@@ -82,10 +83,14 @@ export class BankNavigator extends React.Component {
     return sortedBanks;
   }
 
+  deleteAssessment(bankId, assessmentId) {
+    this.props.deleteAssessment(bankId, assessmentId);
+  }
+
   render() {
     return (
       <div>
-        <NavBar
+        <Heading
           view="banks"
           path={this.props.path}
           createAssessment={this.props.createAssessment}
@@ -98,6 +103,7 @@ export class BankNavigator extends React.Component {
           sortBy={type => this.sortBy(type)}
           sortName={this.state.sortName}
           sortPublished={this.state.sortPublished}
+          deleteAssessment={(bankId, assessmentId) => this.deleteAssessment(bankId, assessmentId)}
         />
       </div>
     );

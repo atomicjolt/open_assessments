@@ -1,102 +1,53 @@
 import React                    from 'react';
 import Icon                     from './bank_icon';
-import { colors, buttonStyle }  from '../../defines';
 
 // TODO: think about breaking this into smaller components
-export default class BankListItem extends React.Component {
-  static propTypes = {
-    bank: React.PropTypes.shape({
-      displayName : React.PropTypes.shape({}),
-      type        : React.PropTypes.string.isRequired,
-    }).isRequired,
-    getBankChildren: React.PropTypes.func.isRequired,
+export default function bankListItem(props) {
+  const { bank } = props;
+  const isAssessment = bank.type === 'Assessment';
+  const buttonContainer = {
+    display: isAssessment ? '' : 'none',
   };
 
-  constructor() {
-    super();
-    this.state = { hovered: false };
-  }
-
-  getStyles() {
-    const { hovered } = this.state;
-    const isAssessment = this.props.bank.type === 'Assessment';
-
-    return {
-      item: {
-        borderBottom    : `1px solid ${colors.accentGrey}`,
-        lineHeight      : '50px',
-        backgroundColor : hovered ? colors.accentPurple : '',
-        color           : hovered ? colors.white : '',
-      },
-      halves: {
-        display       : 'inline-block',
-        verticalAlign : 'top',
-        whiteSpace    : 'nowrap',
-      },
-      name: {
-        width         : '65%',
-        overflow      : 'hidden',
-        textOverflow  : 'ellipsis',
-        cursor        : 'pointer',
-      },
-      options: {
-        width: '35%',
-      },
-      publish: {
-        display         : isAssessment ? 'inline-block' : 'none',
-        color           : hovered ? colors.white : colors.grey,
-        backgroundColor : hovered ? colors.lightAccentPurple : colors.white,
-      },
-      buttonContainer: {
-        float   : 'right',
-        display : hovered && isAssessment ? 'inline-block' : 'none',
-      },
-      button: {
-        backgroundColor : colors.lightAccentPurple,
-        verticalAlign   : 'middle',
-        margin          : '5px',
-      },
-      embed: {
-        padding: '9px 15px',
-      },
-    };
-  }
-
-  selectItem() {
-    const { bank } = this.props;
+  const selectItem = () => {
     if (bank.type === 'Assessment') {
       // console.log(`take me to assessment ${bank.id}`);
     } else {
-      this.props.getBankChildren(bank);
+      props.getBankChildren(bank);
     }
-  }
+  };
 
-  render() {
-    const styles = this.getStyles();
-    const { bank } = this.props;
-
-    return (
-      <div
-        style={styles.item}
-        onMouseEnter={() => this.setState({ hovered: true })}
-        onMouseLeave={() => this.setState({ hovered: false })}
-      >
-        <div
-          style={{ ...styles.halves, ...styles.name }}
-          tabIndex="0"
-          role="button"
-          onClick={() => this.selectItem()}
-        >
-          <Icon type={bank.type} />
-          {bank.displayName ? bank.displayName.text : null}
-        </div>
-
-        <div style={{ ...styles.halves, ...styles.options }}>
-
-          <button style={{ ...buttonStyle, ...styles.publish }}>
-            <Icon type="Publish" />
+  return (
+    <tr
+      onClick={() => selectItem()}
+      tabIndex="0"
+      role="button"
+      aria-label={bank.displayName ? bank.displayName.text : 'bank item'}
+    >
+      <td><Icon type={bank.type} /></td>
+      <td>{bank.displayName ? bank.displayName.text : null}</td>
+      <td>
+        <button className="c-btn c-btn--square c-publish" style={buttonContainer}>
+          <Icon type={bank.published ? 'Published' : 'Publish'} />
+        </button>
+      </td>
+      <td>
+        <div className="c-table__icons" style={buttonContainer}>
+          <button className="c-btn c-btn--sm c-btn--table">
+            embed code
           </button>
-
+          <button className="c-btn c-btn--square c-btn--table">
+            <i className="material-icons">edit</i>
+          </button>
+          <button className="c-btn c-btn--square c-btn--table">
+            <i className="material-icons">remove_red_eye</i>
+          </button>
+          <button
+            className="c-btn c-btn--square c-btn--table"
+            onClick={() => this.props.deleteAssessment(bank.bankId, bank.id)}
+          >
+            <i className="material-icons">delete</i>
+          </button>
           <div style={{ ...styles.halves, ...styles.buttonContainer }}>
             <button style={{ ...buttonStyle, ...styles.button, ...styles.embed }}>
               EMBED CODE
@@ -107,13 +58,20 @@ export default class BankListItem extends React.Component {
             <button style={{ ...buttonStyle, ...styles.button }}>
               <i className="material-icons">remove_red_eye</i>
             </button>
-            <button style={{ ...buttonStyle, ...styles.button }}>
+            <button
+              style={{ ...buttonStyle, ...styles.button }}
+            >
               <i className="material-icons">delete</i>
             </button>
-
           </div>
         </div>
-      </div>
-    );
-  }
+      </td>
+    </tr>
+  );
 }
+
+bankListItem.propTypes = {
+  bank: React.PropTypes.shape({
+    displayName : React.PropTypes.shape({}),
+  }).isRequired,
+};
