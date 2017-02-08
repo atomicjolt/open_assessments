@@ -31,6 +31,7 @@ module.exports = function webpackConfig(stage) {
     babelPlugins += ',plugins[]=react-hot-loader/babel';
   } else if (stage === 'test') {
     // Add test plugins as needed
+    babelPlugins += ',plugins[]=babel-plugin-rewire';
   }
 
   const babel = `babel?${babelPlugins}&${presets}`;
