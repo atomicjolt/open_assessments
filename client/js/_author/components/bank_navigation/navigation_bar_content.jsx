@@ -1,6 +1,6 @@
 import React                    from 'react';
 import _                        from 'lodash';
-import { hashHistory }           from 'react-router';
+import { hashHistory }          from 'react-router';
 import { colors, buttonStyle }  from '../../defines';
 import Breadcrumb               from './breadcrumb';
 
@@ -33,7 +33,6 @@ export default function navigationBarContent(props) {
       padding         : '5px 40px',
     },
   };
-debugger;
   return (
     <div>
       <i
@@ -61,7 +60,7 @@ debugger;
         <span style={styles.spacer} />
         <button
           style={{ ...buttonStyle, ...styles.button }}
-          onClick={() => hashHistory.push(`new_assessment/${props.currentBankId}`)}
+          onClick={() => hashHistory.push(`banks/${props.currentBankId}/new_assessment`)}
         >
         NEW
         </button>

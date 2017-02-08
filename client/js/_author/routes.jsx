@@ -12,7 +12,7 @@ export default (
   <Router history={appHistory}>
     <Route path="/" component={Index}>
       <IndexRoute component={BankNav} />
-      <Route path="new_assessment/:id" component={NewAssessment} />
+      <Route path="banks/:id/new_assessment" component={NewAssessment} />
     </Route>
     <Route path="*" component={NotFound} />
   </Router>

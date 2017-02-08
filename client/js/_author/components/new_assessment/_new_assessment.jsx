@@ -1,6 +1,7 @@
 import React                  from 'react';
 import { connect }            from 'react-redux';
-import NewQuestion            from './new_question'
+import NewQuestion            from './new_question';
+import { colors, buttonStyle }  from '../../defines';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
@@ -10,21 +11,37 @@ function select(state) {
 }
 export class NewAssessment extends React.Component {
   static propTypes = {
-    bankId: React.PropTypes.number,
+    params: React.PropTypes.shape({ id: React.PropTypes.string }).isRequired,
+    id: React.PropTypes.number.isRequired,
+    createAssessment: React.PropTypes.func.isRequired,
   };
 
-  // const newAssessment = {
-  //   name        : 'Bens Brand New Assessment',
-  //   description : 'This is the description of this assessment. It exists because',
-  // };
+  static styles = {
+    button: {
+      backgroundColor : colors.primaryPurple,
+      height          : '100%',
+      verticalAlign   : 'middle',
+      margin          : '7px 15px',
+      padding         : '5px 40px',
+    },
+  };
 
   constructor() {
     super();
     this.titleField = null;
     this.state = {
-      // bankId: this.props.params.bankId,
-      // props.createAssessment(props.currentBankId, newAssessment)
     };
+  }
+
+  saveButton() {
+    return (
+      <button
+        style={{ ...buttonStyle, ...NewAssessment.styles.button }}
+        onClick={() => this.props.createAssessment(this.props.params.id, { name: `${this.titleField.value}` })}
+        >
+      Save Assessment
+      </button>
+    );
   }
 
   render() {
@@ -37,16 +54,21 @@ export class NewAssessment extends React.Component {
               <label htmlFor="check01">Single page assessment</label>
             </div>
           </div>
-
           <div className="c-assessment-title">
             <label className="c-input">
               <div className="c-input__contain">
-                <input className="c-text-input c-text-input--large" type="text" placeholder="Untitled Assessment" ref={e => { this.titleField = e; }} />
+                <input
+                  className="c-text-input c-text-input--large"
+                  type="text"
+                  placeholder="Untitled Assessment"
+                  ref={(e) => { this.titleField = e; }}
+                />
                 <div className="c-input__bottom" />
               </div>
             </label>
           </div>
         </div>
+        {this.saveButton()}
         <NewQuestion bankId={this.props.params.id} />
       </div>
 
