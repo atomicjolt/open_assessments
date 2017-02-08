@@ -3,6 +3,11 @@
   width: 100%;
 }
 
+.c-input--inline{
+  display: inline-block;
+  width: auto;
+}
+
   .c-input__contain{
     @include flex(1);
   }
@@ -12,10 +17,10 @@
   color: $text-color;
   border: none;
   border-top: 0.1rem solid $white;
-  outline: none;
   background: none;
 
   &:focus{
+    outline: none;
 
     & + .c-input__bottom{
       border-color: $blue;
@@ -31,6 +36,9 @@
 
   &.no-border{
     border-top: none;
+  }
+  &.has-error{
+    border-color: $red;
   }
 }
 
@@ -76,6 +84,18 @@
   }
 }
 
+.c-input-label--top{
+  @include semi-bold;
+  color: $text-alt;
+  font-size: 1.2rem;
+  min-width: 25rem;
+  height: 1.7rem;
+
+  .c-input__contain, select{
+    margin-top: 0.5rem;
+  }
+}
+
 .c-input-label--large{
   font-size: 1.6rem;
 }
@@ -93,7 +113,6 @@
     height: 3rem;
     border-radius: 0;
     width: 100%;
-    outline: none;
     cursor: pointer;
   }
 
@@ -124,6 +143,10 @@
     top: 1rem;
     right: 2rem;
   }
+  &.c-input-label--top:before{
+    top: 3.2rem;
+    right: 1.5rem;
+  }
 }
 
 .c-checkbox{
@@ -138,6 +161,7 @@
     padding-left: 2.7rem;
     height: 2rem;
     line-height: 2rem;
+    min-width: 3rem;
   }
 
   input[type="checkbox"] + label:before{
@@ -157,17 +181,23 @@
     color: $blue;
   }
 
+  input:focus + label{
+    outline: thin dotted;
+  }
+
   input{
-    display: none;
+    opacity: 0;
     margin: 0;
     height: 0.01rem;
     width: 0.01rem;
+    position: absolute;
   }
 }
 
 .c-radio{
 
   label{
+    min-width: 3rem;
     display: inline-block;
     cursor: pointer;
     position: relative;
@@ -196,11 +226,16 @@
     color: $blue;
   }
 
+  input:focus + label{
+    outline: thin dotted;
+  }
+
   input{
-    display: none;
+    opacity: 0;
     margin: 0;
     height: 0.01rem;
     width: 0.01rem;
+    position: absolute;
   }
 }
 

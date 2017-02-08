@@ -26,9 +26,38 @@
       padding-right: 2rem;
     }
 
-    &.is-active{
-      @include bold;
-      color: $gray10;
+    .c-table__filter{
+      position: relative;
+      background: none;
+      border: none;
+      padding: 1rem 3rem 1rem 0;
+      font-size: 1.2rem;
+      color: $gray8;
+      height: 3.5rem;
+
+      i{
+        font-size: 2rem;
+        color: $gray4;
+        position: absolute;
+
+        &.top{
+          top: 0rem;
+          right: 0;
+        }
+        &.bottom{
+          bottom: -0.2rem;
+          right: 0;
+        }
+
+        &.is-active{
+          color: $gray10;
+        }
+      }
+
+      &.is-active{
+        @include bold;
+        color: $gray10;
+      }
     }
   }
 
@@ -142,64 +171,4 @@
 .c-scrollable{
   max-height: 90rem;
   overflow: auto;
-}
-
-th{
-  height: 5rem;
-  border-bottom: $border;
-  background: $gray1;
-  @include semi-bold;
-  font-size: 1.2rem;
-  color: $gray8;
-  text-align: left;
-  vertical-align: middle;
-
-  &:nth-of-type(1){
-    padding-left: 2rem;
-    width: 6rem;
-  }
-  &:nth-of-type(2){
-    width: 50%;
-  }
-  &:nth-of-type(3){
-
-  }
-  &:nth-of-type(4){
-    padding-right: 2rem;
-  }
-
-  .c-table__filter{
-    position: relative;
-    background: none;
-    border: none;
-    outline: none;
-    padding: 1rem 3rem 1rem 0;
-    font-size: 1.2rem;
-    color: $gray8;
-    height: 3.5rem;
-
-    i{
-      font-size: 2rem;
-      color: $gray4;
-      position: absolute;
-
-      &.top{
-        top: 0rem;
-        right: 0;
-      }
-      &.bottom{
-        bottom: -0.2rem;
-        right: 0;
-      }
-
-      &.is-active{
-        color: $gray10;
-      }
-    }
-
-    &.is-active{
-      @include bold;
-      color: $gray10;
-    }
-  }
 }
