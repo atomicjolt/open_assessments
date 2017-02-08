@@ -16,6 +16,16 @@ const qbank = {
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments?isolated`,
   },
 
+  [AssessmentConstants.CREATE_ASSESSMENT_OFFERED]: {
+    method : Network.POST,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assessmentsoffered`,
+  },
+
+  [AssessmentConstants.GET_ASSESSMENT_OFFERED]: {
+    method : Network.GET,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assessmentsoffered`,
+  },
+
   [AssessmentConstants.CREATE_ASSESSMENT]: {
     method : Network.POST,
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments`,

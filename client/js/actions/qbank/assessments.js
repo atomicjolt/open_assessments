@@ -8,6 +8,8 @@ const actions = [
 const requests = [
   'GET_ASSESSMENTS',
   'CREATE_ASSESSMENT',
+  'CREATE_ASSESSMENT_OFFERED',
+  'GET_ASSESSMENT_OFFERED',
   'DELETE_ASSESSMENT',
   'PUBLISH_ASSESSMENT',
 ];
@@ -28,6 +30,24 @@ export function createAssessment(bankId, assessment) {
     apiCall : true,
     type    : Constants.CREATE_ASSESSMENT,
     body    : assessment,
+  };
+}
+
+export function createAssessmentOffered(bankId, assessmentId) {
+  return {
+    bankId,
+    assessmentId,
+    apiCall : true,
+    type    : Constants.CREATE_ASSESSMENT_OFFERED,
+  };
+}
+
+export function getAssessmentOffered(bankId, assessmentId) {
+  return {
+    bankId,
+    assessmentId,
+    apiCall : true,
+    type    : Constants.GET_ASSESSMENT_OFFERED,
   };
 }
 
