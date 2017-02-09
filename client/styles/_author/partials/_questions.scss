@@ -130,7 +130,7 @@
     @include transition(background 0.1s ease, transform 0.1s ease);
     cursor: pointer;
     border: 0.2rem dashed $gray4;
-    border-image: url('../img/border.png') 2 round;
+    border-image: url('../../assets/_author/images/border.png') 2 round;
     @include semi-bold;
     text-transform: uppercase;
     font-size: 1.2rem;
