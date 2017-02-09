@@ -2,6 +2,7 @@ import React           from 'react';
 import _               from 'lodash';
 import AssessmentItems from './assessment_items';
 import NewItem         from './new_item_form';
+import AddQuestion     from './add_question_button';
 
 export default class AssessmentForm extends React.Component {
   static propTypes = {
@@ -65,19 +66,11 @@ export default class AssessmentForm extends React.Component {
             this.props.editItem(itemIndex, field, data)}
           addItem={() => this.props.addItem()}
         />
-        <div className="c-question-add">
-          <button
-            onClick={() => this.setState({ addingAssessment: true })}
-            className="c-question-add__button"
-          >
-            Add Question
-          </button>
-        </div>
 
         {this.showNewModal() ? <NewItem
           cancel={() => this.setState({ addingAssessment: false })}
           create={newItem => this.createItem(newItem)}
-        /> : null}
+        /> : <AddQuestion newItem={() => this.setState({ addingAssessment: true })} />}
       </div>
     );
   }
