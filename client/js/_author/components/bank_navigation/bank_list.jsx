@@ -13,7 +13,6 @@ export default function bankList(props) {
           sortName={props.sortName}
           sortPublished={props.sortPublished}
         />
-
         <div className="c-scrollable">
           <table className="c-table">
             <tbody>
