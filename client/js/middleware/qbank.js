@@ -163,7 +163,6 @@ const qbank = {
         action.itemIds.concat(newId)
       );
     }).then((res2) => {
-      debugger;
       store.dispatch({
         type: 'ADD_ITEM_TO_ASSESSMENT',
         original: action,
