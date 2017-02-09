@@ -48,14 +48,10 @@ export default function bankListItem(props) {
           <button className="c-btn c-btn--square c-btn--table">
             <i className="material-icons">remove_red_eye</i>
           </button>
-<<<<<<< HEAD
-          <button className="c-btn c-btn--square c-btn--table">
-=======
           <button
             className="c-btn c-btn--square c-btn--table"
             onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
           >
->>>>>>> New assess (#119)
             <i className="material-icons">delete</i>
           </button>
         </div>

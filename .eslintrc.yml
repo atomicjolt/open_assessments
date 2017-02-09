@@ -43,4 +43,5 @@ rules:
   key-spacing:
     - 0
   jsx-a11y/no-static-element-interactions: 0
-  react/require-default-props: off
+  import/no-named-as-default: off
+
