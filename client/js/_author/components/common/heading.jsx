@@ -1,7 +1,7 @@
 import React          from 'react';
 import assets         from '../../../libs/assets';
 import BanksView      from '../bank_navigation/navigation_bar_content';
-import AssessmentView from '../new_assessment/navigation_bar_content';
+import AssessmentView from '../assessments/navigation_bar_content';
 
 export default function heading(props) {
   const logo = assets('./_author/images/CLIx-logo.png');

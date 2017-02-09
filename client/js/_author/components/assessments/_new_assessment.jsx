@@ -1,6 +1,7 @@
 import React                  from 'react';
 import { connect }            from 'react-redux';
 import AssessmentForm         from './assessment_form';
+import Heading                from  '../common/heading';
 import { colors, buttonStyle }  from '../../defines';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
@@ -61,11 +62,14 @@ export class NewAssessment extends React.Component {
 
   render() {
     return (
-      <AssessmentForm
-        {...this.state.assessment}
-        updateAssessment={() => this.createAssessment()}
-        updateStateAssessment={(field, value) => this.updateStateAssessment(field, value)}
-      />
+      <div>
+        <Heading view="assessments" />
+        <AssessmentForm
+          {...this.state.assessment}
+          updateAssessment={() => this.createAssessment()}
+          updateStateAssessment={(field, value) => this.updateStateAssessment(field, value)}
+        />
+      </div>
     );
   }
 }
