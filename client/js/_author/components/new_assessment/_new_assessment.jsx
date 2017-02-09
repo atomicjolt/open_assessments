@@ -6,7 +6,7 @@ import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 
-function select(state) {
+function select() {
   return {
 
   };
@@ -79,11 +79,12 @@ export class NewAssessment extends React.Component {
             </div>
           </div>
           <div className="c-assessment-title">
-            <label className="c-input">
+            <label htmlFor="title_field" className="c-input">
               <div className="c-input__contain">
                 <input
                   className="c-text-input c-text-input--large"
                   type="text"
+                  id="title_field"
                   placeholder="Untitled Assessment"
                   ref={(e) => { this.titleField = e; }}
                 />
