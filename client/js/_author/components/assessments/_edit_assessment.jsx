@@ -1,16 +1,28 @@
 import React                  from 'react';
 import { connect }            from 'react-redux';
-import AssessmentItems        from './assessment_items';
+import AssessmentForm         from './assessment_form';
 import { colors, buttonStyle }  from '../../defines';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 
-function select() {
-  return {
+function transformAssessment(assessment) {
+  if (!assessment) return {};
+  const fixedAssessment = {
+    ...assessment,
+    name: assessment.displayName.text,
+  };
 
+  return fixedAssessment;
+}
+
+function select(state, props) {
+  const bank = state.assessments[encodeURIComponent(props.params.bankId)];
+  return {
+    assessment: bank && transformAssessment(bank[encodeURIComponent(props.params.id)])
   };
 }
+
 export class NewAssessment extends React.Component {
   static propTypes = {
     params: React.PropTypes.shape({ id: React.PropTypes.string }).isRequired,
@@ -31,18 +43,30 @@ export class NewAssessment extends React.Component {
     super(props);
     this.titleField = null;
     this.state = {
-      items: []
+      assessment: {
+      },
     };
   }
 
-  createAssessment() {
-    this.props.createAssessment(
-      this.props.params.id,
+  componentDidMount() {
+    this.props.getAssessments(this.props.params.bankId);
+  }
+
+  updateAssessment() {
+    this.props.updateAssessment(
+      this.props.params.bankId,
       {
-        name: `${this.titleField.value}`,
-        items: this.state.items,
-      }
+        name: this.state.assessment.name,
+        description: this.state.assessment.description,
+        id: this.props.params.id,
+      },
     );
+  }
+
+  updateStateAssessment(field, value) {
+    const assessment = this.state.assessment;
+    assessment[field] = value;
+    this.setState({ assessment });
   }
 
   saveButton() {
@@ -70,40 +94,12 @@ export class NewAssessment extends React.Component {
 
   render() {
     return (
-      <div className="o-contain">
-        <div className="o-item">
-          <div className="o-item__top">
-            <div className="c-checkbox u-right">
-              <input type="checkbox" id="check01" name="check" />
-              <label htmlFor="check01">Single page assessment</label>
-            </div>
-          </div>
-          <div className="c-assessment-title">
-            <label htmlFor="title_field" className="c-input">
-              <div className="c-input__contain">
-                <input
-                  className="c-text-input c-text-input--large"
-                  type="text"
-                  id="title_field"
-                  placeholder="Untitled Assessment"
-                  ref={(e) => { this.titleField = e; }}
-                />
-                <div className="c-input__bottom" />
-              </div>
-            </label>
-          </div>
-        </div>
-        {this.saveButton()}
-        <AssessmentItems
-          items={this.state.items}
-          editItem={(itemIndex, field, data) =>
-            this.editItem(itemIndex, field, data)}
-          addItem={() => this.addItem()}
-        />
-      </div>
-
+      <AssessmentForm
+        {...{ ...this.props.assessment, ...this.state.assessment }}
+        updateAssessment={() => this.updateAssessment()}
+        updateStateAssessment={(field, value) => this.updateStateAssessment(field, value)}
+      />
     );
-
   }
 }
 // { this.titleField.value }

@@ -7,6 +7,7 @@ const actions = [
 // Actions that make an api request
 const requests = [
   'GET_ASSESSMENTS',
+  'UPDATE_ASSESSMENT',
   'CREATE_ASSESSMENT',
   'CREATE_ASSESSMENT_OFFERED',
   'GET_ASSESSMENT_OFFERED',
@@ -29,6 +30,15 @@ export function createAssessment(bankId, assessment) {
     bankId,
     apiCall : true,
     type    : Constants.CREATE_ASSESSMENT,
+    body    : assessment,
+  };
+}
+
+export function updateAssessment(bankId, assessment) {
+  return {
+    bankId,
+    apiCall : true,
+    type    : Constants.UPDATE_ASSESSMENT,
     body    : assessment,
   };
 }
@@ -69,4 +79,3 @@ export function publishAssessment(bankId, assessmentId) {
     type    : Constants.PUBLISH_ASSESSMENT,
   };
 }
-

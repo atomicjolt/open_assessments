@@ -2,6 +2,7 @@ import _                                    from 'lodash';
 import Network                              from '../constants/network';
 import server                               from './server';
 import api                                  from '../libs/api';
+import authorAppHistory                     from '../_author/history';
 import { DONE }                             from '../constants/wrapper';
 import { Constants as BankConstants }       from '../actions/qbank/banks';
 import { Constants as AssessmentConstants } from '../actions/qbank/assessments';
@@ -95,14 +96,14 @@ const qbank = {
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assessmentsoffered`,
   },
 
-  [AssessmentConstants.CREATE_ASSESSMENT]: {
-    method : Network.POST,
-    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments`,
-  },
-
   [AssessmentConstants.PUBLISH_ASSESSMENT]: {
     method : Network.POST,
     url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedBankIds`,
+  },
+
+  [AssessmentConstants.UPDATE_ASSESSMENT]: {
+    method : Network.PUT,
+    url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}`,
   },
 
   [ItemConstants.GET_ITEMS]: {
@@ -110,10 +111,30 @@ const qbank = {
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items`,
   },
 
+  [AssessmentConstants.CREATE_ASSESSMENT]: (store, action) => {
+    const state = store.getState();
+
+    api.post(
+      `assessment/banks/${action.bankId}/assessments`,
+      state.settings.api_url,
+      state.jwt,
+      state.settings.csrf_token,
+      null,
+      action.body
+    ).then((res) => {
+      authorAppHistory.push(`banks/${action.bankId}/assessments/${res.body.id}`);
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: res.body
+      });
+    });
+  },
+
   [AssessmentConstants.DELETE_ASSESSMENT]: (store, action) => {
     const state = store.getState();
     const { bankId, assessmentId } = action;
-
+    console.log("here");
     getAssessmentsOffered(state, bankId, assessmentId).then((res) => {
       const assessmentsOffered = res.body;
 
