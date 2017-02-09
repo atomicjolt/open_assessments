@@ -48,22 +48,6 @@ export default function bankListItem(props) {
           >
             <i className="material-icons">delete</i>
           </button>
-          <div style={{ ...styles.halves, ...styles.buttonContainer }}>
-            <button style={{ ...buttonStyle, ...styles.button, ...styles.embed }}>
-              EMBED CODE
-            </button>
-            <button style={{ ...buttonStyle, ...styles.button }}>
-              <i className="material-icons">mode_edit</i>
-            </button>
-            <button style={{ ...buttonStyle, ...styles.button }}>
-              <i className="material-icons">remove_red_eye</i>
-            </button>
-            <button
-              style={{ ...buttonStyle, ...styles.button }}
-            >
-              <i className="material-icons">delete</i>
-            </button>
-          </div>
         </div>
       </td>
     </tr>
