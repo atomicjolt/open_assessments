@@ -1,5 +1,7 @@
 import React                  from 'react';
 import { connect }            from 'react-redux';
+import _                      from 'lodash';
+import Heading                from  '../common/heading';
 import AssessmentForm         from './assessment_form';
 import { colors, buttonStyle }  from '../../defines';
 import * as BankActions       from '../../../actions/qbank/banks';
@@ -18,15 +20,22 @@ function transformAssessment(assessment) {
 
 function select(state, props) {
   const bank = state.assessments[encodeURIComponent(props.params.bankId)];
+  const assessmentItemIds = state.assessmentItems[props.params.id];
+
   return {
-    assessment: bank && transformAssessment(bank[encodeURIComponent(props.params.id)])
+    assessment: bank && transformAssessment(bank[encodeURIComponent(props.params.id)]),
+    items: _.at(state.items[props.params.bankId], assessmentItemIds)
   };
 }
 
 export class NewAssessment extends React.Component {
   static propTypes = {
-    params: React.PropTypes.shape({ id: React.PropTypes.string }).isRequired,
+    params: React.PropTypes.shape({
+      id: React.PropTypes.string,
+      bankId: React.PropTypes.string
+    }).isRequired,
     createAssessment: React.PropTypes.func.isRequired,
+    createItemInAssessment: React.PropTypes.func.isRequired,
   };
 
   static styles = {
@@ -50,6 +59,10 @@ export class NewAssessment extends React.Component {
 
   componentDidMount() {
     this.props.getAssessments(this.props.params.bankId);
+    this.props.getAssessmentItems(
+      this.props.params.bankId,
+      this.props.params.id
+    );
   }
 
   updateAssessment() {
@@ -86,19 +99,31 @@ export class NewAssessment extends React.Component {
     this.setState({ items });
   }
 
-  addItem() {
-    const items = this.state.items;
-    items.push({ bankId: this.props.params.id, choices: [{}] });
-    this.setState({ items });
+  createItem(newItem) {
+    this.props.createItemInAssessment(
+      this.props.params.bankId,
+      this.props.params.id,
+      _.map(this.assessmentProps().items, 'id'),
+      newItem,
+    );
+  }
+
+  assessmentProps() {
+    return { ...this.props.assessment, ...this.state.assessment, };
   }
 
   render() {
     return (
-      <AssessmentForm
-        {...{ ...this.props.assessment, ...this.state.assessment }}
-        updateAssessment={() => this.updateAssessment()}
-        updateStateAssessment={(field, value) => this.updateStateAssessment(field, value)}
-      />
+      <div>
+        <Heading view="assessments" />
+        <AssessmentForm
+          {...this.assessmentProps()}
+          updateAssessment={() => this.updateAssessment()}
+          updateStateAssessment={(field, value) => this.updateStateAssessment(field, value)}
+          items={this.props.items}
+        />
+      </div>
+
     );
   }
 }

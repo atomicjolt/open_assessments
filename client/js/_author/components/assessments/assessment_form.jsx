@@ -9,11 +9,16 @@ export default class AssessmentForm extends React.Component {
     items: React.PropTypes.oneOfType(
       [React.PropTypes.shape({}), React.PropTypes.arrayOf(React.PropTypes.shape({}))]
     ),
+    params: React.PropTypes.shape({
+      bankId: React.PropTypes.string,
+      id: React.PropTypes.string,
+    }).isRequired,
     name: React.PropTypes.string,
     editItem: React.PropTypes.func.isRequired,
     addItem: React.PropTypes.func.isRequired,
     updateStateAssessment: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
+    createItem: React.PropTypes.func,
   };
 
   constructor() {
@@ -24,8 +29,7 @@ export default class AssessmentForm extends React.Component {
   }
 
   createItem(newItem) {
-    // console.log(newItem);
-    // TODO: actually create the thing
+    this.props.createItem(newItem);
     this.setState({ addingAssessment: false });
   }
 
