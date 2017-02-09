@@ -109,7 +109,7 @@ export class NewAssessment extends React.Component {
   }
 
   assessmentProps() {
-    return { ...this.props.assessment, ...this.state.assessment, };
+    return { ...this.props.assessment, ...this.state.assessment };
   }
 
   render() {
@@ -121,6 +121,7 @@ export class NewAssessment extends React.Component {
           updateAssessment={() => this.updateAssessment()}
           updateStateAssessment={(field, value) => this.updateStateAssessment(field, value)}
           items={this.props.items}
+          createItem={newItem => this.createItem(newItem)}
         />
       </div>
 
