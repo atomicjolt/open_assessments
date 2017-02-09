@@ -27,6 +27,8 @@ export class NewAssessment extends React.Component {
   }
 
   createAssessment() {
+    // This redirects to the edit view in the middleware after the api call
+    // comes back with an id.
     this.props.createAssessment(
       this.props.params.id,
       this.state.assessment,

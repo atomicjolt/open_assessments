@@ -8,10 +8,12 @@ const actions = [
 const requests = [
   'GET_ASSESSMENTS',
   'UPDATE_ASSESSMENT',
+  'UPDATE_ASSESSMENT_ITEMS',
   'CREATE_ASSESSMENT',
   'CREATE_ASSESSMENT_OFFERED',
   'GET_ASSESSMENT_OFFERED',
   'DELETE_ASSESSMENT',
+  'DELETE_ASSESSMENT_ITEM',
   'PUBLISH_ASSESSMENT',
 ];
 
@@ -43,6 +45,16 @@ export function updateAssessment(bankId, assessment) {
   };
 }
 
+export function updateAssessmentItems(bankId, assessmentId, itemIds) {
+  return {
+    bankId,
+    assessmentId,
+    apiCall : true,
+    type    : Constants.UPDATE_ASSESSMENT_ITEMS,
+    body    : itemIds,
+  };
+}
+
 export function createAssessmentOffered(bankId, assessmentId) {
   return {
     bankId,
@@ -67,6 +79,16 @@ export function deleteAssessment(bankId, assessmentId) {
     assessmentId,
     apiCall : true,
     type    : Constants.DELETE_ASSESSMENT,
+  };
+}
+
+export function deleteAssessmentItem(bankId, assessmentId, itemId) {
+  return {
+    bankId,
+    assessmentId,
+    itemId,
+    apiCall : true,
+    type    : Constants.DELETE_ASSESSMENT_ITEM,
   };
 }
 
