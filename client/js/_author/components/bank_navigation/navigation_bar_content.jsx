@@ -1,4 +1,5 @@
 import React                    from 'react';
+import appHistory               from '../../history';
 import _                        from 'lodash';
 import Breadcrumb               from './breadcrumb';
 
@@ -27,7 +28,10 @@ export default function navigationBarContent(props) {
       </div>
 
       <div className="c-header-bottom__right">
-        <button className="c-btn c-btn--sm c-btn--maroon c-btn--new u-ml-md">
+        <button
+          className="c-btn c-btn--sm c-btn--maroon c-btn--new u-ml-md"
+          onClick={() => appHistory.push(`banks/${props.currentBankId}/new_assessment`)}
+        >
           New
         </button>
       </div>

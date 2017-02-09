@@ -1,18 +1,19 @@
 import React                  from 'react';
 import { connect }            from 'react-redux';
-import NewQuestion            from './new_question';
+import AssessmentItems        from './assessment_items';
 import { colors, buttonStyle }  from '../../defines';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 
 function select(state) {
+  return {
 
+  };
 }
 export class NewAssessment extends React.Component {
   static propTypes = {
     params: React.PropTypes.shape({ id: React.PropTypes.string }).isRequired,
-    id: React.PropTypes.number.isRequired,
     createAssessment: React.PropTypes.func.isRequired,
   };
 
@@ -26,22 +27,45 @@ export class NewAssessment extends React.Component {
     },
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.titleField = null;
     this.state = {
+      items: []
     };
+  }
+
+  createAssessment() {
+    this.props.createAssessment(
+      this.props.params.id,
+      {
+        name: `${this.titleField.value}`,
+        items: this.state.items,
+      }
+    );
   }
 
   saveButton() {
     return (
       <button
         style={{ ...buttonStyle, ...NewAssessment.styles.button }}
-        onClick={() => this.props.createAssessment(this.props.params.id, { name: `${this.titleField.value}` })}
-        >
-      Save Assessment
+        onClick={() => this.createAssessment()}
+      >
+        Save Assessment
       </button>
     );
+  }
+
+  editItem(itemIndex, field, data) {
+    const items = this.state.items;
+    items[itemIndex][field] = data;
+    this.setState({ items });
+  }
+
+  addItem() {
+    const items = this.state.items;
+    items.push({ bankId: this.props.params.id, choices: [{}] });
+    this.setState({ items });
   }
 
   render() {
@@ -69,7 +93,12 @@ export class NewAssessment extends React.Component {
           </div>
         </div>
         {this.saveButton()}
-        <NewQuestion bankId={this.props.params.id} />
+        <AssessmentItems
+          items={this.state.items}
+          editItem={(itemIndex, field, data) =>
+            this.editItem(itemIndex, field, data)}
+          addItem={() => this.addItem()}
+        />
       </div>
 
     );
