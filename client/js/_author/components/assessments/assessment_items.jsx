@@ -1,12 +1,12 @@
 import React            from 'react';
 import _                from 'lodash';
-import EditableItem     from './editable_item';
+import Question         from './question_types/_question';
 
 export default function AssessmentQuestions(props) {
   return (
     <div>
       {_.map(props.items, (item, index) => (
-        <EditableItem
+        <Question
           key={index}
           {...item}
           itemIndex={index}
