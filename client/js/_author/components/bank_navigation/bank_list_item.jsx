@@ -1,5 +1,6 @@
-import React                    from 'react';
-import Icon                     from './bank_icon';
+import React      from 'react';
+import appHistory from '../../history';
+import Icon       from './bank_icon';
 
 // TODO: think about breaking this into smaller components
 export default function bankListItem(props) {
@@ -11,11 +12,16 @@ export default function bankListItem(props) {
 
   const selectItem = () => {
     if (isAssessment) {
-      // console.log(`take me to assessment ${bank.id}`);
+      appHistory.push(`banks/${bank.bankId}/assessments/${bank.id}`);
     } else {
       props.getBankChildren(bank);
     }
   };
+
+  function deleteAssessment(e, bankId, assessmentId) {
+    e.stopPropagation();
+    props.deleteAssessment(bankId, assessmentId);
+  }
 
   return (
     <tr
@@ -42,7 +48,10 @@ export default function bankListItem(props) {
           <button className="c-btn c-btn--square c-btn--table">
             <i className="material-icons">remove_red_eye</i>
           </button>
-          <button className="c-btn c-btn--square c-btn--table">
+          <button
+            className="c-btn c-btn--square c-btn--table"
+            onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
+          >
             <i className="material-icons">delete</i>
           </button>
         </div>

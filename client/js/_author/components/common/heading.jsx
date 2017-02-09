@@ -1,6 +1,7 @@
-import React        from 'react';
-import assets       from '../../../libs/assets';
-import BanksView    from '../bank_navigation/navigation_bar_content';
+import React          from 'react';
+import assets         from '../../../libs/assets';
+import BanksView      from '../bank_navigation/navigation_bar_content';
+import AssessmentView from '../assessments/navigation_bar_content';
 
 export default function heading(props) {
   const logo = assets('./_author/images/CLIx-logo.png');
@@ -10,6 +11,10 @@ export default function heading(props) {
       case 'banks':
         return (
           <BanksView {...props} />
+        );
+      case 'assessments':
+        return (
+          <AssessmentView {...props} />
         );
       default:
         return null;

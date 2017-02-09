@@ -6,6 +6,7 @@ import banks               from './banks';
 import bankNavigation      from './bank_navigation';
 import assessments         from './assessments';
 import items               from './items';
+import assessmentItems     from './assessment_items';
 
 const rootReducer = combineReducers({
   settings,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   bankNavigation,
   assessments,
   items,
+  assessmentItems,
 });
 
 export default rootReducer;

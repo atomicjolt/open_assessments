@@ -8,7 +8,6 @@
   border-radius: $radius;
   @include display-flex;
   @include align-items(center);
-  outline: none;
 
   &:active{
     @include transform(scale(0.98));
