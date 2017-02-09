@@ -96,6 +96,11 @@ const qbank = {
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assessmentsoffered`,
   },
 
+  [AssessmentConstants.GET_ASSESSMENT_ITEMS]: {
+    method : Network.GET,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items`,
+  },
+
   [AssessmentConstants.PUBLISH_ASSESSMENT]: {
     method : Network.POST,
     url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedBankIds`,
@@ -129,6 +134,41 @@ const qbank = {
   [ItemConstants.UPDATE_ITEM]: {
     method : Network.POST,
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items/${action.itemId}`,
+  },
+
+  [AssessmentConstants.CREATE_ITEM_IN_ASSESSMENT]: (store, action) => {
+    const state = store.getState();
+    api.post(
+      `assessment/banks/${action.bankId}/items`,
+      state.settings.api_url,
+      state.jwt,
+      state.settings.csrf_token,
+      null,
+      action.body
+    ).then((res) => {
+      store.dispatch({
+        type: `CREATE_ITEM${DONE}`,
+        original: action,
+        payload: res.body
+      });
+
+      const newId = res.body.id;
+
+      return api.post(
+        `assessment/banks/${action.bankId}/items`,
+        state.settings.api_url,
+        state.jwt,
+        state.settings.csrf_token,
+        null,
+        action.itemIds.concat(newId)
+      );
+    }).then((res2) => {
+      store.dispatch({
+        type: 'ADD_ITEM_TO_ASSESSMENT',
+        original: action,
+        payload: res2.body
+      });
+    });
   },
 
   [AssessmentConstants.CREATE_ASSESSMENT]: (store, action) => {
