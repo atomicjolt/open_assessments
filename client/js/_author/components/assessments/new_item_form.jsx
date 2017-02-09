@@ -10,7 +10,7 @@ export default class newItemForm extends React.Component{
     super();
     this.state = {
       name: '',
-      type: 'multipleChoice',
+      genusTypeId: 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
       language: 'english',
     };
   }
@@ -47,11 +47,15 @@ export default class newItemForm extends React.Component{
                 <label htmlFor="questionType" />
                 <div className="c-dropdown c-dropdown--medium">
                   <select
-                    onChange={e => this.setState({ type: e.target.value })}
+                    onChange={e => this.setState({ genusTypeId: e.target.value })}
                     name=""
                     id="questionType"
                   >
-                    <option value="multipleChoice">Multiple Choice</option>
+                    <option
+                      value="item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU"
+                    >
+                      Multiple Choice
+                    </option>
                     <option value="shortAnswer">Short Answer</option>
                     <option value="file">File</option>
                   </select>

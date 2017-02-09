@@ -147,7 +147,7 @@ const qbank = {
       action.body
     ).then((res) => {
       store.dispatch({
-        type: `CREATE_ITEM${DONE}`,
+        type: ItemConstants.CREATE_ITEM + DONE,
         original: action,
         payload: res.body
       });
@@ -155,16 +155,16 @@ const qbank = {
       const newId = res.body.id;
 
       return api.post(
-        `assessment/banks/${action.bankId}/items`,
+        `assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items`,
         state.settings.api_url,
         state.jwt,
         state.settings.csrf_token,
         null,
-        action.itemIds.concat(newId)
+        { itemIds: action.itemIds.concat(newId) }
       );
     }).then((res2) => {
       store.dispatch({
-        type: 'ADD_ITEM_TO_ASSESSMENT',
+        type: action.type + DONE,
         original: action,
         payload: res2.body
       });
@@ -195,7 +195,6 @@ const qbank = {
   [AssessmentConstants.DELETE_ASSESSMENT]: (store, action) => {
     const state = store.getState();
     const { bankId, assessmentId } = action;
-    console.log("here");
     getAssessmentsOffered(state, bankId, assessmentId).then((res) => {
       const assessmentsOffered = res.body;
 
