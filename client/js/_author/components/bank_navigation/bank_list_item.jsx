@@ -1,5 +1,4 @@
 import React      from 'react';
-import appHistory from '../../history';
 import Icon       from './bank_icon';
 
 // TODO: think about breaking this into smaller components
@@ -11,8 +10,9 @@ export default function bankListItem(props) {
   };
 
   const selectItem = () => {
-    if (bank.type === 'Assessment') {
-      appHistory.push(`banks/${bank.bankId}/assessments/${bank.id}`);
+
+    if (isAssessment) {
+      // console.log(`take me to assessment ${bank.id}`);
     } else {
       props.getBankChildren(bank);
     }
