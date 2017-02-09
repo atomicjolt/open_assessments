@@ -10,7 +10,7 @@ export default function bankListItem(props) {
   };
 
   const selectItem = () => {
-    if (bank.type === 'Assessment') {
+    if (isAssessment) {
       // console.log(`take me to assessment ${bank.id}`);
     } else {
       props.getBankChildren(bank);
