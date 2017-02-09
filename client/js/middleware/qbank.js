@@ -106,9 +106,29 @@ const qbank = {
     url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}`,
   },
 
+  [AssessmentConstants.UPDATE_ASSESSMENT_ITEMS]: {
+    method : Network.POST,
+    url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}/items`,
+  },
+
+  [AssessmentConstants.DELETE_ASSESSMENT_ITEM]: {
+    method : Network.DEL,
+    url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}/items/${action.itemId}`,
+  },
+
   [ItemConstants.GET_ITEMS]: {
     method : Network.GET,
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items`,
+  },
+
+  [ItemConstants.CREATE_ITEM]: {
+    method : Network.POST,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items`,
+  },
+
+  [ItemConstants.UPDATE_ITEM]: {
+    method : Network.POST,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items/${action.itemId}`,
   },
 
   [AssessmentConstants.CREATE_ASSESSMENT]: (store, action) => {
@@ -122,6 +142,7 @@ const qbank = {
       null,
       action.body
     ).then((res) => {
+      // Redirect to the edit view for the assessment, as it exists now
       authorAppHistory.push(`banks/${action.bankId}/assessments/${res.body.id}`);
       store.dispatch({
         type: action.type + DONE,
