@@ -11,6 +11,7 @@ const requests = [
   'UPDATE_ASSESSMENT_ITEMS',
   'CREATE_ITEM_IN_ASSESSMENT',
   'CREATE_ASSESSMENT',
+  'CREATE_ASSESSMENT_WITH_ITEM',
   'CREATE_ASSESSMENT_OFFERED',
   'GET_ASSESSMENT_OFFERED',
   'GET_ASSESSMENT_ITEMS',
@@ -35,6 +36,16 @@ export function createAssessment(bankId, assessment) {
     apiCall : true,
     type    : Constants.CREATE_ASSESSMENT,
     body    : assessment,
+  };
+}
+
+export function createAssessmentWithItem(bankId, assessment, item) {
+  return {
+    bankId,
+    assessment,
+    item,
+    apiCall : true,
+    type    : Constants.CREATE_ASSESSMENT_WITH_ITEM,
   };
 }
 
