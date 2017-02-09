@@ -39,26 +39,9 @@ export class NewAssessment extends React.Component {
     this.setState({ assessment: { ...this.state.assessment, [field]: value } });
   }
 
-  saveButton() {
-    return (
-      <button
-        style={{ ...buttonStyle, ...NewAssessment.styles.button }}
-        onClick={() => this.createAssessment()}
-      >
-        Save Assessment
-      </button>
-    );
-  }
-
   editItem(itemIndex, field, data) {
     const items = this.state.items;
     items[itemIndex][field] = data;
-    this.setState({ items });
-  }
-
-  addItem() {
-    const items = this.state.items;
-    items.push({ bankId: this.props.params.id, choices: [{}] });
     this.setState({ items });
   }
 
