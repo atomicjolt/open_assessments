@@ -25,11 +25,13 @@
     @include justify-content(space-between);
   }
 
-    .c-header-bottom__left{
-
-    }
-
-    .c-header-bottom__right{
+    .c-header-bottom__right, .c-header-bottom__left{
       @include display-flex;
       @include align-items(center);
     }
+
+      .c-breadcrumb__divider{
+        @include regular;
+        font-size: 1.6rem;
+        color: $gray8;
+      }

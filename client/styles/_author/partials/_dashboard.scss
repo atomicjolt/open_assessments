@@ -1,0 +1,174 @@
+.c-table{
+  width: 100%;
+  border-collapse: collapse;
+
+  th{
+    height: 5rem;
+    border-bottom: $border;
+    background: $gray1;
+    @include semi-bold;
+    font-size: 1.2rem;
+    color: $gray8;
+    text-align: left;
+    vertical-align: middle;
+
+    &:nth-of-type(1){
+      padding-left: 2rem;
+      width: 6rem;
+    }
+    &:nth-of-type(2){
+      width: 50%;
+    }
+    &:nth-of-type(3){
+
+    }
+    &:nth-of-type(4){
+      padding-right: 2rem;
+    }
+
+    .c-table__filter{
+      position: relative;
+      background: none;
+      border: none;
+      padding: 1rem 3rem 1rem 0;
+      font-size: 1.2rem;
+      color: $gray8;
+      height: 3.5rem;
+
+      i{
+        font-size: 2rem;
+        color: $gray4;
+        position: absolute;
+
+        &.top{
+          top: 0rem;
+          right: 0;
+        }
+        &.bottom{
+          bottom: -0.2rem;
+          right: 0;
+        }
+
+        &.is-active{
+          color: $gray10;
+        }
+      }
+
+      &.is-active{
+        @include bold;
+        color: $gray10;
+      }
+    }
+  }
+
+  tr{
+
+    &:hover{
+
+      td{
+        background: $purple;
+
+        &:nth-of-type(1){
+          i{
+            color: $white;
+          }
+        }
+        &:nth-of-type(2){
+          @include semi-bold;
+          color: $white;
+        }
+        &:nth-of-type(3){
+          i{
+            color: $white;
+          }
+        }
+        &:nth-of-type(4){
+
+        }
+      }
+      .c-table__icons{
+        @include display-flex;
+      }
+      .c-publish{
+        background-color: $purple2;
+        color: $white;
+
+        i{
+          color: $white;
+        }
+
+        &.is-published{
+          i{
+            color: $white;
+          }
+        }
+
+        &:hover{
+          background-color: $white;
+          color: $purple;
+
+          i{
+            color: $purple;
+          }
+        }
+      }
+    }
+
+    td{
+      height: 5rem;
+      border-bottom: $border;
+      vertical-align: middle;
+
+      button{
+        display: inline-block;
+      }
+
+      i{
+        font-size: 2rem;
+      }
+
+      &:nth-of-type(1){
+        padding-left: 2rem;
+        width: 6rem;
+        i{
+          color: $gray9;
+        }
+      }
+      &:nth-of-type(2){
+        @include regular;
+        font-size: 1.4rem;
+        color: $text-color;
+        width: 50%;
+        @include truncate;
+      }
+      &:nth-of-type(3){
+        i{
+          color: $gray9;
+        }
+        .is-published{
+          i{
+            color: $green;
+          }
+        }
+      }
+      &:nth-of-type(4){
+        padding-right: 2rem;
+      }
+    }
+  }
+}
+
+  .c-table__icons{
+    display: none;
+    @include align-items(center);
+    float: right;
+  }
+
+    .c-publish{
+
+    }
+
+.c-scrollable{
+  max-height: 90rem;
+  overflow: auto;
+}

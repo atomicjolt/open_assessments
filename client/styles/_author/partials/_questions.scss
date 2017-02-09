@@ -1,4 +1,6 @@
-
+.c-assessment-top{
+  background-color: $white;
+}
 
 .c-assessment-title{
   padding: 3rem 2.5rem 4rem;
@@ -15,6 +17,9 @@
 
   .c-question__number{
     color: $text-color;
+    margin: none;
+    @include semi-bold;
+    font-size: 1.2rem;
   }
 
   .c-question__type{
@@ -26,7 +31,6 @@
   width: 3rem;
   height: 3rem;
   border-radius: $radius;
-  margin-left: 0.5rem;
   text-align: center;
   font-size: 2rem;
   line-height: 3rem;
@@ -36,23 +40,62 @@
   &:hover{
     color: $text-color;
   }
-  &:active{
-    @include transform(scale(0.95));
+}
+
+.c-question-icons .c-btn--square{
+  margin-left: 0.5rem;
+  padding: 0;
+}
+
+.c-question-icons--reorder {
+  i{
+    display: block;
+    background: $blue2;
+    color: $white;
+
+    &:hover{
+      background: darken($blue2, 20%);
+      color: $white;
+    }
+  }
+
+  button{
+    margin-left: 0.5rem;
   }
 }
 
 .c-question{
 
   &.is-active{
+    .c-question__answers{
+      margin-bottom: 2.5rem;
+    }
     .c-question-settings{
       @include display-flex;
     }
     .c-question-icons i{
       display: inline-block;
     }
+    .c-question__feedback{
+      display: block;
+    }
+  }
 
+  &.reorder-active{
+    .o-item__top{
+      background-color: $blue;
+    }
+    .c-question__number, .c-question__type{
+      color: $white;
+    }
   }
 }
+
+  .c-question__text{
+    &:hover .c-input__bottom{
+      border-top: $border;
+    }
+  }
 
   .c-question__content {
     padding: 3rem 2.5rem 4rem;
@@ -60,7 +103,7 @@
 
   .c-question__answers{
     margin-top: 3rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 0;
   }
 
   .c-question__answers--maintain{
@@ -69,134 +112,39 @@
     }
   }
 
-    .c-answer{
-      padding: 0.75rem 5.5rem;
-      background: $white;
-      box-shadow: 0 0 0.6rem rgba(0,0,0,0.15);
-      min-height: 5rem;
-      margin-bottom: 1rem;
-      cursor: pointer;
-
-      &:hover{
-        .c-answer__icons .c-answer__icons__spacer:last-of-type i{
-          display: inline-block;
-        }
-
-        .c-input__bottom{
-          border-top: $border;
-        }
-      }
-
-      .c-answer__icons{
-        position: absolute;
-        width: 11rem;
-        height: 3rem;
-        right: -12rem;
-        top: 0.2rem;
-        cursor: pointer;
-
-        i{
-          display: none;
-          font-size: 3rem;
-          color: $gray8;
-
-          &:hover{
-            color: $blue;
-          }
-        }
-      }
-
-        .c-answer__icons__spacer{
-          width: 3rem;
-          height: 3rem;
-          margin-right: 1rem;
-          display: inline-block;
-
-          &:last-of-type{
-            margin: 0;
-            i{
-              color: $gray4;
-
-              &:hover{
-                color: $text-color;
-              }
-            }
-          }
-        }
-
-      .c-feedback{
-        display: none;
-      }
-
-      &.is-active{
-        .c-feedback{
-          @include display-flex;
-        }
-        .c-answer__icons i{
-          display: inline-block;
-        }
-      }
+    .c-question__feedback{
+      display: none;
     }
 
-    .c-answer--add{
-      box-shadow: none;
-      min-height: 5rem;
-      margin-bottom: 0;
-      border: 0.2rem dashed $gray3;
-      @include transition(background 0.1s ease, transform 0.1s ease);
 
-      &:hover{
-        background: $gray1;
+.c-question-add{
+  display: block;
+  margin: 2rem 2rem 0;
+}
 
-        .c-input__bottom{
-          border-color: $white;
-        }
+  .c-question-add__button{
+    display: block;
+    width: 100%;
+    background: none;
+    text-align: center;
+    @include transition(background 0.1s ease, transform 0.1s ease);
+    cursor: pointer;
+    border: 0.2rem dashed $gray4;
+    border-image: url('../../assets/_author/images/border.png') 2 round;
+    @include semi-bold;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    color: $text-color;
+    padding: 1.5rem;
 
-        .c-input .c-text-input{
-          color: $gray8;
-        }
-
-        .c-radio{
-
-          input[type="radio"] + label:before{
-            color: $gray8;
-          }
-        }
-
-        .c-checkbox{
-
-          input[type="checkbox"] + label:before{
-            color: $gray8;
-          }
-        }
-      }
-
-      &:active{
-        @include transform(scale(0.99));
-      }
-
-      .c-input{
-        pointer-events: none;
-
-        .c-text-input{
-          color: $gray4;
-          @include transition(color 0.1s ease);
-        }
-      }
-
-      .c-radio{
-
-        input[type="radio"] + label:before{
-          color: $gray3;
-          @include transition(color 0.1s ease);
-        }
-      }
-
-      .c-checkbox{
-
-        input[type="checkbox"] + label:before{
-          color: $gray3;
-          @include transition(color 0.1s ease);
-        }
-      }
+    &:hover{
+      background: $gray1;
     }
+    &:active{
+      @include transform(scale(0.99));
+    }
+  }
+
+  .c-question-add__buttons{
+    margin-top: 3rem;
+  }
