@@ -7,7 +7,10 @@ export default function bankListHeader(props) {
         <tr>
           <th />
           <th>
-            <button className="c-table__filter is-active" onClick={() => props.sortBy('sortName')}>
+            <button
+              className={props.sortName ? 'c-table__filter is-active' : 'c-table__filter'}
+              onClick={() => props.sortBy('sortName')}
+            >
               Name
               <i className={props.sortName === 'desc' ? 'material-icons top is-active' : 'material-icons top'}>
                 keyboard_arrow_up
@@ -18,7 +21,10 @@ export default function bankListHeader(props) {
             </button>
           </th>
           <th>
-            <button className="c-table__filter" onClick={() => props.sortBy('sortPublished')}>
+            <button
+              className={props.sortPublished ? 'c-table__filter is-active' : 'c-table__filter'}
+              onClick={() => props.sortBy('sortPublished')}
+            >
               Publish
               <i className={props.sortPublished === 'desc' ? 'material-icons top is-active' : 'material-icons top'}>
                 keyboard_arrow_up

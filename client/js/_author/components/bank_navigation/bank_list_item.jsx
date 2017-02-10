@@ -11,7 +11,7 @@ export default function bankListItem(props) {
   };
 
   const selectItem = () => {
-    if (bank.type === 'Assessment') {
+    if (isAssessment) {
       appHistory.push(`banks/${bank.bankId}/assessments/${bank.id}`);
     } else {
       props.getBankChildren(bank);
