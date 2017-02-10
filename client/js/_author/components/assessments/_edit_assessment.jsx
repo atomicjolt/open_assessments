@@ -77,6 +77,10 @@ export class NewAssessment extends React.Component {
     this.setState({ items });
   }
 
+  addItem() {
+  //  TODO: write me
+  }
+
   createItem(newItem) {
     this.props.createItemInAssessment(
       this.props.params.bankId,
@@ -100,6 +104,8 @@ export class NewAssessment extends React.Component {
           updateStateAssessment={(field, value) => this.updateStateAssessment(field, value)}
           items={this.props.items}
           createItem={newItem => this.createItem(newItem)}
+          editItem={(index, field, data) => this.editItem(index, field, data)}
+          addItem={() => this.addItem()}
         />
       </div>
 

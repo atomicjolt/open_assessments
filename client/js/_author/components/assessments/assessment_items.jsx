@@ -5,7 +5,7 @@ import Question         from './question_types/_question';
 export default function AssessmentQuestions(props) {
   return (
     <div>
-      {_.map(props.items, (item, index) => (
+      {_.map(_.compact(props.items), (item, index) => (
         <Question
           key={index}
           {...item}

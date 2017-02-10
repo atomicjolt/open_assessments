@@ -9,10 +9,6 @@ export default class AssessmentForm extends React.Component {
     items: React.PropTypes.oneOfType(
       [React.PropTypes.shape({}), React.PropTypes.arrayOf(React.PropTypes.shape({}))]
     ),
-    params: React.PropTypes.shape({
-      bankId: React.PropTypes.string,
-      id: React.PropTypes.string,
-    }).isRequired,
     name: React.PropTypes.string,
     editItem: React.PropTypes.func.isRequired,
     addItem: React.PropTypes.func.isRequired,
@@ -66,8 +62,7 @@ export default class AssessmentForm extends React.Component {
         </div>
         <AssessmentItems
           items={this.props.items}
-          editItem={(itemIndex, field, data) =>
-            this.props.editItem(itemIndex, field, data)}
+          editItem={(itemIndex, field, data) => this.props.editItem(itemIndex, field, data)}
           addItem={() => this.props.addItem()}
         />
 

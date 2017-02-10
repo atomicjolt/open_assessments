@@ -1,11 +1,21 @@
 import React    from 'react';
 
 export default function inactiveHeader(props) {
+
+  const type = () => {
+    switch (props.type) {
+      case 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU':
+        return 'Multiple Choice';
+      default:
+        return 'Question';
+    }
+  };
+
   return (
     <div className="o-item__top">
       <div className="o-left">
-        <h3 className="c-question__number">Question 1</h3>
-        <div className="c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; Multiple Choice</div>
+        <h3 className="c-question__number">{props.name}</h3>
+        <div className="c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; {type()}</div>
       </div>
 
       <div className="o-right c-question-icons">
@@ -17,4 +27,7 @@ export default function inactiveHeader(props) {
   );
 }
 
-inactiveHeader.propTypes = {};
+inactiveHeader.propTypes = {
+  name: React.PropTypes.string,
+  type: React.PropTypes.string,
+};
