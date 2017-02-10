@@ -11,12 +11,17 @@ export default function bankListItem(props) {
   };
 
   const selectItem = () => {
-    if (bank.type === 'Assessment') {
+    if (isAssessment) {
       appHistory.push(`banks/${bank.bankId}/assessments/${bank.id}`);
     } else {
       props.getBankChildren(bank);
     }
   };
+
+  function deleteAssessment(e, bankId, assessmentId) {
+    e.stopPropagation();
+    props.deleteAssessment(bankId, assessmentId);
+  }
 
   return (
     <tr
@@ -45,7 +50,7 @@ export default function bankListItem(props) {
           </button>
           <button
             className="c-btn c-btn--square c-btn--table"
-            onClick={() => props.deleteAssessment(bank.bankId, bank.id)}
+            onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
           >
             <i className="material-icons">delete</i>
           </button>

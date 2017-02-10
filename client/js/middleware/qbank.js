@@ -96,6 +96,11 @@ const qbank = {
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assessmentsoffered`,
   },
 
+  [AssessmentConstants.GET_ASSESSMENT_ITEMS]: {
+    method : Network.GET,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items`,
+  },
+
   [AssessmentConstants.PUBLISH_ASSESSMENT]: {
     method : Network.POST,
     url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedBankIds`,
@@ -106,9 +111,64 @@ const qbank = {
     url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}`,
   },
 
+  [AssessmentConstants.UPDATE_ASSESSMENT_ITEMS]: {
+    method : Network.POST,
+    url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}/items`,
+  },
+
+  [AssessmentConstants.DELETE_ASSESSMENT_ITEM]: {
+    method : Network.DEL,
+    url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}/items/${action.itemId}`,
+  },
+
   [ItemConstants.GET_ITEMS]: {
     method : Network.GET,
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items`,
+  },
+
+  [ItemConstants.CREATE_ITEM]: {
+    method : Network.POST,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items`,
+  },
+
+  [ItemConstants.UPDATE_ITEM]: {
+    method : Network.POST,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items/${action.itemId}`,
+  },
+
+  [AssessmentConstants.CREATE_ITEM_IN_ASSESSMENT]: (store, action) => {
+    const state = store.getState();
+    api.post(
+      `assessment/banks/${action.bankId}/items`,
+      state.settings.api_url,
+      state.jwt,
+      state.settings.csrf_token,
+      null,
+      action.body
+    ).then((res) => {
+      store.dispatch({
+        type: ItemConstants.CREATE_ITEM + DONE,
+        original: action,
+        payload: res.body
+      });
+
+      const newId = res.body.id;
+
+      return api.post(
+        `assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items`,
+        state.settings.api_url,
+        state.jwt,
+        state.settings.csrf_token,
+        null,
+        { itemIds: action.itemIds.concat(newId) }
+      );
+    }).then((res2) => {
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: res2.body
+      });
+    });
   },
 
   [AssessmentConstants.CREATE_ASSESSMENT]: (store, action) => {
@@ -122,6 +182,7 @@ const qbank = {
       null,
       action.body
     ).then((res) => {
+      // Redirect to the edit view for the assessment, as it exists now
       authorAppHistory.push(`banks/${action.bankId}/assessments/${res.body.id}`);
       store.dispatch({
         type: action.type + DONE,
@@ -134,7 +195,6 @@ const qbank = {
   [AssessmentConstants.DELETE_ASSESSMENT]: (store, action) => {
     const state = store.getState();
     const { bankId, assessmentId } = action;
-    console.log("here");
     getAssessmentsOffered(state, bankId, assessmentId).then((res) => {
       const assessmentsOffered = res.body;
 

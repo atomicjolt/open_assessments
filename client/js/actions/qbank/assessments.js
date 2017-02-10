@@ -8,10 +8,14 @@ const actions = [
 const requests = [
   'GET_ASSESSMENTS',
   'UPDATE_ASSESSMENT',
+  'UPDATE_ASSESSMENT_ITEMS',
+  'CREATE_ITEM_IN_ASSESSMENT',
   'CREATE_ASSESSMENT',
   'CREATE_ASSESSMENT_OFFERED',
   'GET_ASSESSMENT_OFFERED',
+  'GET_ASSESSMENT_ITEMS',
   'DELETE_ASSESSMENT',
+  'DELETE_ASSESSMENT_ITEM',
   'PUBLISH_ASSESSMENT',
 ];
 
@@ -43,12 +47,42 @@ export function updateAssessment(bankId, assessment) {
   };
 }
 
+export function updateAssessmentItems(bankId, assessmentId, itemIds) {
+  return {
+    bankId,
+    assessmentId,
+    apiCall : true,
+    type    : Constants.UPDATE_ASSESSMENT_ITEMS,
+    body    : itemIds,
+  };
+}
+
+export function createItemInAssessment(bankId, assessmentId, itemIds, newItem) {
+  return {
+    bankId,
+    assessmentId,
+    itemIds,
+    apiCall : true,
+    type    : Constants.CREATE_ITEM_IN_ASSESSMENT,
+    body    : newItem,
+  };
+}
+
 export function createAssessmentOffered(bankId, assessmentId) {
   return {
     bankId,
     assessmentId,
     apiCall : true,
     type    : Constants.CREATE_ASSESSMENT_OFFERED,
+  };
+}
+
+export function getAssessmentItems(bankId, assessmentId) {
+  return {
+    bankId,
+    assessmentId,
+    apiCall : true,
+    type    : Constants.GET_ASSESSMENT_ITEMS,
   };
 }
 
@@ -67,6 +101,16 @@ export function deleteAssessment(bankId, assessmentId) {
     assessmentId,
     apiCall : true,
     type    : Constants.DELETE_ASSESSMENT,
+  };
+}
+
+export function deleteAssessmentItem(bankId, assessmentId, itemId) {
+  return {
+    bankId,
+    assessmentId,
+    itemId,
+    apiCall : true,
+    type    : Constants.DELETE_ASSESSMENT_ITEM,
   };
 }
 
