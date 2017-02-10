@@ -3,7 +3,6 @@ import { connect }            from 'react-redux';
 import _                      from 'lodash';
 import Heading                from  '../common/heading';
 import AssessmentForm         from './assessment_form';
-import { colors, buttonStyle }  from '../../defines';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
@@ -38,16 +37,6 @@ export class NewAssessment extends React.Component {
     createItemInAssessment: React.PropTypes.func.isRequired,
   };
 
-  static styles = {
-    button: {
-      backgroundColor : colors.primaryPurple,
-      height          : '100%',
-      verticalAlign   : 'middle',
-      margin          : '7px 15px',
-      padding         : '5px 40px',
-    },
-  };
-
   constructor(props) {
     super(props);
     this.titleField = null;
@@ -80,17 +69,6 @@ export class NewAssessment extends React.Component {
     const assessment = this.state.assessment;
     assessment[field] = value;
     this.setState({ assessment });
-  }
-
-  saveButton() {
-    return (
-      <button
-        style={{ ...buttonStyle, ...NewAssessment.styles.button }}
-        onClick={() => this.createAssessment()}
-      >
-        Save Assessment
-      </button>
-    );
   }
 
   editItem(itemIndex, field, data) {
@@ -128,7 +106,7 @@ export class NewAssessment extends React.Component {
     );
   }
 }
-// { this.titleField.value }
+
 export default connect(select, {
   ...BankActions,
   ...AssessmentActions,
