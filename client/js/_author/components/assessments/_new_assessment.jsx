@@ -2,7 +2,6 @@ import React                  from 'react';
 import { connect }            from 'react-redux';
 import AssessmentForm         from './assessment_form';
 import Heading                from  '../common/heading';
-import { colors, buttonStyle }  from '../../defines';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
