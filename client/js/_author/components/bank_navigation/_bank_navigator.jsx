@@ -23,6 +23,7 @@ function select(state) {
     banks: _.merge(state.assessments[currentBankId], banks),
   };
 }
+
 export class BankNavigator extends React.Component {
   static propTypes = {
     banks: React.PropTypes.oneOfType([
