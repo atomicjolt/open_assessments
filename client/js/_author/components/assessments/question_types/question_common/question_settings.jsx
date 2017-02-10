@@ -12,14 +12,24 @@ export default function questionSettings(props) {
               id={`question_name_${props.id}`}
               type="text"
               tabIndex="-1"
+              defaultValue={props.defaultName}
+              onChange={e => props.updateState('name', e.target.value)}
+              onBlur={props.updateItem}
             />
             <div className="c-input__bottom" />
           </div>
         </div>
 
         <div className="c-dropdown c-dropdown--small u-ml-md">
-          <select name="" id="" tabIndex="-1">
-            <option value="">English</option>
+          <select
+            name=""
+            id=""
+            tabIndex="-1"
+            value={props.language}
+            onChange={e => props.updateState('nameLanguage', e.target.value)}
+            onBlur={props.updateItem}
+          >
+            <option value="639-2%3AENG%40ISO">English</option>
             <option value="">French</option>
             <option value="">Spanish</option>
           </select>
@@ -28,16 +38,37 @@ export default function questionSettings(props) {
 
       <div className="o-right">
         <div className="c-checkbox u-ml-md">
-          <input type="checkbox" id="check02" name="check" tabIndex="-1" />
-          <label htmlFor="check02">Maintain choice order</label>
+          <input
+            type="checkbox"
+            id={`check02_${props.id}`}
+            name="check"
+            tabIndex="-1"
+            onChange={() => props.updateState('maintainOrder', !props.maintainOrder)}
+            checked={props.maintainOrder ? 'checked' : null}
+          />
+          <label htmlFor={`check02_${props.id}`}>Maintain choice order</label>
         </div>
         <div className="c-checkbox u-ml-md">
-          <input type="checkbox" id="check03" name="check" tabIndex="-1" />
-          <label htmlFor="check03">Multiple answer</label>
+          <input
+            type="checkbox"
+            id={`check03_${props.id}`}
+            name="check"
+            tabIndex="-1"
+            onChange={() => props.updateState('multipleAnswer', !props.multipleAnswer)}
+            checked={props.multipleAnswer ? 'checked' : null}
+          />
+          <label htmlFor={`check03_${props.id}`}>Multiple answer</label>
         </div>
         <div className="c-checkbox u-ml-md">
-          <input type="checkbox" id="check04" name="check" tabIndex="-1" />
-          <label htmlFor="check04">Reflection</label>
+          <input
+            type="checkbox"
+            id={`check04_${props.id}`}
+            name="check"
+            tabIndex="-1"
+            onChange={() => props.updateState('reflection', !props.reflection)}
+            checked={props.reflection ? 'checked' : null}
+          />
+          <label htmlFor={`check04_${props.id}`}>Reflection</label>
         </div>
       </div>
     </div>
@@ -46,4 +77,12 @@ export default function questionSettings(props) {
 
 questionSettings.propTypes = {
   id: React.PropTypes.string.isRequired,
+  name: React.PropTypes.string,
+  defaultName: React.PropTypes.string,
+  language: React.PropTypes.string.isRequired,
+  updateState: React.PropTypes.func.isRequired,
+  updateItem: React.PropTypes.func.isRequired,
+  maintainOrder: React.PropTypes.bool,
+  multipleAnswer: React.PropTypes.bool,
+  reflection: React.PropTypes.bool,
 };

@@ -8,12 +8,26 @@ import Feedback         from './question_common/feedback';
 export default class Question extends React.Component {
   static propTypes = {
     genusTypeId: React.PropTypes.string.isRequired,
-    displayName: React.PropTypes.shape({}).isRequired,
+    id: React.PropTypes.string.isRequired,
+    displayName: React.PropTypes.shape({
+      text: React.PropTypes.string,
+    }).isRequired,
   };
 
-  constructor() {
-    super();
-    this.state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: props.displayName.text,
+    };
+  }
+
+  componentWilUpdate(nextProps, nextState) {
+  //  TODO: something to manage state with updates from the server
+  }
+
+  updateItem() {
+  //  call the update item prop with values from the state
+    console.log("updating item");
   }
 
   updateState(key, value) {
@@ -31,8 +45,8 @@ export default class Question extends React.Component {
 
   render() {
     console.log(this.props);
-    const { displayName, genusTypeId } = this.props;
-    const { name } = this.state;
+    const { displayName, genusTypeId, id } = this.props;
+    const { nameLanguage, maintainOrder, multipleAnswer, reflection } = this.state;
     return (
       <div className="o-item c-question is-active" tabIndex="0">
         <InactiveHeader
@@ -40,11 +54,19 @@ export default class Question extends React.Component {
           type={genusTypeId}
         />
         <Settings
+          id={id}
           updateState={(key, val) => this.updateState(key, val)}
-          name={name || displayName.text}
+          updateItem={() => this.updateItem()}
+          defaultName={displayName.text}
+          language={nameLanguage || displayName.languageTypeId}
+          maintainOrder={maintainOrder}
+          multipleAnswer={multipleAnswer}
+          reflection={reflection}
         />
         <div className="c-question__content">
-          <QuestionText />
+          <QuestionText
+            id={id}
+          />
           {this.content()}
           <Feedback />
         </div>
