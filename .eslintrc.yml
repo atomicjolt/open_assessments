@@ -40,8 +40,21 @@ rules:
     - error
     - devDependencies: true
   padded-blocks: 0
-  key-spacing:
-    - 0
-  react/require-default-props: off
+  key-spacing: 0
+  react/require-default-props: 0
   jsx-a11y/no-static-element-interactions: 0
+  space-before-function-paren:
+    - 2
+    - never
+  func-names:
+    - 2
+    - as-needed
+  react/prefer-stateless-function:
+    - 2
+    - ignorePureComponents: true
+  react/forbid-prop-types:
+    - 2
+    - forbid:
+      - any
+  import/extensions: 0
   import/no-named-as-default: off
