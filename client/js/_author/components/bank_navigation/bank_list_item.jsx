@@ -5,6 +5,9 @@ import Icon       from './bank_icon';
 // TODO: think about breaking this into smaller components
 export default function bankListItem(props) {
   const { bank } = props;
+  // const editBankId = 'assessment.Bank%3A588f9225c89cd977c3560780%40ODL.MIT.EDU';
+  const publishedBankId = 'assessment.Bank%3A588f9240c89cd977c3560781%40ODL.MIT.EDU';
+  const isPublished = _.findIndex(bank.assignedBankIds, (id) => { return id === publishedBankId; }) !== -1 ? true : false;
   const isAssessment = bank.type === 'Assessment';
   const buttonContainer = {
     display: isAssessment ? '' : 'none',
@@ -34,7 +37,7 @@ export default function bankListItem(props) {
       <td>{bank.displayName ? bank.displayName.text : null}</td>
       <td>
         <button className="c-btn c-btn--square c-publish" style={buttonContainer}>
-          <Icon type={bank.published ? 'Published' : 'Publish'} />
+          <Icon type={isPublished ? 'Published' : 'Publish'} />
         </button>
       </td>
       <td>

@@ -3,6 +3,7 @@ import { DONE } from '../constants/wrapper';
 
 export default function request(store, action, method, url, params, body) {
   const state = store.getState();
+
   const promise = api.execRequest(
     method,
     url,
@@ -14,14 +15,23 @@ export default function request(store, action, method, url, params, body) {
   );
 
   if (promise) {
-    promise.then((response, error) => {
-      store.dispatch({
-        type      : action.type + DONE,
-        payload   : response.body,
-        original  : action,
-        response,
-        error
-      }); // Dispatch the new data
-    });
+    promise.then(
+      (response) => {
+        store.dispatch({
+          type: action.type + DONE,
+          payload: response.body,
+          original: action,
+          response,
+        }); // Dispatch the new data
+      },
+      (error) => {
+        store.dispatch({
+          type: action.type + DONE,
+          payload: {},
+          original: action,
+          error,
+        }); // Dispatch the new error
+      },
+    );
   }
 }

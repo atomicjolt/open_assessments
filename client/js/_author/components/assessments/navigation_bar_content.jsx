@@ -1,7 +1,8 @@
 import React            from 'react';
 import { hashHistory }  from 'react-router';
+import Icon             from '../bank_navigation/bank_icon';
 
-export default function (props) {
+export default function AssessmentsView(props) {
   return (
     <div className="c-header-bottom">
       <div className="c-header-bottom__left">
@@ -15,9 +16,12 @@ export default function (props) {
       </div>
 
       <div className="c-header-bottom__right">
-        <button className="c-btn c-btn--sm c-btn--green">
-          <i className="material-icons">cloud_upload</i>
-          Publish
+        <button
+          className="c-btn c-btn--sm c-btn--green"
+          onClick={() => props.assignedAssessment(props.isPublished)}
+        >
+          <Icon type={props.isPublished ? 'Published' : 'Publish'} />
+          {props.isPublished ? 'Unpublish' : 'Publish'}
         </button>
         <button className="c-btn c-btn--sm c-btn--maroon u-ml-md">
           <i className="material-icons">remove_red_eye</i>
@@ -27,3 +31,8 @@ export default function (props) {
     </div>
   );
 }
+
+AssessmentsView.propTypes = {
+  assignedAssessment: React.PropTypes.func.isRequired,
+  isPublished: React.PropTypes.bool.isRequired,
+};

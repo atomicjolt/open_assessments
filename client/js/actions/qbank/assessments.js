@@ -16,7 +16,8 @@ const requests = [
   'GET_ASSESSMENT_ITEMS',
   'DELETE_ASSESSMENT',
   'DELETE_ASSESSMENT_ITEM',
-  'PUBLISH_ASSESSMENT',
+  'ASSIGNED_ASSESSMENT',
+  'DELETE_ASSIGNED_ASSESSMENT',
 ];
 
 export const Constants = wrapper(actions, requests);
@@ -114,12 +115,22 @@ export function deleteAssessmentItem(bankId, assessmentId, itemId) {
   };
 }
 
-
-export function publishAssessment(bankId, assessmentId) {
+export function deleteAssignedAssessment(assessment, assignedId) {
   return {
-    bankId,
-    assessmentId,
+    bankId       : assessment.bankId,
+    assessmentId : assessment.id,
+    assignedId,
     apiCall : true,
-    type    : Constants.PUBLISH_ASSESSMENT,
+    type    : Constants.DELETE_ASSIGNED_ASSESSMENT,
+  };
+}
+
+export function assignedAssessment(assessment, publishedBankId) {
+  return {
+    bankId       : assessment.bankId,
+    assessmentId : assessment.id,
+    apiCall      : true,
+    type         : Constants.ASSIGNED_ASSESSMENT,
+    body         : { assignedBankIds: [publishedBankId] }
   };
 }

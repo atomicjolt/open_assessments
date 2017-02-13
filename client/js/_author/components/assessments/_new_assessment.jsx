@@ -2,7 +2,6 @@ import React                  from 'react';
 import { connect }            from 'react-redux';
 import AssessmentForm         from './assessment_form';
 import Heading                from  '../common/heading';
-import { colors, buttonStyle }  from '../../defines';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
@@ -16,6 +15,7 @@ export class NewAssessment extends React.Component {
   static propTypes = {
     params: React.PropTypes.shape({ id: React.PropTypes.string }).isRequired,
     createAssessment: React.PropTypes.func.isRequired,
+    publishAssessment: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -48,7 +48,10 @@ export class NewAssessment extends React.Component {
   render() {
     return (
       <div>
-        <Heading view="assessments" />
+        <Heading
+          view="assessments"
+          publishAssessment={this.props.publishAssessment}
+        />
         <AssessmentForm
           {...this.state.assessment}
           updateAssessment={() => this.createAssessment()}

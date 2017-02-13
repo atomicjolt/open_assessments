@@ -3,7 +3,6 @@ import { connect }            from 'react-redux';
 import _                      from 'lodash';
 import Heading                from  '../common/heading';
 import AssessmentForm         from './assessment_form';
-import { colors, buttonStyle }  from '../../defines';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
@@ -24,7 +23,8 @@ function select(state, props) {
 
   return {
     assessment: bank && transformAssessment(bank[encodeURIComponent(props.params.id)]),
-    items: _.at(state.items[props.params.bankId], assessmentItemIds)
+    items: _.at(state.items[props.params.bankId], assessmentItemIds),
+    currentAssessment: state.assessments[encodeURIComponent(props.params.bankId)][encodeURIComponent(props.params.id)]
   };
 }
 
@@ -34,18 +34,16 @@ export class NewAssessment extends React.Component {
       id: React.PropTypes.string,
       bankId: React.PropTypes.string
     }).isRequired,
-    createAssessment: React.PropTypes.func.isRequired,
+    assessment: React.PropTypes.shape({
+      id: React.PropTypes.string,
+      bankId: React.PropTypes.string
+    }),
+    assignedAssessment: React.PropTypes.func.isRequired,
+    deleteAssignedAssessment: React.PropTypes.func.isRequired,
+    getAssessments: React.PropTypes.func.isRequired,
+    updateAssessment: React.PropTypes.func.isRequired,
+    getAssessmentItems: React.PropTypes.func.isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
-  };
-
-  static styles = {
-    button: {
-      backgroundColor : colors.primaryPurple,
-      height          : '100%',
-      verticalAlign   : 'middle',
-      margin          : '7px 15px',
-      padding         : '5px 40px',
-    },
   };
 
   constructor(props) {
@@ -82,17 +80,6 @@ export class NewAssessment extends React.Component {
     this.setState({ assessment });
   }
 
-  saveButton() {
-    return (
-      <button
-        style={{ ...buttonStyle, ...NewAssessment.styles.button }}
-        onClick={() => this.createAssessment()}
-      >
-        Save Assessment
-      </button>
-    );
-  }
-
   editItem(itemIndex, field, data) {
     const items = this.state.items;
     items[itemIndex][field] = data;
@@ -112,10 +99,32 @@ export class NewAssessment extends React.Component {
     return { ...this.props.assessment, ...this.state.assessment };
   }
 
+  assignedAssessment(published) {
+    const { assessment } = this.props;
+    const editBankId = 'assessment.Bank%3A588f9225c89cd977c3560780%40ODL.MIT.EDU';
+    const publishedBankId = 'assessment.Bank%3A588f9240c89cd977c3560781%40ODL.MIT.EDU';
+    if (published) {
+      this.props.deleteAssignedAssessment(assessment, publishedBankId);
+      // Need to delete the publishedBankId and then add the editBankId
+      this.props.assignedAssessment(assessment, editBankId);
+    } else {
+      this.props.deleteAssignedAssessment(assessment, editBankId);
+      // Need to delete the editBankId and then add the publishedBankId
+      this.props.assignedAssessment(assessment, publishedBankId);
+    }
+  }
+
   render() {
+    // debugger
+    const publishedBankId = 'assessment.Bank%3A588f9240c89cd977c3560781%40ODL.MIT.EDU';
+    const isPublished = _.findIndex(this.props.currentAssessment.assignedBankIds, (id) => { return id === publishedBankId; }) !== -1 ? true : false;
     return (
       <div>
-        <Heading view="assessments" />
+        <Heading
+          view="assessments"
+          assignedAssessment={(published) => { this.assignedAssessment(published); }}
+          isPublished={isPublished}
+        />
         <AssessmentForm
           {...this.assessmentProps()}
           updateAssessment={() => this.updateAssessment()}
