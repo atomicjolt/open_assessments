@@ -19,6 +19,7 @@ export default function bankList(props) {
               {
                 _.map(props.banks, bank => (
                   <ListItem
+                    embedCode={(assessId, bankId) => { props.embedCode(assessId, bankId); }}
                     key={`bank_${bank.id}`}
                     bank={bank}
                     getBankChildren={props.getBankChildren}

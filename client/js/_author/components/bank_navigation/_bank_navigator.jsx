@@ -88,6 +88,19 @@ export class BankNavigator extends React.Component {
     this.props.deleteAssessment(bankId, assessmentId);
   }
 
+  embedCode (assessId, bankId) {
+    debugger;
+    // let assessOffered = this.props.assessment_offered;
+    // if(!_.isEmpty(assessOffered)){
+    //   let qBankHost = this.props.settings.qBankHost ? this.props.settings.qBankHost : "https://qbank-clix-dev.mit.edu";
+    //   let playerHost = this.props.settings.assessmentPlayerUrl; //This will need to be the instance deployed, not localhost.
+    //   let url = `${playerHost}/?unlock_next=ON_CORRECT&api_url=localhost:8091/api/v1&bank=${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}#/assessment`;
+    //   return `<iframe src="${url}"/>`;
+    // } else {
+    //   return "";
+    // }
+  }
+
   render() {
     return (
       <div>
@@ -100,6 +113,7 @@ export class BankNavigator extends React.Component {
         />
         <BankList
           banks={this.sortBanks()}
+          embedCode={(assessId, bankId) => { this.embedCode(assessId, bankId); }}
           getBankChildren={bank => this.getBankChildren(bank)}
           sortBy={type => this.sortBy(type)}
           sortName={this.state.sortName}

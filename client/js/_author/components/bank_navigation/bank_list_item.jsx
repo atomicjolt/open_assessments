@@ -39,7 +39,10 @@ export default function bankListItem(props) {
       </td>
       <td>
         <div className="c-table__icons" style={buttonContainer}>
-          <button className="c-btn c-btn--sm c-btn--table">
+          <button
+            className="c-btn c-btn--sm c-btn--table"
+            onClick={() => props.embedCode(bank.id, bank.bankId)}
+          >
             embed code
           </button>
           <button className="c-btn c-btn--square c-btn--table">
@@ -56,6 +59,7 @@ export default function bankListItem(props) {
           </button>
         </div>
       </td>
+      <div></div>
     </tr>
   );
 }
