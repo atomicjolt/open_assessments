@@ -33,8 +33,9 @@ export class NewAssessment extends React.Component {
       id: React.PropTypes.string,
       bankId: React.PropTypes.string
     }).isRequired,
-    createAssessment: React.PropTypes.func.isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
+    updateItem: React.PropTypes.func.isRequired,
+    items: React.PropTypes.arrayOf(React.PropTypes.shape({}))
   };
 
   constructor(props) {
@@ -77,6 +78,14 @@ export class NewAssessment extends React.Component {
     this.setState({ items });
   }
 
+  updateItem(item) {
+    this.props.updateItem(this.props.params.bankId, item);
+  }
+
+  addItem() {
+  //  TODO: write me
+  }
+
   createItem(newItem) {
     this.props.createItemInAssessment(
       this.props.params.bankId,
@@ -99,7 +108,10 @@ export class NewAssessment extends React.Component {
           updateAssessment={() => this.updateAssessment()}
           updateStateAssessment={(field, value) => this.updateStateAssessment(field, value)}
           items={this.props.items}
+          updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}
+          editItem={(index, field, data) => this.editItem(index, field, data)}
+          addItem={() => this.addItem()}
         />
       </div>
 

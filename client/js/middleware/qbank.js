@@ -132,7 +132,7 @@ const qbank = {
   },
 
   [ItemConstants.UPDATE_ITEM]: {
-    method : Network.POST,
+    method : Network.PUT,
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items/${action.itemId}`,
   },
 
