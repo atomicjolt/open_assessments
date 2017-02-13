@@ -21,6 +21,14 @@ export default class Question extends React.Component {
         id,
         name: newItemProperties.name || displayName.text,
         description: newItemProperties.description || description.text,
+        question: {
+          questionString: description.text,
+          choices: [
+            { text: 'Ronnie James Dio' },
+            { text: 'Ozzy Osbourne' },
+            { text: 'Rick Sanchez' }
+          ],
+        }
       }
     );
   }
@@ -28,7 +36,12 @@ export default class Question extends React.Component {
   content() {
     switch (this.props.item.genusTypeId) {
       case 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU':
-        return <MultipleChoice {...this.props} />;
+        return (
+          <MultipleChoice
+            {...this.props}
+            updateItem={newProps => this.updateItem(newProps)}
+          />
+        );
       default:
         return null;
     }
