@@ -7,35 +7,26 @@ import Feedback         from './question_common/feedback';
 
 export default class Question extends React.Component {
   static propTypes = {
-    genusTypeId: React.PropTypes.string.isRequired,
-    id: React.PropTypes.string.isRequired,
-    displayName: React.PropTypes.shape({
-      text: React.PropTypes.string,
+    item: React.PropTypes.shape({
+      genusTypeId: React.PropTypes.string,
     }).isRequired,
+    updateItem: React.PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: props.displayName.text,
-    };
-  }
-
-  componentWilUpdate(nextProps, nextState) {
-  //  TODO: something to manage state with updates from the server
-  }
-
-  updateItem() {
-  //  call the update item prop with values from the state
-    console.log("updating item");
-  }
-
-  updateState(key, value) {
-    this.setState({ [key]: value });
+  updateItem(newItemProperties) {
+    const { item } = this.props;
+    const { displayName, description, id } = item;
+    this.props.updateItem(
+      {
+        id,
+        name: newItemProperties.name || displayName.text,
+        description: newItemProperties.description || description.text,
+      }
+    );
   }
 
   content() {
-    switch (this.props.genusTypeId) {
+    switch (this.props.item.genusTypeId) {
       case 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU':
         return <MultipleChoice {...this.props} />;
       default:
@@ -44,9 +35,8 @@ export default class Question extends React.Component {
   }
 
   render() {
-    console.log(this.props);
-    const { displayName, genusTypeId, id } = this.props;
-    const { nameLanguage, maintainOrder, multipleAnswer, reflection } = this.state;
+    const { item } = this.props;
+    const { displayName, genusTypeId, id, description } = item;
     return (
       <div className="o-item c-question is-active" tabIndex="0">
         <InactiveHeader
@@ -55,17 +45,18 @@ export default class Question extends React.Component {
         />
         <Settings
           id={id}
-          updateState={(key, val) => this.updateState(key, val)}
-          updateItem={() => this.updateItem()}
+          updateItem={newProps => this.updateItem(newProps)}
           defaultName={displayName.text}
-          language={nameLanguage || displayName.languageTypeId}
-          maintainOrder={maintainOrder}
-          multipleAnswer={multipleAnswer}
-          reflection={reflection}
+          language={displayName.languageTypeId}
+          maintainOrder={false}
+          multipleAnswer={false}
+          reflection={false}
         />
         <div className="c-question__content">
           <QuestionText
             id={id}
+            text={description.text}
+            updateItem={newProps => this.updateItem(newProps)}
           />
           {this.content()}
           <Feedback />

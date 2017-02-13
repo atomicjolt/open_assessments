@@ -11,6 +11,8 @@ export default function questionText(props) {
           type="text"
           placeholder="Question Text"
           tabIndex="-1"
+          defaultValue={props.text}
+          onBlur={e => props.updateItem({ description: e.target.value })}
         />
         <div className="c-input__bottom" />
       </div>
@@ -20,4 +22,6 @@ export default function questionText(props) {
 
 questionText.propTypes = {
   id: React.PropTypes.string.isRequired,
+  text: React.PropTypes.string.isRequired,
+  updateItem: React.PropTypes.func.isRequired,
 };

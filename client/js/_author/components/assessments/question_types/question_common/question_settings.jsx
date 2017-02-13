@@ -13,8 +13,7 @@ export default function questionSettings(props) {
               type="text"
               tabIndex="-1"
               defaultValue={props.defaultName}
-              onChange={e => props.updateState('name', e.target.value)}
-              onBlur={props.updateItem}
+              onBlur={e => props.updateItem({ name: e.target.value })}
             />
             <div className="c-input__bottom" />
           </div>
@@ -43,7 +42,7 @@ export default function questionSettings(props) {
             id={`check02_${props.id}`}
             name="check"
             tabIndex="-1"
-            onChange={() => props.updateState('maintainOrder', !props.maintainOrder)}
+            onChange={() => props.updateItem({ maintainOrder: !props.maintainOrder })}
             checked={props.maintainOrder ? 'checked' : null}
           />
           <label htmlFor={`check02_${props.id}`}>Maintain choice order</label>
@@ -54,7 +53,7 @@ export default function questionSettings(props) {
             id={`check03_${props.id}`}
             name="check"
             tabIndex="-1"
-            onChange={() => props.updateState('multipleAnswer', !props.multipleAnswer)}
+            onChange={() => props.updateItem({ multipleAnswer: !props.multipleAnswer })}
             checked={props.multipleAnswer ? 'checked' : null}
           />
           <label htmlFor={`check03_${props.id}`}>Multiple answer</label>
@@ -65,7 +64,7 @@ export default function questionSettings(props) {
             id={`check04_${props.id}`}
             name="check"
             tabIndex="-1"
-            onChange={() => props.updateState('reflection', !props.reflection)}
+            onChange={() => props.updateItem({ reflection: !props.reflection })}
             checked={props.reflection ? 'checked' : null}
           />
           <label htmlFor={`check04_${props.id}`}>Reflection</label>
@@ -77,10 +76,8 @@ export default function questionSettings(props) {
 
 questionSettings.propTypes = {
   id: React.PropTypes.string.isRequired,
-  name: React.PropTypes.string,
   defaultName: React.PropTypes.string,
   language: React.PropTypes.string.isRequired,
-  updateState: React.PropTypes.func.isRequired,
   updateItem: React.PropTypes.func.isRequired,
   maintainOrder: React.PropTypes.bool,
   multipleAnswer: React.PropTypes.bool,

@@ -8,9 +8,10 @@ export default function AssessmentQuestions(props) {
       {_.map(_.compact(props.items), (item, index) => (
         <Question
           key={index}
-          {...item}
+          item={item}
           itemIndex={index}
           editItem={(field, value) => props.editItem(index, field, value)}
+          updateItem={props.updateItem}
         />
       ))}
     </div>
