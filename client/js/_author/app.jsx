@@ -17,11 +17,14 @@ es6Promise.polyfill();
 // Can go away when react 1.0 release
 // Check this repo:
 // https://github.com/zilverline/react-tap-event-plugin
-
 injectTapEventPlugin();
 
 
-class Root extends React.Component {
+class Root extends React.PureComponent {
+  static propTypes = {
+    store: React.PropTypes.object.isRequired,
+  };
+
   render() {
     const devTools = __DEV__ ? <DevTools /> : null;
     const { store } = this.props;

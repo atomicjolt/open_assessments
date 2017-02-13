@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>CLIx Assessment Editor</title>
+  <link rel="stylesheet" href="css/styles.css" />
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+
+<header class="c-header">
+	<div class="c-header-top">
+		<img src="img/CLIx-logo.png" alt="" class="c-logo">
+	</div>
+
+	<div class="c-header-bottom">
+		<div class="c-header-bottom__left">
+			<button class="c-btn c-btn--sm c-btn--outline c-btn--back"><i class="material-icons">keyboard_arrow_left</i>Back</button>
+		</div>
+
+		<div class="c-header-bottom__right">
+			<button class="c-btn c-btn--sm c-btn--green"><i class="material-icons">cloud_upload</i>Publish</button>
+			<button class="c-btn c-btn--sm c-btn--maroon u-ml-md"><i class="material-icons">remove_red_eye</i>Preview Assessment</button>
+		</div>
+	</div>
+</header>
+
+
+<div class="o-contain">
+
+	<div class="o-item">
+		<div class="o-item__top c-assessment-top">
+			<div class="o-left">
+				<div class="c-dropdown c-dropdown--small">
+					<label for="language1"></label>
+					<select name="" id="language1">
+						<option value="">English</option>
+						<option value="">French</option>
+						<option value="">Spanish</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="o-right">
+				<div class="c-checkbox">
+					<input type="checkbox" id="check01" name="check" tabindex="0">
+					<label for="check01">Single page assessment</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="c-assessment-title">
+			<div class="c-input">
+				<label for=""></label>
+				<div class="c-input__contain">
+					<input class="c-text-input c-text-input--large" type="text" placeholder="Untitled Assessment">
+					<div class="c-input__bottom"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="o-item c-question is-active" tabindex="0">
+		<div class="o-item__top">
+			<div class="o-left">
+				<h3 class="c-question__number">Question 1</h3>
+				<div class="c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; Multiple Choice</div>
+			</div>
+
+			<div class="o-right c-question-icons">
+				<button class="c-btn c-btn--square" tabindex="1"><i class="material-icons">remove_red_eye</i></button>
+				<button class="c-btn c-btn--square" tabindex="1"><i class="material-icons">swap_vert</i></button>
+				<button class="c-btn c-btn--square" tabindex="1"><i class="material-icons">delete</i></button>
+			</div>
+		</div>
+
+		<div class="c-question-settings">
+			<div class="o-left">
+				<div class="c-input c-input-label--left">
+					<label for="">Name</label>
+					<div class="c-input__contain">
+						<input class="c-text-input c-text-input--smaller" type="text" tabindex="1">
+						<div class="c-input__bottom"></div>
+					</div>
+				</div>
+
+				<div class="c-dropdown c-dropdown--small u-ml-md">
+					<label for=""></label>
+					<select name="" id="" tabindex="1">
+						<option value="">English</option>
+						<option value="">French</option>
+						<option value="">Spanish</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="o-right">
+				<div class="c-checkbox u-ml-md">
+					<input type="checkbox" id="check02" name="check" tabindex="1">
+					<label for="check02">Maintain choice order</label>
+				</div>
+				<div class="c-checkbox u-ml-md">
+					<input type="checkbox" id="check03" name="check" tabindex="1">
+					<label for="check03">Multiple answer</label>
+				</div>
+				<div class="c-checkbox u-ml-md">
+					<input type="checkbox" id="check04" name="check" tabindex="1">
+					<label for="check04">Reflection</label>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="c-question__content">
+			<div class="c-input c-question-text">
+				<label for=""></label>
+				<div class="c-input__contain">
+					<input class="c-text-input c-text-input--medium c-wysiwyg" type="text" placeholder="Question Text" tabindex="1">
+					<div class="c-input__bottom"></div>
+				</div>
+			</div>
+
+			<div class="c-question__answers c-question__answers--maintain">
+
+				<div class="c-answer is-active">
+					<div class="c-input">
+						<div class="c-radio">
+							<input type="radio" id="radio" name="radio" tabindex="1">
+							<label for="radio"></label>
+						</div>
+
+						<label for="option1"></label>
+						<div class="c-input__contain">
+							<input class="c-text-input c-text-input--small c-wysiwyg" id="option1" type="text" placeholder="Option 1" tabindex="1">
+							<div class="c-input__bottom"></div>
+						</div>
+
+						<div class="c-answer__icons">
+							<button class="c-answer__icons__spacer" tabindex="1">
+								<i class="material-icons">arrow_upward</i>
+							</button><!--
+						--><button class="c-answer__icons__spacer" tabindex="1">
+								<i class="material-icons">arrow_downward</i>
+							</button><!--
+						--><button class="c-answer__icons__spacer" tabindex="1">
+								<i class="material-icons">close</i>
+							</button>
+						</div>
+					</div>
+
+					<div class="c-input c-input-label--left c-feedback">
+						<label for="feedback1">Feedback</label>
+						<div class="c-input__contain">
+							<input class="c-text-input c-text-input--smaller c-wysiwyg" id="feedback1" type="text" tabindex="1">
+							<div class="c-input__bottom"></div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="c-answer">
+					<div class="c-input">
+						<div class="c-radio">
+							<input type="radio" id="radio1" name="radio" tabindex="1">
+							<label for="radio1"></label>
+						</div>
+
+						<label for="option2"></label>
+						<div class="c-input__contain">
+							<input class="c-text-input c-text-input--small c-wysiwyg c-option" id="option2" type="text" placeholder="Option 2" tabindex="1">
+							<div class="c-input__bottom no-border"></div>
+						</div>
+
+						<div class="c-answer__icons">
+							<button class="c-answer__icons__spacer" tabindex="1">
+								<i class="material-icons">arrow_upward</i>
+							</button><!--
+						--><button class="c-answer__icons__spacer" tabindex="1">
+								<i class="material-icons">arrow_downward</i>
+							</button><!--
+						--><button class="c-answer__icons__spacer" tabindex="1">
+								<i class="material-icons">close</i>
+							</button>
+						</div>
+					</div>
+
+					<div class="c-input c-input-label--left c-feedback">
+						<label for="feedback2">Feedback</label>
+						<div class="c-input__contain">
+							<input class="c-text-input c-text-input--smaller c-wysiwyg" id="feedback2" type="text" tabindex="1">
+							<div class="c-input__bottom"></div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="c-answer c-answer--add">
+					<div class="c-input">
+						<div class="c-radio">
+							<input type="radio" id="radio1" name="radio" tabindex="1">
+							<label for="radio1"></label>
+						</div>
+
+						<label for="option2"></label>
+						<div class="c-input__contain">
+							<input class="c-text-input c-text-input--small c-wysiwyg c-option" id="option2" type="text" value="Add Option" tabindex="1">
+							<div class="c-input__bottom no-border"></div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+
+			<div class="c-question__feedback">
+				<div class="c-input c-input-label--left c-feedback">
+					<label for="feedbackCorrect">Correct Feedback</label>
+					<div class="c-input__contain">
+						<input class="c-text-input c-text-input--smaller c-wysiwyg" id="feedbackCorrect" type="text" tabindex="1">
+						<div class="c-input__bottom"></div>
+					</div>
+				</div>
+				<div class="c-input c-input-label--left c-feedback u-mt-sm">
+					<label for="feedbackIncorrect">Incorrect Feedback</label>
+					<div class="c-input__contain">
+						<input class="c-text-input c-text-input--smaller c-wysiwyg" id="feedbackIncorrect" type="text" tabindex="1">
+						<div class="c-input__bottom"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<div class="o-item c-question reorder-active">
+		<div class="o-item__top">
+			<div class="o-left">
+				<h3 class="c-question__number">Question 1</h3>
+				<div class="c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; Multiple Choice</div>
+			</div>
+
+			<div class="o-right c-question-icons c-question-icons--reorder">
+				<button class="c-btn c-btn--square"><i class="material-icons">arrow_upward</i></button>
+				<button class="c-btn c-btn--square"><i class="material-icons">arrow_downward</i></button>
+				<button class="c-btn c-btn--sm c-btn--white">Done</button>
+			</div>
+		</div>
+
+		<div class="c-question-settings">
+			<div class="o-left">
+				<div class="c-input c-input-label--left">
+					<label for="">Name</label>
+					<div class="c-input__contain">
+						<input class="c-text-input c-text-input--smaller" type="text">
+						<div class="c-input__bottom"></div>
+					</div>
+				</div>
+
+				<div class="c-dropdown c-dropdown--small u-ml-md">
+					<label for=""></label>
+					<select name="" id="">
+						<option value="">English</option>
+						<option value="">French</option>
+						<option value="">Spanish</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="o-right">
+				<div class="c-checkbox u-ml-md">
+					<input type="checkbox" id="check02" name="check">
+					<label for="check02">Maintain choice order</label>
+				</div>
+				<div class="c-checkbox u-ml-md">
+					<input type="checkbox" id="check03" name="check">
+					<label for="check03">Multiple answer</label>
+				</div>
+				<div class="c-checkbox u-ml-md">
+					<input type="checkbox" id="check04" name="check">
+					<label for="check04">Reflection</label>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="c-question__content">
+			<div class="c-input c-question__text">
+				<label for="question2"></label>
+				<div class="c-input__contain">
+					<input class="c-text-input c-text-input--medium c-wysiwyg" id="question2" type="text" placeholder="Question Text">
+					<div class="c-input__bottom no-border"></div>
+				</div>
+			</div>
+
+			<div class="c-question__answers c-question__answers--maintain">
+
+				<div class="c-answer">
+					<div class="c-input">
+						<div class="c-checkbox">
+							<input type="checkbox" id="checkbox" name="checkbox">
+							<label for="checkbox"></label>
+						</div>
+
+						<label for="option1"></label>
+						<div class="c-input__contain">
+							<input class="c-text-input c-text-input--small c-wysiwyg" id="option1" type="text" placeholder="Option 1">
+							<div class="c-input__bottom no-border"></div>
+						</div>
+
+						<div class="c-answer__icons">
+							<button class="c-answer__icons__spacer">
+								<i class="material-icons">arrow_upward</i>
+							</button><!--
+						--><button class="c-answer__icons__spacer">
+								<i class="material-icons">arrow_downward</i>
+							</button><!--
+						--><button class="c-answer__icons__spacer">
+								<i class="material-icons">close</i>
+							</button>
+						</div>
+					</div>
+
+					<div class="c-input c-input-label--left c-feedback">
+						<label for="feedback1">Feedback</label>
+						<div class="c-input__contain">
+							<input class="c-text-input c-text-input--smaller c-wysiwyg" id="feedback1" type="text">
+							<div class="c-input__bottom"></div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="c-answer">
+					<div class="c-input">
+						<div class="c-checkbox">
+							<input type="checkbox" id="checkbox1" name="checkbox">
+							<label for="checkbox1"></label>
+						</div>
+
+						<label for="option2"></label>
+						<div class="c-input__contain">
+							<input class="c-text-input c-text-input--small c-wysiwyg c-option" id="option2" type="text" placeholder="Option 2">
+							<div class="c-input__bottom no-border"></div>
+						</div>
+
+						<div class="c-answer__icons">
+							<button class="c-answer__icons__spacer">
+								<i class="material-icons">arrow_upward</i>
+							</button><!--
+						--><button class="c-answer__icons__spacer">
+								<i class="material-icons">arrow_downward</i>
+							</button><!--
+						--><button class="c-answer__icons__spacer">
+								<i class="material-icons">close</i>
+							</button>
+						</div>
+					</div>
+
+					<div class="c-input c-input-label--left c-feedback">
+						<label for="feedback2">Feedback</label>
+						<div class="c-input__contain">
+							<input class="c-text-input c-text-input--smaller c-wysiwyg" id="feedback2" type="text">
+							<div class="c-input__bottom"></div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="c-answer c-answer--add">
+					<div class="c-input">
+						<div class="c-checkbox">
+							<input type="checkbox" id="checkbox1" name="checkbox">
+							<label for="checkbox1"></label>
+						</div>
+
+						<label for="option2"></label>
+						<div class="c-input__contain">
+							<input class="c-text-input c-text-input--small c-wysiwyg c-option" id="option2" type="text" value="Add Option">
+							<div class="c-input__bottom no-border"></div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+
+			<div class="c-question__feedback">
+				<div class="c-input c-input-label--left c-feedback">
+					<label for="feedbackCorrect">Correct Feedback</label>
+					<div class="c-input__contain">
+						<input class="c-text-input c-text-input--smaller c-wysiwyg" id="feedbackCorrect" type="text">
+						<div class="c-input__bottom"></div>
+					</div>
+				</div>
+				<div class="c-input c-input-label--left c-feedback u-mt-sm">
+					<label for="feedbackIncorrect">Incorrect Feedback</label>
+					<div class="c-input__contain">
+						<input class="c-text-input c-text-input--smaller c-wysiwyg" id="feedbackIncorrect" type="text">
+						<div class="c-input__bottom"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<div class="o-item c-question is-active">
+		<div class="o-item__top">
+			<div class="o-left">
+				<h3 class="c-question__number">Question 2</h3>
+				<div class="c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; Short Answer</div>
+			</div>
+
+			<div class="o-right c-question-icons">
+				<button class="c-btn c-btn--square"><i class="material-icons">remove_red_eye</i></button>
+				<button class="c-btn c-btn--square"><i class="material-icons">swap_vert</i></button>
+				<button class="c-btn c-btn--square"><i class="material-icons">delete</i></button>
+			</div>
+		</div>
+
+		<div class="c-question-settings">
+			<div class="o-left">
+				<div class="c-input c-input-label--left">
+					<label for="">Name</label>
+					<div class="c-input__contain">
+						<input class="c-text-input c-text-input--smaller" type="text">
+						<div class="c-input__bottom"></div>
+					</div>
+				</div>
+
+				<div class="c-dropdown c-dropdown--small u-ml-md">
+					<label for=""></label>
+					<select name="" id="">
+						<option value="">English</option>
+						<option value="">French</option>
+						<option value="">Spanish</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="o-right">
+
+			</div>
+		</div>
+
+
+		<div class="c-question__content">
+			<div class="c-input c-question-text">
+				<label for=""></label>
+				<div class="c-input__contain">
+					<input class="c-text-input c-text-input--medium c-wysiwyg" type="text" placeholder="Question Text">
+					<div class="c-input__bottom"></div>
+				</div>
+			</div>
+
+			<div class="c-question__answers c-short-answer__answers">
+
+				<div class="c-dropdown c-dropdown--medium c-input-label--top">
+					<label for="">Answer Box</label>
+					<select name="" id="">
+						<option value="">Small</option>
+						<option value="">Medium</option>
+						<option value="">Large</option>
+					</select>
+				</div>
+
+				<div class="c-short-answer__example is-large">
+					<span>Small Box</span>
+				</div>
+
+			</div>
+
+
+			<div class="c-question__feedback">
+				<div class="c-input c-input-label--left c-feedback">
+					<label for="feedbackCorrect">Correct Feedback</label>
+					<div class="c-input__contain">
+						<input class="c-text-input c-text-input--smaller c-wysiwyg" id="feedbackCorrect" type="text">
+						<div class="c-input__bottom"></div>
+					</div>
+				</div>
+				<div class="c-input c-input-label--left c-feedback u-mt-sm">
+					<label for="feedbackIncorrect">Incorrect Feedback</label>
+					<div class="c-input__contain">
+						<input class="c-text-input c-text-input--smaller c-wysiwyg" id="feedbackIncorrect" type="text">
+						<div class="c-input__bottom"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<div class="o-item c-question is-active">
+		<div class="o-item__top">
+			<div class="o-left">
+				<h3 class="c-question__number">Question 3</h3>
+				<div class="c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; File Upload</div>
+			</div>
+
+			<div class="o-right c-question-icons">
+				<button class="c-btn c-btn--square"><i class="material-icons">remove_red_eye</i></button>
+				<button class="c-btn c-btn--square"><i class="material-icons">swap_vert</i></button>
+				<button class="c-btn c-btn--square"><i class="material-icons">delete</i></button>
+			</div>
+		</div>
+
+		<div class="c-question-settings">
+			<div class="o-left">
+				<div class="c-input c-input-label--left">
+					<label for="">Name</label>
+					<div class="c-input__contain">
+						<input class="c-text-input c-text-input--smaller" type="text">
+						<div class="c-input__bottom"></div>
+					</div>
+				</div>
+
+				<div class="c-dropdown c-dropdown--small u-ml-md">
+					<label for=""></label>
+					<select name="" id="">
+						<option value="">English</option>
+						<option value="">French</option>
+						<option value="">Spanish</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="o-right">
+
+			</div>
+		</div>
+
+
+		<div class="c-question__content">
+			<div class="c-input c-question-text">
+				<label for=""></label>
+				<div class="c-input__contain">
+					<input class="c-text-input c-text-input--medium c-wysiwyg" type="text" placeholder="Question Text">
+					<div class="c-input__bottom"></div>
+				</div>
+			</div>
+
+			<div class="c-question__answers o-row" role="radiogroup">
+
+				<div class="o-half">
+					<div class="c-radio--file">
+						<input type="radio" id="radio8" name="radio">
+						<label for="radio8">Audio Record</label>
+					</div>
+				</div>
+				<div class="o-half">
+					<div class="c-radio--file">
+						<input type="radio" id="radio9" name="radio">
+						<label for="radio9">File Upload</label>
+					</div>
+				</div>
+
+				<div class="c-file-upload__audio-settings is-active">
+					<span>Audio record limit</span>
+					<div class="c-input c-input--inline">
+						<label for="audio-limit"></label>
+						<div class="c-input__contain">
+							<input class="c-text-input c-text-input--smaller" id="audio-limit" type="text" maxlength="3" value="100">
+							<div class="c-input__bottom has-error"></div>
+						</div>
+					</div>
+					<span>seconds. (240 maximum)</span>
+					<span class="c-inline-error">Please enter a number under 240</span>
+				</div>
+
+			</div>
+
+
+			<div class="c-question__feedback">
+				<div class="c-input c-input-label--left c-feedback">
+					<label for="feedbackCorrect">Correct Feedback</label>
+					<div class="c-input__contain">
+						<input class="c-text-input c-text-input--smaller c-wysiwyg" id="feedbackCorrect" type="text">
+						<div class="c-input__bottom"></div>
+					</div>
+				</div>
+				<div class="c-input c-input-label--left c-feedback u-mt-sm">
+					<label for="feedbackIncorrect">Incorrect Feedback</label>
+					<div class="c-input__contain">
+						<input class="c-text-input c-text-input--smaller c-wysiwyg" id="feedbackIncorrect" type="text">
+						<div class="c-input__bottom"></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<div class="o-item c-question is-active">
+		<div class="o-item__top">
+			<div class="o-left">
+				<h3 class="c-question__number">Add Question</h3>
+			</div>
+		</div>
+
+		<div class="c-question__content">
+
+			<div class="o-row">
+				<div class="o-half">
+					<div class="c-input c-input-label--left c-input-label--large">
+						<label for="name2">Name</label>
+						<div class="c-input__contain">
+							<input class="c-text-input c-text-input--small" id="name2" type="text">
+							<div class="c-input__bottom"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="o-half">
+					<div class="c-input">
+						<label for="questionType"></label>
+						<div class="c-dropdown c-dropdown--medium">
+							<select name="" id="questionType">
+								<option value="">Multiple Choice</option>
+								<option value="">Short Answer</option>
+								<option value="">File</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="o-half">
+					<div class="c-input u-mt-md">
+						<label for="questionType"></label>
+						<div class="c-dropdown c-dropdown--medium">
+							<select name="" id="questionType">
+								<option value="">Select a language</option>
+								<option value="">French</option>
+								<option value="">Spanish</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="o-flex-contain c-question-add__buttons">
+				<div class="o-right u-right">
+					<button class="c-btn c-btn--md c-btn--gray">Cancel</button>
+					<button class="c-btn c-btn--md c-btn--maroon u-ml-md">Create New Question</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+	<div class="c-question-add">
+		<button class="c-question-add__button">
+			Add Question
+		</button>
+	</div>
+
+</div>
+
+
+</body>
+</html>
