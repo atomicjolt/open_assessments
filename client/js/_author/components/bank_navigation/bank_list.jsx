@@ -21,6 +21,7 @@ export default function bankList(props) {
                   <ListItem
                     key={`bank_${bank.id}`}
                     bank={bank}
+                    publishedBankId={props.publishedBankId}
                     getBankChildren={props.getBankChildren}
                     deleteAssessment={props.deleteAssessment}
                   />

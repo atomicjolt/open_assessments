@@ -5,9 +5,7 @@ import Icon       from './bank_icon';
 // TODO: think about breaking this into smaller components
 export default function bankListItem(props) {
   const { bank } = props;
-  // const editBankId = 'assessment.Bank%3A588f9225c89cd977c3560780%40ODL.MIT.EDU';
-  const publishedBankId = 'assessment.Bank%3A588f9240c89cd977c3560781%40ODL.MIT.EDU';
-  const isPublished = _.findIndex(bank.assignedBankIds, (id) => { return id === publishedBankId; }) !== -1 ? true : false;
+  const isPublished = _.findIndex(bank.assignedBankIds, (id) => { return id === props.publishedBankId; }) !== -1;
   const isAssessment = bank.type === 'Assessment';
   const buttonContainer = {
     display: isAssessment ? '' : 'none',

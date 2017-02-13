@@ -23,6 +23,7 @@ function select(state, props) {
 
   return {
     assessment: bank && transformAssessment(bank[encodeURIComponent(props.params.id)]),
+    settings: state.settings,
     items: _.at(state.items[props.params.bankId], assessmentItemIds),
     currentAssessment: state.assessments[encodeURIComponent(props.params.bankId)][encodeURIComponent(props.params.id)]
   };
@@ -37,6 +38,10 @@ export class NewAssessment extends React.Component {
     assessment: React.PropTypes.shape({
       id: React.PropTypes.string,
       bankId: React.PropTypes.string
+    }),
+    settings: React.PropTypes.shape({
+      editableBankId: React.PropTypes.string,
+      publishedBankId: React.PropTypes.string
     }),
     assignedAssessment: React.PropTypes.func.isRequired,
     deleteAssignedAssessment: React.PropTypes.func.isRequired,
@@ -100,24 +105,23 @@ export class NewAssessment extends React.Component {
   }
 
   assignedAssessment(published) {
-    const { assessment } = this.props;
-    const editBankId = 'assessment.Bank%3A588f9225c89cd977c3560780%40ODL.MIT.EDU';
-    const publishedBankId = 'assessment.Bank%3A588f9240c89cd977c3560781%40ODL.MIT.EDU';
+    const { assessment, settings } = this.props;
     if (published) {
-      this.props.deleteAssignedAssessment(assessment, publishedBankId);
+      this.props.deleteAssignedAssessment(assessment, settings.publishedBankId);
       // Need to delete the publishedBankId and then add the editBankId
-      this.props.assignedAssessment(assessment, editBankId);
+      this.props.assignedAssessment(assessment, settings.editableBankId);
     } else {
-      this.props.deleteAssignedAssessment(assessment, editBankId);
+      this.props.deleteAssignedAssessment(assessment, settings.editableBankId);
       // Need to delete the editBankId and then add the publishedBankId
-      this.props.assignedAssessment(assessment, publishedBankId);
+      this.props.assignedAssessment(assessment, settings.publishedBankId);
     }
   }
 
   render() {
-    // debugger
-    const publishedBankId = 'assessment.Bank%3A588f9240c89cd977c3560781%40ODL.MIT.EDU';
-    const isPublished = _.findIndex(this.props.currentAssessment.assignedBankIds, (id) => { return id === publishedBankId; }) !== -1 ? true : false;
+    const index = _.findIndex(this.props.currentAssessment.assignedBankIds,
+      (id) => { return id === this.props.settings.publishedBankId; }
+    );
+    const isPublished =  index !== -1;
     return (
       <div>
         <Heading
