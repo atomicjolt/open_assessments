@@ -10,7 +10,7 @@ export default function questionText(props) {
           id={`question_name_${props.id}`}
           type="text"
           placeholder="Question Text"
-          tabIndex="-1"
+          tabIndex="0"
           defaultValue={props.text}
           onBlur={e => props.updateItem({ description: e.target.value })}
         />

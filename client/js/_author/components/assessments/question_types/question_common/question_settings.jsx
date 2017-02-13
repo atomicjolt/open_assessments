@@ -11,7 +11,7 @@ export default function questionSettings(props) {
               className="c-text-input c-text-input--smaller"
               id={`question_name_${props.id}`}
               type="text"
-              tabIndex="-1"
+              tabIndex="0"
               defaultValue={props.defaultName}
               onBlur={e => props.updateItem({ name: e.target.value })}
             />
@@ -23,7 +23,7 @@ export default function questionSettings(props) {
           <select
             name=""
             id=""
-            tabIndex="-1"
+            tabIndex="0"
             value={props.language}
             onChange={e => props.updateState('nameLanguage', e.target.value)}
             onBlur={props.updateItem}
@@ -41,7 +41,7 @@ export default function questionSettings(props) {
             type="checkbox"
             id={`check02_${props.id}`}
             name="check"
-            tabIndex="-1"
+            tabIndex="0"
             onChange={() => props.updateItem({ maintainOrder: !props.maintainOrder })}
             checked={props.maintainOrder ? 'checked' : null}
           />
@@ -52,7 +52,7 @@ export default function questionSettings(props) {
             type="checkbox"
             id={`check03_${props.id}`}
             name="check"
-            tabIndex="-1"
+            tabIndex="0"
             onChange={() => props.updateItem({ multipleAnswer: !props.multipleAnswer })}
             checked={props.multipleAnswer ? 'checked' : null}
           />
@@ -63,7 +63,7 @@ export default function questionSettings(props) {
             type="checkbox"
             id={`check04_${props.id}`}
             name="check"
-            tabIndex="-1"
+            tabIndex="0"
             onChange={() => props.updateItem({ reflection: !props.reflection })}
             checked={props.reflection ? 'checked' : null}
           />
