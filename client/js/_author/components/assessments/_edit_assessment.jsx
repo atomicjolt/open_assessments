@@ -23,7 +23,9 @@ function select(state, props) {
 
   return {
     assessment: bank && transformAssessment(bank[encodeURIComponent(props.params.id)]),
-    items: _.at(state.items[props.params.bankId], assessmentItemIds)
+    settings: state.settings,
+    items: _.at(state.items[props.params.bankId], assessmentItemIds),
+    currentAssessment: state.assessments[encodeURIComponent(props.params.bankId)][encodeURIComponent(props.params.id)]
   };
 }
 
@@ -33,6 +35,22 @@ export class NewAssessment extends React.Component {
       id: React.PropTypes.string,
       bankId: React.PropTypes.string
     }).isRequired,
+    assessment: React.PropTypes.shape({
+      id: React.PropTypes.string,
+      bankId: React.PropTypes.string
+    }),
+    currentAssessment: React.PropTypes.shape({
+      assignedBankIds: React.PropTypes.array,
+    }),
+    settings: React.PropTypes.shape({
+      editableBankId: React.PropTypes.string,
+      publishedBankId: React.PropTypes.string
+    }),
+    editOrPublishAssessment: React.PropTypes.func.isRequired,
+    deleteAssignedAssessment: React.PropTypes.func.isRequired,
+    getAssessments: React.PropTypes.func.isRequired,
+    updateAssessment: React.PropTypes.func.isRequired,
+    getAssessmentItems: React.PropTypes.func.isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({}))
@@ -99,10 +117,32 @@ export class NewAssessment extends React.Component {
     return { ...this.props.assessment, ...this.state.assessment };
   }
 
+  editOrPublishAssessment(published) {
+    const { assessment, settings } = this.props;
+    if (published) {
+      this.props.deleteAssignedAssessment(assessment, settings.publishedBankId);
+      // Need to delete the publishedBankId and then add the editBankId
+      this.props.editOrPublishAssessment(assessment, settings.editableBankId);
+    } else {
+      if (_.includes(assessment.assignedBankIds, this.props.settings.editableBankId)) {
+        this.props.deleteAssignedAssessment(assessment, settings.editableBankId);
+      }
+      // Need to delete the editBankId and then add the publishedBankId
+      this.props.editOrPublishAssessment(assessment, settings.publishedBankId);
+    }
+  }
+
   render() {
+
+    const { currentAssessment, settings } = this.props;
+    const isPublished =  _.includes(currentAssessment.assignedBankIds, settings.publishedBankId);
     return (
       <div>
-        <Heading view="assessments" />
+        <Heading
+          view="assessments"
+          editOrPublishAssessment={(published) => { this.editOrPublishAssessment(published); }}
+          isPublished={isPublished}
+        />
         <AssessmentForm
           {...this.assessmentProps()}
           updateAssessment={() => this.updateAssessment()}
@@ -114,7 +154,6 @@ export class NewAssessment extends React.Component {
           addItem={() => this.addItem()}
         />
       </div>
-
     );
   }
 }

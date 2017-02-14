@@ -22,6 +22,7 @@ export default function bankList(props) {
                     embedCode={(assessId, bankId) => { props.embedCode(assessId, bankId); }}
                     key={`bank_${bank.id}`}
                     bank={bank}
+                    publishedBankId={props.publishedBankId}
                     getBankChildren={props.getBankChildren}
                     deleteAssessment={props.deleteAssessment}
                   />
