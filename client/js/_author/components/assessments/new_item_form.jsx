@@ -6,11 +6,18 @@ export default class newItemForm extends React.Component{
     create: React.PropTypes.func.isRequired,
   };
 
+  static genusTypes = {
+    multipleChoice: 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
+    fileUpload: 'item-genus-type%3Aqti-upload-interaction-generic%40ODL.MIT.EDU',
+    audioUpload: 'item-genus-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU',
+    shortAnswer: 'shortAnswer'
+  }
+
   constructor() {
     super();
     this.state = {
       name: '',
-      genusTypeId: 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
+      genusTypeId: newItemForm.genusTypes.multipleChoice,
       language: 'english',
     };
   }
@@ -52,12 +59,18 @@ export default class newItemForm extends React.Component{
                     id="questionType"
                   >
                     <option
-                      value="item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU"
-                    >
+                      value={newItemForm.genusTypes.multipleChoice}>
                       Multiple Choice
                     </option>
-                    <option value="shortAnswer">Short Answer</option>
-                    <option value="file">File</option>
+                    <option value={newItemForm.genusTypes.shortAnswer}>
+                      Short Answer
+                    </option>
+                    <option value={newItemForm.genusTypes.fileUpload}>
+                      File Upload
+                    </option>
+                    <option value={newItemForm.genusTypes.audioUpload}>
+                      Audio
+                    </option>
                   </select>
                 </div>
               </div>
