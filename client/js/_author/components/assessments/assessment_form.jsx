@@ -10,11 +10,10 @@ export default class AssessmentForm extends React.Component {
       [React.PropTypes.shape({}), React.PropTypes.arrayOf(React.PropTypes.shape({}))]
     ),
     name: React.PropTypes.string,
-    editItem: React.PropTypes.func.isRequired,
-    addItem: React.PropTypes.func.isRequired,
-    updateStateAssessment: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
     createItem: React.PropTypes.func,
+    updateItem: React.PropTypes.func.isRequired,
+    updateChoice: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -47,13 +46,12 @@ export default class AssessmentForm extends React.Component {
             <label htmlFor="title_field" className="c-input">
               <div className="c-input__contain">
                 <input
-                  value={this.props.name}
+                  defaultValue={this.props.name}
                   className="c-text-input c-text-input--large"
                   type="text"
                   id="title_field"
                   placeholder="Untitled Assessment"
-                  onChange={e => this.props.updateStateAssessment('name', e.target.value)}
-                  onBlur={e => this.props.updateAssessment('name', e.target.value)}
+                  onBlur={e => this.props.updateAssessment({ name: e.target.value })}
                 />
                 <div className="c-input__bottom" />
               </div>
@@ -62,8 +60,6 @@ export default class AssessmentForm extends React.Component {
         </div>
         <AssessmentItems
           items={this.props.items}
-          editItem={(itemIndex, field, data) => this.props.editItem(itemIndex, field, data)}
-          addItem={this.props.addItem}
           updateItem={this.props.updateItem}
           updateChoice={this.props.updateChoice}
         />

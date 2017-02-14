@@ -11,6 +11,7 @@ export default class Question extends React.Component {
       genusTypeId: React.PropTypes.string,
     }).isRequired,
     updateItem: React.PropTypes.func.isRequired,
+    updateChoice: React.PropTypes.func.isRequired,
   };
 
   updateItem(newItemProperties) {

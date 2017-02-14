@@ -47,3 +47,8 @@ export default function multipleChoiceOptions(props) {
     </div>
   );
 }
+
+multipleChoiceOptions.propTypes = {
+  text: React.PropTypes.string,
+  updateItem: React.PropTypes.func.isRequired,
+};

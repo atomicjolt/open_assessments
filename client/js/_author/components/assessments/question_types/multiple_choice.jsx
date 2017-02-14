@@ -31,6 +31,9 @@ multipleChoice.propTypes = {
   item: React.PropTypes.shape({
     answers: React.PropTypes.arrayOf(React.PropTypes.shape),
     id: React.PropTypes.string,
+    question: React.PropTypes.shape({
+      choices: React.PropTypes.arrayOf(React.PropTypes.shape({})),
+    }),
   }).isRequired,
   updateChoice: React.PropTypes.func.isRequired,
 };

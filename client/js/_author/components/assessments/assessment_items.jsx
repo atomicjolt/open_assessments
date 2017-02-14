@@ -19,5 +19,6 @@ export default function AssessmentQuestions(props) {
 }
 
 AssessmentQuestions.propTypes = {
-  items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired
+  items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
+  updateChoice: React.PropTypes.func.isRequired,
 };
