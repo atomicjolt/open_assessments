@@ -49,7 +49,6 @@ export class NewAssessment extends React.Component {
     updateAssessment: React.PropTypes.func.isRequired,
     getAssessmentItems: React.PropTypes.func.isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
-    createItemInAssessment: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({}))
   };

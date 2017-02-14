@@ -94,6 +94,7 @@ export class BankNavigator extends React.Component {
   }
 
   render() {
+    debugger
     return (
       <div>
         <Heading
