@@ -8,15 +8,13 @@ import * as ItemActions       from '../../../actions/qbank/items';
 
 function select(state) {
   return {
-    settings: state.settings,
+    editableBankId: state.settings.editableBankId,
   };
 }
 export class NewAssessment extends React.Component {
   static propTypes = {
     params: React.PropTypes.shape({ id: React.PropTypes.string }).isRequired,
-    settings: React.PropTypes.shape({
-      editableBankId: React.PropTypes.string
-    }).isRequired,
+    editableBankId: React.PropTypes.string.isRequired,
     createAssessment: React.PropTypes.func.isRequired,
     publishAssessment: React.PropTypes.func.isRequired,
   };
@@ -26,7 +24,7 @@ export class NewAssessment extends React.Component {
     this.titleField = null;
     this.state = {
       assessment: {
-        assignedBankIds: [this.props.settings.editableBankId]
+        assignedBankIds: [this.props.editableBankId]
       },
     };
   }
