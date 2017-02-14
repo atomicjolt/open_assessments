@@ -19,29 +19,18 @@ export class NewAssessment extends React.Component {
 
   constructor(props) {
     super(props);
-    this.titleField = null;
     this.state = {
       assessment: {},
     };
   }
 
-  createAssessment() {
+  createAssessment(assessment) {
     // This redirects to the edit view in the middleware after the api call
     // comes back with an id.
     this.props.createAssessment(
       this.props.params.id,
-      this.state.assessment,
+      assessment,
     );
-  }
-
-  updateStateAssessment(field, value) {
-    this.setState({ assessment: { ...this.state.assessment, [field]: value } });
-  }
-
-  editItem(itemIndex, field, data) {
-    const items = this.state.items;
-    items[itemIndex][field] = data;
-    this.setState({ items });
   }
 
   render() {
@@ -49,15 +38,13 @@ export class NewAssessment extends React.Component {
       <div>
         <Heading view="assessments" />
         <AssessmentForm
-          {...this.state.assessment}
-          updateAssessment={() => this.createAssessment()}
-          updateStateAssessment={(field, value) => this.updateStateAssessment(field, value)}
+          updateAssessment={assessment => this.createAssessment(assessment)}
         />
       </div>
     );
   }
 }
-// { this.titleField.value }
+
 export default connect(select, {
   ...BankActions,
   ...AssessmentActions,
