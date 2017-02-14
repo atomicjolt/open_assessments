@@ -21,6 +21,7 @@ function select(state) {
     path,
     currentBankId,
     banks: _.merge(state.assessments[currentBankId], banks),
+    settings: state.settings,
   };
 }
 
@@ -30,6 +31,10 @@ export class BankNavigator extends React.Component {
       React.PropTypes.arrayOf(React.PropTypes.shape({})),
       React.PropTypes.shape({})
     ]).isRequired,
+    settings: React.PropTypes.shape({
+      editableBankId: React.PropTypes.string,
+      publishedBankId: React.PropTypes.string
+    }),
     path               : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
     updatePath         : React.PropTypes.func.isRequired,
     getBanks           : React.PropTypes.func.isRequired,
@@ -100,6 +105,7 @@ export class BankNavigator extends React.Component {
         />
         <BankList
           banks={this.sortBanks()}
+          publishedBankId={this.props.settings.publishedBankId}
           getBankChildren={bank => this.getBankChildren(bank)}
           sortBy={type => this.sortBy(type)}
           sortName={this.state.sortName}

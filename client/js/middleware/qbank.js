@@ -101,24 +101,29 @@ const qbank = {
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items`,
   },
 
-  [AssessmentConstants.PUBLISH_ASSESSMENT]: {
+  [AssessmentConstants.EDIT_OR_PUBLISH_ASSESSMENT]: {
     method : Network.POST,
-    url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedBankIds`,
+    url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedbankids`,
+  },
+
+  [AssessmentConstants.DELETE_ASSIGNED_ASSESSMENT]: {
+    method : Network.DEL,
+    url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedbankids/${action.assignedId}`,
   },
 
   [AssessmentConstants.UPDATE_ASSESSMENT]: {
     method : Network.PUT,
-    url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}`,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}`,
   },
 
   [AssessmentConstants.UPDATE_ASSESSMENT_ITEMS]: {
     method : Network.POST,
-    url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}/items`,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}/items`,
   },
 
   [AssessmentConstants.DELETE_ASSESSMENT_ITEM]: {
     method : Network.DEL,
-    url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}/items/${action.itemId}`,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}/items/${action.itemId}`,
   },
 
   [ItemConstants.GET_ITEMS]: {
@@ -175,7 +180,7 @@ const qbank = {
     const state = store.getState();
 
     api.post(
-      `assessment/banks/${action.bankId}/assessments`,
+      `assessment/banks/${action.bankId}/assessments?genusTypeId=assessment-bank-genus%3Aeditable%40ODL.MIT.EDU`,
       state.settings.api_url,
       state.jwt,
       state.settings.csrf_token,
