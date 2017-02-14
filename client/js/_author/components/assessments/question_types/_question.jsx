@@ -1,5 +1,6 @@
 import React            from 'react';
 import MultipleChoice   from './multiple_choice';
+import FileUpload       from './file_upload';
 import InactiveHeader   from './question_common/question_inactive_header';
 import Settings         from './question_common/question_settings';
 import QuestionText     from './question_common/question_text';
@@ -11,6 +12,11 @@ export default class Question extends React.Component {
       genusTypeId: React.PropTypes.string,
     }).isRequired,
     updateItem: React.PropTypes.func.isRequired,
+  };
+
+  static genusTypes: {
+    multipleChoice: 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
+    fileUpload: 'fileUploadPlaceholder'
   };
 
   updateItem(newItemProperties) {
@@ -27,8 +33,10 @@ export default class Question extends React.Component {
 
   content() {
     switch (this.props.item.genusTypeId) {
-      case 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU':
+      case genusTypes.multipleChoice:
         return <MultipleChoice {...this.props} />;
+      case genusTypes.fileUpload:
+        return <fileUpload {...props} />;
       default:
         return null;
     }
