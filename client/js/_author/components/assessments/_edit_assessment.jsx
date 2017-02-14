@@ -35,7 +35,8 @@ export class NewAssessment extends React.Component {
     }).isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
-    items: React.PropTypes.arrayOf(React.PropTypes.shape({}))
+    items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
+    updateChoice: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -100,6 +101,7 @@ export class NewAssessment extends React.Component {
   }
 
   render() {
+    const { bankId } = this.props.params;
     return (
       <div>
         <Heading view="assessments" />
@@ -112,6 +114,7 @@ export class NewAssessment extends React.Component {
           createItem={newItem => this.createItem(newItem)}
           editItem={(index, field, data) => this.editItem(index, field, data)}
           addItem={() => this.addItem()}
+          updateChoice={(itemId, choice) => this.props.updateChoice(bankId, itemId, choice)}
         />
       </div>
 

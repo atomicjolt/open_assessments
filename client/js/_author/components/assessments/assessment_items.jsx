@@ -10,8 +10,8 @@ export default function AssessmentQuestions(props) {
           key={index}
           item={item}
           itemIndex={index}
-          editItem={(field, value) => props.editItem(index, field, value)}
           updateItem={props.updateItem}
+          updateChoice={props.updateChoice}
         />
       ))}
     </div>

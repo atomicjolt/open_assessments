@@ -2,13 +2,14 @@ import wrapper from '../../constants/wrapper';
 
 // Local actions
 const actions = [
+  'ADD_CHOICE',
 ];
 
 // Actions that make an api request
 const requests = [
   'GET_ITEMS',
   'CREATE_ITEM',
-  'UPDATE_ITEM'
+  'UPDATE_ITEM',
 ];
 
 export const Constants = wrapper(actions, requests);
@@ -39,3 +40,13 @@ export function updateItem(bankId, item) {
     body    : item
   };
 }
+
+export function updateChoice(bankId, itemId, choice) {
+  return {
+    type: Constants.ADD_CHOICE,
+    bankId,
+    itemId,
+    choice,
+  };
+}
+

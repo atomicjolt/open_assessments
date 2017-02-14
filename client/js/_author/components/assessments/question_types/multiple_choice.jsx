@@ -1,17 +1,28 @@
 import React    from 'react';
+import _        from 'lodash';
 import Option   from './multiple_choice_option';
 import Add      from './add_option';
 
 export default function multipleChoice(props) {
-  console.log(props);
+  const hasQuestions = props.item.question
+    && props.item.question.choices
+    && props.item.question.choices.length;
+
   return (
     <div className="c-question__answers c-question__answers--maintain">
       {
-        _.map(props.item.answers.length ? props.item.answers : [{}], choice => (
-          <Option {...choice} />
+        _.map(hasQuestions ? props.item.question.choices : [{}], choice => (
+          <Option
+            key={`assessmentChoice_${choice.id}`}
+            {...choice}
+            updateChoice={newChoice => props.updateChoice(props.item.id, newChoice)}
+            updateItem={() => props.updateItem({ question: props.item.question })}
+          />
         ))
       }
-      <Add />
+      <Add
+        updateChoice={() => props.updateChoice(props.item.id, {})}
+      />
     </div>
   );
 }
@@ -19,5 +30,7 @@ export default function multipleChoice(props) {
 multipleChoice.propTypes = {
   item: React.PropTypes.shape({
     answers: React.PropTypes.arrayOf(React.PropTypes.shape),
+    id: React.PropTypes.string,
   }).isRequired,
+  updateChoice: React.PropTypes.func.isRequired,
 };

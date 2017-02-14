@@ -15,20 +15,13 @@ export default class Question extends React.Component {
 
   updateItem(newItemProperties) {
     const { item } = this.props;
-    const { displayName, description, id } = item;
+    const { displayName, description, id, question } = item;
     this.props.updateItem(
       {
         id,
         name: newItemProperties.name || displayName.text,
         description: newItemProperties.description || description.text,
-        question: {
-          questionString: description.text,
-          choices: [
-            { text: 'Ronnie James Dio' },
-            { text: 'Ozzy Osbourne' },
-            { text: 'Rick Sanchez' }
-          ],
-        }
+        question: newItemProperties.question || question,
       }
     );
   }
@@ -40,6 +33,7 @@ export default class Question extends React.Component {
           <MultipleChoice
             {...this.props}
             updateItem={newProps => this.updateItem(newProps)}
+            updateChoice={this.props.updateChoice}
           />
         );
       default:

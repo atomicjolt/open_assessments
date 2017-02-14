@@ -11,7 +11,16 @@ export default function multipleChoiceOptions(props) {
 
         <label htmlFor="option1" />
         <div className="c-input__contain">
-          <input className="c-text-input c-text-input--small c-wysiwyg" id="option1" type="text" placeholder="Option 1" tabIndex="0" />
+          <input
+            className="c-text-input c-text-input--small c-wysiwyg"
+            value={props.text}
+            onChange={e => props.updateChoice({ id: props.id, text: e.target.value })}
+            onBlur={() => props.updateItem()}
+            id="option1"
+            type="text"
+            placeholder="Option"
+            tabIndex="0"
+          />
           <div className="c-input__bottom" />
         </div>
 
