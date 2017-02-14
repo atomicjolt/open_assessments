@@ -14,10 +14,10 @@ export default class Question extends React.Component {
     updateItem: React.PropTypes.func.isRequired,
   };
 
-  static genusTypes: {
+  static genusTypes = {
     multipleChoice: 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
     fileUpload: 'fileUploadPlaceholder'
-  };
+  }
 
   updateItem(newItemProperties) {
     const { item } = this.props;
@@ -33,9 +33,9 @@ export default class Question extends React.Component {
 
   content() {
     switch (this.props.item.genusTypeId) {
-      case genusTypes.multipleChoice:
+      case Question.genusTypes.multipleChoice:
         return <MultipleChoice {...this.props} />;
-      case genusTypes.fileUpload:
+      case Question.genusTypes.fileUpload:
         return <fileUpload {...props} />;
       default:
         return null;
