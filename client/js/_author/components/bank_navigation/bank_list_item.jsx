@@ -1,11 +1,13 @@
 import React      from 'react';
+import _          from 'lodash';
 import appHistory from '../../history';
 import Icon       from './bank_icon';
 
 // TODO: think about breaking this into smaller components
 export default function bankListItem(props) {
-  const { bank } = props;
-  const isPublished = _.findIndex(bank.assignedBankIds, (id) => { return id === props.publishedBankId; }) !== -1;
+  const { bank, publishedBankId } = props;
+
+  const isPublished = _.includes(bank.assignedBankIds, publishedBankId);
   const isAssessment = bank.type === 'Assessment';
   const buttonContainer = {
     display: isAssessment ? '' : 'none',
@@ -65,4 +67,5 @@ bankListItem.propTypes = {
   bank: React.PropTypes.shape({
     displayName : React.PropTypes.shape({}),
   }).isRequired,
+  publishedBankId: React.PropTypes.string.isRequired,
 };

@@ -19,7 +19,7 @@ export default function banks(state = initialState, action) {
       return newState;
     }
 
-    case 'ASSIGNED_ASSESSMENT_DONE': {
+    case 'EDIT_OR_PUBLISH_ASSESSMENT_DONE': {
       const newState = _.cloneDeep(state);
       const changeId = action.original.body.assignedBankIds[0];
       const bankId = action.original.bankId;

@@ -101,7 +101,7 @@ const qbank = {
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items`,
   },
 
-  [AssessmentConstants.ASSIGNED_ASSESSMENT]: {
+  [AssessmentConstants.EDIT_OR_PUBLISH_ASSESSMENT]: {
     method : Network.POST,
     url    : action => `https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedbankids`,
   },

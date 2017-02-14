@@ -18,7 +18,7 @@ export default function AssessmentsView(props) {
       <div className="c-header-bottom__right">
         <button
           className="c-btn c-btn--sm c-btn--green"
-          onClick={() => props.assignedAssessment(props.isPublished)}
+          onClick={() => props.editOrPublishAssessment(props.isPublished)}
         >
           <Icon type={props.isPublished ? 'Published' : 'Publish'} />
           {props.isPublished ? 'Unpublish' : 'Publish'}
@@ -33,6 +33,6 @@ export default function AssessmentsView(props) {
 }
 
 AssessmentsView.propTypes = {
-  assignedAssessment: React.PropTypes.func.isRequired,
+  editOrPublishAssessment: React.PropTypes.func.isRequired,
   isPublished: React.PropTypes.bool.isRequired,
 };

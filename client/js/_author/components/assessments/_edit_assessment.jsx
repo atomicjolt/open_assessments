@@ -39,11 +39,14 @@ export class NewAssessment extends React.Component {
       id: React.PropTypes.string,
       bankId: React.PropTypes.string
     }),
+    currentAssessment: React.PropTypes.shape({
+      assignedBankIds: React.PropTypes.array,
+    }),
     settings: React.PropTypes.shape({
       editableBankId: React.PropTypes.string,
       publishedBankId: React.PropTypes.string
     }),
-    assignedAssessment: React.PropTypes.func.isRequired,
+    editOrPublishAssessment: React.PropTypes.func.isRequired,
     deleteAssignedAssessment: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
@@ -114,29 +117,30 @@ export class NewAssessment extends React.Component {
     return { ...this.props.assessment, ...this.state.assessment };
   }
 
-  assignedAssessment(published) {
+  editOrPublishAssessment(published) {
     const { assessment, settings } = this.props;
     if (published) {
       this.props.deleteAssignedAssessment(assessment, settings.publishedBankId);
       // Need to delete the publishedBankId and then add the editBankId
-      this.props.assignedAssessment(assessment, settings.editableBankId);
+      this.props.editOrPublishAssessment(assessment, settings.editableBankId);
     } else {
-      this.props.deleteAssignedAssessment(assessment, settings.editableBankId);
+      if (_.includes(assessment.assignedBankIds, this.props.settings.editableBankId)) {
+        this.props.deleteAssignedAssessment(assessment, settings.editableBankId);
+      }
       // Need to delete the editBankId and then add the publishedBankId
-      this.props.assignedAssessment(assessment, settings.publishedBankId);
+      this.props.editOrPublishAssessment(assessment, settings.publishedBankId);
     }
   }
 
   render() {
-    const index = _.findIndex(this.props.currentAssessment.assignedBankIds,
-      (id) => { return id === this.props.settings.publishedBankId; }
-    );
-    const isPublished =  index !== -1;
+
+    const { currentAssessment, settings } = this.props;
+    const isPublished =  _.includes(currentAssessment.assignedBankIds, settings.publishedBankId);
     return (
       <div>
         <Heading
           view="assessments"
-          assignedAssessment={(published) => { this.assignedAssessment(published); }}
+          editOrPublishAssessment={(published) => { this.editOrPublishAssessment(published); }}
           isPublished={isPublished}
         />
         <AssessmentForm
@@ -150,7 +154,6 @@ export class NewAssessment extends React.Component {
           addItem={() => this.addItem()}
         />
       </div>
-
     );
   }
 }
