@@ -1,6 +1,7 @@
 import React            from 'react';
+import _                from 'lodash';
 import MultipleChoice   from './multiple_choice';
-import FileUpload       from './file_upload';
+import AudioUpload      from './audio_upload';
 import genusTypes       from '../../../../constants/genus_types.js';
 import InactiveHeader   from './question_common/question_inactive_header';
 import Settings         from './question_common/question_settings';
@@ -18,13 +19,18 @@ export default class Question extends React.Component {
   updateItem(newItemProperties) {
     const { item } = this.props;
     const { displayName, description, id } = item;
-    this.props.updateItem(
+
+    const newItem = _.merge(
+      {},
       {
         id,
-        name: newItemProperties.name || displayName.text,
-        description: newItemProperties.description || description.text,
-      }
+        name: displayName.text,
+        description: description.text
+      },
+      newItemProperties
     );
+
+    this.props.updateItem(newItem);
   }
 
   content() {
@@ -32,8 +38,9 @@ export default class Question extends React.Component {
       case genusTypes.multipleChoice:
         return <MultipleChoice {...this.props} />;
       case genusTypes.audioUpload:
+        return <AudioUpload
+          updateItem={newProps => this.updateItem(newProps)} />;
       case genusTypes.fileUpload:
-        return <FileUpload {...this.props} />;
       default:
         return null;
     }
