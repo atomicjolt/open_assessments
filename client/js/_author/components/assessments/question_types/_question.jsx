@@ -1,6 +1,6 @@
 import React            from 'react';
 import MultipleChoice   from './multiple_choice';
-import QuestionHeader   from './question_common/_header';
+import QuestionHeader   from './question_common/header/_header';
 import Settings         from './question_common/settings';
 import QuestionText     from './question_common/text';
 import Feedback         from './question_common/feedback';

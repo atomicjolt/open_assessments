@@ -1,6 +1,6 @@
 import React            from 'react';
-import InactiveHeader   from './inactive_h';
-import ReorderHeader    from './reorder_h';
+import InactiveHeader   from './inactive';
+import ReorderHeader    from './reorder';
 
 export default function QuestionHeader(props) {
   const type = () => {
