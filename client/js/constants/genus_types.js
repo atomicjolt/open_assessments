@@ -7,5 +7,9 @@ export default {
   },
   question: {
     audioUpload: 'question-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU'
+  },
+  answer: {
+    rightAnswer: 'answer-type%3Aright-answer%40ODL.MIT.EDU',
+    wrongAnswer: 'answer-type%3Awrong-answer%40ODL.MIT.EDU'
   }
 };

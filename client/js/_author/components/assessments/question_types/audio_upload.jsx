@@ -37,7 +37,7 @@ export default function (props) {
         <span className="c-inline-error">Please enter a number under 240</span>
       </div>
     </div>
-    <Feedback />
+    <Feedback updateItem={props.updateItem} />
   </div>
   );
 }
