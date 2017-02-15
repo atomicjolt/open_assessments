@@ -12,6 +12,7 @@ export default function AssessmentQuestions(props) {
           itemIndex={index}
           updateItem={props.updateItem}
           updateChoice={props.updateChoice}
+          updateAnswer={props.updateAnswer}
         />
       ))}
     </div>
@@ -21,4 +22,5 @@ export default function AssessmentQuestions(props) {
 AssessmentQuestions.propTypes = {
   items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
   updateChoice: React.PropTypes.func.isRequired,
+  updateAnswer: React.PropTypes.func.isRequired,
 };

@@ -70,6 +70,12 @@ export default function banks(state = initialState, action) {
       return newState;
     }
 
+    case 'ADD_ANSWER': {
+      const newState = _.cloneDeep(state);
+      // TODO: need to figure out what answers even do/are
+      return newState;
+    }
+
     default:
       return state;
   }

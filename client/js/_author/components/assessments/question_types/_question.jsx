@@ -12,11 +12,12 @@ export default class Question extends React.Component {
     }).isRequired,
     updateItem: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
+    updateAnswer: React.PropTypes.func.isRequired,
   };
 
   updateItem(newItemProperties) {
     const { item } = this.props;
-    const { displayName, description, id, question } = item;
+    const { displayName, description, id, question, answers } = item;
     this.props.updateItem(
       {
         id,
@@ -25,6 +26,7 @@ export default class Question extends React.Component {
         question: {
           choices: newItemProperties.question.choices || question.choices
         },
+        answers,
       }
     );
   }
@@ -37,6 +39,7 @@ export default class Question extends React.Component {
             {...this.props}
             updateItem={newProps => this.updateItem(newProps)}
             updateChoice={this.props.updateChoice}
+            updateAnswer={this.props.updateAnswer}
           />
         );
       default:

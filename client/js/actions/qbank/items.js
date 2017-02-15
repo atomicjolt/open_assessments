@@ -3,6 +3,7 @@ import wrapper from '../../constants/wrapper';
 // Local actions
 const actions = [
   'ADD_CHOICE',
+  'ADD_ANSWER',
 ];
 
 // Actions that make an api request
@@ -47,6 +48,15 @@ export function updateChoice(bankId, itemId, choice) {
     bankId,
     itemId,
     choice,
+  };
+}
+
+export function updateAnswer(bankId, itemId, answer) {
+  return {
+    type: Constants.ADD_ANSWER,
+    bankId,
+    itemId,
+    answer,
   };
 }
 

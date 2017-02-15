@@ -14,6 +14,7 @@ export default class AssessmentForm extends React.Component {
     createItem: React.PropTypes.func,
     updateItem: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
+    updateAnswer: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -62,6 +63,7 @@ export default class AssessmentForm extends React.Component {
           items={this.props.items}
           updateItem={this.props.updateItem}
           updateChoice={this.props.updateChoice}
+          updateAnswer={this.props.updateAnswer}
         />
 
         {this.showNewModal() ? <NewItem

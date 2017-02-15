@@ -43,6 +43,7 @@ export class NewAssessment extends React.Component {
     getAssessments: React.PropTypes.func.isRequired,
     getAssessmentItems: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
+    updateAnswer: React.PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -90,6 +91,7 @@ export class NewAssessment extends React.Component {
           updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}
           updateChoice={(itemId, choice) => this.props.updateChoice(bankId, itemId, choice)}
+          updateAnswer={(itemId, answer) => this.props.updateAnswer(bankId, itemId, answer)}
         />
       </div>
 
