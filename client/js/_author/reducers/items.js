@@ -32,6 +32,7 @@ export default function banks(state = initialState, action) {
       return newState;
     }
 
+    case 'UPDATE_ITEM_DONE':
     case 'CREATE_ITEM_DONE': {
       const newState = _.cloneDeep(state);
       const bankId = action.original.bankId;

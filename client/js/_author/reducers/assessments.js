@@ -19,6 +19,25 @@ export default function banks(state = initialState, action) {
       return newState;
     }
 
+    case 'EDIT_OR_PUBLISH_ASSESSMENT_DONE': {
+      const newState = _.cloneDeep(state);
+      const changeId = action.original.body.assignedBankIds[0];
+      const bankId = action.original.bankId;
+      const assessmentId = action.original.assessmentId;
+      newState[bankId][assessmentId].assignedBankIds.push(changeId);
+      return newState;
+    }
+
+    case 'DELETE_ASSIGNED_ASSESSMENT_DONE': {
+      const newState = _.cloneDeep(state);
+      const changeId = action.original.assignedId;
+      const bankId = action.original.bankId;
+      const assessmentId = action.original.assessmentId;
+      const index = newState[bankId][assessmentId].assignedBankIds.indexOf(changeId);
+      newState[bankId][assessmentId].assignedBankIds.splice(index, 1);
+      return newState;
+    }
+
     case 'CREATE_ASSESSMENT_DONE': {
       const newState = _.cloneDeep(state);
       const bankId = action.payload.bankId;
