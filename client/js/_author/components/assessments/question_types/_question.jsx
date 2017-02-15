@@ -1,9 +1,13 @@
 import React            from 'react';
+import _                from 'lodash';
 import MultipleChoice   from './multiple_choice';
 import QuestionHeader   from './question_common/header/_header';
 import Settings         from './question_common/settings';
 import QuestionText     from './question_common/text';
 import Feedback         from './question_common/feedback';
+import genusTypes       from '../../../../constants/genus_types.js';
+import AudioUpload      from './audio_upload';
+import FileUpload       from './file_upload';
 
 export default class Question extends React.Component {
   static propTypes = {
@@ -37,15 +41,6 @@ export default class Question extends React.Component {
     return this.props.isActive ? 'is-active' : '';
   }
 
-  content() {
-    switch (this.props.item.genusTypeId) {
-      case 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU':
-        return <MultipleChoice {...this.props} />;
-      default:
-        return null;
-    }
-  }
-
   moveQuestionUp() {
     this.props.moveItem(this.props.itemIndex, this.props.itemIndex - 1);
   }
@@ -57,13 +52,39 @@ export default class Question extends React.Component {
   updateItem(newItemProperties) {
     const { item } = this.props;
     const { displayName, description, id } = item;
-    this.props.updateItem(
-      {
-        id,
-        name: newItemProperties.name || displayName.text,
-        description: newItemProperties.description || description.text,
-      }
-    );
+
+    const newItem = {
+      id,
+      name: displayName.text,
+      description: description.text,
+      ...newItemProperties
+    };
+
+    this.props.updateItem(newItem);
+  }
+
+  content() {
+    switch (this.props.item.genusTypeId) {
+      case genusTypes.item.multipleChoice:
+        return <MultipleChoice {...this.props} />;
+      case genusTypes.item.audioUpload:
+        return (
+          <AudioUpload
+            updateItem={newProps => this.updateItem(newProps)}
+            item={this.props.item}
+          />
+        );
+      case genusTypes.item.fileUpload:
+        return (
+          <FileUpload
+            updateItem={newProps => this.updateItem(newProps)}
+            item={this.props.item}
+          />
+        );
+
+      default:
+        return null;
+    }
   }
 
   render() {
@@ -106,7 +127,6 @@ export default class Question extends React.Component {
             updateItem={newProps => this.updateItem(newProps)}
           />
           {this.content()}
-          <Feedback />
         </div>
       </div>
     );
