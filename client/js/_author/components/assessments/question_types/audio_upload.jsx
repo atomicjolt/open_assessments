@@ -8,6 +8,18 @@ function getFeedback(item){
   return _.get(item, ['answers', '0', 'feedback', 'text'], '');
 }
 
+function getAudioLimit(item){
+  const original = _.get(item, ['question', 'timeValue'], {
+    hours: "00",
+    minutes: "00",
+    seconds: "00"
+  });
+
+  const time = _.mapValues(original, (t) => parseInt(t));
+  const seconds = time.hours * 3600 + time.minutes * 60 + time.seconds;
+  return seconds;
+}
+
 export default function (props) {
   return (
     <div>
@@ -22,7 +34,7 @@ export default function (props) {
               id="audio-limit"
               type="text"
               maxLength="3"
-              defaultValue="100"
+              defaultValue={getAudioLimit(props.item)}
               onBlur={ (e) => {
                 props.updateItem({
                   question:{
