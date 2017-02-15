@@ -3,56 +3,59 @@ import _          from 'lodash';
 import genusTypes from '../../../../constants/genus_types';
 import Feedback from './question_common/single_feedback';
 
-function getAudioLimit(item){
-  const original = _.get(item, ['question', 'timeValue'], {
-    hours: "00",
-    minutes: "00",
-    seconds: "100"
-  });
+export default class AudioUpload extends React.Component {
 
-  const time = _.mapValues(original, (t) => parseInt(t));
-  const seconds = time.hours * 3600 + time.minutes * 60 + time.seconds;
-  return seconds;
-}
+  getAudioLimit(item){
+    const original = _.get(item, ['question', 'timeValue'], {
+      hours: "00",
+      minutes: "00",
+      seconds: "100"
+    });
 
-export default function (props) {
-  return (
-    <div>
-    <div className="c-question__answers o-row" role="radiogroup">
-      <div className="c-file-upload__audio-settings is-active">
-        <span>Audio record limit</span>
-        <div className="c-input c-input--inline">
-          <label htmlFor="audio-limit"></label>
-          <div className="c-input__contain">
-            <input
-              className="c-text-input c-text-input--smaller"
-              id="audio-limit"
-              type="text"
-              maxLength="3"
-              defaultValue={getAudioLimit(props.item)}
-              onBlur={ (e) => {
-                props.updateItem({
-                  question:{
-                    genusTypeId: genusTypes.question.audioUpload,
-                    timeValue: {
-                      hours: 0,
-                      minutes: 0,
-                      seconds: parseInt(e.target.value)
+    const time = _.mapValues(original, (t) => parseInt(t));
+    const seconds = time.hours * 3600 + time.minutes * 60 + time.seconds;
+    return seconds;
+  }
+
+  render(){
+    return (
+      <div>
+      <div className="c-question__answers o-row" role="radiogroup">
+        <div className="c-file-upload__audio-settings is-active">
+          <span>Audio record limit</span>
+          <div className="c-input c-input--inline">
+            <label htmlFor="audio-limit"></label>
+            <div className="c-input__contain">
+              <input
+                className="c-text-input c-text-input--smaller"
+                id="audio-limit"
+                type="text"
+                maxLength="3"
+                defaultValue={this.getAudioLimit(this.props.item)}
+                onBlur={ (e) => {
+                  this.props.updateItem({
+                    question:{
+                      genusTypeId: genusTypes.question.audioUpload,
+                      timeValue: {
+                        hours: 0,
+                        minutes: 0,
+                        seconds: parseInt(e.target.value)
+                      }
                     }
-                  }
-                })
-              }}
-            />
-            <div className="c-input__bottom has-error"></div>
+                  })
+                }}
+              />
+              <div className="c-input__bottom has-error"></div>
+            </div>
           </div>
+          <span>seconds. (240 maximum)</span>
+          <span className="c-inline-error">Please enter a number under 240</span>
         </div>
-        <span>seconds. (240 maximum)</span>
-        <span className="c-inline-error">Please enter a number under 240</span>
       </div>
+      <Feedback
+        item={this.props.item}
+        updateItem={this.props.updateItem} />
     </div>
-    <Feedback
-      item={props.item}
-      updateItem={props.updateItem} />
-  </div>
-  );
-}
+    );
+  }
+};
