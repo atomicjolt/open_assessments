@@ -3,12 +3,10 @@ import Feedback from './question_common/single_feedback';
 
 export default function FileUpload(props) {
   return (
-    <div>
-      <Feedback
-        item={props.item}
-        updateItem={props.updateItem}
-      />
-    </div>
+    <Feedback
+      item={props.item}
+      updateItem={props.updateItem}
+    />
   );
 }
 
