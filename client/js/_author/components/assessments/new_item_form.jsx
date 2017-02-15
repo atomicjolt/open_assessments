@@ -1,4 +1,5 @@
 import React      from 'react';
+import genusTypes from '../../../constants/genus_types';
 
 export default class newItemForm extends React.Component {
   static propTypes = {
@@ -6,18 +7,11 @@ export default class newItemForm extends React.Component {
     create: React.PropTypes.func.isRequired,
   };
 
-  static genusTypes = {
-    multipleChoice: 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
-    fileUpload: 'item-genus-type%3Aqti-upload-interaction-generic%40ODL.MIT.EDU',
-    audioUpload: 'item-genus-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU',
-    shortAnswer: 'shortAnswer'
-  }
-
   constructor() {
     super();
     this.state = {
       name: '',
-      genusTypeId: newItemForm.genusTypes.multipleChoice,
+      genusTypeId: genusTypes.item.multipleChoice,
       language: 'english',
     };
   }
@@ -59,17 +53,17 @@ export default class newItemForm extends React.Component {
                     id="questionType"
                   >
                     <option
-                      value={newItemForm.genusTypes.multipleChoice}
+                      value={genusTypes.item.multipleChoice}
                     >
                       Multiple Choice
                     </option>
-                    <option value={newItemForm.genusTypes.shortAnswer}>
+                    <option value={genusTypes.item.shortAnswer}>
                       Short Answer
                     </option>
-                    <option value={newItemForm.genusTypes.fileUpload}>
+                    <option value={genusTypes.item.fileUpload}>
                       File Upload
                     </option>
-                    <option value={newItemForm.genusTypes.audioUpload}>
+                    <option value={genusTypes.item.audioUpload}>
                       Audio Upload
                     </option>
                   </select>

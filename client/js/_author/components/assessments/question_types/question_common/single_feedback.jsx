@@ -24,7 +24,7 @@ export default class SingleFeedback extends React.Component {
   }
 
   handleBlur(e) {
-    const answer = this.getAnswer(this.props.item);
+    const answer = SingleFeedback.getAnswer(this.props.item);
     const newAnswer = {
       id: answer.id,
       genusTypeId: genusTypes.answer.rightAnswer,
