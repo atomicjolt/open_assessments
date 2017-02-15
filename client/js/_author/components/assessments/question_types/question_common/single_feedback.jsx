@@ -17,7 +17,8 @@ export default function feedback(props) {
                 genusTypeId: genusTypes.answer.rightAnswer,
                 feedback: e.target.value
               }]
-            })}/>
+            })}
+            defaultValue={props.feedback}/>
           <div className="c-input__bottom" />
         </div>
       </div>
@@ -26,5 +27,6 @@ export default function feedback(props) {
 }
 
 feedback.propTypes = {
-  updateItem: React.PropTypes.func.isRequired
+  updateItem: React.PropTypes.func.isRequired,
+  feedback: React.PropTypes.string
 };

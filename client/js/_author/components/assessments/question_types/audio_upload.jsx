@@ -1,6 +1,12 @@
 import React    from 'react';
+import _          from 'lodash';
 import genusTypes from '../../../../constants/genus_types';
 import Feedback from './question_common/single_feedback';
+
+
+function getFeedback(item){
+  return _.get(item, ['answers', '0', 'feedback', 'text'], '');
+}
 
 export default function (props) {
   return (
@@ -37,7 +43,9 @@ export default function (props) {
         <span className="c-inline-error">Please enter a number under 240</span>
       </div>
     </div>
-    <Feedback updateItem={props.updateItem} />
+    <Feedback
+      feedback={getFeedback(props.item)}
+      updateItem={props.updateItem} />
   </div>
   );
 }

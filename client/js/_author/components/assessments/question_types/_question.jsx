@@ -38,7 +38,8 @@ export default class Question extends React.Component {
         return <MultipleChoice {...this.props} />;
       case genusTypes.item.audioUpload:
         return <AudioUpload
-          updateItem={newProps => this.updateItem(newProps)} />;
+          updateItem={newProps => this.updateItem(newProps)}
+          item={this.props.item}/>;
         case genusTypes.item.fileUpload:
       default:
         return null;
