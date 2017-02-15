@@ -59,6 +59,7 @@ export class NewAssessment extends React.Component {
     getAssessmentItems: React.PropTypes.func.isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
+    deleteAssessmentItem: React.PropTypes.func,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({}))
   };
 
@@ -104,6 +105,14 @@ export class NewAssessment extends React.Component {
 
   updateItem(item) {
     this.props.updateItem(this.props.params.bankId, item);
+  }
+
+  deleteAssessmentItem(itemId) {
+    this.props.deleteAssessmentItem(
+      this.props.params.bankId,
+      this.props.params.id,
+      itemId,
+    );
   }
 
   addItem() {
@@ -158,6 +167,7 @@ export class NewAssessment extends React.Component {
           createItem={newItem => this.createItem(newItem)}
           editItem={(index, field, data) => this.editItem(index, field, data)}
           addItem={() => this.addItem()}
+          deleteAssessmentItem={itemId => this.deleteAssessmentItem(itemId)}
         />
       </div>
     );

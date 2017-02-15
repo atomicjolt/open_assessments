@@ -12,6 +12,7 @@ export default function AssessmentQuestions(props) {
           itemIndex={index}
           editItem={(field, value) => props.editItem(index, field, value)}
           updateItem={props.updateItem}
+          deleteAssessmentItem={props.deleteAssessmentItem}
         />
       ))}
     </div>
