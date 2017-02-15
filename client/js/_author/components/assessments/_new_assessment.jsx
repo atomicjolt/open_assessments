@@ -42,10 +42,12 @@ export class NewAssessment extends React.Component {
     this.setState({ assessment: { ...this.state.assessment, [field]: value } });
   }
 
-  editItem(itemIndex, field, data) {
-    const items = this.state.items;
-    items[itemIndex][field] = data;
-    this.setState({ items });
+  createItem(newItem) {
+    this.props.createAssessmentWithItem(
+      this.props.params.id,
+      this.state.assessment,
+      newItem,
+    )
   }
 
   render() {
@@ -59,6 +61,7 @@ export class NewAssessment extends React.Component {
           {...this.state.assessment}
           updateAssessment={() => this.createAssessment()}
           updateStateAssessment={(field, value) => this.updateStateAssessment(field, value)}
+          createItem={newItem => this.createItem(newItem)}
         />
       </div>
     );

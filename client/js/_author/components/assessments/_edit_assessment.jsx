@@ -20,16 +20,18 @@ function transformAssessment(assessment) {
 function select(state, props) {
   const bank = state.assessments[encodeURIComponent(props.params.bankId)];
   const assessmentItemIds = state.assessmentItems[props.params.id];
+  const items = _.compact(_.at(state.items[props.params.bankId], assessmentItemIds));
 
   return {
     assessment: bank && transformAssessment(bank[encodeURIComponent(props.params.id)]),
+    items,
     settings: state.settings,
     items: _.at(state.items[props.params.bankId], assessmentItemIds),
     currentAssessment: state.assessments[encodeURIComponent(props.params.bankId)][encodeURIComponent(props.params.id)]
   };
 }
 
-export class NewAssessment extends React.Component {
+export class EditAssessment extends React.Component {
   static propTypes = {
     params: React.PropTypes.shape({
       id: React.PropTypes.string,
@@ -162,4 +164,4 @@ export default connect(select, {
   ...BankActions,
   ...AssessmentActions,
   ...ItemActions
-})(NewAssessment);
+})(EditAssessment);
