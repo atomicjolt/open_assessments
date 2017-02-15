@@ -15,7 +15,7 @@ export default function multipleChoiceOptions(props) {
             className="c-text-input c-text-input--small c-wysiwyg"
             value={props.text}
             onChange={e => props.updateChoice({ id: props.id, text: e.target.value })}
-            onBlur={() => props.updateItem()}
+            onBlur={props.updateItem}
             id="option1"
             type="text"
             placeholder="Option"
@@ -25,13 +25,17 @@ export default function multipleChoiceOptions(props) {
         </div>
 
         <div className="c-answer__icons">
-          <button className="c-answer__icons__spacer" tabIndex="0">
+          <button className="c-answer__icons__spacer" tabIndex="0" onClick={props.moveUp}>
             <i className="material-icons">arrow_upward</i>
           </button>
-          <button className="c-answer__icons__spacer" tabIndex="0">
+          <button className="c-answer__icons__spacer" tabIndex="0" onClick={props.moveDown}>
             <i className="material-icons">arrow_downward</i>
           </button>
-          <button className="c-answer__icons__spacer" tabIndex="0">
+          <button
+            className="c-answer__icons__spacer"
+            tabIndex="0"
+            onClick={props.deleteChoice}
+          >
             <i className="material-icons">close</i>
           </button>
         </div>
@@ -50,5 +54,10 @@ export default function multipleChoiceOptions(props) {
 
 multipleChoiceOptions.propTypes = {
   text: React.PropTypes.string,
+  id: React.PropTypes.string,
   updateItem: React.PropTypes.func.isRequired,
+  updateChoice: React.PropTypes.func.isRequired,
+  deleteChoice: React.PropTypes.func.isRequired,
+  moveUp: React.PropTypes.func.isRequired,
+  moveDown: React.PropTypes.func.isRequired,
 };

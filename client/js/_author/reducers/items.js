@@ -67,7 +67,6 @@ export default function banks(state = initialState, action) {
       } else {
         newState[bankId][itemId].question.choices.push({ id: guid(), text: choice.text });
       }
-      // debugger;
       return newState;
     }
 
