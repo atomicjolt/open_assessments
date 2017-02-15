@@ -1,7 +1,9 @@
 import React    from 'react';
+import Feedback from './question_common/single_feedback';
 
 export default function (props) {
   return (
+    <div>
     <div className="c-question__answers o-row" role="radiogroup">
       <div className="c-file-upload__audio-settings is-active">
         <span>Audio record limit</span>
@@ -20,7 +22,7 @@ export default function (props) {
                     timeValue: {
                       hours: 0,
                       minutes: 0,
-                      seconds: e.target.value
+                      seconds: parseInt(e.target.value)
                     }
                   }
                 })
@@ -33,5 +35,7 @@ export default function (props) {
         <span className="c-inline-error">Please enter a number under 240</span>
       </div>
     </div>
+    <Feedback />
+  </div>
   );
 }

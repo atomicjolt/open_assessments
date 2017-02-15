@@ -6,7 +6,6 @@ import genusTypes       from '../../../../constants/genus_types.js';
 import InactiveHeader   from './question_common/question_inactive_header';
 import Settings         from './question_common/question_settings';
 import QuestionText     from './question_common/question_text';
-import Feedback         from './question_common/feedback';
 
 export default class Question extends React.Component {
   static propTypes = {
@@ -71,7 +70,6 @@ export default class Question extends React.Component {
             updateItem={newProps => this.updateItem(newProps)}
           />
           {this.content()}
-          <Feedback />
         </div>
       </div>
     );
