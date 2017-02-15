@@ -25,12 +25,23 @@ export default function multipleChoiceOptions(props) {
         </div>
 
         <div className="c-answer__icons">
-          <button className="c-answer__icons__spacer" tabIndex="0" onClick={props.moveUp}>
-            <i className="material-icons">arrow_upward</i>
-          </button>
-          <button className="c-answer__icons__spacer" tabIndex="0" onClick={props.moveDown}>
-            <i className="material-icons">arrow_downward</i>
-          </button>
+          {
+            props.first ? <div className="c-answer__icons__spacer" /> : <button
+              className="c-answer__icons__spacer"
+              tabIndex="0"
+              onClick={props.moveUp}
+            >
+              <i className="material-icons">arrow_upward</i>
+            </button>
+          }
+          {
+            props.last ? <div className="c-answer__icons__spacer" /> : <button
+              className="c-answer__icons__spacer"
+              tabIndex="0"
+              onClick={props.moveDown}>
+              <i className="material-icons">arrow_downward</i>
+            </button>
+          }
           <button
             className="c-answer__icons__spacer"
             tabIndex="0"
@@ -60,4 +71,6 @@ multipleChoiceOptions.propTypes = {
   deleteChoice: React.PropTypes.func.isRequired,
   moveUp: React.PropTypes.func.isRequired,
   moveDown: React.PropTypes.func.isRequired,
+  first: React.PropTypes.bool,
+  last: React.PropTypes.bool,
 };

@@ -38,23 +38,17 @@ export default class multipleChoice extends React.Component {
     });
   }
 
-  moveChoice(choice, up) {
-    const { choices } = this.props.item.question;
-    const index = _.findIndex(choices, { id: choice.id });
-
-    if ((up && index === 0) || (!up && choice === _.last(choices))) {
-      return;
-    }
-
+  moveChoice(choice, index, up) {
+    const newChoices = _.cloneDeep(this.props.item.question.choices);
     const newIndex = up ? index - 1 : index + 1;
 
-    const earlierItem = choices[newIndex];
-    choices[newIndex] = choice;
-    choices[index] = earlierItem;
+    const earlierItem = newChoices[newIndex];
+    newChoices[newIndex] = choice;
+    newChoices[index] = earlierItem;
 
     this.props.updateItem({
       question: {
-        choices,
+        choices: newChoices,
       }
     });
   }
@@ -64,15 +58,18 @@ export default class multipleChoice extends React.Component {
     return (
       <div className="c-question__answers c-question__answers--maintain">
         {
-          _.map(this.hasQuestions() ? question.choices : [{}], choice => (
+          _.map(this.hasQuestions() ? question.choices : [{}], (choice, index) => (
             <Option
               key={`assessmentChoice_${choice.id}`}
               {...choice}
+              index={index}
               updateChoice={newChoice => this.props.updateChoice(id, newChoice)}
               updateItem={() => this.props.updateItem({ question })}
               deleteChoice={() => this.deleteChoice(choice)}
-              moveUp={() => this.moveChoice(choice, true)}
-              moveDown={() => this.moveChoice(choice)}
+              moveUp={() => this.moveChoice(choice, index, true)}
+              moveDown={() => this.moveChoice(choice, index)}
+              first={index === 0}
+              last={choice === _.last(question.choices)}
             />
           ))
         }
