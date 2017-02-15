@@ -28,6 +28,6 @@ export default function AssessmentQuestions(props) {
 
 AssessmentQuestions.propTypes = {
   items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
-  updateItem: React.PropTypes.func,
+  // updateItem: React.PropTypes.func,
   moveItem: React.PropTypes.func.isRequired,
 };
