@@ -1,6 +1,6 @@
 import React      from 'react';
 
-export default function feedback() {
+export default function feedback(props) {
   return (
     <div className="c-question__feedback">
       <div className="c-input c-input-label--left c-feedback">

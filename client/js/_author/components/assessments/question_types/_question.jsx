@@ -21,15 +21,12 @@ export default class Question extends React.Component {
     const { item } = this.props;
     const { displayName, description, id } = item;
 
-    const newItem = _.merge(
-      {},
-      {
-        id,
-        name: displayName.text,
-        description: description.text
-      },
-      newItemProperties
-    );
+    const newItem = {
+      id,
+      name: displayName.text,
+      description: description.text,
+      ...newItemProperties
+    };
 
     this.props.updateItem(newItem);
   }
