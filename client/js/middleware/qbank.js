@@ -153,8 +153,8 @@ const qbank = {
   },
 
   [AssessmentConstants.UPDATE_ASSESSMENT_ITEMS]: {
-    method : Network.POST,
-    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}/items`,
+    method : Network.PUT,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items`,
   },
 
   [AssessmentConstants.DELETE_ASSESSMENT_ITEM]: {

@@ -65,7 +65,7 @@ export function updateAssessmentItems(bankId, assessmentId, itemIds) {
     assessmentId,
     apiCall : true,
     type    : Constants.UPDATE_ASSESSMENT_ITEMS,
-    body    : itemIds,
+    body    : { itemIds },
   };
 }
 

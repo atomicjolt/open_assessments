@@ -1,8 +1,8 @@
 import React            from 'react';
 import MultipleChoice   from './multiple_choice';
-import InactiveHeader   from './question_common/question_inactive_header';
-import Settings         from './question_common/question_settings';
-import QuestionText     from './question_common/question_text';
+import QuestionHeader   from './question_common/_header';
+import Settings         from './question_common/settings';
+import QuestionText     from './question_common/text';
 import Feedback         from './question_common/feedback';
 
 export default class Question extends React.Component {
@@ -10,9 +10,19 @@ export default class Question extends React.Component {
     item: React.PropTypes.shape({
       genusTypeId: React.PropTypes.string,
     }).isRequired,
+    topItem: React.PropTypes.bool,
+    bottomItem: React.PropTypes.bool,
     updateItem: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
+    moveItem: React.PropTypes.func.isRequired,
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      reorderActive: false,
+    };
+  }
 
   updateItem(newItemProperties) {
     const { item } = this.props;
@@ -26,6 +36,14 @@ export default class Question extends React.Component {
     );
   }
 
+  moveQuestionUp() {
+    this.props.moveItem(this.props.itemIndex, this.props.itemIndex - 1);
+  }
+
+  moveQuestionDown() {
+    this.props.moveItem(this.props.itemIndex, this.props.itemIndex + 1);
+  }
+
   content() {
     switch (this.props.item.genusTypeId) {
       case 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU':
@@ -35,16 +53,38 @@ export default class Question extends React.Component {
     }
   }
 
+  getClassName() {
+    if (this.props.isActive && this.props.reorderActive) {
+      return 'reorder-active';
+    }
+
+    if (this.props.isActive) return 'is-active';
+    return '';
+  }
+
   render() {
     const { item } = this.props;
     const { displayName, genusTypeId, id, description } = item;
+    const className = this.getClassName();
     return (
-      <div className="o-item c-question is-active" tabIndex="0">
-        <InactiveHeader
+      <div
+        className={`o-item c-question ${className}`}
+        tabIndex="0"
+        onClick={() => this.props.activateItem(item.id)}
+        onFocus={() => this.props.activateItem(item.id)}
+      >
+        <QuestionHeader
           name={displayName.text}
-          type={genusTypeId}
+          type={genusTypeId}s
           deleteAssessmentItem={this.props.deleteAssessmentItem}
           id={id}
+          index={this.props.itemIndex}
+          topItem={this.props.topItem}
+          bottomItem={this.props.bottomItem}
+          toggleReorder={this.props.toggleReorder}
+          reorderActive={this.props.isActive && this.props.reorderActive}
+          moveUp={() => this.moveQuestionUp()}
+          moveDown={() => this.moveQuestionDown()}
         />
         <Settings
           id={id}
@@ -55,7 +95,7 @@ export default class Question extends React.Component {
           multipleAnswer={false}
           reflection={false}
         />
-        <div className="c-question__content">
+        <div className={`c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
             id={id}
             text={description.text}

@@ -14,13 +14,18 @@ export default class AssessmentForm extends React.Component {
     addItem: React.PropTypes.func.isRequired,
     updateStateAssessment: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
+    updateItemOrder: React.PropTypes.func.isRequired,
     createItem: React.PropTypes.func,
+    updateItem: React.PropTypes.func,
+    deleteAssessmentItem: React.PropTypes.func,
   };
 
   constructor() {
     super();
     this.state = {
       addingAssessment: false,
+      activeItem: '',
+      reorderActive: false,
     };
   }
 
@@ -33,7 +38,27 @@ export default class AssessmentForm extends React.Component {
     return this.state.addingAssessment || _.isEmpty(this.props.items);
   }
 
+  activateItem(itemId) {
+    if (itemId !== this.state.activeItem && !this.state.reorderActive) {
+      this.setState({ activeItem: itemId, reorderActive: false });
+    }
+  }
+
+  toggleReorder() {
+    this.setState({ reorderActive: true });
+  }
+
+  moveItem(oldIndex, newIndex) {
+    const itemIds = _.map(this.props.items, 'id');
+    const temp = itemIds[newIndex];
+    itemIds[newIndex] = itemIds[oldIndex];
+    itemIds[oldIndex] = temp;
+    this.props.updateItemOrder(itemIds);
+  }
+
   render() {
+    const reorderActive = this.state.reorderActive;
+
     return (
       <div className="o-contain">
         <div className="o-item">
@@ -62,10 +87,15 @@ export default class AssessmentForm extends React.Component {
         </div>
         <AssessmentItems
           items={this.props.items}
+          activeItem={this.state.activeItem}
+          reorderActive={reorderActive}
+          activateItem={itemId => this.activateItem(itemId)}
+          toggleReorder={() => this.setState({ reorderActive: !reorderActive })}
           editItem={(itemIndex, field, data) => this.props.editItem(itemIndex, field, data)}
           addItem={this.props.addItem}
           updateItem={this.props.updateItem}
           deleteAssessmentItem={this.props.deleteAssessmentItem}
+          moveItem={(oldIndex, newIndex) => this.moveItem(oldIndex, newIndex)}
         />
 
         {this.showNewModal() ? <NewItem

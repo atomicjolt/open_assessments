@@ -1,21 +1,11 @@
 import React    from 'react';
 
 export default function inactiveHeader(props) {
-
-  const type = () => {
-    switch (props.type) {
-      case 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU':
-        return 'Multiple Choice';
-      default:
-        return 'Question';
-    }
-  };
-
   return (
     <div className="o-item__top">
       <div className="o-left">
         <h3 className="c-question__number">{props.name}</h3>
-        <div className="c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; {type()}</div>
+        <div className="c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; {props.type}</div>
       </div>
 
       <div className="o-right c-question-icons">
@@ -28,6 +18,7 @@ export default function inactiveHeader(props) {
         <button
           className="c-btn c-btn--square"
           tabIndex="0"
+          onClick={props.toggleReorder}
         >
           <i className="material-icons">swap_vert</i>
         </button>
@@ -48,4 +39,5 @@ inactiveHeader.propTypes = {
   type: React.PropTypes.string,
   id: React.PropTypes.string,
   deleteAssessmentItem: React.PropTypes.func,
+  toggleReorder: React.PropTypes.func,
 };
