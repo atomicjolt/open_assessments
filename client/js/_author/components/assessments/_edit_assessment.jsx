@@ -22,11 +22,10 @@ function select(state, props) {
   const id = encodeURIComponent(props.params.id);
   const bank = state.assessments[bankId];
   const assessmentItemIds = state.assessmentItems[id];
-  const items = _.compact(_.at(state.items[props.params.bankId], assessmentItemIds));
 
   return {
     assessment: bank && transformAssessment(bank[id]),
-    items,
+    items: _.compact(_.at(state.items[bankId], assessmentItemIds)),
     settings: state.settings,
     currentAssessment: (bank && bank[id]) || {},
     params: { // override react router because we want the escaped ids
