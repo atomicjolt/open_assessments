@@ -65,6 +65,7 @@ export default class AssessmentForm extends React.Component {
           editItem={(itemIndex, field, data) => this.props.editItem(itemIndex, field, data)}
           addItem={this.props.addItem}
           updateItem={this.props.updateItem}
+          deleteAssessmentItem={this.props.deleteAssessmentItem}
         />
 
         {this.showNewModal() ? <NewItem

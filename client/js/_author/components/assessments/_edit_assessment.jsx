@@ -18,16 +18,20 @@ function transformAssessment(assessment) {
 }
 
 function select(state, props) {
-  const bank = state.assessments[encodeURIComponent(props.params.bankId)];
-  const assessmentItemIds = state.assessmentItems[props.params.id];
-  const items = _.compact(_.at(state.items[props.params.bankId], assessmentItemIds));
+  const bankId = encodeURIComponent(props.params.bankId);
+  const id = encodeURIComponent(props.params.id);
+  const bank = state.assessments[bankId];
+  const assessmentItemIds = state.assessmentItems[id];
 
   return {
-    assessment: bank && transformAssessment(bank[encodeURIComponent(props.params.id)]),
-    items,
+    assessment: bank && transformAssessment(bank[id]),
+    items: _.compact(_.at(state.items[bankId], assessmentItemIds)),
     settings: state.settings,
-    items: _.at(state.items[props.params.bankId], assessmentItemIds),
-    currentAssessment: state.assessments[encodeURIComponent(props.params.bankId)][encodeURIComponent(props.params.id)]
+    currentAssessment: (bank && bank[id]) || {},
+    params: { // override react router because we want the escaped ids
+      bankId,
+      id,
+    }
   };
 }
 
@@ -55,6 +59,7 @@ export class EditAssessment extends React.Component {
     getAssessmentItems: React.PropTypes.func.isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
+    deleteAssessmentItem: React.PropTypes.func,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({}))
   };
 
@@ -100,6 +105,14 @@ export class EditAssessment extends React.Component {
 
   updateItem(item) {
     this.props.updateItem(this.props.params.bankId, item);
+  }
+
+  deleteAssessmentItem(itemId) {
+    this.props.deleteAssessmentItem(
+      this.props.params.bankId,
+      this.props.params.id,
+      itemId,
+    );
   }
 
   addItem() {
@@ -154,6 +167,7 @@ export class EditAssessment extends React.Component {
           createItem={newItem => this.createItem(newItem)}
           editItem={(index, field, data) => this.editItem(index, field, data)}
           addItem={() => this.addItem()}
+          deleteAssessmentItem={itemId => this.deleteAssessmentItem(itemId)}
         />
       </div>
     );
