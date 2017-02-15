@@ -22,7 +22,9 @@ export default class Question extends React.Component {
         id,
         name: newItemProperties.name || displayName.text,
         description: newItemProperties.description || description.text,
-        question: newItemProperties.question || question,
+        question: {
+          choices: newItemProperties.question.choices || question.choices
+        },
       }
     );
   }
