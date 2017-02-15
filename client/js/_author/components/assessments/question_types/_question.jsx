@@ -80,7 +80,7 @@ export default class Question extends React.Component {
       >
         <QuestionHeader
           name={displayName.text}
-          type={genusTypeId}s
+          type={genusTypeId}
           deleteAssessmentItem={this.props.deleteAssessmentItem}
           id={id}
           index={this.props.itemIndex}
