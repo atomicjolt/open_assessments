@@ -8,35 +8,35 @@ export default class SingleFeedback extends React.Component {
     item: React.PropTypes.object
   };
 
-  getFeedback(item){
-    return this.getAnswer(item).feedback.text;
-  }
-
-  getAnswer(item){
+  static getAnswer(item) {
     return _.get(
       item,
       ['answers', '0'],
       {
         genusTypeId: genusTypes.answer.rightAnswer,
-        feedback: ""
+        feedback: ''
       }
-    )
+    );
   }
 
-  handleBlur(e){
+  static getFeedback(item) {
+    return SingleFeedback.getAnswer(item).feedback.text;
+  }
+
+  handleBlur(e) {
     const answer = this.getAnswer(this.props.item);
     const newAnswer = {
       id: answer.id,
       genusTypeId: genusTypes.answer.rightAnswer,
       feedback: e.target.value
-    }
+    };
 
     this.props.updateItem({
       answers:[newAnswer]
     });
   }
 
-  render(){
+  render() {
     return (
       <div className="c-question__feedback">
         <div className="c-input c-input-label--left c-feedback">
@@ -47,8 +47,9 @@ export default class SingleFeedback extends React.Component {
               id="feedbackCorrect"
               type="text"
               tabIndex="0"
-              onBlur={(e) => this.handleBlur(e)}
-              defaultValue={this.getFeedback(this.props.item)}/>
+              onBlur={e => this.handleBlur(e)}
+              defaultValue={SingleFeedback.getFeedback(this.props.item)}
+            />
             <div className="c-input__bottom" />
           </div>
         </div>

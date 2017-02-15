@@ -1,6 +1,6 @@
 import React      from 'react';
 
-export default class newItemForm extends React.Component{
+export default class newItemForm extends React.Component {
   static propTypes = {
     cancel: React.PropTypes.func.isRequired,
     create: React.PropTypes.func.isRequired,
@@ -59,7 +59,8 @@ export default class newItemForm extends React.Component{
                     id="questionType"
                   >
                     <option
-                      value={newItemForm.genusTypes.multipleChoice}>
+                      value={newItemForm.genusTypes.multipleChoice}
+                    >
                       Multiple Choice
                     </option>
                     <option value={newItemForm.genusTypes.shortAnswer}>

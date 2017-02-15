@@ -5,8 +5,8 @@ import Feedback from './question_common/single_feedback';
 
 export default class AudioUpload extends React.Component {
   static propTypes = {
-    updateItem: React.PropTypes.Func.isrequired,
-    item: React.PropTypes.Object
+    updateItem: React.PropTypes.func.isRequired,
+    item: React.PropTypes.object
   }
 
   static getAudioLimit(item) {

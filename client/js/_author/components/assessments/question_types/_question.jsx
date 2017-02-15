@@ -38,13 +38,19 @@ export default class Question extends React.Component {
       case genusTypes.item.multipleChoice:
         return <MultipleChoice {...this.props} />;
       case genusTypes.item.audioUpload:
-        return <AudioUpload
-          updateItem={newProps => this.updateItem(newProps)}
-          item={this.props.item}/>;
+        return (
+          <AudioUpload
+            updateItem={newProps => this.updateItem(newProps)}
+            item={this.props.item}
+          />
+        );
       case genusTypes.item.fileUpload:
-        return <FileUpload
-          updateItem={newProps => this.updateItem(newProps)}
-          item={this.props.item}/>;
+        return (
+          <FileUpload
+            updateItem={newProps => this.updateItem(newProps)}
+            item={this.props.item}
+          />
+        );
 
       default:
         return null;
