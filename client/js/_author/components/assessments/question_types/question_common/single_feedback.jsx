@@ -1,56 +1,58 @@
 import React      from 'react';
+import _          from 'lodash';
 import genusTypes from '../../../../../constants/genus_types';
 
-function getFeedback(item){
-  return getAnswer(item).feedback.text;
-}
+export default class SingleFeedback extends React.Component {
+  static propTypes = {
+    updateItem: React.PropTypes.func.isRequired,
+    item: React.PropTypes.object
+  };
 
-function getAnswer(item){
-  return _.get(
-    item,
-    ['answers', '0'],
-    {
-      genusTypeId: genusTypes.answer.rightAnswer,
-      feedback: ""
-    }
-  )
-}
+  getFeedback(item){
+    return this.getAnswer(item).feedback.text;
+  }
 
-export default function feedback(props) {
+  getAnswer(item){
+    return _.get(
+      item,
+      ['answers', '0'],
+      {
+        genusTypeId: genusTypes.answer.rightAnswer,
+        feedback: ""
+      }
+    )
+  }
 
-  function handleBlur(e){
-    const answer = getAnswer(props.item);
+  handleBlur(e){
+    const answer = this.getAnswer(this.props.item);
     const newAnswer = {
       id: answer.id,
       genusTypeId: genusTypes.answer.rightAnswer,
       feedback: e.target.value
     }
 
-    props.updateItem({
+    this.props.updateItem({
       answers:[newAnswer]
     });
   }
 
-  return (
-    <div className="c-question__feedback">
-      <div className="c-input c-input-label--left c-feedback">
-        <label htmlFor="feedbackCorrect">Feedback</label>
-        <div className="c-input__contain">
-          <input
-            className="c-text-input c-text-input--smaller c-wysiwyg"
-            id="feedbackCorrect"
-            type="text"
-            tabIndex="0"
-            onBlur={(e) => handleBlur(e)}
-            defaultValue={getFeedback(props.item)}/>
-          <div className="c-input__bottom" />
+  render(){
+    return (
+      <div className="c-question__feedback">
+        <div className="c-input c-input-label--left c-feedback">
+          <label htmlFor="feedbackCorrect">Feedback</label>
+          <div className="c-input__contain">
+            <input
+              className="c-text-input c-text-input--smaller c-wysiwyg"
+              id="feedbackCorrect"
+              type="text"
+              tabIndex="0"
+              onBlur={(e) => this.handleBlur(e)}
+              defaultValue={this.getFeedback(this.props.item)}/>
+            <div className="c-input__bottom" />
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
-
-feedback.propTypes = {
-  updateItem: React.PropTypes.func.isRequired,
-  item: React.PropTypes.object
-};
