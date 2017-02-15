@@ -13,6 +13,7 @@ export default function AssessmentQuestions(props) {
           updateItem={props.updateItem}
           updateChoice={props.updateChoice}
           updateAnswer={props.updateAnswer}
+          deleteAssessmentItem={props.deleteAssessmentItem}
         />
       ))}
     </div>

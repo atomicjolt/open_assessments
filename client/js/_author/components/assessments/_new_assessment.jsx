@@ -6,21 +6,25 @@ import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 
-function select() {
+function select(state) {
   return {
-
+    editableBankId: state.settings.editableBankId,
   };
 }
 export class NewAssessment extends React.Component {
   static propTypes = {
     params: React.PropTypes.shape({ id: React.PropTypes.string }).isRequired,
+    editableBankId: React.PropTypes.string.isRequired,
     createAssessment: React.PropTypes.func.isRequired,
+    publishAssessment: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      assessment: {},
+      assessment: {
+        assignedBankIds: [this.props.editableBankId]
+      },
     };
   }
 
@@ -33,12 +37,24 @@ export class NewAssessment extends React.Component {
     );
   }
 
+  createItem(newItem) {
+    this.props.createAssessmentWithItem(
+      this.props.params.id,
+      this.state.assessment,
+      newItem,
+    )
+  }
+
   render() {
     return (
       <div>
-        <Heading view="assessments" />
+        <Heading
+          view="assessments"
+          publishAssessment={this.props.publishAssessment}
+        />
         <AssessmentForm
           updateAssessment={assessment => this.createAssessment(assessment)}
+          createItem={newItem => this.createItem(newItem)}
         />
       </div>
     );
