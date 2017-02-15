@@ -25,6 +25,7 @@ function select(state, props) {
 
   return {
     assessment: bank && transformAssessment(bank[id]),
+    items,
     settings: state.settings,
     items: _.at(state.items[bankId], assessmentItemIds),
     currentAssessment: (bank && bank[id]) || {},
@@ -35,7 +36,7 @@ function select(state, props) {
   };
 }
 
-export class NewAssessment extends React.Component {
+export class EditAssessment extends React.Component {
   static propTypes = {
     params: React.PropTypes.shape({
       id: React.PropTypes.string,
@@ -178,4 +179,4 @@ export default connect(select, {
   ...BankActions,
   ...AssessmentActions,
   ...ItemActions
-})(NewAssessment);
+})(EditAssessment);
