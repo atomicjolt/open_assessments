@@ -34,12 +34,12 @@ export default class Question extends React.Component {
 
   content() {
     switch (this.props.item.genusTypeId) {
-      case genusTypes.multipleChoice:
+      case genusTypes.item.multipleChoice:
         return <MultipleChoice {...this.props} />;
-      case genusTypes.audioUpload:
+      case genusTypes.item.audioUpload:
         return <AudioUpload
           updateItem={newProps => this.updateItem(newProps)} />;
-      case genusTypes.fileUpload:
+        case genusTypes.item.fileUpload:
       default:
         return null;
     }

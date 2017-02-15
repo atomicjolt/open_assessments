@@ -1,4 +1,5 @@
 import React    from 'react';
+import genusTypes from '../../../../constants/genus_types';
 import Feedback from './question_common/single_feedback';
 
 export default function (props) {
@@ -19,6 +20,7 @@ export default function (props) {
               onBlur={ (e) => {
                 props.updateItem({
                   question:{
+                    genusTypeId: genusTypes.question.audioUpload,
                     timeValue: {
                       hours: 0,
                       minutes: 0,
