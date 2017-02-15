@@ -10,9 +10,14 @@ export default class Question extends React.Component {
     item: React.PropTypes.shape({
       genusTypeId: React.PropTypes.string,
     }).isRequired,
+    isActive: React.PropTypes.bool,
+    itemIndex: React.PropTypes.number,
     topItem: React.PropTypes.bool,
     bottomItem: React.PropTypes.bool,
+    reorderActive: React.PropTypes.bool,
     updateItem: React.PropTypes.func.isRequired,
+    activateItem: React.PropTypes.func.isRequired,
+    toggleReorder: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
     moveItem: React.PropTypes.func.isRequired,
   };
@@ -22,6 +27,32 @@ export default class Question extends React.Component {
     this.state = {
       reorderActive: false,
     };
+  }
+
+  getClassName() {
+    if (this.props.isActive && this.props.reorderActive) {
+      return 'reorder-active';
+    }
+
+    if (this.props.isActive) return 'is-active';
+    return '';
+  }
+
+  content() {
+    switch (this.props.item.genusTypeId) {
+      case 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU':
+        return <MultipleChoice {...this.props} />;
+      default:
+        return null;
+    }
+  }
+
+  moveQuestionUp() {
+    this.props.moveItem(this.props.itemIndex, this.props.itemIndex - 1);
+  }
+
+  moveQuestionDown() {
+    this.props.moveItem(this.props.itemIndex, this.props.itemIndex + 1);
   }
 
   updateItem(newItemProperties) {
@@ -34,32 +65,6 @@ export default class Question extends React.Component {
         description: newItemProperties.description || description.text,
       }
     );
-  }
-
-  moveQuestionUp() {
-    this.props.moveItem(this.props.itemIndex, this.props.itemIndex - 1);
-  }
-
-  moveQuestionDown() {
-    this.props.moveItem(this.props.itemIndex, this.props.itemIndex + 1);
-  }
-
-  content() {
-    switch (this.props.item.genusTypeId) {
-      case 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU':
-        return <MultipleChoice {...this.props} />;
-      default:
-        return null;
-    }
-  }
-
-  getClassName() {
-    if (this.props.isActive && this.props.reorderActive) {
-      return 'reorder-active';
-    }
-
-    if (this.props.isActive) return 'is-active';
-    return '';
   }
 
   render() {
