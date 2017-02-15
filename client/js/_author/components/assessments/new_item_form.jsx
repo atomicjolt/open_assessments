@@ -69,7 +69,7 @@ export default class newItemForm extends React.Component{
                       File Upload
                     </option>
                     <option value={newItemForm.genusTypes.audioUpload}>
-                      Audio
+                      Audio Upload
                     </option>
                   </select>
                 </div>
