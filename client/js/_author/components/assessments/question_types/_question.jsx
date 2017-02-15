@@ -34,8 +34,7 @@ export default class Question extends React.Component {
       return 'reorder-active';
     }
 
-    if (this.props.isActive) return 'is-active';
-    return '';
+    return this.props.isActive ? 'is-active' : '';
   }
 
   content() {
