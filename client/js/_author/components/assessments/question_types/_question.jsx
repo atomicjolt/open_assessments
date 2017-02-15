@@ -11,7 +11,7 @@ export default class Question extends React.Component {
       genusTypeId: React.PropTypes.string,
     }).isRequired,
     updateItem: React.PropTypes.func.isRequired,
-    deleteAssessmentItem: React.PropTypes.func,
+    deleteAssessmentItem: React.PropTypes.func.isRequired,
   };
 
   updateItem(newItemProperties) {
