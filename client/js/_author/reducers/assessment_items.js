@@ -15,6 +15,25 @@ export default function banks(state = initialState, action) {
       return newState;
     }
 
+    case 'DELETE_ASSESSMENT_ITEM_DONE': {
+      const newState = _.cloneDeep(state);
+
+      _.pull( // _.pull mutates the array
+        newState[action.original.assessmentId],
+        action.original.itemId
+      );
+
+      return newState;
+    }
+
+    case 'CREATE_ASSESSMENT_WITH_ITEM_DONE': {
+      const newState = _.cloneDeep(state);
+      const assessmentId = action.assessmentId;
+
+      newState[assessmentId] = _.map(action.payload, 'id');
+      return newState;
+    }
+
     default:
       return state;
   }

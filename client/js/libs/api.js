@@ -93,7 +93,6 @@ export default class Api {
         default:
           break;
       }
-
       request.set('Accept', 'application/json');
       request.timeout(timeout);
 

@@ -32,12 +32,17 @@ describe('Bank Navigator', () => {
           type: 'OsidNode'
         },
       ],
+      settings: {
+        editableBankId   : 'bankId123',
+        publishedBankId  : 'publishedId123'
+      },
       path               : [],
       updatePath         : () => { calledFuncts.push('updatePath'); },
       getBanks           : () => { calledFuncts.push('getBanks'); },
       getAssessments     : () => { calledFuncts.push('getAssessments'); },
       getItems           : () => { calledFuncts.push('getItems'); },
       createAssessment   : () => { calledFuncts.push('createAssessment'); },
+      deleteAssessment   : () => { calledFuncts.push('deleteAssessment'); },
       currentBankId      : '',
     };
     result = TestUtils.renderIntoDocument(<BankNavigator {...props} />);

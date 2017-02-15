@@ -19,9 +19,25 @@ export default function inactiveHeader(props) {
       </div>
 
       <div className="o-right c-question-icons">
-        <button className="c-btn c-btn--square" tabIndex="0"><i className="material-icons">remove_red_eye</i></button>
-        <button className="c-btn c-btn--square" tabIndex="0"><i className="material-icons">swap_vert</i></button>
-        <button className="c-btn c-btn--square" tabIndex="0"><i className="material-icons">delete</i></button>
+        <button
+          className="c-btn c-btn--square"
+          tabIndex="0"
+        >
+          <i className="material-icons">remove_red_eye</i>
+        </button>
+        <button
+          className="c-btn c-btn--square"
+          tabIndex="0"
+        >
+          <i className="material-icons">swap_vert</i>
+        </button>
+        <button
+          className="c-btn c-btn--square"
+          tabIndex="0"
+          onClick={() => props.deleteAssessmentItem(props.id)}
+        >
+          <i className="material-icons">delete</i>
+        </button>
       </div>
     </div>
   );
@@ -30,4 +46,6 @@ export default function inactiveHeader(props) {
 inactiveHeader.propTypes = {
   name: React.PropTypes.string,
   type: React.PropTypes.string,
+  id: React.PropTypes.string,
+  deleteAssessmentItem: React.PropTypes.func,
 };

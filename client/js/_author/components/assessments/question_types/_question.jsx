@@ -14,6 +14,7 @@ export default class Question extends React.Component {
       genusTypeId: React.PropTypes.string,
     }).isRequired,
     updateItem: React.PropTypes.func.isRequired,
+    deleteAssessmentItem: React.PropTypes.func.isRequired,
   };
 
   updateItem(newItemProperties) {
@@ -65,6 +66,8 @@ export default class Question extends React.Component {
         <InactiveHeader
           name={displayName.text}
           type={genusTypeId}
+          deleteAssessmentItem={this.props.deleteAssessmentItem}
+          id={id}
         />
         <Settings
           id={id}
