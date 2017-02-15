@@ -123,7 +123,7 @@ const qbank = {
 
   [AssessmentConstants.DELETE_ASSESSMENT_ITEM]: {
     method : Network.DEL,
-    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}/items/${action.itemId}`,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items/${action.itemId}`,
   },
 
   [ItemConstants.GET_ITEMS]: {
