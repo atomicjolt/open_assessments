@@ -33,6 +33,7 @@ export function createItem(bankId, item) {
 export function updateItem(bankId, item) {
   return {
     bankId,
+    itemId  : item.id,
     apiCall : true,
     type    : Constants.UPDATE_ITEM,
     body    : item

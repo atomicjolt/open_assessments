@@ -2,27 +2,30 @@ import React                  from 'react';
 import { connect }            from 'react-redux';
 import AssessmentForm         from './assessment_form';
 import Heading                from  '../common/heading';
-import { colors, buttonStyle }  from '../../defines';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 
-function select() {
+function select(state) {
   return {
-
+    editableBankId: state.settings.editableBankId,
   };
 }
 export class NewAssessment extends React.Component {
   static propTypes = {
     params: React.PropTypes.shape({ id: React.PropTypes.string }).isRequired,
+    editableBankId: React.PropTypes.string.isRequired,
     createAssessment: React.PropTypes.func.isRequired,
+    publishAssessment: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
     super(props);
     this.titleField = null;
     this.state = {
-      assessment: {},
+      assessment: {
+        assignedBankIds: [this.props.editableBankId]
+      },
     };
   }
 
@@ -50,7 +53,10 @@ export class NewAssessment extends React.Component {
   render() {
     return (
       <div>
-        <Heading view="assessments" />
+        <Heading
+          view="assessments"
+          publishAssessment={this.props.publishAssessment}
+        />
         <AssessmentForm
           {...this.state.assessment}
           updateAssessment={() => this.createAssessment()}

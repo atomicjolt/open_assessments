@@ -3,7 +3,6 @@ import { connect }            from 'react-redux';
 import _                      from 'lodash';
 import Heading                from  '../common/heading';
 import AssessmentForm         from './assessment_form';
-import { colors, buttonStyle }  from '../../defines';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
@@ -26,6 +25,9 @@ function select(state, props) {
   return {
     assessment: bank && transformAssessment(bank[encodeURIComponent(props.params.id)]),
     items,
+    settings: state.settings,
+    items: _.at(state.items[props.params.bankId], assessmentItemIds),
+    currentAssessment: state.assessments[encodeURIComponent(props.params.bankId)][encodeURIComponent(props.params.id)]
   };
 }
 
@@ -35,18 +37,25 @@ export class EditAssessment extends React.Component {
       id: React.PropTypes.string,
       bankId: React.PropTypes.string
     }).isRequired,
-    createAssessment: React.PropTypes.func.isRequired,
+    assessment: React.PropTypes.shape({
+      id: React.PropTypes.string,
+      bankId: React.PropTypes.string
+    }),
+    currentAssessment: React.PropTypes.shape({
+      assignedBankIds: React.PropTypes.array,
+    }),
+    settings: React.PropTypes.shape({
+      editableBankId: React.PropTypes.string,
+      publishedBankId: React.PropTypes.string
+    }),
+    editOrPublishAssessment: React.PropTypes.func.isRequired,
+    deleteAssignedAssessment: React.PropTypes.func.isRequired,
+    getAssessments: React.PropTypes.func.isRequired,
+    updateAssessment: React.PropTypes.func.isRequired,
+    getAssessmentItems: React.PropTypes.func.isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
-  };
-
-  static styles = {
-    button: {
-      backgroundColor : colors.primaryPurple,
-      height          : '100%',
-      verticalAlign   : 'middle',
-      margin          : '7px 15px',
-      padding         : '5px 40px',
-    },
+    updateItem: React.PropTypes.func.isRequired,
+    items: React.PropTypes.arrayOf(React.PropTypes.shape({}))
   };
 
   constructor(props) {
@@ -83,21 +92,18 @@ export class EditAssessment extends React.Component {
     this.setState({ assessment });
   }
 
-  saveButton() {
-    return (
-      <button
-        style={{ ...buttonStyle, ...NewAssessment.styles.button }}
-        onClick={() => this.createAssessment()}
-      >
-        Save Assessment
-      </button>
-    );
-  }
-
   editItem(itemIndex, field, data) {
     const items = this.state.items;
     items[itemIndex][field] = data;
     this.setState({ items });
+  }
+
+  updateItem(item) {
+    this.props.updateItem(this.props.params.bankId, item);
+  }
+
+  addItem() {
+  //  TODO: write me
   }
 
   createItem(newItem) {
@@ -113,23 +119,47 @@ export class EditAssessment extends React.Component {
     return { ...this.props.assessment, ...this.state.assessment };
   }
 
+  editOrPublishAssessment(published) {
+    const { assessment, settings } = this.props;
+    if (published) {
+      this.props.deleteAssignedAssessment(assessment, settings.publishedBankId);
+      // Need to delete the publishedBankId and then add the editBankId
+      this.props.editOrPublishAssessment(assessment, settings.editableBankId);
+    } else {
+      if (_.includes(assessment.assignedBankIds, this.props.settings.editableBankId)) {
+        this.props.deleteAssignedAssessment(assessment, settings.editableBankId);
+      }
+      // Need to delete the editBankId and then add the publishedBankId
+      this.props.editOrPublishAssessment(assessment, settings.publishedBankId);
+    }
+  }
+
   render() {
+
+    const { currentAssessment, settings } = this.props;
+    const isPublished =  _.includes(currentAssessment.assignedBankIds, settings.publishedBankId);
     return (
       <div>
-        <Heading view="assessments" />
+        <Heading
+          view="assessments"
+          editOrPublishAssessment={(published) => { this.editOrPublishAssessment(published); }}
+          isPublished={isPublished}
+        />
         <AssessmentForm
           {...this.assessmentProps()}
           updateAssessment={() => this.updateAssessment()}
           updateStateAssessment={(field, value) => this.updateStateAssessment(field, value)}
           items={this.props.items}
+          updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}
+          editItem={(index, field, data) => this.editItem(index, field, data)}
+          addItem={() => this.addItem()}
         />
       </div>
-
     );
   }
 }
-// { this.titleField.value }
+
 export default connect(select, {
   ...BankActions,
   ...AssessmentActions,
