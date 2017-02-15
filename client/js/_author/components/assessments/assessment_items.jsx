@@ -2,7 +2,7 @@ import React            from 'react';
 import _                from 'lodash';
 import Question         from './question_types/_question';
 
-export default function AssessmentQuestions(props) {
+export default function AssessmentItems(props) {
   return (
     <div>
       {_.map(_.compact(props.items), (item, index) => (
@@ -19,6 +19,6 @@ export default function AssessmentQuestions(props) {
   );
 }
 
-AssessmentQuestions.propTypes = {
+AssessmentItems.propTypes = {
   items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired
 };

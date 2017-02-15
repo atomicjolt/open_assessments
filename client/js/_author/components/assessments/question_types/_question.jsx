@@ -1,9 +1,12 @@
 import React            from 'react';
+import _                from 'lodash';
 import MultipleChoice   from './multiple_choice';
+import AudioUpload      from './audio_upload';
+import FileUpload       from './file_upload';
+import genusTypes       from '../../../../constants/genus_types.js';
 import InactiveHeader   from './question_common/question_inactive_header';
 import Settings         from './question_common/question_settings';
 import QuestionText     from './question_common/question_text';
-import Feedback         from './question_common/feedback';
 
 export default class Question extends React.Component {
   static propTypes = {
@@ -17,19 +20,36 @@ export default class Question extends React.Component {
   updateItem(newItemProperties) {
     const { item } = this.props;
     const { displayName, description, id } = item;
-    this.props.updateItem(
-      {
-        id,
-        name: newItemProperties.name || displayName.text,
-        description: newItemProperties.description || description.text,
-      }
-    );
+
+    const newItem = {
+      id,
+      name: displayName.text,
+      description: description.text,
+      ...newItemProperties
+    };
+
+    this.props.updateItem(newItem);
   }
 
   content() {
     switch (this.props.item.genusTypeId) {
-      case 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU':
+      case genusTypes.item.multipleChoice:
         return <MultipleChoice {...this.props} />;
+      case genusTypes.item.audioUpload:
+        return (
+          <AudioUpload
+            updateItem={newProps => this.updateItem(newProps)}
+            item={this.props.item}
+          />
+        );
+      case genusTypes.item.fileUpload:
+        return (
+          <FileUpload
+            updateItem={newProps => this.updateItem(newProps)}
+            item={this.props.item}
+          />
+        );
+
       default:
         return null;
     }
@@ -62,7 +82,6 @@ export default class Question extends React.Component {
             updateItem={newProps => this.updateItem(newProps)}
           />
           {this.content()}
-          <Feedback />
         </div>
       </div>
     );
