@@ -18,14 +18,20 @@ function transformAssessment(assessment) {
 }
 
 function select(state, props) {
-  const bank = state.assessments[encodeURIComponent(props.params.bankId)];
-  const assessmentItemIds = state.assessmentItems[props.params.id];
+  const bankId = encodeURIComponent(props.params.bankId);
+  const id = encodeURIComponent(props.params.id);
+  const bank = state.assessments[bankId];
+  const assessmentItemIds = state.assessmentItems[id];
 
   return {
-    assessment: bank && transformAssessment(bank[encodeURIComponent(props.params.id)]),
+    assessment: bank && transformAssessment(bank[id]),
     settings: state.settings,
-    items: _.at(state.items[props.params.bankId], assessmentItemIds),
-    currentAssessment: state.assessments[encodeURIComponent(props.params.bankId)][encodeURIComponent(props.params.id)]
+    items: _.at(state.items[bankId], assessmentItemIds),
+    currentAssessment: (bank && bank[id]) || {},
+    params: { // override react router because we want the escaped ids
+      bankId,
+      id,
+    }
   };
 }
 
