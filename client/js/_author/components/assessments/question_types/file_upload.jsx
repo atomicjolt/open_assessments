@@ -1,16 +1,18 @@
 import React    from 'react';
-import _          from 'lodash';
-import genusTypes from '../../../../constants/genus_types';
 import Feedback from './question_common/single_feedback';
 
-export default class FileUpload extends React.Component {
-  render(){
-    return (
-      <div>
-        <Feedback
-          item={this.props.item}
-          updateItem={this.props.updateItem} />
-      </div>
-    );
-  }
+export default function FileUpload(props) {
+  return (
+    <div>
+      <Feedback
+        item={props.item}
+        updateItem={props.updateItem}
+      />
+    </div>
+  );
+}
+
+FileUpload.propTypes = {
+  updateItem: React.PropTypes.func.isRequired,
+  item: React.PropTypes.object
 };
