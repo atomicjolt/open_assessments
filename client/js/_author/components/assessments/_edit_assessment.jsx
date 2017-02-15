@@ -25,9 +25,8 @@ function select(state, props) {
 
   return {
     assessment: bank && transformAssessment(bank[id]),
-    items,
-    settings: state.settings,
     items: _.at(state.items[bankId], assessmentItemIds),
+    settings: state.settings,
     currentAssessment: (bank && bank[id]) || {},
     params: { // override react router because we want the escaped ids
       bankId,
