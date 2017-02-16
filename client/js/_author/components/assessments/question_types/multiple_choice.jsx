@@ -2,6 +2,7 @@ import React    from 'react';
 import _        from 'lodash';
 import Option   from './multiple_choice_option';
 import Add      from './add_option';
+import Feedback from './question_common/feedback';
 
 export default class multipleChoice extends React.Component {
   static propTypes = {
@@ -76,6 +77,7 @@ export default class multipleChoice extends React.Component {
         <Add
           updateChoice={() => this.props.updateChoice(id, {})}
         />
+        <Feedback />
       </div>
     );
   }
