@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import _    from 'lodash';
+import guid from '../../utils/guid';
 
 // Leave this empty. It will hold assessments by bank id. IE `state[someId] = {a_bank}`
 const initialState = {};
@@ -42,6 +43,36 @@ export default function banks(state = initialState, action) {
 
       newState[bankId][action.payload.id] = action.payload;
 
+      return newState;
+    }
+
+    case 'ADD_CHOICE': {
+      const newState = _.cloneDeep(state);
+      const { bankId, itemId, choice } = action;
+      if (!newState[bankId][itemId].question) {
+        newState[bankId][itemId].question = {
+          questionString: action.questionString || '',
+          choices: [{
+            id: guid(),
+            text: choice.text,
+          }]
+        };
+      } else if (choice.id) {
+        const foundChoice = _.find(newState[bankId][itemId].question.choices, { id: choice.id });
+        if (foundChoice) {
+          foundChoice.text = choice.text;
+        } else {
+          newState[bankId][itemId].question.choices.push(choice);
+        }
+      } else {
+        newState[bankId][itemId].question.choices.push({ id: guid(), text: choice.text });
+      }
+      return newState;
+    }
+
+    case 'ADD_ANSWER': {
+      const newState = _.cloneDeep(state);
+      // TODO: need to figure out what answers even do/are
       return newState;
     }
 

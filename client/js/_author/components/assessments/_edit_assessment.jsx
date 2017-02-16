@@ -18,18 +18,24 @@ function transformAssessment(assessment) {
 }
 
 function select(state, props) {
-  const bank = state.assessments[encodeURIComponent(props.params.bankId)];
-  const assessmentItemIds = state.assessmentItems[props.params.id];
+  const bankId = encodeURIComponent(props.params.bankId);
+  const id = encodeURIComponent(props.params.id);
+  const bank = state.assessments[bankId];
+  const assessmentItemIds = state.assessmentItems[id];
 
   return {
-    assessment: bank && transformAssessment(bank[encodeURIComponent(props.params.id)]),
+    assessment: bank && transformAssessment(bank[id]),
+    items: _.compact(_.at(state.items[bankId], assessmentItemIds)),
     settings: state.settings,
-    items: _.at(state.items[props.params.bankId], assessmentItemIds),
-    currentAssessment: state.assessments[encodeURIComponent(props.params.bankId)][encodeURIComponent(props.params.id)]
+    currentAssessment: (bank && bank[id]) || {},
+    params: { // override react router because we want the escaped ids
+      bankId,
+      id,
+    }
   };
 }
 
-export class NewAssessment extends React.Component {
+export class EditAssessment extends React.Component {
   static propTypes = {
     params: React.PropTypes.shape({
       id: React.PropTypes.string,
@@ -37,7 +43,8 @@ export class NewAssessment extends React.Component {
     }).isRequired,
     assessment: React.PropTypes.shape({
       id: React.PropTypes.string,
-      bankId: React.PropTypes.string
+      bankId: React.PropTypes.string,
+      items: React.PropTypes.arrayOf(React.PropTypes.shape),
     }),
     currentAssessment: React.PropTypes.shape({
       assignedBankIds: React.PropTypes.array,
@@ -51,20 +58,15 @@ export class NewAssessment extends React.Component {
     createAssessmentOffered: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
+    updateAssessmentItems: React.PropTypes.func.isRequired,
     getAssessmentItems: React.PropTypes.func.isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
-    items: React.PropTypes.arrayOf(React.PropTypes.shape({}))
+    items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
+    updateChoice: React.PropTypes.func.isRequired,
+    updateAnswer: React.PropTypes.func.isRequired,
+    deleteAssessmentItem: React.PropTypes.func,
   };
-
-  constructor(props) {
-    super(props);
-    this.titleField = null;
-    this.state = {
-      assessment: {
-      },
-    };
-  }
 
   componentDidMount() {
     this.props.getAssessments(this.props.params.bankId);
@@ -74,48 +76,38 @@ export class NewAssessment extends React.Component {
     );
   }
 
-  updateAssessment() {
-    this.props.updateAssessment(
-      this.props.params.bankId,
-      {
-        name: this.state.assessment.name,
-        description: this.state.assessment.description,
-        id: this.props.params.id,
-      },
-    );
-  }
-
-  updateStateAssessment(field, value) {
-    const assessment = this.state.assessment;
-    assessment[field] = value;
-    this.setState({ assessment });
-  }
-
-  editItem(itemIndex, field, data) {
-    const items = this.state.items;
-    items[itemIndex][field] = data;
-    this.setState({ items });
+  updateAssessment(newFields) {
+    const updated = { id: this.props.params.id, ...newFields };
+    this.props.updateAssessment(this.props.params.bankId, updated);
   }
 
   updateItem(item) {
     this.props.updateItem(this.props.params.bankId, item);
   }
 
-  addItem() {
-  //  TODO: write me
+  deleteAssessmentItem(itemId) {
+    this.props.deleteAssessmentItem(
+      this.props.params.bankId,
+      this.props.params.id,
+      itemId,
+    );
   }
 
   createItem(newItem) {
     this.props.createItemInAssessment(
       this.props.params.bankId,
       this.props.params.id,
-      _.map(this.assessmentProps().items, 'id'),
+      _.map(this.props.assessment.items, 'id'),
       newItem,
     );
   }
 
-  assessmentProps() {
-    return { ...this.props.assessment, ...this.state.assessment };
+  updateItemOrder(itemIds) {
+    this.props.updateAssessmentItems(
+      this.props.params.bankId,
+      this.props.params.id,
+      itemIds
+    );
   }
 
   editOrPublishAssessment(published) {
@@ -138,9 +130,10 @@ export class NewAssessment extends React.Component {
   }
 
   render() {
-
+    const { bankId } = this.props.params;
     const { currentAssessment, settings } = this.props;
     const isPublished =  _.includes(currentAssessment.assignedBankIds, settings.publishedBankId);
+
     return (
       <div>
         <Heading
@@ -150,14 +143,15 @@ export class NewAssessment extends React.Component {
           items={this.props.items}
         />
         <AssessmentForm
-          {...this.assessmentProps()}
-          updateAssessment={() => this.updateAssessment()}
-          updateStateAssessment={(field, value) => this.updateStateAssessment(field, value)}
+          {...this.props.assessment}
+          updateAssessment={newFields => this.updateAssessment(newFields)}
+          updateItemOrder={itemIds => this.updateItemOrder(itemIds)}
           items={this.props.items}
           updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}
-          editItem={(index, field, data) => this.editItem(index, field, data)}
-          addItem={() => this.addItem()}
+          updateChoice={(itemId, choice) => this.props.updateChoice(bankId, itemId, choice)}
+          updateAnswer={(itemId, answer) => this.props.updateAnswer(bankId, itemId, answer)}
+          deleteAssessmentItem={itemId => this.deleteAssessmentItem(itemId)}
         />
       </div>
     );
@@ -168,4 +162,4 @@ export default connect(select, {
   ...BankActions,
   ...AssessmentActions,
   ...ItemActions
-})(NewAssessment);
+})(EditAssessment);

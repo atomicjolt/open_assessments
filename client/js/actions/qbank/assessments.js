@@ -11,6 +11,7 @@ const requests = [
   'UPDATE_ASSESSMENT_ITEMS',
   'CREATE_ITEM_IN_ASSESSMENT',
   'CREATE_ASSESSMENT',
+  'CREATE_ASSESSMENT_WITH_ITEM',
   'CREATE_ASSESSMENT_OFFERED',
   'GET_ASSESSMENT_OFFERED',
   'GET_ASSESSMENT_ITEMS',
@@ -39,6 +40,16 @@ export function createAssessment(bankId, assessment) {
   };
 }
 
+export function createAssessmentWithItem(bankId, assessment, item) {
+  return {
+    bankId,
+    assessment,
+    item,
+    apiCall : true,
+    type    : Constants.CREATE_ASSESSMENT_WITH_ITEM,
+  };
+}
+
 export function updateAssessment(bankId, assessment) {
   return {
     bankId,
@@ -54,7 +65,7 @@ export function updateAssessmentItems(bankId, assessmentId, itemIds) {
     assessmentId,
     apiCall : true,
     type    : Constants.UPDATE_ASSESSMENT_ITEMS,
-    body    : itemIds,
+    body    : { itemIds },
   };
 }
 
