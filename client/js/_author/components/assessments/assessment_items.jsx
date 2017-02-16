@@ -10,10 +10,17 @@ export default function AssessmentItems(props) {
           key={index}
           item={item}
           itemIndex={index}
+          topItem={index === 0}
+          bottomItem={index === (props.items.length - 1)}
+          isActive={props.activeItem === item.id}
+          reorderActive={props.reorderActive}
+          activateItem={props.activateItem}
+          toggleReorder={props.toggleReorder}
           updateItem={props.updateItem}
           updateChoice={props.updateChoice}
           updateAnswer={props.updateAnswer}
           deleteAssessmentItem={props.deleteAssessmentItem}
+          moveItem={props.moveItem}
         />
       ))}
     </div>
@@ -24,4 +31,6 @@ AssessmentItems.propTypes = {
   items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
   updateChoice: React.PropTypes.func.isRequired,
   updateAnswer: React.PropTypes.func.isRequired,
+  items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
+  moveItem: React.PropTypes.func.isRequired,
 };

@@ -57,6 +57,7 @@ export class EditAssessment extends React.Component {
     deleteAssignedAssessment: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
+    updateAssessmentItems: React.PropTypes.func.isRequired,
     getAssessmentItems: React.PropTypes.func.isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
@@ -102,6 +103,14 @@ export class EditAssessment extends React.Component {
     );
   }
 
+  updateItemOrder(itemIds) {
+    this.props.updateAssessmentItems(
+      this.props.params.bankId,
+      this.props.params.id,
+      itemIds
+    );
+  }
+
   editOrPublishAssessment(published) {
     const { assessment, settings } = this.props;
     if (published) {
@@ -131,7 +140,8 @@ export class EditAssessment extends React.Component {
         />
         <AssessmentForm
           {...this.props.assessment}
-          updateAssessment={newFields => this.updateAssessment(newFields)}
+          updateAssessment={() => this.updateAssessment()}
+          updateItemOrder={itemIds => this.updateItemOrder(itemIds)}
           items={this.props.items}
           updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}

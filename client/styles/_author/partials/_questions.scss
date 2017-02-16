@@ -26,8 +26,11 @@
     color: $text-alt;
   }
 
-.c-question-icons i{
+.c-question-icons button {
   display: none;
+}
+
+.c-question-icons i{
   width: 3rem;
   height: 3rem;
   border-radius: $radius;
@@ -60,7 +63,12 @@
   }
 
   button{
+    display: block;
     margin-left: 0.5rem;
+
+    &.is-hidden {
+      display: none;
+    }
   }
 }
 
@@ -73,7 +81,7 @@
     .c-question-settings{
       @include display-flex;
     }
-    .c-question-icons i{
+    .c-question-icons button{
       display: inline-block;
     }
     .c-question__feedback{
@@ -99,6 +107,10 @@
 
   .c-question__content {
     padding: 3rem 2.5rem 4rem;
+
+    &.is-reordering {
+      pointer-events: none;
+    }
   }
 
   .c-question__answers{
