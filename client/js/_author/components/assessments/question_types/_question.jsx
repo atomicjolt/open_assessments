@@ -18,18 +18,7 @@ export default class Question extends React.Component {
 
   updateItem(newItemProperties) {
     const { item } = this.props;
-    const { displayName, description, id, question, answers } = item;
-    this.props.updateItem(
-      {
-        id,
-        name: newItemProperties.name || displayName.text,
-        description: newItemProperties.description || description.text,
-        question: {
-          choices: newItemProperties.question.choices || question.choices
-        },
-        answers,
-      }
-    );
+    this.props.updateItem({ ...{ id: item.id }, ...newItemProperties });
   }
 
   content() {

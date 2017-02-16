@@ -62,9 +62,6 @@ export class EditAssessment extends React.Component {
     updateItem: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
     updateChoice: React.PropTypes.func.isRequired,
-    getAssessments: React.PropTypes.func.isRequired,
-    getAssessmentItems: React.PropTypes.func.isRequired,
-    updateAssessment: React.PropTypes.func.isRequired,
     updateAnswer: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func,
   };
@@ -78,14 +75,9 @@ export class EditAssessment extends React.Component {
   }
 
   updateAssessment(newFields) {
-    const { assessment } = this.props;
     this.props.updateAssessment(
       this.props.params.bankId,
-      {
-        id: this.props.params.id,
-        name: newFields.name || assessment.displayName.text,
-        description: newFields.name || assessment.description.text,
-      },
+      { ...{ id: this.props.params.id }, ...newFields },
     );
   }
 

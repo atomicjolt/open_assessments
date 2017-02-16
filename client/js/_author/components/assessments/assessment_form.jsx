@@ -47,7 +47,7 @@ export default class AssessmentForm extends React.Component {
             <label htmlFor="title_field" className="c-input">
               <div className="c-input__contain">
                 <input
-                  defaultValue={this.props.name}
+                  defaultValue={_.get(this, 'props.displayName.text', '')}
                   className="c-text-input c-text-input--large"
                   type="text"
                   id="title_field"
