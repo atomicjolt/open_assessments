@@ -20,6 +20,8 @@ export default class Question extends React.Component {
     bottomItem: React.PropTypes.bool,
     reorderActive: React.PropTypes.bool,
     updateItem: React.PropTypes.func.isRequired,
+    updateChoice: React.PropTypes.func.isRequired,
+    updateAnswer: React.PropTypes.func.isRequired,
     activateItem: React.PropTypes.func.isRequired,
     toggleReorder: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
@@ -51,22 +53,18 @@ export default class Question extends React.Component {
 
   updateItem(newItemProperties) {
     const { item } = this.props;
-    const { displayName, description, id } = item;
-
-    const newItem = {
-      id,
-      name: displayName.text,
-      description: description.text,
-      ...newItemProperties
-    };
-
-    this.props.updateItem(newItem);
+    this.props.updateItem({ id: item.id, ...newItemProperties });
   }
 
   content() {
     switch (this.props.item.genusTypeId) {
       case genusTypes.item.multipleChoice:
-        return <MultipleChoice {...this.props} />;
+        return <MultipleChoice
+          {...this.props}
+          updateItem={newProps => this.updateItem(newProps)}
+          updateChoice={this.props.updateChoice}
+          updateAnswer={this.props.updateAnswer}
+        />;
       case genusTypes.item.audioUpload:
         return (
           <AudioUpload

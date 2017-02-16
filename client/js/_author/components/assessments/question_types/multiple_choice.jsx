@@ -1,96 +1,84 @@
 import React    from 'react';
+import _        from 'lodash';
+import Option   from './multiple_choice_option';
+import Add      from './add_option';
 import Feedback from './question_common/feedback';
 
+export default class multipleChoice extends React.Component {
+  static propTypes = {
+    item: React.PropTypes.shape({
+      answers: React.PropTypes.arrayOf(React.PropTypes.shape),
+      id: React.PropTypes.string,
+      question: React.PropTypes.shape({
+        choices: React.PropTypes.arrayOf(React.PropTypes.shape({})),
+      }),
+    }).isRequired,
+    updateItem: React.PropTypes.func.isRequired,
+    updateChoice: React.PropTypes.func.isRequired,
+  };
 
-export default function() {
-  return (
-    <div className="c-question__answers c-question__answers--maintain">
-      <div className="c-answer is-active">
-        <div className="c-input">
-          <div className="c-radio">
-            <input type="radio" id="radio" name="radio" tabIndex="0" />
-            <label htmlFor="radio" />
-          </div>
-          <label htmlFor="option1" />
-          <div className="c-input__contain">
-            <input className="c-text-input c-text-input--small c-wysiwyg" id="option1" type="text" placeholder="Option 1" tabIndex="0" />
-            <div className="c-input__bottom" />
-          </div>
+  hasQuestions() {
+    const { question } = this.props.item;
+    return question
+    && question.choices
+    && question.choices.length;
+  }
 
-          <div className="c-answer__icons">
-            <button className="c-answer__icons__spacer" tabIndex="0">
-              <i className="material-icons">arrow_upward</i>
-            </button>
-            <button className="c-answer__icons__spacer" tabIndex="0">
-              <i className="material-icons">arrow_downward</i>
-            </button>
-            <button className="c-answer__icons__spacer" tabIndex="0">
-              <i className="material-icons">close</i>
-            </button>
-          </div>
-        </div>
+  markedForDeletion(choice) {
+    const { question } = this.props.item;
+    const deleteChoice = _.find(question.choices, { id: choice.id });
+    deleteChoice.delete = true;
+    return question.choices;
+  }
 
-        <div className="c-input c-input-label--left c-feedback">
-          <label htmlFor="feedback1">Feedback</label>
-          <div className="c-input__contain">
-            <input className="c-text-input c-text-input--smaller c-wysiwyg" id="feedback1" type="text" tabIndex="0" />
-            <div className="c-input__bottom" />
-          </div>
-        </div>
+  deleteChoice(choice) {
+    this.props.updateItem({
+      question: {
+        choices: this.markedForDeletion(choice)
+      }
+    });
+  }
+
+  moveChoice(choice, index, up) {
+    const newChoices = _.cloneDeep(this.props.item.question.choices);
+    const newIndex = up ? index - 1 : index + 1;
+
+    const earlierItem = newChoices[newIndex];
+    newChoices[newIndex] = choice;
+    newChoices[index] = earlierItem;
+
+    this.props.updateItem({
+      question: {
+        choices: newChoices,
+      }
+    });
+  }
+
+  render() {
+    const { question, id } = this.props.item;
+    return (
+      <div className="c-question__answers c-question__answers--maintain">
+        {
+          _.map(this.hasQuestions() ? question.choices : [{}], (choice, index) => (
+            <Option
+              key={`assessmentChoice_${choice.id}`}
+              {...choice}
+              index={index}
+              updateChoice={newChoice => this.props.updateChoice(id, newChoice)}
+              updateItem={() => this.props.updateItem({ question })}
+              deleteChoice={() => this.deleteChoice(choice)}
+              moveUp={() => this.moveChoice(choice, index, true)}
+              moveDown={() => this.moveChoice(choice, index)}
+              first={index === 0}
+              last={choice === _.last(question.choices)}
+            />
+          ))
+        }
+        <Add
+          updateChoice={() => this.props.updateChoice(id, {})}
+        />
+        <Feedback />
       </div>
-
-
-      <div className="c-answer">
-        <div className="c-input">
-          <div className="c-radio">
-            <input type="radio" id="radio1" name="radio" tabIndex="0" />
-            <label htmlFor="radio1" />
-          </div>
-
-          <label htmlFor="option2" />
-          <div className="c-input__contain">
-            <input className="c-text-input c-text-input--small c-wysiwyg c-option" id="option2" type="text" placeholder="Option 2" tabIndex="0" />
-            <div className="c-input__bottom no-border" />
-          </div>
-
-          <div className="c-answer__icons">
-            <button className="c-answer__icons__spacer" tabIndex="0">
-              <i className="material-icons">arrow_upward</i>
-            </button>
-            <button className="c-answer__icons__spacer" tabIndex="0">
-              <i className="material-icons">arrow_downward</i>
-            </button>
-            <button className="c-answer__icons__spacer" tabIndex="0">
-              <i className="material-icons">close</i>
-            </button>
-          </div>
-        </div>
-
-        <div className="c-input c-input-label--left c-feedback">
-          <label htmlFor="feedback2">Feedback</label>
-          <div className="c-input__contain">
-            <input className="c-text-input c-text-input--smaller c-wysiwyg" id="feedback2" type="text" tabIndex="0" />
-            <div className="c-input__bottom" />
-          </div>
-        </div>
-      </div>
-
-
-      <div className="c-answer c-answer--add">
-        <div className="c-input">
-          <div className="c-radio">
-            <input type="radio" id="radio1" name="radio" tabIndex="0" />
-            <label htmlFor="radio1" />
-          </div>
-
-          <label htmlFor="option2" />
-          <div className="c-input__contain">
-            <input className="c-text-input c-text-input--small c-wysiwyg c-option" id="option2" type="text" value="Add Option" tabIndex="0" />
-            <div className="c-input__bottom no-border" />
-          </div>
-        </div>
-      </div>
-      <Feedback />
-    </div>
-  );
+    );
+  }
 }
