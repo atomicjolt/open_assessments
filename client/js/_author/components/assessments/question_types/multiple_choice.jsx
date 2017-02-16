@@ -71,7 +71,7 @@ export default class multipleChoice extends React.Component {
               moveUp={() => this.moveChoice(choice, index, true)}
               moveDown={() => this.moveChoice(choice, index)}
               first={index === 0}
-              last={choice === _.last(question.choices)}
+              last={question ? choice === _.last(question.choices) : true}
               updateAnswer={newAnswer => this.props.updateAnswer(id, newAnswer)}
             />
           ))
