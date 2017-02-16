@@ -4,7 +4,7 @@ import _             from 'lodash';
 import Stub         from '../../../../../../../specs_support/stub';
 import DefaultHeader from './default';
 
-describe('', () => {
+describe('default question header', () => {
   let result;
   let props;
   let deleteCalled;

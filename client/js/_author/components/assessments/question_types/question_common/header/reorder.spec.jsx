@@ -4,7 +4,7 @@ import _             from 'lodash';
 import Stub         from '../../../../../../../specs_support/stub';
 import ReorderHeader from './reorder';
 
-fdescribe('', () => {
+describe('reorder question header', () => {
   let result;
   let props;
   let called;
