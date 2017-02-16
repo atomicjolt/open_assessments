@@ -69,7 +69,6 @@ class RecorderTimer extends React.Component {
   }
 
   render() {
-    console.log('localizedStrings ', this.props.localizedStrings);
     return (
       <div>
         <div className="c-audio-timer"><small>{this.props.localizedStrings.recordTime}</small> {this.state.minsCt}:{this.state.secsStringCt}</div>
