@@ -56,6 +56,7 @@ export class EditAssessment extends React.Component {
     deleteAssignedAssessment: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
+    updateAssessmentItems: React.PropTypes.func.isRequired,
     getAssessmentItems: React.PropTypes.func.isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
@@ -128,6 +129,14 @@ export class EditAssessment extends React.Component {
     );
   }
 
+  updateItemOrder(itemIds) {
+    this.props.updateAssessmentItems(
+      this.props.params.bankId,
+      this.props.params.id,
+      itemIds
+    );
+  }
+
   assessmentProps() {
     return { ...this.props.assessment, ...this.state.assessment };
   }
@@ -162,6 +171,7 @@ export class EditAssessment extends React.Component {
           {...this.assessmentProps()}
           updateAssessment={() => this.updateAssessment()}
           updateStateAssessment={(field, value) => this.updateStateAssessment(field, value)}
+          updateItemOrder={itemIds => this.updateItemOrder(itemIds)}
           items={this.props.items}
           updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}
