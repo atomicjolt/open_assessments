@@ -78,7 +78,7 @@ export class EditAssessment extends React.Component {
   updateAssessment(newFields) {
     this.props.updateAssessment(
       this.props.params.bankId,
-      { ...{ id: this.props.params.id }, ...newFields },
+      { id: this.props.params.id, ...newFields },
     );
   }
 

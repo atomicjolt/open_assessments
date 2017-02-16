@@ -53,7 +53,7 @@ export default class Question extends React.Component {
 
   updateItem(newItemProperties) {
     const { item } = this.props;
-    this.props.updateItem({ ...{ id: item.id }, ...newItemProperties });
+    this.props.updateItem({ id: item.id, ...newItemProperties });
   }
 
   content() {
