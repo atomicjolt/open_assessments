@@ -48,7 +48,8 @@ export default {
     },
     audioUpload: {
       record: "రికార్డు చేయండి",
-      stop: "ఆపండిు"
+      stop: "ఆపండిు",
+      recordTime: "Recording time"
     },
     fileUpload: {
       chooseFile: "అప్లోడ్ కై ఫైల్ ని ఎంచండి"
