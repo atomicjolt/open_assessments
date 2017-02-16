@@ -1,6 +1,6 @@
 import React    from 'react';
 
-export default function inactiveHeader(props) {
+export default function DefaultHeader(props) {
   return (
     <div className="o-right c-question-icons">
       <button
@@ -27,7 +27,7 @@ export default function inactiveHeader(props) {
   );
 }
 
-inactiveHeader.propTypes = {
+DefaultHeader.propTypes = {
   id: React.PropTypes.string,
   deleteAssessmentItem: React.PropTypes.func,
   toggleReorder: React.PropTypes.func,

@@ -1,5 +1,5 @@
 import React            from 'react';
-import InactiveHeader   from './inactive';
+import DefaultHeader    from './default';
 import ReorderHeader    from './reorder';
 
 export default function QuestionHeader(props) {
@@ -12,7 +12,7 @@ export default function QuestionHeader(props) {
     }
   };
 
-  let currentHeader = <InactiveHeader {...props} type={type()} />;
+  let currentHeader = <DefaultHeader {...props} type={type()} />;
 
   if (props.reorderActive) {
     currentHeader =  <ReorderHeader {...props} type={type()} />;
