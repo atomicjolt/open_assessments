@@ -5,7 +5,13 @@ export default function multipleChoiceOptions(props) {
     <div className="c-answer is-active">
       <div className="c-input">
         <div className="c-radio">
-          <input type="radio" id="radio" name="radio" tabIndex="0" />
+          <input
+            type="radio"
+            id="radio"
+            name="radio"
+            tabIndex="0"
+            onClick={e => props.updateAnswer({ choiceId: props.id, correct: e.target.checked })}
+          />
           <label htmlFor="radio" />
         </div>
 
@@ -38,7 +44,8 @@ export default function multipleChoiceOptions(props) {
             props.last ? <div className="c-answer__icons__spacer" /> : <button
               className="c-answer__icons__spacer"
               tabIndex="0"
-              onClick={props.moveDown}>
+              onClick={props.moveDown}
+            >
               <i className="material-icons">arrow_downward</i>
             </button>
           }

@@ -1,8 +1,24 @@
-import _    from 'lodash';
-import guid from '../../utils/guid';
+import _          from 'lodash';
+import guid       from '../../utils/guid';
+import genusTypes from '../../constants/genus_types';
 
 // Leave this empty. It will hold assessments by bank id. IE `state[someId] = {a_bank}`
 const initialState = {};
+
+// TODO: this may be better suited in a utils file, maybe...
+function answerType(itemType) {
+  switch (itemType) {
+    case genusTypes.item.multipleChoice:
+      return genusTypes.answer.multipleChoice;
+
+    case genusTypes.item.fileUpload:
+    case genusTypes.item.audioUpload:
+      return genusTypes.answer.file;
+
+    default:
+      return null;
+  }
+}
 
 export default function banks(state = initialState, action) {
   switch (action.type) {
@@ -72,7 +88,28 @@ export default function banks(state = initialState, action) {
 
     case 'ADD_ANSWER': {
       const newState = _.cloneDeep(state);
-      // TODO: need to figure out what answers even do/are
+      const { bankId, itemId, answer } = action;
+      const item = newState[bankId][itemId];
+      const answerTypeId = genusTypes.answer;
+
+      const answerItemIndex = _.find(item.answers, answerItem => _.find(answerItem.choiceIds, answer.choiceId));
+
+      if (answerItemIndex) {
+        newState[bankId][itemId].answers[answerItemIndex] = {
+          ...newState[bankId][itemId].answers[answerItemIndex],
+          ...answer,
+        };
+      } else {
+        const newAnswer = {
+          ...{
+            genusTypeId: answer.correct ? answerTypeId.rightAnswer : answerTypeId.wrongAnswer,
+            type: answerType(item.genusTypeId),
+            choiceIds: [answer.choiceId]
+          },
+          ...answer
+        };
+        newState[bankId][itemId].answers.push(newAnswer);
+      }
       return newState;
     }
 

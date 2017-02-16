@@ -15,6 +15,7 @@ export default class multipleChoice extends React.Component {
     }).isRequired,
     updateItem: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
+    updateAnswer: React.PropTypes.func.isRequired,
   };
 
   hasQuestions() {
@@ -71,6 +72,7 @@ export default class multipleChoice extends React.Component {
               moveDown={() => this.moveChoice(choice, index)}
               first={index === 0}
               last={choice === _.last(question.choices)}
+              updateAnswer={newAnswer => this.props.updateAnswer(id, newAnswer)}
             />
           ))
         }
