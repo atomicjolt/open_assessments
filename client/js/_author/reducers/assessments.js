@@ -48,6 +48,18 @@ export default function banks(state = initialState, action) {
       return newState;
     }
 
+    // working
+    // https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/assessment.Bank%3A577fcf75c89cd90cbd5616f8%40ODL.MIT.EDU/assessments/assessment.Assessment%3A589e2038c89cd965168b810b%40ODL.MIT.EDU/assessmentsoffered
+
+    // failing
+    // https://qbank-clix-dev.mit.edu//api/v1/assessment/banks/assessment.Bank%3A57e2b4c5c89cd916208d00de%40ODL.MIT.EDU/assessments/assessment.Assessment%3A58a22a80c89cd9109610dc34%40ODL.MIT.EDU/assessmentsoffered
+    case 'CREATE_ASSESSMENT_OFFERED_DONE':
+    case 'GET_ASSESSMENT_OFFERED_DONE': {
+      const newState = _.cloneDeep(state);
+      newState[action.original.bankId][action.original.assessmentId]['assessmentOffered'] = action.payload;
+      return newState;
+    }
+
     case 'DELETE_ASSESSMENT_DONE': {
       const newState = _.cloneDeep(state);
       const bankId = action.original.bankId;

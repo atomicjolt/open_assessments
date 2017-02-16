@@ -22,6 +22,7 @@ function select(state) {
     currentBankId,
     banks: _.merge(state.assessments[currentBankId], banks),
     settings: state.settings,
+    yourBank: state.assessments[currentBankId],
   };
 }
 
@@ -33,16 +34,19 @@ export class BankNavigator extends React.Component {
     ]).isRequired,
     settings: React.PropTypes.shape({
       editableBankId: React.PropTypes.string,
-      publishedBankId: React.PropTypes.string
+      publishedBankId: React.PropTypes.string,
+      baseEmbedUrl       : React.PropTypes.string,
     }),
     path               : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
     updatePath         : React.PropTypes.func.isRequired,
     getBanks           : React.PropTypes.func.isRequired,
     getAssessments     : React.PropTypes.func.isRequired,
+    getAssessmentOffered     : React.PropTypes.func.isRequired,
     getItems           : React.PropTypes.func.isRequired,
     createAssessment   : React.PropTypes.func.isRequired,
     deleteAssessment   : React.PropTypes.func.isRequired,
     currentBankId      : React.PropTypes.string,
+    yourBank           : React.PropTypes.shape({}),
   };
 
   constructor() {
@@ -50,6 +54,8 @@ export class BankNavigator extends React.Component {
     this.state = {
       sortName      : null,
       sortPublished : null,
+      embedUrlCode  : {},
+      highLightedAssessmentId: '',
     };
   }
 
@@ -93,20 +99,32 @@ export class BankNavigator extends React.Component {
     this.props.deleteAssessment(bankId, assessmentId);
   }
 
-  embedCode (assessId, bankId) {
-    debugger;
-    // let assessOffered = this.props.assessment_offered;
-    // if(!_.isEmpty(assessOffered)){
-    //   let qBankHost = this.props.settings.qBankHost ? this.props.settings.qBankHost : "https://qbank-clix-dev.mit.edu";
-    //   let playerHost = this.props.settings.assessmentPlayerUrl; //This will need to be the instance deployed, not localhost.
-    //   let url = `${playerHost}/?unlock_next=ON_CORRECT&api_url=localhost:8091/api/v1&bank=${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}#/assessment`;
-    //   return `<iframe src="${url}"/>`;
-    // } else {
-    //   return "";
-    // }
+  embedCode(assessId, bankId) {
+    // const { qBankHost, assessmentPlayerUrl } = this.props.settings;
+    const assessment = this.props.yourBank[assessId];
+    const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
+    if (_.isEmpty(assessOffered)) {
+      this.props.getAssessmentOffered(bankId, assessId);
+    }
+    this.setState({ highLightedAssessmentId: assessId });
+  }
+
+  showCode() {
+    const { highLightedAssessmentId } = this.state;
+    const { baseEmbedUrl } = this.props.settings;
+    if (highLightedAssessmentId && _.isEmpty(this.state.embedUrlCode[highLightedAssessmentId])) {
+      const assessment = this.props.yourBank[highLightedAssessmentId];
+      const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
+      if (!_.isEmpty(assessOffered)) {
+        const url = `${baseEmbedUrl}${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}#/assessment`;
+        return this.setState({ embedUrlCode: { [assessment.id]: `<iframe src="${url}"/>` } });
+      }
+    }
+    return null;
   }
 
   render() {
+    this.showCode();
     return (
       <div>
         <Heading
@@ -117,6 +135,7 @@ export class BankNavigator extends React.Component {
           updatePath={this.props.updatePath}
         />
         <BankList
+          embedUrlCode={this.state.embedUrlCode}
           banks={this.sortBanks()}
           embedCode={(assessId, bankId) => { this.embedCode(assessId, bankId); }}
           publishedBankId={this.props.settings.publishedBankId}

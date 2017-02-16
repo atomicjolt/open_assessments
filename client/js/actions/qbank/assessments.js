@@ -69,10 +69,11 @@ export function createItemInAssessment(bankId, assessmentId, itemIds, newItem) {
   };
 }
 
-export function createAssessmentOffered(bankId, assessmentId) {
+export function createAssessmentOffered(bankId, assessmentId, body) {
   return {
     bankId,
     assessmentId,
+    body,
     apiCall : true,
     type    : Constants.CREATE_ASSESSMENT_OFFERED,
   };

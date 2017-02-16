@@ -48,6 +48,7 @@ export class NewAssessment extends React.Component {
     }),
     editOrPublishAssessment: React.PropTypes.func.isRequired,
     deleteAssignedAssessment: React.PropTypes.func.isRequired,
+    createAssessmentOffered: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
     getAssessmentItems: React.PropTypes.func.isRequired,
@@ -121,13 +122,17 @@ export class NewAssessment extends React.Component {
     const { assessment, settings } = this.props;
     if (published) {
       this.props.deleteAssignedAssessment(assessment, settings.publishedBankId);
-      // Need to delete the publishedBankId and then add the editBankId
+      // delete all the old offeredAssessments
+      // can you delete if its already empty?
       this.props.editOrPublishAssessment(assessment, settings.editableBankId);
     } else {
       if (_.includes(assessment.assignedBankIds, this.props.settings.editableBankId)) {
         this.props.deleteAssignedAssessment(assessment, settings.editableBankId);
       }
-      // Need to delete the editBankId and then add the publishedBankId
+      if (_.isEmpty(assessment.assessmentOffered) && !_.isEmpty(this.props.items)) {
+        const body = { id: '123' }; // have to send up a garbage value for the create to work.
+        this.props.createAssessmentOffered(assessment.bankId, assessment.id, body);
+      }
       this.props.editOrPublishAssessment(assessment, settings.publishedBankId);
     }
   }
@@ -142,6 +147,7 @@ export class NewAssessment extends React.Component {
           view="assessments"
           editOrPublishAssessment={(published) => { this.editOrPublishAssessment(published); }}
           isPublished={isPublished}
+          items={this.props.items}
         />
         <AssessmentForm
           {...this.assessmentProps()}

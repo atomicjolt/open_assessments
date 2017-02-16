@@ -25,6 +25,7 @@ export default function bankList(props) {
                     publishedBankId={props.publishedBankId}
                     getBankChildren={props.getBankChildren}
                     deleteAssessment={props.deleteAssessment}
+                    embedUrlCode={props.embedUrlCode}
                   />
                 ))
               }
@@ -44,6 +45,7 @@ bankList.propTypes = {
   getBankChildren  : React.PropTypes.func.isRequired,
   sortBy           : React.PropTypes.func.isRequired,
   sortName         : React.PropTypes.string,
+  embedUrlCode     : React.PropTypes.shape({}),
   sortPublished    : React.PropTypes.string,
   deleteAssessment : React.PropTypes.func,
 };

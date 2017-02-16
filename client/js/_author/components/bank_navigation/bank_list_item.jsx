@@ -5,7 +5,7 @@ import Icon       from './bank_icon';
 
 // TODO: think about breaking this into smaller components
 export default function bankListItem(props) {
-  const { bank, publishedBankId } = props;
+  const { bank, publishedBankId, embedUrlCode } = props;
 
   const isPublished = _.includes(bank.assignedBankIds, publishedBankId);
   const isAssessment = bank.type === 'Assessment';
@@ -26,6 +26,40 @@ export default function bankListItem(props) {
     props.deleteAssessment(bankId, assessmentId);
   }
 
+  function embedCode(e, currentBank) {
+    e.stopPropagation();
+    props.embedCode(currentBank.id, currentBank.bankId);
+  }
+
+  function pub() {
+    if (isPublished) {
+      return 'c-btn c-btn--square c-publish is-published';
+    }
+    return 'c-btn c-btn--square c-publish';
+  }
+
+  function embedButtonOrUrl() {
+    if (isPublished) {
+      if (!_.isEmpty(embedUrlCode[bank.id])) {
+        return (
+          <label className="c-input--purple" htmlFor="embedInput">
+            <input id="embedInput" onClick={e => e.stopPropagation()} className="c-text-input c-text-input--smaller" readOnly type="text" value={embedUrlCode[bank.id]} />
+          </label>
+        );
+      }
+
+      return (
+        <button
+          className="c-btn c-btn--sm c-btn--table"
+          onClick={e => embedCode(e, bank)}
+        >
+          embed code
+        </button>
+      );
+    }
+    return null;
+  }
+
   return (
     <tr
       onClick={() => selectItem()}
@@ -36,18 +70,13 @@ export default function bankListItem(props) {
       <td><Icon type={bank.type} /></td>
       <td>{bank.displayName ? bank.displayName.text : null}</td>
       <td>
-        <button className="c-btn c-btn--square c-publish" style={buttonContainer}>
+        <button className={pub()} style={buttonContainer}>
           <Icon type={isPublished ? 'Published' : 'Publish'} />
         </button>
       </td>
       <td>
         <div className="c-table__icons" style={buttonContainer}>
-          <button
-            className="c-btn c-btn--sm c-btn--table"
-            onClick={() => props.embedCode(bank.id, bank.bankId)}
-          >
-            embed code
-          </button>
+          {embedButtonOrUrl()}
           <button className="c-btn c-btn--square c-btn--table">
             <i className="material-icons">edit</i>
           </button>
@@ -62,7 +91,6 @@ export default function bankListItem(props) {
           </button>
         </div>
       </td>
-      <div></div>
     </tr>
   );
 }
@@ -72,4 +100,5 @@ bankListItem.propTypes = {
     displayName : React.PropTypes.shape({}),
   }).isRequired,
   publishedBankId: React.PropTypes.string.isRequired,
+  embedUrlCode: React.PropTypes.shape({}).isRequired,
 };
