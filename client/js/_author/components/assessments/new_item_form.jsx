@@ -1,6 +1,7 @@
 import React      from 'react';
+import genusTypes from '../../../constants/genus_types';
 
-export default class newItemForm extends React.Component{
+export default class newItemForm extends React.Component {
   static propTypes = {
     cancel: React.PropTypes.func.isRequired,
     create: React.PropTypes.func.isRequired,
@@ -10,7 +11,7 @@ export default class newItemForm extends React.Component{
     super();
     this.state = {
       name: '',
-      genusTypeId: 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
+      genusTypeId: genusTypes.item.multipleChoice,
       language: 'english',
     };
   }
@@ -52,12 +53,19 @@ export default class newItemForm extends React.Component{
                     id="questionType"
                   >
                     <option
-                      value="item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU"
+                      value={genusTypes.item.multipleChoice}
                     >
                       Multiple Choice
                     </option>
-                    <option value="shortAnswer">Short Answer</option>
-                    <option value="file">File</option>
+                    <option value={genusTypes.item.shortAnswer}>
+                      Short Answer
+                    </option>
+                    <option value={genusTypes.item.fileUpload}>
+                      File Upload
+                    </option>
+                    <option value={genusTypes.item.audioUpload}>
+                      Audio Upload
+                    </option>
                   </select>
                 </div>
               </div>

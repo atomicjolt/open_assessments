@@ -2,7 +2,7 @@ import React            from 'react';
 import _                from 'lodash';
 import Question         from './question_types/_question';
 
-export default function AssessmentQuestions(props) {
+export default function AssessmentItems(props) {
   return (
     <div>
       {_.map(_.compact(props.items), (item, index) => (
@@ -10,15 +10,27 @@ export default function AssessmentQuestions(props) {
           key={index}
           item={item}
           itemIndex={index}
-          editItem={(field, value) => props.editItem(index, field, value)}
+          topItem={index === 0}
+          bottomItem={index === (props.items.length - 1)}
+          isActive={props.activeItem === item.id}
+          reorderActive={props.reorderActive}
+          activateItem={props.activateItem}
+          toggleReorder={props.toggleReorder}
           updateItem={props.updateItem}
+          updateChoice={props.updateChoice}
+          updateAnswer={props.updateAnswer}
           deleteAssessmentItem={props.deleteAssessmentItem}
+          moveItem={props.moveItem}
         />
       ))}
     </div>
   );
 }
 
-AssessmentQuestions.propTypes = {
-  items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired
+AssessmentItems.propTypes = {
+  items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
+  updateChoice: React.PropTypes.func.isRequired,
+  updateAnswer: React.PropTypes.func.isRequired,
+  items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
+  moveItem: React.PropTypes.func.isRequired,
 };
