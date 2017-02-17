@@ -80,11 +80,11 @@ export function createItemInAssessment(bankId, assessmentId, itemIds, newItem) {
   };
 }
 
-export function createAssessmentOffered(bankId, assessmentId, body) {
+export function createAssessmentOffered(bankId, assessmentId) {
   return {
     bankId,
     assessmentId,
-    body,
+    body    : { id: '123' }, // have to send up garbage data to make it work.
     apiCall : true,
     type    : Constants.CREATE_ASSESSMENT_OFFERED,
   };

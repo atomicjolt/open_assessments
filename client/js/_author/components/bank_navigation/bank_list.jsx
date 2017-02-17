@@ -19,13 +19,13 @@ export default function bankList(props) {
               {
                 _.map(props.banks, bank => (
                   <ListItem
-                    embedCode={(assessId, bankId) => { props.embedCode(assessId, bankId); }}
+                    baseEmbedUrl={props.baseEmbedUrl}
+                    showEmbedCode={(assessId, bankId) => { props.showEmbedCode(assessId, bankId); }}
                     key={`bank_${bank.id}`}
                     bank={bank}
                     publishedBankId={props.publishedBankId}
                     getBankChildren={props.getBankChildren}
                     deleteAssessment={props.deleteAssessment}
-                    embedUrlCode={props.embedUrlCode}
                   />
                 ))
               }
@@ -45,7 +45,6 @@ bankList.propTypes = {
   getBankChildren  : React.PropTypes.func.isRequired,
   sortBy           : React.PropTypes.func.isRequired,
   sortName         : React.PropTypes.string,
-  embedUrlCode     : React.PropTypes.shape({}),
   sortPublished    : React.PropTypes.string,
   deleteAssessment : React.PropTypes.func,
 };

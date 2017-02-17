@@ -114,16 +114,13 @@ export class EditAssessment extends React.Component {
     const { assessment, settings } = this.props;
     if (published) {
       this.props.deleteAssignedAssessment(assessment, settings.publishedBankId);
-      // delete all the old offeredAssessments
-      // can you delete if its already empty?
       this.props.editOrPublishAssessment(assessment, settings.editableBankId);
     } else {
       if (_.includes(assessment.assignedBankIds, this.props.settings.editableBankId)) {
         this.props.deleteAssignedAssessment(assessment, settings.editableBankId);
       }
       if (_.isEmpty(assessment.assessmentOffered) && !_.isEmpty(this.props.items)) {
-        const body = { id: '123' }; // have to send up a garbage value for the create to work.
-        this.props.createAssessmentOffered(assessment.bankId, assessment.id, body);
+        this.props.createAssessmentOffered(assessment.bankId, assessment.id);
       }
       this.props.editOrPublishAssessment(assessment, settings.publishedBankId);
     }

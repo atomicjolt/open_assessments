@@ -22,7 +22,7 @@ function select(state) {
     currentBankId,
     banks: _.merge(state.assessments[currentBankId], banks),
     settings: state.settings,
-    yourBank: state.assessments[currentBankId],
+    currentBank: state.assessments[currentBankId],
   };
 }
 
@@ -46,7 +46,7 @@ export class BankNavigator extends React.Component {
     createAssessment   : React.PropTypes.func.isRequired,
     deleteAssessment   : React.PropTypes.func.isRequired,
     currentBankId      : React.PropTypes.string,
-    yourBank           : React.PropTypes.shape({}),
+    currentBank        : React.PropTypes.shape({}),
   };
 
   constructor() {
@@ -54,8 +54,6 @@ export class BankNavigator extends React.Component {
     this.state = {
       sortName      : null,
       sortPublished : null,
-      embedUrlCode  : {},
-      highLightedAssessmentId: '',
     };
   }
 
@@ -91,7 +89,6 @@ export class BankNavigator extends React.Component {
     if (sortPublished) {
       sortedBanks = _.orderBy(sortedBanks, bank => _.find(bank.assignedBankIds, { id: 'the publishedBankId' }), sortPublished);
     }
-
     return sortedBanks;
   }
 
@@ -99,46 +96,30 @@ export class BankNavigator extends React.Component {
     this.props.deleteAssessment(bankId, assessmentId);
   }
 
-  embedCode(assessId, bankId) {
-    // const { qBankHost, assessmentPlayerUrl } = this.props.settings;
-    const assessment = this.props.yourBank[assessId];
+  showEmbedCode(assessId, bankId) {
+    const assessment = this.props.currentBank[assessId];
     const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
     if (_.isEmpty(assessOffered)) {
       this.props.getAssessmentOffered(bankId, assessId);
     }
-    this.setState({ highLightedAssessmentId: assessId });
-  }
-
-  showCode() {
-    const { highLightedAssessmentId } = this.state;
-    const { baseEmbedUrl } = this.props.settings;
-    if (highLightedAssessmentId && _.isEmpty(this.state.embedUrlCode[highLightedAssessmentId])) {
-      const assessment = this.props.yourBank[highLightedAssessmentId];
-      const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
-      if (!_.isEmpty(assessOffered)) {
-        const url = `${baseEmbedUrl}${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}#/assessment`;
-        return this.setState({ embedUrlCode: { [assessment.id]: `<iframe src="${url}"/>` } });
-      }
-    }
-    return null;
   }
 
   render() {
-    this.showCode();
+    const { createAssessment, currentBankId, updatePath, settings } = this.props;
     return (
       <div>
         <Heading
           view="banks"
           path={this.props.path}
-          createAssessment={this.props.createAssessment}
-          currentBankId={this.props.currentBankId}
-          updatePath={this.props.updatePath}
+          createAssessment={createAssessment}
+          currentBankId={currentBankId}
+          updatePath={updatePath}
         />
         <BankList
-          embedUrlCode={this.state.embedUrlCode}
+          baseEmbedUrl={settings.baseEmbedUrl}
           banks={this.sortBanks()}
-          embedCode={(assessId, bankId) => { this.embedCode(assessId, bankId); }}
-          publishedBankId={this.props.settings.publishedBankId}
+          showEmbedCode={(assessId, bankId) => { this.showEmbedCode(assessId, bankId); }}
+          publishedBankId={settings.publishedBankId}
           getBankChildren={bank => this.getBankChildren(bank)}
           sortBy={type => this.sortBy(type)}
           sortName={this.state.sortName}
