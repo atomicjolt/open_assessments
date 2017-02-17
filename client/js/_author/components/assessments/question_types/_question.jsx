@@ -8,7 +8,7 @@ import Feedback         from './question_common/feedback';
 import genusTypes       from '../../../../constants/genus_types.js';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
-
+import ShortAnswer      from './short_answer';
 export default class Question extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
@@ -75,6 +75,14 @@ export default class Question extends React.Component {
       case genusTypes.item.fileUpload:
         return (
           <FileUpload
+            updateItem={newProps => this.updateItem(newProps)}
+            item={this.props.item}
+          />
+        );
+
+      case genusTypes.item.shortAnswer:
+        return (
+          <ShortAnswer
             updateItem={newProps => this.updateItem(newProps)}
             item={this.props.item}
           />
