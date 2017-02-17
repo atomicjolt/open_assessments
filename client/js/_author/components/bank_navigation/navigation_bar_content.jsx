@@ -1,6 +1,6 @@
 import React                    from 'react';
-import appHistory               from '../../history';
 import _                        from 'lodash';
+import appHistory               from '../../history';
 import Breadcrumb               from './breadcrumb';
 
 export default function navigationBarContent(props) {

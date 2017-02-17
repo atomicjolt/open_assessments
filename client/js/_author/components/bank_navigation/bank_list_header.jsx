@@ -25,7 +25,7 @@ export default function bankListHeader(props) {
               className={props.sortPublished ? 'c-table__filter is-active' : 'c-table__filter'}
               onClick={() => props.sortBy('sortPublished')}
             >
-              Publish
+              Published
               <i className={props.sortPublished === 'desc' ? 'material-icons top is-active' : 'material-icons top'}>
                 keyboard_arrow_up
               </i>
