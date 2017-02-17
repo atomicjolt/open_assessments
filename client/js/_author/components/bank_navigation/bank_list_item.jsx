@@ -23,7 +23,10 @@ export default function bankListItem(props) {
 
   function deleteAssessment(e, bankId, assessmentId) {
     e.stopPropagation();
-    props.deleteAssessment(bankId, assessmentId);
+    // make a confirmation dialog.
+    if (confirm('Delete this assessment?')) {
+      props.deleteAssessment(bankId, assessmentId);
+    }
   }
 
   return (
