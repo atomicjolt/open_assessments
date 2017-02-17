@@ -76,10 +76,8 @@ export class EditAssessment extends React.Component {
   }
 
   updateAssessment(newFields) {
-    this.props.updateAssessment(
-      this.props.params.bankId,
-      { id: this.props.params.id, ...newFields },
-    );
+    const updated = { id: this.props.params.id, ...newFields };
+    this.props.updateAssessment(this.props.params.bankId, updated);
   }
 
   updateItem(item) {
@@ -140,7 +138,7 @@ export class EditAssessment extends React.Component {
         />
         <AssessmentForm
           {...this.props.assessment}
-          updateAssessment={() => this.updateAssessment()}
+          updateAssessment={newFields => this.updateAssessment(newFields)}
           updateItemOrder={itemIds => this.updateItemOrder(itemIds)}
           items={this.props.items}
           updateItem={item => this.updateItem(item)}
