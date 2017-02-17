@@ -96,7 +96,7 @@ export class BankNavigator extends React.Component {
     this.props.deleteAssessment(bankId, assessmentId);
   }
 
-  showEmbedCode(assessId, bankId) {
+  getEmbedCode(assessId, bankId) {
     const assessment = this.props.currentBank[assessId];
     const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
     if (_.isEmpty(assessOffered)) {
@@ -118,7 +118,7 @@ export class BankNavigator extends React.Component {
         <BankList
           baseEmbedUrl={settings.baseEmbedUrl}
           banks={this.sortBanks()}
-          showEmbedCode={(assessId, bankId) => { this.showEmbedCode(assessId, bankId); }}
+          getEmbedCode={(assessId, bankId) => { this.getEmbedCode(assessId, bankId); }}
           publishedBankId={settings.publishedBankId}
           getBankChildren={bank => this.getBankChildren(bank)}
           sortBy={type => this.sortBy(type)}

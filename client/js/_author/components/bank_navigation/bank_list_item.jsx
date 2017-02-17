@@ -28,9 +28,9 @@ export default function bankListItem(props) {
     props.deleteAssessment(bankId, assessmentId);
   }
 
-  function showEmbedCode(e, currentBank) {
+  function getEmbedCode(e, currentBank) {
     e.stopPropagation();
-    props.showEmbedCode(currentBank.id, currentBank.bankId);
+    props.getEmbedCode(currentBank.id, currentBank.bankId);
   }
 
   function embedButtonOrUrl() {
@@ -54,7 +54,7 @@ export default function bankListItem(props) {
       return (
         <button
           className="c-btn c-btn--sm c-btn--table"
-          onClick={e => showEmbedCode(e, bank)}
+          onClick={e => getEmbedCode(e, bank)}
         >
           embed code
         </button>
@@ -104,5 +104,5 @@ bankListItem.propTypes = {
   }).isRequired,
   publishedBankId: React.PropTypes.string.isRequired,
   baseEmbedUrl: React.PropTypes.string.isRequired,
-  showEmbedCode: React.PropTypes.func.isRequired,
+  getEmbedCode: React.PropTypes.func.isRequired,
 };
