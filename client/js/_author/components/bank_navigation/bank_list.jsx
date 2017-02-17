@@ -19,6 +19,8 @@ export default function bankList(props) {
               {
                 _.map(props.banks, bank => (
                   <ListItem
+                    baseEmbedUrl={props.baseEmbedUrl}
+                    getEmbedCode={props.getEmbedCode}
                     key={`bank_${bank.id}`}
                     bank={bank}
                     publishedBankId={props.publishedBankId}

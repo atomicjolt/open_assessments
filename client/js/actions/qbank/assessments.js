@@ -84,6 +84,7 @@ export function createAssessmentOffered(bankId, assessmentId) {
   return {
     bankId,
     assessmentId,
+    body    : { id: '123' }, // have to send up garbage data to make it work.
     apiCall : true,
     type    : Constants.CREATE_ASSESSMENT_OFFERED,
   };

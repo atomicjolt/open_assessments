@@ -5,10 +5,12 @@ import Icon       from './bank_icon';
 
 // TODO: think about breaking this into smaller components
 export default function bankListItem(props) {
-  const { bank, publishedBankId } = props;
+  const { bank, publishedBankId, baseEmbedUrl } = props;
 
   const isPublished = _.includes(bank.assignedBankIds, publishedBankId);
+  const published = isPublished ? 'is-published' : '';
   const isAssessment = bank.type === 'Assessment';
+  const assessOffered = bank.assessmentOffered ? bank.assessmentOffered[0] : undefined;
   const buttonContainer = {
     display: isAssessment ? '' : 'none',
   };
@@ -29,6 +31,41 @@ export default function bankListItem(props) {
     }
   }
 
+  function getEmbedCode(e, currentBank) {
+    e.stopPropagation();
+    props.getEmbedCode(currentBank.id, currentBank.bankId);
+  }
+
+  function embedButtonOrUrl() {
+    if (isPublished) {
+      if (assessOffered) {
+        const embedUrlCode = `${baseEmbedUrl}${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}#/assessment`;
+        return (
+          <label className="c-input--purple" htmlFor="embedInput">
+            <input
+              id="embedInput"
+              onClick={e => e.stopPropagation()}
+              className="c-text-input c-text-input--smaller"
+              readOnly
+              type="text"
+              value={`<iframe src="${embedUrlCode}"/>`}
+            />
+          </label>
+        );
+      }
+
+      return (
+        <button
+          className="c-btn c-btn--sm c-btn--table"
+          onClick={e => getEmbedCode(e, bank)}
+        >
+          embed code
+        </button>
+      );
+    }
+    return null;
+  }
+
   return (
     <tr
       onClick={() => selectItem()}
@@ -39,15 +76,13 @@ export default function bankListItem(props) {
       <td><Icon type={bank.type} /></td>
       <td>{bank.displayName ? bank.displayName.text : null}</td>
       <td>
-        <button className="c-btn c-btn--square c-publish" style={buttonContainer}>
+        <button className={`c-btn c-btn--square c-publish ${published}`} style={buttonContainer}>
           <Icon type={isPublished ? 'Published' : 'Publish'} />
         </button>
       </td>
       <td>
         <div className="c-table__icons" style={buttonContainer}>
-          <button className="c-btn c-btn--sm c-btn--table">
-            embed code
-          </button>
+          {embedButtonOrUrl()}
           <button className="c-btn c-btn--square c-btn--table">
             <i className="material-icons">edit</i>
           </button>
@@ -71,4 +106,6 @@ bankListItem.propTypes = {
     displayName : React.PropTypes.shape({}),
   }).isRequired,
   publishedBankId: React.PropTypes.string.isRequired,
+  baseEmbedUrl: React.PropTypes.string.isRequired,
+  getEmbedCode: React.PropTypes.func.isRequired,
 };
