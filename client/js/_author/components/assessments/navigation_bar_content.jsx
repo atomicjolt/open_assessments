@@ -54,7 +54,12 @@ export default class AssessmentsView extends React.Component {
 
         <div className="c-header-bottom__right">
           { this.publishButton() }
-          <button className="c-btn c-btn--sm c-btn--maroon u-ml-md">
+          <button
+            className="c-btn c-btn--sm c-btn--maroon u-ml-md"
+            onClick={() => this.setState({
+              shouldDisplayPreview: !this.state.shouldDisplayPreview
+            })}
+          >
             <i className="material-icons">remove_red_eye</i>
             Preview Assessment
           </button>
