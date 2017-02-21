@@ -1,28 +1,22 @@
 import React            from 'react';
 import DefaultHeader    from './default';
 import ReorderHeader    from './reorder';
+import QuestionTypeNames from '../../../../../../constants/question_type_names';
 
 export default function QuestionHeader(props) {
-  const type = () => {
-    switch (props.type) {
-      case 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU':
-        return 'Multiple Choice';
-      default:
-        return 'Question';
-    }
-  };
+  const type = QuestionTypeNames[props.type] || 'Unknown';
 
-  let currentHeader = <DefaultHeader {...props} type={type()} />;
+  let currentHeader = <DefaultHeader {...props} />;
 
   if (props.reorderActive) {
-    currentHeader =  <ReorderHeader {...props} type={type()} />;
+    currentHeader =  <ReorderHeader {...props} />;
   }
 
   return (
     <div className="o-item__top">
       <div className="o-left">
         <h3 className="c-question__number">Question {props.index + 1}</h3>
-        <div className="c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; {props.type}</div>
+        <div className="c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; {type}</div>
       </div>
       { currentHeader }
     </div>
