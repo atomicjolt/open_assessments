@@ -5,7 +5,7 @@ import ReorderHeader    from './reorder';
 import GenusTypes       from '../../../../../../constants/genus_types';
 
 export default function QuestionHeader(props) {
-  const type = _.findKey(GenusTypes.item, genusType => genusType === props.type);
+  const type = _.findKey(GenusTypes.item, genusType => genusType === props.type) || 'Unknown';
   const typeName = _.words(_.upperFirst(type)).join(' ');
 
   let currentHeader = <DefaultHeader {...props} />;
