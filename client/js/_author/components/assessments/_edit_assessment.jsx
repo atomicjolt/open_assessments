@@ -1,21 +1,13 @@
 import React                  from 'react';
 import { connect }            from 'react-redux';
 import _                      from 'lodash';
+
+import { transformAssessment } from '../../selectors/assessment';
 import Heading                from  '../common/heading';
 import AssessmentForm         from './assessment_form';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
-
-function transformAssessment(assessment) {
-  if (!assessment) return {};
-  const fixedAssessment = {
-    ...assessment,
-    name: assessment.displayName.text,
-  };
-
-  return fixedAssessment;
-}
 
 function select(state, props) {
   const bankId = encodeURIComponent(props.params.bankId);

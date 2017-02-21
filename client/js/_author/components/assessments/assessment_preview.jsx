@@ -3,22 +3,11 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 
 import * as AssessmentActions from '../../../actions/qbank/assessments';
-
-
-//TODO add selector to remove duplication
-function transformAssessment(assessment) {
-  if (!assessment) return {};
-  const fixedAssessment = {
-    ...assessment,
-    name: assessment.displayName.text,
-  };
-
-  return fixedAssessment;
-}
+import { transformAssessment } from '../../selectors/assessment';
 
 function select(state, props) {
   return {
-    assessment: props.assessment,
+    assessment: transformAssessment(props.assessment),
     settings: state.settings,
   };
 }
