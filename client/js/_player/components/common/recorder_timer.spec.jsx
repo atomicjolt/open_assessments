@@ -44,10 +44,11 @@ describe('recorder timer', () => {
 
   describe('count secs', () => {
     let secCt = 8;
+    const minCt = 0;
     it('counts from 08 to 09 as a string', () => {
       result.setState(
         {
-          minsCt       : 0,
+          minsCt       : minCt,
           secsCt       : secCt,
           secsStringCt : `0${secCt + 1}`,
           prcntCt      : result.state.prcntCt,
@@ -65,7 +66,7 @@ describe('recorder timer', () => {
       secCt = 9;
       result.setState(
         {
-          minsCt       : 0,
+          minsCt       : minCt,
           secsCt       : secCt,
           secsStringCt : `0${secCt + 1}`,
           prcntCt      : result.state.prcntCt,
@@ -73,7 +74,7 @@ describe('recorder timer', () => {
       );
       result.tick(secCt);
       expect(result.state).toEqual({
-        minsCt       : 0,
+        minsCt       : minCt,
         secsCt       : 10,
         secsStringCt : 10,
         prcntCt      : result.state.prcntCt
@@ -83,7 +84,7 @@ describe('recorder timer', () => {
       secCt = 59;
       result.setState(
         {
-          minsCt       : 0,
+          minsCt       : minCt,
           secsCt       : secCt,
           secsStringCt : '59',
           prcntCt      : result.state.prcntCt,
@@ -91,7 +92,7 @@ describe('recorder timer', () => {
       );
       result.tick(secCt);
       expect(result.state).toEqual({
-        minsCt       : 1,
+        minsCt       : minCt + 1,
         secsCt       : 0,
         secsStringCt : '00',
         prcntCt      : result.state.prcntCt
@@ -102,10 +103,11 @@ describe('recorder timer', () => {
   describe('calc percentage', () => {
     const secCt = 49;
     const prctCt = 49;
+    const minCt = 0;
     it('calculates the percent', () => {
       result.setState(
         {
-          minsCt       : 0,
+          minsCt       : minCt,
           secsCt       : secCt,
           secsStringCt : 49,
           prcntCt      : prctCt,
@@ -113,7 +115,7 @@ describe('recorder timer', () => {
       );
       result.tick(secCt);
       expect(result.state).toEqual({
-        minsCt       : 0,
+        minsCt       : minCt,
         secsCt       : 50,
         secsStringCt : 50,
         prcntCt      : 50
