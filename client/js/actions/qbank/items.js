@@ -42,11 +42,12 @@ export function updateItem(bankId, item) {
   };
 }
 
-export function updateChoice(bankId, itemId, choice) {
+export function updateChoice(bankId, itemId, choiceId, choice) {
   return {
     type: Constants.ADD_CHOICE,
     bankId,
     itemId,
+    choiceId,
     choice,
   };
 }

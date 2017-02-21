@@ -18,7 +18,6 @@ export default function AssessmentItems(props) {
           toggleReorder={props.toggleReorder}
           updateItem={props.updateItem}
           updateChoice={props.updateChoice}
-          updateAnswer={props.updateAnswer}
           deleteAssessmentItem={props.deleteAssessmentItem}
           moveItem={props.moveItem}
         />
@@ -30,7 +29,5 @@ export default function AssessmentItems(props) {
 AssessmentItems.propTypes = {
   items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
   updateChoice: React.PropTypes.func.isRequired,
-  updateAnswer: React.PropTypes.func.isRequired,
-  items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
   moveItem: React.PropTypes.func.isRequired,
 };

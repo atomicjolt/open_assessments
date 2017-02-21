@@ -1,29 +1,21 @@
-import React    from 'react';
-import _        from 'lodash';
-import Option   from './multiple_choice_option';
-import Add      from './add_option';
-import Feedback from './question_common/feedback';
+import React        from 'react';
+import _            from 'lodash';
+import Option       from './multiple_choice_option';
+import Add          from './add_option';
+import Feedback     from './question_common/feedback';
 
-export default class multipleChoice extends React.Component {
+export default class MultipleChoice extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
       answers: React.PropTypes.arrayOf(React.PropTypes.shape),
       id: React.PropTypes.string,
       question: React.PropTypes.shape({
-        choices: React.PropTypes.arrayOf(React.PropTypes.shape({})),
+        choices: React.PropTypes.shape({}),
       }),
     }).isRequired,
     updateItem: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
-    updateAnswer: React.PropTypes.func.isRequired,
   };
-
-  hasQuestions() {
-    const { question } = this.props.item;
-    return question
-    && question.choices
-    && question.choices.length;
-  }
 
   markedForDeletion(choice) {
     const { question } = this.props.item;
@@ -60,24 +52,22 @@ export default class multipleChoice extends React.Component {
     return (
       <div className="c-question__answers c-question__answers--maintain">
         {
-          _.map(this.hasQuestions() ? question.choices : [{}], (choice, index) => (
+          _.map(question.choices, choice => (
             <Option
               key={`assessmentChoice_${choice.id}`}
               {...choice}
-              index={index}
-              updateChoice={newChoice => this.props.updateChoice(id, newChoice)}
+              updateChoice={newChoice => this.props.updateChoice(id, choice.id, newChoice)}
               updateItem={() => this.props.updateItem({ question })}
               deleteChoice={() => this.deleteChoice(choice)}
-              moveUp={() => this.moveChoice(choice, index, true)}
-              moveDown={() => this.moveChoice(choice, index)}
-              first={index === 0}
-              last={question ? choice === _.last(question.choices) : true}
-              updateAnswer={newAnswer => this.props.updateAnswer(id, newAnswer)}
+              moveUp={() => this.moveChoice(choice, true)}
+              moveDown={() => this.moveChoice(choice)}
+              first={choice.order === 0}
+              last={question ? choice.order === _.size(question.choices) - 1 : true}
             />
           ))
         }
         <Add
-          updateChoice={() => this.props.updateChoice(id, {})}
+          updateChoice={() => this.props.updateChoice(id)}
         />
         <Feedback />
       </div>

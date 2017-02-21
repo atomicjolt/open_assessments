@@ -5,36 +5,38 @@ import genusTypes from '../../constants/genus_types';
 // Leave this empty. It will hold assessments by bank id. IE `state[someId] = {a_bank}`
 const initialState = {};
 
-// TODO: this may be better suited in a utils file, maybe...
-function answerType(itemType) {
-  switch (itemType) {
-    case genusTypes.item.multipleChoice:
-      return genusTypes.answer.multipleChoice;
 
-    case genusTypes.item.fileUpload:
-    case genusTypes.item.audioUpload:
-      return genusTypes.answer.file;
+function updateChoiceData(item) {
+  const newItem = _.cloneDeep(item);
 
-    default:
-      return null;
+  if (!newItem.question) {
+    newItem.question = {
+      choices: {},
+    };
+    return newItem;
   }
+
+  const newChoices = {};
+  _.forEach(item.question.choices, (choice, index) => {
+    newChoices[choice.id] = { order: index, ...choice, correct: false };
+    _.forEach(item.answers, (answer) => {
+      if (_.includes(answer.choiceIds, choice.id)) {
+        newChoices[choice.id] = {
+          answer,
+          correct: answer.genusTypeId === genusTypes.answer.rightAnswer,
+          answerId: answer.id,
+          ...newChoices[choice.id],
+        };
+      }
+    });
+  });
+  newItem.question.choices = newChoices;
+  console.log('newChoices', newChoices);
+  return newItem;
 }
 
 export default function banks(state = initialState, action) {
   switch (action.type) {
-
-    case 'GET_ITEMS_DONE': {
-      const newState = _.cloneDeep(state);
-      // const bankId = action.original.bankId;
-      // if (!newState[bankId]) {
-      //   newState[bankId] = {};
-      // }
-      // _.forEach(action.payload, (assessment) => {
-      //   newState[bankId][assessment.id] = assessment;
-      // });
-      return newState;
-    }
-
     case 'GET_ASSESSMENT_ITEMS_DONE': {
       const newState = _.cloneDeep(state);
       const bankId = action.original.bankId;
@@ -43,7 +45,7 @@ export default function banks(state = initialState, action) {
       }
 
       _.each(action.payload, (item) => {
-        newState[bankId][item.id] = item;
+        newState[bankId][item.id] = updateChoiceData(item);
       });
 
       return newState;
@@ -57,58 +59,39 @@ export default function banks(state = initialState, action) {
         newState[bankId] = {};
       }
 
-      newState[bankId][action.payload.id] = action.payload;
+      newState[bankId][action.payload.id] = updateChoiceData(action.payload);
 
       return newState;
     }
 
     case 'ADD_CHOICE': {
       const newState = _.cloneDeep(state);
-      const { bankId, itemId, choice } = action;
-      if (!newState[bankId][itemId].question) {
-        newState[bankId][itemId].question = {
-          questionString: action.questionString || '',
-          choices: [{
-            id: guid(),
-            text: choice.text,
-          }]
+      const { bankId, itemId, choiceId, choice } = action;
+
+      if (!choiceId) {
+        const newId = guid();
+        newState[bankId][itemId].question.choices[newId] = {
+          id: newId,
+          text: '',
+          feedback: '',
+          correct: false,
+          order: _.size(newState[bankId][itemId].question.choices),
         };
-      } else if (choice.id) {
-        const foundChoice = _.find(newState[bankId][itemId].question.choices, { id: choice.id });
-        if (foundChoice) {
-          foundChoice.text = choice.text;
-        } else {
-          newState[bankId][itemId].question.choices.push(choice);
-        }
-      } else {
-        newState[bankId][itemId].question.choices.push({ id: guid(), text: choice.text });
+        return newState;
       }
-      return newState;
-    }
 
-    case 'ADD_ANSWER': {
-      const newState = _.cloneDeep(state);
-      const { bankId, itemId, answer } = action;
-      const item = newState[bankId][itemId];
-      const answerTypeId = genusTypes.answer;
+      newState[bankId][itemId].question.choices[choiceId] = {
+        ...newState[bankId][itemId].question.choices[choiceId],
+        ...choice
+      };
 
-      const answerItemIndex = _.find(item.answers, answerItem => _.find(answerItem.choiceIds, answer.choiceId));
-
-      if (answerItemIndex) {
-        newState[bankId][itemId].answers[answerItemIndex] = {
-          ...newState[bankId][itemId].answers[answerItemIndex],
-          ...answer,
-        };
-      } else {
-        const newAnswer = {
-          ...{
-            genusTypeId: answer.correct ? answerTypeId.rightAnswer : answerTypeId.wrongAnswer,
-            type: answerType(item.genusTypeId),
-            choiceIds: [answer.choiceId]
-          },
-          ...answer
-        };
-        newState[bankId][itemId].answers.push(newAnswer);
+      if (choice.correct) {
+        _.forEach(newState[bankId][itemId].question.choices, (incorrectChoice) => {
+          if (incorrectChoice.id !== choiceId) {
+            console.log('Incorrect choice: ', incorrectChoice.text);
+            incorrectChoice.correct = false;
+          }
+        });
       }
       return newState;
     }

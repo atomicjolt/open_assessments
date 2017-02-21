@@ -145,8 +145,9 @@ export class EditAssessment extends React.Component {
           items={this.props.items}
           updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}
-          updateChoice={(itemId, choice) => this.props.updateChoice(bankId, itemId, choice)}
-          updateAnswer={(itemId, answer) => this.props.updateAnswer(bankId, itemId, answer)}
+          updateChoice={
+            (itemId, choiceId, choice) => this.props.updateChoice(bankId, itemId, choiceId, choice)
+          }
           deleteAssessmentItem={itemId => this.deleteAssessmentItem(itemId)}
         />
       </div>
