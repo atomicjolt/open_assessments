@@ -1,16 +1,27 @@
-import React from 'react';
-import _     from 'lodash';
+import React    from 'react';
+import _        from 'lodash';
+import Feedback from './question_common/feedback';
+
+const BOX_SIZES = {
+  small: {
+    expectedLines: 1,
+    expectedLength: 50,
+    maxStrings: 1,
+  },
+  medium: {
+    expectedLines: 3,
+    expectedLength: 500,
+    maxStrings: 1,
+  },
+  large: {
+    expectedLines: 5,
+    expectedLength: 500,
+    maxStrings: 1,
+  }
+};
 
 function getBoxSize(lines) {
-  if (!lines || lines < 3) return 'small';
-  if (lines < 5) return 'medium';
-  return 'large';
-}
-
-function getBoxLines(size) {
-  if (!size || size === 'small') return 1;
-  if (size === 'medium') return 3;
-  return 5;
+  return _.findKey(BOX_SIZES, boxSize => lines === boxSize.expectedLines) || 'large';
 }
 
 export default function ShortAnswer(props) {
@@ -18,27 +29,33 @@ export default function ShortAnswer(props) {
   const lines = question && question.expectedLines;
 
   function updateItem(e) {
-    props.updateItem({ question: { expectedLines: getBoxLines(e.target.value) } });
+    props.updateItem({
+      question: { ...BOX_SIZES[e.target.value] }
+    });
   }
 
   return (
-    <div className="c-question__answers c-short-answer__answers">
-      <div className="c-dropdown c-dropdown--medium c-input-label--top">
-        <label htmlFor="short-answer-size">Answer Box</label>
-        <select
-          value={getBoxSize(lines)}
-          onChange={e => updateItem(e)}
-          id="short-answer-size"
-        >
-          <option value="small">Small</option>
-          <option value="medium">Medium</option>
-          <option value="large">Large</option>
-        </select>
+    <div>
+      <div className="c-question__answers c-short-answer__answers">
+        <div className="c-dropdown c-dropdown--medium c-input-label--top">
+          <label htmlFor="short-answer-size">Answer Box</label>
+          <select
+            value={getBoxSize(lines)}
+            onChange={e => updateItem(e)}
+            id="short-answer-size"
+          >
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+
+        <div className={`c-short-answer__example is-${getBoxSize(lines)}`}>
+          <span>{_.capitalize(getBoxSize(lines))} Box</span>
+        </div>
       </div>
 
-      <div className={`c-short-answer__example is-${getBoxSize(lines)}`}>
-        <span>{_.capitalize(getBoxSize(lines))} Box</span>
-      </div>
+      <Feedback />
     </div>
   );
 }
