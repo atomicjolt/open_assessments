@@ -59,12 +59,14 @@ export default class Question extends React.Component {
   content() {
     switch (this.props.item.genusTypeId) {
       case genusTypes.item.multipleChoice:
-        return <MultipleChoice
-          {...this.props}
-          updateItem={newProps => this.updateItem(newProps)}
-          updateChoice={this.props.updateChoice}
-          updateAnswer={this.props.updateAnswer}
-        />;
+        return (
+          <MultipleChoice
+            {...this.props}
+            updateItem={newProps => this.updateItem(newProps)}
+            updateChoice={this.props.updateChoice}
+            updateAnswer={this.props.updateAnswer}
+          />
+        );
       case genusTypes.item.audioUpload:
         return (
           <AudioUpload
