@@ -8,7 +8,7 @@ export default class NavigationBarContent extends React.Component {
   static propTypes = {
     editOrPublishAssessment: React.PropTypes.func.isRequired,
     isPublished: React.PropTypes.bool.isRequired,
-    items: React.PropTypes.shape({}).isRequired,
+    items: React.PropTypes.array.isRequired,
     assessment: React.PropTypes.object,
   };
 

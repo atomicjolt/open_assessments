@@ -19,7 +19,7 @@ export default function addOption(props) {
             className="c-text-input c-text-input--small c-wysiwyg c-option"
             id="addOption"
             type="text"
-            value="Add Option"
+            placeholder="Add Option"
             tabIndex="-1"
           />
           <div className="c-input__bottom no-border" />
