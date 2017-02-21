@@ -2,7 +2,7 @@ import React        from 'react';
 import TestUtils    from 'react-addons-test-utils';
 import { AssessmentPreview }  from './assessment_preview';
 
-describe('AssessmentPreview', () => {
+fdescribe('AssessmentPreview', () => {
   let props;
   beforeEach(() => {
     props = {
@@ -42,6 +42,7 @@ describe('AssessmentPreview', () => {
   });
 
   it('Renders iframe preview', () => {
+    props.assessment.assessmentOffered = ['fake_id'];
     const result = TestUtils.renderIntoDocument(
       <AssessmentPreview {...props} />
     );

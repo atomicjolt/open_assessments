@@ -19,6 +19,12 @@ export class AssessmentPreview extends React.Component {
     settings: React.PropTypes.object
   }
 
+  componentWillMount() {
+    if (!this.hasAssessmentOffered() && this.props.assessment) {
+      this.getEmbedCode(this.props.assessment);
+    }
+  }
+
   getEmbedCode(assessment) {
     const assessOffered = _.get(assessment, 'assessmentOffered[0]', '');
     if (_.isEmpty(assessOffered)) {
@@ -26,9 +32,12 @@ export class AssessmentPreview extends React.Component {
     }
   }
 
+  hasAssessmentOffered() {
+    return !_.isUndefined(_.get(this.props, 'assessment.assessmentOffered'));
+  }
+
   render() {
-    if (this.props.assessment) {
-      this.getEmbedCode(this.props.assessment);
+    if (this.hasAssessmentOffered()) {
       const bankId = this.props.assessment.bankId;
       const assessmentId = this.props.assessment.id;
       const baseEmbedUrl = this.props.settings.baseEmbedUrl;

@@ -39,6 +39,12 @@ export default class NavigationBarContent extends React.Component {
     return null;
   }
 
+  handlePreviewClick() {
+    this.setState({
+      shouldDisplayPreview: !this.state.shouldDisplayPreview
+    });
+  }
+
 
   render() {
     return (
@@ -57,9 +63,7 @@ export default class NavigationBarContent extends React.Component {
           { this.publishButton() }
           <button
             className="c-btn c-btn--sm c-btn--maroon u-ml-md"
-            onClick={() => this.setState({
-              shouldDisplayPreview: !this.state.shouldDisplayPreview
-            })}
+            onClick={() => this.handlePreviewClick()}
           >
             <i className="material-icons">remove_red_eye</i>
             Preview Assessment
