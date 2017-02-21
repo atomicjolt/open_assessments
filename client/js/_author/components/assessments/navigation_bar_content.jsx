@@ -4,23 +4,24 @@ import { hashHistory }  from 'react-router';
 import Icon             from '../bank_navigation/bank_icon';
 import Preview          from './assessment_preview';
 
-export default class AssessmentsView extends React.Component {
+export default class NavigationBarContent extends React.Component {
   static propTypes = {
     editOrPublishAssessment: React.PropTypes.func.isRequired,
     isPublished: React.PropTypes.bool.isRequired,
     items: React.PropTypes.shape({}).isRequired,
+    assessment: React.PropTypes.object,
   };
-
-  static getPreview(stuff) {
-    if (stuff) return <Preview />;
-    return null;
-  }
 
   constructor() {
     super();
     this.state = {
       shouldDisplayPreview: false,
     };
+  }
+
+  getPreview(stuff) {
+    if (stuff) return <Preview assessment={this.props.assessment} />;
+    return null;
   }
 
   publishButton() {
@@ -64,7 +65,7 @@ export default class AssessmentsView extends React.Component {
             Preview Assessment
           </button>
         </div>
-        {AssessmentsView.getPreview(this.state.shouldDisplayPreview)}
+        {this.getPreview(this.state.shouldDisplayPreview)}
       </div>
     );
   }

@@ -137,7 +137,7 @@ export class EditAssessment extends React.Component {
           view="assessments"
           editOrPublishAssessment={(published) => { this.editOrPublishAssessment(published); }}
           isPublished={isPublished}
-          items={this.props.items}
+          assessment={this.props.assessment}
         />
         <AssessmentForm
           {...this.props.assessment}

@@ -1,12 +1,56 @@
 import React from 'react';
+import _ from 'lodash';
+import { connect } from 'react-redux';
 
-// import Assessment from '../../../_player/componentsi/main/assessment.jsx';
+import * as AssessmentActions from '../../../actions/qbank/assessments';
 
-export default class ItemPreview extends React.Component {
+
+//TODO add selector to remove duplication
+function transformAssessment(assessment) {
+  if (!assessment) return {};
+  const fixedAssessment = {
+    ...assessment,
+    name: assessment.displayName.text,
+  };
+
+  return fixedAssessment;
+}
+
+function select(state, props) {
+  return {
+    assessment: props.assessment,
+    settings: state.settings,
+  };
+}
+
+export class AssessmentPreview extends React.Component {
   static propTypes = {
+    assessment: React.PropTypes.object,
+    getAssessmentOffered: React.PropTypes.func,
+    settings: React.PropTypes.object
+  }
+
+  getEmbedCode(assessment) {
+    const assessOffered = _.get(assessment, 'assessmentOffered[0]', '');
+    if (_.isEmpty(assessOffered)) {
+      this.props.getAssessmentOffered(assessment.bankId, assessment.id);
+    }
   }
 
   render() {
-    return <div> Howdy </div>;
+    if (this.props.assessment) {
+      this.getEmbedCode(this.props.assessment);
+      const bankId = this.props.assessment.bankId;
+      const assessmentId = this.props.assessment.id;
+      const baseEmbedUrl = this.props.settings.baseEmbedUrl;
+      const embedUrlCode = `${baseEmbedUrl}${bankId}&assessment_offered_id=${assessmentId}#/assessment`;
+
+      return <iframe src={embedUrlCode} />;
+    }
+    return null;
   }
 }
+
+export default connect(select, {
+  ...AssessmentActions,
+})(AssessmentPreview);
