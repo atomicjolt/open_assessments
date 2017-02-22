@@ -26,6 +26,7 @@ export default class Question extends React.Component {
     toggleReorder: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
     moveItem: React.PropTypes.func.isRequired,
+    uploadImage: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -133,6 +134,7 @@ export default class Question extends React.Component {
             id={id}
             text={description.text}
             updateItem={newProps => this.updateItem(newProps)}
+            uploadImage={this.props.uploadImage}
           />
           {this.content()}
         </div>

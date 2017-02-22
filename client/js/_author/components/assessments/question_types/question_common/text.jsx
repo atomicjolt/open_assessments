@@ -8,12 +8,29 @@ export default class questionText extends React.Component {
     }
   }
 
+  uploadImage(file) {
+    return new Promise((resolve, reject) => {
+      this.props.uploadImage(file, resolve);
+    });
+  }
+
   render() {
     return (
       <div className="c-input c-question-text">
         <label htmlFor={`question_text_${this.props.id}`} />
         <div className="c-input__contain">
-          <Editor />
+          {
+            /*
+              This is how to pass the prop for uploading images to the editor.
+              <Editor
+                toolbar={{
+                  image: {
+                    uploadCallback: file => this.uploadImage(file)
+                  }
+                }}
+              />
+            */
+          }
           <input
             ref={ref => (this.description = ref)}
             className="c-text-input c-text-input--medium c-wysiwyg"
@@ -35,4 +52,5 @@ questionText.propTypes = {
   id: React.PropTypes.string.isRequired,
   text: React.PropTypes.string.isRequired,
   updateItem: React.PropTypes.func.isRequired,
+  uploadImage: React.PropTypes.func.isRequired,
 };

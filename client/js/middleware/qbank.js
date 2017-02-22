@@ -7,6 +7,7 @@ import { DONE }                             from '../constants/wrapper';
 import { Constants as BankConstants }       from '../actions/qbank/banks';
 import { Constants as AssessmentConstants } from '../actions/qbank/assessments';
 import { Constants as ItemConstants }       from '../actions/qbank/items';
+import { Constants as AssetConstants }      from '../actions/qbank/assets';
 
 // TODO: extract out the https://qbank-clix-dev.mit.edu bit
 function getAssessmentsOffered(state, bankId, assessmentId) {
@@ -265,6 +266,32 @@ const qbank = {
       }));
     });
   },
+
+  [AssetConstants.UPLOAD_IMAGE]: (store, action) => {
+    const state = store.getState();
+
+    const formData = new FormData();
+    formData.append('inputFile', action.file);
+    formData.append('returnUrl', true);
+
+    api.post(
+      `repository/repositories/${action.bankId}/assets`,
+      state.settings.api_url,
+      state.jwt,
+      state.settings.csrf_token,
+      null,
+      formData,
+    ).then((res) => {
+      const result = res.body;
+      const link = _.replace(
+        result.assetContents[0].url,
+        '/api/v1',
+        state.settings.api_url
+      );
+
+      action.resolve({ data: { link } });
+    });
+  }
 };
 
 export default { ...server, ...qbank };
