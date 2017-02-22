@@ -1,6 +1,6 @@
-import React    from 'react';
-import _        from 'lodash';
-import Feedback from './question_common/feedback';
+import React          from 'react';
+import _              from 'lodash';
+import SingleFeedback from './question_common/single_feedback';
 
 const BOX_SIZES = {
   small: {
@@ -9,13 +9,13 @@ const BOX_SIZES = {
     maxStrings: 1,
   },
   medium: {
-    expectedLines: 3,
-    expectedLength: 500,
+    expectedLines: 1,
+    expectedLength: 200,
     maxStrings: 1,
   },
   large: {
     expectedLines: 5,
-    expectedLength: 500,
+    expectedLength: 200,
     maxStrings: 1,
   }
 };
@@ -55,7 +55,10 @@ export default function ShortAnswer(props) {
         </div>
       </div>
 
-      <Feedback />
+      <SingleFeedback
+        item={props.item}
+        updateItem={props.updateItem}
+      />
     </div>
   );
 }
