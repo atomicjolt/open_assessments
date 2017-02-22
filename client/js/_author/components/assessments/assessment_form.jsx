@@ -9,13 +9,11 @@ export default class AssessmentForm extends React.Component {
     items: React.PropTypes.oneOfType(
       [React.PropTypes.shape({}), React.PropTypes.arrayOf(React.PropTypes.shape({}))]
     ),
-    name: React.PropTypes.string,
     updateAssessment: React.PropTypes.func.isRequired,
     updateItemOrder: React.PropTypes.func.isRequired,
     createItem: React.PropTypes.func,
     updateItem: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
-    updateAnswer: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func,
   };
 
@@ -93,7 +91,6 @@ export default class AssessmentForm extends React.Component {
           toggleReorder={() => this.setState({ reorderActive: !reorderActive })}
           updateItem={this.props.updateItem}
           updateChoice={this.props.updateChoice}
-          updateAnswer={this.props.updateAnswer}
           deleteAssessmentItem={this.props.deleteAssessmentItem}
           moveItem={(oldIndex, newIndex) => this.moveItem(oldIndex, newIndex)}
         />

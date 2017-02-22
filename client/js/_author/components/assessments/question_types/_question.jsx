@@ -9,6 +9,7 @@ import genusTypes       from '../../../../constants/genus_types.js';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
 import ShortAnswer      from './short_answer';
+
 export default class Question extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
@@ -21,7 +22,6 @@ export default class Question extends React.Component {
     reorderActive: React.PropTypes.bool,
     updateItem: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
-    updateAnswer: React.PropTypes.func.isRequired,
     activateItem: React.PropTypes.func.isRequired,
     toggleReorder: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
@@ -64,7 +64,6 @@ export default class Question extends React.Component {
             {...this.props}
             updateItem={newProps => this.updateItem(newProps)}
             updateChoice={this.props.updateChoice}
-            updateAnswer={this.props.updateAnswer}
           />
         );
       case genusTypes.item.audioUpload:
