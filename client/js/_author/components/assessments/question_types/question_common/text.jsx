@@ -2,7 +2,6 @@ import React      from 'react';
 import Editor     from '../../../common/oea_editor';
 
 export default class questionText extends React.Component {
-
   componentDidUpdate(prevProps) {
     if (this.props.text !== prevProps.text) {
       this.description.value = this.props.text;

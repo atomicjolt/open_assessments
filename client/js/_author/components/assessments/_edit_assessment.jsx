@@ -158,5 +158,5 @@ export class EditAssessment extends React.Component {
 export default connect(select, {
   ...BankActions,
   ...AssessmentActions,
-  ...ItemActions,
+  ...ItemActions
 })(EditAssessment);
