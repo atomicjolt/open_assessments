@@ -1,4 +1,5 @@
 import React      from 'react';
+import { Editor } from 'react-draft-wysiwyg';
 
 export default class questionText extends React.Component {
   componentDidUpdate(prevProps) {
@@ -12,6 +13,7 @@ export default class questionText extends React.Component {
       <div className="c-input c-question-text">
         <label htmlFor={`question_text_${this.props.id}`} />
         <div className="c-input__contain">
+          <Editor />
           <input
             ref={ref => (this.description = ref)}
             className="c-text-input c-text-input--medium c-wysiwyg"
