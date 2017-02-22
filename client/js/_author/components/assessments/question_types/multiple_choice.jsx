@@ -52,7 +52,7 @@ export default class MultipleChoice extends React.Component {
     return (
       <div className="c-question__answers c-question__answers--maintain">
         {
-          _.map(question.choices, choice => (
+          _.map(_.orderBy(question.choices, 'order'), choice => (
             <Option
               key={`assessmentChoice_${choice.id}`}
               {...choice}

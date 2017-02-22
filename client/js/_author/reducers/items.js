@@ -18,7 +18,11 @@ function updateChoiceData(item) {
 
   const newChoices = {};
   _.forEach(item.question.choices, (choice, index) => {
-    newChoices[choice.id] = { order: index, ...choice, correct: false };
+    newChoices[choice.id] = {
+      order: index,
+      ...choice,
+      correct: false
+    };
     _.forEach(item.answers, (answer) => {
       if (_.includes(answer.choiceIds, choice.id)) {
         newChoices[choice.id] = {
