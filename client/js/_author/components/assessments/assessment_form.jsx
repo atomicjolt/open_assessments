@@ -55,7 +55,7 @@ export default class AssessmentForm extends React.Component {
 
   render() {
     const reorderActive = this.state.reorderActive;
-
+    const name = _.get(this, 'props.displayName.text', '');
     return (
       <div className="o-contain">
         <div className="o-item">
@@ -69,11 +69,13 @@ export default class AssessmentForm extends React.Component {
             <label htmlFor="title_field" className="c-input">
               <div className="c-input__contain">
                 <input
-                  defaultValue={_.get(this, 'props.displayName.text', '')}
+                  key={name}
+                  defaultValue={name}
                   className="c-text-input c-text-input--large"
                   type="text"
                   id="title_field"
                   placeholder="Untitled Assessment"
+                  onChange={e => this.setState({ title: e.target.value })}
                   onBlur={e => this.props.updateAssessment({ name: e.target.value })}
                 />
                 <div className="c-input__bottom" />

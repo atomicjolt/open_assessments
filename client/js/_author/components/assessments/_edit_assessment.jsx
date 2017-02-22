@@ -55,6 +55,7 @@ export class EditAssessment extends React.Component {
     }),
     editOrPublishAssessment: React.PropTypes.func.isRequired,
     deleteAssignedAssessment: React.PropTypes.func.isRequired,
+    createAssessmentOffered: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
     updateAssessmentItems: React.PropTypes.func.isRequired,
@@ -76,10 +77,8 @@ export class EditAssessment extends React.Component {
   }
 
   updateAssessment(newFields) {
-    this.props.updateAssessment(
-      this.props.params.bankId,
-      { id: this.props.params.id, ...newFields },
-    );
+    const updated = { id: this.props.params.id, ...newFields };
+    this.props.updateAssessment(this.props.params.bankId, updated);
   }
 
   updateItem(item) {
@@ -115,13 +114,14 @@ export class EditAssessment extends React.Component {
     const { assessment, settings } = this.props;
     if (published) {
       this.props.deleteAssignedAssessment(assessment, settings.publishedBankId);
-      // Need to delete the publishedBankId and then add the editBankId
       this.props.editOrPublishAssessment(assessment, settings.editableBankId);
     } else {
       if (_.includes(assessment.assignedBankIds, this.props.settings.editableBankId)) {
         this.props.deleteAssignedAssessment(assessment, settings.editableBankId);
       }
-      // Need to delete the editBankId and then add the publishedBankId
+      if (_.isEmpty(assessment.assessmentOffered) && !_.isEmpty(this.props.items)) {
+        this.props.createAssessmentOffered(assessment.bankId, assessment.id);
+      }
       this.props.editOrPublishAssessment(assessment, settings.publishedBankId);
     }
   }
@@ -137,10 +137,11 @@ export class EditAssessment extends React.Component {
           view="assessments"
           editOrPublishAssessment={(published) => { this.editOrPublishAssessment(published); }}
           isPublished={isPublished}
+          items={this.props.items}
         />
         <AssessmentForm
           {...this.props.assessment}
-          updateAssessment={() => this.updateAssessment()}
+          updateAssessment={newFields => this.updateAssessment(newFields)}
           updateItemOrder={itemIds => this.updateItemOrder(itemIds)}
           items={this.props.items}
           updateItem={item => this.updateItem(item)}

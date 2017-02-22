@@ -22,6 +22,7 @@ function select(state) {
     currentBankId,
     banks: _.merge(state.assessments[currentBankId], banks),
     settings: state.settings,
+    currentBank: state.assessments[currentBankId],
   };
 }
 
@@ -33,16 +34,19 @@ export class BankNavigator extends React.Component {
     ]).isRequired,
     settings: React.PropTypes.shape({
       editableBankId: React.PropTypes.string,
-      publishedBankId: React.PropTypes.string
+      publishedBankId: React.PropTypes.string,
+      baseEmbedUrl       : React.PropTypes.string,
     }),
     path               : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
     updatePath         : React.PropTypes.func.isRequired,
     getBanks           : React.PropTypes.func.isRequired,
     getAssessments     : React.PropTypes.func.isRequired,
+    getAssessmentOffered     : React.PropTypes.func.isRequired,
     getItems           : React.PropTypes.func.isRequired,
     createAssessment   : React.PropTypes.func.isRequired,
     deleteAssessment   : React.PropTypes.func.isRequired,
     currentBankId      : React.PropTypes.string,
+    currentBank        : React.PropTypes.shape({}),
   };
 
   constructor() {
@@ -85,7 +89,6 @@ export class BankNavigator extends React.Component {
     if (sortPublished) {
       sortedBanks = _.orderBy(sortedBanks, bank => _.find(bank.assignedBankIds, { id: 'the publishedBankId' }), sortPublished);
     }
-
     return sortedBanks;
   }
 
@@ -93,19 +96,30 @@ export class BankNavigator extends React.Component {
     this.props.deleteAssessment(bankId, assessmentId);
   }
 
+  getEmbedCode(assessId, bankId) {
+    const assessment = this.props.currentBank[assessId];
+    const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
+    if (_.isEmpty(assessOffered)) {
+      this.props.getAssessmentOffered(bankId, assessId);
+    }
+  }
+
   render() {
+    const { createAssessment, currentBankId, updatePath, settings } = this.props;
     return (
       <div>
         <Heading
           view="banks"
           path={this.props.path}
-          createAssessment={this.props.createAssessment}
-          currentBankId={this.props.currentBankId}
-          updatePath={this.props.updatePath}
+          createAssessment={createAssessment}
+          currentBankId={currentBankId}
+          updatePath={updatePath}
         />
         <BankList
+          baseEmbedUrl={settings.baseEmbedUrl}
           banks={this.sortBanks()}
-          publishedBankId={this.props.settings.publishedBankId}
+          getEmbedCode={(assessId, bankId) => { this.getEmbedCode(assessId, bankId); }}
+          publishedBankId={settings.publishedBankId}
           getBankChildren={bank => this.getBankChildren(bank)}
           sortBy={type => this.sortBy(type)}
           sortName={this.state.sortName}

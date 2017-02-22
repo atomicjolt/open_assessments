@@ -172,3 +172,21 @@
   max-height: 90rem;
   overflow: auto;
 }
+
+.c-input--purple{
+  @include flex(1);
+
+  .c-text-input{
+    color: $white;
+    border-top: transparent;
+    background: $purple2;
+    // height: 3rem;
+    border-radius: $radius;
+    width: 100%;
+    padding: 0 1rem;
+
+    &:focus{
+      outline: thin dotted;
+    }
+  }
+}
