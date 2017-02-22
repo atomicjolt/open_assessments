@@ -62,6 +62,14 @@ export default function banks(state = initialState, action) {
       return newState;
     }
 
+    case 'UPDATE_SINGLE_ITEM_OR_PAGE_DONE': {
+      debugger
+      const newState = _.cloneDeep(state);
+      // const bankId = action.original.bankId;
+      // delete newState[bankId][action.original.assessmentId];
+      return newState;
+    }
+
     default:
       return state;
   }

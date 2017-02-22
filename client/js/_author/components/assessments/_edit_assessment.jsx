@@ -27,7 +27,6 @@ function select(state, props) {
     assessment: bank && transformAssessment(bank[id]),
     items: _.compact(_.at(state.items[bankId], assessmentItemIds)),
     settings: state.settings,
-    currentAssessment: (bank && bank[id]) || {},
     params: { // override react router because we want the escaped ids
       bankId,
       id,
@@ -45,9 +44,6 @@ export class EditAssessment extends React.Component {
       id: React.PropTypes.string,
       bankId: React.PropTypes.string,
       items: React.PropTypes.arrayOf(React.PropTypes.shape),
-    }),
-    currentAssessment: React.PropTypes.shape({
-      assignedBankIds: React.PropTypes.array,
     }),
     settings: React.PropTypes.shape({
       editableBankId: React.PropTypes.string,
@@ -69,7 +65,7 @@ export class EditAssessment extends React.Component {
   };
 
   componentDidMount() {
-    this.props.getAssessments(this.props.params.bankId);
+    // this.props.getAssessments(this.props.params.bankId);
     this.props.getAssessmentItems(
       this.props.params.bankId,
       this.props.params.id
@@ -126,10 +122,17 @@ export class EditAssessment extends React.Component {
     }
   }
 
+  updateSingleItemOrPage(setSinglePage) {
+    const { assessmentOffered } = this.props.assessment;
+    const genusTypeId = setSinglePage ? this.props.settings.single_page : this.props.settings.one_item_per_page;
+    this.props.updateSingleItemOrPage(assessmentOffered[0], genusTypeId);
+  }
+
   render() {
     const { bankId } = this.props.params;
-    const { currentAssessment, settings } = this.props;
-    const isPublished =  _.includes(currentAssessment.assignedBankIds, settings.publishedBankId);
+    const { assessment, settings } = this.props;
+    const isPublished =  _.includes(assessment.assignedBankIds, settings.publishedBankId);
+    const publishedAndOffered = isPublished && !_.isUndefined(assessment.assessmentOffered);
 
     return (
       <div>
@@ -140,6 +143,8 @@ export class EditAssessment extends React.Component {
           items={this.props.items}
         />
         <AssessmentForm
+          publishedAndOffered={publishedAndOffered}
+          updateSingleItemOrPage={setSinglePage => this.updateSingleItemOrPage(setSinglePage)}
           {...this.props.assessment}
           updateAssessment={newFields => this.updateAssessment(newFields)}
           updateItemOrder={itemIds => this.updateItemOrder(itemIds)}
