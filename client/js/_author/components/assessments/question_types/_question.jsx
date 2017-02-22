@@ -9,10 +9,12 @@ import genusTypes       from '../../../../constants/genus_types.js';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
 import ShortAnswer      from './short_answer';
+
 export default class Question extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
       genusTypeId: React.PropTypes.string,
+      bankId: React.PropTypes.string,
     }).isRequired,
     isActive: React.PropTypes.bool,
     itemIndex: React.PropTypes.number,
@@ -98,7 +100,7 @@ export default class Question extends React.Component {
 
   render() {
     const { item } = this.props;
-    const { displayName, genusTypeId, id, description } = item;
+    const { displayName, genusTypeId, id, description, bankId } = item;
     const className = this.getClassName();
     return (
       <div
@@ -135,6 +137,7 @@ export default class Question extends React.Component {
             text={description.text}
             updateItem={newProps => this.updateItem(newProps)}
             uploadImage={this.props.uploadImage}
+            bankId={bankId}
           />
           {this.content()}
         </div>

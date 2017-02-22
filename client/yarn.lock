@@ -2440,6 +2440,10 @@ draft-js@^0.10.0:
     immutable "~3.7.4"
     object-assign "^4.1.0"
 
+draftjs-to-html@^0.6.3:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/draftjs-to-html/-/draftjs-to-html-0.6.3.tgz#80c7ade1517d17b1c65417811f1d16a751fe1a70"
+
 draftjs-utils@^0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/draftjs-utils/-/draftjs-utils-0.6.3.tgz#8c53e01bc28a9d3f622f4fcbf0c34cc472fe481a"
@@ -3836,6 +3840,10 @@ html-minifier@^3.3.1:
     param-case "2.1.x"
     relateurl "0.2.x"
     uglify-js "2.7.x"
+
+html-to-draftjs@^0.1.0-beta6:
+  version "0.1.0-beta6"
+  resolved "https://registry.yarnpkg.com/html-to-draftjs/-/html-to-draftjs-0.1.0-beta6.tgz#621ad5d6997bd55685061297ab46e11a5b553743"
 
 html-truncate@^1.2.1:
   version "1.2.1"
