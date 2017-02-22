@@ -150,7 +150,7 @@ const qbank = {
 
   [AssessmentConstants.GET_ASSESSMENT_ITEMS]: {
     method : Network.GET,
-    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items`,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items?wronganswers`,
   },
 
   [AssessmentConstants.EDIT_OR_PUBLISH_ASSESSMENT]: {
@@ -189,7 +189,6 @@ const qbank = {
   },
 
   [ItemConstants.UPDATE_ITEM]: (store, action) => {
-    console.log('Updating...', action.body);
     const item = store.getState().items[action.bankId][action.itemId];
     const updatedItem = action.body;
     const choices = [];
@@ -208,13 +207,14 @@ const qbank = {
           text: choice.text,
           order: choice.order,
         });
-        answers.push({
+        const newAnswer = {
           id: choice.answerId,
           genusTypeId: choice.correct ? genusTypes.answer.rightAnswer : genusTypes.answer.wrongAnswer,
           feedback: choice.feedback,
           type: answerType(item.genusTypeId),
           choiceIds: [choice.id],
-        });
+        };
+        answers.push(newAnswer);
       });
 
       if (!_.isEmpty(answers)) {

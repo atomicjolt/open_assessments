@@ -16,6 +16,8 @@ function updateChoiceData(item) {
     return newItem;
   }
 
+  console.log(item.answers.length);
+
   const newChoices = {};
   _.forEach(item.question.choices, (choice, index) => {
     newChoices[choice.id] = { order: index, ...choice, correct: false };
@@ -23,15 +25,14 @@ function updateChoiceData(item) {
       if (_.includes(answer.choiceIds, choice.id)) {
         newChoices[choice.id] = {
           answer,
+          ...newChoices[choice.id],
           correct: answer.genusTypeId === genusTypes.answer.rightAnswer,
           answerId: answer.id,
-          ...newChoices[choice.id],
         };
       }
     });
   });
   newItem.question.choices = newChoices;
-  console.log('newChoices', newChoices);
   return newItem;
 }
 
@@ -88,7 +89,6 @@ export default function banks(state = initialState, action) {
       if (choice.correct) {
         _.forEach(newState[bankId][itemId].question.choices, (incorrectChoice) => {
           if (incorrectChoice.id !== choiceId) {
-            console.log('Incorrect choice: ', incorrectChoice.text);
             incorrectChoice.correct = false;
           }
         });
