@@ -48,7 +48,8 @@ export default {
     },
     audioUpload: {
       record: "दर्ज करें",
-      stop: "रुकिए"
+      stop: "रुकिए",
+      recordTime: "Recording time"
     },
     fileUpload: {
       chooseFile: "अपलोड करने के लिए एक फाइल चुनें"
