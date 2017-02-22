@@ -16,8 +16,6 @@ function updateChoiceData(item) {
     return newItem;
   }
 
-  console.log(item.answers.length);
-
   const newChoices = {};
   _.forEach(item.question.choices, (choice, index) => {
     newChoices[choice.id] = { order: index, ...choice, correct: false };
