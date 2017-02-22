@@ -6,7 +6,6 @@ import AssessmentForm         from './assessment_form';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
-import * as AssetActions      from '../../../actions/qbank/assets';
 
 function transformAssessment(assessment) {
   if (!assessment) return {};
@@ -67,7 +66,6 @@ export class EditAssessment extends React.Component {
     updateChoice: React.PropTypes.func.isRequired,
     updateAnswer: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func,
-    uploadImage: React.PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -151,7 +149,6 @@ export class EditAssessment extends React.Component {
           updateChoice={(itemId, choice) => this.props.updateChoice(bankId, itemId, choice)}
           updateAnswer={(itemId, answer) => this.props.updateAnswer(bankId, itemId, answer)}
           deleteAssessmentItem={itemId => this.deleteAssessmentItem(itemId)}
-          uploadImage={(file, resolve) => this.props.uploadImage(file, resolve, bankId)}
         />
       </div>
     );
@@ -162,5 +159,4 @@ export default connect(select, {
   ...BankActions,
   ...AssessmentActions,
   ...ItemActions,
-  ...AssetActions,
 })(EditAssessment);

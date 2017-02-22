@@ -21,7 +21,6 @@ export default function AssessmentItems(props) {
           updateAnswer={props.updateAnswer}
           deleteAssessmentItem={props.deleteAssessmentItem}
           moveItem={props.moveItem}
-          uploadImage={props.uploadImage}
         />
       ))}
     </div>
