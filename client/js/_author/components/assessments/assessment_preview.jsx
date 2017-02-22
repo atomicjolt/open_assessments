@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import { transformAssessment } from '../../selectors/assessment';
+import PreviewContainer from './preview_container';
 
 function select(state, props) {
   return {
@@ -37,15 +38,17 @@ export class AssessmentPreview extends React.Component {
   }
 
   render() {
-    if (this.hasAssessmentOffered()) {
-      const bankId = this.props.assessment.bankId;
-      const assessmentId = this.props.assessment.id;
-      const baseEmbedUrl = this.props.settings.baseEmbedUrl;
-      const embedUrlCode = `${baseEmbedUrl}${bankId}&assessment_offered_id=${assessmentId}#/assessment`;
-
-      return <iframe src={embedUrlCode} />;
-    }
-    return null;
+    // if (!this.props.assessment) return null;
+    return <PreviewContainer />;
+    // if (this.hasAssessmentOffered()) {
+    //   const bankId = this.props.assessment.bankId;
+    //   const assessmentId = this.props.assessment.id;
+    //   const baseEmbedUrl = this.props.settings.baseEmbedUrl;
+    //   const embedUrlCode = `${baseEmbedUrl}${bankId}&assessment_offered_id=${assessmentId}#/assessment`;
+    //
+    //   return <iframe src={embedUrlCode} />;
+    // }
+    // return null;
   }
 }
 
