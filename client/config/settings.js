@@ -54,8 +54,7 @@ module.exports = {
 
   cssEntries: {
     player_styles : `${clientAppPath}styles/player_styles.js`,
-    author_styles : `${clientAppPath}styles/author_styles.js`,
-    editor_styles : `${clientAppPath}styles/editor_styles.js`
+    author_styles : `${clientAppPath}styles/author_styles.js`
   }
 
 };
