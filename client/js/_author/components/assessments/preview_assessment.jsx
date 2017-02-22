@@ -13,31 +13,15 @@ function select(state, props) {
   };
 }
 
-export class AssessmentPreview extends React.Component {
+export class PreviewAssessment extends React.Component {
   static propTypes = {
     assessment: React.PropTypes.object,
     getAssessmentOffered: React.PropTypes.func,
     settings: React.PropTypes.object
   }
 
-  componentWillMount() {
-    if (!this.hasAssessmentOffered() && this.props.assessment) {
-      this.getEmbedCode(this.props.assessment);
-    }
-  }
-
-  getEmbedCode(assessment) {
-    const assessOffered = _.get(assessment, 'assessmentOffered[0]', '');
-    if (_.isEmpty(assessOffered)) {
-      this.props.getAssessmentOffered(assessment.bankId, assessment.id);
-    }
-  }
-
-  hasAssessmentOffered() {
-    return !_.isUndefined(_.get(this.props, 'assessment.assessmentOffered'));
-  }
-
   render() {
+    // return <div> Howdy </div>;
     // if (!this.props.assessment) return null;
     return <PreviewContainer />;
     // if (this.hasAssessmentOffered()) {
@@ -54,4 +38,4 @@ export class AssessmentPreview extends React.Component {
 
 export default connect(select, {
   ...AssessmentActions,
-})(AssessmentPreview);
+})(PreviewAssessment);
