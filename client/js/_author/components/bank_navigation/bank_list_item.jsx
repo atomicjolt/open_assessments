@@ -89,12 +89,12 @@ export default function bankListItem(props) {
           <button className="c-btn c-btn--square c-btn--table">
             <i className="material-icons">remove_red_eye</i>
           </button>
-          <button
+          {!isPublished ? <button
             className="c-btn c-btn--square c-btn--table"
             onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
           >
             <i className="material-icons">delete</i>
-          </button>
+          </button> : null}
         </div>
       </td>
     </tr>
