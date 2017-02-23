@@ -60,8 +60,8 @@ export default class AssessmentForm extends React.Component {
       return (
         <div className="o-item__top">
           <div className="c-checkbox u-right">
-            <input type="checkbox" id="check01" name="check" onChange={e => this.props.updateSingleItemOrPage(e.target.checked)} />
-            <label htmlFor="check01">Single page assessment</label>
+            <input type="checkbox" id="assessmentFormCheck01" name="check" onChange={e => this.props.updateSingleItemOrPage(e.target.checked)} />
+            <label htmlFor="assessmentFormCheck01">Single page assessment</label>
           </div>
         </div>
       );
