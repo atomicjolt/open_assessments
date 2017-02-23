@@ -204,7 +204,6 @@ const qbank = {
       description: updatedItem.description || item.description.text,
     };
 
-
     if (updatedItem.question) {
       _.forEach(updatedItem.question.choices, (choice) => {
         choices.push({
