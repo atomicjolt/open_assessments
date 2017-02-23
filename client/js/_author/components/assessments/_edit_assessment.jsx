@@ -65,7 +65,6 @@ export class EditAssessment extends React.Component {
   };
 
   componentDidMount() {
-    // this.props.getAssessments(this.props.params.bankId);
     this.props.getAssessmentItems(
       this.props.params.bankId,
       this.props.params.id
