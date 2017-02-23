@@ -18,27 +18,29 @@ export default class MultipleChoice extends React.Component {
   };
 
   markedForDeletion(choice) {
-    const { question } = this.props.item;
-    const deleteChoice = _.find(question.choices, { id: choice.id });
-    deleteChoice.delete = true;
-    return question.choices;
+    const newChoices = _.cloneDeep(this.props.item.question.choices);
+    newChoices[choice.id].delete = true;
+    return newChoices;
   }
 
   deleteChoice(choice) {
-    this.props.updateItem({
-      question: {
-        choices: this.markedForDeletion(choice)
-      }
-    });
+    if (confirm('Are you sure you want to delete this option?')) {
+      this.props.updateItem({
+        question: {
+          choices: this.markedForDeletion(choice)
+        }
+      });
+    }
   }
 
-  moveChoice(choice, index, up) {
+  moveChoice(choice, up) {
     const newChoices = _.cloneDeep(this.props.item.question.choices);
-    const newIndex = up ? index - 1 : index + 1;
+    const oldPosition = choice.order;
+    const newPosition = up ? oldPosition - 1 : oldPosition + 1;
+    const swapChoice = _.find(newChoices, { order: newPosition });
 
-    const earlierItem = newChoices[newIndex];
-    newChoices[newIndex] = choice;
-    newChoices[index] = earlierItem;
+    newChoices[choice.id].order = newPosition;
+    newChoices[swapChoice.id].order = oldPosition;
 
     this.props.updateItem({
       question: {
@@ -52,13 +54,14 @@ export default class MultipleChoice extends React.Component {
     return (
       <div className="c-question__answers c-question__answers--maintain">
         {
-          _.map(question.choices, choice => (
+          _.map(_.orderBy(question.choices, 'order'), choice => (
             <Option
               key={`assessmentChoice_${choice.id}`}
               {...choice}
               updateChoice={newChoice => this.props.updateChoice(id, choice.id, newChoice)}
               updateItem={() => this.props.updateItem({ question })}
               deleteChoice={() => this.deleteChoice(choice)}
+              shuffle={question.shuffle}
               moveUp={() => this.moveChoice(choice, true)}
               moveDown={() => this.moveChoice(choice)}
               first={choice.order === 0}

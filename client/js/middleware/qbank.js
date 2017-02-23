@@ -201,11 +201,12 @@ const qbank = {
 
 
     if (updatedItem.question) {
-      _.forEach(item.question.choices, (choice) => {
+      _.forEach(updatedItem.question.choices, (choice) => {
         choices.push({
           id: choice.id,
           text: choice.text,
           order: choice.order,
+          delete: choice.delete,
         });
         const newAnswer = {
           id: choice.answerId,
@@ -220,10 +221,18 @@ const qbank = {
       if (!_.isEmpty(answers)) {
         newItem.answers = answers;
       }
-      if (!_.isEmpty(choices) || item.questionString) {
+      if (!_.isEmpty(choices)
+        || updatedItem.questionString
+        || updatedItem.question.maintainOrder
+        || updatedItem.question.maintainOrder === false) {
         newItem.question = {};
-        if (item.questionString) { newItem.question.questionString = item.questionString; }
+        if (updatedItem.questionString) {
+          newItem.question.questionString = updatedItem.questionString;
+        }
         if (!_.isEmpty(choices)) { newItem.question.choices = choices; }
+        if (updatedItem.question.maintainOrder || updatedItem.question.maintainOrder === false) {
+          newItem.question.shuffle = !updatedItem.question.maintainOrder;
+        }
       }
     }
 
