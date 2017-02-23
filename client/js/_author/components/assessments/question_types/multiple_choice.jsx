@@ -32,13 +32,14 @@ export default class MultipleChoice extends React.Component {
     });
   }
 
-  moveChoice(choice, index, up) {
+  moveChoice(choice, up) {
     const newChoices = _.cloneDeep(this.props.item.question.choices);
-    const newIndex = up ? index - 1 : index + 1;
+    const oldPosition = choice.order;
+    const newPosition = up ? oldPosition - 1 : oldPosition + 1;
+    const swapChoice = _.find(newChoices, { order: newPosition });
 
-    const earlierItem = newChoices[newIndex];
-    newChoices[newIndex] = choice;
-    newChoices[index] = earlierItem;
+    newChoices[choice.id].order = newPosition;
+    newChoices[swapChoice.id].order = oldPosition;
 
     this.props.updateItem({
       question: {
@@ -59,6 +60,7 @@ export default class MultipleChoice extends React.Component {
               updateChoice={newChoice => this.props.updateChoice(id, choice.id, newChoice)}
               updateItem={() => this.props.updateItem({ question })}
               deleteChoice={() => this.deleteChoice(choice)}
+              shuffle={question.shuffle}
               moveUp={() => this.moveChoice(choice, true)}
               moveDown={() => this.moveChoice(choice)}
               first={choice.order === 0}

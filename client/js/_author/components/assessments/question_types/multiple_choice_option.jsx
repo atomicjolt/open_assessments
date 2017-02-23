@@ -34,7 +34,7 @@ export default function multipleChoiceOptions(props) {
 
         <div className="c-answer__icons">
           {
-            props.first ? <div className="c-answer__icons__spacer" /> : <button
+            props.first || props.shuffle ? <div className="c-answer__icons__spacer" /> : <button
               className="c-answer__icons__spacer"
               tabIndex="0"
               onClick={props.moveUp}
@@ -43,7 +43,7 @@ export default function multipleChoiceOptions(props) {
             </button>
           }
           {
-            props.last ? <div className="c-answer__icons__spacer" /> : <button
+            props.last || props.shuffle ? <div className="c-answer__icons__spacer" /> : <button
               className="c-answer__icons__spacer"
               tabIndex="0"
               onClick={props.moveDown}
