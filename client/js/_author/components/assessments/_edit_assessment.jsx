@@ -22,7 +22,6 @@ function select(state, props) {
   const id = encodeURIComponent(props.params.id);
   const bank = state.assessments[bankId];
   const assessmentItemIds = state.assessmentItems[id];
-
   return {
     assessment: bank && transformAssessment(bank[id]),
     items: _.compact(_.at(state.items[bankId], assessmentItemIds)),
@@ -43,6 +42,7 @@ export class EditAssessment extends React.Component {
     assessment: React.PropTypes.shape({
       id: React.PropTypes.string,
       bankId: React.PropTypes.string,
+      assessmentOffered: React.PropTypes.arrayOf(React.PropTypes.shape),
       items: React.PropTypes.arrayOf(React.PropTypes.shape),
     }),
     settings: React.PropTypes.shape({
@@ -54,6 +54,7 @@ export class EditAssessment extends React.Component {
     createAssessmentOffered: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
+    updateSingleItemOrPage: React.PropTypes.func.isRequired,
     updateAssessmentItems: React.PropTypes.func.isRequired,
     getAssessmentItems: React.PropTypes.func.isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
@@ -65,6 +66,7 @@ export class EditAssessment extends React.Component {
   };
 
   componentDidMount() {
+    this.props.getAssessments(this.props.params.bankId);
     this.props.getAssessmentItems(
       this.props.params.bankId,
       this.props.params.id
@@ -132,7 +134,7 @@ export class EditAssessment extends React.Component {
   render() {
     const { bankId } = this.props.params;
     const { assessment, settings } = this.props;
-    const isPublished =  _.includes(assessment.assignedBankIds, settings.publishedBankId);
+    const isPublished =  assessment ? _.includes(assessment.assignedBankIds, settings.publishedBankId) : false;
     const publishedAndOffered = isPublished && !_.isUndefined(assessment.assessmentOffered);
 
     return (
