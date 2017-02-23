@@ -29,8 +29,8 @@ export default function EditableItem(props) {
           <label htmlFor={`language_${props.itemIndex}`}className="c-dropdown c-dropdown--small u-ml-sm">
             <select name="" id={`language_${props.itemIndex}`}>
               <option value="">English</option>
-              <option value="">French</option>
-              <option value="">Spanish</option>
+              <option value="">Hindi</option>
+              <option value="">Telugu</option>
             </select>
           </label>
         </div>
