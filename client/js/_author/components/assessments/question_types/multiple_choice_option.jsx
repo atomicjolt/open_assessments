@@ -92,4 +92,5 @@ multipleChoiceOptions.propTypes = {
   first: React.PropTypes.bool,
   last: React.PropTypes.bool,
   correct: React.PropTypes.bool,
+  shuffle: React.PropTypes.bool,
 };

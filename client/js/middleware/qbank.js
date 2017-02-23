@@ -201,11 +201,12 @@ const qbank = {
 
 
     if (updatedItem.question) {
-      _.forEach(item.question.choices, (choice) => {
+      _.forEach(updatedItem.question.choices, (choice) => {
         choices.push({
           id: choice.id,
           text: choice.text,
           order: choice.order,
+          delete: choice.delete,
         });
         const newAnswer = {
           id: choice.answerId,

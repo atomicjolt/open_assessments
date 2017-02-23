@@ -18,18 +18,19 @@ export default class MultipleChoice extends React.Component {
   };
 
   markedForDeletion(choice) {
-    const { question } = this.props.item;
-    const deleteChoice = _.find(question.choices, { id: choice.id });
-    deleteChoice.delete = true;
-    return question.choices;
+    const newChoices = _.cloneDeep(this.props.item.question.choices);
+    newChoices[choice.id].delete = true;
+    return newChoices;
   }
 
   deleteChoice(choice) {
-    this.props.updateItem({
-      question: {
-        choices: this.markedForDeletion(choice)
-      }
-    });
+    if (confirm('Are you sure you want to delete this option?')) {
+      this.props.updateItem({
+        question: {
+          choices: this.markedForDeletion(choice)
+        }
+      });
+    }
   }
 
   moveChoice(choice, up) {
