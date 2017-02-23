@@ -168,6 +168,11 @@ const qbank = {
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}`,
   },
 
+  [AssessmentConstants.UPDATE_SINGLE_ITEM_OR_PAGE]: {
+    method : Network.PUT,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessmentsoffered/${action.assessmentsOfferedId}`,
+  },
+
   [AssessmentConstants.UPDATE_ASSESSMENT_ITEMS]: {
     method : Network.PUT,
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items`,
