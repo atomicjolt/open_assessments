@@ -24,7 +24,7 @@ export default function AssessmentsView(props) {
     <div className="c-header-bottom">
       <div className="c-header-bottom__left">
         <button
-          onClick={() => hashHistory.goBack()}
+          onClick={() => hashHistory.push('/')}
           className="c-btn c-btn--sm c-btn--outline c-btn--back"
         >
           <i className="material-icons">keyboard_arrow_left</i>
