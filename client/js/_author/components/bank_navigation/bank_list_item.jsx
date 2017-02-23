@@ -1,7 +1,8 @@
-import React      from 'react';
-import _          from 'lodash';
-import appHistory from '../../history';
-import Icon       from './bank_icon';
+import React            from 'react';
+import _                from 'lodash';
+import CopyToClipboard  from 'react-copy-to-clipboard';
+import appHistory       from '../../history';
+import Icon             from './bank_icon';
 
 // TODO: think about breaking this into smaller components
 export default function bankListItem(props) {
@@ -36,21 +37,30 @@ export default function bankListItem(props) {
     props.getEmbedCode(currentBank.id, currentBank.bankId);
   }
 
+
   function embedButtonOrUrl() {
     if (isPublished) {
       if (assessOffered) {
         const embedUrlCode = `${baseEmbedUrl}${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}#/assessment`;
+
         return (
-          <label className="c-input--purple" htmlFor="embedInput">
-            <input
-              id="embedInput"
-              onClick={e => e.stopPropagation()}
-              className="c-text-input c-text-input--smaller"
-              readOnly
-              type="text"
-              value={`<iframe src="${embedUrlCode}"/>`}
-            />
-          </label>
+          <div className="c-embed-contain">
+            <label className="c-input--purple" htmlFor="embedInput">
+              <input
+                id="embedInput"
+                onClick={e => e.stopPropagation()}
+                className="c-text-input c-text-input--smaller"
+                readOnly
+                type="text"
+                value={`<iframe src="${embedUrlCode}"/>`}
+              />
+            </label>
+            <CopyToClipboard text={`<iframe src="${embedUrlCode}"/>`}>
+              <button className="c-btn c-btn--square c-btn--embed " onClick={e => e.stopPropagation()}>
+                <i className="material-icons">content_paste</i>
+              </button>
+            </CopyToClipboard>
+          </div>
         );
       }
 

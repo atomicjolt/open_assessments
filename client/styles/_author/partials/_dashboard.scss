@@ -178,15 +178,51 @@
 
   .c-text-input{
     color: $white;
-    border-top: transparent;
-    background: $purple2;
+    border: 0.2rem solid $purple2;
+    border-right: none;
+    background: $purple;
     // height: 3rem;
-    border-radius: $radius;
+    border-radius: $radius 0 0 $radius;
     width: 100%;
     padding: 0 1rem;
 
     &:focus{
-      outline: thin dotted;
+      border-style: dotted;
+    }
+  }
+}
+
+.c-embed-contain{
+  width: 100%;
+  @include flex(1);
+  @include display-flex;
+  @include align-items(center);
+}
+
+.c-btn--embed{
+  border-radius: 0 $radius $radius 0;
+  border: 0.2rem solid $purple2;
+  background-color: $purple2;
+  color: $white;
+  @include transition(all 0.1s ease);
+  display: block;
+  position: relative;
+
+  i{
+    position: absolute;
+    @include center(horizontal);
+    top: 0.3rem;
+    width: 3rem;
+    height: 3rem;
+    color: $white;
+    @include transition(color 0.1s ease);
+  }
+
+  &:hover{
+    background-color: $white;
+
+    i{
+      color: $purple;
     }
   }
 }
