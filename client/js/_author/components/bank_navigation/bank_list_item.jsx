@@ -1,8 +1,8 @@
-import React      from 'react';
-import _          from 'lodash';
+import React            from 'react';
+import _                from 'lodash';
 import CopyToClipboard  from 'react-copy-to-clipboard';
-import appHistory from '../../history';
-import Icon       from './bank_icon';
+import appHistory       from '../../history';
+import Icon             from './bank_icon';
 
 // TODO: think about breaking this into smaller components
 export default function bankListItem(props) {
