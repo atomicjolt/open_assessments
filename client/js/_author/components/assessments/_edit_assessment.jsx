@@ -86,11 +86,13 @@ export class EditAssessment extends React.Component {
   }
 
   deleteAssessmentItem(itemId) {
-    this.props.deleteAssessmentItem(
-      this.props.params.bankId,
-      this.props.params.id,
-      itemId,
-    );
+    if (confirm('Are you sure you want to delete this item?')) {
+      this.props.deleteAssessmentItem(
+        this.props.params.bankId,
+        this.props.params.id,
+        itemId,
+      );
+    }
   }
 
   createItem(newItem) {
