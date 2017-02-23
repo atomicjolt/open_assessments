@@ -81,11 +81,13 @@ export class EditAssessment extends React.Component {
   }
 
   deleteAssessmentItem(itemId) {
-    this.props.deleteAssessmentItem(
-      this.props.params.bankId,
-      this.props.params.id,
-      itemId,
-    );
+    if (confirm('Are you sure you want to delete this item?')) {
+      this.props.deleteAssessmentItem(
+        this.props.params.bankId,
+        this.props.params.id,
+        itemId,
+      );
+    }
   }
 
   createItem(newItem) {
@@ -150,8 +152,9 @@ export class EditAssessment extends React.Component {
           items={this.props.items}
           updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}
-          updateChoice={(itemId, choice) => this.props.updateChoice(bankId, itemId, choice)}
-          updateAnswer={(itemId, answer) => this.props.updateAnswer(bankId, itemId, answer)}
+          updateChoice={
+            (itemId, choiceId, choice) => this.props.updateChoice(bankId, itemId, choiceId, choice)
+          }
           deleteAssessmentItem={itemId => this.deleteAssessmentItem(itemId)}
         />
       </div>

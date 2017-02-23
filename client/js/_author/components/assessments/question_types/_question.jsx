@@ -8,6 +8,7 @@ import Feedback         from './question_common/feedback';
 import genusTypes       from '../../../../constants/genus_types.js';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
+import ShortAnswer      from './short_answer';
 
 export default class Question extends React.Component {
   static propTypes = {
@@ -21,7 +22,6 @@ export default class Question extends React.Component {
     reorderActive: React.PropTypes.bool,
     updateItem: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
-    updateAnswer: React.PropTypes.func.isRequired,
     activateItem: React.PropTypes.func.isRequired,
     toggleReorder: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
@@ -59,12 +59,14 @@ export default class Question extends React.Component {
   content() {
     switch (this.props.item.genusTypeId) {
       case genusTypes.item.multipleChoice:
-        return <MultipleChoice
-          {...this.props}
-          updateItem={newProps => this.updateItem(newProps)}
-          updateChoice={this.props.updateChoice}
-          updateAnswer={this.props.updateAnswer}
-        />;
+        return (
+          <MultipleChoice
+            {...this.props}
+            updateItem={newProps => this.updateItem(newProps)}
+            updateChoice={this.props.updateChoice}
+            isActive={this.props.isActive}
+          />
+        );
       case genusTypes.item.audioUpload:
         return (
           <AudioUpload
@@ -80,6 +82,14 @@ export default class Question extends React.Component {
           />
         );
 
+      case genusTypes.item.shortAnswer:
+        return (
+          <ShortAnswer
+            updateItem={newProps => this.updateItem(newProps)}
+            item={this.props.item}
+          />
+        );
+
       default:
         return null;
     }
@@ -87,7 +97,7 @@ export default class Question extends React.Component {
 
   render() {
     const { item } = this.props;
-    const { displayName, genusTypeId, id, description } = item;
+    const { displayName, genusTypeId, id, description, question } = item;
     const className = this.getClassName();
     return (
       <div
@@ -114,7 +124,7 @@ export default class Question extends React.Component {
           updateItem={newProps => this.updateItem(newProps)}
           defaultName={displayName.text}
           language={displayName.languageTypeId}
-          maintainOrder={false}
+          maintainOrder={!question.shuffle}
           multipleAnswer={false}
           reflection={false}
         />
