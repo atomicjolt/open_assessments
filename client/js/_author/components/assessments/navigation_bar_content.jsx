@@ -2,12 +2,14 @@ import React            from 'react';
 import _                from 'lodash';
 import { hashHistory }  from 'react-router';
 import Icon             from '../bank_navigation/bank_icon';
+import appHistory       from '../../history';
 
 export default class NavigationBarContent extends React.Component {
   static propTypes = {
     editOrPublishAssessment: React.PropTypes.func.isRequired,
     isPublished: React.PropTypes.bool.isRequired,
     items: React.PropTypes.array.isRequired,
+    assessment: React.PropTypes.object.isRequired,
   };
 
   publishButton() {
@@ -25,6 +27,11 @@ export default class NavigationBarContent extends React.Component {
     return null;
   }
 
+  handlePreviewClick() {
+    const bankId = this.props.assessment.bankId;
+    const assessmentId = this.props.assessment.id;
+    appHistory.push(`banks/${bankId}/assessments/${assessmentId}/preview`);
+  }
 
   render() {
     return (
