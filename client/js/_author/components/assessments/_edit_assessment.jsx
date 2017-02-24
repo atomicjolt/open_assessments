@@ -136,7 +136,6 @@ export class EditAssessment extends React.Component {
     const { assessment, settings } = this.props;
     const isPublished =  assessment ? _.includes(assessment.assignedBankIds, settings.publishedBankId) : false;
     const publishedAndOffered = isPublished && !_.isUndefined(assessment.assessmentOffered);
-
     return (
       <div>
         <Heading
