@@ -9,8 +9,38 @@ import { Constants as BankConstants }       from '../actions/qbank/banks';
 import { Constants as AssessmentConstants } from '../actions/qbank/assessments';
 import { Constants as ItemConstants }       from '../actions/qbank/items';
 import genusTypes                           from '../constants/genus_types';
+import serialize                            from './serializers/qbank/serializer_factory';
 
-// TODO: extract out the https://qbank-clix-dev.mit.edu bit
+function removeNullAttributes(item) {
+  const cleanedItem = _.cloneDeep(item);
+  // TODO: clean item
+  // remove null
+  // remove if empty object
+  return cleanedItem;
+}
+
+
+function serializeItem(originalItem, newAttributes) {
+  // the method to our madness here is provide every available field,
+  // update what we want, then remove the null ones
+  let newItem = {
+    id: originalItem.id,
+    genusTypeId: genusTypes.item[newAttributes.type],
+    name: newAttributes.name,
+    question: null,
+    answers: null,
+  };
+
+  if (newAttributes.question) {
+    newItem.question = serializeQuestion(originalItem.question, newAttributes.question);
+    newItem.answers = serializeAnswers(originalItem.question, newAttributes.question);
+  }
+
+  newItem = removeNullAttributes(newItem);
+
+  return newItem;
+}
+
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
 
@@ -195,14 +225,17 @@ const qbank = {
 
   [ItemConstants.UPDATE_ITEM]: (store, action) => {
     const item = store.getState().items[action.bankId][action.itemId];
-    const updatedItem = action.body;
+    const updatedAttributes = action.body;
+
+    const newItem = serialize(updatedAttributes.type || item.type)(item, updatedAttributes);
+
     const choices = [];
     const answers = [];
 
-    const newItem = {
-      name: updatedItem.name || item.displayName.text,
-      description: updatedItem.description || item.description.text,
-    };
+    // const newItem = {
+    //   name: updatedItem.name || item.displayName.text,
+    //   description: updatedItem.description || item.description.text,
+    // };
 
     if (updatedItem.question) {
       _.forEach(updatedItem.question.choices, (choice) => {

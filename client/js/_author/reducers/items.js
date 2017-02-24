@@ -1,14 +1,48 @@
-import _          from 'lodash';
-import guid       from '../../utils/guid';
-import genusTypes from '../../constants/genus_types';
+import _                from 'lodash';
+import guid             from '../../utils/guid';
+import { getQbankType } from '../../constants/genus_types';
 
 // Leave this empty. It will hold assessments by bank id. IE `state[someId] = {a_bank}`
 const initialState = {};
 
+// This takes what we get from the backend and makes it how we want to use it
+function deserializeItem(item) {
+  // The implementation of function is Q-Bank specific
 
-function updateChoiceData(item) {
-  const newItem = _.cloneDeep(item);
+  // If there is any extra data you need from Qbank Items, add it here
+  const newItem = {
+    id: getQbankType(),
+    type: getQbankType(),
+    bankId: '',
+    assessmentId: '',
+    name: '',
+    question: {
+      id: '',
+      type: getQbankType(),
+      text: '',
+      multipleAnswer: false,
+      shuffle: false,
+      fileIds: [],
+      choices: deserializeChoices()
+    },
+  };
+  debugger;
+  // Do some cool things here
+  return newItem;
+}
 
+
+function deserializeChoices(item) {
+  const newChoice = {
+    id: '',
+    answerId: '',
+    text: '',
+    order: 0,
+    feedback: '',
+    fileIds: [],
+    isCorrect: false,
+  };
+  // TODO: Everything below this line
   if (!newItem.question) {
     newItem.question = {
       choices: {},
@@ -49,7 +83,7 @@ export default function banks(state = initialState, action) {
       }
 
       _.each(action.payload, (item) => {
-        newState[bankId][item.id] = updateChoiceData(item);
+        newState[bankId][item.id] = deserializeItem(item);
       });
 
       return newState;
@@ -63,7 +97,7 @@ export default function banks(state = initialState, action) {
         newState[bankId] = {};
       }
 
-      newState[bankId][action.payload.id] = updateChoiceData(action.payload);
+      newState[bankId][action.payload.id] = deserializeItem(action.payload);
 
       return newState;
     }

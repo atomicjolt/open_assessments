@@ -25,7 +25,7 @@ export default function questionSettings(props) {
             id=""
             tabIndex="0"
             value={props.language}
-            onChange={e => props.updateState('nameLanguage', e.target.value)}
+            onChange={e => console.log('nameLanguage', e.target.value)}
             onBlur={props.updateItem}
           >
             <option value="639-2%3AENG%40ISO">English</option>
@@ -43,7 +43,7 @@ export default function questionSettings(props) {
             name="check"
             tabIndex="0"
             onChange={e => props.updateItem({ question: { maintainOrder: e.target.checked } })}
-            checked={props.maintainOrder ? 'checked' : null}
+            checked={props.maintainOrder}
           />
           <label htmlFor={`check02_${props.id}`}>Maintain choice order</label>
         </div>
@@ -64,7 +64,7 @@ export default function questionSettings(props) {
             id={`check04_${props.id}`}
             name="check"
             tabIndex="0"
-            onChange={() => props.updateItem({ reflection: !props.reflection })}
+            onChange={e => props.updateItem({ reflection: e.target.checked })}
             checked={props.reflection ? 'checked' : null}
           />
           <label htmlFor={`check04_${props.id}`}>Reflection</label>
