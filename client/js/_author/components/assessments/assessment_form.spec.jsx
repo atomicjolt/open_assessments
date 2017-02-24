@@ -45,21 +45,12 @@ describe('AssessmentForm component', () => {
     expect(assessmentForm).toBeDefined();
   });
 
-  it('renders AssessmentItems', () => {
-    result.state.addingAssessment = true;
-    const assessmentItems = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'c-question'
-    );
-    expect(assessmentItems).toBeDefined();
-  });
-
-  it('renders two labels', () => {
+  it('renders one labels', () => {
     const labels = TestUtils.scryRenderedDOMComponentsWithClass(
       result,
       'test_label',
     );
-    expect(labels.length).toBe(2);
+    expect(labels.length).toBe(1);
   });
 
   it('creates a new item', () => {

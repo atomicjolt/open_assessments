@@ -21,6 +21,9 @@ describe('assessment items component', () => {
         },
         genusTypeId: '3',
         index: 1,
+        question: {
+          shuffle: true,
+        },
       }],
       updateChoice: () => {},
       updateAnswer: () => {},

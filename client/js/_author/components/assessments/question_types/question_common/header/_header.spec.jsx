@@ -11,7 +11,7 @@ describe('header component', () => {
   beforeEach(() => {
     props = {
       reorderActive: false,
-      type: 'Question',
+      type: 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
       index: 7,
     };
     result = TestUtils.renderIntoDocument(<Stub><Header {...props} /></Stub>);
@@ -24,14 +24,14 @@ describe('header component', () => {
 
   it('displays the correct default question type', () => {
     const questionType = TestUtils.findRenderedDOMComponentWithClass(result, 'c-question__type');
-    expect(questionType.textContent).toContain('Question');
+    expect(questionType.textContent).toContain('multipleChoice');
   });
 
   it('displays Multiple Choice when specific value is present', () => {
     props.type = 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU';
     result = TestUtils.renderIntoDocument(<Stub><Header {...props} /></Stub>);
     const questionType = TestUtils.findRenderedDOMComponentWithClass(result, 'c-question__type');
-    expect(questionType.textContent).toContain('Multiple Choice');
+    expect(questionType.textContent).toContain('multipleChoice');
   });
 
   it('renders DefaultHeader when props.reorderActive is false', () => {

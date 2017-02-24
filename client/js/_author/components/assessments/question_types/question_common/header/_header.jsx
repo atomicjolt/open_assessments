@@ -18,7 +18,7 @@ export default function QuestionHeader(props) {
     <div className="o-item__top">
       <div className="o-left">
         <h3 className="c-question__number">Question {props.index + 1}</h3>
-        <div className="c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; {type()}</div>
+        <div className="c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; {type}</div>
       </div>
       { currentHeader }
     </div>
