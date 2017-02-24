@@ -29,8 +29,8 @@ export default function questionSettings(props) {
             onBlur={props.updateItem}
           >
             <option value="639-2%3AENG%40ISO">English</option>
-            <option value="">French</option>
-            <option value="">Spanish</option>
+            <option value="639-2%3AFRA%40ISO">French</option>
+            <option value="639-2%3ASPA%40ISO">Spanish</option>
           </select>
         </div>
       </div>

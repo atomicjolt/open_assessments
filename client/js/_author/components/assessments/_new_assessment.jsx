@@ -17,6 +17,7 @@ export class NewAssessment extends React.Component {
     editableBankId: React.PropTypes.string.isRequired,
     createAssessment: React.PropTypes.func.isRequired,
     publishAssessment: React.PropTypes.func.isRequired,
+    createAssessmentWithItem: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
