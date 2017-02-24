@@ -2,7 +2,6 @@ import React    from 'react';
 import genusTypes from '../../../../../constants/genus_types';
 
 export default function questionSettings(props) {
-
   function checkboxOptions() {
     return (props.genusTypeId === genusTypes.item.multipleChoice ?
       <div className="o-right">
