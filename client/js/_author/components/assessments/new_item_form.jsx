@@ -82,8 +82,8 @@ export default class newItemForm extends React.Component {
                   >
                     <option value="english">Select a language</option>
                     <option value="english">English</option>
-                    <option value="french">French</option>
-                    <option value="spanish">Spanish</option>
+                    <option value="hindi">Hindi</option>
+                    <option value="telugu">Telugu</option>
                   </select>
                 </div>
               </div>
