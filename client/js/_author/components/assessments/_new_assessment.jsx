@@ -17,6 +17,7 @@ export class NewAssessment extends React.Component {
     editableBankId: React.PropTypes.string.isRequired,
     createAssessment: React.PropTypes.func.isRequired,
     publishAssessment: React.PropTypes.func.isRequired,
+    createAssessmentWithItem: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -29,7 +30,7 @@ export class NewAssessment extends React.Component {
   }
 
   createAssessment(assessment) {
-    // This redirects to the edit view in the middleware after the api call
+    // This redirects to the _edit_assessment.jsx view in the middleware after the api call
     // comes back with an id.
     this.props.createAssessment(
       this.props.params.id,
@@ -42,7 +43,7 @@ export class NewAssessment extends React.Component {
       this.props.params.id,
       this.state.assessment,
       newItem,
-    )
+    );
   }
 
   render() {
