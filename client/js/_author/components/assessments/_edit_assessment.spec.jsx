@@ -80,6 +80,7 @@ describe('_edit_assessment component', () => {
   });
 
   xit('performs the editOrPublishAssessment & deleteAssignedAssessment functions', () => {
+    // removed until a better delete confirm is in place
     expect(handleFunction).toBeFalsy();
     expect(handleDeleteFunction).toBeFalsy();
     result.editOrPublishAssessment(true);
@@ -108,6 +109,7 @@ describe('_edit_assessment component', () => {
   });
 
   xit('runs deleteAssessmentItem', () => {
+    // removed until a better delete confirm is in place
     expect(handleFunction).toBeFalsy();
     result.deleteAssessmentItem();
     expect(handleFunction).toBeTruthy();
