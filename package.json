@@ -1,11 +1,10 @@
 {
   "name": "OpenAssessments",
   "version": "1.0.0",
-  "description": "QTI player for assessments.",
+  "description": "QTI client and authoring tool written in React.js",
   "engines": {
     "node": "7.4.0"
   },
-  "description": "QTI client and authoring tool written in React.js",
   "author": "atomicjolt",
   "license": "MIT",
   "homepage": "https://github.com/atomicjolt/open_assessments",
@@ -31,6 +30,5 @@
   "dependencies": {
     "del": "^2.2.2"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }

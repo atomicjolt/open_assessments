@@ -1,21 +1,17 @@
 import React            from 'react';
+import _                from 'lodash';
 import DefaultHeader    from './default';
 import ReorderHeader    from './reorder';
+import GenusTypes       from '../../../../../../constants/genus_types';
 
 export default function QuestionHeader(props) {
-  const type = () => {
-    switch (props.type) {
-      case 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU':
-        return 'Multiple Choice';
-      default:
-        return 'Question';
-    }
-  };
+  const type = _.findKey(GenusTypes.item, genusType => genusType === props.type) || 'Unknown';
+  const typeName = _.words(_.upperFirst(type)).join(' ');
 
-  let currentHeader = <DefaultHeader {...props} type={type()} />;
+  let currentHeader = <DefaultHeader {...props} />;
 
   if (props.reorderActive) {
-    currentHeader =  <ReorderHeader {...props} type={type()} />;
+    currentHeader =  <ReorderHeader {...props} />;
   }
 
   return (

@@ -19,6 +19,7 @@ const requests = [
   'DELETE_ASSESSMENT_ITEM',
   'EDIT_OR_PUBLISH_ASSESSMENT',
   'DELETE_ASSIGNED_ASSESSMENT',
+  'UPDATE_SINGLE_ITEM_OR_PAGE',
 ];
 
 export const Constants = wrapper(actions, requests);
@@ -84,6 +85,7 @@ export function createAssessmentOffered(bankId, assessmentId) {
   return {
     bankId,
     assessmentId,
+    body    : { dummyId: '123' }, // have to send up garbage data to make it work.
     apiCall : true,
     type    : Constants.CREATE_ASSESSMENT_OFFERED,
   };
@@ -143,5 +145,15 @@ export function editOrPublishAssessment(assessment, editOrPublishId) {
     apiCall      : true,
     type         : Constants.EDIT_OR_PUBLISH_ASSESSMENT,
     body         : { assignedBankIds: [editOrPublishId] }
+  };
+}
+
+export function updateSingleItemOrPage(assessmentOffered, genusTypeId) {
+  return {
+    bankId: assessmentOffered.bankId,
+    assessmentsOfferedId: assessmentOffered.id,
+    apiCall      : true,
+    type         : Constants.UPDATE_SINGLE_ITEM_OR_PAGE,
+    body         : { genusTypeId }
   };
 }

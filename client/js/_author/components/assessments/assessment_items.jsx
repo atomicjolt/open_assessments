@@ -18,7 +18,6 @@ export default function AssessmentItems(props) {
           toggleReorder={props.toggleReorder}
           updateItem={props.updateItem}
           updateChoice={props.updateChoice}
-          updateAnswer={props.updateAnswer}
           deleteAssessmentItem={props.deleteAssessmentItem}
           moveItem={props.moveItem}
         />

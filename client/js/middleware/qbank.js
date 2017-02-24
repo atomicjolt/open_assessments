@@ -1,5 +1,6 @@
 import _                                    from 'lodash';
 import Network                              from '../constants/network';
+import request                              from './middleware_request';
 import server                               from './server';
 import api                                  from '../libs/api';
 import authorAppHistory                     from '../_author/history';
@@ -7,6 +8,7 @@ import { DONE }                             from '../constants/wrapper';
 import { Constants as BankConstants }       from '../actions/qbank/banks';
 import { Constants as AssessmentConstants } from '../actions/qbank/assessments';
 import { Constants as ItemConstants }       from '../actions/qbank/items';
+import genusTypes                           from '../constants/genus_types';
 
 // TODO: extract out the https://qbank-clix-dev.mit.edu bit
 function getAssessmentsOffered(state, bankId, assessmentId) {
@@ -111,6 +113,20 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
   });
 }
 
+function answerType(itemType) {
+  switch (itemType) {
+    case genusTypes.item.multipleChoice:
+      return genusTypes.answer.multipleChoice;
+
+    case genusTypes.item.fileUpload:
+    case genusTypes.item.audioUpload:
+      return genusTypes.answer.file;
+
+    default:
+      return null;
+  }
+}
+
 const qbank = {
   [BankConstants.GET_BANKS_HIERARCHY]: {
     method : Network.GET,
@@ -134,7 +150,7 @@ const qbank = {
 
   [AssessmentConstants.GET_ASSESSMENT_ITEMS]: {
     method : Network.GET,
-    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items`,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items?wronganswers`,
   },
 
   [AssessmentConstants.EDIT_OR_PUBLISH_ASSESSMENT]: {
@@ -150,6 +166,11 @@ const qbank = {
   [AssessmentConstants.UPDATE_ASSESSMENT]: {
     method : Network.PUT,
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments/${action.body.id}`,
+  },
+
+  [AssessmentConstants.UPDATE_SINGLE_ITEM_OR_PAGE]: {
+    method : Network.PUT,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessmentsoffered/${action.assessmentsOfferedId}`,
   },
 
   [AssessmentConstants.UPDATE_ASSESSMENT_ITEMS]: {
@@ -172,9 +193,61 @@ const qbank = {
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items`,
   },
 
-  [ItemConstants.UPDATE_ITEM]: {
-    method : Network.PUT,
-    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items/${action.itemId}`,
+  [ItemConstants.UPDATE_ITEM]: (store, action) => {
+    const item = store.getState().items[action.bankId][action.itemId];
+    const updatedItem = action.body;
+    const choices = [];
+    const answers = [];
+
+    const newItem = {
+      name: updatedItem.name || item.displayName.text,
+      description: updatedItem.description || item.description.text,
+    };
+
+    if (updatedItem.question) {
+      _.forEach(updatedItem.question.choices, (choice) => {
+        choices.push({
+          id: choice.id,
+          text: choice.text,
+          order: choice.order,
+          delete: choice.delete,
+        });
+        const newAnswer = {
+          id: choice.answerId,
+          genusTypeId: choice.correct ? genusTypes.answer.rightAnswer : genusTypes.answer.wrongAnswer,
+          feedback: choice.feedback,
+          type: answerType(item.genusTypeId),
+          choiceIds: [choice.id],
+        };
+        answers.push(newAnswer);
+      });
+
+      if (!_.isEmpty(answers)) {
+        newItem.answers = answers;
+      }
+      if (!_.isEmpty(choices)
+        || updatedItem.questionString
+        || updatedItem.question.maintainOrder
+        || updatedItem.question.maintainOrder === false) {
+        newItem.question = {};
+        if (updatedItem.questionString) {
+          newItem.question.questionString = updatedItem.questionString;
+        }
+        if (!_.isEmpty(choices)) { newItem.question.choices = choices; }
+        if (updatedItem.question.maintainOrder || updatedItem.question.maintainOrder === false) {
+          newItem.question.shuffle = !updatedItem.question.maintainOrder;
+        }
+      }
+    }
+
+    request(
+      store,
+      action,
+      Network.PUT,
+      `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items/${action.itemId}`,
+      action.params,
+      newItem
+    );
   },
 
   [AssessmentConstants.CREATE_ITEM_IN_ASSESSMENT]: (store, action) => {

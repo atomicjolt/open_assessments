@@ -1,14 +1,17 @@
-import React      from 'react';
-import _          from 'lodash';
-import appHistory from '../../history';
-import Icon       from './bank_icon';
+import React            from 'react';
+import _                from 'lodash';
+import CopyToClipboard  from 'react-copy-to-clipboard';
+import appHistory       from '../../history';
+import Icon             from './bank_icon';
 
 // TODO: think about breaking this into smaller components
 export default function bankListItem(props) {
-  const { bank, publishedBankId } = props;
+  const { bank, publishedBankId, baseEmbedUrl } = props;
 
   const isPublished = _.includes(bank.assignedBankIds, publishedBankId);
+  const published = isPublished ? 'is-published' : '';
   const isAssessment = bank.type === 'Assessment';
+  const assessOffered = bank.assessmentOffered ? bank.assessmentOffered[0] : undefined;
   const buttonContainer = {
     display: isAssessment ? '' : 'none',
   };
@@ -23,7 +26,54 @@ export default function bankListItem(props) {
 
   function deleteAssessment(e, bankId, assessmentId) {
     e.stopPropagation();
-    props.deleteAssessment(bankId, assessmentId);
+    // make a confirmation dialog.
+    if (confirm('Delete this assessment?')) {
+      props.deleteAssessment(bankId, assessmentId);
+    }
+  }
+
+  function getEmbedCode(e, currentBank) {
+    e.stopPropagation();
+    props.getEmbedCode(currentBank.id, currentBank.bankId);
+  }
+
+
+  function embedButtonOrUrl() {
+    if (isPublished) {
+      if (assessOffered) {
+        const embedUrlCode = `${baseEmbedUrl}${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}#/assessment`;
+
+        return (
+          <div className="c-embed-contain">
+            <label className="c-input--purple" htmlFor="embedInput">
+              <input
+                id="embedInput"
+                onClick={e => e.stopPropagation()}
+                className="c-text-input c-text-input--smaller"
+                readOnly
+                type="text"
+                value={`<iframe src="${embedUrlCode}"/>`}
+              />
+            </label>
+            <CopyToClipboard text={`<iframe src="${embedUrlCode}"/>`}>
+              <button className="c-btn c-btn--square c-btn--embed " onClick={e => e.stopPropagation()}>
+                <i className="material-icons">content_paste</i>
+              </button>
+            </CopyToClipboard>
+          </div>
+        );
+      }
+
+      return (
+        <button
+          className="c-btn c-btn--sm c-btn--table"
+          onClick={e => getEmbedCode(e, bank)}
+        >
+          embed code
+        </button>
+      );
+    }
+    return null;
   }
 
   return (
@@ -36,27 +86,25 @@ export default function bankListItem(props) {
       <td><Icon type={bank.type} /></td>
       <td>{bank.displayName ? bank.displayName.text : null}</td>
       <td>
-        <button className="c-btn c-btn--square c-publish" style={buttonContainer}>
+        <button className={`c-btn c-btn--square c-publish ${published}`} style={buttonContainer}>
           <Icon type={isPublished ? 'Published' : 'Publish'} />
         </button>
       </td>
       <td>
         <div className="c-table__icons" style={buttonContainer}>
-          <button className="c-btn c-btn--sm c-btn--table">
-            embed code
-          </button>
+          {embedButtonOrUrl()}
           <button className="c-btn c-btn--square c-btn--table">
             <i className="material-icons">edit</i>
           </button>
           <button className="c-btn c-btn--square c-btn--table">
             <i className="material-icons">remove_red_eye</i>
           </button>
-          <button
+          {!isPublished ? <button
             className="c-btn c-btn--square c-btn--table"
             onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
           >
             <i className="material-icons">delete</i>
-          </button>
+          </button> : null}
         </div>
       </td>
     </tr>
@@ -68,4 +116,6 @@ bankListItem.propTypes = {
     displayName : React.PropTypes.shape({}),
   }).isRequired,
   publishedBankId: React.PropTypes.string.isRequired,
+  baseEmbedUrl: React.PropTypes.string.isRequired,
+  getEmbedCode: React.PropTypes.func.isRequired,
 };
