@@ -43,10 +43,6 @@ export default class AssessmentForm extends React.Component {
     }
   }
 
-  toggleReorder() {
-    this.setState({ reorderActive: true });
-  }
-
   moveItem(oldIndex, newIndex) {
     const itemIds = _.map(this.props.items, 'id');
     const temp = itemIds[newIndex];
@@ -86,7 +82,7 @@ export default class AssessmentForm extends React.Component {
         <div className="o-item">
           {this.showSinglePageOption()}
           <div className="c-assessment-title">
-            <label htmlFor="title_field" className="c-input">
+            <label htmlFor="title_field" className="c-input test_label">
               <div className="c-input__contain">
                 <input
                   key={name}
