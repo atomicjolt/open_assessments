@@ -116,7 +116,9 @@ const qbank = {
     method : Network.GET,
     url    : () => 'https://4h8n6sg95j.execute-api.us-east-1.amazonaws.com/dev/proxy',
   },
-
+  [AssessmentConstants.GET_ASSESSMENT_PREVIEW]: {
+    // debugger;
+  },
   [AssessmentConstants.GET_ASSESSMENTS]: {
     method : Network.GET,
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/assessments?isolated`,

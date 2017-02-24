@@ -19,9 +19,19 @@ const requests = [
   'DELETE_ASSESSMENT_ITEM',
   'EDIT_OR_PUBLISH_ASSESSMENT',
   'DELETE_ASSIGNED_ASSESSMENT',
+  'GET_ASSESSMENT_PREVIEW',
 ];
 
 export const Constants = wrapper(actions, requests);
+
+export function getAssessmentPreview(bankId, assessmentId) {
+  return {
+    bankId,
+    assessmentId,
+    apiCall : true,
+    type    : Constants.GET_ASSESSMENT_PREVIEW,
+  };
+}
 
 export function getAssessments(bankId) {
   return {
