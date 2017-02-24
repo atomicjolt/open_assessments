@@ -3,7 +3,7 @@ import React from 'react';
 import TestUtils from 'react-addons-test-utils';
 import AssessmentForm from './assessment_form';
 
-fdescribe('AssessmentForm component', () => {
+describe('AssessmentForm component', () => {
   let props;
   let result;
   let createItem;
