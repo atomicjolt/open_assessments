@@ -178,6 +178,11 @@ const qbank = {
     url    : action => `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${action.bankId}/items/${action.itemId}`,
   },
 
+  [AssetConstants.UPLOAD_IMAGE]: {
+    method : Network.POST,
+    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/repository/repositories/${action.bankId}/assets`,
+  },
+
   [AssessmentConstants.CREATE_ITEM_IN_ASSESSMENT]: (store, action) => {
     createItemInAssessment(
       store,
@@ -264,32 +269,6 @@ const qbank = {
         type     : action.type + DONE,
         original : action,
       }));
-    });
-  },
-
-  [AssetConstants.UPLOAD_IMAGE]: (store, action) => {
-    const state = store.getState();
-
-    const formData = new FormData();
-    formData.append('inputFile', action.file);
-    formData.append('returnUrl', true);
-
-    api.post(
-      `repository/repositories/${action.bankId}/assets`,
-      state.settings.api_url,
-      state.jwt,
-      state.settings.csrf_token,
-      null,
-      formData,
-    ).then((res) => {
-      const result = res.body;
-      const link = _.replace(
-        result.assetContents[0].url,
-        '/api/v1',
-        state.settings.api_url
-      );
-
-      action.resolve({ data: { link } });
     });
   }
 };
