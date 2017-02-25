@@ -1,11 +1,18 @@
+import _              from 'lodash';
 import baseSerializer from './base_serializer';
+import { scrub }      from '../serializer_utils';
+import genusTypes     from '../../../constants/genus_types';
 
-export default function multipleChoiceSerializer(originalQuestion, newQuestionAttributes) {
-  const newItem = baseSerializer(originalQuestion, newQuestionAttributes);
-
-
-  // TODO: add additional stuff for this question type
-
+function serializeChoices(originalChoices, newChoiceAttributes) {
+  return _.map(originalChoices, (choice) => {
+    const updateValues = newChoiceAttributes[choice.id];
+    return {
+      id: choice.id,
+      text: updateValues.text || choice.text,
+      order: updateValues.order || choice.order,
+      delete: updateValues.delete,
+    };
+  });
 }
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
@@ -20,18 +27,44 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
     choices: null,
   };
 
-  if (originalQuestion.choices) {
-    newQuestion.choices = [];
-    _.forEach(originalQuestion.choices, (choice) => {
-      //  TODO: make choices
-    });
+  if (newQuestionAttributes.choices) {
+    newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
   }
 
   return newQuestion;
 }
 
-function serializeAnswers(originalQuestion, newQuestionAttributes) {
-  const newAnswers = [];
-  // TODO: that stuff I have below, but better
-  return newAnswers;
+function correctAnswer(wasCorrect, isCorrect) {
+  if (_.isUndefined(isCorrect)) {
+    return wasCorrect ? genusTypes.answer.rightAnswer : genusTypes.answer.wrongAnswer;
+  }
+  return isCorrect ? genusTypes.answer.rightAnswer : genusTypes.answer.wrongAnswer;
+}
+
+function serializeAnswers(originalChoices, newChoiceAttributes) {
+  return _.map(originalChoices, (choice) => {
+    const updateValues = newChoiceAttributes[choice.id];
+    return {
+      id: choice.answerId,
+      genusTypeId: correctAnswer(choice.correct, updateValues.correct),
+      feedback: updateValues.feedback || choice.feedback,
+      type: genusTypes.answer.multipleChoice,
+      choiceIds: [choice.id],
+    };
+  });
+}
+
+
+export default function multipleChoiceSerializer(originalItem, newItemAttributes) {
+  const newItem = baseSerializer(originalItem, newItemAttributes);
+
+  const { question } = newItemAttributes;
+  if (question) {
+    newItem.question = serializeQuestion(originalItem.question, question);
+    if (question.choices) {
+      newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
+    }
+  }
+
+  return scrub(newItem);
 }

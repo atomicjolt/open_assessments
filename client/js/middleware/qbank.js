@@ -11,36 +11,6 @@ import { Constants as ItemConstants }       from '../actions/qbank/items';
 import genusTypes                           from '../constants/genus_types';
 import serialize                            from './serializers/qbank/serializer_factory';
 
-function removeNullAttributes(item) {
-  const cleanedItem = _.cloneDeep(item);
-  // TODO: clean item
-  // remove null
-  // remove if empty object
-  return cleanedItem;
-}
-
-
-function serializeItem(originalItem, newAttributes) {
-  // the method to our madness here is provide every available field,
-  // update what we want, then remove the null ones
-  let newItem = {
-    id: originalItem.id,
-    genusTypeId: genusTypes.item[newAttributes.type],
-    name: newAttributes.name,
-    question: null,
-    answers: null,
-  };
-
-  if (newAttributes.question) {
-    newItem.question = serializeQuestion(originalItem.question, newAttributes.question);
-    newItem.answers = serializeAnswers(originalItem.question, newAttributes.question);
-  }
-
-  newItem = removeNullAttributes(newItem);
-
-  return newItem;
-}
-
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
 
@@ -143,20 +113,6 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
   });
 }
 
-function answerType(itemType) {
-  switch (itemType) {
-    case genusTypes.item.multipleChoice:
-      return genusTypes.answer.multipleChoice;
-
-    case genusTypes.item.fileUpload:
-    case genusTypes.item.audioUpload:
-      return genusTypes.answer.file;
-
-    default:
-      return null;
-  }
-}
-
 const qbank = {
   [BankConstants.GET_BANKS_HIERARCHY]: {
     method : Network.GET,
@@ -228,50 +184,6 @@ const qbank = {
     const updatedAttributes = action.body;
 
     const newItem = serialize(updatedAttributes.type || item.type)(item, updatedAttributes);
-
-    const choices = [];
-    const answers = [];
-
-    // const newItem = {
-    //   name: updatedItem.name || item.displayName.text,
-    //   description: updatedItem.description || item.description.text,
-    // };
-
-    if (updatedItem.question) {
-      _.forEach(updatedItem.question.choices, (choice) => {
-        choices.push({
-          id: choice.id,
-          text: choice.text,
-          order: choice.order,
-          delete: choice.delete,
-        });
-        const newAnswer = {
-          id: choice.answerId,
-          genusTypeId: choice.correct ? genusTypes.answer.rightAnswer : genusTypes.answer.wrongAnswer,
-          feedback: choice.feedback,
-          type: answerType(item.genusTypeId),
-          choiceIds: [choice.id],
-        };
-        answers.push(newAnswer);
-      });
-
-      if (!_.isEmpty(answers)) {
-        newItem.answers = answers;
-      }
-      if (!_.isEmpty(choices)
-        || updatedItem.questionString
-        || updatedItem.question.maintainOrder
-        || updatedItem.question.maintainOrder === false) {
-        newItem.question = {};
-        if (updatedItem.questionString) {
-          newItem.question.questionString = updatedItem.questionString;
-        }
-        if (!_.isEmpty(choices)) { newItem.question.choices = choices; }
-        if (updatedItem.question.maintainOrder || updatedItem.question.maintainOrder === false) {
-          newItem.question.shuffle = !updatedItem.question.maintainOrder;
-        }
-      }
-    }
 
     request(
       store,
