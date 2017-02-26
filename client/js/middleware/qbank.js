@@ -117,7 +117,15 @@ const qbank = {
     url    : () => 'https://4h8n6sg95j.execute-api.us-east-1.amazonaws.com/dev/proxy',
   },
   [AssessmentConstants.GET_ASSESSMENT_PREVIEW]: {
+    method: Network.GET,
+    url: (action) => {
+      debugger;
+      const bankId = encodeURIComponent(action.bankId);
+      const assessmentId = encodeURIComponent(action.assessmentId);
+      return `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${bankId}/assessments/${assessmentId}/items?qti`;
+    }
     // debugger;
+    // TODO redirect & make reques
   },
   [AssessmentConstants.GET_ASSESSMENTS]: {
     method : Network.GET,

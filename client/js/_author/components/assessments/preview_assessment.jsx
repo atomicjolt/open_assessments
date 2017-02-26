@@ -20,6 +20,13 @@ export class PreviewAssessment extends React.Component {
     settings: React.PropTypes.object
   }
 
+  componentDidMount() {
+    this.props.getAssessmentPreview (
+      this.props.params.bankId,
+      this.props.params.id,
+    );
+  }
+
   render() {
     // return <div> Howdy </div>;
     // if (!this.props.assessment) return null;
@@ -29,7 +36,6 @@ export class PreviewAssessment extends React.Component {
     //   const assessmentId = this.props.assessment.id;
     //   const baseEmbedUrl = this.props.settings.baseEmbedUrl;
     //   const embedUrlCode = `${baseEmbedUrl}${bankId}&assessment_offered_id=${assessmentId}#/assessment`;
-    //
     //   return <iframe src={embedUrlCode} />;
     // }
     // return null;
