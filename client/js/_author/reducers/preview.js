@@ -7,8 +7,7 @@ export default function preview(state = initialState, action) {
   switch (action.type) {
 
     case Assessment.Constants.GET_ASSESSMENT_PREVIEW + DONE: {
-      debugger;
-      return state;
+      return action.payload;
     }
 
     default:

@@ -10,14 +10,15 @@ function select(state, props) {
   return {
     assessment: transformAssessment(props.assessment),
     settings: state.settings,
+    previewItems: state.preview
   };
 }
 
 export class PreviewAssessment extends React.Component {
   static propTypes = {
-    assessment: React.PropTypes.object,
-    getAssessmentOffered: React.PropTypes.func,
-    settings: React.PropTypes.object
+    // assessment: React.PropTypes.object,
+    // getAssessmentOffered: React.PropTypes.func,
+    // settings: React.PropTypes.object
   }
 
   componentDidMount() {
@@ -30,7 +31,9 @@ export class PreviewAssessment extends React.Component {
   render() {
     // return <div> Howdy </div>;
     // if (!this.props.assessment) return null;
-    return <PreviewContainer />;
+    return (<PreviewContainer
+      previewItems={this.props.previewItems}
+    />);
     // if (this.hasAssessmentOffered()) {
     //   const bankId = this.props.assessment.bankId;
     //   const assessmentId = this.props.assessment.id;

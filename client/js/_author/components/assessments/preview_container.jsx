@@ -7,12 +7,21 @@ import * as selectors from '../../../_player/selectors/assessment';
 
 export default class PreviewContainer extends React.Component {
   static propTypes = {
-    assessment: React.PropTypes.object,
-    getAssessmentOffered: React.PropTypes.func,
-    settings: React.PropTypes.object
+    // assessment: React.PropTypes.object,
+    // getAssessmentOffered: React.PropTypes.func,
+    // settings: React.PropTypes.object
   }
 
   render() {
+
+
+    const questions = selectors.questions({
+      assessment: {
+        standard: "CLIx",
+        items: this.props.previewItems,
+      },
+    });
+    debugger;
 
     const question = {
       title:"Test Question Title",
