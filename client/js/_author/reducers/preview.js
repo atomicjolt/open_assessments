@@ -1,4 +1,4 @@
-import * as Assessment from '../../actions/qbank/assessment';
+import * as Assessment from '../../actions/qbank/assessments';
 import { DONE } from '../../constants/wrapper';
 // Leave this empty. It will hold banks by id. IE `state[someId] = {a_bank}`
 const initialState = [];
