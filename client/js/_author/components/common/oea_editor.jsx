@@ -23,7 +23,9 @@ export default class OeaEditor extends React.Component{
 
   render() {
     // active is handled here instead of in TinyWrapper, because tinyMCE does
-    // not handle rerendering very well.
+    // not handle rerendering very well. This may become unnecessary when
+    // Brandon finishes the styles.
+
     const active = this.state.focused ? "is-focused" : "";
 
     return (
