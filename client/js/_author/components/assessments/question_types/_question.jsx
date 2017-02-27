@@ -1,10 +1,8 @@
 import React            from 'react';
-import _                from 'lodash';
 import MultipleChoice   from './multiple_choice';
 import QuestionHeader   from './question_common/header/_header';
 import Settings         from './question_common/settings';
 import QuestionText     from './question_common/text';
-import Feedback         from './question_common/feedback';
 import genusTypes       from '../../../../constants/genus_types.js';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
@@ -13,7 +11,7 @@ import ShortAnswer      from './short_answer';
 export default class Question extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
-      genusTypeId: React.PropTypes.string,
+      type: React.PropTypes.string,
     }).isRequired,
     isActive: React.PropTypes.bool,
     itemIndex: React.PropTypes.number,
@@ -57,8 +55,8 @@ export default class Question extends React.Component {
   }
 
   content() {
-    switch (this.props.item.genusTypeId) {
-      case genusTypes.item.multipleChoice:
+    switch (this.props.item.type) {
+      case 'multipleChoice':
         return (
           <MultipleChoice
             {...this.props}
@@ -97,7 +95,7 @@ export default class Question extends React.Component {
 
   render() {
     const { item } = this.props;
-    const { name, genusTypeId, id, question } = item;
+    const { name, type, id, question } = item;
     const className = this.getClassName();
 
     return (
@@ -109,7 +107,7 @@ export default class Question extends React.Component {
       >
         <QuestionHeader
           name={name}
-          type={genusTypeId}
+          type={type}
           deleteAssessmentItem={this.props.deleteAssessmentItem}
           id={id}
           index={this.props.itemIndex}
@@ -128,7 +126,7 @@ export default class Question extends React.Component {
           maintainOrder={!question.shuffle}
           multipleAnswer={false}
           reflection={false}
-          genusTypeId={genusTypeId}
+          type={type}
         />
         <div className={`c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText

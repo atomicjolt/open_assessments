@@ -1,7 +1,8 @@
 import _    from 'lodash';
 
 export function scrub(item) {
-  const scrubbedItem = _.cloneDeep(item);
-  // TODO: kill nulls, undefined, and empty objects with extreme prejudice
+  let scrubbedItem = _.cloneDeep(item);
+  scrubbedItem = _.omitBy(scrubbedItem, _.isNil);
+  scrubbedItem = _.omitBy(scrubbedItem, _.isEmpty);
   return scrubbedItem;
 }

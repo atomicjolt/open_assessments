@@ -3,7 +3,7 @@ import genusTypes from '../../../../../constants/genus_types';
 
 export default function questionSettings(props) {
   function checkboxOptions() {
-    return (props.genusTypeId === genusTypes.item.multipleChoice ?
+    return (props.type === 'multipleChoice' ?
       <div className="o-right">
         <div className="c-checkbox u-ml-md">
           <input
@@ -83,7 +83,7 @@ export default function questionSettings(props) {
 questionSettings.propTypes = {
   id: React.PropTypes.string.isRequired,
   defaultName: React.PropTypes.string,
-  genusTypeId: React.PropTypes.string,
+  type: React.PropTypes.string,
   language: React.PropTypes.string.isRequired,
   updateItem: React.PropTypes.func.isRequired,
   maintainOrder: React.PropTypes.bool,

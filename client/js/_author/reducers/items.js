@@ -10,11 +10,11 @@ function deserializeChoices(choices, answers) {
 
   _.forEach(choices, (choice, index) => {
     newChoices[choice.id] = {
-      id: '',
-      answerId: '',
-      text: '',
+      id: choice.id,
+      answerId: null,
+      text: choice.text,
       order: index,
-      feedback: '',
+      feedback: null,
       fileIds: [],
       isCorrect: false,
     };
@@ -44,7 +44,7 @@ function deserializeItem(item) {
     question: {
       id: _.get(item, 'question.id'),
       type: getQbankType(_.get(item, 'question.genusTypeId')),
-      text: _.get(item, 'question.displayName.text'),
+      text: _.get(item, 'question.text.text'),
       multipleAnswer: _.get(item, 'question.multiAnswer'),
       shuffle: _.get(item, 'question.shuffle'),
       fileIds: {},

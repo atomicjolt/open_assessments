@@ -18,8 +18,8 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
     id: originalQuestion.id,
-    genusTypeId: newQuestionAttributes.type,
-    questionString: newQuestionAttributes.name,
+    // genusTypeId: genusTypes.default, // TODO: this probably has a real type
+    questionString: newQuestionAttributes.text,
     multiAnswer: newQuestionAttributes.multiAnswer,
     shuffle: newQuestionAttributes.shuffle,
     timeValue: newQuestionAttributes.timeValue,
@@ -31,7 +31,7 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
     newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
   }
 
-  return newQuestion;
+  return scrub(newQuestion);
 }
 
 function correctAnswer(wasCorrect, isCorrect) {
