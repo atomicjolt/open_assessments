@@ -8,9 +8,9 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
     const updateValues = newChoiceAttributes[choice.id];
     return {
       id: choice.id,
-      text: updateValues.text || choice.text,
-      order: updateValues.order || choice.order,
-      delete: updateValues.delete,
+      text: _.get(updateValues, 'text') || choice.text,
+      order: _.get(updateValues, 'order') || choice.order,
+      delete: _.get(updateValues, 'delete'),
     };
   });
 }
@@ -46,8 +46,8 @@ function serializeAnswers(originalChoices, newChoiceAttributes) {
     const updateValues = newChoiceAttributes[choice.id];
     return {
       id: choice.answerId,
-      genusTypeId: correctAnswer(choice.correct, updateValues.correct),
-      feedback: updateValues.feedback || choice.feedback,
+      genusTypeId: correctAnswer(choice.isCorrect, _.get(updateValues, 'isCorrect')),
+      feedback: _.get(updateValues, 'feedback') || choice.feedback,
       type: genusTypes.answer.multipleChoice,
       choiceIds: [choice.id],
     };

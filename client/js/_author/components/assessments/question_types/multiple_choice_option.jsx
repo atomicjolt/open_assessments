@@ -10,9 +10,8 @@ export default function multipleChoiceOptions(props) {
             id={`option_radio_${props.id}`}
             name="radio"
             tabIndex="0"
-            checked={props.correct}
-            onClick={e => props.updateChoice({ correct: e.target.checked })}
-            onBlur={props.updateItem}
+            checked={props.isCorrect}
+            onClick={e => props.updateChoice({ isCorrect: e.target.checked })}
           />
           <label htmlFor={`option_radio_${props.id}`} />
         </div>
@@ -21,9 +20,8 @@ export default function multipleChoiceOptions(props) {
         <div className="c-input__contain">
           <input
             className="c-text-input c-text-input--small c-wysiwyg"
-            value={props.text}
-            onChange={e => props.updateChoice({ text: e.target.value })}
-            onBlur={props.updateItem}
+            defaultValue={props.text}
+            onBlur={e => props.updateChoice({ text: e.target.value })}
             id="option1"
             type="text"
             placeholder="Option"
@@ -67,9 +65,8 @@ export default function multipleChoiceOptions(props) {
             <label htmlFor="feedback1">Feedback</label>
             <div className="c-input__contain">
               <input
-                value={props.feedback}
-                onChange={e => props.updateChoice({ feedback: e.target.value })}
-                onBlur={props.updateItem}
+                defaultValue={props.feedback}
+                onBlur={e => props.updateChoice({ feedback: e.target.value })}
                 className="c-text-input c-text-input--smaller c-wysiwyg"
                 id="feedback1"
                 type="text"
@@ -95,7 +92,7 @@ multipleChoiceOptions.propTypes = {
   moveDown: React.PropTypes.func.isRequired,
   first: React.PropTypes.bool,
   last: React.PropTypes.bool,
-  correct: React.PropTypes.bool,
+  isCorrect: React.PropTypes.bool,
   shuffle: React.PropTypes.bool,
   isActive: React.PropTypes.bool,
 };
