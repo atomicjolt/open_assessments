@@ -11,6 +11,7 @@ export default class questionText extends React.Component {
             text={this.props.text}
             onBlur={val => this.props.updateItem({ description: val })}
             bankId={this.props.bankId}
+            id={this.props.id}
           />
           <div className="c-input__bottom" />
         </div>
