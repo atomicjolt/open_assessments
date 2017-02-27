@@ -30,7 +30,7 @@ export default class NavigationBarContent extends React.Component {
   handlePreviewClick() {
     const bankId = this.props.assessment.bankId;
     const assessmentId = this.props.assessment.id;
-    appHistory.push(`banks/${bankId}/assessments/${assessmentId}/preview`);
+    hashHistory.push(`banks/${bankId}/assessments/${assessmentId}/preview`);
   }
 
   render() {
@@ -38,7 +38,7 @@ export default class NavigationBarContent extends React.Component {
       <div className="c-header-bottom">
         <div className="c-header-bottom__left">
           <button
-            onClick{() => hashHistory.push('/')}
+            onClick={() => hashHistory.push('/')}
             className="c-btn c-btn--sm c-btn--outline c-btn--back"
           >
             <i className="material-icons">keyboard_arrow_left</i>
