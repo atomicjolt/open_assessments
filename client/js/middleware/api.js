@@ -19,7 +19,7 @@ const API = store => next => (action) => {
         store,
         action,
         handler.method,
-        handler.url(state.settings ? state.settings.api_url : '', action),
+        handler.url(state.settings.api_url, action),
         handler.params ? handler.params(action) : action.params,
         handler.body ? handler.body(action) : action.body
       );
