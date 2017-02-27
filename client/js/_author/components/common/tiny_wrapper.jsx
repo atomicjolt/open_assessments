@@ -6,6 +6,7 @@ import guid from '../../../utils/guid';
 import 'tinymce';
 import 'tinymce/themes/modern/theme'
 import 'tinymce/plugins/autolink/plugin';
+import 'tinymce/plugins/paste/plugin';
 import 'tinymce/plugins/link/plugin';
 import 'tinymce/plugins/image/plugin';
 import 'tinymce/plugins/lists/plugin';
@@ -79,9 +80,10 @@ export class TinyWrapper extends React.Component {
           this.imageFilePicker.click();
         }
       },
-      plugins: 'autolink link image lists',
-      toolbar: 'undo redo | bold italic | alignleft aligncenter alignright image',
-      inline: true
+      plugins: 'autolink link image lists paste',
+      toolbar: 'undo redo | bold italic | alignleft aligncenter alignright image paste',
+      inline: true,
+      paste_data_images: true
     };
   }
 
