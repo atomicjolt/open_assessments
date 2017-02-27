@@ -23,7 +23,6 @@ export default class Question extends React.Component {
     reorderActive: React.PropTypes.bool,
     updateItem: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
-    updateAnswer: React.PropTypes.func.isRequired,
     activateItem: React.PropTypes.func.isRequired,
     toggleReorder: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
@@ -66,7 +65,7 @@ export default class Question extends React.Component {
             {...this.props}
             updateItem={newProps => this.updateItem(newProps)}
             updateChoice={this.props.updateChoice}
-            updateAnswer={this.props.updateAnswer}
+            isActive={this.props.isActive}
           />
         );
       case genusTypes.item.audioUpload:
@@ -99,7 +98,8 @@ export default class Question extends React.Component {
 
   render() {
     const { item } = this.props;
-    const { displayName, genusTypeId, id, description, bankId } = item;
+    const { displayName, genusTypeId, id, description, bankId, question } = item;
+
     const className = this.getClassName();
     return (
       <div
@@ -126,9 +126,10 @@ export default class Question extends React.Component {
           updateItem={newProps => this.updateItem(newProps)}
           defaultName={displayName.text}
           language={displayName.languageTypeId}
-          maintainOrder={false}
+          maintainOrder={!question.shuffle}
           multipleAnswer={false}
           reflection={false}
+          genusTypeId={genusTypeId}
         />
         <div className={`c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
