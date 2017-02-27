@@ -4,6 +4,15 @@ import _ from 'lodash';
 import Item from '../../../_player/components/assessments/item';
 import localizeStrings from '../../../_player/selectors/localize';
 import * as selectors from '../../../_player/selectors/assessment';
+import Parser from '../../../parsers/clix/parser';
+
+// function parsePreviewItem(item){
+//   return item;
+// }
+//
+// function parsePreview(items) {
+//   return items.map(parsePreviewItem);
+// }
 
 export default class PreviewContainer extends React.Component {
   static propTypes = {
@@ -14,14 +23,19 @@ export default class PreviewContainer extends React.Component {
 
   render() {
 
-
-    const questions = selectors.questions({
-      assessment: {
-        standard: "CLIx",
-        items: this.props.previewItems,
-      },
-    });
-    debugger;
+    if(this.props.previewItems.length > 0){
+      // const questions = selectors.questions({
+      //   assessment: {
+      //     standard: "CLIx",
+      //     items: this.props.previewItems,
+      //   },
+      // });
+      const assessment = Parser.parse("fakeid", {data: this.props.previewItems});
+      debugger;
+      const questions = selectors.questions({assessment});
+      debugger;
+    }
+    // parsePreview(this.props.previewItems);
 
     const question = {
       title:"Test Question Title",
