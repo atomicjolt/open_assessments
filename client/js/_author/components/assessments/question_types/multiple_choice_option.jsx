@@ -1,5 +1,4 @@
 import React      from 'react';
-import Editor     from '../../common/oea_editor';
 
 export default function multipleChoiceOptions(props) {
   return (
