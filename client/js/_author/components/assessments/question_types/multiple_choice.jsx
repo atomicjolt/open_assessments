@@ -15,6 +15,7 @@ export default class MultipleChoice extends React.Component {
     }).isRequired,
     updateItem: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
+    isActive: React.PropTypes.bool,
   };
 
   markedForDeletion(choice) {
@@ -66,12 +67,13 @@ export default class MultipleChoice extends React.Component {
               moveDown={() => this.moveChoice(choice)}
               first={choice.order === 0}
               last={question ? choice.order === _.size(question.choices) - 1 : true}
+              isActive={this.props.isActive}
             />
           ))
         }
-        <Add
-          updateChoice={() => this.props.updateChoice(id)}
-        />
+        {
+          this.props.isActive ? <Add updateChoice={() => this.props.updateChoice(id)} /> : null
+        }
         <Feedback />
       </div>
     );

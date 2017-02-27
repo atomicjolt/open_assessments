@@ -11,8 +11,10 @@ export default class AssessmentForm extends React.Component {
     ),
     updateAssessment: React.PropTypes.func.isRequired,
     updateItemOrder: React.PropTypes.func.isRequired,
+    publishedAndOffered: React.PropTypes.bool.isRequired,
     createItem: React.PropTypes.func,
     updateItem: React.PropTypes.func.isRequired,
+    updateSingleItemOrPage: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func,
   };
@@ -41,10 +43,6 @@ export default class AssessmentForm extends React.Component {
     }
   }
 
-  toggleReorder() {
-    this.setState({ reorderActive: true });
-  }
-
   moveItem(oldIndex, newIndex) {
     const itemIds = _.map(this.props.items, 'id');
     const temp = itemIds[newIndex];
@@ -53,20 +51,38 @@ export default class AssessmentForm extends React.Component {
     this.props.updateItemOrder(itemIds);
   }
 
+  showSinglePageOption() {
+    if (this.props.publishedAndOffered) {
+      return (
+        <div className="o-item__top">
+          <div className="c-checkbox u-right">
+            <input type="checkbox" id="assessmentFormCheck01" name="check" onChange={e => this.props.updateSingleItemOrPage(e.target.checked)} />
+            <label htmlFor="assessmentFormCheck01">Single page assessment</label>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  }
+
+  newItem(name) {
+    return (
+      name ? <NewItem
+        cancel={() => this.setState({ addingAssessment: false })}
+        create={newItem => this.createItem(newItem)}
+      /> : null
+    );
+  }
+
   render() {
     const reorderActive = this.state.reorderActive;
     const name = _.get(this, 'props.displayName.text', '');
     return (
       <div className="o-contain">
         <div className="o-item">
-          <div className="o-item__top">
-            <div className="c-checkbox u-right">
-              <input type="checkbox" id="check01" name="check" />
-              <label htmlFor="check01">Single page assessment</label>
-            </div>
-          </div>
+          {this.showSinglePageOption()}
           <div className="c-assessment-title">
-            <label htmlFor="title_field" className="c-input">
+            <label htmlFor="title_field" className="c-input test_label">
               <div className="c-input__contain">
                 <input
                   key={name}
@@ -83,22 +99,20 @@ export default class AssessmentForm extends React.Component {
             </label>
           </div>
         </div>
-        <AssessmentItems
-          items={this.props.items}
-          activeItem={this.state.activeItem}
-          reorderActive={reorderActive}
-          activateItem={itemId => this.activateItem(itemId)}
-          toggleReorder={() => this.setState({ reorderActive: !reorderActive })}
-          updateItem={this.props.updateItem}
-          updateChoice={this.props.updateChoice}
-          deleteAssessmentItem={this.props.deleteAssessmentItem}
-          moveItem={(oldIndex, newIndex) => this.moveItem(oldIndex, newIndex)}
-        />
-
-        {this.showNewModal() ? <NewItem
-          cancel={() => this.setState({ addingAssessment: false })}
-          create={newItem => this.createItem(newItem)}
-        /> : <AddQuestion newItem={() => this.setState({ addingAssessment: true })} />}
+        { name ?
+          <AssessmentItems
+            items={this.props.items}
+            activeItem={this.state.activeItem}
+            reorderActive={reorderActive}
+            activateItem={itemId => this.activateItem(itemId)}
+            toggleReorder={() => this.setState({ reorderActive: !reorderActive })}
+            updateItem={this.props.updateItem}
+            updateChoice={this.props.updateChoice}
+            deleteAssessmentItem={this.props.deleteAssessmentItem}
+            moveItem={(oldIndex, newIndex) => this.moveItem(oldIndex, newIndex)}
+          /> : null
+        }
+        {this.showNewModal() ? this.newItem(name) : <AddQuestion newItem={() => this.setState({ addingAssessment: true })} />}
       </div>
     );
   }

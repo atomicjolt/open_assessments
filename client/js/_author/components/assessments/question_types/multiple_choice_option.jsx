@@ -61,21 +61,25 @@ export default function multipleChoiceOptions(props) {
         </div>
       </div>
 
-      <div className="c-input c-input-label--left c-feedback">
-        <label htmlFor="feedback1">Feedback</label>
-        <div className="c-input__contain">
-          <input
-            value={props.feedback}
-            onChange={e => props.updateChoice({ feedback: e.target.value })}
-            onBlur={props.updateItem}
-            className="c-text-input c-text-input--smaller c-wysiwyg"
-            id="feedback1"
-            type="text"
-            tabIndex="0"
-          />
-          <div className="c-input__bottom" />
-        </div>
-      </div>
+      {
+        props.isActive ? (
+          <div className="c-input c-input-label--left c-feedback">
+            <label htmlFor="feedback1">Feedback</label>
+            <div className="c-input__contain">
+              <input
+                value={props.feedback}
+                onChange={e => props.updateChoice({ feedback: e.target.value })}
+                onBlur={props.updateItem}
+                className="c-text-input c-text-input--smaller c-wysiwyg"
+                id="feedback1"
+                type="text"
+                tabIndex="0"
+              />
+              <div className="c-input__bottom" />
+            </div>
+          </div>
+        ) : null
+      }
     </div>
   );
 }
@@ -93,4 +97,5 @@ multipleChoiceOptions.propTypes = {
   last: React.PropTypes.bool,
   correct: React.PropTypes.bool,
   shuffle: React.PropTypes.bool,
+  isActive: React.PropTypes.bool,
 };

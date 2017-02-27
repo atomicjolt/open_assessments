@@ -64,6 +64,7 @@ export default class Question extends React.Component {
             {...this.props}
             updateItem={newProps => this.updateItem(newProps)}
             updateChoice={this.props.updateChoice}
+            isActive={this.props.isActive}
           />
         );
       case genusTypes.item.audioUpload:
@@ -126,6 +127,7 @@ export default class Question extends React.Component {
           maintainOrder={!question.shuffle}
           multipleAnswer={false}
           reflection={false}
+          genusTypeId={genusTypeId}
         />
         <div className={`c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText

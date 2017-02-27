@@ -28,6 +28,7 @@ function updateChoiceData(item) {
         newChoices[choice.id] = {
           answer,
           ...newChoices[choice.id],
+          feedback: _.get(answer, 'feedback.text'),
           correct: answer.genusTypeId === genusTypes.answer.rightAnswer,
           answerId: answer.id,
         };
