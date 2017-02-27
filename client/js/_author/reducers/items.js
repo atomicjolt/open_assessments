@@ -82,37 +82,6 @@ export default function banks(state = initialState, action) {
       return newState;
     }
 
-    case 'ADD_CHOICE': {
-      const newState = _.cloneDeep(state);
-      const { bankId, itemId, choiceId, choice } = action;
-
-      if (!choiceId) {
-        const newId = guid();
-        newState[bankId][itemId].question.choices[newId] = {
-          id: newId,
-          text: '',
-          feedback: '',
-          correct: false,
-          order: _.size(newState[bankId][itemId].question.choices),
-        };
-        return newState;
-      }
-
-      newState[bankId][itemId].question.choices[choiceId] = {
-        ...newState[bankId][itemId].question.choices[choiceId],
-        ...choice
-      };
-
-      if (choice.correct) {
-        _.forEach(newState[bankId][itemId].question.choices, (incorrectChoice) => {
-          if (incorrectChoice.id !== choiceId) {
-            incorrectChoice.correct = false;
-          }
-        });
-      }
-      return newState;
-    }
-
     default:
       return state;
   }

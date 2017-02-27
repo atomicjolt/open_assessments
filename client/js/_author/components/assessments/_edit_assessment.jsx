@@ -60,8 +60,6 @@ export class EditAssessment extends React.Component {
     createItemInAssessment: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
-    updateChoice: React.PropTypes.func.isRequired,
-    updateAnswer: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func,
   };
 
