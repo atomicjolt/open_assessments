@@ -1,4 +1,4 @@
-export default {
+export const types = {
   item:{
     multipleChoice: 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
     fileUpload: 'item-genus-type%3Aqti-upload-interaction-generic%40ODL.MIT.EDU',
@@ -19,12 +19,19 @@ export default {
     fillInTheBlank: 'answer-record-type%3Ainline-choice-answer%40ODL.MIT.EDU',
     file: 'answer-record-type%3Afiles-submission%40ODL.MIT.EDU', // for any moveable word sandbox, audio record tool, and generic file submission
     shortAnswer: 'answer-record-type%3Ashort-text-answer%40ODL.MIT.EDU',
-  }
+  },
+  default: 'GenusType%3ADEFAULT%40DLKIT.MIT.EDU',
 };
 
 export function getQbankType(type) {
   switch (type) {
+    case types.item.multipleChoice:
+      return 'multipleChoice';
+
+    case types.default:
     default:
       return null;
   }
 }
+
+export default types;
