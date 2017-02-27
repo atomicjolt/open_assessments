@@ -97,8 +97,9 @@ export default class Question extends React.Component {
 
   render() {
     const { item } = this.props;
-    const { displayName, genusTypeId, id, description, question } = item;
+    const { name, genusTypeId, id, question } = item;
     const className = this.getClassName();
+
     return (
       <div
         className={`o-item c-question ${className}`}
@@ -107,7 +108,7 @@ export default class Question extends React.Component {
         onFocus={() => this.props.activateItem(item.id)}
       >
         <QuestionHeader
-          name={displayName.text}
+          name={name}
           type={genusTypeId}
           deleteAssessmentItem={this.props.deleteAssessmentItem}
           id={id}
@@ -122,8 +123,8 @@ export default class Question extends React.Component {
         <Settings
           id={id}
           updateItem={newProps => this.updateItem(newProps)}
-          defaultName={displayName.text}
-          language={displayName.languageTypeId}
+          defaultName={name}
+          language={null}
           maintainOrder={!question.shuffle}
           multipleAnswer={false}
           reflection={false}
@@ -131,7 +132,7 @@ export default class Question extends React.Component {
         <div className={`c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
             id={id}
-            text={description.text}
+            text={question.text}
             updateItem={newProps => this.updateItem(newProps)}
           />
           {this.content()}

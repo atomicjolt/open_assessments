@@ -32,18 +32,14 @@ function deserializeChoices(choices, answers) {
   return newChoices;
 }
 
+// The implementation of function is Q-Bank specific
 function deserializeItem(item) {
-  // The implementation of function is Q-Bank specific
-
   // If there is any extra data you need from Qbank Items, add it here
-  // TODO: we may want to break this up by type, like the serializers
-  // Or not, because we want to have all the fields right?
-  // I am not sure
-  const newItem = {
+  return {
     id: item.id,
     type: getQbankType(item.genusTypeId),
     bankId: item.bankId,
-    assessmentId: '', // TODO
+    assessmentId: null, // TODO
     name: _.get(item, 'displayName.text'),
     question: {
       id: _.get(item, 'question.id'),
@@ -55,7 +51,6 @@ function deserializeItem(item) {
       choices: deserializeChoices(_.get(item, 'question.choices'), item.answers)
     },
   };
-  return newItem;
 }
 
 export default function banks(state = initialState, action) {
