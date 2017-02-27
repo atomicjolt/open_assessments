@@ -18,7 +18,7 @@ const API = store => next => (action) => {
         store,
         action,
         handler.method,
-        handler.url(action),
+        handler.url(store.settings.api_url, action),
         handler.params ? handler.params(action) : action.params,
         handler.body ? handler.body(action) : action.body
       );

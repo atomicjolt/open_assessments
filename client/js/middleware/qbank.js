@@ -9,7 +9,6 @@ import { Constants as BankConstants }       from '../actions/qbank/banks';
 import { Constants as AssessmentConstants } from '../actions/qbank/assessments';
 import { Constants as ItemConstants }       from '../actions/qbank/items';
 import genusTypes                           from '../constants/genus_types';
-import Url                                  from '../constants/host_url';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -135,66 +134,67 @@ const qbank = {
 
   [AssessmentConstants.GET_ASSESSMENTS]: {
     method : Network.GET,
-    url    : action => `${Url.hostUrl}/assessment/banks/${action.bankId}/assessments?isolated`,
+    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments?isolated`,
   },
 
   [AssessmentConstants.CREATE_ASSESSMENT_OFFERED]: {
     method : Network.POST,
-    url    : action => `${Url.hostUrl}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assessmentsoffered`,
+    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assessmentsoffered`,
   },
 
   [AssessmentConstants.GET_ASSESSMENT_OFFERED]: {
     method : Network.GET,
-    url    : action => `${Url.hostUrl}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assessmentsoffered`,
+    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assessmentsoffered`,
   },
 
   [AssessmentConstants.GET_ASSESSMENT_ITEMS]: {
     method : Network.GET,
-    url    : action => `${Url.hostUrl}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items?wronganswers`,
+    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items?wronganswers`,
   },
 
   [AssessmentConstants.EDIT_OR_PUBLISH_ASSESSMENT]: {
     method : Network.POST,
-    url    : action => `${Url.hostUrl}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedbankids`,
+    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedbankids`,
   },
 
   [AssessmentConstants.DELETE_ASSIGNED_ASSESSMENT]: {
     method : Network.DEL,
-    url    : action => `${Url.hostUrl}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedbankids/${action.assignedId}`,
+    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedbankids/${action.assignedId}`,
   },
 
   [AssessmentConstants.UPDATE_ASSESSMENT]: {
     method : Network.PUT,
-    url    : action => `${Url.hostUrl}/assessment/banks/${action.bankId}/assessments/${action.body.id}`,
+    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.body.id}`,
   },
 
   [AssessmentConstants.UPDATE_SINGLE_ITEM_OR_PAGE]: {
     method : Network.PUT,
-    url    : action => `${Url.hostUrl}/assessment/banks/${action.bankId}/assessmentsoffered/${action.assessmentsOfferedId}`,
+    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessmentsoffered/${action.assessmentsOfferedId}`,
   },
 
   [AssessmentConstants.UPDATE_ASSESSMENT_ITEMS]: {
     method : Network.PUT,
-    url    : action => `${Url.hostUrl}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items`,
+    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items`,
   },
 
   [AssessmentConstants.DELETE_ASSESSMENT_ITEM]: {
     method : Network.DEL,
-    url    : action => `${Url.hostUrl}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items/${action.itemId}`,
+    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items/${action.itemId}`,
   },
 
   [ItemConstants.GET_ITEMS]: {
     method : Network.GET,
-    url    : action => `${Url.hostUrl}/assessment/banks/${action.bankId}/items`,
+    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/items`,
   },
 
   [ItemConstants.CREATE_ITEM]: {
     method : Network.POST,
-    url    : action => `${Url.hostUrl}/assessment/banks/${action.bankId}/items`,
+    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/items`,
   },
 
   [ItemConstants.UPDATE_ITEM]: (store, action) => {
-    const item = store.getState().items[action.bankId][action.itemId];
+    const state = store.getState();
+    const item = state.items[action.bankId][action.itemId];
     const updatedItem = action.body;
     const choices = [];
     const answers = [];
@@ -244,7 +244,7 @@ const qbank = {
       store,
       action,
       Network.PUT,
-      `${Url.hostUrl}/assessment/banks/${action.bankId}/items/${action.itemId}`,
+      `${state.settings.api_url}/assessment/banks/${action.bankId}/items/${action.itemId}`,
       action.params,
       newItem
     );
