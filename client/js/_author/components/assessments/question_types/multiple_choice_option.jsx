@@ -12,7 +12,7 @@ export default function multipleChoiceOptions(props) {
 
         <label htmlFor="option1" />
         <div className="c-input__contain">
-          {/* <input
+          <input
             className="c-text-input c-text-input--small c-wysiwyg"
             value={props.text}
             onChange={e => props.updateChoice({ id: props.id, text: e.target.value })}
@@ -21,8 +21,7 @@ export default function multipleChoiceOptions(props) {
             type="text"
             placeholder="Option"
             tabIndex="0"
-          /> */}
-          <Editor text="" onBlur={()=>{}}/>
+          />
           <div className="c-input__bottom" />
         </div>
 
@@ -57,8 +56,7 @@ export default function multipleChoiceOptions(props) {
       <div className="c-input c-input-label--left c-feedback">
         <label htmlFor="feedback1">Feedback</label>
         <div className="c-input__contain">
-          {/* <input className="c-text-input c-text-input--smaller c-wysiwyg" id="feedback1" type="text" tabIndex="0" /> */}
-          <Editor text="" onBlur={()=>{}}/>
+          <input className="c-text-input c-text-input--smaller c-wysiwyg" id="feedback1" type="text" tabIndex="0" />
           <div className="c-input__bottom" />
         </div>
       </div>
