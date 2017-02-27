@@ -43,10 +43,6 @@ export default class AssessmentForm extends React.Component {
     }
   }
 
-  toggleReorder() {
-    this.setState({ reorderActive: true });
-  }
-
   moveItem(oldIndex, newIndex) {
     const itemIds = _.map(this.props.items, 'id');
     const temp = itemIds[newIndex];
@@ -69,6 +65,15 @@ export default class AssessmentForm extends React.Component {
     return null;
   }
 
+  newItem(name) {
+    return (
+      name ? <NewItem
+        cancel={() => this.setState({ addingAssessment: false })}
+        create={newItem => this.createItem(newItem)}
+      /> : null
+    );
+  }
+
   render() {
     const reorderActive = this.state.reorderActive;
     const name = _.get(this, 'props.displayName.text', '');
@@ -77,7 +82,7 @@ export default class AssessmentForm extends React.Component {
         <div className="o-item">
           {this.showSinglePageOption()}
           <div className="c-assessment-title">
-            <label htmlFor="title_field" className="c-input">
+            <label htmlFor="title_field" className="c-input test_label">
               <div className="c-input__contain">
                 <input
                   key={name}
@@ -94,22 +99,20 @@ export default class AssessmentForm extends React.Component {
             </label>
           </div>
         </div>
-        <AssessmentItems
-          items={this.props.items}
-          activeItem={this.state.activeItem}
-          reorderActive={reorderActive}
-          activateItem={itemId => this.activateItem(itemId)}
-          toggleReorder={() => this.setState({ reorderActive: !reorderActive })}
-          updateItem={this.props.updateItem}
-          updateChoice={this.props.updateChoice}
-          deleteAssessmentItem={this.props.deleteAssessmentItem}
-          moveItem={(oldIndex, newIndex) => this.moveItem(oldIndex, newIndex)}
-        />
-
-        {this.showNewModal() ? <NewItem
-          cancel={() => this.setState({ addingAssessment: false })}
-          create={newItem => this.createItem(newItem)}
-        /> : <AddQuestion newItem={() => this.setState({ addingAssessment: true })} />}
+        { name ?
+          <AssessmentItems
+            items={this.props.items}
+            activeItem={this.state.activeItem}
+            reorderActive={reorderActive}
+            activateItem={itemId => this.activateItem(itemId)}
+            toggleReorder={() => this.setState({ reorderActive: !reorderActive })}
+            updateItem={this.props.updateItem}
+            updateChoice={this.props.updateChoice}
+            deleteAssessmentItem={this.props.deleteAssessmentItem}
+            moveItem={(oldIndex, newIndex) => this.moveItem(oldIndex, newIndex)}
+          /> : null
+        }
+        {this.showNewModal() ? this.newItem(name) : <AddQuestion newItem={() => this.setState({ addingAssessment: true })} />}
       </div>
     );
   }

@@ -40,7 +40,6 @@ describe('reorder question header', () => {
   });
 
   it('hides nothing', () => {
-    result = TestUtils.renderIntoDocument(<Stub><ReorderHeader {...props} /></Stub>);
     const buttons = TestUtils.scryRenderedDOMComponentsWithClass(result, 'is-hidden');
     expect(_.isEmpty(buttons)).toBeTruthy();
   });
