@@ -67,6 +67,7 @@ export class TinyWrapper extends React.Component {
   }
 
   tinyMCEConfig() {
+    // Whenever you add a plugin, make sure that it is imported above.
     return {
       selector: ".editable_component",
       fixed_toolbar_container: `#${this.id}`,

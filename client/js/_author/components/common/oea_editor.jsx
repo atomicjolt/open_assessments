@@ -12,25 +12,18 @@ export default class OeaEditor extends React.Component{
     };
   }
 
-  // leaving this in for now, so that we can reference it later for styling the
-  // rich text editor
-  // <input
-  //   ref={ref => (this.description = ref)}
-  //   className="c-text-input c-text-input--medium c-wysiwyg"
-  //   id={`question_name_${this.props.id}`}
-  //   type="text"
-  //   placeholder="Question Text"
-  //   tabIndex="0"
-  //   defaultValue={this.props.text}
-  //   onBlur={e => this.props.updateItem({ description: e.target.value })}
-  // />
-
   onBlur(editorText) {
+    // TODO: This is where we will handle replacing the image source with the
+    // "AssetContent:{asset_id}". We need to do it here instead of in the
+    // tinymce callback because we want to be able to preview the uploads.
+
     this.setState({ focused: false });
     this.props.onBlur(editorText);
   }
 
   render() {
+    // active is handled here instead of in TinyWrapper, because tinyMCE does
+    // not handle rerendering very well.
     const active = this.state.focused ? "is-focused" : "";
 
     return (

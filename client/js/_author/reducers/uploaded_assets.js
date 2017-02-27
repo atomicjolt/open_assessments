@@ -5,10 +5,6 @@ const initialState = {};
 export default (state = initialState, action) => {
   switch (action.type) {
 
-    // TODO: These urls are currently being resolved to the current api url.
-    // Verify that when this is deployed, this will still be valid. Otherwise
-    // all uploaded assets in authored questions will break.
-
     case AssetConstants.UPLOAD_IMAGE_DONE: {
       const newState = _.cloneDeep(state);
       const link = _.replace(
