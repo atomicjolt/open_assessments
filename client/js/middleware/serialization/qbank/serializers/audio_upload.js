@@ -2,8 +2,8 @@ import _                          from 'lodash';
 import { baseSerializeItem, baseSerializeQuestion }  from './base';
 import { scrub }                  from '../../serializer_utils';
 
-function serializeQuestion(originalQuestion, newQuestionAttributes) {
-  const newQuestion = baseSerializeQuestion(originalQuestion, newQuestionAttributes);
+function serializeQuestion(originalItem, newQuestionAttributes) {
+  const newQuestion = baseSerializeQuestion(originalItem, newQuestionAttributes);
   const updatedQuestion = {
     timeValue: newQuestionAttributes.timeValue,
   };
@@ -16,7 +16,7 @@ export default function audioUploadSerializer(originalItem, newItemAttributes) {
 
   const { question } = newItemAttributes;
   if (question) {
-    newItem.question = serializeQuestion(originalItem.question, question);
+    newItem.question = serializeQuestion(originalItem, question);
   }
 
   return scrub(newItem);
