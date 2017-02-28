@@ -1,6 +1,5 @@
 import _                  from 'lodash';
 import baseDeserializer   from './base';
-import genusTypes         from '../../../../constants/genus_types';
 
 export default function audioUpload(item) {
   const newItem = baseDeserializer(item);
