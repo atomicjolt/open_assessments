@@ -2,9 +2,10 @@ import _              from 'lodash';
 import baseSerializer from './base';
 import { scrub }      from '../../serializer_utils';
 import genusTypes     from '../../../../constants/genus_types';
+import guid           from '../../../../utils/guid';
 
 function serializeChoices(originalChoices, newChoiceAttributes) {
-  return _.map(originalChoices, (choice) => {
+  const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
     return {
       id: choice.id,
@@ -13,6 +14,16 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
       delete: _.get(updateValues, 'delete'),
     };
   });
+
+  if (newChoiceAttributes.new) {
+    choices.push({
+      id: guid(),
+      text: '',
+      order: choices.length,
+    });
+  }
+
+  return choices;
 }
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
