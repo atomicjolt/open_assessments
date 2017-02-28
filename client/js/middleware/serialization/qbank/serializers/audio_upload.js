@@ -1,25 +1,19 @@
-import _              from 'lodash';
-import baseSerializer from './base';
-import { scrub }      from '../../serializer_utils';
-// import genusTypes     from '../../../../constants/genus_types';
+import _                          from 'lodash';
+// import baseSerializer             from './base';
+import { baseSerializeQuestion, baseSerializeItem } from './base';
+import { scrub }                  from '../../serializer_utils';
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
-  const newQuestion = {
-    id: originalQuestion.id,
-    // genusTypeId: genusTypes.default, // TODO: this probably has a real type
-    questionString: newQuestionAttributes.text,
-    multiAnswer: newQuestionAttributes.multiAnswer,
-    shuffle: newQuestionAttributes.shuffle,
+  const newQuestion = baseSerializeQuestion(originalQuestion, newQuestionAttributes);
+  const updatedQuestion = {
     timeValue: newQuestionAttributes.timeValue,
-    fileIds: {},
-    choices: null,
   };
 
-  return scrub(newQuestion);
+  return scrub(_.merge({}, newQuestion, updatedQuestion));
 }
 
 export default function audioUploadSerializer(originalItem, newItemAttributes) {
-  const newItem = baseSerializer(originalItem, newItemAttributes);
+  const newItem = baseSerializeItem(originalItem, newItemAttributes);
 
   const { question } = newItemAttributes;
   if (question) {

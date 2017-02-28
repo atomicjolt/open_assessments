@@ -27,7 +27,8 @@ export function getQbankType(type) {
   switch (type) {
     case types.item.multipleChoice:
       return 'multipleChoice';
-
+    case types.item.audioUpload:
+      return 'audioUpload';
     case types.default:
     default:
       return null;
