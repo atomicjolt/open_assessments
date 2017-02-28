@@ -4,7 +4,7 @@ import Stub             from '../../../../specs_support/stub';
 import { hashHistory }  from 'react-router';
 import AssessmentView   from './navigation_bar_content';
 
-fdescribe('Assessment View component', () => {
+describe('Assessment View component', () => {
   let props;
   let result;
   let editButtonPushed;
