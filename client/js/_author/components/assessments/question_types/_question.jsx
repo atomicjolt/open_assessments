@@ -65,7 +65,7 @@ export default class Question extends React.Component {
             isActive={this.props.isActive}
           />
         );
-      case genusTypes.item.audioUpload:
+      case 'audioUpload':
         return (
           <AudioUpload
             updateItem={newProps => this.updateItem(newProps)}
