@@ -34,19 +34,24 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   return scrub(newQuestion);
 }
 
-function correctAnswer(wasCorrect, isCorrect) {
-  if (_.isUndefined(isCorrect)) {
+function correctAnswer(correctId, choiceId, wasCorrect) {
+  if (_.isNil(correctId)) {
     return wasCorrect ? genusTypes.answer.rightAnswer : genusTypes.answer.wrongAnswer;
   }
-  return isCorrect ? genusTypes.answer.rightAnswer : genusTypes.answer.wrongAnswer;
+  return correctId === choiceId ? genusTypes.answer.rightAnswer : genusTypes.answer.wrongAnswer;
 }
 
 function serializeAnswers(originalChoices, newChoiceAttributes) {
+  let correctId = null;
+  _.forEach(newChoiceAttributes, (choice, key) => {
+    if (_.get(choice, 'isCorrect')) { correctId = key; }
+  });
+
   return _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
     return {
       id: choice.answerId,
-      genusTypeId: correctAnswer(choice.isCorrect, _.get(updateValues, 'isCorrect')),
+      genusTypeId: correctAnswer(correctId, choice.id, choice.isCorrect),
       feedback: _.get(updateValues, 'feedback') || choice.feedback,
       type: genusTypes.answer.multipleChoice,
       choiceIds: [choice.id],
