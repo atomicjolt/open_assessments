@@ -1,6 +1,5 @@
 import _                                    from 'lodash';
 import Network                              from '../constants/network';
-import request                              from './middleware_request';
 import server                               from './server';
 import api                                  from '../libs/api';
 import authorAppHistory                     from '../_author/history';
@@ -9,6 +8,7 @@ import { Constants as BankConstants }       from '../actions/qbank/banks';
 import { Constants as AssessmentConstants } from '../actions/qbank/assessments';
 import { Constants as ItemConstants }       from '../actions/qbank/items';
 import serialize                            from './serialization/qbank/serializers/factory';
+import deserialize                          from './serialization/qbank/deserializers/factory';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -133,9 +133,22 @@ const qbank = {
     url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assessmentsoffered`,
   },
 
-  [AssessmentConstants.GET_ASSESSMENT_ITEMS]: {
-    method : Network.GET,
-    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items?wronganswers`,
+  [AssessmentConstants.GET_ASSESSMENT_ITEMS]: (store, action) => {
+    const state = store.getState();
+    api.get(
+      `assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items?wronganswers`,
+      state.settings.api_url,
+      state.jwt,
+      state.settings.csrf_token,
+      null,
+      null
+    ).then((res) => {
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: _.map(res.body, item => deserialize(item.genusTypeId)(item))
+      });
+    });
   },
 
   [AssessmentConstants.EDIT_OR_PUBLISH_ASSESSMENT]: {
@@ -185,16 +198,19 @@ const qbank = {
 
     const newItem = serialize(updatedAttributes.type || item.type)(item, updatedAttributes);
 
-    // Params in incorrect order
     api.put(
-      store,
-      action,
-      Network.PUT,
-      `${state.settings.api_url}/assessment/banks/${action.bankId}/items/${action.itemId}`,
-      action.params,
+      `assessment/banks/${action.bankId}/items/${action.itemId}`,
+      state.settings.api_url,
+      state.jwt,
+      state.settings.csrf_token,
+      null,
       newItem
-    ).then((response) => {
-      //  .then(deserialize(stuff) & dispatch)
+    ).then((res) => {
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: deserialize(res.body.genusTypeId)(res.body)
+      });
     });
   },
 

@@ -1,4 +1,4 @@
-
+import { getQbankType }     from '../../../../constants/genus_types';
 
 export default function base(item) {
   return {
@@ -11,10 +11,8 @@ export default function base(item) {
       id: _.get(item, 'question.id'),
       type: getQbankType(_.get(item, 'question.genusTypeId')),
       text: _.get(item, 'question.text.text'),
-      multipleAnswer: _.get(item, 'question.multiAnswer'),
-      shuffle: _.get(item, 'question.shuffle'),
       fileIds: {},
-      choices: deserializeChoices(_.get(item, 'question.choices'), item.answers)
+      choices: null, // implement in type
     },
   };
 }
