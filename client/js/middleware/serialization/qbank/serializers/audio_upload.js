@@ -1,6 +1,5 @@
 import _                          from 'lodash';
-// import baseSerializer             from './base';
-import { baseSerializeQuestion, baseSerializeItem } from './base';
+import { baseSerializeItem, baseSerializeQuestion }  from './base';
 import { scrub }                  from '../../serializer_utils';
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {

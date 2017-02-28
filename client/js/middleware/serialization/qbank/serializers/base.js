@@ -1,6 +1,6 @@
 import genusTypes       from '../../../../constants/genus_types';
 
-export default function baseSerializeItem(originalItem, newAttributes) {
+export function baseSerializeItem(originalItem, newAttributes) {
   return {
     id: originalItem.id,
     genusTypeId: genusTypes.item[newAttributes.type],
@@ -17,3 +17,5 @@ export function baseSerializeQuestion(original, newAttributes) {
     questionString: newAttributes.text,
   };
 }
+
+export default baseSerializeItem;
