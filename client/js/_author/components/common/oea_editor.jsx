@@ -1,8 +1,10 @@
 import React       from 'react';
 import TinyWrapper from './tiny_wrapper';
 
-export default class OeaEditor extends React.Component{
-  static propTypes = {};
+export default class OeaEditor extends React.Component {
+  static propTypes = {
+    onBlur: React.PropTypes.func.isRequired,
+  };
 
   constructor() {
     super();
@@ -26,13 +28,13 @@ export default class OeaEditor extends React.Component{
     // not handle rerendering very well. This may become unnecessary when
     // Brandon finishes the styles.
 
-    const active = this.state.focused ? "is-focused" : "";
+    const active = this.state.focused ? 'is-focused' : '';
 
     return (
       <div className={`c-text-input c-text-input--medium c-wysiwyg ${active}`}>
         <TinyWrapper
           {...this.props}
-          onBlur={(editorText) => this.onBlur(editorText)}
+          onBlur={editorText => this.onBlur(editorText)}
           onFocus={() => this.setState({ focused: true })}
         />
       </div>

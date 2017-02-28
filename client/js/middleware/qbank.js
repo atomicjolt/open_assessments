@@ -253,7 +253,7 @@ const qbank = {
 
   [AssetConstants.UPLOAD_IMAGE]: {
     method : Network.POST,
-    url    : action => `https://qbank-clix-dev.mit.edu/api/v1/repository/repositories/${action.bankId}/assets`,
+    url    : (url, action) => `${url}/repository/repositories/${action.bankId}/assets`,
   },
 
   [AssessmentConstants.CREATE_ITEM_IN_ASSESSMENT]: (store, action) => {

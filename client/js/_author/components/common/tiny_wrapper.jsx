@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import TinyMCE     from 'react-tinymce';
-import guid from '../../../utils/guid';
-
 import 'tinymce';
-import 'tinymce/themes/modern/theme'
+import 'tinymce/themes/modern/theme';
 import 'tinymce/plugins/autolink/plugin';
 import 'tinymce/plugins/paste/plugin';
 import 'tinymce/plugins/link/plugin';
 import 'tinymce/plugins/image/plugin';
 import 'tinymce/plugins/lists/plugin';
+import guid from '../../../utils/guid';
 
 import * as AssetActions from '../../../actions/qbank/assets';
 
@@ -25,6 +24,9 @@ export class TinyWrapper extends React.Component {
     text: React.PropTypes.string,
     uploadImage: React.PropTypes.func.isRequired,
     bankId: React.PropTypes.string.isRequired,
+    apiUrl: React.PropTypes.string.isRequired,
+    onBlur: React.PropTypes.func.isRequired,
+    onFocus: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -41,9 +43,9 @@ export class TinyWrapper extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const imageUrl = nextProps.uploadedAssets[this.state.imageGuid];
-    if(this.state.uploadingImage && imageUrl) {
+    if (this.state.uploadingImage && imageUrl) {
       this.state.imageCallback(imageUrl);
-      this.setState({uploadingImage: false});
+      this.setState({ uploadingImage: false });
     }
   }
 
@@ -69,7 +71,6 @@ export class TinyWrapper extends React.Component {
   tinyMCEConfig() {
     // Whenever you add a plugin, make sure that it is imported above.
     return {
-      selector: ".editable_component",
       fixed_toolbar_container: `#${this.id}`,
       skin: false,
       menubar: false,
@@ -84,7 +85,7 @@ export class TinyWrapper extends React.Component {
       plugins: 'autolink link image lists paste',
       toolbar: 'undo redo | bold italic | alignleft aligncenter alignright image paste',
       inline: true,
-      paste_data_images: true
+      paste_data_images: true,
     };
   }
 
@@ -93,8 +94,7 @@ export class TinyWrapper extends React.Component {
       <div>
         <div id={this.id} />
         <TinyMCE
-          className="editable_component"
-          content={this.props.text || "Question Text"}
+          content={this.props.text}
           config={this.tinyMCEConfig()}
           onBlur={e => this.props.onBlur(e.target.getContent())}
           onFocus={this.props.onFocus}
@@ -103,7 +103,7 @@ export class TinyWrapper extends React.Component {
           className="c-image-uploader"
           type="file"
           ref={ref => (this.imageFilePicker = ref)}
-          onChange={e => this.uploadImage(e) }
+          onChange={e => this.uploadImage(e)}
         />
       </div>
     );
