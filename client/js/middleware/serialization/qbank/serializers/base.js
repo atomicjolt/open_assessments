@@ -1,6 +1,6 @@
 import genusTypes       from '../../../../constants/genus_types';
 
-export default function serializeQuestion(originalItem, newAttributes) {
+export default function serializeItem(originalItem, newAttributes) {
   return {
     id: originalItem.id,
     genusTypeId: genusTypes.item[newAttributes.type],
@@ -8,4 +8,9 @@ export default function serializeQuestion(originalItem, newAttributes) {
     question: null,
     answers: null,
   };
+}
+
+//TODO add default question
+export function serializeQuestion(original, newAttributes){
+  return {};
 }
