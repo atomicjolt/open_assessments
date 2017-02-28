@@ -50,6 +50,10 @@ export default class MultipleChoice extends React.Component {
     });
   }
 
+  addNewChoice(id) {
+    this.props.updateChoice(id, 'new', true);
+  }
+
   render() {
     const { question, id } = this.props.item;
     return (
@@ -72,7 +76,9 @@ export default class MultipleChoice extends React.Component {
           ))
         }
         {
-          this.props.isActive ? <Add updateChoice={() => this.props.updateChoice(id)} /> : null
+          this.props.isActive ? <Add
+            updateChoice={() => this.addNewChoice(id)}
+          /> : null
         }
         <Feedback />
       </div>
