@@ -4,7 +4,7 @@ import TestUtils        from 'react-addons-test-utils';
 import genusTypes       from '../../../../constants/genus_types.js';
 import Question         from './_question';
 
-fdescribe('question component', () => {
+describe('question component', () => {
   let props;
   let result;
   let movedUp;
@@ -23,7 +23,7 @@ fdescribe('question component', () => {
         description: {
           text: 'IMADESCRIPTION',
         },
-        genusTypeId: '',
+        type: '',
         index: 1,
         question: {
           shuffle: true,
@@ -64,7 +64,7 @@ fdescribe('question component', () => {
   });
 
   it('shows renders Multiple Choice', () => {
-    props.item.genusTypeId = genusTypes.item.multipleChoice;
+    props.item.type = 'multipleChoice';
     result = TestUtils.renderIntoDocument(<Question {...props} />);
     const multipleChoice = TestUtils.findRenderedDOMComponentWithClass(
       result,
@@ -74,7 +74,7 @@ fdescribe('question component', () => {
   });
 
   it('shows renders Audio Upload', () => {
-    props.item.genusTypeId = genusTypes.item.audioUpload;
+    props.item.type = genusTypes.item.audioUpload;
     result = TestUtils.renderIntoDocument(<Question {...props} />);
     const audioUpload = TestUtils.findRenderedDOMComponentWithClass(
       result,
@@ -84,7 +84,7 @@ fdescribe('question component', () => {
   });
 
   it('shows renders fileUpload', () => {
-    props.item.genusTypeId = genusTypes.item.fileUpload;
+    props.item.type = genusTypes.item.fileUpload;
     result = TestUtils.renderIntoDocument(<Question {...props} />);
     const fileUpload = TestUtils.findRenderedDOMComponentWithClass(
       result,
@@ -94,7 +94,7 @@ fdescribe('question component', () => {
   });
 
   it('shows renders shortAnswer', () => {
-    props.item.genusTypeId = genusTypes.item.shortAnswer;
+    props.item.type = genusTypes.item.shortAnswer;
     result = TestUtils.renderIntoDocument(<Question {...props} />);
     const shortAnswer = TestUtils.findRenderedDOMComponentWithClass(
       result,
