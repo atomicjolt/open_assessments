@@ -112,7 +112,7 @@ export default class Question extends React.Component {
 
   render() {
     const { item } = this.props;
-    const { name, type, id, question } = item;
+    const { name, type, id, question, language } = item;
     const className = this.getClassName();
 
     return (
@@ -139,7 +139,7 @@ export default class Question extends React.Component {
           id={id}
           updateItem={newProps => this.updateItem(newProps)}
           defaultName={name}
-          language={null}
+          language={language}
           maintainOrder={!question.shuffle}
           multipleAnswer={item.multipleAnswer}
           reflection={item.type === 'survey'}

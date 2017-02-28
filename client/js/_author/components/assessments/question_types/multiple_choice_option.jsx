@@ -11,7 +11,7 @@ export default function multipleChoiceOptions(props) {
             name="radio"
             tabIndex="0"
             checked={props.isCorrect}
-            onClick={e => props.updateChoice({ isCorrect: e.target.checked })}
+            onChange={e => props.updateChoice({ isCorrect: e.target.checked })}
           />
           <label htmlFor={`option_radio_${props.id}`} />
         </div>

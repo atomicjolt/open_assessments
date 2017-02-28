@@ -66,12 +66,11 @@ export default function questionSettings(props) {
             id=""
             tabIndex="0"
             value={props.language}
-            // onChange={e => props.updateState('nameLanguage', e.target.value)}
-            onBlur={props.updateItem}
+            onChange={e => props.updateItem({ language: e.target.value })}
           >
-            <option value="639-2%3AENG%40ISO">English</option>
-            <option value="">Hindi</option>
-            <option value="">Telugu</option>
+            <option value="english">English</option>
+            <option value="hindi">Hindi</option>
+            <option value="telugu">Telugu</option>
           </select>
         </div>
       </div>
