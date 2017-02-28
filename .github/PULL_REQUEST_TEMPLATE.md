@@ -1,6 +1,3 @@
-# Code-review checklist #
+**Description**
 
-  * Documentation
-      * [ ] Interfaces describe how other programmers would use them.
-      * [ ] Code that is not obvious has documentation describing why
-        that code is the way it is.
+Enter a brief description of what you are accomplishing with this Pull Request.
