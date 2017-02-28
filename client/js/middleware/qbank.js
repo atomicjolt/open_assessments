@@ -8,7 +8,7 @@ import { DONE }                             from '../constants/wrapper';
 import { Constants as BankConstants }       from '../actions/qbank/banks';
 import { Constants as AssessmentConstants } from '../actions/qbank/assessments';
 import { Constants as ItemConstants }       from '../actions/qbank/items';
-import genusTypes                           from '../constants/genus_types';
+import serialize                            from './serializers/qbank/serializer_factory';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -112,20 +112,6 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
   });
 }
 
-function answerType(itemType) {
-  switch (itemType) {
-    case genusTypes.item.multipleChoice:
-      return genusTypes.answer.multipleChoice;
-
-    case genusTypes.item.fileUpload:
-    case genusTypes.item.audioUpload:
-      return genusTypes.answer.file;
-
-    default:
-      return null;
-  }
-}
-
 const qbank = {
   [BankConstants.GET_BANKS_HIERARCHY]: {
     method : Network.GET,
@@ -195,50 +181,9 @@ const qbank = {
   [ItemConstants.UPDATE_ITEM]: (store, action) => {
     const state = store.getState();
     const item = state.items[action.bankId][action.itemId];
-    const updatedItem = action.body;
-    const choices = [];
-    const answers = [];
+    const updatedAttributes = action.body;
 
-    const newItem = {
-      name: updatedItem.name || item.displayName.text,
-      description: updatedItem.description || item.description.text,
-    };
-
-    if (updatedItem.question) {
-      _.forEach(updatedItem.question.choices, (choice) => {
-        choices.push({
-          id: choice.id,
-          text: choice.text,
-          order: choice.order,
-          delete: choice.delete,
-        });
-        const newAnswer = {
-          id: choice.answerId,
-          genusTypeId: choice.correct ? genusTypes.answer.rightAnswer : genusTypes.answer.wrongAnswer,
-          feedback: choice.feedback,
-          type: answerType(item.genusTypeId),
-          choiceIds: [choice.id],
-        };
-        answers.push(newAnswer);
-      });
-
-      if (!_.isEmpty(answers)) {
-        newItem.answers = answers;
-      }
-      if (!_.isEmpty(choices)
-        || updatedItem.questionString
-        || updatedItem.question.maintainOrder
-        || updatedItem.question.maintainOrder === false) {
-        newItem.question = {};
-        if (updatedItem.questionString) {
-          newItem.question.questionString = updatedItem.questionString;
-        }
-        if (!_.isEmpty(choices)) { newItem.question.choices = choices; }
-        if (updatedItem.question.maintainOrder || updatedItem.question.maintainOrder === false) {
-          newItem.question.shuffle = !updatedItem.question.maintainOrder;
-        }
-      }
-    }
+    const newItem = serialize(updatedAttributes.type || item.type)(item, updatedAttributes);
 
     request(
       store,

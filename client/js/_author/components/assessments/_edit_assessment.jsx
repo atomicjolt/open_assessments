@@ -60,8 +60,6 @@ export class EditAssessment extends React.Component {
     createItemInAssessment: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
-    updateChoice: React.PropTypes.func.isRequired,
-    updateAnswer: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func,
   };
 
@@ -126,13 +124,25 @@ export class EditAssessment extends React.Component {
   }
 
   updateSingleItemOrPage(setSinglePage) {
-    const { assessmentOffered } = this.props.assessment;
-    const genusTypeId = setSinglePage ? this.props.settings.single_page : this.props.settings.one_item_per_page;
+    const { settings, assessment } = this.props;
+    const { assessmentOffered } = assessment;
+    const genusTypeId = setSinglePage ? settings.single_page : settings.one_item_per_page;
     this.props.updateSingleItemOrPage(assessmentOffered[0], genusTypeId);
   }
 
+  updateChoice(itemId, choiceId, choice) {
+    const updateAttributes = {
+      id: itemId,
+      question: {
+        choices: {
+          [choiceId]: choice,
+        }
+      }
+    };
+    this.updateItem(updateAttributes);
+  }
+
   render() {
-    const { bankId } = this.props.params;
     const { assessment, settings } = this.props;
     const isPublished =  assessment ? _.includes(assessment.assignedBankIds, settings.publishedBankId) : false;
     const publishedAndOffered = isPublished && !_.isUndefined(assessment.assessmentOffered);
@@ -153,9 +163,7 @@ export class EditAssessment extends React.Component {
           items={this.props.items}
           updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}
-          updateChoice={
-            (itemId, choiceId, choice) => this.props.updateChoice(bankId, itemId, choiceId, choice)
-          }
+          updateChoice={(itemId, choiceId, choice) => this.updateChoice(itemId, choiceId, choice)}
           deleteAssessmentItem={itemId => this.deleteAssessmentItem(itemId)}
         />
       </div>

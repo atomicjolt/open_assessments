@@ -20,7 +20,7 @@ export default class questionText extends React.Component {
             placeholder="Question Text"
             tabIndex="0"
             defaultValue={this.props.text}
-            onBlur={e => this.props.updateItem({ description: e.target.value })}
+            onBlur={e => this.props.updateItem({ question: { text: e.target.value } })}
           />
           <div className="c-input__bottom" />
         </div>

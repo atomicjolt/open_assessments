@@ -3,7 +3,7 @@ import genusTypes from '../../../../../constants/genus_types';
 
 export default function questionSettings(props) {
   function checkboxOptions() {
-    return (props.genusTypeId === genusTypes.item.multipleChoice ?
+    return (props.type === 'multipleChoice' ?
       <div className="o-right">
         <div className="c-checkbox u-ml-md">
           <input
@@ -12,7 +12,7 @@ export default function questionSettings(props) {
             name="check"
             tabIndex="0"
             onChange={e => props.updateItem({ question: { maintainOrder: e.target.checked } })}
-            checked={props.maintainOrder ? 'checked' : null}
+            checked={props.maintainOrder}
           />
           <label htmlFor={`check02_${props.id}`}>Maintain choice order</label>
         </div>
@@ -33,7 +33,7 @@ export default function questionSettings(props) {
             id={`check04_${props.id}`}
             name="check"
             tabIndex="0"
-            onChange={() => props.updateItem({ reflection: !props.reflection })}
+            onChange={e => props.updateItem({ reflection: e.target.checked })}
             checked={props.reflection ? 'checked' : null}
           />
           <label htmlFor={`check04_${props.id}`}>Reflection</label>
@@ -83,10 +83,9 @@ export default function questionSettings(props) {
 questionSettings.propTypes = {
   id: React.PropTypes.string.isRequired,
   defaultName: React.PropTypes.string,
-  genusTypeId: React.PropTypes.string,
+  type: React.PropTypes.string,
   language: React.PropTypes.string.isRequired,
   updateItem: React.PropTypes.func.isRequired,
-  // updateState: React.PropTypes.func.isRequired,
   maintainOrder: React.PropTypes.bool,
   multipleAnswer: React.PropTypes.bool,
   reflection: React.PropTypes.bool,
