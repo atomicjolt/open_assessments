@@ -9,7 +9,7 @@ export default class questionText extends React.Component {
         <div className="c-input__contain">
           <Editor
             text={this.props.text}
-            onBlur={val => this.props.updateItem({ description: val })}
+            onBlur={val => this.props.updateItem({ question: { text: val } })}
             bankId={this.props.bankId}
             id={this.props.id}
           />
