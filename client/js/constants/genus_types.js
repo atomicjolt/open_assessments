@@ -4,13 +4,13 @@ export const types = {
     fileUpload: 'item-genus-type%3Aqti-upload-interaction-generic%40ODL.MIT.EDU',
     audioUpload: 'item-genus-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU',
     shortAnswer: 'item-genus-type%3Aqti-extended-text-interaction%40ODL.MIT.EDU',
-    singleReflection: 'item-genus-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
-    multiReflection: 'item-genus-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',
+    survey: 'item-genus-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
+    multiSurvey: 'item-genus-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',
   },
   question: {
     audioUpload: 'question-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU',
-    singeReflection: 'question-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
-    multiReflections: 'question-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',
+    survey: 'question-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
+    multiSurvey: 'question-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',
   },
   answer: {
     rightAnswer: 'answer-type%3Aright-answer%40ODL.MIT.EDU',

@@ -54,6 +54,23 @@ export default class Question extends React.Component {
     this.props.updateItem({ id: item.id, ...newItemProperties });
   }
 
+  makeReflection(reflect) {
+    const { item } = this.props;
+    let type = 'multipleChoice';
+    if (reflect) {
+      type = item.multipleAnswer ? 'multiSurvey' : 'survey';
+    }
+
+    this.props.updateItem({
+      id: item.id,
+      type,
+      question: {
+        type,
+        choices: true,
+      }
+    });
+  }
+
   content() {
     switch (this.props.item.type) {
       case 'multipleChoice':
@@ -124,8 +141,9 @@ export default class Question extends React.Component {
           defaultName={name}
           language={null}
           maintainOrder={!question.shuffle}
-          multipleAnswer={false}
-          reflection={false}
+          multipleAnswer={item.multipleAnswer}
+          reflection={item.type === 'survey'}
+          makeReflection={reflect => this.makeReflection(reflect)}
           type={type}
         />
         <div className={`c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
