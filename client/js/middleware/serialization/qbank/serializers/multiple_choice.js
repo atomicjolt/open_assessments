@@ -1,7 +1,7 @@
 import _              from 'lodash';
-import baseSerializer from './base_serializer';
-import { scrub }      from '../serializer_utils';
-import genusTypes     from '../../../constants/genus_types';
+import baseSerializer from './base';
+import { scrub }      from '../../serializer_utils';
+import genusTypes     from '../../../../constants/genus_types';
 
 function serializeChoices(originalChoices, newChoiceAttributes) {
   return _.map(originalChoices, (choice) => {

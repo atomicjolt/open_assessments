@@ -8,7 +8,7 @@ import { DONE }                             from '../constants/wrapper';
 import { Constants as BankConstants }       from '../actions/qbank/banks';
 import { Constants as AssessmentConstants } from '../actions/qbank/assessments';
 import { Constants as ItemConstants }       from '../actions/qbank/items';
-import serialize                            from './serializers/qbank/serializer_factory';
+import serialize                            from './serialization/qbank/serializers/factory';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -185,14 +185,17 @@ const qbank = {
 
     const newItem = serialize(updatedAttributes.type || item.type)(item, updatedAttributes);
 
-    request(
+    // Params in incorrect order
+    api.put(
       store,
       action,
       Network.PUT,
       `${state.settings.api_url}/assessment/banks/${action.bankId}/items/${action.itemId}`,
       action.params,
       newItem
-    );
+    ).then((response) => {
+      //  .then(deserialize(stuff) & dispatch)
+    });
   },
 
   [AssessmentConstants.CREATE_ITEM_IN_ASSESSMENT]: (store, action) => {

@@ -1,4 +1,4 @@
-import genusTypes       from '../../../constants/genus_types';
+import genusTypes       from '../../../../constants/genus_types';
 
 export default function serializeQuestion(originalItem, newAttributes) {
   return {

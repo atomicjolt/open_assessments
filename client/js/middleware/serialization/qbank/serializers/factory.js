@@ -1,5 +1,5 @@
-import multipleChoice   from './multiple_choice_serializer';
-import genusTypes       from '../../../constants/genus_types';
+import multipleChoice   from './multiple_choice';
+import genusTypes       from '../../../../constants/genus_types';
 
 export default function factory(type) {
   switch (type) {

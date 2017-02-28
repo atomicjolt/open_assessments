@@ -20,6 +20,7 @@ function deserializeChoices(choices, answers) {
     };
     _.forEach(answers, (answer) => {
       if (_.includes(answer.choiceIds, choice.id)) {
+        if(answer.genusTypeId === types.answer.rightAnswer) console.log(choice.text);
         newChoices[choice.id] = {
           ...newChoices[choice.id],
           feedback: _.get(answer, 'feedback.text'),
