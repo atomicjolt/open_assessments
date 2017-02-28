@@ -115,7 +115,7 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
 const qbank = {
   [BankConstants.GET_BANKS_HIERARCHY]: {
     method : Network.GET,
-    url    : () => 'https://4h8n6sg95j.execute-api.us-east-1.amazonaws.com/dev/proxy',
+    url    : url => `${url}`,
   },
 
   [AssessmentConstants.GET_ASSESSMENTS]: {
