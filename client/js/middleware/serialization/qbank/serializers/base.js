@@ -15,10 +15,11 @@ export function baseSerializeItem(originalItem, newAttributes) {
     id: originalItem.id,
     genusTypeId: genusTypes.item[originalItem.type],
     name: newAttributes.name || originalItem.name,
-    question: baseSerializeQuestion(originalItem, newAttributes.question || {}),
+    question: scrub(
+      baseSerializeQuestion(originalItem, newAttributes.question || {})
+    ),
     answers: null,
   };
-  newItem.question = scrub(newItem.question);
   return newItem;
 }
 
