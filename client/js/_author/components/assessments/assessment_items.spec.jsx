@@ -1,7 +1,6 @@
-import _                from 'lodash';
-import AssessmentItems  from './assessment_items';
 import React            from 'react';
 import TestUtils        from 'react-addons-test-utils';
+import AssessmentItems  from './assessment_items';
 import Stub             from '../../../../specs_support/stub';
 
 describe('assessment items component', () => {
