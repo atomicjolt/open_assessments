@@ -99,7 +99,7 @@ export default class Question extends React.Component {
           />
         );
 
-      case genusTypes.item.shortAnswer:
+      case 'shortAnswer':
         return (
           <ShortAnswer
             updateItem={newProps => this.updateItem(newProps)}
