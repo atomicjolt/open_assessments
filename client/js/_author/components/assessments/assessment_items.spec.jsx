@@ -1,7 +1,8 @@
 import React            from 'react';
 import TestUtils        from 'react-addons-test-utils';
+import { Provider }     from 'react-redux';
+import { createStore }  from 'redux';
 import AssessmentItems  from './assessment_items';
-import Stub             from '../../../../specs_support/stub';
 
 describe('assessment items component', () => {
   let props;
@@ -28,7 +29,11 @@ describe('assessment items component', () => {
       updateAnswer: () => {},
       moveItem: () => {},
     };
-    result = TestUtils.renderIntoDocument(<Stub><AssessmentItems {...props} /></Stub>);
+    result = TestUtils.renderIntoDocument(
+      <Provider store={createStore(()=>({ settings: {} }))}>
+        <AssessmentItems {...props} />
+      </Provider>
+    );
   });
 
   it('renders question component', () => {
