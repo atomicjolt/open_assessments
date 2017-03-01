@@ -67,6 +67,14 @@ module.exports = () => {
       plugins : webpackConfig.plugins,
       module  : webpackConfig.module,
       resolve : webpackConfig.resolve,
+      externals: {
+        'react/addons': true,
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': true
+      },
+      query: {
+        presets: ['airbnb']
+      }
     },
 
     // Reduce the noise to the console
