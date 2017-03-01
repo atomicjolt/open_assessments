@@ -75,6 +75,7 @@ export default class Question extends React.Component {
   content() {
     switch (this.props.item.type) {
       case 'multipleChoice':
+      case 'reflection':
         return (
           <MultipleChoice
             {...this.props}

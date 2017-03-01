@@ -1,21 +1,26 @@
 import React      from 'react';
+import Radio      from './question_common/option_radio';
 
 export default function multipleChoiceOptions(props) {
+
+  const selector = () => {
+    // TODO: this is where I will put checkboxes
+    if (props.itemType === 'multipleChoice') {
+      return (
+        <Radio
+          id={props.id}
+          isCorrect={props.isCorrect}
+          updateChoice={props.updateChoice}
+        />
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="c-answer is-active">
       <div className="c-input">
-        <div className="c-radio">
-          <input
-            type="radio"
-            id={`option_radio_${props.id}`}
-            name="radio"
-            tabIndex="0"
-            checked={props.isCorrect}
-            onChange={e => props.updateChoice({ isCorrect: e.target.checked })}
-          />
-          <label htmlFor={`option_radio_${props.id}`} />
-        </div>
-
+        {selector()}
         <label htmlFor="option1" />
         <div className="c-input__contain">
           <input
@@ -85,6 +90,7 @@ multipleChoiceOptions.propTypes = {
   text: React.PropTypes.string,
   feedback: React.PropTypes.string,
   id: React.PropTypes.string,
+  itemType: React.PropTypes.string,
   updateItem: React.PropTypes.func.isRequired,
   updateChoice: React.PropTypes.func.isRequired,
   deleteChoice: React.PropTypes.func.isRequired,

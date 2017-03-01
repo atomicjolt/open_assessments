@@ -2,8 +2,9 @@ import React    from 'react';
 import genusTypes from '../../../../../constants/genus_types';
 
 export default function questionSettings(props) {
+  const extraOptionTypes = ['multipleChoice', 'reflection', 'multipleReflection'];
   function checkboxOptions() {
-    return (props.type === 'multipleChoice' ?
+    return (
       <div className="o-right">
         <div className="c-checkbox u-ml-md">
           <input
@@ -38,7 +39,7 @@ export default function questionSettings(props) {
           />
           <label htmlFor={`check04_${props.id}`}>Reflection</label>
         </div>
-      </div> : null
+      </div>
     );
   }
 
@@ -74,7 +75,7 @@ export default function questionSettings(props) {
           </select>
         </div>
       </div>
-      {checkboxOptions()}
+      {_.includes(extraOptionTypes, props.type) ? checkboxOptions() : null}
     </div>
   );
 }
@@ -85,6 +86,7 @@ questionSettings.propTypes = {
   type: React.PropTypes.string,
   language: React.PropTypes.string.isRequired,
   updateItem: React.PropTypes.func.isRequired,
+  makeReflection: React.PropTypes.func.isRequired,
   maintainOrder: React.PropTypes.bool,
   multipleAnswer: React.PropTypes.bool,
   reflection: React.PropTypes.bool,
