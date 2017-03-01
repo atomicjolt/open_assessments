@@ -21,10 +21,6 @@ export default function factory(type) {
       return survey;
 
     default:
-<<<<<<< HEAD
       return baseItem;
-=======
-      return base;
->>>>>>> 0f1667f191b87e897312b03376f3509054e39524
   }
 }
