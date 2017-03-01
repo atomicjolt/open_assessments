@@ -6,7 +6,9 @@ import 'tinymce/themes/modern/theme';
 import 'tinymce/plugins/autolink/plugin';
 import 'tinymce/plugins/paste/plugin';
 import 'tinymce/plugins/link/plugin';
+import 'tinymce/plugins/code/plugin';
 import 'tinymce/plugins/image/plugin';
+import 'tinymce/plugins/charmap/plugin';
 import 'tinymce/plugins/lists/plugin';
 import guid from '../../../utils/guid';
 
@@ -82,8 +84,8 @@ export class TinyWrapper extends React.Component {
           this.imageFilePicker.click();
         }
       },
-      plugins: 'autolink link image lists paste',
-      toolbar: 'undo redo | bold italic | alignleft aligncenter alignright image paste',
+      plugins: 'autolink link image lists paste code charmap',
+      toolbar: 'bold italic removeformat | bullist numlist  blockquote | code charmap subscript superscript | image',
       inline: true,
       paste_data_images: true,
     };

@@ -40,6 +40,10 @@
   &.has-error{
     border-color: $red;
   }
+  &.is-focused{
+    border-color: $blue;
+    background: $blue;
+  }
 }
 
 .c-text-input--large{
@@ -65,8 +69,105 @@
 }
 
 .c-wysiwyg{
-  &:focus{
-    border-top: $border;
+  &.is-focused{
+
+    .mce-content-body{
+      border-top: $border;
+      outline: none;
+    }
+
+  }
+
+  .mce-content-body{
+    padding: 0.5rem 0;
+  }
+
+  .mce-panel{
+    background: none;
+    width: 100% !important;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-top-color: $gray3;
+  }
+
+  .mce-btn{
+    background: none;
+    border-radius: $radius;
+    border: 0.1rem solid transparent;
+    &:hover{
+      background: $gray3;
+      border: $border;
+      .mce-ico{
+        color: $text-color;
+      }
+    }
+    &.mce-active{
+      background: $gray2;
+      border: $border;
+      .mce-ico{
+        color: $text-color;
+      }
+      &:hover{
+        background: $gray3;
+        border: $border;
+      }
+    }
+  }
+
+  .mce-flow-layout-item{
+    margin: 0;
+  }
+
+  .mce-ico{
+    color: $gray9;
+  }
+
+  p{
+    margin: 0;
+  }
+  strong{
+    @include bold;
+  }
+  sub{
+    vertical-align: sub !important;
+  }
+  sup{
+    vertical-align: super !important;
+  }
+}
+
+.mce-floatpanel{
+
+  .mce-window-head{
+    height: 5rem;
+    padding: 0 1rem 0 2rem;
+    @include display-flex;
+    @include align-items(center);
+    .mce-close{
+      position: relative;
+      margin-left: auto;
+    }
+  }
+  .mce-btn button{
+    border: none;
+    background: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: $radius;
+    @include display-flex;
+    @include align-items(center);
+    height: 3rem;
+    padding: 0 2rem;
+
+    span{
+      @include bold;
+      font-size: 1.2rem;
+    }
+
+    &:active{
+      @include transform(scale(0.98));
+    }
   }
 }
 
