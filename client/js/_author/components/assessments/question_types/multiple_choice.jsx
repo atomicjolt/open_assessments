@@ -55,7 +55,7 @@ export default class MultipleChoice extends React.Component {
   }
 
   render() {
-    const { question, id } = this.props.item;
+    const { question, id, type } = this.props.item;
     return (
       <div className="c-question__answers c-question__answers--maintain">
         {
@@ -63,6 +63,7 @@ export default class MultipleChoice extends React.Component {
             <Option
               key={`assessmentChoice_${choice.id}`}
               {...choice}
+              itemType={type}
               updateChoice={newChoice => this.props.updateChoice(id, choice.id, newChoice)}
               updateItem={() => this.props.updateItem({ question })}
               deleteChoice={() => this.deleteChoice(choice)}
