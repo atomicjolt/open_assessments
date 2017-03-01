@@ -15,7 +15,6 @@ export default class AudioUpload extends React.Component {
       minutes: '00',
       seconds: '100'
     });
-
     const time = _.mapValues(original, t => parseInt(t, 10));
     const seconds = (time.hours * 3600) + (time.minutes * 60) + time.seconds;
     return seconds;
