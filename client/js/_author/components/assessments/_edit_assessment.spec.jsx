@@ -1,4 +1,3 @@
-import _                from 'lodash';
 import React            from 'react';
 import TestUtils        from 'react-addons-test-utils';
 import { EditAssessment }  from './_edit_assessment';
@@ -44,13 +43,13 @@ describe('_edit_assessment component', () => {
         handleFunction = true;
       },
       createAssessmentOffered: () => {},
-      deleteAssignedAssessment: () => {handleDeleteFunction = true},
-      getAssessments: () => {didMount = true},
-      updateAssessment: () => {handleFunction = true},
-      updateAssessmentItems: () => {handleFunction = true},
-      getAssessmentItems: () => {didGetAssessmentItems = true},
-      createItemInAssessment: () => {handleFunction = true},
-      updateItem: () => {handleFunction = true},
+      deleteAssignedAssessment: () => { handleDeleteFunction = true; },
+      getAssessments: () => { didMount = true; },
+      updateAssessment: () => { handleFunction = true; },
+      updateAssessmentItems: () => { handleFunction = true; },
+      getAssessmentItems: () => { didGetAssessmentItems = true; },
+      createItemInAssessment: () => { handleFunction = true; },
+      updateItem: () => { handleFunction = true; },
       items: [
         {
           id: '7',
@@ -64,7 +63,7 @@ describe('_edit_assessment component', () => {
       ],
       updateChoice: () => {},
       updateAnswer: () => {},
-      deleteAssessmentItem: () => {handleFunction = true},
+      deleteAssessmentItem: () => { handleFunction = true; },
     };
     result = TestUtils.renderIntoDocument(<EditAssessment {...props} />);
   });

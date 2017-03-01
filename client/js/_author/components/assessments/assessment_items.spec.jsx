@@ -1,9 +1,7 @@
-import _                from 'lodash';
 import React            from 'react';
 import TestUtils        from 'react-addons-test-utils';
 import { Provider }     from 'react-redux';
 import { createStore }  from 'redux';
-import Stub             from '../../../../specs_support/stub';
 import AssessmentItems  from './assessment_items';
 
 describe('assessment items component', () => {

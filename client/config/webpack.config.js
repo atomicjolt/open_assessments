@@ -101,6 +101,7 @@ module.exports = function webpackConfig(stage) {
   const loaders = [
     { test: /\.js$/, loaders: jsLoaders, exclude: /node_modules/ },
     { test: /\.jsx?$/, loaders: jsLoaders, exclude: /node_modules/ },
+    { test: /\.json$/, loader: 'json' },
     { test: /\.scss$/i, loader: extractCSS.extract(scssLoaders) },
     { test: /\.css$/i, loader: extractCSS.extract(cssLoaders) },
     { test: /\.less$/i, loader: extractCSS.extract(lessLoaders) },

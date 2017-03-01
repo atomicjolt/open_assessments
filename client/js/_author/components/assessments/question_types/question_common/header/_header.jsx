@@ -2,11 +2,9 @@ import React            from 'react';
 import _                from 'lodash';
 import DefaultHeader    from './default';
 import ReorderHeader    from './reorder';
-import GenusTypes       from '../../../../../../constants/genus_types';
 
 export default function QuestionHeader(props) {
-  const type = props.type || 'Unknown';
-  const typeName = _.words(_.upperFirst(type)).join(' ');
+  const typeName = _.words(_.upperFirst(props.type)).join(' ');
 
   let currentHeader = <DefaultHeader {...props} />;
 

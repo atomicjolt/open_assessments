@@ -9,21 +9,19 @@ import * as ItemActions       from '../../../actions/qbank/items';
 
 function transformAssessment(assessment) {
   if (!assessment) return {};
-  const fixedAssessment = {
+  return {
     ...assessment,
-    name: assessment.displayName.text,
+    name: _.get(assessment, 'displayName.text', ''),
   };
-
-  return fixedAssessment;
 }
 
 function select(state, props) {
   const bankId = encodeURIComponent(props.params.bankId);
   const id = encodeURIComponent(props.params.id);
-  const bank = state.assessments[bankId];
+  const bankAssessments = state.assessments[bankId];
   const assessmentItemIds = state.assessmentItems[id];
   return {
-    assessment: bank && transformAssessment(bank[id]),
+    assessment: (bankAssessments && transformAssessment(bankAssessments[id])) || {},
     items: _.compact(_.at(state.items[bankId], assessmentItemIds)),
     settings: state.settings,
     params: { // override react router because we want the escaped ids
@@ -146,6 +144,7 @@ export class EditAssessment extends React.Component {
     const { assessment, settings } = this.props;
     const isPublished =  assessment ? _.includes(assessment.assignedBankIds, settings.publishedBankId) : false;
     const publishedAndOffered = isPublished && !_.isUndefined(assessment.assessmentOffered);
+
     return (
       <div>
         <Heading
