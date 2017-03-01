@@ -20,19 +20,23 @@ const BOX_SIZES = {
   }
 };
 
-function getBoxSize(lines) {
-  return _.findKey(BOX_SIZES, boxSize => lines === boxSize.expectedLines) || 'large';
+function getBoxSize(lines, length) {
+  return _.findKey(BOX_SIZES, boxSize => (
+    lines === boxSize.expectedLines && length === boxSize.expectedLength
+  )) || 'large';
+}
+
+function updateItem(e, update) {
+  update({
+    question: { ...BOX_SIZES[e.target.value] }
+  });
 }
 
 export default function ShortAnswer(props) {
   const { question } = props.item;
   const lines = question && question.expectedLines;
-
-  function updateItem(e) {
-    props.updateItem({
-      question: { ...BOX_SIZES[e.target.value] }
-    });
-  }
+  const length = question && question.expectedLength;
+  const boxSize = getBoxSize(lines, length);
 
   return (
     <div>
@@ -40,8 +44,8 @@ export default function ShortAnswer(props) {
         <div className="c-dropdown c-dropdown--medium c-input-label--top">
           <label htmlFor="short-answer-size">Answer Box</label>
           <select
-            value={getBoxSize(lines)}
-            onChange={e => updateItem(e)}
+            value={boxSize}
+            onChange={e => updateItem(e, props.updateItem)}
             id="short-answer-size"
           >
             <option value="small">Small</option>
@@ -50,8 +54,8 @@ export default function ShortAnswer(props) {
           </select>
         </div>
 
-        <div className={`c-short-answer__example is-${getBoxSize(lines)}`}>
-          <span>{_.capitalize(getBoxSize(lines))} Box</span>
+        <div className={`c-short-answer__example is-${boxSize}`}>
+          <span>{_.capitalize(boxSize)} Box</span>
         </div>
       </div>
 
