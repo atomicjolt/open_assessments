@@ -1,17 +1,40 @@
 import React        from 'react';
 import TestUtils    from 'react-addons-test-utils';
 import FileUpload   from './file_upload';
+import Stub         from '../../../../../specs_support/stub';
 
-describe('file upload component', () => {
+fdescribe('file upload component', () => {
   let props;
   let result;
 
   beforeEach(() => {
-    props = {};
-    result = TestUtils.renderIntoDocument(<FileUpload {...props} />);
+    props = {
+      updateItem: () => {},
+      item: {
+        id: '76',
+        displayName: {
+          text: 'IMATITLESPEC',
+          languageTypeId: '639-2%3AENG%40ISO',
+        },
+        description: {
+          text: 'IMADESCRIPTION',
+        },
+        type: '',
+        index: 1,
+        question: {
+          shuffle: true,
+          timeValue: {
+            hours: '1',
+            minutes: '70',
+            seconds: '100',
+          },
+        },
+      },
+    };
+    result = TestUtils.renderIntoDocument(<Stub><FileUpload {...props} /></Stub>);
   });
 
-  it('does something', () => {
-
+  it('renders component', () => {
+    expect(result).toBeDefined();
   });
 });
