@@ -7,6 +7,8 @@ import { DONE }                             from '../constants/wrapper';
 import { Constants as BankConstants }       from '../actions/qbank/banks';
 import { Constants as AssessmentConstants } from '../actions/qbank/assessments';
 import { Constants as ItemConstants }       from '../actions/qbank/items';
+import { Constants as AssetConstants }      from '../actions/qbank/assets';
+import genusTypes                           from '../constants/genus_types';
 import serialize                            from './serialization/qbank/serializers/factory';
 import deserialize                          from './serialization/qbank/deserializers/factory';
 
@@ -115,7 +117,7 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
 const qbank = {
   [BankConstants.GET_BANKS_HIERARCHY]: {
     method : Network.GET,
-    url    : () => 'https://4h8n6sg95j.execute-api.us-east-1.amazonaws.com/dev/proxy',
+    url    : url => `${url}`,
   },
 
   [AssessmentConstants.GET_ASSESSMENTS]: {
@@ -214,6 +216,11 @@ const qbank = {
     });
   },
 
+  [AssetConstants.UPLOAD_IMAGE]: {
+    method : Network.POST,
+    url    : (url, action) => `${url}/repository/repositories/${action.bankId}/assets`,
+  },
+
   [AssessmentConstants.CREATE_ITEM_IN_ASSESSMENT]: (store, action) => {
     createItemInAssessment(
       store,
@@ -301,7 +308,7 @@ const qbank = {
         original : action,
       }));
     });
-  },
+  }
 };
 
 export default { ...server, ...qbank };
