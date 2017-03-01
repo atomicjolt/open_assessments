@@ -12,6 +12,7 @@ export default class Question extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
       type: React.PropTypes.string,
+      bankId: React.PropTypes.string,
     }).isRequired,
     isActive: React.PropTypes.bool,
     itemIndex: React.PropTypes.number,
@@ -82,7 +83,7 @@ export default class Question extends React.Component {
             isActive={this.props.isActive}
           />
         );
-      case genusTypes.item.audioUpload:
+      case 'audioUpload':
         return (
           <AudioUpload
             updateItem={newProps => this.updateItem(newProps)}
@@ -112,7 +113,7 @@ export default class Question extends React.Component {
 
   render() {
     const { item } = this.props;
-    const { name, type, id, question, language } = item;
+    const { name, type, id, question, language, bankId } = item;
     const className = this.getClassName();
 
     return (
@@ -151,6 +152,7 @@ export default class Question extends React.Component {
             id={id}
             text={question.text}
             updateItem={newProps => this.updateItem(newProps)}
+            bankId={bankId}
           />
           {this.content()}
         </div>
