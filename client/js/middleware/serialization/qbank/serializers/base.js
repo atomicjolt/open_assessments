@@ -16,7 +16,7 @@ export function baseSerializeItem(originalItem, newAttributes) {
     genusTypeId: genusTypes.item[originalItem.type],
     name: _.get(newAttributes, 'name', originalItem.name),
     question: scrub(
-      baseSerializeQuestion(originalItem, newAttributes.question || {})
+      baseSerializeQuestion(originalItem, _.get(newAttributes, 'question', {}))
     ),
     answers: null,
   };
