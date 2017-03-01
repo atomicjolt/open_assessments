@@ -4,13 +4,7 @@ export const languages = {
 };
 
 export function getLanguage(langCode) {
-  switch (langCode) {
-    case languages.english:
-      return 'english';
-
-    default:
-      return null;
-  }
+  return _.findKey(languages, language => langCode === language) || null;
 }
 
 
