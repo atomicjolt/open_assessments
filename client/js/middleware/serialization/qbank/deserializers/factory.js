@@ -1,4 +1,5 @@
 import audioUpload      from './audio_upload';
+import base             from './base';
 import shortAnswer      from './short_answer';
 import multipleChoice   from './multiple_choice';
 import genusTypes       from '../../../../constants/genus_types';
@@ -17,6 +18,6 @@ export default function factory(type) {
       return shortAnswer;
 
     default:
-      throw `invalid type: ${type}`;
+      return base;
   }
 }

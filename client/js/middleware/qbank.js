@@ -8,9 +8,9 @@ import { Constants as BankConstants }       from '../actions/qbank/banks';
 import { Constants as AssessmentConstants } from '../actions/qbank/assessments';
 import { Constants as ItemConstants }       from '../actions/qbank/items';
 import { Constants as AssetConstants }      from '../actions/qbank/assets';
-import genusTypes                           from '../constants/genus_types';
 import serialize                            from './serialization/qbank/serializers/factory';
 import deserialize                          from './serialization/qbank/deserializers/factory';
+import { scrub }                            from './serialization/serializer_utils';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -86,12 +86,12 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
     state.jwt,
     state.settings.csrf_token,
     null,
-    item
+    scrub(serialize()(item))
   ).then((res) => {
     store.dispatch({
       type: ItemConstants.CREATE_ITEM + DONE,
       original: action,
-      payload: res.body
+      payload: deserialize(res.body.genusTypeId)(res.body)
     });
 
     const newId = res.body.id;
