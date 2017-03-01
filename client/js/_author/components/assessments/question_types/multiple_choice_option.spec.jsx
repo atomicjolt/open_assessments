@@ -11,18 +11,14 @@ describe('Multiple Choice Option', () => {
 
   beforeEach(() => {
     props = {
-      // {...choice}
       isCorrect: true,
       key: 'assessmentChoice_1',
       updateChoice: attr =>  { updatedChoice = attr; },
       text: 'This is dummy text',
-      // updateItem: () => this.props.updateItem({ question }),
       deleteChoice: (e) => { moveChoice = e.target.innerText; },
       shuffle: false,
       moveUp: (e) => { moveChoice = e.target.innerText; },
       moveDown: (e) => { moveChoice = e.target.innerText; },
-      // first: choice.order === 0,
-      // last: question ? choice.order === _.size(question.choices) - 1 : true,
       isActive: true,
     };
     result = TestUtils.renderIntoDocument(<Stub><Option {...props} /></Stub>);
