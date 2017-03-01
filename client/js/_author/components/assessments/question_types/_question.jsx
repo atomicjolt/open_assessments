@@ -99,6 +99,8 @@ export default class Question extends React.Component {
     const { name, type, id, question, bankId } = item;
     const className = this.getClassName();
 
+    const questionText = question ? question.text : '';
+
     return (
       <div
         className={`o-item c-question ${className}`}
@@ -124,7 +126,7 @@ export default class Question extends React.Component {
           updateItem={newProps => this.updateItem(newProps)}
           defaultName={name}
           language={null}
-          maintainOrder={!question.shuffle}
+          maintainOrder={question && !question.shuffle}
           multipleAnswer={false}
           reflection={false}
           type={type}
@@ -132,7 +134,7 @@ export default class Question extends React.Component {
         <div className={`c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
             id={id}
-            text={question.text}
+            text={questionText}
             updateItem={newProps => this.updateItem(newProps)}
             bankId={bankId}
           />
