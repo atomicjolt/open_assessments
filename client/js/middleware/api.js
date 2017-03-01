@@ -15,11 +15,13 @@ const API = store => next => (action) => {
       handler(store, action);
     } else if (_.isObject(handler)) {
       const state = store.getState();
+      const { api_url, lambda_url } = state.settings;
+      const url = action.type === 'GET_BANKS_HIERARCHY' ? lambda_url : api_url;
       request(
         store,
         action,
         handler.method,
-        handler.url(state.settings.api_url, action),
+        handler.url(url, action),
         handler.params ? handler.params(action) : action.params,
         handler.body ? handler.body(action) : action.body
       );
