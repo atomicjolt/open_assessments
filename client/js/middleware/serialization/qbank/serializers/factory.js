@@ -1,8 +1,8 @@
 import multipleChoice   from './multiple_choice';
+import { baseItem }     from './base';
 import shortAnswer      from './short_answer';
 import audioUpload      from './audio_upload';
 import survey           from './survey';
-import base             from './base';
 
 export default function factory(type) {
   switch (type) {
@@ -20,6 +20,6 @@ export default function factory(type) {
       return survey;
 
     default:
-      return base;
+      return baseItem;
   }
 }
