@@ -61,7 +61,7 @@ export default class Question extends React.Component {
     if (reflect) {
       type = item.multipleAnswer ? 'multipleReflection' : 'reflection';
     }
-
+    // The choices: true is to make sure the deserializer updates the choice and answer data
     this.props.updateItem({
       id: item.id,
       type,
