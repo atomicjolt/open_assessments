@@ -48,7 +48,8 @@ export default {
       recordTime: "Recording time"
     },
     fileUpload: {
-      chooseFile: "Choose a File to Upload"
+      chooseFile: "Choose a File to Upload",
+      noFile: "No file chosen"
     }
   }
 };

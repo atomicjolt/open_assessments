@@ -26,14 +26,14 @@ module.exports = () => {
       { pattern: './specs_support/**/*.xml', watched: true, served: true, included: false },
 
       // Use webpack to build each test individually. If changed here, change in preprocessors
-      // './js/**/*.spec.js'
+      // './js/**/*.js'
       './webpack.tests.js',          // More performant but tests cannot be run individually
     ],
 
     // Transpile tests with the karma-webpack plugin
     preprocessors: {
       // Use webpack to build each test individually. If changed here, match the change in files
-      // './js/**/*.spec.js': ['webpack', 'sourcemap']
+      // './js/**/*.js': ['webpack', 'sourcemap']
       './webpack.tests.js': ['webpack', 'sourcemap', 'coverage'],      // More performant but tests cannot be run individually
       // './js/**/*.js*': 'coverage',
     },
