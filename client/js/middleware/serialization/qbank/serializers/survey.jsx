@@ -29,7 +29,7 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
     id: originalQuestion.id,
-    genusTypeId: newQuestionAttributes.type === 'survey' ? genusTypes.question.survey : genusTypes.question.multiSurvey,
+    genusTypeId: newQuestionAttributes.type === 'reflection' ? genusTypes.question.reflection : genusTypes.question.multipleReflection,
     questionString: newQuestionAttributes.text,
     multiAnswer: newQuestionAttributes.multiAnswer,
     shuffle: newQuestionAttributes.shuffle,

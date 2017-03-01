@@ -5,8 +5,8 @@ export default function factory(type) {
   switch (type) {
     case 'multipleChoice':
       return multipleChoice;
-    case 'survey':
-    case 'multiSurvey':
+    case 'reflection':
+    case 'multipleReflection':
       return survey;
 
     default:

@@ -58,7 +58,7 @@ export default class Question extends React.Component {
     const { item } = this.props;
     let type = 'multipleChoice';
     if (reflect) {
-      type = item.multipleAnswer ? 'multiSurvey' : 'survey';
+      type = item.multipleAnswer ? 'multipleReflection' : 'reflection';
     }
 
     this.props.updateItem({
@@ -142,7 +142,7 @@ export default class Question extends React.Component {
           language={language}
           maintainOrder={!question.shuffle}
           multipleAnswer={item.multipleAnswer}
-          reflection={item.type === 'survey'}
+          reflection={item.type === 'reflection'}
           makeReflection={reflect => this.makeReflection(reflect)}
           type={type}
         />
