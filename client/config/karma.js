@@ -34,8 +34,7 @@ module.exports = () => {
     preprocessors: {
       // Use webpack to build each test individually. If changed here, match the change in files
       // './js/**/*.spec.js': ['webpack', 'sourcemap']
-      './webpack.tests.js': ['webpack', 'sourcemap', 'coverage'],      // More performant but tests cannot be run individually
-      // './js/**/*.js*': 'coverage',
+      './webpack.tests.js': ['webpack', 'sourcemap'],      // More performant but tests cannot be run individually
     },
 
     // Run the tests using any of the following browsers
@@ -58,10 +57,9 @@ module.exports = () => {
     frameworks: ['jasmine-ajax', 'jasmine-jquery', 'jasmine'],
 
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage', 'spec'
-    reporters: ['dots', 'coverage'],
+    reporters: ['dots'],
 
     // karma-webpack configuration. Load and transpile js and jsx files.
-    // Use istanbul-transformer post loader to generate code coverage report.
     webpack: {
       devtool : 'eval',
       plugins : webpackConfig.plugins,
@@ -75,12 +73,6 @@ module.exports = () => {
       stats  : {
         colors: true,
       },
-    },
-
-    coverageReporter: {
-      type : 'lcovonly',
-      dir  : '../coverage/',
-      file : 'coverage.info',
     },
   };
   return testConfig;
