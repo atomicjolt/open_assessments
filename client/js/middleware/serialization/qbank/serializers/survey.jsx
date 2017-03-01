@@ -52,13 +52,13 @@ function serializeAnswers(originalChoices, newChoiceAttributes) {
   });
 
   return _.map(originalChoices, (choice) => {
-    return {
+    return scrub({
       id: choice.answerId,
       genusTypeId: genusTypes.answer.rightAnswer,
       feedback: newFeedback || choice.feedback,
       type: genusTypes.answer.multipleChoice,  // TODO: probably wrong
       choiceIds: [choice.id],
-    };
+    });
   });
 }
 
