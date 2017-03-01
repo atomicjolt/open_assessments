@@ -61,7 +61,7 @@ export default class NavigationBarContent extends React.Component {
   }
 }
 
-AssessmentsView.propTypes = {
+NavigationBarContent.propTypes = {
   editOrPublishAssessment: React.PropTypes.func.isRequired,
   isPublished: React.PropTypes.bool.isRequired,
   items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,

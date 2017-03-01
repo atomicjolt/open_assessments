@@ -9,14 +9,6 @@ import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 
-function transformAssessment(assessment) {
-  if (!assessment) return {};
-  return {
-    ...assessment,
-    name: _.get(assessment, 'displayName.text', ''),
-  };
-}
-
 function select(state, props) {
   const bankId = encodeURIComponent(props.params.bankId);
   const id = encodeURIComponent(props.params.id);
