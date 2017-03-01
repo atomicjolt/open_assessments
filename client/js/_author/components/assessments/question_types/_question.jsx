@@ -66,7 +66,7 @@ export default class Question extends React.Component {
             isActive={this.props.isActive}
           />
         );
-      case genusTypes.item.audioUpload:
+      case 'audioUpload':
         return (
           <AudioUpload
             updateItem={newProps => this.updateItem(newProps)}
@@ -98,7 +98,6 @@ export default class Question extends React.Component {
     const { item } = this.props;
     const { name, type, id, question, bankId } = item;
     const className = this.getClassName();
-
     return (
       <div
         className={`o-item c-question ${className}`}

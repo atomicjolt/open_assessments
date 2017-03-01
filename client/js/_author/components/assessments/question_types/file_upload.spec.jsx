@@ -3,7 +3,7 @@ import TestUtils    from 'react-addons-test-utils';
 import FileUpload   from './file_upload';
 import Stub         from '../../../../../specs_support/stub';
 
-fdescribe('file upload component', () => {
+describe('file upload component', () => {
   let props;
   let result;
 
