@@ -1,10 +1,8 @@
 import React            from 'react';
-import _                from 'lodash';
 import MultipleChoice   from './multiple_choice';
 import QuestionHeader   from './question_common/header/_header';
 import Settings         from './question_common/settings';
 import QuestionText     from './question_common/text';
-import Feedback         from './question_common/feedback';
 import genusTypes       from '../../../../constants/genus_types.js';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
@@ -13,7 +11,8 @@ import ShortAnswer      from './short_answer';
 export default class Question extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
-      genusTypeId: React.PropTypes.string,
+      type: React.PropTypes.string,
+      bankId: React.PropTypes.string,
     }).isRequired,
     isActive: React.PropTypes.bool,
     itemIndex: React.PropTypes.number,
@@ -57,8 +56,8 @@ export default class Question extends React.Component {
   }
 
   content() {
-    switch (this.props.item.genusTypeId) {
-      case genusTypes.item.multipleChoice:
+    switch (this.props.item.type) {
+      case 'multipleChoice':
         return (
           <MultipleChoice
             {...this.props}
@@ -97,8 +96,9 @@ export default class Question extends React.Component {
 
   render() {
     const { item } = this.props;
-    const { displayName, genusTypeId, id, description, question } = item;
+    const { name, type, id, question, bankId } = item;
     const className = this.getClassName();
+
     return (
       <div
         className={`o-item c-question ${className}`}
@@ -107,8 +107,8 @@ export default class Question extends React.Component {
         onFocus={() => this.props.activateItem(item.id)}
       >
         <QuestionHeader
-          name={displayName.text}
-          type={genusTypeId}
+          name={name}
+          type={type}
           deleteAssessmentItem={this.props.deleteAssessmentItem}
           id={id}
           index={this.props.itemIndex}
@@ -122,18 +122,19 @@ export default class Question extends React.Component {
         <Settings
           id={id}
           updateItem={newProps => this.updateItem(newProps)}
-          defaultName={displayName.text}
-          language={displayName.languageTypeId}
+          defaultName={name}
+          language={null}
           maintainOrder={!question.shuffle}
           multipleAnswer={false}
           reflection={false}
-          genusTypeId={genusTypeId}
+          type={type}
         />
         <div className={`c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
             id={id}
-            text={description.text}
+            text={question.text}
             updateItem={newProps => this.updateItem(newProps)}
+            bankId={bankId}
           />
           {this.content()}
         </div>
