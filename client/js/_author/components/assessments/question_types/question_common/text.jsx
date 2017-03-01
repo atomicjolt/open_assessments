@@ -6,15 +6,12 @@ export default class questionText extends React.Component {
     return (
       <div className="c-input c-question-text">
         <label htmlFor={`question_text_${this.props.id}`} />
-        <div className="c-input__contain">
-          <Editor
-            text={this.props.text}
-            onBlur={val => this.props.updateItem({ question: { text: val } })}
-            bankId={this.props.bankId}
-            id={this.props.id}
-          />
-          <div className="c-input__bottom" />
-        </div>
+        <Editor
+          text={this.props.text}
+          onBlur={val => this.props.updateItem({ question: { text: val } })}
+          bankId={this.props.bankId}
+          id={this.props.id}
+        />
       </div>
     );
   }
