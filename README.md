@@ -1,4 +1,4 @@
-#Open Assessments [![Build Status](https://travis-ci.org/atomicjolt/open_assessments.svg?branch=master)](https://travis-ci.org/atomicjolt/open_assessments) [![Coverage Status](https://coveralls.io/repos/github/atomicjolt/open_assessments/badge.svg?branch=master)](https://coveralls.io/github/atomicjolt/open_assessments?branch=master)
+#Open Assessments [![Build Status](https://travis-ci.org/atomicjolt/open_assessments.svg?branch=master)](https://travis-ci.org/atomicjolt/open_assessments) 
 Open Assessments is a QTI client that can interpret QTI 1.x and 2.x as well as an authoring tool for generating
 QTI files. It currently works with MIT's QBank system.
 
