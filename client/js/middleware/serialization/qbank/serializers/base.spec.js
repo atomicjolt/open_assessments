@@ -9,6 +9,7 @@ fdescribe('baseSerialization', () => {
       id:'assessment.Item%3A58b7140ac89cd95590bd329b%40ODL.MIT.EDU',
       name:'Sample Question',
       type:'fileUpload',
+      answers: null,
       question:{
         choices:null,
         fileIds:{ file_id: 'file_id' },
@@ -17,6 +18,8 @@ fdescribe('baseSerialization', () => {
       }
     };
   });
+
+  describe('item', () => {});
 
   describe('question', () => {
     it('should only include base fields if question has not changed', () => {

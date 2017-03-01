@@ -1,5 +1,5 @@
 import multipleChoice   from './multiple_choice';
-import base             from './base';
+import { baseItem }     from './base';
 import audioUpload      from './audio_upload';
 import genusTypes       from '../../../../constants/genus_types';
 
@@ -10,6 +10,6 @@ export default function factory(type) {
     case 'audioUpload':
       return audioUpload;
     default:
-      return base;
+      return baseItem;
   }
 }
