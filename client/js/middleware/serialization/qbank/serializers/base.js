@@ -14,7 +14,7 @@ export function baseSerializeItem(originalItem, newAttributes) {
   const newItem = {
     id: originalItem.id,
     genusTypeId: genusTypes.item[originalItem.type],
-    name: newAttributes.name || originalItem.name,
+    name: _.get(newAttributes, 'name', originalItem.name),
     question: scrub(
       baseSerializeQuestion(originalItem, newAttributes.question || {})
     ),
