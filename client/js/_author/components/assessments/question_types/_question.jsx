@@ -73,7 +73,7 @@ export default class Question extends React.Component {
             item={this.props.item}
           />
         );
-      case genusTypes.item.fileUpload:
+      case 'fileUpload':
         return (
           <FileUpload
             updateItem={newProps => this.updateItem(newProps)}
