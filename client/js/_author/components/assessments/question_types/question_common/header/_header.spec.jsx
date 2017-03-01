@@ -22,16 +22,11 @@ describe('header component', () => {
     expect(questionNumber.textContent).toEqual('Question 8');
   });
 
-  it('displays the correct default question type', () => {
-    const questionType = TestUtils.findRenderedDOMComponentWithClass(result, 'c-question__type');
-    expect(questionType.textContent).toContain('multipleChoice');
-  });
-
   it('displays Multiple Choice when specific value is present', () => {
-    props.type = 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU';
+    props.type = 'multipleChoice';
     result = TestUtils.renderIntoDocument(<Stub><Header {...props} /></Stub>);
     const questionType = TestUtils.findRenderedDOMComponentWithClass(result, 'c-question__type');
-    expect(questionType.textContent).toContain('multipleChoice');
+    expect(questionType.textContent).toContain('Multiple Choice');
   });
 
   it('renders DefaultHeader when props.reorderActive is false', () => {

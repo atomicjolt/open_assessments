@@ -1,4 +1,6 @@
+import _                    from 'lodash';
 import { getQbankType }     from '../../../../constants/genus_types';
+import { getLanguage }      from '../../../../constants/language_types';
 
 export default function base(item) {
   return {
@@ -7,6 +9,7 @@ export default function base(item) {
     bankId: item.bankId,
     assessmentId: null, // TODO
     name: _.get(item, 'displayName.text'),
+    language: getLanguage(_.get(item, 'displayName.languageTypeId')), // TODO: How does the language even work?
     question: {
       id: _.get(item, 'question.id'),
       type: getQbankType(_.get(item, 'question.genusTypeId')),

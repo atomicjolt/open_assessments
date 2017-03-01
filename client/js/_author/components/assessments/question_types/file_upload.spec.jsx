@@ -4,6 +4,7 @@ import FileUpload   from './file_upload';
 import Stub         from '../../../../../specs_support/stub';
 
 describe('file upload component', () => {
+
   let props;
   let result;
 
