@@ -339,6 +339,14 @@
   }
 }
 
+input.c-file{
+  opacity: 0;
+  margin: 0;
+  height: 0.01rem;
+  width: 0.01rem;
+  position: absolute;
+}
+
 .c-answer{
 
   .c-checkbox, .c-radio{
