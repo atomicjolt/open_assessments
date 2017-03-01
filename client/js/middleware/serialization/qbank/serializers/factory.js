@@ -2,7 +2,7 @@ import multipleChoice   from './multiple_choice';
 import shortAnswer      from './short_answer';
 import audioUpload      from './audio_upload';
 import survey           from './survey';
-import genusTypes       from '../../../../constants/genus_types';
+import base             from './base';
 
 export default function factory(type) {
   switch (type) {
@@ -20,6 +20,6 @@ export default function factory(type) {
       return survey;
 
     default:
-      throw `invalid type: ${type}`;
+      return base;
   }
 }

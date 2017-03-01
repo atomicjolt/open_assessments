@@ -1,10 +1,11 @@
+import _                from 'lodash';
 import genusTypes       from '../../../../constants/genus_types';
 
 export function baseSerializeItem(originalItem, newAttributes) {
   return {
     id: originalItem.id,
     genusTypeId: genusTypes.item[originalItem.type],
-    name: newAttributes.name,
+    name: _.get(newAttributes, 'name', originalItem.name),
     question: null,
     answers: null,
   };
