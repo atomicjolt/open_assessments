@@ -1,4 +1,5 @@
 import multipleChoice   from './multiple_choice';
+import base             from './base';
 import genusTypes       from '../../../../constants/genus_types';
 
 export default function factory(type) {
@@ -7,6 +8,6 @@ export default function factory(type) {
       return multipleChoice;
 
     default:
-      throw `invalid type: ${type}`;
+      return base;
   }
 }
