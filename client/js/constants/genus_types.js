@@ -24,14 +24,7 @@ export const types = {
 };
 
 export function getQbankType(type) {
-  switch (type) {
-    case types.item.multipleChoice:
-      return 'multipleChoice';
-
-    case types.default:
-    default:
-      return null;
-  }
+  return _.findKey(types.item, (genusType) => type === genusType) || null;
 }
 
 export default types;
