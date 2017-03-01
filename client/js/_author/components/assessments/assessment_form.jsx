@@ -9,6 +9,7 @@ export default class AssessmentForm extends React.Component {
     items: React.PropTypes.oneOfType(
       [React.PropTypes.shape({}), React.PropTypes.arrayOf(React.PropTypes.shape({}))]
     ),
+    name: React.PropTypes.string,
     updateAssessment: React.PropTypes.func.isRequired,
     updateItemOrder: React.PropTypes.func.isRequired,
     publishedAndOffered: React.PropTypes.bool.isRequired,
@@ -22,7 +23,7 @@ export default class AssessmentForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      addingAssessment: false,
+      addingItem: false,
       activeItem: '',
       reorderActive: false,
     };
@@ -30,11 +31,11 @@ export default class AssessmentForm extends React.Component {
 
   createItem(newItem) {
     this.props.createItem(newItem);
-    this.setState({ addingAssessment: false });
+    this.setState({ addingItem: false });
   }
 
   showNewModal() {
-    return this.state.addingAssessment || _.isEmpty(this.props.items);
+    return this.props.name && (this.state.addingItem || _.isEmpty(this.props.items));
   }
 
   activateItem(itemId) {
@@ -65,18 +66,19 @@ export default class AssessmentForm extends React.Component {
     return null;
   }
 
-  newItem(name) {
+  newItem() {
     return (
-      name ? <NewItem
-        cancel={() => this.setState({ addingAssessment: false })}
+      <NewItem
+        cancel={() => this.setState({ addingItem: false })}
         create={newItem => this.createItem(newItem)}
-      /> : null
+      />
     );
   }
 
   render() {
     const reorderActive = this.state.reorderActive;
-    const name = _.get(this, 'props.displayName.text', '');
+    const canAddItem = !this.state.addingItem && this.props.name;
+
     return (
       <div className="o-contain">
         <div className="o-item">
@@ -85,8 +87,8 @@ export default class AssessmentForm extends React.Component {
             <label htmlFor="title_field" className="c-input test_label">
               <div className="c-input__contain">
                 <input
-                  key={name}
-                  defaultValue={name}
+                  key={this.props.name}
+                  defaultValue={this.props.name}
                   className="c-text-input c-text-input--large"
                   type="text"
                   id="title_field"
@@ -99,7 +101,7 @@ export default class AssessmentForm extends React.Component {
             </label>
           </div>
         </div>
-        { name ?
+        { this.props.name ?
           <AssessmentItems
             items={this.props.items}
             activeItem={this.state.activeItem}
@@ -112,7 +114,8 @@ export default class AssessmentForm extends React.Component {
             moveItem={(oldIndex, newIndex) => this.moveItem(oldIndex, newIndex)}
           /> : null
         }
-        {this.showNewModal() ? this.newItem(name) : <AddQuestion newItem={() => this.setState({ addingAssessment: true })} />}
+        {this.showNewModal() ? this.newItem() : null }
+        {canAddItem ? <AddQuestion newItem={() => this.setState({ addingItem: true })} /> : null}
       </div>
     );
   }
