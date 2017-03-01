@@ -3,7 +3,7 @@ import TestUtils  from 'react-addons-test-utils';
 import AddOption  from './add_option';
 import Stub       from '../../../../../specs_support/stub'
 
-fdescribe('Update Choice working', () => {
+describe('Update Choice working', () => {
   let result;
   let props;
   let called = false
