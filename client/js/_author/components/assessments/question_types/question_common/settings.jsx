@@ -2,8 +2,9 @@ import React    from 'react';
 import genusTypes from '../../../../../constants/genus_types';
 
 export default function questionSettings(props) {
+  const extraOptionTypes = ['multipleChoice', 'reflection', 'multipleReflection'];
   function checkboxOptions() {
-    return (props.type === 'multipleChoice' ?
+    return (
       <div className="o-right">
         <div className="c-checkbox u-ml-md">
           <input
@@ -33,12 +34,12 @@ export default function questionSettings(props) {
             id={`check04_${props.id}`}
             name="check"
             tabIndex="0"
-            onChange={e => props.updateItem({ reflection: e.target.checked })}
+            onChange={e => props.makeReflection({ reflection: e.target.checked })}
             checked={props.reflection ? 'checked' : null}
           />
           <label htmlFor={`check04_${props.id}`}>Reflection</label>
         </div>
-      </div> : null
+      </div>
     );
   }
 
@@ -66,16 +67,15 @@ export default function questionSettings(props) {
             id=""
             tabIndex="0"
             value={props.language}
-            // onChange={e => props.updateState('nameLanguage', e.target.value)}
-            onBlur={props.updateItem}
+            onChange={e => props.updateItem({ language: e.target.value })}
           >
-            <option value="639-2%3AENG%40ISO">English</option>
-            <option value="">Hindi</option>
-            <option value="">Telugu</option>
+            <option value="english">English</option>
+            <option value="hindi">Hindi</option>
+            <option value="telugu">Telugu</option>
           </select>
         </div>
       </div>
-      {checkboxOptions()}
+      {_.includes(extraOptionTypes, props.type) ? checkboxOptions() : null}
     </div>
   );
 }
@@ -86,6 +86,7 @@ questionSettings.propTypes = {
   type: React.PropTypes.string,
   language: React.PropTypes.string.isRequired,
   updateItem: React.PropTypes.func.isRequired,
+  makeReflection: React.PropTypes.func.isRequired,
   maintainOrder: React.PropTypes.bool,
   multipleAnswer: React.PropTypes.bool,
   reflection: React.PropTypes.bool,

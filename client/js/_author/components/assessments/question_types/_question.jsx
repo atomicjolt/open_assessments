@@ -55,9 +55,27 @@ export default class Question extends React.Component {
     this.props.updateItem({ id: item.id, ...newItemProperties });
   }
 
+  makeReflection(reflect) {
+    const { item } = this.props;
+    let type = 'multipleChoice';
+    if (reflect) {
+      type = item.multipleAnswer ? 'multipleReflection' : 'reflection';
+    }
+    // The choices: true is to make sure the deserializer updates the choice and answer data
+    this.props.updateItem({
+      id: item.id,
+      type,
+      question: {
+        type,
+        choices: true,
+      }
+    });
+  }
+
   content() {
     switch (this.props.item.type) {
       case 'multipleChoice':
+      case 'reflection':
         return (
           <MultipleChoice
             {...this.props}
@@ -81,7 +99,7 @@ export default class Question extends React.Component {
           />
         );
 
-      case genusTypes.item.shortAnswer:
+      case 'shortAnswer':
         return (
           <ShortAnswer
             updateItem={newProps => this.updateItem(newProps)}
@@ -96,7 +114,7 @@ export default class Question extends React.Component {
 
   render() {
     const { item } = this.props;
-    const { name, type, id, question, bankId } = item;
+    const { name, type, id, question, language, bankId } = item;
     const className = this.getClassName();
 
     return (
@@ -123,10 +141,11 @@ export default class Question extends React.Component {
           id={id}
           updateItem={newProps => this.updateItem(newProps)}
           defaultName={name}
-          language={null}
+          language={language}
           maintainOrder={!question.shuffle}
-          multipleAnswer={false}
-          reflection={false}
+          multipleAnswer={item.multipleAnswer}
+          reflection={item.type === 'reflection'}
+          makeReflection={reflect => this.makeReflection(reflect)}
           type={type}
         />
         <div className={`c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
