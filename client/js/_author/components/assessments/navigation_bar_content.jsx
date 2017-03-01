@@ -46,5 +46,5 @@ export default function AssessmentsView(props) {
 AssessmentsView.propTypes = {
   editOrPublishAssessment: React.PropTypes.func.isRequired,
   isPublished: React.PropTypes.bool.isRequired,
-  items: React.PropTypes.shape({}).isRequired,
+  items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
 };

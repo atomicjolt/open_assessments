@@ -1,6 +1,8 @@
 import multipleChoice   from './multiple_choice';
 import shortAnswer      from './short_answer';
 import audioUpload      from './audio_upload';
+import survey           from './survey';
+import genusTypes       from '../../../../constants/genus_types';
 
 export default function factory(type) {
   switch (type) {
@@ -12,6 +14,10 @@ export default function factory(type) {
 
     case 'audioUpload':
       return audioUpload;
+
+    case 'reflection':
+    case 'multipleReflection':
+      return survey;
 
     default:
       throw `invalid type: ${type}`;
