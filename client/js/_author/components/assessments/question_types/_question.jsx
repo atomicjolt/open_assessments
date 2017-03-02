@@ -170,8 +170,8 @@ export default class Question extends React.Component {
           defaultName={name}
           language={language}
           maintainOrder={question && !question.shuffle}
-          multipleAnswer={item.multipleAnswer}
-          reflection={item.type === 'reflection'}
+          multipleAnswer={_.includes([types.multipleAnswer, types.multipleReflection], item.type)}
+          reflection={_.includes([types.reflection, types.multipleReflection], item.type)}
           makeReflection={reflect => this.makeReflection(reflect)}
           makeMultipleAnswer={multi => this.makeMultipleAnswer(multi)}
           type={type}

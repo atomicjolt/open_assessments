@@ -23,7 +23,7 @@ export default function questionSettings(props) {
             id={`check03_${props.id}`}
             name="check"
             tabIndex="0"
-            onChange={() => props.updateItem({ multipleAnswer: !props.multipleAnswer })}
+            onChange={() => props.makeMultipleAnswer()}
             checked={props.multipleAnswer ? 'checked' : null}
           />
           <label htmlFor={`check03_${props.id}`}>Multiple answer</label>
@@ -34,7 +34,7 @@ export default function questionSettings(props) {
             id={`check04_${props.id}`}
             name="check"
             tabIndex="0"
-            onChange={e => props.makeReflection({ reflection: e.target.checked })}
+            onChange={e => props.makeReflection(e.target.checked)}
             checked={props.reflection ? 'checked' : null}
           />
           <label htmlFor={`check04_${props.id}`}>Reflection</label>
