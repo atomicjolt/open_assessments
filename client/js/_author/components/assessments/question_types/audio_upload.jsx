@@ -29,10 +29,13 @@ export default class AudioUpload extends React.Component {
 
   constructor(props) {
     super(props);
+    const timeLimit = AudioUpload.getAudioLimit(props.item)
+      || `${AudioUpload.MAX_TIME}`;
+    const displayWarning = timeLimit > AudioUpload.MAX_TIME;
+
     this.state = {
-      timeLimit: AudioUpload.getAudioLimit(props.item)
-        || `${AudioUpload.MAX_TIME}`,
-      displayWarning: false,
+      timeLimit,
+      displayWarning,
     };
   }
 
