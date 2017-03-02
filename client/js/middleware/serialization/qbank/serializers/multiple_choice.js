@@ -28,13 +28,9 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
-    id: originalQuestion.id,
-    // genusTypeId: genusTypes.default, // TODO: this probably has a real type
-    questionString: newQuestionAttributes.text,
     multiAnswer: newQuestionAttributes.multiAnswer,
     shuffle: newQuestionAttributes.shuffle,
     timeValue: newQuestionAttributes.timeValue,
-    fileIds: {},
     choices: null,
   };
 
@@ -76,9 +72,15 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
 
   const { question } = newItemAttributes;
   if (question) {
-    newItem.question = serializeQuestion(originalItem.question, question);
+    newItem.question = {
+      ...newItem.question,
+      ...serializeQuestion(originalItem.question, question)
+    };
     if (question.choices) {
-      newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
+      newItem.answers = {
+        ...newItem.answers,
+        ...serializeAnswers(originalItem.question.choices, question.choices)
+      };
     }
   }
 

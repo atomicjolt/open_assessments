@@ -7,7 +7,7 @@ export default (state = initialState, action) => {
 
     case AssetConstants.UPLOAD_IMAGE_DONE: {
       const newState = _.cloneDeep(state);
-      newState[action.original.guid] = action.payload.assetContents[0].url;
+      newState[action.original.guid] = action.payload;
 
       return newState;
     }

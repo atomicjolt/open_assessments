@@ -10,7 +10,7 @@ const requests = [
 
 export const Constants = wrapper(actions, requests);
 
-export function uploadImage(file, guid, bankId, apiUrl) {
+export function uploadImage(file, guid, bankId) {
   const formData = new FormData();
   formData.append('inputFile', file);
   formData.append('returnUrl', true);
@@ -19,9 +19,8 @@ export function uploadImage(file, guid, bankId, apiUrl) {
     bankId,
     file,
     guid,
-    apiUrl,
-    apiCall : true,
-    type    : Constants.UPLOAD_IMAGE,
+    apiCall: true,
+    type: Constants.UPLOAD_IMAGE,
     body: formData
   };
 }
