@@ -7,6 +7,7 @@ export function baseSerializeQuestion(originalItem, newAttributes) {
     id: _.get(originalItem, 'question.id'),
     genusTypeId: genusTypes.question[originalItem.type],
     questionString: newAttributes.text,
+    fileIds: newAttributes.fileIds
   };
 }
 
