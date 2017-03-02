@@ -25,6 +25,6 @@ export default function factory(type) {
       return multipleAnswer;
 
     default:
-      return baseItem;
+      throw 'We could not find a type for serializing';
   }
 }
