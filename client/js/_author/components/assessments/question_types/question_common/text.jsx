@@ -1,36 +1,23 @@
 import React      from 'react';
+import Editor     from '../../../common/oea_editor';
 
-export default class questionText extends React.Component {
-  componentDidUpdate(prevProps) {
-    if (this.props.text !== prevProps.text) {
-      this.description.value = this.props.text;
-    }
-  }
-
-  render() {
-    return (
-      <div className="c-input c-question-text">
-        <label htmlFor={`question_text_${this.props.id}`} />
-        <div className="c-input__contain">
-          <input
-            ref={ref => (this.description = ref)}
-            className="c-text-input c-text-input--medium c-wysiwyg"
-            id={`question_name_${this.props.id}`}
-            type="text"
-            placeholder="Question Text"
-            tabIndex="0"
-            defaultValue={this.props.text}
-            onBlur={e => this.props.updateItem({ description: e.target.value })}
-          />
-          <div className="c-input__bottom" />
-        </div>
-      </div>
-    );
-  }
+export default function questionText(props) {
+  return (
+    <div className="author--c-input c-question-text">
+      <label htmlFor={`question_text_${props.itemId}`} />
+      <Editor
+        text={props.text}
+        onBlur={(val, fileIds) => props.updateItem({ question: { text: val, fileIds } })}
+        bankId={props.bankId}
+        itemId={props.itemId}
+      />
+    </div>
+  );
 }
 
 questionText.propTypes = {
-  id: React.PropTypes.string.isRequired,
+  itemId: React.PropTypes.string.isRequired,
   text: React.PropTypes.string.isRequired,
   updateItem: React.PropTypes.func.isRequired,
+  bankId: React.PropTypes.string.isRequired,
 };

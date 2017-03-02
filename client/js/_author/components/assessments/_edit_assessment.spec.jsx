@@ -1,4 +1,3 @@
-import _                from 'lodash';
 import React            from 'react';
 import TestUtils        from 'react-addons-test-utils';
 import { EditAssessment }  from './_edit_assessment';
@@ -44,13 +43,13 @@ describe('_edit_assessment component', () => {
         handleFunction = true;
       },
       createAssessmentOffered: () => {},
-      deleteAssignedAssessment: () => {handleDeleteFunction = true},
-      getAssessments: () => {didMount = true},
-      updateAssessment: () => {handleFunction = true},
-      updateAssessmentItems: () => {handleFunction = true},
-      getAssessmentItems: () => {didGetAssessmentItems = true},
-      createItemInAssessment: () => {handleFunction = true},
-      updateItem: () => {handleFunction = true},
+      deleteAssignedAssessment: () => { handleDeleteFunction = true; },
+      getAssessments: () => { didMount = true; },
+      updateAssessment: () => { handleFunction = true; },
+      updateAssessmentItems: () => { handleFunction = true; },
+      getAssessmentItems: () => { didGetAssessmentItems = true; },
+      createItemInAssessment: () => { handleFunction = true; },
+      updateItem: () => { handleFunction = true; },
       items: [
         {
           id: '7',
@@ -64,18 +63,18 @@ describe('_edit_assessment component', () => {
       ],
       updateChoice: () => {},
       updateAnswer: () => {},
-      deleteAssessmentItem: () => {handleFunction = true},
+      deleteAssessmentItem: () => { handleFunction = true; },
     };
     result = TestUtils.renderIntoDocument(<EditAssessment {...props} />);
   });
 
   it('renders Assessment Form to DOM', () => {
-    const assessmentForm = TestUtils.scryRenderedDOMComponentsWithClass(result, 'c-assessment-title');
+    const assessmentForm = TestUtils.scryRenderedDOMComponentsWithClass(result, 'author--c-assessment-title');
     expect(assessmentForm.length).toBe(1);
   });
 
   it('renders Heading to DOM', () => {
-    const heading = TestUtils.scryRenderedDOMComponentsWithClass(result, 'c-logo');
+    const heading = TestUtils.scryRenderedDOMComponentsWithClass(result, 'author--c-logo');
     expect(heading.length).toBe(1);
   });
 

@@ -5,22 +5,22 @@ export default function inactiveHeader(props) {
   const hideDown = props.bottomItem ? 'is-hidden' : '';
 
   return (
-    <div className="o-right c-question-icons c-question-icons--reorder">
+    <div className="author--o-right author--c-question-icons author--c-question-icons--reorder">
       <button
-        className={`c-btn c-btn--square ${hideUp}`}
+        className={`author--c-btn author--c-btn--square ${hideUp}`}
         onClick={!props.topItem && props.moveUp}
       >
         <i className="material-icons">arrow_upward</i>
       </button>
       <button
-        className={`c-btn c-btn--square ${hideDown}`}
+        className={`author--c-btn author--c-btn--square ${hideDown}`}
         onClick={!props.bottomItem && props.moveDown}
       >
         <i className="material-icons">arrow_downward</i>
       </button>
       <button
         onClick={props.toggleReorder}
-        className="c-btn c-btn--sm c-btn--white"
+        className="author--c-btn author--c-btn--sm author--c-btn--white"
       > Done </button>
     </div>
   );

@@ -10,11 +10,7 @@ export default class AudioUpload extends React.Component {
   }
 
   static getAudioLimit(item) {
-    const original = _.get(item, ['question', 'timeValue'], {
-      hours: '00',
-      minutes: '00',
-      seconds: '100'
-    });
+    const original = _.get(item, ['question', 'timeValue']);
 
     const time = _.mapValues(original, t => parseInt(t, 10));
     const seconds = (time.hours * 3600) + (time.minutes * 60) + time.seconds;
@@ -34,28 +30,36 @@ export default class AudioUpload extends React.Component {
     });
   }
 
+  static rangeWarning(){
+    return (
+      <span className="author--c-inline-error">Please enter a number under 240</span>
+    );
+  }
+
   render() {
+    const audioLimit = AudioUpload.getAudioLimit(this.props.item);
+    const warning = audioLimit >= 240 ? AudioUpload.rangeWarning() : null;
     return (
       <div>
-        <div className="c-question__answers o-row" role="radiogroup">
-          <div className="c-file-upload__audio-settings is-active">
+        <div className="author--c-question__answers author--o-row" role="radiogroup">
+          <div className="author--c-file-upload__audio-settings is-active">
             <span>Audio record limit</span>
-            <div className="c-input c-input--inline">
+            <div className="author--c-input author--c-input--inline">
               <label htmlFor="audio-limit" />
-              <div className="c-input__contain">
+              <div className="author--c-input__contain">
                 <input
-                  className="c-text-input c-text-input--smaller"
+                  className="author--c-text-input author--c-text-input--smaller"
                   id="audio-limit"
                   type="text"
                   maxLength="3"
-                  defaultValue={AudioUpload.getAudioLimit(this.props.item)}
+                  defaultValue={audioLimit}
                   onBlur={e => this.handleBlur(e)}
                 />
-                <div className="c-input__bottom has-error" />
+                <div className="author--c-input__bottom has-error" />
               </div>
             </div>
             <span>seconds. (240 maximum)</span>
-            <span className="c-inline-error">Please enter a number under 240</span>
+            {warning}
           </div>
         </div>
         <Feedback

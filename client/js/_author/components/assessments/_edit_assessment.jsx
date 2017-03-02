@@ -1,29 +1,21 @@
 import React                  from 'react';
 import { connect }            from 'react-redux';
 import _                      from 'lodash';
+
+import { transformAssessment } from '../../selectors/assessment';
 import Heading                from  '../common/heading';
 import AssessmentForm         from './assessment_form';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 
-function transformAssessment(assessment) {
-  if (!assessment) return {};
-  const fixedAssessment = {
-    ...assessment,
-    name: assessment.displayName.text,
-  };
-
-  return fixedAssessment;
-}
-
 function select(state, props) {
   const bankId = encodeURIComponent(props.params.bankId);
   const id = encodeURIComponent(props.params.id);
-  const bank = state.assessments[bankId];
+  const bankAssessments = state.assessments[bankId];
   const assessmentItemIds = state.assessmentItems[id];
   return {
-    assessment: bank && transformAssessment(bank[id]),
+    assessment: (bankAssessments && transformAssessment(bankAssessments[id])) || {},
     items: _.compact(_.at(state.items[bankId], assessmentItemIds)),
     settings: state.settings,
     params: { // override react router because we want the escaped ids
@@ -60,8 +52,6 @@ export class EditAssessment extends React.Component {
     createItemInAssessment: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
-    updateChoice: React.PropTypes.func.isRequired,
-    updateAnswer: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func,
   };
 
@@ -126,22 +116,36 @@ export class EditAssessment extends React.Component {
   }
 
   updateSingleItemOrPage(setSinglePage) {
-    const { assessmentOffered } = this.props.assessment;
-    const genusTypeId = setSinglePage ? this.props.settings.single_page : this.props.settings.one_item_per_page;
+    const { settings, assessment } = this.props;
+    const { assessmentOffered } = assessment;
+    const genusTypeId = setSinglePage ? settings.single_page : settings.one_item_per_page;
     this.props.updateSingleItemOrPage(assessmentOffered[0], genusTypeId);
   }
 
+  updateChoice(itemId, choiceId, choice) {
+    const updateAttributes = {
+      id: itemId,
+      question: {
+        choices: {
+          [choiceId]: choice,
+        }
+      }
+    };
+    this.updateItem(updateAttributes);
+  }
+
   render() {
-    const { bankId } = this.props.params;
     const { assessment, settings } = this.props;
     const isPublished =  assessment ? _.includes(assessment.assignedBankIds, settings.publishedBankId) : false;
     const publishedAndOffered = isPublished && !_.isUndefined(assessment.assessmentOffered);
+
     return (
       <div>
         <Heading
           view="assessments"
           editOrPublishAssessment={(published) => { this.editOrPublishAssessment(published); }}
           isPublished={isPublished}
+          assessment={this.props.assessment}
           items={this.props.items}
         />
         <AssessmentForm
@@ -153,9 +157,7 @@ export class EditAssessment extends React.Component {
           items={this.props.items}
           updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}
-          updateChoice={
-            (itemId, choiceId, choice) => this.props.updateChoice(bankId, itemId, choiceId, choice)
-          }
+          updateChoice={(itemId, choiceId, choice) => this.updateChoice(itemId, choiceId, choice)}
           deleteAssessmentItem={itemId => this.deleteAssessmentItem(itemId)}
         />
       </div>
