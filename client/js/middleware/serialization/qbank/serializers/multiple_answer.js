@@ -51,10 +51,30 @@ function serializeAnswers(originalChoices, newChoiceAttributes) {
   };
   const answers = [];
 
+  // TODO: refactor this is a nasty long block of code
   _.forEach(originalChoices, (choice) => {
     const updatedChoice = newChoiceAttributes[choice.id];
-    if (choice.isCorrect || (updatedChoice && updatedChoice.isCorrect)) {
-      if (!correctAnswers.id) { correctAnswers.id = choice.answerId }
+    const newCorrectness = _.get(updatedChoice, 'isCorrect');
+    if (!_.isNil(newCorrectness)) {
+      if (newCorrectness) {
+        if (!correctAnswers.id) { correctAnswers.id = choice.answerId; }
+        if (updatedChoice && updatedChoice.feedback) {
+          correctAnswers.feedback = updatedChoice.feedback;
+        } else {
+          correctAnswers.feedback = choice.feedback;
+        }
+        correctAnswers.choiceIds.push(choice.id);
+      } else {
+        answers.push({
+          id: choice.answerId,
+          genusTypeId: genusTypes.answer.wrongAnswer,
+          feedback: _.get(updatedChoice, 'feedback') || choice.feedback,
+          type: genusTypes.answer.multipleChoice,
+          choiceIds: [choice.id],
+        });
+      }
+    } else if (choice.isCorrect) {
+      if (!correctAnswers.id) { correctAnswers.id = choice.answerId; }
       if (updatedChoice && updatedChoice.feedback) {
         correctAnswers.feedback = updatedChoice.feedback;
       } else {
