@@ -10,8 +10,15 @@ export default function banks(state = initialState, action) {
     case 'UPDATE_ASSESSMENT_ITEMS_DONE':
     case 'CREATE_ITEM_IN_ASSESSMENT_DONE': {
       const newState = _.cloneDeep(state);
-
       newState[action.original.assessmentId] = _.map(action.payload, 'id');
+      return newState;
+    }
+
+    case 'CREATE_ITEM_IN_ASSESSMENT': {
+      const newState = _.cloneDeep(state);
+      if (action.newItemId) {
+        newState[action.original.assessmentId].push(action.newItemId);
+      }
       return newState;
     }
 

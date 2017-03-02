@@ -26,8 +26,21 @@ export default function banks(state = initialState, action) {
       if (!newState[bankId]) {
         newState[bankId] = {};
       }
-
       newState[bankId][action.payload.id] = action.payload;
+
+      return newState;
+    }
+
+    case 'UPDATE_ITEM': {
+      const newState = _.cloneDeep(state);
+      const bankId = action.bankId;
+      const itemId = action.itemId;
+      if (!newState[bankId]) {
+        newState[bankId] = {};
+      }
+
+      const item = newState[bankId][itemId];
+      newState[bankId][itemId] = _.merge(item, action.body);
 
       return newState;
     }
