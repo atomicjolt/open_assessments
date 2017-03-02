@@ -28,12 +28,9 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
-    id: originalQuestion.id,
-    questionString: newQuestionAttributes.text,
-    multiAnswer: newQuestionAttributes.multipleAnswer,
+    multiAnswer: newQuestionAttributes.multiAnswer,
     shuffle: newQuestionAttributes.shuffle,
     timeValue: newQuestionAttributes.timeValue,
-    fileIds: {},
     choices: null,
   };
 
@@ -71,7 +68,7 @@ function serializeAnswers(originalChoices, newChoiceAttributes) {
         feedback: _.get(updatedChoice, 'feedback') || choice.feedback,
         type: genusTypes.answer.multipleChoice,
         choiceIds: [choice.id],
-      })
+      });
     }
   });
 
@@ -89,7 +86,10 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
 
   const { question } = newItemAttributes;
   if (question) {
-    newItem.question = serializeQuestion(originalItem.question, question);
+    newItem.question = {
+      ...newItem.question,
+      ...serializeQuestion(originalItem.question, question)
+    };
     if (question.choices) {
       newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
     }

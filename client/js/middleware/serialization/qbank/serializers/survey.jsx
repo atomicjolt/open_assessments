@@ -28,13 +28,9 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
-    id: originalQuestion.id,
-    genusTypeId: newQuestionAttributes.type === 'reflection' ? genusTypes.question.reflection : genusTypes.question.multipleReflection,
-    questionString: newQuestionAttributes.text,
     multiAnswer: newQuestionAttributes.multiAnswer,
     shuffle: newQuestionAttributes.shuffle,
     timeValue: newQuestionAttributes.timeValue,
-    fileIds: {},
     choices: null,
   };
 
@@ -66,7 +62,10 @@ export default function surveySerializer(originalItem, newItemAttributes) {
 
   const { question } = newItemAttributes;
   if (question) {
-    newItem.question = serializeQuestion(originalItem.question, question);
+    newItem.question = {
+      ...newItem.question,
+      ...serializeQuestion(originalItem.question, question)
+    };
     if (question.choices) {
       newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
     }
