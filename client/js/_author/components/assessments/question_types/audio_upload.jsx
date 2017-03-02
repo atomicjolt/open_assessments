@@ -4,6 +4,7 @@ import genusTypes from '../../../../constants/genus_types';
 import Feedback   from './question_common/single_feedback';
 
 export default class AudioUpload extends React.Component {
+  static MAX_TIME = 240;
   static propTypes = {
     updateItem: React.PropTypes.func.isRequired,
     item: React.PropTypes.object
@@ -20,6 +21,21 @@ export default class AudioUpload extends React.Component {
     return seconds;
   }
 
+  static rangeWarning() {
+    return (
+      <span className="author--c-inline-error">Please enter a positive number under 240</span>
+    );
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      timeLimit: AudioUpload.getAudioLimit(props.item)
+        || `${AudioUpload.MAX_TIME}`,
+      displayWarning: false,
+    };
+  }
+
   handleBlur(e) {
     this.props.updateItem({
       question:{
@@ -33,15 +49,24 @@ export default class AudioUpload extends React.Component {
     });
   }
 
-  static rangeWarning(){
-    return (
-      <span className="author--c-inline-error">Please enter a number under 240</span>
-    );
+  handleTimeLimitUpdate(e) {
+    let timeLimit = e.target.value;
+    const timeVal = parseInt(timeLimit, 10);
+    let displayWarning = false;
+    if (timeVal > AudioUpload.MAX_TIME) {
+      timeLimit = `${AudioUpload.MAX_TIME}`;
+      displayWarning = true;
+    } else if (_.isNaN(timeVal) || timeVal < 0) {
+      displayWarning = true;
+    }
+
+    this.setState({
+      timeLimit,
+      displayWarning
+    });
   }
 
   render() {
-    const audioLimit = AudioUpload.getAudioLimit(this.props.item);
-    const warning = audioLimit >= 240 ? AudioUpload.rangeWarning() : null;
     return (
       <div>
         <div className="author--c-question__answers author--o-row" role="radiogroup">
@@ -55,14 +80,15 @@ export default class AudioUpload extends React.Component {
                   id="audio-limit"
                   type="text"
                   maxLength="3"
-                  defaultValue={audioLimit}
+                  value={this.state.timeLimit}
+                  onChange={e => this.handleTimeLimitUpdate(e)}
                   onBlur={e => this.handleBlur(e)}
                 />
                 <div className="author--c-input__bottom has-error" />
               </div>
             </div>
             <span>seconds. (240 maximum)</span>
-            {warning}
+            { this.state.displayWarning ? AudioUpload.rangeWarning() : null }
           </div>
         </div>
         <Feedback
