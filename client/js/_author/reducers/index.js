@@ -7,7 +7,6 @@ import bankNavigation      from './bank_navigation';
 import assessments         from './assessments';
 import items               from './items';
 import assessmentItems     from './assessment_items';
-import preview             from './preview';
 import uploadedAssets      from './uploaded_assets';
 
 const rootReducer = combineReducers({
@@ -19,7 +18,6 @@ const rootReducer = combineReducers({
   assessments,
   items,
   assessmentItems,
-  preview,
   uploadedAssets,
 });
 
