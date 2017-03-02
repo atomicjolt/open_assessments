@@ -75,8 +75,7 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
   if (question) {
     newItem.question = {
       ...newItem.question,
-      ...serializeQuestion(originalItem.question, question),
-      genusTypeId: genusTypes.question[originalItem.type]
+      ...serializeQuestion(originalItem.question, question)
     };
 
     if (question.choices) {
