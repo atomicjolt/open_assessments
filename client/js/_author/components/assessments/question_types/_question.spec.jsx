@@ -6,7 +6,7 @@ import Question         from './_question';
 import { Provider }     from 'react-redux';
 import { createStore }  from 'redux';
 
-fdescribe('question component', () => {
+describe('question component', () => {
   let props;
   let result;
   let movedUp;
