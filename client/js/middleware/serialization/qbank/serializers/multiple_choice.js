@@ -29,16 +29,13 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
-    multiAnswer: newQuestionAttributes.multiAnswer,
-    shuffle: newQuestionAttributes.shuffle,
+    shuffle: _.isNil(newQuestionAttributes.maintainOrder) ? null : !newQuestionAttributes.maintainOrder,
     timeValue: newQuestionAttributes.timeValue,
     choices: null,
   };
 
   if (newQuestionAttributes.choices) {
-    newQuestion.choices = scrub(
-      serializeChoices(originalQuestion.choices, newQuestionAttributes.choices)
-    );
+    newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
   }
 
   return scrub(newQuestion);
