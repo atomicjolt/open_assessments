@@ -91,7 +91,7 @@ export default function bankListItem(props) {
         </button>
       </td>
       <td>
-        <div className="c-table__icons" style={buttonContainer}>
+        <div className="author--c-table__icons" style={buttonContainer}>
           {embedButtonOrUrl()}
           <button className="author--c-btn author--c-btn--square author--c-btn--table">
             <i className="material-icons">edit</i>
