@@ -61,7 +61,7 @@
   }
 
   &.is-active{
-    .c-feedback{
+    .author--c-feedback{
       @include display-flex;
     }
     .author--c-answer__icons i{

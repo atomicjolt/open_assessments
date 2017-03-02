@@ -78,18 +78,18 @@ describe('Multiple Choice Option', () => {
   });
 
   it('isActive??', () => {
-    let div = TestUtils.scryRenderedDOMComponentsWithClass(
+    let div = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'author--c-input author--c-input-label--left author--c-feedback');
-    expect(div).toBeDefined();
+      'author--c-answer',
+    );
+    expect(div.className).toContain('is-active');
 
     props.isActive = false;
     result = TestUtils.renderIntoDocument(<Stub><Option {...props} /></Stub>);
-    div = TestUtils.scryRenderedDOMComponentsWithClass(
+    div = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'author--c-input author--c-input-label--left author--c-feedback',
+      'author--c-answer',
     );
-    expect(div.length).toBe(0);
+    expect(div.className).not.toContain('is-active');
   });
-
 });
