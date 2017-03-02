@@ -6,7 +6,6 @@ import types      from '../../../../constants/question_types';
 export default function multipleChoiceOptions(props) {
 
   const selector = () => {
-    // console.log(props.itemType);
     // The null is for reflection questions
     if (_.includes([types.reflection, types.multipleReflection], props.itemType)) { return null; }
     if (props.itemType === types.multipleAnswer) {
