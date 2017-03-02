@@ -7,7 +7,6 @@ export default function QuestionHeader(props) {
   const typeName = _.words(_.upperFirst(props.type)).join(' ');
 
   let currentHeader = <DefaultHeader {...props} />;
-
   if (props.reorderActive) {
     currentHeader =  <ReorderHeader {...props} />;
   }

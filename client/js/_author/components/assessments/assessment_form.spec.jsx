@@ -19,8 +19,11 @@ describe('AssessmentForm component', () => {
         type: '3',
         index: 1,
         question: {
-          choices: []
-        }
+          text: {
+            name: 'NAMEME',
+          },
+          choices: [],
+        },
       }],
       name: 'IMASPEC',
       updateAssessment: () => {},
@@ -44,7 +47,7 @@ describe('AssessmentForm component', () => {
 
   it('creates a new item', () => {
     expect(createItem).toBeFalsy();
-    result.instance().createItem();
+    result.instance().createItem(props.items[0]);
     expect(createItem).toBeTruthy();
   });
 

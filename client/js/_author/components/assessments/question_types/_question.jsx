@@ -143,7 +143,6 @@ export default class Question extends React.Component {
     const { item } = this.props;
     const { name, type, id, question, language, bankId } = item;
     const className = this.getClassName();
-
     const questionText = question ? question.text : '';
 
     return (
