@@ -17,7 +17,7 @@ export default class PreviewContainer extends React.Component {
 
     const result = questions.map((question, index) =>
       <Item
-        localizedStrings={localizeStrings({ settings:{ locale:"en" } })}
+        localizedStrings={localizeStrings({ settings:{ locale:'en' } })}
         key={ `item_${index}` }
         settings={{}}
         assessment={{}}
