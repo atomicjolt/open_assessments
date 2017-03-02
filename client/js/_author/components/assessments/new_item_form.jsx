@@ -1,5 +1,6 @@
 import React      from 'react';
-import genusTypes from '../../../constants/genus_types';
+import types      from '../../../constants/question_types';
+import languages  from '../../../constants/language_types';
 
 export default class newItemForm extends React.Component {
   static propTypes = {
@@ -11,7 +12,7 @@ export default class newItemForm extends React.Component {
     super();
     this.state = {
       name: '',
-      genusTypeId: genusTypes.item.multipleChoice,
+      type: types.multipleChoice,
       language: 'english',
     };
   }
@@ -48,22 +49,20 @@ export default class newItemForm extends React.Component {
                 <label htmlFor="questionType" />
                 <div className="c-dropdown c-dropdown--medium">
                   <select
-                    onChange={e => this.setState({ genusTypeId: e.target.value })}
+                    onChange={e => this.setState({ type: e.target.value })}
                     name=""
                     id="questionType"
                   >
-                    <option
-                      value={genusTypes.item.multipleChoice}
-                    >
+                    <option value={types.multipleChoice}>
                       Multiple Choice
                     </option>
-                    <option value={genusTypes.item.shortAnswer}>
+                    <option value={types.shortAnswer}>
                       Short Answer
                     </option>
-                    <option value={genusTypes.item.fileUpload}>
+                    <option value={types.fileUpload}>
                       File Upload
                     </option>
-                    <option value={genusTypes.item.audioUpload}>
+                    <option value={types.audioUpload}>
                       Audio Upload
                     </option>
                   </select>
@@ -80,10 +79,10 @@ export default class newItemForm extends React.Component {
                     name=""
                     id="questionType"
                   >
-                    <option value="english">Select a language</option>
-                    <option value="639-2%3AENG%40ISO">English</option>
-                    <option value="639-2%3AHIN%40ISO">Hindi</option>
-                    <option value="639-2%3ATEL%40ISO">Telugu</option>
+                    <option value={languages.english}>Select a language</option>
+                    <option value={languages.english}>English</option>
+                    <option value={languages.hindi}>Hindi</option>
+                    <option value={languages.telugu}>Telugu</option>
                   </select>
                 </div>
               </div>
