@@ -10,8 +10,27 @@ export default function banks(state = initialState, action) {
     case 'UPDATE_ASSESSMENT_ITEMS_DONE':
     case 'CREATE_ITEM_IN_ASSESSMENT_DONE': {
       const newState = _.cloneDeep(state);
-
       newState[action.original.assessmentId] = _.map(action.payload, 'id');
+      return newState;
+    }
+
+    case 'CREATE_ITEM_IN_ASSESSMENT': {
+      const newState = _.cloneDeep(state);
+      if (action.newItemId) {
+        const payload = {
+          assignedBankIds: [action.original.bankId],
+          bankId: action.original.bankId,
+          id: action.newItemId,
+          displayName: {
+            text: action.original.body.name,
+            languageTypeId: action.original.body.language,
+          },
+          type: 'Item',
+          genusTypeId: action.original.body.type
+        };
+
+        newState[action.newItemId] = payload;
+      }
       return newState;
     }
 
