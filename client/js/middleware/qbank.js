@@ -95,6 +95,11 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
     });
 
     const newId = res.body.id;
+    store.dispatch({
+      type: AssessmentConstants.CREATE_ITEM_IN_ASSESSMENT,
+      original: action,
+      newItemId: newId,
+    });
 
     return api.post(
       `assessment/banks/${bankId}/assessments/${assessmentId}/items`,
@@ -112,6 +117,8 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
       payload: res2.body
     });
   });
+
+
 }
 
 const qbank = {

@@ -27,21 +27,13 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
   return choices;
 }
 
-function serializeQuestion(originalItem, newQuestionAttributes) {
-
-  const originalQuestion = originalItem.question;
-
-  const newQuestion = _.merge(
-    baseSerializeQuestion(originalItem, newQuestionAttributes),
-    {
-      questionString: newQuestionAttributes.text,
-      multiAnswer: newQuestionAttributes.multiAnswer,
-      shuffle: newQuestionAttributes.shuffle,
-      timeValue: newQuestionAttributes.timeValue,
-      fileIds: {},
-      choices: null,
-    }
-  );
+function serializeQuestion(originalQuestion, newQuestionAttributes) {
+  const newQuestion = {
+    multiAnswer: newQuestionAttributes.multiAnswer,
+    shuffle: newQuestionAttributes.shuffle,
+    timeValue: newQuestionAttributes.timeValue,
+    choices: null,
+  };
 
   if (newQuestionAttributes.choices) {
     newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
@@ -81,9 +73,17 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
 
   const { question } = newItemAttributes;
   if (question) {
-    newItem.question = serializeQuestion(originalItem, question);
+    newItem.question = {
+      ...newItem.question,
+      ...serializeQuestion(originalItem.question, question),
+      genusTypeId: genusTypes.question[originalItem.type]
+    };
+
     if (question.choices) {
-      newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
+      newItem.answers = {
+        ...newItem.answers,
+        ...serializeAnswers(originalItem.question.choices, question.choices)
+      };
     }
   }
 
