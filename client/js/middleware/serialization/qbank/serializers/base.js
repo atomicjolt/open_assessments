@@ -5,7 +5,7 @@ import { scrub }        from '../../serializer_utils';
 export function baseSerializeQuestion(originalItem, newAttributes) {
   return {
     id: _.get(originalItem, 'question.id'),
-    genusTypeId: genusTypes.question[newAttributes.type || originalItem.type],
+    genusTypeId: genusTypes.question[_.get(newAttributes, 'type') || originalItem.type],
     questionString: newAttributes.text,
     fileIds: newAttributes.fileIds
   };
@@ -14,7 +14,7 @@ export function baseSerializeQuestion(originalItem, newAttributes) {
 export function baseSerializeItem(originalItem, newAttributes) {
   const newItem = {
     id: originalItem.id,
-    genusTypeId: genusTypes.item[newAttributes.type || originalItem.type],
+    genusTypeId: genusTypes.item[_.get(newAttributes, 'type') || originalItem.type],
     name: _.get(newAttributes, 'name', originalItem.name),
     question: scrub(
       baseSerializeQuestion(originalItem, _.get(newAttributes, 'question', {}))
