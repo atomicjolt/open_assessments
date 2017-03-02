@@ -119,7 +119,7 @@ describe('question component', () => {
   });
 
   it('shows renders fileUpload', () => {
-    props.item.type = genusTypes.item.fileUpload;
+    props.item.type = 'fileUpload';
     result = TestUtils.renderIntoDocument(
       <Provider store={createStore(()=>({ settings: {} }))}>
         <Question {...props} />
