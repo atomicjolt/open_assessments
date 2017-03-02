@@ -17,7 +17,7 @@ export default function questionText(props) {
 
 questionText.propTypes = {
   itemId: React.PropTypes.string.isRequired,
-  text: React.PropTypes.string.isRequired,
+  text: React.PropTypes.string,
   updateItem: React.PropTypes.func.isRequired,
   bankId: React.PropTypes.string.isRequired,
 };

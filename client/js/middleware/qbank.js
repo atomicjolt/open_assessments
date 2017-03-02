@@ -80,6 +80,8 @@ function deleteAssessmentsOffered(state, bankId, assessmentsOffered) {
 
 function createItemInAssessment(store, bankId, assessmentId, item, itemIds, action) {
   const state = store.getState();
+  let b=serialize(item.type)({ question: {} }, item);
+  debugger
   api.post(
     `assessment/banks/${bankId}/items`,
     state.settings.api_url,
@@ -88,6 +90,8 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
     null,
     scrub(serialize(item.type)({ question: {} }, item))
   ).then((res) => {
+    let a = deserialize(res.body.genusTypeId)(res.body);
+    debugger
     store.dispatch({
       type: ItemConstants.CREATE_ITEM + DONE,
       original: action,

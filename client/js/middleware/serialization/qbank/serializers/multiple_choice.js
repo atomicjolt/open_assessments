@@ -1,6 +1,5 @@
 import _                         from 'lodash';
 import baseSerializer            from './base';
-import { baseSerializeQuestion } from './base';
 import { scrub }                 from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';

@@ -84,7 +84,7 @@ questionSettings.propTypes = {
   id: React.PropTypes.string.isRequired,
   defaultName: React.PropTypes.string,
   type: React.PropTypes.string,
-  language: React.PropTypes.string.isRequired,
+  language: React.PropTypes.string,
   updateItem: React.PropTypes.func.isRequired,
   makeReflection: React.PropTypes.func.isRequired,
   maintainOrder: React.PropTypes.bool,

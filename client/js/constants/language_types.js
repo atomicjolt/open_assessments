@@ -1,12 +1,25 @@
 
 export const languages = {
-  english: '639-2%3AENG%40ISO',
-  hindi: '639-2%3AHIN%40ISO',
-  telugu: '639-2%3ATEL%40ISO',
+  languageTypeId: {
+    english: '639-2%3AENG%40ISO',
+    hindi: '639-2%3AHIN%40ISO',
+    telugu: '639-2%3ATEL%40ISO',
+  },
+  formatTypeId: 'TextFormats%3APLAIN%40okapia.net',
+  scriptTypeId: {
+    english: '15924%3ALATN%40ISO',
+    hindi: '15924%3ADEVA%40ISO',
+    telugu: '15924%3ATELU%40ISO',
+  }
+
 };
 
 export function getLanguage(langCode) {
-  return _.findKey(languages, language => langCode === language) || null;
+  return _.findKey(languages.languageTypeId, language => langCode === language) || null;
+}
+
+export function getScriptTypeId(langCode) {
+  return _.findKey(languages.scriptTypeId, language => langCode === language) || null;
 }
 
 
