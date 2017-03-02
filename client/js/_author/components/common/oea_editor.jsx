@@ -1,4 +1,5 @@
 import _           from 'lodash';
+import $           from 'jquery';
 import React       from 'react';
 import { connect } from 'react-redux';
 
@@ -7,9 +8,14 @@ import guid        from '../../../utils/guid';
 
 import * as AssetActions from '../../../actions/qbank/assets';
 
-function select(state) {
+function select(state, props) {
   return {
     uploadedAssets: state.uploadedAssets,
+    existingFileIds: _.get(
+      state,
+      `items['${props.bankId}']['${props.itemId}'].question.fileIds`,
+      {}
+    )
   };
 }
 
@@ -20,6 +26,7 @@ export class OeaEditor extends React.Component {
     itemId: React.PropTypes.string.isRequired,
     uploadImage: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}).isRequired,
+    existingFileIds: React.PropTypes.shape({})
   };
 
   constructor() {
@@ -40,15 +47,41 @@ export class OeaEditor extends React.Component {
 
   onBlur(editorText) {
     let text = editorText;
+    const uploadedAssets = this.props.uploadedAssets;
     const fileIds = {};
-    _.each(this.props.uploadedAssets[this.props.itemId], (asset, imageGuid) => {
+
+    _.each(uploadedAssets[this.props.itemId], (asset, uploadedGuid) => {
+      const assetContentId = asset.assetContents[0].id;
+
+      // If we already have the image uploaded, don't make a new fileId entry
+      // for it.
+      const imageGuid = _.findKey(this.props.existingFileIds, fileData => (
+        fileData.assetContentId === assetContentId
+      )) || uploadedGuid;
+
       fileIds[imageGuid] = {
         assetId: asset.id,
-        assetContentId: asset.assetContents[0].id,
+        assetContentId,
         assetContentTypeId: asset.assetContents[0].genusTypeId
       };
       text = text.replace(asset.assetContents[0].url, `AssetContent:${imageGuid}`);
     });
+
+    const doc = $(`<div>${text}</div>`);
+    $('img', doc).each((i, el) => {
+      const img = $(el);
+      const match = /.*\/(.*)\/stream$/.exec(img.attr('src'));
+      if (match) {
+        const assetContentId = match[1];
+        const imageGuid = _.findKey(this.props.existingFileIds, fileData => (
+          fileData.assetContentId === assetContentId
+        ));
+        img.attr('src', `AssetContent:${imageGuid}`);
+      }
+    });
+
+    text = doc.html();
+
     this.setState({ focused: false });
     this.props.onBlur(text, fileIds);
   }
@@ -68,10 +101,6 @@ export class OeaEditor extends React.Component {
   }
 
   render() {
-    // active is handled here instead of in TinyWrapper, because tinyMCE does
-    // not handle rerendering very well. This may become unnecessary when
-    // Brandon finishes the styles.
-
     const active = this.state.focused ? 'is-focused' : '';
 
     return (
@@ -91,4 +120,3 @@ export class OeaEditor extends React.Component {
 }
 
 export default connect(select, AssetActions)(OeaEditor);
-
