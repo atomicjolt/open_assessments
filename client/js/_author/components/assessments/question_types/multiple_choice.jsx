@@ -57,7 +57,7 @@ export default class MultipleChoice extends React.Component {
   render() {
     const { question, id, type } = this.props.item;
     return (
-      <div className="c-question__answers c-question__answers--maintain">
+      <div className="author--c-question__answers author--c-question__answers--maintain">
         {
           _.map(_.orderBy(question.choices, 'order'), choice => (
             <Option

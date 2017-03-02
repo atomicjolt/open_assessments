@@ -1,16 +1,16 @@
-.o-contain{
+.author--o-contain{
   max-width: 100rem;
   margin: 0 auto;
   padding-bottom: 10rem;
 }
 
-.o-item{
+.author--o-item{
   margin-top: 2rem;
   background-color: $white;
   box-shadow: 0 0 0.6rem rgba(0,0,0,0.15);
 }
 
-  .o-item__top{
+  .author--o-item__top{
     height: 5rem;
     padding: 0 2.5rem;
     background-color: $gray1;
@@ -22,28 +22,28 @@
     font-size: 1.2rem;
   }
 
-  .o-right, .o-left{
+  .author--o-right, .author--o-left{
     @include display-flex;
     @include align-items(center);
   }
 
-.o-row{
+.author--o-row{
   @include display-flex;
   @include align-items(center);
   flex-wrap: wrap;
   margin-left: -3rem;
 }
 
-.o-half{
+.author--o-half{
   width: 50%;
   padding-left: 3rem;
 }
 
-.o-flex-contain{
+.author--o-flex-contain{
   @include display-flex;
 }
 
-.o-flex-center{
+.author--o-flex-center{
   @include display-flex;
   @include align-items(center);
 }

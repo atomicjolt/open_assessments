@@ -31,15 +31,15 @@ export default class OeaEditor extends React.Component {
     const active = this.state.focused ? 'is-focused' : '';
 
     return (
-      <div className="c-input__contain">
-        <div className={`c-text-input c-text-input--medium c-wysiwyg ${active}`}>
+      <div className="author--c-input__contain">
+        <div className={`author--c-text-input author--c-text-input--medium author--c-wysiwyg ${active}`}>
           <TinyWrapper
             {...this.props}
             onBlur={editorText => this.onBlur(editorText)}
             onFocus={() => this.setState({ focused: true })}
           />
         </div>
-        <div className={`c-input__bottom ${active}`} />
+        <div className={`author--c-input__bottom ${active}`} />
       </div>
     );
   }

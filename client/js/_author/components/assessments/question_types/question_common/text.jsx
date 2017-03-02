@@ -4,7 +4,7 @@ import Editor     from '../../../common/oea_editor';
 export default class questionText extends React.Component {
   render() {
     return (
-      <div className="c-input c-question-text">
+      <div className="author--c-input author--c-question-text">
         <label htmlFor={`question_text_${this.props.id}`} />
         <Editor
           text={this.props.text}
