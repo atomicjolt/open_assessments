@@ -79,12 +79,8 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
     };
 
     if (question.choices) {
-      newItem.answers = {
-        ...newItem.answers,
-        ...serializeAnswers(originalItem.question.choices, question.choices)
-      };
+      newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
     }
   }
-
   return scrub(newItem);
 }
