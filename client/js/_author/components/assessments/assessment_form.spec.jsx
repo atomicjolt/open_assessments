@@ -1,6 +1,6 @@
-import _ from 'lodash';
-import React from 'react';
-import TestUtils from 'react-addons-test-utils';
+import React          from 'react';
+import { shallow }    from 'enzyme';
+import TestUtils      from 'react-addons-test-utils';
 import AssessmentForm from './assessment_form';
 
 describe('AssessmentForm component', () => {
@@ -15,77 +15,66 @@ describe('AssessmentForm component', () => {
     props = {
       items: [{
         id: '76',
-        displayName: {
-          text: 'IMATITLESPEC',
-          languageTypeId: '639-2%3AENG%40ISO',
-        },
-        description: {
-          text: 'IMADESCRIPTION',
-        },
-        genusTypeId: '3',
+        name: 'IMATITLESPEC',
+        type: '3',
         index: 1,
+        question: {
+          choices: []
+        }
       }],
       name: 'IMASPEC',
       updateAssessment: () => {},
-      updateItemOrder: () => {updateItemOrderFunction = true},
-      createItem: () => {createItem = true},
+      updateItemOrder: () => { updateItemOrderFunction = true; },
+      createItem: () => { createItem = true; },
       updateItem: () => {},
       updateChoice: () => {},
       updateAnswer: () => {},
       deleteAssessmentItem: () => {},
     };
-    result = TestUtils.renderIntoDocument(<AssessmentForm {...props} />);
+    result = shallow(<AssessmentForm {...props} />);
   });
 
   it('renders to the DOM', () => {
-    const assessmentForm = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'c-assessment-title'
-    );
-    expect(assessmentForm).toBeDefined();
+    expect(result.find('.author--c-assessment-title').length).toBe(1);
   });
 
   it('renders one labels', () => {
-    const labels = TestUtils.scryRenderedDOMComponentsWithClass(
-      result,
-      'test_label',
-    );
-    expect(labels.length).toBe(1);
+    expect(result.find('.test_label').length).toBe(1);
   });
 
   it('creates a new item', () => {
     expect(createItem).toBeFalsy();
-    result.createItem();
+    result.instance().createItem();
     expect(createItem).toBeTruthy();
   });
 
-  it('employs show a new modal', () => {
-    const addQuestion = TestUtils.scryRenderedDOMComponentsWithClass(
-      result,
-      'c-question-add__button',
-    );
-    expect(addQuestion.length).toBe(1);
-    const assessmentForm = TestUtils.scryRenderedDOMComponentsWithClass(
-      result,
-      'is-active',
-    );
-    expect(assessmentForm.length).toEqual(0);
-    expect(result.state).not.toBeNull();
+  it('employs show a new modal when items is empty', () => {
+    props.items = [];
+    result = shallow(<AssessmentForm {...props} />);
+    expect(result.find('newItemForm').length).toBe(1);
+    expect(result.find('.is-active').length).toEqual(0);
+    expect(result.instance().state).not.toBeNull();
+  });
+
+  it('does not show the new modal when items is not empty', () => {
+    expect(result.find('newItemForm').length).toBe(0);
+    expect(result.find('.is-active').length).toEqual(0);
+    expect(result.instance().state).not.toBeNull();
   });
 
   it('activates a new item', () => {
     const itemId = '7';
-    result.activateItem(itemId);
-    expect(result.state.activeItem).toEqual(itemId);
-    expect(result.state.reorderActive).toBeFalsy();
+    result.instance().activateItem(itemId);
+    expect(result.instance().state.activeItem).toEqual(itemId);
+    expect(result.instance().state.reorderActive).toBeFalsy();
   });
 
   it('moves a new item', () => {
     expect(updateItemOrderFunction).toBeFalsy();
-    expect(result.props.items[0].id).toBe('76');
+    expect(result.instance().props.items[0].id).toBe('76');
     const oldIndex = props.items[0].id;
     const newIndex = '77';
-    result.moveItem(oldIndex, newIndex);
+    result.instance().moveItem(oldIndex, newIndex);
     expect(updateItemOrderFunction).toBeTruthy();
   });
 });

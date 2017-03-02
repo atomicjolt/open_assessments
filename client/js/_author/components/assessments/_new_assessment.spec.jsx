@@ -1,4 +1,3 @@
-import _                  from 'lodash';
 import React              from 'react';
 import TestUtils          from 'react-addons-test-utils';
 import { NewAssessment }  from './_new_assessment';
@@ -15,9 +14,9 @@ describe('_new_assessment component', () => {
         id: '7',
       },
       editableBankId: '77',
-      createAssessment: () => {callFunction = true},
+      createAssessment: () => { callFunction = true; },
       publishAssessment: () => {},
-      createAssessmentWithItem: () => {callFunction = true},
+      createAssessmentWithItem: () => { callFunction = true; },
     };
     result = TestUtils.renderIntoDocument(<NewAssessment {...props} />);
   });
@@ -35,9 +34,9 @@ describe('_new_assessment component', () => {
   });
 
   it('renders Heading and Assessment Form to DOM', () => {
-    const heading = TestUtils.findRenderedDOMComponentWithClass(result, 'c-logo');
+    const heading = TestUtils.findRenderedDOMComponentWithClass(result, 'author--c-logo');
     expect(heading).toBeDefined();
-    const assessmentForm = TestUtils.findRenderedDOMComponentWithClass(result, 'c-assessment-title');
+    const assessmentForm = TestUtils.findRenderedDOMComponentWithClass(result, 'author--c-assessment-title');
     expect(assessmentForm).toBeDefined();
   });
 

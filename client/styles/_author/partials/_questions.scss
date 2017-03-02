@@ -1,12 +1,12 @@
-.c-assessment-top{
+.author--c-assessment-top{
   background-color: $white;
 }
 
-.c-assessment-title{
+.author--c-assessment-title{
   padding: 3rem 2.5rem 4rem;
 }
 
-.c-question-settings{
+.author--c-question-settings{
   display: none;
   height: 5rem;
   padding: 0 2.5rem;
@@ -15,22 +15,22 @@
   @include justify-content(space-between);
 }
 
-  .c-question__number{
+  .author--c-question__number{
     color: $text-color;
     margin: none;
     @include semi-bold;
     font-size: 1.2rem;
   }
 
-  .c-question__type{
+  .author--c-question__type{
     color: $text-alt;
   }
 
-.c-question-icons button {
+.author--c-question-icons button {
   display: none;
 }
 
-.c-question-icons i{
+.author--c-question-icons i{
   width: 3rem;
   height: 3rem;
   border-radius: $radius;
@@ -45,12 +45,12 @@
   }
 }
 
-.c-question-icons .c-btn--square{
+.author--c-question-icons .author--c-btn--square{
   margin-left: 0.5rem;
   padding: 0;
 }
 
-.c-question-icons--reorder {
+.author--c-question-icons--reorder {
   i{
     display: block;
     background: $blue2;
@@ -72,40 +72,40 @@
   }
 }
 
-.c-question{
+.author--c-question{
 
   &.is-active{
-    .c-question__answers{
+    .author--c-question__answers{
       margin-bottom: 2.5rem;
     }
-    .c-question-settings{
+    .author--c-question-settings{
       @include display-flex;
     }
-    .c-question-icons button{
+    .author--c-question-icons button{
       display: inline-block;
     }
-    .c-question__feedback{
+    .author--c-question__feedback{
       display: block;
     }
   }
 
   &.reorder-active{
-    .o-item__top{
+    .author--o-item__top{
       background-color: $blue;
     }
-    .c-question__number, .c-question__type{
+    .author--c-question__number, .author--c-question__type{
       color: $white;
     }
   }
 }
 
-  .c-question__text{
+  .author--c-question__text{
     &:hover .c-input__bottom{
       border-top: $border;
     }
   }
 
-  .c-question__content {
+  .author--c-question__content {
     padding: 3rem 2.5rem 4rem;
 
     &.is-reordering {
@@ -113,28 +113,28 @@
     }
   }
 
-  .c-question__answers{
+  .author--c-question__answers{
     margin-top: 3rem;
     margin-bottom: 0;
   }
 
-  .c-question__answers--maintain{
-    .c-answer{
+  .author--c-question__answers--maintain{
+    .author--c-answer{
       padding-right: 13.5rem;
     }
   }
 
-    .c-question__feedback{
+    .author--c-question__feedback{
       display: none;
     }
 
 
-.c-question-add{
+.author--c-question-add{
   display: block;
   margin: 2rem 2rem 0;
 }
 
-  .c-question-add__button{
+  .author--c-question-add__button{
     display: block;
     width: 100%;
     background: none;
@@ -157,6 +157,6 @@
     }
   }
 
-  .c-question-add__buttons{
+  .author--c-question-add__buttons{
     margin-top: 3rem;
   }
