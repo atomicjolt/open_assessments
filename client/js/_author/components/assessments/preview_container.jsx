@@ -22,8 +22,7 @@ export default class PreviewContainer extends React.Component {
   }
 
   render() {
-
-    if(this.props.previewItems.length > 0){
+    // if(this.props.previewItems.length > 0){
       // const questions = selectors.questions({
       //   assessment: {
       //     standard: "CLIx",
@@ -31,54 +30,51 @@ export default class PreviewContainer extends React.Component {
       //   },
       // });
       const assessment = Parser.parse("fakeid", {data: this.props.previewItems});
-      debugger;
+      // debugger;
       const questions = selectors.questions({assessment});
-      debugger;
-    }
+      // debugger;
+
     // parsePreview(this.props.previewItems);
 
-    const question = {
-      title:"Test Question Title",
-      material:"Test Question Material"
-    };
+    // const question = {
+    //   title:"Test Question Title",
+    //   material:"Test Question Material"
+    // };
     const questionResult = {};
     const currentItemIndex = 0;
-    const assessment = {};
+    // const assessment = {};
     const questionCount = 10;
     const index = 1
     const settings = {};
 
-    return <Item
-        localizedStrings={localizeStrings({settings:{locale:"en"}})}
-        key              = {index /* react uses this to distinguish children */}
-        settings         = {settings}
-        assessment       = {assessment}
-        question         = {question}
-        response         = {[]}
-        currentItemIndex = {index}
-        questionCount    = {10}
-        questionResult   = {{}}
-        allQuestions     = {[question]}
-        outcomes         = {{}}
-        sendSize         = {() => {}}
-        videoPlay        = {() => {}}
-        videoPause       = {() => {}}
-        audioPlay        = {() => {}}
-        audioPause       = {() => {}}
-        audioRecordStart = {() => {}}
-        audioRecordStop  = {() => {}}
-        selectAnswer     = {
-          (answerId, exclusive) =>
-            {this.props.answerSelected(index, answerId, exclusive);}}
-        />
+    const result = questions.map((question) => {
+      return <Item
+          localizedStrings={localizeStrings({settings:{locale:"en"}})}
+          key              = {index /* react uses this to distinguish children */}
+          settings         = {settings}
+          assessment       = {{}}
+          question         = {question}
+          response         = {[]}
+          currentItemIndex = {index}
+          questionCount    = {10}
+          questionResult   = {{}}
+          allQuestions     = {[question]}
+          outcomes         = {{}}
+          sendSize         = {() => {}}
+          videoPlay        = {() => {}}
+          videoPause       = {() => {}}
+          audioPlay        = {() => {}}
+          audioPause       = {() => {}}
+          audioRecordStart = {() => {}}
+          audioRecordStop  = {() => {}}
+          selectAnswer     = {
+            (answerId, exclusive) =>
+              {this.props.answerSelected(index, answerId, exclusive);}}
+      />
+    });
 
-    // return (<Item
-    //   question={question}
-    //   questionResult={questionResult}
-    //   currentItemIndex={currentItemIndex}
-    //   questionCount={questionCount}
-    //   assessment={assessment}
-    //   localizedStrings={localizeStrings({settings:{locale:"en"}})}
-    // />);
+    return <div>
+      {result}
+    </div>;
   }
 }

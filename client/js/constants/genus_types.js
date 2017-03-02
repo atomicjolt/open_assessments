@@ -8,6 +8,7 @@ export const types = {
     multipleReflection: 'item-genus-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',
   },
   question: {
+    multipleChoice: 'question-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
     audioUpload: 'question-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU',
     reflection: 'question-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
     multipleReflection: 'question-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',

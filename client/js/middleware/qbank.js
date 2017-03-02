@@ -121,13 +121,11 @@ const qbank = {
   },
   [AssessmentConstants.GET_ASSESSMENT_PREVIEW]: {
     method: Network.GET,
-    url: (action) => {
+    url: (url, action) => {
       const bankId = encodeURIComponent(action.bankId);
       const assessmentId = encodeURIComponent(action.assessmentId);
       return `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${bankId}/assessments/${assessmentId}/items?qti`;
     }
-    // debugger;
-    // TODO redirect & make reques
   },
   [AssessmentConstants.GET_ASSESSMENTS]: {
     method : Network.GET,

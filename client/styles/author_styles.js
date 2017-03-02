@@ -3,3 +3,4 @@ require('./_author/styles.less');
 require('./_author/styles.scss');
 require('../node_modules/tinymce/skins/lightgray/content.min.css');
 require('../node_modules/tinymce/skins/lightgray/skin.min.css');
+// require('./_player/styles.scss');
