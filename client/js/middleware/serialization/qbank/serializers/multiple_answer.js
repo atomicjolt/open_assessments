@@ -9,8 +9,8 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
     const updateValues = newChoiceAttributes[choice.id];
     return {
       id: choice.id,
-      text: _.get(updateValues, 'text', choice.text),
-      order: _.get(updateValues, 'order', choice.order),
+      text: _.get(updateValues, 'text') || choice.text,
+      order: _.get(updateValues, 'order') || choice.order,
       delete: _.get(updateValues, 'delete'),
     };
   });
@@ -42,22 +42,46 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
 }
 
 function serializeAnswers(originalChoices, newChoiceAttributes) {
-  let newFeedback = null;
-  _.forEach(newChoiceAttributes, (choice) => {
-    if (choice.feedback) { newFeedback = choice.feedback; }
+  let correctAnswers = {
+    id: null,
+    genusTypeId: genusTypes.answer.rightAnswer,
+    feedback: null,
+    type: genusTypes.question.multipleSelection,
+    choiceIds: [],
+  };
+  const answers = [];
+
+  _.forEach(originalChoices, (choice) => {
+    const updatedChoice = newChoiceAttributes[choice.id];
+    if (choice.isCorrect || (updatedChoice && updatedChoice.isCorrect)) {
+      if (!correctAnswers.id) { correctAnswers.id = choice.answerId }
+      if (updatedChoice && updatedChoice.feedback) {
+        correctAnswers.feedback = updatedChoice.feedback;
+      } else {
+        correctAnswers.feedback = choice.feedback;
+      }
+      correctAnswers.choiceIds.push(choice.id);
+    } else {
+      answers.push({
+        id: choice.answerId,
+        genusTypeId: genusTypes.answer.wrongAnswer,
+        feedback: _.get(updatedChoice, 'feedback') || choice.feedback,
+        type: genusTypes.answer.multipleChoice,
+        choiceIds: [choice.id],
+      });
+    }
   });
 
-  return _.map(originalChoices, choice => scrub({
-    id: choice.answerId,
-    genusTypeId: genusTypes.answer.rightAnswer,
-    feedback: newFeedback || choice.feedback,
-    type: genusTypes.answer.multipleChoice,  // TODO: probably wrong
-    choiceIds: [choice.id],
-  }));
+  correctAnswers = scrub(correctAnswers);
+
+  if (correctAnswers.choiceIds) {
+    answers.push(correctAnswers);
+  }
+
+  return _.map(answers);
 }
 
-
-export default function surveySerializer(originalItem, newItemAttributes) {
+export default function multipleChoiceSerializer(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
 
   const { question } = newItemAttributes;

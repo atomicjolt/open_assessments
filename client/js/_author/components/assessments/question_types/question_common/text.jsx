@@ -1,24 +1,23 @@
 import React      from 'react';
 import Editor     from '../../../common/oea_editor';
 
-export default class questionText extends React.Component {
-  render() {
-    return (
-      <div className="c-input c-question-text">
-        <label htmlFor={`question_text_${this.props.id}`} />
-        <Editor
-          text={this.props.text}
-          onBlur={val => this.props.updateItem({ question: { text: val } })}
-          bankId={this.props.bankId}
-          id={this.props.id}
-        />
-      </div>
-    );
-  }
+export default function questionText(props) {
+  return (
+    <div className="author--c-input c-question-text">
+      <label htmlFor={`question_text_${props.itemId}`} />
+      <Editor
+        text={props.text}
+        onBlur={(val, fileIds) => props.updateItem({ question: { text: val, fileIds } })}
+        bankId={props.bankId}
+        itemId={props.itemId}
+      />
+    </div>
+  );
 }
 
 questionText.propTypes = {
-  id: React.PropTypes.string.isRequired,
+  itemId: React.PropTypes.string.isRequired,
   text: React.PropTypes.string.isRequired,
   updateItem: React.PropTypes.func.isRequired,
+  bankId: React.PropTypes.string.isRequired,
 };

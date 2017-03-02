@@ -1,12 +1,12 @@
 import React    from 'react';
-import genusTypes from '../../../../../constants/genus_types';
+import types from '../../../../../constants/question_types';
 
 export default function questionSettings(props) {
-  const extraOptionTypes = ['multipleChoice', 'reflection', 'multipleReflection'];
+  const extraOptionTypes = [types.multipleChoice, types.reflection, types.multipleReflection, types.multipleAnswer];
   function checkboxOptions() {
     return (
-      <div className="o-right">
-        <div className="c-checkbox u-ml-md">
+      <div className="author--o-right">
+        <div className="author--c-checkbox author--u-ml-md">
           <input
             type="checkbox"
             id={`check02_${props.id}`}
@@ -17,24 +17,24 @@ export default function questionSettings(props) {
           />
           <label htmlFor={`check02_${props.id}`}>Maintain choice order</label>
         </div>
-        <div className="c-checkbox u-ml-md">
+        <div className="author--c-checkbox u-ml-md">
           <input
             type="checkbox"
             id={`check03_${props.id}`}
             name="check"
             tabIndex="0"
-            onChange={() => props.updateItem({ multipleAnswer: !props.multipleAnswer })}
+            onChange={() => props.makeMultipleAnswer()}
             checked={props.multipleAnswer ? 'checked' : null}
           />
           <label htmlFor={`check03_${props.id}`}>Multiple answer</label>
         </div>
-        <div className="c-checkbox u-ml-md">
+        <div className="author--c-checkbox author--u-ml-md">
           <input
             type="checkbox"
             id={`check04_${props.id}`}
             name="check"
             tabIndex="0"
-            onChange={e => props.makeReflection({ reflection: e.target.checked })}
+            onChange={e => props.makeReflection(e.target.checked)}
             checked={props.reflection ? 'checked' : null}
           />
           <label htmlFor={`check04_${props.id}`}>Reflection</label>
@@ -44,24 +44,24 @@ export default function questionSettings(props) {
   }
 
   return (
-    <div className="c-question-settings">
-      <div className="o-left">
-        <div className="c-input c-input-label--left">
+    <div className="author--c-question-settings">
+      <div className="author--o-left">
+        <div className="author--c-input author--c-input-label--left">
           <label htmlFor={`question_name_${props.id}`}>Name</label>
-          <div className="c-input__contain">
+          <div className="author--c-input__contain">
             <input
-              className="c-text-input c-text-input--smaller"
+              className="author--c-text-input author--c-text-input--smaller"
               id={`question_name_${props.id}`}
               type="text"
               tabIndex="0"
               defaultValue={props.defaultName}
               onBlur={e => props.updateItem({ name: e.target.value })}
             />
-            <div className="c-input__bottom" />
+            <div className="author--c-input__bottom" />
           </div>
         </div>
 
-        <div className="c-dropdown c-dropdown--small u-ml-md">
+        <div className="author--c-dropdown author--c-dropdown--small author--u-ml-md">
           <select
             name=""
             id=""

@@ -30,7 +30,7 @@ export default class AssessmentForm extends React.Component {
   }
 
   createItem(newItem) {
-    this.props.createItem(newItem);
+    this.props.createItem({ ...newItem, question: { text: newItem.name } });
     this.setState({ addingItem: false });
   }
 
@@ -55,8 +55,8 @@ export default class AssessmentForm extends React.Component {
   showSinglePageOption() {
     if (this.props.publishedAndOffered) {
       return (
-        <div className="o-item__top">
-          <div className="c-checkbox u-right">
+        <div className="author--o-item__top">
+          <div className="author--c-checkbox author--u-right">
             <input type="checkbox" id="assessmentFormCheck01" name="check" onChange={e => this.props.updateSingleItemOrPage(e.target.checked)} />
             <label htmlFor="assessmentFormCheck01">Single page assessment</label>
           </div>
@@ -80,23 +80,23 @@ export default class AssessmentForm extends React.Component {
     const canAddItem = !this.state.addingItem && this.props.name;
 
     return (
-      <div className="o-contain">
-        <div className="o-item">
+      <div className="author--o-contain">
+        <div className="author--o-item">
           {this.showSinglePageOption()}
-          <div className="c-assessment-title">
-            <label htmlFor="title_field" className="c-input test_label">
-              <div className="c-input__contain">
+          <div className="author--c-assessment-title">
+            <label htmlFor="title_field" className="author--c-input test_label">
+              <div className="author--c-input__contain">
                 <input
                   key={this.props.name}
                   defaultValue={this.props.name}
-                  className="c-text-input c-text-input--large"
+                  className="author--c-text-input author--c-text-input--large"
                   type="text"
                   id="title_field"
                   placeholder="Untitled Assessment"
                   onChange={e => this.setState({ title: e.target.value })}
                   onBlur={e => this.props.updateAssessment({ name: e.target.value })}
                 />
-                <div className="c-input__bottom" />
+                <div className="author--c-input__bottom" />
               </div>
             </label>
           </div>

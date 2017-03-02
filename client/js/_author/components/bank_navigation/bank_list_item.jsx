@@ -44,19 +44,19 @@ export default function bankListItem(props) {
         const embedUrlCode = `${baseEmbedUrl}${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}#/assessment`;
 
         return (
-          <div className="c-embed-contain">
-            <label className="c-input--purple" htmlFor="embedInput">
+          <div className="author--c-embed-contain">
+            <label className="author--c-input--purple" htmlFor="embedInput">
               <input
                 id="embedInput"
                 onClick={e => e.stopPropagation()}
-                className="c-text-input c-text-input--smaller"
+                className="author--c-text-input author--c-text-input--smaller"
                 readOnly
                 type="text"
                 value={`<iframe src="${embedUrlCode}"/>`}
               />
             </label>
             <CopyToClipboard text={`<iframe src="${embedUrlCode}"/>`}>
-              <button className="c-btn c-btn--square c-btn--embed " onClick={e => e.stopPropagation()}>
+              <button className="author--c-btn author--c-btn--square author--c-btn--embed " onClick={e => e.stopPropagation()}>
                 <i className="material-icons">content_paste</i>
               </button>
             </CopyToClipboard>
@@ -66,7 +66,7 @@ export default function bankListItem(props) {
 
       return (
         <button
-          className="c-btn c-btn--sm c-btn--table"
+          className="author--c-btn author--c-btn--sm author--c-btn--table"
           onClick={e => getEmbedCode(e, bank)}
         >
           embed code
@@ -86,21 +86,21 @@ export default function bankListItem(props) {
       <td><Icon type={bank.type} /></td>
       <td>{bank.displayName ? bank.displayName.text : null}</td>
       <td>
-        <button className={`c-btn c-btn--square c-publish ${published}`} style={buttonContainer}>
+        <button className={`author--c-btn author--c-btn--square author--c-publish ${published}`} style={buttonContainer}>
           <Icon type={isPublished ? 'Published' : 'Publish'} />
         </button>
       </td>
       <td>
         <div className="c-table__icons" style={buttonContainer}>
           {embedButtonOrUrl()}
-          <button className="c-btn c-btn--square c-btn--table">
+          <button className="author--c-btn author--c-btn--square author--c-btn--table">
             <i className="material-icons">edit</i>
           </button>
-          <button className="c-btn c-btn--square c-btn--table">
+          <button className="author--c-btn author--c-btn--square author--c-btn--table">
             <i className="material-icons">remove_red_eye</i>
           </button>
           {!isPublished ? <button
-            className="c-btn c-btn--square c-btn--table"
+            className="author--c-btn author--c-btn--square author--c-btn--table"
             onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
           >
             <i className="material-icons">delete</i>

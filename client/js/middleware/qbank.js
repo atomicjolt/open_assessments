@@ -86,7 +86,7 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
     state.jwt,
     state.settings.csrf_token,
     null,
-    scrub(serialize()(item))
+    scrub(serialize(item.type)({ question: {} }, item))
   ).then((res) => {
     store.dispatch({
       type: ItemConstants.CREATE_ITEM + DONE,
@@ -95,6 +95,11 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
     });
 
     const newId = res.body.id;
+    store.dispatch({
+      type: AssessmentConstants.CREATE_ITEM_IN_ASSESSMENT,
+      original: action,
+      newItemId: newId,
+    });
 
     return api.post(
       `assessment/banks/${bankId}/assessments/${assessmentId}/items`,
@@ -112,6 +117,8 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
       payload: res2.body
     });
   });
+
+
 }
 
 const qbank = {
@@ -119,7 +126,14 @@ const qbank = {
     method : Network.GET,
     url    : url => `${url}`,
   },
-
+  [AssessmentConstants.GET_ASSESSMENT_PREVIEW]: {
+    method: Network.GET,
+    url: (url, action) => {
+      const bankId = encodeURIComponent(action.bankId);
+      const assessmentId = encodeURIComponent(action.assessmentId);
+      return `${url}/assessment/banks/${bankId}/assessments/${assessmentId}/items?qti`;
+    }
+  },
   [AssessmentConstants.GET_ASSESSMENTS]: {
     method : Network.GET,
     url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments?isolated`,

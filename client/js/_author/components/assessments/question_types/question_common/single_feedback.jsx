@@ -38,19 +38,19 @@ export default class SingleFeedback extends React.Component {
 
   render() {
     return (
-      <div className="c-question__feedback">
-        <div className="c-input c-input-label--left c-feedback">
+      <div className="author--c-question__feedback">
+        <div className="author--c-input author--c-input-label--left author--c-feedback">
           <label htmlFor="feedbackCorrect">Feedback</label>
-          <div className="c-input__contain">
+          <div className="author--c-input__contain">
             <input
-              className="c-text-input c-text-input--smaller c-wysiwyg"
+              className="author--c-text-input author--c-text-input--smaller author--c-wysiwyg"
               id="feedbackCorrect"
               type="text"
               tabIndex="0"
               onBlur={e => this.handleBlur(e)}
               defaultValue={SingleFeedback.getFeedback(this.props.item)}
             />
-            <div className="c-input__bottom" />
+            <div className="author--c-input__bottom" />
           </div>
         </div>
       </div>

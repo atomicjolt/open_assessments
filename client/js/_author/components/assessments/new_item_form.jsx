@@ -19,35 +19,35 @@ export default class newItemForm extends React.Component {
 
   render() {
     return (
-      <div className="o-item c-question is-active">
-        <div className="o-item__top">
-          <div className="o-left">
-            <h3 className="c-question__number">Add Question</h3>
+      <div className="author--o-item author--c-question is-active">
+        <div className="author--o-item__top">
+          <div className="author--o-left">
+            <h3 className="author--c-question__number">Add Question</h3>
           </div>
         </div>
 
-        <div className="c-question__content">
+        <div className="author--c-question__content">
 
-          <div className="o-row">
-            <div className="o-half">
-              <div className="c-input c-input-label--left c-input-label--large">
+          <div className="author--o-row">
+            <div className="author--o-half">
+              <div className="author--c-input author--c-input-label--left author--c-input-label--large">
                 <label htmlFor="name2">Name</label>
-                <div className="c-input__contain">
+                <div className="author--c-input__contain">
                   <input
                     onChange={e => this.setState({ name: e.target.value })}
-                    className="c-text-input c-text-input--small"
+                    className="author--c-text-input author--c-text-input--small"
                     id="name2"
                     type="text"
                   />
-                  <div className="c-input__bottom" />
+                  <div className="author--c-input__bottom" />
                 </div>
               </div>
             </div>
 
-            <div className="o-half">
-              <div className="c-input">
+            <div className="author--o-half">
+              <div className="author--c-input">
                 <label htmlFor="questionType" />
-                <div className="c-dropdown c-dropdown--medium">
+                <div className="author--c-dropdown author--c-dropdown--medium">
                   <select
                     onChange={e => this.setState({ type: e.target.value })}
                     name=""
@@ -70,10 +70,10 @@ export default class newItemForm extends React.Component {
               </div>
             </div>
 
-            <div className="o-half">
-              <div className="c-input u-mt-md">
+            <div className="author--o-half">
+              <div className="author--c-input author--u-mt-md">
                 <label htmlFor="questionType" />
-                <div className="c-dropdown c-dropdown--medium">
+                <div className="author--c-dropdown author--c-dropdown--medium">
                   <select
                     onChange={e => this.setState({ language: e.target.value })}
                     name=""
@@ -89,17 +89,17 @@ export default class newItemForm extends React.Component {
             </div>
           </div>
 
-          <div className="o-flex-contain c-question-add__buttons">
-            <div className="o-right u-right">
+          <div className="author--o-flex-contain author--c-question-add__buttons">
+            <div className="author--o-right author--u-right">
               <button
                 onClick={this.props.cancel}
-                className="c-btn c-btn--md c-btn--gray"
+                className="author--c-btn author--c-btn--md author--c-btn--gray"
               >
                 Cancel
               </button>
               <button
                 onClick={() => this.props.create(this.state)}
-                className="c-btn c-btn--md c-btn--maroon u-ml-md"
+                className="author--c-btn author--c-btn--md author--c-btn--maroon author--u-ml-md"
               >
                 Create New Question
               </button>

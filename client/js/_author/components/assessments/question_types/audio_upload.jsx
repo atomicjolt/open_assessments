@@ -35,7 +35,7 @@ export default class AudioUpload extends React.Component {
 
   static rangeWarning(){
     return (
-      <span className="c-inline-error">Please enter a number under 240</span>
+      <span className="author--c-inline-error">Please enter a number under 240</span>
     );
   }
 
@@ -44,21 +44,21 @@ export default class AudioUpload extends React.Component {
     const warning = audioLimit >= 240 ? AudioUpload.rangeWarning() : null;
     return (
       <div>
-        <div className="c-question__answers o-row" role="radiogroup">
-          <div className="c-file-upload__audio-settings is-active">
+        <div className="author--c-question__answers author--o-row" role="radiogroup">
+          <div className="author--c-file-upload__audio-settings is-active">
             <span>Audio record limit</span>
-            <div className="c-input c-input--inline">
+            <div className="author--c-input author--c-input--inline">
               <label htmlFor="audio-limit" />
-              <div className="c-input__contain">
+              <div className="author--c-input__contain">
                 <input
-                  className="c-text-input c-text-input--smaller"
+                  className="author--c-text-input author--c-text-input--smaller"
                   id="audio-limit"
                   type="text"
                   maxLength="3"
                   defaultValue={audioLimit}
                   onBlur={e => this.handleBlur(e)}
                 />
-                <div className="c-input__bottom has-error" />
+                <div className="author--c-input__bottom has-error" />
               </div>
             </div>
             <span>seconds. (240 maximum)</span>

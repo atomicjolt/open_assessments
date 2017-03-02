@@ -40,8 +40,8 @@ export default function ShortAnswer(props) {
 
   return (
     <div>
-      <div className="c-question__answers c-short-answer__answers">
-        <div className="c-dropdown c-dropdown--medium c-input-label--top">
+      <div className="author--c-question__answers author--c-short-answer__answers">
+        <div className="author--c-dropdown author--c-dropdown--medium author--c-input-label--top">
           <label htmlFor="short-answer-size">Answer Box</label>
           <select
             value={boxSize}
@@ -54,7 +54,7 @@ export default function ShortAnswer(props) {
           </select>
         </div>
 
-        <div className={`c-short-answer__example is-${boxSize}`}>
+        <div className={`author--c-short-answer__example is-${boxSize}`}>
           <span>{_.capitalize(boxSize)} Box</span>
         </div>
       </div>
