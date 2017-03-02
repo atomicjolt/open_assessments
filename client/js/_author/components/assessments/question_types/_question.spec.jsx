@@ -99,7 +99,7 @@ describe('question component', () => {
     );
     const multipleChoice = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'c-question__answers--maintain',
+      'author--c-question__answers--maintain',
     );
     expect(multipleChoice).toBeDefined();
   });
@@ -113,7 +113,7 @@ describe('question component', () => {
     );
     const audioUpload = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'c-file-upload__audio-settings',
+      'author--c-file-upload__audio-settings',
     );
     expect(audioUpload).toBeDefined();
   });
@@ -127,7 +127,7 @@ describe('question component', () => {
     );
     const fileUpload = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'c-question__feedback',
+      'author--c-question__feedback',
     );
     expect(fileUpload).toBeDefined();
   });
@@ -141,7 +141,7 @@ describe('question component', () => {
     );
     const shortAnswer = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'c-short-answer__answers',
+      'author--c-short-answer__answers',
     );
     expect(shortAnswer).toBeDefined();
   });

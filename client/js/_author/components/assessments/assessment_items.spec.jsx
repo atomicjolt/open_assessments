@@ -39,7 +39,7 @@ describe('assessment items component', () => {
   it('renders question component', () => {
     const questionComponent = TestUtils.scryRenderedDOMComponentsWithClass(
       result,
-      'c-question__content',
+      'author--c-question__content',
     );
     expect(questionComponent.length).not.toBe(0);
   });

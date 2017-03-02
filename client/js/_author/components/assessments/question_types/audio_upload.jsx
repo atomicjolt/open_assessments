@@ -1,7 +1,7 @@
-import React    from 'react';
+import React      from 'react';
 import _          from 'lodash';
 import genusTypes from '../../../../constants/genus_types';
-import Feedback from './question_common/single_feedback';
+import Feedback   from './question_common/single_feedback';
 
 export default class AudioUpload extends React.Component {
   static propTypes = {

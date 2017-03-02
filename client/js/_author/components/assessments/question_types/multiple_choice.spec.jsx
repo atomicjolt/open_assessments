@@ -54,7 +54,7 @@ describe('multiple choice component', () => {
   it('renders', () => {
     const div = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'c-question__answers--maintain',
+      'author--c-question__answers--maintain',
     );
     expect(div).toBeDefined();
   });
