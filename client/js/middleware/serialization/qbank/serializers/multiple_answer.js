@@ -29,7 +29,6 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
     id: originalQuestion.id,
-    // genusTypeId: genusTypes.default, // TODO: this probably has a real type
     questionString: newQuestionAttributes.text,
     multiAnswer: newQuestionAttributes.multipleAnswer,
     shuffle: newQuestionAttributes.shuffle,
