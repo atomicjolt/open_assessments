@@ -3,6 +3,7 @@ import _            from 'lodash';
 import Option       from './multiple_choice_option';
 import Add          from './add_option';
 import Feedback     from './question_common/feedback';
+import types        from '../../../../constants/question_types';
 
 export default class MultipleChoice extends React.Component {
   static propTypes = {
@@ -84,7 +85,9 @@ export default class MultipleChoice extends React.Component {
             updateChoice={() => this.addNewChoice(id)}
           /> : null
         }
-        <Feedback />
+        <Feedback
+          onlyShowCorrect={type === types.reflection || type === types.multipleReflection}
+        />
       </div>
     );
   }
