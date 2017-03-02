@@ -36,7 +36,9 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   };
 
   if (newQuestionAttributes.choices) {
-    newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
+    newQuestion.choices = scrub(
+      serializeChoices(originalQuestion.choices, newQuestionAttributes.choices)
+    );
   }
 
   return scrub(newQuestion);
@@ -57,16 +59,15 @@ function serializeAnswers(originalChoices, newChoiceAttributes) {
 
   return _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
-    return {
+    return scrub({
       id: choice.answerId,
       genusTypeId: correctAnswer(correctId, choice.id, choice.isCorrect),
       feedback: _.get(updateValues, 'feedback') || choice.feedback,
       type: genusTypes.answer.multipleChoice,
       choiceIds: [choice.id],
-    };
+    });
   });
 }
-
 
 export default function multipleChoiceSerializer(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
