@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Constants as AssetConstants } from '../../actions/qbank/assets';
 
 const initialState = {};
@@ -7,7 +8,8 @@ export default (state = initialState, action) => {
 
     case AssetConstants.UPLOAD_IMAGE_DONE: {
       const newState = _.cloneDeep(state);
-      newState[action.original.guid] = action.payload;
+      newState[action.original.itemId] = newState[action.original.itemId] || {};
+      newState[action.original.itemId][action.original.guid] = action.payload;
 
       return newState;
     }

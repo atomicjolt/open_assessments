@@ -152,7 +152,7 @@ export default class Question extends React.Component {
         />
         <div className={`c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
-            id={id}
+            itemId={id}
             text={questionText}
             updateItem={newProps => this.updateItem(newProps)}
             bankId={bankId}

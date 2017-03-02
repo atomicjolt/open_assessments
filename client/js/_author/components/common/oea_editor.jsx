@@ -17,6 +17,7 @@ export class OeaEditor extends React.Component {
   static propTypes = {
     onBlur: React.PropTypes.func.isRequired,
     bankId: React.PropTypes.string.isRequired,
+    itemId: React.PropTypes.string.isRequired,
     uploadImage: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}).isRequired,
   };
@@ -30,7 +31,8 @@ export class OeaEditor extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.uploadedAssets !== this.props.uploadedAssets) {
-      const imageUrl = nextProps.uploadedAssets[this.state.imageGuid].assetContents[0].url;
+      const asset = nextProps.uploadedAssets[this.props.itemId][this.state.imageGuid];
+      const imageUrl = asset.assetContents[0].url;
       this.state.imageCallback(imageUrl);
       this.setState({ imageCallback: null, imageGuid: null });
     }
@@ -39,7 +41,7 @@ export class OeaEditor extends React.Component {
   onBlur(editorText) {
     let text = editorText;
     const fileIds = {};
-    _.each(this.props.uploadedAssets, (asset, imageGuid) => {
+    _.each(this.props.uploadedAssets[this.props.itemId], (asset, imageGuid) => {
       fileIds[imageGuid] = {
         assetId: asset.id,
         assetContentId: asset.assetContents[0].id,
@@ -56,6 +58,7 @@ export class OeaEditor extends React.Component {
     this.props.uploadImage(
       file,
       imageGuid,
+      this.props.itemId,
       this.props.bankId
     );
     this.setState({
@@ -76,7 +79,7 @@ export class OeaEditor extends React.Component {
         <div className={`c-text-input c-text-input--medium c-wysiwyg ${active}`}>
           <TinyWrapper
             {...this.props}
-            uploadImage={(files, imageCallback) => this.uploadImage(files, imageCallback)}
+            uploadImage={(file, imageCallback) => this.uploadImage(file, imageCallback)}
             onBlur={editorText => this.onBlur(editorText)}
             onFocus={() => this.setState({ focused: true })}
           />
