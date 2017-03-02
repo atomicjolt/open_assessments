@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 import { connect } from 'react-redux';
 
 import * as AssessmentActions from '../../../actions/qbank/assessments';
@@ -16,35 +15,25 @@ function select(state, props) {
 
 export class PreviewAssessment extends React.Component {
   static propTypes = {
-    // assessment: React.PropTypes.object,
-    // getAssessmentOffered: React.PropTypes.func,
-    // settings: React.PropTypes.object
+    params: React.PropTypes.object.isRequired,
+    getAssessmentPreview: React.PropTypes.func.isRequired,
+    previewItems: React.PropTypes.array.isRequired,
   }
 
   componentDidMount() {
-    this.props.getAssessmentPreview (
+    this.props.getAssessmentPreview(
       this.props.params.bankId,
       this.props.params.id,
     );
   }
 
   render() {
-    // return <div> Howdy </div>;
-    // if (!this.props.assessment) return null;
-    return (<PreviewContainer
-      previewItems={this.props.previewItems}
-    />);
-    // if (this.hasAssessmentOffered()) {
-    //   const bankId = this.props.assessment.bankId;
-    //   const assessmentId = this.props.assessment.id;
-    //   const baseEmbedUrl = this.props.settings.baseEmbedUrl;
-    //   const embedUrlCode = `${baseEmbedUrl}${bankId}&assessment_offered_id=${assessmentId}#/assessment`;
-    //   return <iframe src={embedUrlCode} />;
-    // }
-    // return null;
+    return (
+      <PreviewContainer
+        previewItems={this.props.previewItems}
+      />
+    );
   }
 }
 
-export default connect(select, {
-  ...AssessmentActions,
-})(PreviewAssessment);
+export default connect(select, { ...AssessmentActions })(PreviewAssessment);
