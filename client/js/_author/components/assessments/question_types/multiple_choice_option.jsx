@@ -1,20 +1,30 @@
 import React      from 'react';
 import Radio      from './question_common/option_radio';
+import CheckBox   from './question_common/option_checkbox';
+import types      from '../../../../constants/question_types';
 
 export default function multipleChoiceOptions(props) {
 
   const selector = () => {
-    // TODO: this is where I will put checkboxes
-    if (props.itemType === 'multipleChoice') {
+    // console.log(props.itemType);
+    // The null is for reflection questions
+    if (_.includes([types.reflection, types.multipleReflection], props.itemType)) { return null; }
+    if (props.itemType === types.multipleAnswer) {
       return (
-        <Radio
+        <CheckBox
           id={props.id}
           isCorrect={props.isCorrect}
           updateChoice={props.updateChoice}
         />
       );
     }
-    return null;
+    return (
+      <Radio
+        id={props.id}
+        isCorrect={props.isCorrect}
+        updateChoice={props.updateChoice}
+      />
+    );
   };
 
   return (
@@ -101,4 +111,5 @@ multipleChoiceOptions.propTypes = {
   isCorrect: React.PropTypes.bool,
   shuffle: React.PropTypes.bool,
   isActive: React.PropTypes.bool,
+  multipleAnswer: React.PropTypes.bool,
 };

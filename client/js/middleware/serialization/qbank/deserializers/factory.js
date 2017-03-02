@@ -9,6 +9,7 @@ export default function factory(type) {
     case genusTypes.item.multipleChoice:
     case genusTypes.item.reflection:
     case genusTypes.item.multipleReflection:
+    case genusTypes.item.multipleAnswer:
       return multipleChoice;
 
     case genusTypes.item.audioUpload:

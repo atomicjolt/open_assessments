@@ -9,6 +9,8 @@ export default class MultipleChoice extends React.Component {
     item: React.PropTypes.shape({
       answers: React.PropTypes.arrayOf(React.PropTypes.shape),
       id: React.PropTypes.string,
+      type: React.PropTypes.string,
+      multipleAnswer: React.PropTypes.string,
       question: React.PropTypes.shape({
         choices: React.PropTypes.shape({}),
       }),
@@ -64,6 +66,7 @@ export default class MultipleChoice extends React.Component {
               key={`assessmentChoice_${choice.id}`}
               {...choice}
               itemType={type}
+              multipleAnswer={_.get(question, 'multipleAnswer', false)}
               updateChoice={newChoice => this.props.updateChoice(id, choice.id, newChoice)}
               updateItem={() => this.props.updateItem({ question })}
               deleteChoice={() => this.deleteChoice(choice)}

@@ -1,8 +1,8 @@
 import React    from 'react';
-import genusTypes from '../../../../../constants/genus_types';
+import types from '../../../../../constants/question_types';
 
 export default function questionSettings(props) {
-  const extraOptionTypes = ['multipleChoice', 'reflection', 'multipleReflection'];
+  const extraOptionTypes = [types.multipleChoice, types.reflection, types.multipleReflection, types.multipleAnswer];
   function checkboxOptions() {
     return (
       <div className="author--o-right">
@@ -23,7 +23,7 @@ export default function questionSettings(props) {
             id={`check03_${props.id}`}
             name="check"
             tabIndex="0"
-            onChange={() => props.updateItem({ multipleAnswer: !props.multipleAnswer })}
+            onChange={() => props.makeMultipleAnswer()}
             checked={props.multipleAnswer ? 'checked' : null}
           />
           <label htmlFor={`check03_${props.id}`}>Multiple answer</label>
@@ -34,7 +34,7 @@ export default function questionSettings(props) {
             id={`check04_${props.id}`}
             name="check"
             tabIndex="0"
-            onChange={e => props.makeReflection({ reflection: e.target.checked })}
+            onChange={e => props.makeReflection(e.target.checked)}
             checked={props.reflection ? 'checked' : null}
           />
           <label htmlFor={`check04_${props.id}`}>Reflection</label>
