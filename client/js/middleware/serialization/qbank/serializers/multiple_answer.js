@@ -45,31 +45,45 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   return scrub(newQuestion);
 }
 
-function correctAnswer(correctId, choiceId, wasCorrect) {
-  if (_.isNil(correctId)) {
-    return wasCorrect ? genusTypes.answer.rightAnswer : genusTypes.answer.wrongAnswer;
-  }
-  return correctId === choiceId ? genusTypes.answer.rightAnswer : genusTypes.answer.wrongAnswer;
-}
-
 function serializeAnswers(originalChoices, newChoiceAttributes) {
-  let correctId = null;
-  _.forEach(newChoiceAttributes, (choice, key) => {
-    if (_.get(choice, 'isCorrect')) { correctId = key; }
+  let correctAnswers = {
+    id: null,
+    genusTypeId: genusTypes.answer.rightAnswer,
+    feedback: null,
+    type: genusTypes.question.multipleSelection,
+    choiceIds: [],
+  };
+  const answers = [];
+
+  _.forEach(originalChoices, (choice) => {
+    const updatedChoice = newChoiceAttributes[choice.id];
+    if (choice.isCorrect || (updatedChoice && updatedChoice.isCorrect)) {
+      if (!correctAnswers.id) { correctAnswers.id = choice.answerId }
+      if (updatedChoice && updatedChoice.feedback) {
+        correctAnswers.feedback = updatedChoice.feedback;
+      } else {
+        correctAnswers.feedback = choice.feedback;
+      }
+      correctAnswers.choiceIds.push(choice.id);
+    } else {
+      answers.push({
+        id: choice.answerId,
+        genusTypeId: genusTypes.answer.wrongAnswer,
+        feedback: _.get(updatedChoice, 'feedback') || choice.feedback,
+        type: genusTypes.answer.multipleChoice,
+        choiceIds: [choice.id],
+      })
+    }
   });
 
-  return _.map(originalChoices, (choice) => {
-    const updateValues = newChoiceAttributes[choice.id];
-    return {
-      id: choice.answerId,
-      genusTypeId: correctAnswer(correctId, choice.id, choice.isCorrect),
-      feedback: _.get(updateValues, 'feedback') || choice.feedback,
-      type: genusTypes.answer.multipleChoice,
-      choiceIds: [choice.id],
-    };
-  });
+  correctAnswers = scrub(correctAnswers);
+
+  if (correctAnswers.choiceIds) {
+    answers.push(correctAnswers);
+  }
+
+  return _.map(answers);
 }
-
 
 export default function multipleChoiceSerializer(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);

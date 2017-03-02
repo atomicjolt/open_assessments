@@ -3,10 +3,10 @@ import MultipleChoice   from './multiple_choice';
 import QuestionHeader   from './question_common/header/_header';
 import Settings         from './question_common/settings';
 import QuestionText     from './question_common/text';
-import genusTypes       from '../../../../constants/genus_types.js';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
 import ShortAnswer      from './short_answer';
+import types            from '../../../../constants/question_types';
 
 export default class Question extends React.Component {
   static propTypes = {
@@ -55,21 +55,46 @@ export default class Question extends React.Component {
     this.props.updateItem({ id: item.id, ...newItemProperties });
   }
 
-  makeReflection(reflect) {
-    const { item } = this.props;
-    let type = 'multipleChoice';
-    if (reflect) {
-      type = item.multipleAnswer ? 'multipleReflection' : 'reflection';
-    }
+  changeType(type) {
     // The choices: true is to make sure the deserializer updates the choice and answer data
     this.props.updateItem({
-      id: item.id,
+      id: this.props.item.id,
       type,
       question: {
         type,
         choices: true,
       }
     });
+  }
+
+  makeReflection() {
+    const { item } = this.props;
+    let type = 'multipleChoice';
+    if (item.type === types.multipleChoice) {
+      type = types.reflection;
+    } else if (item.type === types.reflection) {
+      type = types.multipleChoice;
+    } else if (item.type === types.multipleReflection) {
+      type = types.multipleAnswer;
+    } else if (item.type === types.multipleAnswer) {
+      type = types.multipleReflection;
+    }
+    this.changeType(type);
+  }
+
+  makeMultipleAnswer() {
+    const { item } = this.props;
+    let type = 'multipleChoice';
+    if (item.type === types.multipleChoice) {
+      type = types.multipleAnswer;
+    } else if (item.type === types.reflection) {
+      type = types.multipleReflection;
+    } else if (item.type === types.multipleReflection) {
+      type = types.reflection;
+    } else if (item.type === types.multipleAnswer) {
+      type = types.multipleChoice;
+    }
+    this.changeType(type);
   }
 
   content() {
@@ -148,6 +173,7 @@ export default class Question extends React.Component {
           multipleAnswer={item.multipleAnswer}
           reflection={item.type === 'reflection'}
           makeReflection={reflect => this.makeReflection(reflect)}
+          makeMultipleAnswer={multi => this.makeMultipleAnswer(multi)}
           type={type}
         />
         <div className={`c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>

@@ -3,4 +3,7 @@ export default {
   shortAnswer: 'shortAnswer',
   fileUpload: 'fileUpload',
   audioUpload: 'audioUpload',
+  reflection: 'reflection',
+  multipleReflection: 'multipleReflection',
+  multipleAnswer: 'multipleAnswer',
 }
