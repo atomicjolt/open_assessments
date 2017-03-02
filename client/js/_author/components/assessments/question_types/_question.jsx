@@ -99,8 +99,10 @@ export default class Question extends React.Component {
 
   content() {
     switch (this.props.item.type) {
-      case 'multipleChoice':
-      case 'reflection':
+      case types.multipleChoice:
+      case types.reflection:
+      case types.multipleReflection:
+      case types.multipleAnswer:
         return (
           <MultipleChoice
             {...this.props}
@@ -109,14 +111,14 @@ export default class Question extends React.Component {
             isActive={this.props.isActive}
           />
         );
-      case 'audioUpload':
+      case types.audioUpload:
         return (
           <AudioUpload
             updateItem={newProps => this.updateItem(newProps)}
             item={this.props.item}
           />
         );
-      case 'fileUpload':
+      case types.fileUpload:
         return (
           <FileUpload
             updateItem={newProps => this.updateItem(newProps)}
@@ -124,7 +126,7 @@ export default class Question extends React.Component {
           />
         );
 
-      case 'shortAnswer':
+      case types.shortAnswer:
         return (
           <ShortAnswer
             updateItem={newProps => this.updateItem(newProps)}
@@ -170,8 +172,8 @@ export default class Question extends React.Component {
           defaultName={name}
           language={language}
           maintainOrder={question && !question.shuffle}
-          multipleAnswer={item.multipleAnswer}
-          reflection={item.type === 'reflection'}
+          multipleAnswer={item.type === types.multipleAnswer || item.type === types.multipleReflection}
+          reflection={_.includes([types.reflection, types.multipleReflection], item.type)}
           makeReflection={reflect => this.makeReflection(reflect)}
           makeMultipleAnswer={multi => this.makeMultipleAnswer(multi)}
           type={type}
