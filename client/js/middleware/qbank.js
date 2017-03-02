@@ -86,7 +86,7 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
     state.jwt,
     state.settings.csrf_token,
     null,
-    scrub(serialize()(item))
+    scrub(serialize(item.type)({ question: {} }, item))
   ).then((res) => {
     store.dispatch({
       type: ItemConstants.CREATE_ITEM + DONE,
