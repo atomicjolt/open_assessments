@@ -131,7 +131,7 @@ const qbank = {
     url: (url, action) => {
       const bankId = encodeURIComponent(action.bankId);
       const assessmentId = encodeURIComponent(action.assessmentId);
-      return `https://qbank-clix-dev.mit.edu/api/v1/assessment/banks/${bankId}/assessments/${assessmentId}/items?qti`;
+      return `${url}/assessment/banks/${bankId}/assessments/${assessmentId}/items?qti`;
     }
   },
   [AssessmentConstants.GET_ASSESSMENTS]: {
