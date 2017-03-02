@@ -13,10 +13,10 @@ export default function QuestionHeader(props) {
   }
 
   return (
-    <div className="o-item__top">
-      <div className="o-left">
-        <h3 className="c-question__number">Question {props.index + 1}</h3>
-        <div className="c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; {typeName}</div>
+    <div className="author--o-item__top">
+      <div className="author--o-left">
+        <h3 className="author--c-question__number">Question {props.index + 1}</h3>
+        <div className="author--c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; {typeName}</div>
       </div>
       { currentHeader }
     </div>

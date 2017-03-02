@@ -1,19 +1,13 @@
 import React                  from 'react';
 import { connect }            from 'react-redux';
 import _                      from 'lodash';
+
+import { transformAssessment } from '../../selectors/assessment';
 import Heading                from  '../common/heading';
 import AssessmentForm         from './assessment_form';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
-
-function transformAssessment(assessment) {
-  if (!assessment) return {};
-  return {
-    ...assessment,
-    name: _.get(assessment, 'displayName.text', ''),
-  };
-}
 
 function select(state, props) {
   const bankId = encodeURIComponent(props.params.bankId);
@@ -151,6 +145,7 @@ export class EditAssessment extends React.Component {
           view="assessments"
           editOrPublishAssessment={(published) => { this.editOrPublishAssessment(published); }}
           isPublished={isPublished}
+          assessment={this.props.assessment}
           items={this.props.items}
         />
         <AssessmentForm

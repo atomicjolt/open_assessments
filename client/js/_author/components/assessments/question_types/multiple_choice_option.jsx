@@ -28,13 +28,13 @@ export default function multipleChoiceOptions(props) {
   };
 
   return (
-    <div className="c-answer is-active">
-      <div className="c-input">
+    <div className="author--c-answer is-active">
+      <div className="author--c-input">
         {selector()}
         <label htmlFor="option1" />
-        <div className="c-input__contain">
+        <div className="author--c-input__contain">
           <input
-            className="c-text-input c-text-input--small c-wysiwyg"
+            className="author--c-text-input author--c-text-input--small author--c-wysiwyg"
             defaultValue={props.text}
             onBlur={e => props.updateChoice({ text: e.target.value })}
             id="option1"
@@ -42,13 +42,13 @@ export default function multipleChoiceOptions(props) {
             placeholder="Option"
             tabIndex="0"
           />
-          <div className="c-input__bottom" />
+          <div className="author--c-input__bottom" />
         </div>
 
-        <div className="c-answer__icons">
+        <div className="author--c-answer__icons">
           {
-            props.first || props.shuffle ? <div className="c-answer__icons__spacer" /> : <button
-              className="c-answer__icons__spacer"
+            props.first || props.shuffle ? <div className="author--c-answer__icons__spacer" /> : <button
+              className="author--c-answer__icons__spacer"
               tabIndex="0"
               onClick={props.moveUp}
             >
@@ -56,8 +56,8 @@ export default function multipleChoiceOptions(props) {
             </button>
           }
           {
-            props.last || props.shuffle ? <div className="c-answer__icons__spacer" /> : <button
-              className="c-answer__icons__spacer"
+            props.last || props.shuffle ? <div className="author--c-answer__icons__spacer" /> : <button
+              className="author--c-answer__icons__spacer"
               tabIndex="0"
               onClick={props.moveDown}
             >
@@ -65,7 +65,7 @@ export default function multipleChoiceOptions(props) {
             </button>
           }
           <button
-            className="c-answer__icons__spacer"
+            className="author--c-answer__icons__spacer"
             tabIndex="0"
             onClick={props.deleteChoice}
           >
@@ -76,18 +76,18 @@ export default function multipleChoiceOptions(props) {
 
       {
         props.isActive ? (
-          <div className="c-input c-input-label--left c-feedback">
+          <div className="author--c-input author--c-input-label--left author--c-feedback">
             <label htmlFor="feedback1">Feedback</label>
-            <div className="c-input__contain">
+            <div className="author--c-input__contain">
               <input
                 defaultValue={props.feedback}
                 onBlur={e => props.updateChoice({ feedback: e.target.value })}
-                className="c-text-input c-text-input--smaller c-wysiwyg"
+                className="author--c-text-input author--c-text-input--smaller author--c-wysiwyg"
                 id="feedback1"
                 type="text"
                 tabIndex="0"
               />
-              <div className="c-input__bottom" />
+              <div className="author--c-input__bottom" />
             </div>
           </div>
         ) : null

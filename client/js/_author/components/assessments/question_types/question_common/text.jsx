@@ -3,7 +3,7 @@ import Editor     from '../../../common/oea_editor';
 
 export default function questionText(props) {
   return (
-    <div className="c-input c-question-text">
+    <div className="author--c-input c-question-text">
       <label htmlFor={`question_text_${props.itemId}`} />
       <Editor
         text={props.text}

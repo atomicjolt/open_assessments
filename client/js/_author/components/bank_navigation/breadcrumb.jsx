@@ -3,10 +3,10 @@ import React    from 'react';
 export default function breadcrumbs(props) {
   const { name, id } = props;
   return (
-    <span className="o-flex-center">
-      <span className="c-breadcrumb__divider">/</span>
+    <span className="author--o-flex-center">
+      <span className="author--c-breadcrumb__divider">/</span>
       <button
-        className={props.current ? 'c-btn c-btn--breadcrumb is-active' : 'c-btn c-btn--breadcrumb'}
+        className={props.current ? 'author--c-btn author--c-btn--breadcrumb is-active' : 'author--c-btn author--c-btn--breadcrumb'}
         onClick={() => props.updatePath(id, name)}
       >
         {name}

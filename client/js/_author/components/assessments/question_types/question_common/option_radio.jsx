@@ -2,7 +2,7 @@ import React      from 'react';
 
 export default function optionRadio(props) {
   return (
-    <div className="c-radio">
+    <div className="author--c-radio">
       <input
         type="radio"
         id={`option_radio_${props.id}`}

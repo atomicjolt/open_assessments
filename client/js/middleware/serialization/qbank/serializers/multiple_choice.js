@@ -1,8 +1,9 @@
-import _              from 'lodash';
-import baseSerializer from './base';
-import { scrub }      from '../../serializer_utils';
-import genusTypes     from '../../../../constants/genus_types';
-import guid           from '../../../../utils/guid';
+import _                         from 'lodash';
+import baseSerializer            from './base';
+import { baseSerializeQuestion } from './base';
+import { scrub }                 from '../../serializer_utils';
+import genusTypes                from '../../../../constants/genus_types';
+import guid                      from '../../../../utils/guid';
 
 function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
@@ -76,6 +77,7 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
       ...newItem.question,
       ...serializeQuestion(originalItem.question, question)
     };
+
     if (question.choices) {
       newItem.answers = {
         ...newItem.answers,

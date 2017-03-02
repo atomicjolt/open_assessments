@@ -126,7 +126,14 @@ const qbank = {
     method : Network.GET,
     url    : url => `${url}`,
   },
-
+  [AssessmentConstants.GET_ASSESSMENT_PREVIEW]: {
+    method: Network.GET,
+    url: (url, action) => {
+      const bankId = encodeURIComponent(action.bankId);
+      const assessmentId = encodeURIComponent(action.assessmentId);
+      return `${url}/assessment/banks/${bankId}/assessments/${assessmentId}/items?qti`;
+    }
+  },
   [AssessmentConstants.GET_ASSESSMENTS]: {
     method : Network.GET,
     url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments?isolated`,

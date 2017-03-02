@@ -148,7 +148,7 @@ export default class Question extends React.Component {
 
     return (
       <div
-        className={`o-item c-question ${className}`}
+        className={`author--o-item author--c-question ${className}`}
         tabIndex="0"
         onClick={() => this.props.activateItem(item.id)}
         onFocus={() => this.props.activateItem(item.id)}
@@ -178,7 +178,7 @@ export default class Question extends React.Component {
           makeMultipleAnswer={multi => this.makeMultipleAnswer(multi)}
           type={type}
         />
-        <div className={`c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
+        <div className={`author--c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
             itemId={id}
             text={questionText}

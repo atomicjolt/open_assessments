@@ -1,18 +1,18 @@
-.c-input{
+.author--c-input{
   position: relative;
   width: 100%;
 }
 
-.c-input--inline{
+.author--c-input--inline{
   display: inline-block;
   width: auto;
 }
 
-  .c-input__contain{
+  .author--c-input__contain{
     @include flex(1);
   }
 
-.c-text-input{
+.author--c-text-input{
   width: 100%;
   color: $text-color;
   border: none;
@@ -22,14 +22,14 @@
   &:focus{
     outline: none;
 
-    & + .c-input__bottom{
+    & + .author--c-input__bottom{
       border-color: $blue;
       background: $blue;
     }
   }
 }
 
-.c-input__bottom{
+.author--c-input__bottom{
   height: 0.2rem;
   background: none;
   border-top: $border;
@@ -46,29 +46,29 @@
   }
 }
 
-.c-text-input--large{
+.author--c-text-input--large{
   font-size: 3rem;
   @include semi-bold;
 }
 
-.c-text-input--medium{
+.author--c-text-input--medium{
   font-size: 2rem;
   @include semi-bold;
 }
 
-.c-text-input--small{
+.author--c-text-input--small{
   height: 3.5rem;
   font-size: 1.6rem;
   @include semi-bold;
 }
 
-.c-text-input--smaller{
+.author--c-text-input--smaller{
   height: 3rem;
   font-size: 1.2rem;
   @include semi-bold;
 }
 
-.c-wysiwyg{
+.author--c-wysiwyg{
   &.is-focused{
 
     .mce-content-body{
@@ -171,7 +171,7 @@
   }
 }
 
-.c-input-label--left{
+.author--c-input-label--left{
   @include display-flex;
   @include align-items(center);
   @include semi-bold;
@@ -179,28 +179,28 @@
   font-size: 1.2rem;
   min-width: 25rem;
 
-  .c-input__contain{
+  .author--c-input__contain{
     margin-left: 1rem;
   }
 }
 
-.c-input-label--top{
+.author--c-input-label--top{
   @include semi-bold;
   color: $text-alt;
   font-size: 1.2rem;
   min-width: 25rem;
   height: 1.7rem;
 
-  .c-input__contain, select{
+  .author--c-input__contain, select{
     margin-top: 0.5rem;
   }
 }
 
-.c-input-label--large{
+.author--c-input-label--large{
   font-size: 1.6rem;
 }
 
-.c-dropdown{
+.author--c-dropdown{
   min-width: 20rem;
   position: relative;
 
@@ -228,12 +228,12 @@
   }
 }
 
-.c-dropdown--small select{
+.author--c-dropdown--small select{
   font-size: 1.2rem;
   padding: 0 1rem;
 }
 
-.c-dropdown--medium {
+.author--c-dropdown--medium {
   select{
     height: 4rem;
     font-size: 1.6rem;
@@ -249,7 +249,7 @@
   }
 }
 
-.c-checkbox{
+.author--c-checkbox{
 
   label{
     display: inline-block;
@@ -294,7 +294,7 @@
   }
 }
 
-.c-radio{
+.author--c-radio{
 
   label{
     min-width: 3rem;
@@ -347,9 +347,9 @@ input.c-file{
   position: absolute;
 }
 
-.c-answer{
+.author--c-answer{
 
-  .c-checkbox, .c-radio{
+  .author--c-checkbox, .author--c-radio{
     position: absolute;
     left: -4rem;
     top: 0.2rem;
@@ -363,7 +363,7 @@ input.c-file{
     }
   }
 
-  .c-radio{
+  .author--c-radio{
 
     input[type="radio"] + label:before{
       font-size: 3rem;
@@ -374,7 +374,7 @@ input.c-file{
     }
   }
 
-  .c-checkbox{
+  .author--c-checkbox{
 
     input[type="checkbox"] + label:before{
       font-size: 3rem;
