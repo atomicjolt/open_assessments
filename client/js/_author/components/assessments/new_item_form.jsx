@@ -49,7 +49,7 @@ export default class newItemForm extends React.Component {
                 <label htmlFor="questionType" />
                 <div className="author--c-dropdown author--c-dropdown--medium">
                   <select
-                    onChange={e => this.setState({ genusTypeId: e.target.value })}
+                    onChange={e => this.setState({ type: e.target.value })}
                     name=""
                     id="questionType"
                   >
