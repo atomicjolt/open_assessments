@@ -3,7 +3,7 @@ import TestUtils    from 'react-addons-test-utils';
 import Stub         from '../../../../../specs_support/stub';
 import Option  from './multiple_choice_option';
 
-fdescribe('Multiple Choice Option', () => {
+describe('Multiple Choice Option', () => {
   let result;
   let props;
   let updatedChoice = {};
