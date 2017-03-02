@@ -1,7 +1,7 @@
-import React    from 'react';
+import React      from 'react';
 import _          from 'lodash';
 import genusTypes from '../../../../constants/genus_types';
-import Feedback from './question_common/single_feedback';
+import Feedback   from './question_common/single_feedback';
 
 export default class AudioUpload extends React.Component {
   static propTypes = {
@@ -10,8 +10,11 @@ export default class AudioUpload extends React.Component {
   }
 
   static getAudioLimit(item) {
-    const original = _.get(item, ['question', 'timeValue']);
-
+    const original = _.get(item, ['question', 'timeValue'], {
+      hours: '00',
+      minutes: '00',
+      seconds: '100'
+    });
     const time = _.mapValues(original, t => parseInt(t, 10));
     const seconds = (time.hours * 3600) + (time.minutes * 60) + time.seconds;
     return seconds;

@@ -27,7 +27,10 @@ describe('addOption component', () => {
   });
 
   it('calls props.updateChoice', () => {
-    const clickableDiv = TestUtils.findRenderedDOMComponentWithClass(result, 'c-answer--add');
+    const clickableDiv = TestUtils.findRenderedDOMComponentWithClass(
+      result,
+      'author--c-answer--add',
+    );
     expect(clickableDiv).toBeDefined();
     expect(choiceUpdated).toBeFalsy();
     TestUtils.Simulate.click(clickableDiv);

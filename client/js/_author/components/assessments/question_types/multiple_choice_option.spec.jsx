@@ -3,7 +3,7 @@ import TestUtils    from 'react-addons-test-utils';
 import Stub         from '../../../../../specs_support/stub';
 import Option  from './multiple_choice_option';
 
-describe('Multiple Choice Option', () => {
+fdescribe('Multiple Choice Option', () => {
   let result;
   let props;
   let updatedChoice = {};
@@ -32,7 +32,7 @@ describe('Multiple Choice Option', () => {
   it('clicks the first input', () => {
     const input = TestUtils.scryRenderedDOMComponentsWithTag(result, 'input')[0];
     expect(updatedChoice.isCorrect).toBe(undefined);
-    TestUtils.Simulate.click(input);
+    TestUtils.Simulate.change(input);
     expect(updatedChoice.isCorrect).toBe(true);
   });
 
@@ -78,12 +78,17 @@ describe('Multiple Choice Option', () => {
   });
 
   it('isActive??', () => {
-    let div = TestUtils.scryRenderedDOMComponentsWithClass(result, 'c-input c-input-label--left c-feedback');
+    let div = TestUtils.scryRenderedDOMComponentsWithClass(
+      result,
+      'author--c-input author--c-input-label--left author--c-feedback');
     expect(div).toBeDefined();
 
     props.isActive = false;
     result = TestUtils.renderIntoDocument(<Stub><Option {...props} /></Stub>);
-    div = TestUtils.scryRenderedDOMComponentsWithClass(result, 'c-input c-input-label--left c-feedback');
+    div = TestUtils.scryRenderedDOMComponentsWithClass(
+      result,
+      'author--c-input author--c-input-label--left author--c-feedback',
+    );
     expect(div.length).toBe(0);
   });
 

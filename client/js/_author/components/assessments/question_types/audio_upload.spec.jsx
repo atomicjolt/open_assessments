@@ -54,7 +54,7 @@ describe('audio_upload component', () => {
   it('runs the getAudioLimit static function', () => {
     const inputs = TestUtils.scryRenderedDOMComponentsWithClass(
       result,
-      'c-text-input--smaller',
+      'author--c-text-input--smaller',
     );
     expect(inputs[0].value).toBe('7900');
   });
@@ -68,7 +68,7 @@ describe('audio_upload component', () => {
     const newResult = TestUtils.renderIntoDocument(<AudioUpload {...props} />);
     const secondInput = TestUtils.scryRenderedDOMComponentsWithClass(
       newResult,
-      'c-text-input--smaller',
+      'author--c-text-input--smaller',
     );
     expect(secondInput[0].value).toBe('30100')
   });
