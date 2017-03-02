@@ -39,8 +39,13 @@ export default class PreviewContainer extends React.Component {
       />
     );
 
-    return (<div>
-      {result}
-    </div>);
+    return (<div className="o-assessment-container">
+      <div className="c-header">
+        <div className="c-header__title">Assessment Preview</div>
+        <div className="c-header__question-number" />
+      </div>
+      <div>{result}</div>
+    </div>
+    );
   }
 }
