@@ -8,10 +8,11 @@ import guid                      from '../../../../utils/guid';
 function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
+    const newOrder = _.get(updateValues, 'order');
     return {
       id: choice.id,
       text: _.get(updateValues, 'text') || choice.text,
-      order: _.get(updateValues, 'order') || choice.order,
+      order: _.isNil(newOrder) ? choice.order : newOrder,
       delete: _.get(updateValues, 'delete'),
     };
   });
