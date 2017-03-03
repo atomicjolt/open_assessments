@@ -3,38 +3,25 @@ import genusTypes       from '../../../../constants/genus_types';
 import { scrub }        from '../../serializer_utils';
 import { languages, getLanguage } from '../../../../constants/language_types';
 
-function serializeQuestionString(text, item) {
-  if (item.name) {
-    // create
-    const simpleLanguage = getLanguage(item.language);
-    item.question = {
-      text: item.question.text,
-      languageTypeId: item.language,
-      formatTypeId: languages.formatTypeId,
-      scriptTypeId: languages.scriptTypeId[simpleLanguage]
-    };
-    return item.question;
-  } else if (item.language) {
-    // update language
-    const simpleLanguage = getLanguage(item.language);
-    item.question = {
-      text,
-      languageTypeId: item.language,
-      formatTypeId: languages.formatTypeId,
-      scriptTypeId: languages.scriptTypeId[simpleLanguage]
-    };
-    return item.question;
-  } else {
-    // update
-    return item.question.text;
-  }
+function serializeQuestionString(item) {
+  const simpleLanguage = getLanguage(item.language);
+  // create
+  debugger
+  // TODO: Maybe default create in english..
+  item.question = {
+    text: item.question.text,
+    languageTypeId: item.language,
+    formatTypeId: languages.formatTypeId,
+    scriptTypeId: languages.scriptTypeId[simpleLanguage]
+  };
+  return item.question;
 }
 
 export function baseSerializeQuestion(originalItem, newAttributes, item) {
   return {
     id: _.get(originalItem, 'question.id'),
     genusTypeId: genusTypes.question[_.get(newAttributes, 'type') || originalItem.type],
-    questionString: serializeQuestionString(originalItem.question.text, item),
+    questionString: serializeQuestionString(item),
     fileIds: newAttributes.fileIds
   };
 }

@@ -1,4 +1,5 @@
 import React            from 'react';
+import _                from 'lodash';
 import MultipleChoice   from './multiple_choice';
 import QuestionHeader   from './question_common/header/_header';
 import Settings         from './question_common/settings';
@@ -7,6 +8,7 @@ import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
 import ShortAnswer      from './short_answer';
 import types            from '../../../../constants/question_types';
+import languages        from '../../../../constants/language_types';
 
 export default class Question extends React.Component {
   static propTypes = {
@@ -31,6 +33,7 @@ export default class Question extends React.Component {
     super(props);
     this.state = {
       reorderActive: false,
+      language: languages.languageTypeId.english
     };
   }
 
@@ -51,8 +54,19 @@ export default class Question extends React.Component {
   }
 
   updateItem(newItemProperties) {
+
     const { item } = this.props;
-    this.props.updateItem({ id: item.id, ...newItemProperties });
+    const exists = _.filter(item.question.texts, (textObj) => {
+      return textObj.languageTypeId === newItemProperties.language;
+    });
+
+    if (exists.length === 1 && this.state.language !== newItemProperties.language) {
+      this.setState({ language: newItemProperties.language });
+    } else {
+      newItemProperties.language = this.state.language;
+      this.props.updateItem({ id: item.id, ...newItemProperties });
+      //update the text in question to the correct language from state.
+    }
   }
 
   changeType(type) {
@@ -141,9 +155,14 @@ export default class Question extends React.Component {
 
   render() {
     const { item } = this.props;
-    const { name, type, id, question, language, bankId } = item;
+    const { name, type, id, question, bankId } = item;
+    const defaultLanguage = this.state.language;
     const className = this.getClassName();
-    const questionText = question ? question.text : '';
+    const choosenLanguage = _.filter(item.question.texts, (textObj) => {
+      return textObj.languageTypeId === defaultLanguage;
+    });
+    const questionText = _.get(choosenLanguage[0], 'text', '');
+    debugger;
 
     return (
       <div
@@ -169,7 +188,7 @@ export default class Question extends React.Component {
           id={id}
           updateItem={newProps => this.updateItem(newProps)}
           defaultName={name}
-          language={language}
+          language={this.state.language}
           maintainOrder={question && !question.shuffle}
           multipleAnswer={item.type === types.multipleAnswer || item.type === types.multipleReflection}
           reflection={_.includes([types.reflection, types.multipleReflection], item.type)}
