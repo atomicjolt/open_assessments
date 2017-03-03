@@ -162,7 +162,6 @@ export default class Question extends React.Component {
       return textObj.languageTypeId === defaultLanguage;
     });
     const questionText = _.get(choosenLanguage[0], 'text', '');
-    debugger;
 
     return (
       <div

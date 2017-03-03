@@ -9,7 +9,7 @@ function serializeQuestionString(item) {
   debugger
   // TODO: Maybe default create in english..
   item.question = {
-    text: item.question.text,
+    text: _.get(item, 'question.text', ''),
     languageTypeId: item.language,
     formatTypeId: languages.formatTypeId,
     scriptTypeId: languages.scriptTypeId[simpleLanguage]
