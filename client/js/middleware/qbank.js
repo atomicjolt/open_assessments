@@ -230,7 +230,7 @@ const qbank = {
     });
   },
 
-  [AssetConstants.UPLOAD_IMAGE]: {
+  [AssetConstants.UPLOAD_MEDIA]: {
     method : Network.POST,
     url    : (url, action) => `${url}/repository/repositories/${action.bankId}/assets`,
   },

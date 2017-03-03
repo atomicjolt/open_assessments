@@ -20,7 +20,7 @@ export default function base(item) {
       id: _.get(item, 'question.id'),
       type: getQbankType(_.get(item, 'question.genusTypeId')),
       text: _.get(item, 'question.text.text'),
-      fileIds: {},
+      fileIds: _.get(item, 'question.fileIds'),
       choices: null, // implement in type
     },
   };
