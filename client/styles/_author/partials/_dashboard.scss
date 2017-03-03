@@ -1,4 +1,4 @@
-.c-table{
+.author--c-table{
   width: 100%;
   border-collapse: collapse;
 
@@ -26,7 +26,7 @@
       padding-right: 2rem;
     }
 
-    .c-table__filter{
+    .author--c-table__filter{
       position: relative;
       background: none;
       border: none;
@@ -86,10 +86,10 @@
 
         }
       }
-      .c-table__icons{
+      .author--c-table__icons{
         @include display-flex;
       }
-      .c-publish{
+      .author--c-publish{
         background-color: $purple2;
         color: $white;
 
@@ -158,25 +158,25 @@
   }
 }
 
-  .c-table__icons{
+  .author--c-table__icons{
     display: none;
     @include align-items(center);
     float: right;
   }
 
-    .c-publish{
+    .author--c-publish{
 
     }
 
-.c-scrollable{
+.author--c-scrollable{
   max-height: 90rem;
   overflow: auto;
 }
 
-.c-input--purple{
+.author--c-input--purple{
   @include flex(1);
 
-  .c-text-input{
+  .author--c-text-input{
     color: $white;
     border: 0.2rem solid $purple2;
     border-right: none;
@@ -192,14 +192,14 @@
   }
 }
 
-.c-embed-contain{
+.author--c-embed-contain{
   width: 100%;
   @include flex(1);
   @include display-flex;
   @include align-items(center);
 }
 
-.c-btn--embed{
+.author--c-btn--embed{
   border-radius: 0 $radius $radius 0;
   border: 0.2rem solid $purple2;
   background-color: $purple2;

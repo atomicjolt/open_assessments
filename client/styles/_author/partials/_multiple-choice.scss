@@ -1,4 +1,4 @@
-.c-answer{
+.author--c-answer{
   padding: 0.75rem 5.5rem;
   background: $white;
   box-shadow: 0 0 0.6rem rgba(0,0,0,0.15);
@@ -7,16 +7,16 @@
   cursor: pointer;
 
   &:hover{
-    .c-answer__icons .c-answer__icons__spacer:last-of-type i{
+    .author--c-answer__icons .author--c-answer__icons__spacer:last-of-type i{
       display: inline-block;
     }
 
-    .c-input__bottom{
+    .author--c-input__bottom{
       border-top: $border;
     }
   }
 
-  .c-answer__icons{
+  .author--c-answer__icons{
     position: absolute;
     width: 11rem;
     height: 3rem;
@@ -35,7 +35,7 @@
     }
   }
 
-    .c-answer__icons__spacer{
+    .author--c-answer__icons__spacer{
       width: 3rem;
       height: 3rem;
       margin-right: 1rem;
@@ -56,21 +56,21 @@
       }
     }
 
-  .c-feedback{
+  .author--c-feedback{
     display: none;
   }
 
   &.is-active{
-    .c-feedback{
+    .author--c-feedback{
       @include display-flex;
     }
-    .c-answer__icons i{
+    .author--c-answer__icons i{
       display: inline-block;
     }
   }
 }
 
-.c-answer--add{
+.author--c-answer--add{
   box-shadow: none;
   min-height: 5rem;
   margin-bottom: 0;
@@ -78,18 +78,18 @@
 
   &:hover{
 
-    .c-input .c-text-input{
+    .author--c-input .author--c-text-input{
       color: lighten($gray8, 10%);
     }
 
-    .c-radio{
+    .author--c-radio{
 
       input[type="radio"] + label:before{
         color: $gray8;
       }
     }
 
-    .c-checkbox{
+    .author--c-checkbox{
 
       input[type="checkbox"] + label:before{
         color: $gray8;
@@ -97,16 +97,16 @@
     }
   }
 
-  .c-input{
+  .author--c-input{
     pointer-events: none;
 
-    .c-text-input{
+    .author--c-text-input{
       color: $gray4;
       @include transition(color 0.1s ease);
     }
   }
 
-  .c-radio{
+  .author--c-radio{
 
     input[type="radio"] + label:before{
       color: $gray3;
@@ -114,7 +114,7 @@
     }
   }
 
-  .c-checkbox{
+  .author--c-checkbox{
 
     input[type="checkbox"] + label:before{
       color: $gray3;

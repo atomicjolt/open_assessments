@@ -22,9 +22,9 @@ export default function heading(props) {
   };
 
   return (
-    <header className="c-header">
-      <div className="c-header-top">
-        <img src={logo} alt="CLI Logo" className="c-logo" />
+    <header className="author--c-header">
+      <div className="author--c-header-top">
+        <img src={logo} alt="CLI Logo" className="author--c-logo" />
       </div>
       {content()}
     </header>
