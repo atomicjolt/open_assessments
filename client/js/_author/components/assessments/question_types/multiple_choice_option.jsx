@@ -69,19 +69,13 @@ export default function multipleChoiceOptions(props) {
 
       <div className="author--c-input author--c-input-label--left author--c-feedback">
         <label htmlFor="feedback1">Feedback</label>
-        <div className="author--c-input__contain">
-          <input
-            defaultValue={props.feedback}
-            onBlur={e => props.updateChoice({ feedback: e.target.value })}
-            className="author--c-text-input author--c-text-input--smaller author--c-wysiwyg"
-            id="feedback1"
-            type="text"
-            tabIndex="0"
-          />
-          <div className="author--c-input__bottom" />
-        </div>
+        <Editor
+          text={props.feedback}
+          bankId={props.bankId}
+          itemId={props.itemId}
+          onBlur={(text, fileIds) => props.updateChoice({ feedback: text }, fileIds)}
+        />
       </div>
-
     </div>
   );
 }

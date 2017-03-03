@@ -43,8 +43,8 @@ describe('Multiple Choice Option', () => {
 
   it('clicks the second input', () => {
     const input = TestUtils.scryRenderedDOMComponentsWithTag(result, 'input')[1];
-    TestUtils.Simulate.blur(input);
-    expect(updatedChoice.text).toBe('This is dummy text');
+    TestUtils.Simulate.blur(input, { target: { value: 'lasers are neat' } });
+    expect(updatedChoice.text).toBe('lasers are neat');
   });
 
   it('finds all buttons when shuffle is true', () => {

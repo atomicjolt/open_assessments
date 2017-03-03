@@ -80,7 +80,7 @@ export default class TinyWrapper extends React.Component {
           id={`${this.id}-tinymce`}
           content={this.props.text}
           config={this.tinyMCEConfig()}
-          onBlur={e => this.props.onBlur(e.target.getContent())}
+          onBlur={e => this.props.onBlur(e.target.getContent(), e.target.isDirty())}
           onFocus={this.props.onFocus}
         />
         <input
