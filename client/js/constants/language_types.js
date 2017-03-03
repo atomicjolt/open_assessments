@@ -11,7 +11,6 @@ export const languages = {
     hindi: '15924%3ADEVA%40ISO',
     telugu: '15924%3ATELU%40ISO',
   }
-
 };
 
 export function getLanguage(langCode) {

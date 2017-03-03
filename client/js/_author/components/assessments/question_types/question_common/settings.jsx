@@ -1,5 +1,6 @@
-import React    from 'react';
-import types from '../../../../../constants/question_types';
+import React      from 'react';
+import types      from '../../../../../constants/question_types';
+import languages  from '../../../../../constants/language_types';
 
 export default function questionSettings(props) {
   const extraOptionTypes = [types.multipleChoice, types.reflection, types.multipleReflection, types.multipleAnswer];
@@ -66,12 +67,12 @@ export default function questionSettings(props) {
             name=""
             id=""
             tabIndex="0"
-            value={props.language}
+            value={languages.languageTypeId[props.language]}
             onChange={e => props.updateItem({ language: e.target.value })}
           >
-            <option value="english">English</option>
-            <option value="hindi">Hindi</option>
-            <option value="telugu">Telugu</option>
+            <option value={languages.languageTypeId.english}>English</option>
+            <option value={languages.languageTypeId.hindi}>Hindi</option>
+            <option value={languages.languageTypeId.telugu}>Telugu</option>
           </select>
         </div>
       </div>

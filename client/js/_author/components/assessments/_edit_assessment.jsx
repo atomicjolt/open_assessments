@@ -8,7 +8,6 @@ import AssessmentForm         from './assessment_form';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
-import { languages, getLanguage } from '../../../constants/language_types';
 
 function select(state, props) {
   const bankId = encodeURIComponent(props.params.bankId);
@@ -83,25 +82,12 @@ export class EditAssessment extends React.Component {
     }
   }
 
-  addLanguageType(item) {
-    const simpleLanguage = getLanguage(item.language);
-    item.question = {
-      text: item.question.text,
-      languageTypeId: item.language,
-      formatTypeId: languages.formatTypeId,
-      scriptTypeId: languages.scriptTypeId[simpleLanguage]
-    };
-    return item;
-  }
-
   createItem(newItem) {
-    const updatedItem = this.addLanguageType(newItem);
-    debugger
     this.props.createItemInAssessment(
       this.props.params.bankId,
       this.props.params.id,
       _.map(this.props.assessment.items, 'id'),
-      updatedItem,
+      newItem,
     );
   }
 
