@@ -11,7 +11,6 @@ export const types = {
   question: {
     multipleChoice: 'question-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
     audioUpload: 'question-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU',
-    multipleChoice: 'question-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
     multipleAnswer: 'question-type%3Aqti-choice-interaction-multi-select%40ODL.MIT.EDU',
     reflection: 'question-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
     multipleReflection: 'question-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',
@@ -29,7 +28,7 @@ export const types = {
 };
 
 export function getQbankType(type) {
-  return _.findKey(types.item, (genusType) => type === genusType) || null;
+  return _.findKey(types.item, genusType => type === genusType) || null;
 }
 
 export default types;

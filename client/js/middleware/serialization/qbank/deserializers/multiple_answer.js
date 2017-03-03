@@ -11,7 +11,6 @@ function deserializeChoices(choices, answers) {
       answerId: null,
       text: choice.text,
       order: index,
-      feedback: null,
       fileIds: [],
       isCorrect: false,
     };
@@ -30,13 +29,23 @@ function deserializeChoices(choices, answers) {
 }
 
 
-export default function multipleChoice(item) {
+export default function multipleAnswer(item) {
   const newItem = baseDeserializer(item);
+  const correctAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.rightAnswer });
+  const incorrectAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.wrongAnswer });
 
   newItem.question = {
     ...newItem.question,
     shuffle: _.get(item, 'question.shuffle'),
-    choices: deserializeChoices(_.get(item, 'question.choices'), item.answers)
+    choices: deserializeChoices(_.get(item, 'question.choices'), item.answers),
+    correctFeedback: {
+      text: _.get(correctAnswer, 'feedback.text'),
+      answerId: _.get(correctAnswer, 'id'),
+    },
+    incorrectFeedback: {
+      text: _.get(incorrectAnswer, 'feedback.text'),
+      answerId: _.get(incorrectAnswer, 'id'),
+    },
   };
 
   return newItem;

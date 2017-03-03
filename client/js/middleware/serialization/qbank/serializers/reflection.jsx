@@ -41,19 +41,14 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   return scrub(newQuestion);
 }
 
-function serializeAnswers(originalChoices, newChoiceAttributes) {
-  let newFeedback = null;
-  _.forEach(newChoiceAttributes, (choice) => {
-    if (choice.feedback) { newFeedback = choice.feedback; }
-  });
-
-  return _.map(originalChoices, choice => scrub({
-    id: choice.answerId,
+function serializeAnswers(originalChoices, feedback, multi) {
+  return [{
+    id: _.get(_.find(originalChoices, { isCorrect: true }), 'answerId'),
     genusTypeId: genusTypes.answer.rightAnswer,
-    feedback: newFeedback || choice.feedback,
-    type: genusTypes.answer.multipleChoice,  // TODO: probably wrong
-    choiceIds: [choice.id],
-  }));
+    feedback,
+    type: multi ? genusTypes.question.multipleReflection : genusTypes.question.reflection,
+    choiceIds: _.map(originalChoices, 'id'),
+  }];
 }
 
 
@@ -67,7 +62,11 @@ export default function surveySerializer(originalItem, newItemAttributes) {
       ...serializeQuestion(originalItem.question, question)
     };
     if (question.choices) {
-      newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
+      newItem.answers = serializeAnswers(
+        originalItem.question.choices,
+        question.correctFeedback,
+        item.type === genusTypes.item.multipleReflection
+      );
     }
   }
 
