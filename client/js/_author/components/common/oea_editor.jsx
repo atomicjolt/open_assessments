@@ -37,7 +37,11 @@ export class OeaEditor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.uploadedAssets !== this.props.uploadedAssets) {
+    if (nextProps.uploadedAssets[this.props.itemId] &&
+      (nextProps.uploadedAssets[this.props.itemId] !==
+        this.props.uploadedAssets[this.props.itemId]
+      )
+    ) {
       const asset = nextProps.uploadedAssets[this.props.itemId][this.state.mediaGuid];
       const imageUrl = asset.assetContents[0].url;
       this.state.mediaCallback(imageUrl);
