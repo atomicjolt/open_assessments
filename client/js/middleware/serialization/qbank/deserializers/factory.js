@@ -2,6 +2,7 @@ import audioUpload      from './audio_upload';
 import base             from './base';
 import shortAnswer      from './short_answer';
 import multipleChoice   from './multiple_choice';
+import fileUpload       from './file_upload';
 import genusTypes       from '../../../../constants/genus_types';
 
 export default function factory(type) {
@@ -17,6 +18,9 @@ export default function factory(type) {
 
     case genusTypes.item.shortAnswer:
       return shortAnswer;
+
+    case genusTypes.item.fileUpload:
+      return fileUpload;
 
     default:
       return base;

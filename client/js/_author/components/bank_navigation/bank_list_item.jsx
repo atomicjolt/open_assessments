@@ -41,7 +41,7 @@ export default function bankListItem(props) {
   function embedButtonOrUrl() {
     if (isPublished) {
       if (assessOffered) {
-        const embedUrlCode = `${baseEmbedUrl}${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}#/assessment`;
+        const embedUrlCode = `${baseEmbedUrl}&bank=${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}#/assessment`;
 
         return (
           <div className="author--c-embed-contain">
