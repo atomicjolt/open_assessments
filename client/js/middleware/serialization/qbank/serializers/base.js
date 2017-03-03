@@ -3,7 +3,7 @@ import genusTypes       from '../../../../constants/genus_types';
 import { scrub }        from '../../serializer_utils';
 import { languages, getLanguage } from '../../../../constants/language_types';
 
-function serializeQuestionString(item) {
+function serializeQuestionString(text, item) {
   if (item.name) {
     // create
     const simpleLanguage = getLanguage(item.language);
@@ -18,7 +18,7 @@ function serializeQuestionString(item) {
     // update language
     const simpleLanguage = getLanguage(item.language);
     item.question = {
-      text: '',
+      text,
       languageTypeId: item.language,
       formatTypeId: languages.formatTypeId,
       scriptTypeId: languages.scriptTypeId[simpleLanguage]
@@ -34,7 +34,7 @@ export function baseSerializeQuestion(originalItem, newAttributes, item) {
   return {
     id: _.get(originalItem, 'question.id'),
     genusTypeId: genusTypes.question[_.get(newAttributes, 'type') || originalItem.type],
-    questionString: serializeQuestionString(item),
+    questionString: serializeQuestionString(originalItem.question.text, item),
     fileIds: newAttributes.fileIds
   };
 }

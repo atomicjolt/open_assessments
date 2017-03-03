@@ -3,7 +3,7 @@ import { getQbankType }     from '../../../../constants/genus_types';
 import { getLanguage }      from '../../../../constants/language_types';
 
 export default function base(item) {
-  const languages = item.question ? item.question.texts : [];
+  const languages = _.get(item, 'question.texts', []);
   let languageTypeId = '';
   // TODO: always grabs last one, pass the langauge through and find it.
   if (!_.isEmpty(languages)) {
@@ -15,7 +15,7 @@ export default function base(item) {
     bankId: item.bankId,
     assessmentId: null, // TODO
     name: _.get(item, 'displayName.text'),
-    language: getLanguage(languageTypeId), // TODO: How does the language even work?
+    language: getLanguage(languageTypeId),
     question: {
       id: _.get(item, 'question.id'),
       type: getQbankType(_.get(item, 'question.genusTypeId')),
