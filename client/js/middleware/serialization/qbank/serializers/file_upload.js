@@ -1,5 +1,5 @@
 import baseSerializer                    from './base';
-import { scrub, getSingleCorrectAnswer} from '../../serializer_utils';
+import { scrub, getSingleCorrectAnswer } from '../../serializer_utils';
 
 export default function fileUploadSerializer(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
