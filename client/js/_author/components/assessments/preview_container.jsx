@@ -7,7 +7,7 @@ import * as selectors from '../../../_player/selectors/assessment';
 import Parser from '../../../parsers/clix/parser';
 
 
-function transformItem(item){
+function transformItem(item) {
   return _.merge({}, item, {
     genusTypeId: _.get(item, 'question.genusTypeId', item.genusTypeId)
   });
@@ -22,7 +22,7 @@ export default class PreviewContainer extends React.Component {
     const assessment = Parser.parse(
       'preview',
       { data: _.map(this.props.previewItems, transformItem) });
-    debugger;
+
     const questions = selectors.questions({ assessment });
 
     const result = questions.map((question, index) =>
