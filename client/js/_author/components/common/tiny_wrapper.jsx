@@ -8,6 +8,7 @@ import 'tinymce/plugins/paste/plugin';
 import 'tinymce/plugins/link/plugin';
 import 'tinymce/plugins/code/plugin';
 import 'tinymce/plugins/image/plugin';
+import 'tinymce/plugins/media/plugin';
 import 'tinymce/plugins/charmap/plugin';
 import 'tinymce/plugins/lists/plugin';
 
@@ -16,7 +17,7 @@ import guid    from '../../../utils/guid';
 export default class TinyWrapper extends React.Component {
   static propTypes = {
     text: React.PropTypes.string,
-    uploadImage: React.PropTypes.func.isRequired,
+    uploadMedia: React.PropTypes.func.isRequired,
     onBlur: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func.isRequired,
   };
@@ -41,18 +42,29 @@ export default class TinyWrapper extends React.Component {
       skin: false,
       menubar: false,
       statusbar: false,
-      file_picker_types: 'image',
-      file_picker_callback: (imageCallback, value, meta) => {
-        if (meta.filetype === 'image') {
-          this.imageFilePicker.onchange = e => this.props.uploadImage(
-            e.target.files[0],
-            imageCallback
-          );
-          this.imageFilePicker.click();
+      file_picker_types: 'file image media',
+      file_picker_callback: (callback, value, meta) => {
+        switch (meta.filetype) {
+          case 'image':
+          case 'media':
+            this.filePicker.onchange = e => this.props.uploadMedia(
+              e.target.files[0],
+              callback
+            );
+            this.filePicker.click();
+            break;
+          default:
+            break;
         }
       },
-      plugins: 'autolink link image lists paste code charmap',
-      toolbar: 'bold italic removeformat | bullist numlist  blockquote | code charmap subscript superscript | image',
+      media_url_resolver: (data, resolve) => {
+        // const type = data.source1mime ? ` type='${data.source1mime}'` : '';
+        // return `<audio controls><source src='${data.source1}'${type}/></audio>`;
+        // <span contenteditable="false" data-mce-object="audio" class="mce-preview-object mce-object-audio" data-mce-selected="1">
+        resolve({ html: `<audio controls><source src='${data.url}'/></audio>` })
+      },
+      plugins: 'autolink link image lists paste code charmap media',
+      toolbar: 'bold italic removeformat | bullist numlist  blockquote | code charmap subscript superscript | image media',
       inline: true,
       paste_data_images: true,
     };
@@ -71,7 +83,7 @@ export default class TinyWrapper extends React.Component {
         <input
           className="author--c-image-uploader author--c-file"
           type="file"
-          ref={ref => (this.imageFilePicker = ref)}
+          ref={ref => (this.filePicker = ref)}
         />
       </div>
     );
