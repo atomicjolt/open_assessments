@@ -7053,9 +7053,9 @@ rechoir@^0.6.2:
   dependencies:
     resolve "^1.1.6"
 
-"recorderjs@https://github.com/nick-benoit14/Recorderjs":
+"recorderjs@git+https://github.com/nick-benoit14/Recorderjs":
   version "0.1.0"
-  resolved "https://github.com/nick-benoit14/Recorderjs#64682b37001a9f14a061485323fbed4110ba82e1"
+  resolved "git+https://github.com/nick-benoit14/Recorderjs#64682b37001a9f14a061485323fbed4110ba82e1"
   dependencies:
     inline-worker "^0.1.0"
 
