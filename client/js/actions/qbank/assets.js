@@ -5,12 +5,12 @@ const actions = [];
 
 // Actions that make an api request
 const requests = [
-  'UPLOAD_IMAGE',
+  'UPLOAD_MEDIA',
 ];
 
 export const Constants = wrapper(actions, requests);
 
-export function uploadImage(file, guid, itemId, bankId) {
+export function uploadMedia(file, guid, itemId, bankId) {
   const formData = new FormData();
   formData.append('inputFile', file);
   formData.append('returnUrl', true);
@@ -21,7 +21,7 @@ export function uploadImage(file, guid, itemId, bankId) {
     file,
     guid,
     apiCall: true,
-    type: Constants.UPLOAD_IMAGE,
+    type: Constants.UPLOAD_MEDIA,
     body: formData
   };
 }
