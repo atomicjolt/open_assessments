@@ -24,7 +24,7 @@ export class OeaEditor extends React.Component {
     onBlur: React.PropTypes.func.isRequired,
     bankId: React.PropTypes.string.isRequired,
     itemId: React.PropTypes.string.isRequired,
-    uploadImage: React.PropTypes.func.isRequired,
+    uploadMedia: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}).isRequired,
     existingFileIds: React.PropTypes.shape({})
   };
@@ -38,10 +38,10 @@ export class OeaEditor extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.uploadedAssets !== this.props.uploadedAssets) {
-      const asset = nextProps.uploadedAssets[this.props.itemId][this.state.imageGuid];
+      const asset = nextProps.uploadedAssets[this.props.itemId][this.state.mediaGuid];
       const imageUrl = asset.assetContents[0].url;
-      this.state.imageCallback(imageUrl);
-      this.setState({ imageCallback: null, imageGuid: null });
+      this.state.mediaCallback(imageUrl);
+      this.setState({ mediaCallback: null, mediaGuid: null });
     }
   }
 
@@ -55,28 +55,28 @@ export class OeaEditor extends React.Component {
 
       // If we already have the image uploaded, don't make a new fileId entry
       // for it.
-      const imageGuid = _.findKey(this.props.existingFileIds, fileData => (
+      const mediaGuid = _.findKey(this.props.existingFileIds, fileData => (
         fileData.assetContentId === assetContentId
       )) || uploadedGuid;
 
-      fileIds[imageGuid] = {
+      fileIds[mediaGuid] = {
         assetId: asset.id,
         assetContentId,
         assetContentTypeId: asset.assetContents[0].genusTypeId
       };
-      text = text.replace(asset.assetContents[0].url, `AssetContent:${imageGuid}`);
+      text = text.replace(asset.assetContents[0].url, `AssetContent:${mediaGuid}`);
     });
 
     const doc = $(`<div>${text}</div>`);
-    $('img', doc).each((i, el) => {
-      const img = $(el);
-      const match = /.*\/(.*)\/stream$/.exec(img.attr('src'));
+    $('img, source', doc).each((i, el) => {
+      const media = $(el);
+      const match = /.*\/(.*)\/stream$/.exec(media.attr('src'));
       if (match) {
         const assetContentId = match[1];
-        const imageGuid = _.findKey(this.props.existingFileIds, fileData => (
+        const mediaGuid = _.findKey(this.props.existingFileIds, fileData => (
           fileData.assetContentId === assetContentId
         ));
-        img.attr('src', `AssetContent:${imageGuid}`);
+        media.attr('src', `AssetContent:${mediaGuid}`);
       }
     });
 
@@ -86,17 +86,17 @@ export class OeaEditor extends React.Component {
     this.props.onBlur(text, fileIds);
   }
 
-  uploadImage(file, imageCallback) {
-    const imageGuid = guid();
-    this.props.uploadImage(
+  uploadMedia(file, mediaCallback) {
+    const mediaGuid = guid();
+    this.props.uploadMedia(
       file,
-      imageGuid,
+      mediaGuid,
       this.props.itemId,
       this.props.bankId
     );
     this.setState({
-      imageGuid,
-      imageCallback,
+      mediaGuid,
+      mediaCallback,
     });
   }
 
@@ -108,7 +108,7 @@ export class OeaEditor extends React.Component {
         <div className={`author--c-text-input author--c-text-input--medium author--c-wysiwyg ${active}`}>
           <TinyWrapper
             {...this.props}
-            uploadImage={(file, imageCallback) => this.uploadImage(file, imageCallback)}
+            uploadMedia={(file, mediaCallback) => this.uploadMedia(file, mediaCallback)}
             onBlur={editorText => this.onBlur(editorText)}
             onFocus={() => this.setState({ focused: true })}
           />

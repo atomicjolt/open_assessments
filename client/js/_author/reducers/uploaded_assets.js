@@ -6,7 +6,7 @@ const initialState = {};
 export default (state = initialState, action) => {
   switch (action.type) {
 
-    case AssetConstants.UPLOAD_IMAGE_DONE: {
+    case AssetConstants.UPLOAD_MEDIA_DONE: {
       const newState = _.cloneDeep(state);
       newState[action.original.itemId] = newState[action.original.itemId] || {};
       newState[action.original.itemId][action.original.guid] = action.payload;
