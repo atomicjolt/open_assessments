@@ -8,6 +8,7 @@ import types        from '../../../../constants/question_types';
 export default class MultipleChoice extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
+      bankId: React.PropTypes.string,
       answers: React.PropTypes.arrayOf(React.PropTypes.shape),
       id: React.PropTypes.string,
       type: React.PropTypes.string,
@@ -68,7 +69,7 @@ export default class MultipleChoice extends React.Component {
               {...choice}
               itemType={type}
               multipleAnswer={_.get(question, 'multipleAnswer', false)}
-              updateChoice={newChoice => this.props.updateChoice(id, choice.id, newChoice)}
+              updateChoice={(newChoice, fileIds) => this.props.updateChoice(id, choice.id, newChoice, fileIds)}
               updateItem={() => this.props.updateItem({ question })}
               deleteChoice={() => this.deleteChoice(choice)}
               shuffle={question.shuffle}
@@ -77,6 +78,8 @@ export default class MultipleChoice extends React.Component {
               first={choice.order === 0}
               last={question ? choice.order === _.size(question.choices) - 1 : true}
               isActive={this.props.isActive}
+              bankId={this.props.item.bankId}
+              itemId={this.props.item.id}
             />
           ))
         }

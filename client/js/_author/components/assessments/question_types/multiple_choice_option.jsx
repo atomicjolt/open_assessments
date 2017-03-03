@@ -2,6 +2,7 @@ import React      from 'react';
 import Radio      from './question_common/option_radio';
 import CheckBox   from './question_common/option_checkbox';
 import types      from '../../../../constants/question_types';
+import Editor  from '../../common/oea_editor';
 
 export default function multipleChoiceOptions(props) {
   const selector = () => {
@@ -30,18 +31,12 @@ export default function multipleChoiceOptions(props) {
       <div className="author--c-input">
         {selector()}
         <label htmlFor="option1" />
-        <div className="author--c-input__contain">
-          <input
-            className="author--c-text-input author--c-text-input--small author--c-wysiwyg"
-            defaultValue={props.text}
-            onBlur={e => props.updateChoice({ text: e.target.value })}
-            id="option1"
-            type="text"
-            placeholder="Option"
-            tabIndex="0"
-          />
-          <div className="author--c-input__bottom" />
-        </div>
+        <Editor
+          text={props.text}
+          bankId={props.bankId}
+          itemId={props.itemId}
+          onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
+        />
 
         <div className="author--c-answer__icons">
           {
@@ -107,4 +102,6 @@ multipleChoiceOptions.propTypes = {
   shuffle: React.PropTypes.bool,
   isActive: React.PropTypes.bool,
   multipleAnswer: React.PropTypes.bool,
+  itemId: React.PropTypes.string,
+  bankId: React.PropTypes.string,
 };
