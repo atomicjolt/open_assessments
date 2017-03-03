@@ -3,12 +3,15 @@ import _            from 'lodash';
 import Option       from './multiple_choice_option';
 import Add          from './add_option';
 import Feedback     from './question_common/feedback';
+import types        from '../../../../constants/question_types';
 
 export default class MultipleChoice extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
       answers: React.PropTypes.arrayOf(React.PropTypes.shape),
       id: React.PropTypes.string,
+      type: React.PropTypes.string,
+      multipleAnswer: React.PropTypes.string,
       question: React.PropTypes.shape({
         choices: React.PropTypes.shape({}),
       }),
@@ -50,15 +53,21 @@ export default class MultipleChoice extends React.Component {
     });
   }
 
+  addNewChoice(id) {
+    this.props.updateChoice(id, 'new', true);
+  }
+
   render() {
-    const { question, id } = this.props.item;
+    const { question, id, type } = this.props.item;
     return (
-      <div className="c-question__answers c-question__answers--maintain">
+      <div className="author--c-question__answers author--c-question__answers--maintain">
         {
           _.map(_.orderBy(question.choices, 'order'), choice => (
             <Option
               key={`assessmentChoice_${choice.id}`}
               {...choice}
+              itemType={type}
+              multipleAnswer={_.get(question, 'multipleAnswer', false)}
               updateChoice={newChoice => this.props.updateChoice(id, choice.id, newChoice)}
               updateItem={() => this.props.updateItem({ question })}
               deleteChoice={() => this.deleteChoice(choice)}
@@ -72,9 +81,13 @@ export default class MultipleChoice extends React.Component {
           ))
         }
         {
-          this.props.isActive ? <Add updateChoice={() => this.props.updateChoice(id)} /> : null
+          this.props.isActive ? <Add
+            updateChoice={() => this.addNewChoice(id)}
+          /> : null
         }
-        <Feedback />
+        <Feedback
+          onlyShowCorrect={type === types.reflection || type === types.multipleReflection}
+        />
       </div>
     );
   }

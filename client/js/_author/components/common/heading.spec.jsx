@@ -20,6 +20,6 @@ describe('Heading', () => {
   });
 
   it('renders the Bank view content', () => {
-    expect(TestUtils.findRenderedDOMComponentWithClass(result, 'c-header-bottom')).toBeDefined();
+    expect(TestUtils.findRenderedDOMComponentWithClass(result, 'author--c-header-bottom')).toBeDefined();
   });
 });

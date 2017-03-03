@@ -1,8 +1,8 @@
-import _                from 'lodash';
-import AssessmentItems  from './assessment_items';
 import React            from 'react';
 import TestUtils        from 'react-addons-test-utils';
-import Stub             from '../../../../specs_support/stub';
+import { Provider }     from 'react-redux';
+import { createStore }  from 'redux';
+import AssessmentItems  from './assessment_items';
 
 describe('assessment items component', () => {
   let props;
@@ -29,13 +29,17 @@ describe('assessment items component', () => {
       updateAnswer: () => {},
       moveItem: () => {},
     };
-    result = TestUtils.renderIntoDocument(<Stub><AssessmentItems {...props} /></Stub>);
+    result = TestUtils.renderIntoDocument(
+      <Provider store={createStore(()=>({ settings: {} }))}>
+        <AssessmentItems {...props} />
+      </Provider>
+    );
   });
 
   it('renders question component', () => {
     const questionComponent = TestUtils.scryRenderedDOMComponentsWithClass(
       result,
-      'c-question__content',
+      'author--c-question__content',
     );
     expect(questionComponent.length).not.toBe(0);
   });
