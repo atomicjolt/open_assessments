@@ -26,6 +26,7 @@ export default function factory(type) {
 
     case types.fileUpload:
       return fileUpload;
+
     default:
       throw 'We could not find a type for serializing';
   }
