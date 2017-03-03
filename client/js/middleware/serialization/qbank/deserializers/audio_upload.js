@@ -1,5 +1,6 @@
-import _                  from 'lodash';
-import baseDeserializer   from './base';
+import _                        from 'lodash';
+import baseDeserializer         from './base';
+import { createSingleCorrectFeedback } from '../../serializer_utils';
 
 export default function audioUpload(item) {
   const newItem = baseDeserializer(item);
@@ -9,7 +10,11 @@ export default function audioUpload(item) {
     seconds: '100'
   });
 
-  _.merge(newItem.question, { timeValue });
+  newItem.question = {
+    ...newItem.question,
+    timeValue,
+    correctFeedback: createSingleCorrectFeedback(item)
+  };
 
   return newItem;
 }
