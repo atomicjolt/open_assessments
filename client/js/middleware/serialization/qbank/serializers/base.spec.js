@@ -1,6 +1,6 @@
 import { baseItem } from './base';
 
-describe('baseSerialization', () => {
+fdescribe('baseSerialization', () => {
   let item;
   beforeEach(() => {
     item = {
@@ -23,10 +23,17 @@ describe('baseSerialization', () => {
 
   describe('question', () => {
     it('should only include base fields if question has not changed', () => {
-      const result = baseItem(item, {});
+      const result = baseItem(item, item);
       expect(result.question).toEqual({
-        id:item.question.id,
-        genusTypeId: 'question-type%3Aqti-upload-interaction-generic%40ODL.MIT.EDU'
+        id: 'questionID',
+        genusTypeId: 'question-type%3Aqti-upload-interaction-generic%40ODL.MIT.EDU',
+        fileIds: { file_id: 'file_id'},
+        questionString: {
+          formatTypeId: 'TextFormats%3APLAIN%40okapia.net',
+          languageTypeId: undefined,
+          scriptTypeId: undefined,
+          text: 'Question Text',
+        }
       });
     });
 
