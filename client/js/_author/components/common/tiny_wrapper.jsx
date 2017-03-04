@@ -27,7 +27,6 @@ export default class TinyWrapper extends React.Component {
   constructor() {
     super();
     this.id = guid();
-    this.editors = {};
   }
 
   shouldComponentUpdate(nextProps) {
@@ -73,29 +72,16 @@ export default class TinyWrapper extends React.Component {
     };
   }
 
-// The editor will never change if the text changes. We handle this
-  // by passing a key that will generate a new editor instance
-  editorFactory(key) {
-    if (_.isUndefined(key)) { return null; }
-    if (this.editors[key]) {
-      return this.editors[key];
-    }
-    this.editors[key] = (
-      <TinyMCE
-        content={this.props.text}
-        config={this.tinyMCEConfig()}
-        onBlur={e => this.props.onBlur(e.target.getContent())}
-        onFocus={this.props.onFocus}
-      />
-    );
-    return this.editors[key];
-  }
-
   render() {
     return (
       <div>
         <div id={this.id} />
-        {this.editorFactory(this.props.editorKey)}
+        <TinyMCE
+          content={this.props.text}
+          config={this.tinyMCEConfig()}
+          onBlur={e => this.props.onBlur(e.target.getContent())}
+          onFocus={this.props.onFocus}
+        />
         <input
           className="author--c-image-uploader author--c-file"
           type="file"

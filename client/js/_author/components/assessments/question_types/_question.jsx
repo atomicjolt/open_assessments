@@ -56,15 +56,14 @@ export default class Question extends React.Component {
   updateItem(newItemProperties) {
 
     const { item } = this.props;
-    // const exists = _.find(item.question.texts, (textObj) => {
-    //   return textObj.languageTypeId === newItemProperties.language;
-    // });
-    newItemProperties.language =  newItemProperties.language || this.state.language;
-    this.props.updateItem({ id: item.id, ...newItemProperties });
-      //update the text in question to the correct language from state.
 
-    if (this.state.language !== newItemProperties.language) {
-      this.setState({ language: newItemProperties.language });
+    if (newItemProperties.language) {
+      if (newItemProperties.language && this.state.language !== newItemProperties.language) {
+        this.setState({ language: newItemProperties.language });
+      }
+    } else {
+      newItemProperties.language = newItemProperties.language || this.state.language;
+      this.props.updateItem({ id: item.id, ...newItemProperties });
     }
   }
 
