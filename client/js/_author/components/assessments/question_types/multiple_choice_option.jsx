@@ -79,20 +79,25 @@ export default function multipleChoiceOptions(props) {
         </div>
       </div>
 
-      <div className="author--c-input author--c-input-label--left author--c-feedback">
-        <label htmlFor="feedback1">Feedback</label>
-        <div className="author--c-input__contain">
-          <input
-            defaultValue={props.feedback}
-            onBlur={e => props.updateChoice({ feedback: e.target.value })}
-            className="author--c-text-input author--c-text-input--smaller author--c-wysiwyg"
-            id="feedback1"
-            type="text"
-            tabIndex="0"
-          />
-          <div className="author--c-input__bottom" />
-        </div>
-      </div>
+      {
+        // TODO: extract to own component
+        props.itemType === types.multipleChoice ? (
+          <div className="author--c-input author--c-input-label--left author--c-feedback">
+            <label htmlFor="feedback1">Feedback</label>
+            <div className="author--c-input__contain">
+              <input
+                defaultValue={props.feedback}
+                onBlur={e => props.updateChoice({ feedback: e.target.value })}
+                className="author--c-text-input author--c-text-input--smaller author--c-wysiwyg"
+                id="feedback1"
+                type="text"
+                tabIndex="0"
+              />
+              <div className="author--c-input__bottom" />
+            </div>
+          </div>
+        ) : null
+      }
 
     </div>
   );
