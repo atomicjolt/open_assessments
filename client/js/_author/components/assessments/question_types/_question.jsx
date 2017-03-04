@@ -62,8 +62,11 @@ export default class Question extends React.Component {
         this.setState({ language: newItemProperties.language });
       }
     } else {
-      newItemProperties.language = newItemProperties.language || this.state.language;
-      this.props.updateItem({ id: item.id, ...newItemProperties });
+      this.props.updateItem({
+        id: item.id,
+        language: newItemProperties.language || this.state.language,
+        ...newItemProperties
+      });
     }
   }
 

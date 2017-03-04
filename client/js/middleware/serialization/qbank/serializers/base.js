@@ -12,13 +12,12 @@ function serializeQuestionString(originalItem, item) {
   if (!_.isEmpty(originalItem.question) && _.isEmpty(text)) {
     text = originalItem.question.text;
   }
-  item.question = {
+  return {
     text,
     languageTypeId: item.language,
     formatTypeId: languages.formatTypeId,
     scriptTypeId: languages.scriptTypeId[simpleLanguage]
   };
-  return item.question;
 }
 
 export function baseSerializeQuestion(originalItem, newAttributes, item) {
