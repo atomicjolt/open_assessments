@@ -1,61 +1,41 @@
 import React from 'react';
 import _ from 'lodash';
 
-import Item from '../../../_player/components/assessments/item';
-import localizeStrings from '../../../_player/selectors/localize';
-import * as selectors from '../../../_player/selectors/assessment';
-import Parser from '../../../parsers/clix/parser';
-
-
-function transformItem(item) {
-  return _.merge({}, item, {
-    genusTypeId: _.get(item, 'question.genusTypeId', item.genusTypeId)
-  });
-}
-
 export default class PreviewContainer extends React.Component {
   static propTypes = {
-    previewItems: React.PropTypes.array.isRequired,
+    assessment: React.PropTypes.object.isRequired,
+    getAssessmentOffered: React.PropTypes.func.isRequired,
+    assessmentPlayerUrl: React.PropTypes.string.isRequired,
+    apiUrl: React.PropTypes.string.isRequired,
+  }
+
+  static hasOffered(assessment) {
+    return !(_.isUndefined(assessment.assessmentOffered)
+      || _.isEmpty(assessment.assessmentOffered[0]));
+  }
+
+
+  componentDidMount() {
+    const assessment = this.props.assessment;
+    if (!PreviewContainer.hasOffered(assessment)) {
+      this.props.getAssessmentOffered(assessment.bankId, assessment.id);
+    }
+  }
+
+  buildEmbedUrl() {
+    const { assessmentPlayerUrl, apiUrl, assessment } = this.props;
+
+    const bankId = assessment.bankId;
+    const assessmentOfferedId = _.get(assessment, 'assessmentOffered[0].id');
+    return `${assessmentPlayerUrl}?unlock_next=ON_ANSWER&api_url=${apiUrl}&bank=${bankId}&assessment_offered_id=${assessmentOfferedId}#/assessment`;
   }
 
   render() {
-    const assessment = Parser.parse(
-      'preview',
-      { data: _.map(this.props.previewItems, transformItem) });
-
-    const questions = selectors.questions({ assessment });
-
-    const result = questions.map((question, index) =>
-      <Item
-        localizedStrings={localizeStrings({ settings:{ locale:'en' } })}
-        key={ `item_${index}` }
-        settings={{}}
-        assessment={{}}
-        question={question}
-        response={[]}
-        currentItemIndex={index}
-        questionCount={0}
-        questionResult={{}}
-        allQuestions={[question]}
-        outcomes={{}}
-        sendSize={() => {}}
-        videoPlay={() => {}}
-        videoPause={() => {}}
-        audioPlay={() => {}}
-        audioPause={() => {}}
-        audioRecordStart={() => {}}
-        audioRecordStop={() => {}}
-        selectAnswer={() => {}}
-      />
-    );
-
-    return (<div className="o-assessment-container">
-      <div className="c-header">
-        <div className="c-header__title">Assessment Preview</div>
-        <div className="c-header__question-number" />
-      </div>
-      <div>{result}</div>
-    </div>
-    );
+    if (PreviewContainer.hasOffered(this.props.assessment)) {
+      return (
+        <iframe height="10000" width="100%" src={this.buildEmbedUrl()} />
+      );
+    }
+    return null;
   }
 }
