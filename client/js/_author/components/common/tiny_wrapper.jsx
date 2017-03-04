@@ -69,17 +69,20 @@ export default class TinyWrapper extends React.Component {
       toolbar: 'bold italic removeformat | bullist numlist  blockquote | code charmap subscript superscript | image media',
       inline: true,
       paste_data_images: true,
+      browser_spellcheck: true,
     };
   }
 
   render() {
     return (
       <div>
+        <label htmlFor={`${this.id}-tinymce`} />
         <div id={this.id} />
         <TinyMCE
+          id={`${this.id}-tinymce`}
           content={this.props.text}
           config={this.tinyMCEConfig()}
-          onBlur={e => this.props.onBlur(e.target.getContent())}
+          onBlur={e => this.props.onBlur(e.target.getContent(), e.target.isDirty())}
           onFocus={this.props.onFocus}
         />
         <input
