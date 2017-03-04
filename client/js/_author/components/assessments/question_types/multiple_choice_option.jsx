@@ -66,16 +66,20 @@ export default function multipleChoiceOptions(props) {
           </button>
         </div>
       </div>
-
-      <div className="author--c-input author--c-input-label--left author--c-feedback">
-        <label htmlFor="feedback1">Feedback</label>
-        <Editor
-          text={props.feedback}
-          bankId={props.bankId}
-          itemId={props.itemId}
-          onBlur={(text, fileIds) => props.updateChoice({ feedback: text }, fileIds)}
-        />
-      </div>
+      {
+        // TODO: extract to own component
+        props.itemType === types.multipleChoice ? (
+          <div className="author--c-input author--c-input-label--left author--c-feedback">
+            <label htmlFor="feedback1">Feedback</label>
+            <Editor
+              text={props.feedback}
+              bankId={props.bankId}
+              itemId={props.itemId}
+              onBlur={(text, fileIds) => props.updateChoice({ feedback: text }, fileIds)}
+            />
+          </div>
+        ) : null
+      }
     </div>
   );
 }

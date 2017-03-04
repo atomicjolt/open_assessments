@@ -15,11 +15,13 @@ export const types = {
     reflection: 'question-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
     multipleReflection: 'question-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',
     fileUpload: 'question-type%3Aqti-upload-interaction-generic%40ODL.MIT.EDU',
+    shortAnswer: 'question-type%3Aqti-extended-text-interaction%40ODL.MIT.EDU',
   },
   answer: {
     rightAnswer: 'answer-type%3Aright-answer%40ODL.MIT.EDU',
     wrongAnswer: 'answer-type%3Awrong-answer%40ODL.MIT.EDU',
     multipleChoice: 'answer-record-type%3Amulti-choice-answer%40ODL.MIT.EDU', // for multiple choice, reflection, moveable words, image sequence
+    multipleAnswer: 'answer-record-type%3Amulti-choice-answer%40ODL.MIT.EDU',
     fillInTheBlank: 'answer-record-type%3Ainline-choice-answer%40ODL.MIT.EDU',
     file: 'answer-record-type%3Afiles-submission%40ODL.MIT.EDU', // for any moveable word sandbox, audio record tool, and generic file submission
     shortAnswer: 'answer-record-type%3Ashort-text-answer%40ODL.MIT.EDU',
@@ -28,7 +30,7 @@ export const types = {
 };
 
 export function getQbankType(type) {
-  return _.findKey(types.item, (genusType) => type === genusType) || null;
+  return _.findKey(types.item, genusType => type === genusType) || null;
 }
 
 export default types;

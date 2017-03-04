@@ -88,9 +88,14 @@ export default class MultipleChoice extends React.Component {
             updateChoice={() => this.addNewChoice(id)}
           /> : null
         }
-        <Feedback
-          onlyShowCorrect={type === types.reflection || type === types.multipleReflection}
-        />
+        {
+          type !== types.multipleChoice ? <Feedback
+            updateItem={this.props.updateItem}
+            onlyShowCorrect={type === types.reflection || type === types.multipleReflection}
+            correct={_.get(question, 'correctFeedback.text')}
+            incorrect={_.get(question, 'incorrectFeedback.text')}
+          /> : null
+        }
       </div>
     );
   }
