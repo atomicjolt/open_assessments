@@ -1,61 +1,31 @@
 import React from 'react';
 import _ from 'lodash';
 
-import Item from '../../../_player/components/assessments/item';
-import localizeStrings from '../../../_player/selectors/localize';
-import * as selectors from '../../../_player/selectors/assessment';
-import Parser from '../../../parsers/clix/parser';
-
-
-function transformItem(item) {
-  return _.merge({}, item, {
-    genusTypeId: _.get(item, 'question.genusTypeId', item.genusTypeId)
-  });
-}
-
 export default class PreviewContainer extends React.Component {
   static propTypes = {
-    previewItems: React.PropTypes.array.isRequired,
+    assessment: React.PropTypes.object.isRequired,
+    getAssessmentOffered: React.PropTypes.func.isRequired,
+    assessmentPlayerUrl: React.PropTypes.string.isRequired,
+    apiUrl: React.PropTypes.string.isRequired,
+  }
+
+  componentDidMount() {
+    const assessment = this.props.assessment;
+    if (assessment.assessmentOffered && _.isEmpty(assessment.assessmentOffered[0])) {
+      this.props.getAssessmentOffered(assessment.bankId, assessment.id);
+    }
+  }
+
+  buildEmbedUrl() {
+    const { assessmentPlayerUrl, apiUrl, assessment } = this.props;
+    const bankId = encodeURIComponent(assessment.bankId);
+    const assessmentId = encodeURIComponent(assessment.id);
+    return `${assessmentPlayerUrl}?unlock_next=ON_CORRECT&api_url=${apiUrl}&bank=${bankId}&assessment_offered_id=${assessmentId}#/assessment`;
   }
 
   render() {
-    const assessment = Parser.parse(
-      'preview',
-      { data: _.map(this.props.previewItems, transformItem) });
-
-    const questions = selectors.questions({ assessment });
-
-    const result = questions.map((question, index) =>
-      <Item
-        localizedStrings={localizeStrings({ settings:{ locale:'en' } })}
-        key={ `item_${index}` }
-        settings={{}}
-        assessment={{}}
-        question={question}
-        response={[]}
-        currentItemIndex={index}
-        questionCount={0}
-        questionResult={{}}
-        allQuestions={[question]}
-        outcomes={{}}
-        sendSize={() => {}}
-        videoPlay={() => {}}
-        videoPause={() => {}}
-        audioPlay={() => {}}
-        audioPause={() => {}}
-        audioRecordStart={() => {}}
-        audioRecordStop={() => {}}
-        selectAnswer={() => {}}
-      />
-    );
-
-    return (<div className="o-assessment-container">
-      <div className="c-header">
-        <div className="c-header__title">Assessment Preview</div>
-        <div className="c-header__question-number" />
-      </div>
-      <div>{result}</div>
-    </div>
+    return (
+      <iframe height="1000" width="1000" src={this.buildEmbedUrl()} />
     );
   }
 }
