@@ -1,12 +1,28 @@
 import _                from 'lodash';
 import genusTypes       from '../../../../constants/genus_types';
 import { scrub }        from '../../serializer_utils';
+import { languages, getLanguage } from '../../../../constants/language_types';
 
-export function baseSerializeQuestion(originalItem, newAttributes) {
+function serializeQuestionString(originalItem, item) {
+  const simpleLanguage = getLanguage(item.language);
+  let text = _.get(item, 'question.text', '');
+  if (!_.isEmpty(originalItem.question) && _.isEmpty(text)) {
+    text = originalItem.question.text;
+  }
+  item.question = {
+    text,
+    languageTypeId: item.language,
+    formatTypeId: languages.formatTypeId,
+    scriptTypeId: languages.scriptTypeId[simpleLanguage]
+  };
+  return item.question;
+}
+
+export function baseSerializeQuestion(originalItem, newAttributes, item) {
   return {
     id: _.get(originalItem, 'question.id'),
     genusTypeId: genusTypes.question[_.get(newAttributes, 'type') || originalItem.type],
-    questionString: newAttributes.text,
+    questionString: serializeQuestionString(originalItem, item),
     fileIds: newAttributes.fileIds
   };
 }
@@ -17,7 +33,7 @@ export function baseSerializeItem(originalItem, newAttributes) {
     genusTypeId: genusTypes.item[_.get(newAttributes, 'type') || originalItem.type],
     name: _.get(newAttributes, 'name', originalItem.name),
     question: scrub(
-      baseSerializeQuestion(originalItem, _.get(newAttributes, 'question', {}))
+      baseSerializeQuestion(originalItem, _.get(newAttributes, 'question', {}), newAttributes)
     ),
     answers: null,
   };

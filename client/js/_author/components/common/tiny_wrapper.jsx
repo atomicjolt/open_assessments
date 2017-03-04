@@ -1,3 +1,4 @@
+import _       from 'lodash';
 import React   from 'react';
 import TinyMCE from 'react-tinymce';
 
@@ -18,6 +19,7 @@ export default class TinyWrapper extends React.Component {
   static propTypes = {
     text: React.PropTypes.string,
     uploadMedia: React.PropTypes.func.isRequired,
+    editorKey: React.PropTypes.string.isRequired,
     onBlur: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func.isRequired,
   };
@@ -27,12 +29,12 @@ export default class TinyWrapper extends React.Component {
     this.id = guid();
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
     // TinyMCE doesn't handle rerendering very well, and everything dealing
     // with the content inside of it is completely managed by tinyMCE, so we
-    // never rerender. All state that needs to be updated is done so in
-    // componentWillReceiveProps or in callbacks from tinyMCE.
-    return false;
+    // only render when the editorKey changes. All state that needs to be
+    // updated is done so in componentWillReceiveProps or in callbacks from tinyMCE.
+    return nextProps.editorKey !== this.props.editorKey;
   }
 
   tinyMCEConfig() {

@@ -10,13 +10,14 @@ export default function base(item) {
     bankId: item.bankId,
     assessmentId: null, // TODO
     name: _.get(item, 'displayName.text'),
-    language: getLanguage(_.get(item, 'displayName.languageTypeId')), // TODO: How does the language even work?
+    language: getLanguage(_.get(item, 'question.text.languageTypeId')),
     question: {
       id: _.get(item, 'question.id'),
       type: getQbankType(_.get(item, 'question.genusTypeId')),
       text: _.get(item, 'question.text.text'),
       fileIds: _.get(item, 'question.fileIds'),
-      choices: null, // implement in type,
+      choices: null, // implement in type
+      texts: _.get(item, 'question.texts'),
       correctFeedback: {
         text: null,
         answerId: null,

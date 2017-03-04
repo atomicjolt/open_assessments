@@ -13,7 +13,7 @@ export default class newItemForm extends React.Component {
     this.state = {
       name: '',
       type: types.multipleChoice,
-      language: 'english',
+      language: languages.languageTypeId.english,
       question: {
         type: types.multipleChoice,
       }
@@ -90,10 +90,10 @@ export default class newItemForm extends React.Component {
                     name=""
                     id="questionType"
                   >
-                    <option value={languages.english}>Select a language</option>
-                    <option value={languages.english}>English</option>
-                    <option value={languages.hindi}>Hindi</option>
-                    <option value={languages.telugu}>Telugu</option>
+                    <option value={languages.languageTypeId.english}>Select a language</option>
+                    <option value={languages.languageTypeId.english}>English</option>
+                    <option value={languages.languageTypeId.hindi}>Hindi</option>
+                    <option value={languages.languageTypeId.telugu}>Telugu</option>
                   </select>
                 </div>
               </div>
