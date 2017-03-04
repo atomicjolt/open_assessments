@@ -47,14 +47,14 @@ function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers, corr
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.rightAnswer }), 'id'),
     genusTypeId: genusTypes.answer.rightAnswer,
     feedback: correctFeedback,
-    type: genusTypes.question.multipleAnswer,
+    type: genusTypes.answer.multipleAnswer,
     choiceIds: [],
   };
   let incorrectAnswer = {
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.wrongAnswer }), 'id'),
     genusTypeId: genusTypes.answer.wrongAnswer,
     feedback: incorrectFeedback,
-    type: genusTypes.question.multipleAnswer,
+    type: genusTypes.answer.multipleAnswer,
     choiceIds: [],
   };
 
