@@ -1,6 +1,6 @@
 import { baseItem } from './base';
 
-fdescribe('baseSerialization', () => {
+describe('baseSerialization', () => {
   let item;
   beforeEach(() => {
     item = {
