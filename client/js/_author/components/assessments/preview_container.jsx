@@ -6,13 +6,23 @@ import localizeStrings from '../../../_player/selectors/localize';
 import * as selectors from '../../../_player/selectors/assessment';
 import Parser from '../../../parsers/clix/parser';
 
+
+function transformItem(item) {
+  return _.merge({}, item, {
+    genusTypeId: _.get(item, 'question.genusTypeId', item.genusTypeId)
+  });
+}
+
 export default class PreviewContainer extends React.Component {
   static propTypes = {
     previewItems: React.PropTypes.array.isRequired,
   }
 
   render() {
-    const assessment = Parser.parse('preview', { data: this.props.previewItems });
+    const assessment = Parser.parse(
+      'preview',
+      { data: _.map(this.props.previewItems, transformItem) });
+
     const questions = selectors.questions({ assessment });
 
     const result = questions.map((question, index) =>
