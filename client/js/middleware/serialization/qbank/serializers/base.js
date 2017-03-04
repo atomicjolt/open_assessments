@@ -6,7 +6,7 @@ import { languages, getLanguage } from '../../../../constants/language_types';
 function serializeQuestionString(item) {
   const simpleLanguage = getLanguage(item.language);
   // create
-  debugger
+
   // TODO: Maybe default create in english..
   item.question = {
     text: _.get(item, 'question.text', ''),

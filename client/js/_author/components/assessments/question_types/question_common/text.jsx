@@ -7,6 +7,7 @@ export default function questionText(props) {
       <label htmlFor={`question_text_${props.itemId}`} />
       <Editor
         text={props.text}
+        editorKey={props.editorKey}
         onBlur={(val, fileIds) => props.updateItem({ question: { text: val, fileIds } })}
         bankId={props.bankId}
         itemId={props.itemId}
@@ -18,6 +19,7 @@ export default function questionText(props) {
 questionText.propTypes = {
   itemId: React.PropTypes.string.isRequired,
   text: React.PropTypes.string,
+  editorKey: React.PropTypes.string,
   updateItem: React.PropTypes.func.isRequired,
   bankId: React.PropTypes.string.isRequired,
 };

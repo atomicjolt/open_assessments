@@ -158,10 +158,11 @@ export default class Question extends React.Component {
     const { name, type, id, question, bankId } = item;
     const defaultLanguage = this.state.language;
     const className = this.getClassName();
-    const choosenLanguage = _.filter(item.question.texts, (textObj) => {
+    const choosenLanguage = _.find(item.question.texts, (textObj) => {
       return textObj.languageTypeId === defaultLanguage;
     });
-    const questionText = _.get(choosenLanguage[0], 'text', '');
+    const questionText = _.get(choosenLanguage, 'text', '');
+    const languageTypeId = _.get(choosenLanguage, 'languageTypeId');
 
     return (
       <div
@@ -198,6 +199,7 @@ export default class Question extends React.Component {
         <div className={`author--c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
             itemId={id}
+            editorKey={languageTypeId}
             text={questionText}
             updateItem={newProps => this.updateItem(newProps)}
             bankId={bankId}
