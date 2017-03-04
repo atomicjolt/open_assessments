@@ -27,7 +27,7 @@ export default class PreviewContainer extends React.Component {
 
     const bankId = assessment.bankId;
     const assessmentOfferedId = _.get(assessment, 'assessmentOffered[0].id');
-    return `${assessmentPlayerUrl}?unlock_next=ALWAYS&api_url=${apiUrl}&bank=${bankId}&assessment_offered_id=${assessmentOfferedId}#/assessment`;
+    return `${assessmentPlayerUrl}?unlock_next=ON_ANSWER&api_url=${apiUrl}&bank=${bankId}&assessment_offered_id=${assessmentOfferedId}#/assessment`;
   }
 
   render() {
