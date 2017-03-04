@@ -12,8 +12,8 @@ export default function questionSettings(props) {
             id={`check02_${props.id}`}
             name="check"
             tabIndex="0"
-            onChange={e => props.updateItem({ question: { maintainOrder: e.target.checked } })}
-            checked={props.maintainOrder}
+            onChange={e => props.updateItem({ question: { shuffle: !e.target.checked } })}
+            checked={!props.shuffle}
           />
           <label htmlFor={`check02_${props.id}`}>Maintain choice order</label>
         </div>

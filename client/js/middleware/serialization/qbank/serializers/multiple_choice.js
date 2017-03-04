@@ -30,7 +30,7 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
-    shuffle: _.isNil(newQuestionAttributes.maintainOrder) ? null : !newQuestionAttributes.maintainOrder,
+    shuffle: _.isNil(newQuestionAttributes.shuffle) ? null : newQuestionAttributes.shuffle,
     timeValue: newQuestionAttributes.timeValue,
     choices: null,
   };
