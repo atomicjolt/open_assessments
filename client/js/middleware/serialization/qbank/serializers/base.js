@@ -3,13 +3,17 @@ import genusTypes       from '../../../../constants/genus_types';
 import { scrub }        from '../../serializer_utils';
 import { languages, getLanguage } from '../../../../constants/language_types';
 
-function serializeQuestionString(item) {
+function serializeQuestionString(originalItem, item) {
   const simpleLanguage = getLanguage(item.language);
   // create
-  debugger
+  // debugger
   // TODO: Maybe default create in english..
+  let text = _.get(item, 'question.text', '');
+  if (!_.isEmpty(originalItem.question) && _.isEmpty(text)) {
+    text = originalItem.question.text;
+  }
   item.question = {
-    text: _.get(item, 'question.text', ''),
+    text,
     languageTypeId: item.language,
     formatTypeId: languages.formatTypeId,
     scriptTypeId: languages.scriptTypeId[simpleLanguage]
@@ -21,7 +25,7 @@ export function baseSerializeQuestion(originalItem, newAttributes, item) {
   return {
     id: _.get(originalItem, 'question.id'),
     genusTypeId: genusTypes.question[_.get(newAttributes, 'type') || originalItem.type],
-    questionString: serializeQuestionString(item),
+    questionString: serializeQuestionString(originalItem, item),
     fileIds: newAttributes.fileIds
   };
 }
