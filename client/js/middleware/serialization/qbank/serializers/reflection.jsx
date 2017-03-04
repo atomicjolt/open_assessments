@@ -41,12 +41,12 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   return scrub(newQuestion);
 }
 
-function serializeAnswers(originalChoices, oldAnswers, feedback, multi) {
+function serializeAnswers(originalChoices, oldAnswers, feedback) {
   return [{
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.rightAnswer }), 'id'),
     genusTypeId: genusTypes.answer.rightAnswer,
     feedback,
-    type: multi ? genusTypes.question.multipleReflection : genusTypes.question.reflection,
+    type: genusTypes.answer.multipleAnswer,
     choiceIds: _.map(originalChoices, 'id'),
   }];
 }
@@ -72,8 +72,7 @@ export default function surveySerializer(originalItem, newItemAttributes) {
         newItem.answers = serializeAnswers(
           originalItem.question.choices,
           _.get(originalItem, 'originalItem.answers'),
-          _.get(question, 'correctFeedback.text'),
-          originalItem.type === genusTypes.item.multipleReflection
+          _.get(question, 'correctFeedback.text')
         );
       }
     }
