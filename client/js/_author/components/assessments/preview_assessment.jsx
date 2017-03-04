@@ -13,7 +13,11 @@ function select(state, props) {
   return {
     assessment: transformAssessment(assessment),
     settings: state.settings,
-    previewItems: state.preview
+    previewItems: state.preview,
+    parsedParams: {
+      bankId,
+      assessmentId
+    }
   };
 }
 
@@ -23,6 +27,19 @@ export class PreviewAssessment extends React.Component {
     assessment: React.PropTypes.object.isRequired,
     settings: React.PropTypes.object.isRequired,
     getAssessmentOffered: React.PropTypes.func.isRequired,
+    getAssessments: React.PropTypes.func.isRequired,
+    getAssessmentItems: React.PropTypes.func.isRequired,
+    parsedParams: React.PropTypes.object.isRequired,
+  }
+
+  componentDidMount() {
+    if (_.isEmpty(this.props.assessment)) {
+      this.props.getAssessments(this.props.parsedParams.bankId);
+      this.props.getAssessmentItems(
+        this.props.parsedParams.bankId,
+        this.props.parsedParams.assessmentId
+      );
+    }
   }
 
   render() {

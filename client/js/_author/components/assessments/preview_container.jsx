@@ -14,6 +14,7 @@ export default class PreviewContainer extends React.Component {
       || _.isEmpty(assessment.assessmentOffered[0]));
   }
 
+
   componentDidMount() {
     const assessment = this.props.assessment;
     if (!PreviewContainer.hasOffered(assessment)) {
@@ -32,7 +33,7 @@ export default class PreviewContainer extends React.Component {
   render() {
     if (PreviewContainer.hasOffered(this.props.assessment)) {
       return (
-        <iframe height="1000" width="1000" src={this.buildEmbedUrl()} />
+        <iframe height="10000" width="100%" src={this.buildEmbedUrl()} />
       );
     }
     return null;
