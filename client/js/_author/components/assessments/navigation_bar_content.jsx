@@ -48,13 +48,16 @@ export default class NavigationBarContent extends React.Component {
 
         <div className="author--c-header-bottom__right">
           { this.publishButton() }
-          <button
-            className="author--c-btn c-btn--sm author--c-btn--maroon author--u-ml-md"
-            onClick={() => this.handlePreviewClick()}
-          >
-            <i className="material-icons">remove_red_eye</i>
-            Preview Assessment
-          </button>
+          {
+            this.props.isPublished ?
+              <button
+                className="author--c-btn c-btn--sm author--c-btn--maroon author--u-ml-md"
+                onClick={() => this.handlePreviewClick()}
+              >
+                <i className="material-icons">remove_red_eye</i>
+              Preview Assessment
+            </button> : null
+         }
         </div>
       </div>
     );
