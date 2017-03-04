@@ -187,7 +187,7 @@ export default class Question extends React.Component {
           updateItem={newProps => this.updateItem(newProps)}
           defaultName={name}
           language={this.state.language}
-          maintainOrder={question && !question.shuffle}
+          shuffle={question.shuffle}
           multipleAnswer={item.type === types.multipleAnswer || item.type === types.multipleReflection}
           reflection={_.includes([types.reflection, types.multipleReflection], item.type)}
           makeReflection={reflect => this.makeReflection(reflect)}
