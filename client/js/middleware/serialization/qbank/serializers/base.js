@@ -12,6 +12,7 @@ function serializeQuestionString(originalItem, item) {
   if (!_.isEmpty(originalItem.question) && _.isEmpty(text)) {
     text = originalItem.question.text;
   }
+
   return {
     text,
     languageTypeId: item.language,
