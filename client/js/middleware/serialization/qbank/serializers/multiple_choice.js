@@ -67,6 +67,10 @@ function serializeAnswers(originalChoices, newChoiceAttributes) {
   });
 }
 
+function killAnswers(answers) {
+  return _.map(answers, answer => ({ id: answer.id, delete: true }));
+}
+
 export default function multipleChoiceSerializer(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
 
@@ -78,7 +82,11 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
     };
 
     if (question.choices) {
-      newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
+      if (newItemAttributes.type && originalItem.type !== newItemAttributes.type) {
+        newItem.answers = killAnswers(_.get(originalItem, 'originalItem.answers'));
+      } else {
+        newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
+      }
     }
   }
   return scrub(newItem);
