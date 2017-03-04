@@ -29,7 +29,7 @@ export const types = {
 };
 
 export function getQbankType(type) {
-  return _.findKey(types.item, (genusType) => type === genusType) || null;
+  return _.findKey(types.item, genusType => type === genusType) || null;
 }
 
 export default types;
