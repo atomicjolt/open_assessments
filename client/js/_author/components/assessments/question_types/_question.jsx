@@ -168,6 +168,14 @@ export default class Question extends React.Component {
         <Settings
           id={id}
           updateItem={newProps => this.updateItem(newProps)}
+<<<<<<< HEAD
+          defaultName={displayName.text}
+          language={displayName.languageTypeId}
+          maintainOrder={!question.shuffle}
+          multipleAnswer={false}
+          reflection={false}
+          genusTypeId={genusTypeId}
+=======
           defaultName={name}
           language={language}
           maintainOrder={question && !question.shuffle}
@@ -176,6 +184,7 @@ export default class Question extends React.Component {
           makeReflection={reflect => this.makeReflection(reflect)}
           makeMultipleAnswer={multi => this.makeMultipleAnswer(multi)}
           type={type}
+>>>>>>> de5c24ffbc2dabdd493f2eaeaee646773367805c
         />
         <div className={`author--c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText

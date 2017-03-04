@@ -211,7 +211,6 @@ const qbank = {
     const state = store.getState();
     const item = state.items[action.bankId][action.itemId];
     const updatedAttributes = action.body;
-
     const newItem = serialize(updatedAttributes.type || item.type)(item, updatedAttributes);
 
     api.put(

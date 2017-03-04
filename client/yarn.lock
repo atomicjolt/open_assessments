@@ -6738,6 +6738,10 @@ raw-body@~2.2.0:
     iconv-lite "0.4.15"
     unpipe "1.0.0"
 
+rc-progress@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/rc-progress/-/rc-progress-2.0.6.tgz#799af503904330d35184ab00d61ebfcbc005c486"
+
 rc@^1.0.1, rc@^1.1.2, rc@^1.1.6, rc@~1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/rc/-/rc-1.1.6.tgz#43651b76b6ae53b5c802f1151fa3fc3b059969c9"

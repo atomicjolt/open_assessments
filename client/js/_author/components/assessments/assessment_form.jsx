@@ -55,8 +55,13 @@ export default class AssessmentForm extends React.Component {
   showSinglePageOption() {
     if (this.props.publishedAndOffered) {
       return (
+<<<<<<< HEAD
+        <div className="o-item__top">
+          <div className="c-checkbox u-right">
+=======
         <div className="author--o-item__top">
           <div className="author--c-checkbox author--u-right">
+>>>>>>> de5c24ffbc2dabdd493f2eaeaee646773367805c
             <input type="checkbox" id="assessmentFormCheck01" name="check" onChange={e => this.props.updateSingleItemOrPage(e.target.checked)} />
             <label htmlFor="assessmentFormCheck01">Single page assessment</label>
           </div>

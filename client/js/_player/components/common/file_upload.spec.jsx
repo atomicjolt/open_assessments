@@ -4,13 +4,15 @@ import TestUtils    from 'react-addons-test-utils';
 
 import FileUpload   from './file_upload';
 
-var fileUpload, subject, props;
+let fileUpload;
+let subject;
+let props;
 describe('file upload', () => {
   beforeEach(() => {
     props = {
       selectAnswer: () => {},
       localizedStrings: {
-        uploadFile: "Upload file"
+        uploadFile: 'Upload file'
       }
     };
     spyOn(props, 'selectAnswer');
@@ -19,7 +21,7 @@ describe('file upload', () => {
   });
 
   it('calls select answer on change', () => {
-    TestUtils.Simulate.change(subject.childNodes[0]);
+    TestUtils.Simulate.change(subject.childNodes[1]);
     expect(props.selectAnswer).toHaveBeenCalled();
   });
 
