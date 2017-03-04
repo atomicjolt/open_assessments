@@ -25,7 +25,7 @@
     "react-tap-event-plugin": "2.0.1",
     "react-tinymce": "^0.5.1",
     "reactable": "^0.13.2",
-    "recorderjs": "^1.0.1",
+    "recorderjs": "git+https://github.com/nick-benoit14/Recorderjs",
     "redux": "3.6.0",
     "reselect": "^2.5.1",
     "superagent": "3.4.1",

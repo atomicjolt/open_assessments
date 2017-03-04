@@ -25,6 +25,13 @@ export default function multipleChoiceOptions(props) {
     );
   };
 
+  const updateChoice = (newText) => {
+    if (newText !== props.text) {
+      props.updateChoice({ text: newText });
+    }
+  };
+
+
   return (
     <div className={`author--c-answer ${props.isActive ? 'is-active' : ''}`}>
       <div className="author--c-input">
@@ -34,7 +41,7 @@ export default function multipleChoiceOptions(props) {
           <input
             className="author--c-text-input author--c-text-input--small author--c-wysiwyg"
             defaultValue={props.text}
-            onBlur={e => props.updateChoice({ text: e.target.value })}
+            onBlur={e => updateChoice(e.target.value)}
             id="option1"
             type="text"
             placeholder="Option"
