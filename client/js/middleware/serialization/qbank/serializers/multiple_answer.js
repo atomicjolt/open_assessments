@@ -41,26 +41,25 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   return scrub(newQuestion);
 }
 
-function serializeAnswers(originalChoices, newChoiceAttributes, correctFeedback, incorrecFeedback) {
+function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers, correctFeedback, incorrectFeedback) {
   const answers = [];
   let correctAnswer = {
-    id: _.get(_.find(originalChoices, { isCorrect: true }), 'answerId'),
+    id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.rightAnswer }), 'id'),
     genusTypeId: genusTypes.answer.rightAnswer,
     feedback: correctFeedback,
     type: genusTypes.question.multipleAnswer,
     choiceIds: [],
   };
   let incorrectAnswer = {
-    id: _.get(_.find(originalChoices, { isCorrect: false }), 'answerId'),
+    id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.wrongAnswer }), 'id'),
     genusTypeId: genusTypes.answer.wrongAnswer,
-    feedback: incorrecFeedback,
+    feedback: incorrectFeedback,
     type: genusTypes.question.multipleAnswer,
     choiceIds: [],
   };
 
   _.forEach(originalChoices, (choice) => {
-    const updatedChoice = newChoiceAttributes[choice.id];
-    const newCorrectness = _.get(updatedChoice, 'isCorrect');
+    const newCorrectness = _.get(newChoiceAttributes, `[${choice.id}].isCorrect`);
     if (!_.isNil(newCorrectness)) {
       if (newCorrectness) {
         correctAnswer.choiceIds.push(choice.id);
@@ -93,15 +92,16 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
       ...newItem.question,
       ...serializeQuestion(originalItem.question, question)
     };
-    if (question.choices) {
+    if (question.choices || question.correctFeedback || question.incorrectFeedback) {
       if (newItemAttributes.type && originalItem.type !== newItemAttributes.type) {
         newItem.answers = killAnswers(_.get(originalItem, 'originalItem.answers'));
       } else {
         newItem.answers = serializeAnswers(
           originalItem.question.choices,
           question.choices,
-          question.correctFeedback,
-          question.incorrectFeedback
+          _.get(originalItem, 'originalItem.answers'),
+          _.get(question, 'correctFeedback.text'),
+          _.get(question, 'incorrectFeedback.text')
         );
       }
     }
