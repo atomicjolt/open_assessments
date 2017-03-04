@@ -9,23 +9,32 @@ export default class PreviewContainer extends React.Component {
     apiUrl: React.PropTypes.string.isRequired,
   }
 
+  static hasOffered(assessment) {
+    return !(_.isUndefined(assessment.assessmentOffered)
+      || _.isEmpty(assessment.assessmentOffered[0]));
+  }
+
   componentDidMount() {
     const assessment = this.props.assessment;
-    if (assessment.assessmentOffered && _.isEmpty(assessment.assessmentOffered[0])) {
+    if (!PreviewContainer.hasOffered(assessment)) {
       this.props.getAssessmentOffered(assessment.bankId, assessment.id);
     }
   }
 
   buildEmbedUrl() {
     const { assessmentPlayerUrl, apiUrl, assessment } = this.props;
-    const bankId = encodeURIComponent(assessment.bankId);
-    const assessmentId = encodeURIComponent(assessment.id);
-    return `${assessmentPlayerUrl}?unlock_next=ON_CORRECT&api_url=${apiUrl}&bank=${bankId}&assessment_offered_id=${assessmentId}#/assessment`;
+
+    const bankId = assessment.bankId;
+    const assessmentOfferedId = _.get(assessment, 'assessmentOffered[0].id');
+    return `${assessmentPlayerUrl}?unlock_next=ALWAYS&api_url=${apiUrl}&bank=${bankId}&assessment_offered_id=${assessmentOfferedId}#/assessment`;
   }
 
   render() {
-    return (
-      <iframe height="1000" width="1000" src={this.buildEmbedUrl()} />
-    );
+    if (PreviewContainer.hasOffered(this.props.assessment)) {
+      return (
+        <iframe height="1000" width="1000" src={this.buildEmbedUrl()} />
+      );
+    }
+    return null;
   }
 }
