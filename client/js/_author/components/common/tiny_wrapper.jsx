@@ -1,3 +1,4 @@
+import _       from 'lodash';
 import React   from 'react';
 import TinyMCE from 'react-tinymce';
 
@@ -18,6 +19,7 @@ export default class TinyWrapper extends React.Component {
   static propTypes = {
     text: React.PropTypes.string,
     uploadMedia: React.PropTypes.func.isRequired,
+    editorKey: React.PropTypes.string.isRequired,
     onBlur: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func.isRequired,
   };
@@ -25,14 +27,15 @@ export default class TinyWrapper extends React.Component {
   constructor() {
     super();
     this.id = guid();
+    this.editors = {};
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
     // TinyMCE doesn't handle rerendering very well, and everything dealing
     // with the content inside of it is completely managed by tinyMCE, so we
-    // never rerender. All state that needs to be updated is done so in
-    // componentWillReceiveProps or in callbacks from tinyMCE.
-    return false;
+    // only render when the editorKey changes. All state that needs to be
+    // updated is done so in componentWillReceiveProps or in callbacks from tinyMCE.
+    return nextProps.editorKey !== this.props.editorKey;
   }
 
   tinyMCEConfig() {
@@ -70,16 +73,29 @@ export default class TinyWrapper extends React.Component {
     };
   }
 
+// The editor will never change if the text changes. We handle this
+  // by passing a key that will generate a new editor instance
+  editorFactory(key) {
+    if (_.isUndefined(key)) { return null; }
+    if (this.editors[key]) {
+      return this.editors[key];
+    }
+    this.editors[key] = (
+      <TinyMCE
+        content={this.props.text}
+        config={this.tinyMCEConfig()}
+        onBlur={e => this.props.onBlur(e.target.getContent())}
+        onFocus={this.props.onFocus}
+      />
+    );
+    return this.editors[key];
+  }
+
   render() {
     return (
       <div>
         <div id={this.id} />
-        <TinyMCE
-          content={this.props.text}
-          config={this.tinyMCEConfig()}
-          onBlur={e => this.props.onBlur(e.target.getContent())}
-          onFocus={this.props.onFocus}
-        />
+        {this.editorFactory(this.props.editorKey)}
         <input
           className="author--c-image-uploader author--c-file"
           type="file"
