@@ -1,5 +1,6 @@
-import React    from 'react';
-import types from '../../../../../constants/question_types';
+import React      from 'react';
+import types      from '../../../../../constants/question_types';
+import languages  from '../../../../../constants/language_types';
 
 export default function questionSettings(props) {
   const extraOptionTypes = [types.multipleChoice, types.reflection, types.multipleReflection, types.multipleAnswer];
@@ -12,8 +13,8 @@ export default function questionSettings(props) {
             id={`check02_${props.id}`}
             name="check"
             tabIndex="0"
-            onChange={e => props.updateItem({ question: { maintainOrder: e.target.checked } })}
-            checked={props.maintainOrder}
+            onChange={e => props.updateItem({ question: { shuffle: !e.target.checked } })}
+            checked={!props.shuffle}
           />
           <label htmlFor={`check02_${props.id}`}>Maintain choice order</label>
         </div>
@@ -66,12 +67,12 @@ export default function questionSettings(props) {
             name=""
             id=""
             tabIndex="0"
-            value={props.language}
+            value={languages.languageTypeId[props.language]}
             onChange={e => props.updateItem({ language: e.target.value })}
           >
-            <option value="english">English</option>
-            <option value="hindi">Hindi</option>
-            <option value="telugu">Telugu</option>
+            <option value={languages.languageTypeId.english}>English</option>
+            <option value={languages.languageTypeId.hindi}>Hindi</option>
+            <option value={languages.languageTypeId.telugu}>Telugu</option>
           </select>
         </div>
       </div>
@@ -84,7 +85,7 @@ questionSettings.propTypes = {
   id: React.PropTypes.string.isRequired,
   defaultName: React.PropTypes.string,
   type: React.PropTypes.string,
-  language: React.PropTypes.string.isRequired,
+  language: React.PropTypes.string,
   updateItem: React.PropTypes.func.isRequired,
   makeReflection: React.PropTypes.func.isRequired,
   maintainOrder: React.PropTypes.bool,

@@ -1,6 +1,5 @@
 import _                         from 'lodash';
 import baseSerializer            from './base';
-import { baseSerializeQuestion } from './base';
 import { scrub }                 from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
@@ -30,7 +29,7 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
-    shuffle: _.isNil(newQuestionAttributes.maintainOrder) ? null : !newQuestionAttributes.maintainOrder,
+    shuffle: _.isNil(newQuestionAttributes.shuffle) ? null : newQuestionAttributes.shuffle,
     timeValue: newQuestionAttributes.timeValue,
     choices: null,
   };
@@ -67,6 +66,10 @@ function serializeAnswers(originalChoices, newChoiceAttributes) {
   });
 }
 
+function killAnswers(answers) {
+  return _.map(answers, answer => ({ id: answer.id, delete: true }));
+}
+
 export default function multipleChoiceSerializer(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
 
@@ -78,7 +81,11 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
     };
 
     if (question.choices) {
-      newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
+      if (newItemAttributes.type && originalItem.type !== newItemAttributes.type) {
+        newItem.answers = killAnswers(_.get(originalItem, 'originalItem.answers'));
+      } else {
+        newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
+      }
     }
   }
   return scrub(newItem);

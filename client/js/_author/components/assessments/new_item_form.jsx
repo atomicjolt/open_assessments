@@ -13,8 +13,19 @@ export default class newItemForm extends React.Component {
     this.state = {
       name: '',
       type: types.multipleChoice,
-      language: 'english',
+      language: languages.languageTypeId.english,
+      question: {
+        type: types.multipleChoice,
+      }
     };
+  }
+
+  updateType(type) {
+    this.setState({ type, question: { type } });
+  }
+
+  updateName(name) {
+    this.setState({ name, question: { ...this.state.question, text: name } });
   }
 
   render() {
@@ -34,7 +45,7 @@ export default class newItemForm extends React.Component {
                 <label htmlFor="name2">Name</label>
                 <div className="author--c-input__contain">
                   <input
-                    onChange={e => this.setState({ name: e.target.value })}
+                    onChange={e => this.updateName(e.target.value)}
                     className="author--c-text-input author--c-text-input--small"
                     id="name2"
                     type="text"
@@ -49,7 +60,7 @@ export default class newItemForm extends React.Component {
                 <label htmlFor="questionType" />
                 <div className="author--c-dropdown author--c-dropdown--medium">
                   <select
-                    onChange={e => this.setState({ type: e.target.value })}
+                    onChange={e => this.updateType(e.target.value)}
                     name=""
                     id="questionType"
                   >
@@ -79,10 +90,10 @@ export default class newItemForm extends React.Component {
                     name=""
                     id="questionType"
                   >
-                    <option value={languages.english}>Select a language</option>
-                    <option value={languages.english}>English</option>
-                    <option value={languages.hindi}>Hindi</option>
-                    <option value={languages.telugu}>Telugu</option>
+                    <option value={languages.languageTypeId.english}>Select a language</option>
+                    <option value={languages.languageTypeId.english}>English</option>
+                    <option value={languages.languageTypeId.hindi}>Hindi</option>
+                    <option value={languages.languageTypeId.telugu}>Telugu</option>
                   </select>
                 </div>
               </div>

@@ -76,6 +76,25 @@ export default function bankListItem(props) {
     return null;
   }
 
+  function getPreviewButton(bankId, assessmentId) {
+    if (!isPublished || _.isUndefined(bankId) || _.isUndefined(assessmentId)) {
+      return null;
+    }
+
+    return (
+      <button
+        className="author--c-btn author--c-btn--square author--c-btn--table"
+        onClick={(e) => {
+          e.stopPropagation();
+          appHistory.push(
+            `banks/${bankId}/assessments/${assessmentId}/preview`);
+        }}
+      >
+        <i className="material-icons">remove_red_eye</i>
+      </button>
+    );
+  }
+
   return (
     <tr
       onClick={() => selectItem()}
@@ -96,9 +115,7 @@ export default function bankListItem(props) {
           <button className="author--c-btn author--c-btn--square author--c-btn--table">
             <i className="material-icons">edit</i>
           </button>
-          <button className="author--c-btn author--c-btn--square author--c-btn--table">
-            <i className="material-icons">remove_red_eye</i>
-          </button>
+          {getPreviewButton(bank.bankId, bank.id)}
           {!isPublished ? <button
             className="author--c-btn author--c-btn--square author--c-btn--table"
             onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
