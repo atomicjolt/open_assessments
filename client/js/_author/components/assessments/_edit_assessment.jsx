@@ -122,13 +122,14 @@ export class EditAssessment extends React.Component {
     this.props.updateSingleItemOrPage(assessmentOffered[0], genusTypeId);
   }
 
-  updateChoice(itemId, choiceId, choice) {
+  updateChoice(itemId, choiceId, choice, fileIds) {
     const updateAttributes = {
       id: itemId,
       question: {
         choices: {
           [choiceId]: choice,
-        }
+        },
+        fileIds,
       }
     };
     this.updateItem(updateAttributes);
@@ -157,7 +158,7 @@ export class EditAssessment extends React.Component {
           items={this.props.items}
           updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}
-          updateChoice={(itemId, choiceId, choice) => this.updateChoice(itemId, choiceId, choice)}
+          updateChoice={(itemId, choiceId, choice, fileIds) => this.updateChoice(itemId, choiceId, choice, fileIds)}
           deleteAssessmentItem={itemId => this.deleteAssessmentItem(itemId)}
         />
       </div>

@@ -41,64 +41,46 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   return scrub(newQuestion);
 }
 
-function serializeAnswers(originalChoices, newChoiceAttributes) {
-  let correctAnswers = {
-    id: null,
+function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers, correctFeedback, incorrectFeedback) {
+  const answers = [];
+  let correctAnswer = {
+    id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.rightAnswer }), 'id'),
     genusTypeId: genusTypes.answer.rightAnswer,
-    feedback: null,
-    type: genusTypes.question.multipleSelection,
+    feedback: correctFeedback,
+    type: genusTypes.answer.multipleAnswer,
     choiceIds: [],
   };
-  const answers = [];
+  let incorrectAnswer = {
+    id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.wrongAnswer }), 'id'),
+    genusTypeId: genusTypes.answer.wrongAnswer,
+    feedback: incorrectFeedback,
+    type: genusTypes.answer.multipleAnswer,
+    choiceIds: [],
+  };
 
-  // TODO: refactor this is a nasty long block of code
   _.forEach(originalChoices, (choice) => {
-    const updatedChoice = newChoiceAttributes[choice.id];
-    const newCorrectness = _.get(updatedChoice, 'isCorrect');
+    const newCorrectness = _.get(newChoiceAttributes, `[${choice.id}].isCorrect`);
     if (!_.isNil(newCorrectness)) {
       if (newCorrectness) {
-        if (!correctAnswers.id) { correctAnswers.id = choice.answerId; }
-        if (updatedChoice && updatedChoice.feedback) {
-          correctAnswers.feedback = updatedChoice.feedback;
-        } else {
-          correctAnswers.feedback = choice.feedback;
-        }
-        correctAnswers.choiceIds.push(choice.id);
-      } else {
-        answers.push({
-          id: choice.answerId,
-          genusTypeId: genusTypes.answer.wrongAnswer,
-          feedback: _.get(updatedChoice, 'feedback') || choice.feedback,
-          type: genusTypes.answer.multipleChoice,
-          choiceIds: [choice.id],
-        });
-      }
+        correctAnswer.choiceIds.push(choice.id);
+      } else { incorrectAnswer.choiceIds.push(choice.id); }
     } else if (choice.isCorrect) {
-      if (!correctAnswers.id) { correctAnswers.id = choice.answerId; }
-      if (updatedChoice && updatedChoice.feedback) {
-        correctAnswers.feedback = updatedChoice.feedback;
-      } else {
-        correctAnswers.feedback = choice.feedback;
-      }
-      correctAnswers.choiceIds.push(choice.id);
+      correctAnswer.choiceIds.push(choice.id);
     } else {
-      answers.push({
-        id: choice.answerId,
-        genusTypeId: genusTypes.answer.wrongAnswer,
-        feedback: _.get(updatedChoice, 'feedback') || choice.feedback,
-        type: genusTypes.answer.multipleChoice,
-        choiceIds: [choice.id],
-      });
+      incorrectAnswer.choiceIds.push(choice.id);
     }
   });
 
-  correctAnswers = scrub(correctAnswers);
+  correctAnswer = scrub(correctAnswer);
+  incorrectAnswer = scrub(incorrectAnswer);
+  answers.push(correctAnswer);
+  answers.push(incorrectAnswer);
 
-  if (correctAnswers.choiceIds) {
-    answers.push(correctAnswers);
-  }
+  return answers;
+}
 
-  return _.map(answers);
+function killAnswers(answers) {
+  return _.map(answers, answer => ({ id: answer.id, delete: true }));
 }
 
 export default function multipleChoiceSerializer(originalItem, newItemAttributes) {
@@ -110,8 +92,18 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
       ...newItem.question,
       ...serializeQuestion(originalItem.question, question)
     };
-    if (question.choices) {
-      newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
+    if (question.choices || question.correctFeedback || question.incorrectFeedback) {
+      if (newItemAttributes.type && originalItem.type !== newItemAttributes.type) {
+        newItem.answers = killAnswers(_.get(originalItem, 'originalItem.answers'));
+      } else {
+        newItem.answers = serializeAnswers(
+          originalItem.question.choices,
+          question.choices,
+          _.get(originalItem, 'originalItem.answers'),
+          _.get(question, 'correctFeedback.text'),
+          _.get(question, 'incorrectFeedback.text')
+        );
+      }
     }
   }
 

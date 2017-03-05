@@ -1,6 +1,5 @@
 import React      from 'react';
 import _          from 'lodash';
-import genusTypes from '../../../../../constants/genus_types';
 
 export default class SingleFeedback extends React.Component {
   static propTypes = {
@@ -8,31 +7,11 @@ export default class SingleFeedback extends React.Component {
     item: React.PropTypes.object
   };
 
-  static getAnswer(item) {
-    return _.get(
-      item,
-      ['answers', '0'],
-      {
-        genusTypeId: genusTypes.answer.rightAnswer,
-        feedback: ''
-      }
-    );
-  }
-
-  static getFeedback(item) {
-    return SingleFeedback.getAnswer(item).feedback.text;
-  }
-
-  handleBlur(e) {
-    const answer = SingleFeedback.getAnswer(this.props.item);
-    const newAnswer = {
-      id: answer.id,
-      genusTypeId: genusTypes.answer.rightAnswer,
-      feedback: e.target.value
-    };
-
+  updateItem(e) {
     this.props.updateItem({
-      answers:[newAnswer]
+      question: {
+        correctFeedback: { text: e.target.value }
+      }
     });
   }
 
@@ -47,8 +26,8 @@ export default class SingleFeedback extends React.Component {
               id="feedbackCorrect"
               type="text"
               tabIndex="0"
-              onBlur={e => this.handleBlur(e)}
-              defaultValue={SingleFeedback.getFeedback(this.props.item)}
+              onBlur={e => this.updateItem(e)}
+              defaultValue={_.get(this.props.item, 'question.correctFeedback.text')}
             />
             <div className="author--c-input__bottom" />
           </div>
