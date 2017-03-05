@@ -45,7 +45,10 @@ export class OeaEditor extends React.Component {
     }
   }
 
-  onBlur(editorText) {
+  onBlur(editorText, isChanged) {
+    this.setState({ focused: false });
+    if (!isChanged) return;
+
     let text = editorText;
     const uploadedAssets = this.props.uploadedAssets;
     const fileIds = {};
@@ -82,7 +85,6 @@ export class OeaEditor extends React.Component {
 
     text = doc.html();
 
-    this.setState({ focused: false });
     this.props.onBlur(text, fileIds);
   }
 
@@ -109,7 +111,7 @@ export class OeaEditor extends React.Component {
           <TinyWrapper
             {...this.props}
             uploadMedia={(file, mediaCallback) => this.uploadMedia(file, mediaCallback)}
-            onBlur={editorText => this.onBlur(editorText)}
+            onBlur={(editorText, isChanged) => this.onBlur(editorText, isChanged)}
             onFocus={() => this.setState({ focused: true })}
           />
         </div>

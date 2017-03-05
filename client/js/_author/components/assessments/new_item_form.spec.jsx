@@ -35,7 +35,7 @@ describe('New Item Form', () => {
     expect(called.type).toBeDefined();
     expect(called.type).toBe('multipleChoice');
     expect(called.name).toBe('');
-    expect(called.language).toBe('english');
+    expect(called.language).toBe('639-2%3AENG%40ISO');
   });
 
   it('sets name on new assessments', () => {

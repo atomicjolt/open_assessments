@@ -1,7 +1,9 @@
 import React        from 'react';
 import TestUtils    from 'react-addons-test-utils';
+import { shallow }  from 'enzyme';
+import OeaEditor    from '../../common/oea_editor';
 import Stub         from '../../../../../specs_support/stub';
-import Option  from './multiple_choice_option';
+import Option       from './multiple_choice_option';
 
 describe('Multiple Choice Option', () => {
   let result;
@@ -21,75 +23,66 @@ describe('Multiple Choice Option', () => {
       moveDown: (e) => { moveChoice = e.target.innerText; },
       isActive: true,
     };
-    result = TestUtils.renderIntoDocument(<Stub><Option {...props} /></Stub>);
+    result = shallow(<Option {...props} />);
   });
 
   it('checks if input.checked is true', () => {
-    const input = TestUtils.scryRenderedDOMComponentsWithTag(result, 'input')[0];
-    expect(input.checked).toBeTruthy();
+    expect(result.find('optionRadio').props().isCorrect).toBeTruthy();
   });
 
   it('clicks the first input', () => {
-    const input = TestUtils.scryRenderedDOMComponentsWithTag(result, 'input')[0];
     expect(updatedChoice.isCorrect).toBe(undefined);
-    TestUtils.Simulate.change(input);
+    result.find('optionRadio').props().updateChoice({ isCorrect: true });
     expect(updatedChoice.isCorrect).toBe(true);
   });
 
-  it('checks defaultValue of second input', () => {
-    const input = TestUtils.scryRenderedDOMComponentsWithTag(result, 'input')[1];
-    expect(input.defaultValue).toBe('This is dummy text');
+  it('checks defaultValue of question text', () => {
+    expect(result.find(OeaEditor).nodes[0].props.text).toBe('This is dummy text');
   });
 
-  it('clicks the second input', () => {
-    const input = TestUtils.scryRenderedDOMComponentsWithTag(result, 'input')[1];
-    TestUtils.Simulate.blur(input);
-    expect(updatedChoice.text).toBe('This is dummy text');
+  it('blurring the quesiton text calls updateChoice', () => {
+    const inputs = result.find(OeaEditor);
+    inputs.at(0).props().onBlur('lasers are neat');
+    expect(updatedChoice.text).toBe('lasers are neat');
   });
 
   it('finds all buttons when shuffle is true', () => {
-    const buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
+    const buttons = result.find('button');
     expect(buttons.length).toBe(3);
   });
 
   it('finds only one button', () => {
     props.shuffle = true;
-    result = TestUtils.renderIntoDocument(<Stub><Option {...props} /></Stub>);
-    const buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
+    result = shallow(<Option {...props} />);
+    const buttons = result.find('button');
     expect(buttons.length).toBe(1);
   });
 
   it('finds button and clicks it upward', () => {
-    const buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
-    TestUtils.Simulate.click(buttons[0]);
+    const buttons = result.find('button');
+    buttons.at(1).simulate('click', { target: { innerText: buttons.at(0).text() } });
     expect(moveChoice).toBe('arrow_upward');
   });
 
   it('finds button and clicks it downward', () => {
-    const buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
-    TestUtils.Simulate.click(buttons[1]);
+    const buttons = result.find('button');
+    buttons.at(1).simulate('click', { target: { innerText: buttons.at(1).text() } });
     expect(moveChoice).toBe('arrow_downward');
   });
 
   it('finds button and clicks it close', () => {
-    const buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
-    TestUtils.Simulate.click(buttons[2]);
+    const buttons = result.find('button');
+    buttons.at(2).simulate('click', { target: { innerText: buttons.at(2).text() } });
     expect(moveChoice).toBe('close');
   });
 
   it('isActive??', () => {
-    let div = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'author--c-answer',
-    );
-    expect(div.className).toContain('is-active');
+    let div = result.find('.author--c-answer');
+    expect(div.props().className).toContain('is-active');
 
     props.isActive = false;
-    result = TestUtils.renderIntoDocument(<Stub><Option {...props} /></Stub>);
-    div = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'author--c-answer',
-    );
-    expect(div.className).not.toContain('is-active');
+    result = shallow(<Option {...props} />);
+    div = result.find('.author--c-answer');
+    expect(div.props().className).not.toContain('is-active');
   });
 });

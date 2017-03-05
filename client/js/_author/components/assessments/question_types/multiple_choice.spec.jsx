@@ -1,5 +1,6 @@
 import React            from 'react';
 import TestUtils        from 'react-addons-test-utils';
+import { shallow }      from 'enzyme';
 import _                from 'lodash';
 import MultipleChoice   from './multiple_choice';
 
@@ -48,26 +49,23 @@ describe('multiple choice component', () => {
       updateChoice: () => {choiceUpdated = true},
       isActive: false,
     };
-    result = TestUtils.renderIntoDocument(<MultipleChoice {...props} />);
+    result = shallow(<MultipleChoice {...props} />);
   });
 
   it('renders', () => {
-    const div = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'author--c-question__answers--maintain',
-    );
-    expect(div).toBeDefined();
+    const divs = result.find('.author--c-question__answers--maintain');
+    expect(divs.length).toBe(1)
   });
 
   it('calls updateChoice', () => {
     expect(choiceUpdated).toBeFalsy();
-    result.addNewChoice(props.item.id);
+    result.instance().addNewChoice(props.item.id);
     expect(choiceUpdated).toBeTruthy();
   });
 
   it('the props.updateChoice function', () => {
     expect(choiceUpdated).toBeFalsy();
-    result.moveChoice(props.item.question.choices['bob']);
+    result.instance().moveChoice(props.item.question.choices['bob']);
     expect(choiceUpdated).toBeTruthy();
   });
 });
