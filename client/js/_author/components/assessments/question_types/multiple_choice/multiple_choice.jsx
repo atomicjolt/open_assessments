@@ -80,6 +80,7 @@ export default class MultipleChoice extends React.Component {
               isActive={this.props.isActive}
               bankId={this.props.item.bankId}
               itemId={this.props.item.id}
+              questionFileIds={question.fileIds}
             />
           ))
         }

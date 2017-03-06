@@ -199,6 +199,7 @@ export default class Question extends React.Component {
         />
         <div className={`author--c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
+            fileIds={question.fileIds}
             itemId={id}
             editorKey={languageTypeId}
             text={questionText}

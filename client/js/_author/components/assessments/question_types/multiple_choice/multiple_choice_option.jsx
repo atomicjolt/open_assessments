@@ -31,9 +31,10 @@ export default function multipleChoiceOptions(props) {
         />
         <label htmlFor="option1" />
         <Editor
+          fileIds={props.questionFileIds}
           text={props.text}
           bankId={props.bankId}
-          itemId={props.itemId}
+          uploadScopeId={props.itemId}
           onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
         />
 
@@ -53,6 +54,7 @@ export default function multipleChoiceOptions(props) {
             bankId={props.bankId}
             itemId={props.itemId}
             updateChoice={props.updateChoice}
+            fileIds={props.fileIds}
           />
         )
       }
@@ -77,4 +79,6 @@ multipleChoiceOptions.propTypes = {
   isActive: React.PropTypes.bool,
   itemId: React.PropTypes.string,
   bankId: React.PropTypes.string,
+  questionFileIds: React.PropTypes.shape({}),
+  fileIds: React.PropTypes.shape({}),
 };
