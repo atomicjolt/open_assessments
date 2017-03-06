@@ -26,10 +26,6 @@ describe('Multiple Choice Option', () => {
     result = shallow(<Option {...props} />);
   });
 
-  it('checks if input.checked is true', () => {
-    expect(result.find('optionRadio').props().isCorrect).toBeTruthy();
-  });
-
   it('clicks the first input', () => {
     expect(updatedChoice.isCorrect).toBe(undefined);
     result.find('optionRadio').props().updateChoice({ isCorrect: true });
@@ -44,36 +40,6 @@ describe('Multiple Choice Option', () => {
     const inputs = result.find(OeaEditor);
     inputs.at(0).props().onBlur('lasers are neat');
     expect(updatedChoice.text).toBe('lasers are neat');
-  });
-
-  it('finds all buttons when shuffle is true', () => {
-    const buttons = result.find('button');
-    expect(buttons.length).toBe(3);
-  });
-
-  it('finds only one button', () => {
-    props.shuffle = true;
-    result = shallow(<Option {...props} />);
-    const buttons = result.find('button');
-    expect(buttons.length).toBe(1);
-  });
-
-  it('finds button and clicks it upward', () => {
-    const buttons = result.find('button');
-    buttons.at(1).simulate('click', { target: { innerText: buttons.at(0).text() } });
-    expect(moveChoice).toBe('arrow_upward');
-  });
-
-  it('finds button and clicks it downward', () => {
-    const buttons = result.find('button');
-    buttons.at(1).simulate('click', { target: { innerText: buttons.at(1).text() } });
-    expect(moveChoice).toBe('arrow_downward');
-  });
-
-  it('finds button and clicks it close', () => {
-    const buttons = result.find('button');
-    buttons.at(2).simulate('click', { target: { innerText: buttons.at(2).text() } });
-    expect(moveChoice).toBe('close');
   });
 
   it('isActive??', () => {
