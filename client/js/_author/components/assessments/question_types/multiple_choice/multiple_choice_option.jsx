@@ -25,6 +25,7 @@ export default function multipleChoiceOptions(props) {
         <Selector
           itemType={props.itemType}
           id={props.id}
+          itemId={props.itemId}
           isCorrect={props.isCorrect}
           updateChoice={props.updateChoice}
         />
@@ -63,6 +64,7 @@ multipleChoiceOptions.propTypes = {
   text: React.PropTypes.string,
   feedback: React.PropTypes.string,
   id: React.PropTypes.string,
+  itemId: React.PropTypes.string,
   itemType: React.PropTypes.string,
   updateChoice: React.PropTypes.func.isRequired,
   deleteChoice: React.PropTypes.func.isRequired,
