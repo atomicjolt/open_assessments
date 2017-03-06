@@ -2,8 +2,8 @@ import React        from 'react';
 import _            from 'lodash';
 import Option       from './multiple_choice_option';
 import Add          from './add_option';
-import Feedback     from './question_common/feedback';
-import types        from '../../../../constants/question_types';
+import Feedback     from '../question_common/feedback';
+import types        from '../../../../../constants/question_types';
 
 export default class MultipleChoice extends React.Component {
   static propTypes = {
@@ -55,7 +55,7 @@ export default class MultipleChoice extends React.Component {
   }
 
   addNewChoice(id) {
-    this.props.updateChoice(id, 'new', true);
+    this.props.updateChoice(id, 'new', { id: 'new' });
   }
 
   render() {

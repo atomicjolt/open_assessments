@@ -1,7 +1,7 @@
 import React      from 'react';
 import TestUtils  from 'react-addons-test-utils';
 import AddOption  from './add_option';
-import Stub       from '../../../../../specs_support/stub';
+import Stub       from '../../../../../../specs_support/stub';
 
 describe('addOption component', () => {
   let props;
