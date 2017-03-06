@@ -20,12 +20,15 @@ export default class AssessmentForm extends React.Component {
     deleteAssessmentItem: React.PropTypes.func,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
       addingItem: false,
       activeItem: '',
       reorderActive: false,
+      title: 'start',
+      first: true,
     };
   }
 
@@ -96,7 +99,13 @@ export default class AssessmentForm extends React.Component {
                   onChange={e => this.setState({ title: e.target.value })}
                   onBlur={e => this.props.updateAssessment({ name: e.target.value })}
                 />
-                <div className="author--c-input__bottom" />
+                { _.isEmpty(this.state.title) ?
+                  <div>
+                    <div className="author--c-input__bottom has-error" />
+                    <div style={{ color: 'red' }}>Name is required in order to edit</div>
+                  </div> :
+                  <div className="author--c-input__bottom" />
+                }
               </div>
             </label>
           </div>
