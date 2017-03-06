@@ -1,4 +1,5 @@
 import React      from 'react';
+import _          from 'lodash';
 import Radio      from './question_common/option_radio';
 import CheckBox   from './question_common/option_checkbox';
 import types      from '../../../../constants/question_types';
@@ -32,9 +33,10 @@ export default function multipleChoiceOptions(props) {
         {selector()}
         <label htmlFor="option1" />
         <Editor
+          fileIds={props.questionFileIds}
           text={props.text}
           bankId={props.bankId}
-          itemId={props.itemId}
+          uploadScopeId={props.itemId}
           onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
         />
 
@@ -72,10 +74,11 @@ export default function multipleChoiceOptions(props) {
           <div className="author--c-input author--c-input-label--left author--c-feedback">
             <label htmlFor="feedback1">Feedback</label>
             <Editor
+              fileIds={props.fileIds}
               text={props.feedback}
               bankId={props.bankId}
-              itemId={props.itemId}
-              onBlur={(text, fileIds) => props.updateChoice({ feedback: text }, fileIds)}
+              uploadScopeId={props.id}
+              onBlur={(text, fileIds) => props.updateChoice({ feedback: text, fileIds })}
             />
           </div>
         ) : null
@@ -101,5 +104,7 @@ multipleChoiceOptions.propTypes = {
   isActive: React.PropTypes.bool,
   multipleAnswer: React.PropTypes.bool,
   itemId: React.PropTypes.string,
+  questionFileIds: React.PropTypes.shape({}),
   bankId: React.PropTypes.string,
+  fileIds: React.PropTypes.shape({}),
 };

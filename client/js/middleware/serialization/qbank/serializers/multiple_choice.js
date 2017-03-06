@@ -62,6 +62,7 @@ function serializeAnswers(originalChoices, newChoiceAttributes) {
       feedback: _.get(updateValues, 'feedback') || choice.feedback,
       type: genusTypes.answer.multipleChoice,
       choiceIds: [choice.id],
+      fileIds: _.get(updateValues, 'fileIds'),
     });
   });
 }
