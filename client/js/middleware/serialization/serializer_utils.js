@@ -12,17 +12,16 @@ export function getSingleCorrectAnswer(originalItem, question) {
   const answer = {
     genusTypeId: genusTypes.answer.rightAnswer,
     feedback: question.correctFeedback.text,
+    fileIds: question.correctFeedback.fileIds,
+    id: _.get(originalItem, 'question.correctFeedback.answerId'),
   };
 
-  if (_.get(originalItem, 'question.correctFeedback')) {
-    answer.id = originalItem.question.correctFeedback.answerId;
-  }
-
-  return answer;
+  return scrub(answer);
 }
 
 export function createSingleCorrectFeedback(item) {
   return {
+    fileIds: _.get(item, 'answers[0].fileIds'),
     text: _.get(item, 'answers[0].feedback.text'),
     answerId: _.get(item, 'answers[0].id')
   };
