@@ -1,8 +1,8 @@
 import React        from 'react';
 import TestUtils    from 'react-addons-test-utils';
 import { shallow }  from 'enzyme';
-import OeaEditor    from '../../common/oea_editor';
-import Stub         from '../../../../../specs_support/stub';
+import OeaEditor    from '../../../common/oea_editor';
+import Stub         from '../../../../../../specs_support/stub';
 import Option       from './multiple_choice_option';
 
 describe('Multiple Choice Option', () => {
