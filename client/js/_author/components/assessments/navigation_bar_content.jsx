@@ -51,7 +51,7 @@ export default class NavigationBarContent extends React.Component {
           {
             this.props.isPublished ?
               <button
-                className="author--c-btn c-btn--sm author--c-btn--maroon author--u-ml-md"
+                className="author--c-btn author--c-btn--sm author--c-btn--maroon author--u-ml-md"
                 onClick={() => this.handlePreviewClick()}
               >
                 <i className="material-icons">remove_red_eye</i>
