@@ -26,6 +26,7 @@ export default class AssessmentForm extends React.Component {
       addingItem: false,
       activeItem: '',
       reorderActive: false,
+      title: 'start'
     };
   }
 
@@ -96,7 +97,13 @@ export default class AssessmentForm extends React.Component {
                   onChange={e => this.setState({ title: e.target.value })}
                   onBlur={e => this.props.updateAssessment({ name: e.target.value })}
                 />
-                <div className="author--c-input__bottom" />
+                { _.isEmpty(this.state.title) ?
+                  <div>
+                    <div className="author--c-input__bottom has-error" />
+                    <div className="author--c-error-text">Name is required in order to edit</div>
+                  </div> :
+                  <div className="author--c-input__bottom" />
+                }
               </div>
             </label>
           </div>
