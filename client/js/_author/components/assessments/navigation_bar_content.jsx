@@ -2,49 +2,70 @@ import React            from 'react';
 import _                from 'lodash';
 import { hashHistory }  from 'react-router';
 import Icon             from '../bank_navigation/bank_icon';
+import appHistory       from '../../history';
 
-export default function AssessmentsView(props) {
+export default class NavigationBarContent extends React.Component {
+  static propTypes = {
+    editOrPublishAssessment: React.PropTypes.func.isRequired,
+    isPublished: React.PropTypes.bool.isRequired,
+    items: React.PropTypes.array.isRequired,
+    assessment: React.PropTypes.object.isRequired,
+  };
 
-  const publishButton = () => {
-    if (!_.isEmpty(props.items)) {
+  publishButton() {
+    if (!_.isEmpty(this.props.items)) {
       return (
         <button
-          className="c-btn c-btn--sm c-btn--green"
-          onClick={() => props.editOrPublishAssessment(props.isPublished)}
+          className="author--c-btn author--c-btn--sm author--c-btn--green"
+          onClick={() => this.props.editOrPublishAssessment(this.props.isPublished)}
         >
-          <Icon type={props.isPublished ? 'Published' : 'Publish'} />
-          {props.isPublished ? 'Unpublish' : 'Publish'}
+          <Icon type={this.props.isPublished ? 'Published' : 'Publish'} />
+          {this.props.isPublished ? 'Unpublish' : 'Publish'}
         </button>
       );
     }
     return null;
-  };
+  }
 
-  return (
-    <div className="c-header-bottom">
-      <div className="c-header-bottom__left">
-        <button
-          onClick={() => hashHistory.push('/')}
-          className="c-btn c-btn--sm c-btn--outline c-btn--back"
-        >
-          <i className="material-icons">keyboard_arrow_left</i>
-          Back
-        </button>
-      </div>
+  handlePreviewClick() {
+    const bankId = this.props.assessment.bankId;
+    const assessmentId = this.props.assessment.id;
+    hashHistory.push(`banks/${bankId}/assessments/${assessmentId}/preview`);
+  }
 
-      <div className="c-header-bottom__right">
-        { publishButton() }
-        <button className="c-btn c-btn--sm c-btn--maroon u-ml-md">
-          <i className="material-icons">remove_red_eye</i>
-          Preview Assessment
-        </button>
+  render() {
+    return (
+      <div className="author--c-header-bottom">
+        <div className="author--c-header-bottom__left">
+          <button
+            onClick={() => hashHistory.push('/')}
+            className="author--c-btn author--c-btn--sm author--c-btn--outline author--c-btn--back"
+          >
+            <i className="material-icons">keyboard_arrow_left</i>
+            Back
+          </button>
+        </div>
+
+        <div className="author--c-header-bottom__right">
+          { this.publishButton() }
+          {
+            this.props.isPublished ?
+              <button
+                className="author--c-btn c-btn--sm author--c-btn--maroon author--u-ml-md"
+                onClick={() => this.handlePreviewClick()}
+              >
+                <i className="material-icons">remove_red_eye</i>
+              Preview Assessment
+            </button> : null
+         }
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
-AssessmentsView.propTypes = {
+NavigationBarContent.propTypes = {
   editOrPublishAssessment: React.PropTypes.func.isRequired,
   isPublished: React.PropTypes.bool.isRequired,
-  items: React.PropTypes.shape({}).isRequired,
+  items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
 };

@@ -1,18 +1,18 @@
-.c-input{
+.author--c-input{
   position: relative;
   width: 100%;
 }
 
-.c-input--inline{
+.author--c-input--inline{
   display: inline-block;
   width: auto;
 }
 
-  .c-input__contain{
+  .author--c-input__contain{
     @include flex(1);
   }
 
-.c-text-input{
+.author--c-text-input{
   width: 100%;
   color: $text-color;
   border: none;
@@ -22,14 +22,14 @@
   &:focus{
     outline: none;
 
-    & + .c-input__bottom{
+    & + .author--c-input__bottom{
       border-color: $blue;
       background: $blue;
     }
   }
 }
 
-.c-input__bottom{
+.author--c-input__bottom{
   height: 0.2rem;
   background: none;
   border-top: $border;
@@ -40,38 +40,138 @@
   &.has-error{
     border-color: $red;
   }
+  &.is-focused{
+    border-color: $blue;
+    background: $blue;
+  }
 }
 
-.c-text-input--large{
+.author--c-text-input--large{
   font-size: 3rem;
   @include semi-bold;
 }
 
-.c-text-input--medium{
-  height: 4rem;
+.author--c-text-input--medium{
   font-size: 2rem;
   @include semi-bold;
 }
 
-.c-text-input--small{
+.author--c-text-input--small{
   height: 3.5rem;
   font-size: 1.6rem;
   @include semi-bold;
 }
 
-.c-text-input--smaller{
+.author--c-text-input--smaller{
   height: 3rem;
   font-size: 1.2rem;
   @include semi-bold;
 }
 
-.c-wysiwyg{
-  &:focus{
-    border-top: $border;
+.author--c-wysiwyg{
+  &.is-focused{
+
+    .mce-content-body{
+      border-top: $border;
+      outline: none;
+    }
+
+  }
+
+  .mce-content-body{
+    padding: 0.5rem 0;
+  }
+
+  .mce-panel{
+    background: none;
+    width: 100% !important;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-top-color: $gray3;
+  }
+
+  .mce-btn{
+    background: none;
+    border-radius: $radius;
+    border: 0.1rem solid transparent;
+    &:hover{
+      background: $gray3;
+      border: $border;
+      .mce-ico{
+        color: $text-color;
+      }
+    }
+    &.mce-active{
+      background: $gray2;
+      border: $border;
+      .mce-ico{
+        color: $text-color;
+      }
+      &:hover{
+        background: $gray3;
+        border: $border;
+      }
+    }
+  }
+
+  .mce-flow-layout-item{
+    margin: 0;
+  }
+
+  .mce-ico{
+    color: $gray9;
+  }
+
+  p{
+    margin: 0;
+  }
+  strong{
+    @include bold;
+  }
+  sub{
+    vertical-align: sub !important;
+  }
+  sup{
+    vertical-align: super !important;
   }
 }
 
-.c-input-label--left{
+.mce-floatpanel{
+
+  .mce-window-head{
+    height: 5rem;
+    padding: 0 1rem 0 2rem;
+    @include display-flex;
+    @include align-items(center);
+    .mce-close{
+      position: relative;
+      margin-left: auto;
+    }
+  }
+  .mce-btn button{
+    border: none;
+    background: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: $radius;
+    @include display-flex;
+    @include align-items(center);
+    height: 3rem;
+    padding: 0 2rem;
+
+    span{
+      @include bold;
+      font-size: 1.2rem;
+    }
+
+    &:active{
+      @include transform(scale(0.98));
+    }
+  }
+}
+
+.author--c-input-label--left{
   @include display-flex;
   @include align-items(center);
   @include semi-bold;
@@ -79,28 +179,28 @@
   font-size: 1.2rem;
   min-width: 25rem;
 
-  .c-input__contain{
+  .author--c-input__contain{
     margin-left: 1rem;
   }
 }
 
-.c-input-label--top{
+.author--c-input-label--top{
   @include semi-bold;
   color: $text-alt;
   font-size: 1.2rem;
   min-width: 25rem;
   height: 1.7rem;
 
-  .c-input__contain, select{
+  .author--c-input__contain, select{
     margin-top: 0.5rem;
   }
 }
 
-.c-input-label--large{
+.author--c-input-label--large{
   font-size: 1.6rem;
 }
 
-.c-dropdown{
+.author--c-dropdown{
   min-width: 20rem;
   position: relative;
 
@@ -128,12 +228,12 @@
   }
 }
 
-.c-dropdown--small select{
+.author--c-dropdown--small select{
   font-size: 1.2rem;
   padding: 0 1rem;
 }
 
-.c-dropdown--medium {
+.author--c-dropdown--medium {
   select{
     height: 4rem;
     font-size: 1.6rem;
@@ -143,13 +243,13 @@
     top: 1rem;
     right: 2rem;
   }
-  &.c-input-label--top:before{
+  &.author--c-input-label--top:before{
     top: 3.2rem;
     right: 1.5rem;
   }
 }
 
-.c-checkbox{
+.author--c-checkbox{
 
   label{
     display: inline-block;
@@ -194,7 +294,7 @@
   }
 }
 
-.c-radio{
+.author--c-radio{
 
   label{
     min-width: 3rem;
@@ -239,9 +339,17 @@
   }
 }
 
-.c-answer{
+input.author--c-file{
+  opacity: 0;
+  margin: 0;
+  height: 0.01rem;
+  width: 0.01rem;
+  position: absolute;
+}
 
-  .c-checkbox, .c-radio{
+.author--c-answer{
+
+  .author--c-checkbox, .author--c-radio{
     position: absolute;
     left: -4rem;
     top: 0.2rem;
@@ -255,7 +363,7 @@
     }
   }
 
-  .c-radio{
+  .author--c-radio{
 
     input[type="radio"] + label:before{
       font-size: 3rem;
@@ -266,7 +374,7 @@
     }
   }
 
-  .c-checkbox{
+  .author--c-checkbox{
 
     input[type="checkbox"] + label:before{
       font-size: 3rem;

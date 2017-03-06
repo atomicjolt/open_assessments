@@ -5,11 +5,11 @@ import Breadcrumb               from './breadcrumb';
 
 export default function navigationBarContent(props) {
   return (
-    <div className="c-header-bottom">
-      <div className="c-header-bottom__left">
+    <div className="author--c-header-bottom">
+      <div className="author--c-header-bottom__left">
         <button
           onClick={() => props.updatePath(null)}
-          className={props.currentBankId ? 'c-btn c-btn--breadcrumb' : 'c-btn c-btn--breadcrumb is-active'}
+          className={props.currentBankId ? 'author--c-btn author--c-btn--breadcrumb' : 'author--c-btn author--c-btn--breadcrumb is-active'}
         >
           <i className="material-icons">home</i>
           Assessments
@@ -27,9 +27,9 @@ export default function navigationBarContent(props) {
         }
       </div>
 
-      <div className="c-header-bottom__right">
+      <div className="author--c-header-bottom__right">
         <button
-          className="c-btn c-btn--sm c-btn--maroon c-btn--new u-ml-md"
+          className="author--c-btn c-btn--sm author--c-btn--maroon author--c-btn--new u-ml-md"
           onClick={() => appHistory.push(`banks/${props.currentBankId}/new_assessment`)}
         >
           New

@@ -1,41 +1,47 @@
 import React      from 'react';
+import Radio      from './question_common/option_radio';
+import CheckBox   from './question_common/option_checkbox';
+import types      from '../../../../constants/question_types';
+import Editor  from '../../common/oea_editor';
 
 export default function multipleChoiceOptions(props) {
+  const selector = () => {
+    // The null is for reflection questions
+    if (_.includes([types.reflection, types.multipleReflection], props.itemType)) { return null; }
+    if (props.itemType === types.multipleAnswer) {
+      return (
+        <CheckBox
+          id={props.id}
+          isCorrect={props.isCorrect}
+          updateChoice={props.updateChoice}
+        />
+      );
+    }
+    return (
+      <Radio
+        id={props.id}
+        isCorrect={props.isCorrect}
+        updateChoice={props.updateChoice}
+      />
+    );
+  };
+
   return (
-    <div className="c-answer is-active">
-      <div className="c-input">
-        <div className="c-radio">
-          <input
-            type="radio"
-            id={`option_radio_${props.id}`}
-            name="radio"
-            tabIndex="0"
-            checked={props.correct}
-            onClick={e => props.updateChoice({ correct: e.target.checked })}
-            onBlur={props.updateItem}
-          />
-          <label htmlFor={`option_radio_${props.id}`} />
-        </div>
-
+    <div className={`author--c-answer ${props.isActive ? 'is-active' : ''}`}>
+      <div className="author--c-input">
+        {selector()}
         <label htmlFor="option1" />
-        <div className="c-input__contain">
-          <input
-            className="c-text-input c-text-input--small c-wysiwyg"
-            value={props.text}
-            onChange={e => props.updateChoice({ text: e.target.value })}
-            onBlur={props.updateItem}
-            id="option1"
-            type="text"
-            placeholder="Option"
-            tabIndex="0"
-          />
-          <div className="c-input__bottom" />
-        </div>
+        <Editor
+          text={props.text}
+          bankId={props.bankId}
+          itemId={props.itemId}
+          onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
+        />
 
-        <div className="c-answer__icons">
+        <div className="author--c-answer__icons">
           {
-            props.first || props.shuffle ? <div className="c-answer__icons__spacer" /> : <button
-              className="c-answer__icons__spacer"
+            props.first || props.shuffle ? <div className="author--c-answer__icons__spacer" /> : <button
+              className="author--c-answer__icons__spacer"
               tabIndex="0"
               onClick={props.moveUp}
             >
@@ -43,8 +49,8 @@ export default function multipleChoiceOptions(props) {
             </button>
           }
           {
-            props.last || props.shuffle ? <div className="c-answer__icons__spacer" /> : <button
-              className="c-answer__icons__spacer"
+            props.last || props.shuffle ? <div className="author--c-answer__icons__spacer" /> : <button
+              className="author--c-answer__icons__spacer"
               tabIndex="0"
               onClick={props.moveDown}
             >
@@ -52,7 +58,7 @@ export default function multipleChoiceOptions(props) {
             </button>
           }
           <button
-            className="c-answer__icons__spacer"
+            className="author--c-answer__icons__spacer"
             tabIndex="0"
             onClick={props.deleteChoice}
           >
@@ -60,23 +66,17 @@ export default function multipleChoiceOptions(props) {
           </button>
         </div>
       </div>
-
       {
-        props.isActive ? (
-          <div className="c-input c-input-label--left c-feedback">
+        // TODO: extract to own component
+        props.itemType === types.multipleChoice ? (
+          <div className="author--c-input author--c-input-label--left author--c-feedback">
             <label htmlFor="feedback1">Feedback</label>
-            <div className="c-input__contain">
-              <input
-                value={props.feedback}
-                onChange={e => props.updateChoice({ feedback: e.target.value })}
-                onBlur={props.updateItem}
-                className="c-text-input c-text-input--smaller c-wysiwyg"
-                id="feedback1"
-                type="text"
-                tabIndex="0"
-              />
-              <div className="c-input__bottom" />
-            </div>
+            <Editor
+              text={props.feedback}
+              bankId={props.bankId}
+              itemId={props.itemId}
+              onBlur={(text, fileIds) => props.updateChoice({ feedback: text }, fileIds)}
+            />
           </div>
         ) : null
       }
@@ -88,6 +88,7 @@ multipleChoiceOptions.propTypes = {
   text: React.PropTypes.string,
   feedback: React.PropTypes.string,
   id: React.PropTypes.string,
+  itemType: React.PropTypes.string,
   updateItem: React.PropTypes.func.isRequired,
   updateChoice: React.PropTypes.func.isRequired,
   deleteChoice: React.PropTypes.func.isRequired,
@@ -95,7 +96,10 @@ multipleChoiceOptions.propTypes = {
   moveDown: React.PropTypes.func.isRequired,
   first: React.PropTypes.bool,
   last: React.PropTypes.bool,
-  correct: React.PropTypes.bool,
+  isCorrect: React.PropTypes.bool,
   shuffle: React.PropTypes.bool,
   isActive: React.PropTypes.bool,
+  multipleAnswer: React.PropTypes.bool,
+  itemId: React.PropTypes.string,
+  bankId: React.PropTypes.string,
 };
