@@ -69,6 +69,12 @@
 }
 
 .author--c-wysiwyg{
+  ul {
+    list-style-type: disc;
+    margin: 20px 0;
+    padding-left: 40px;
+  }
+
   &.is-focused{
 
     .mce-content-body{
