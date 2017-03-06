@@ -21,11 +21,11 @@ export default class newItemForm extends React.Component {
   }
 
   updateType(type) {
-    this.setState({ type, question: { type } });
+    this.setState({ type, question: { ...this.state.question, type } });
   }
 
   updateName(name) {
-    this.setState({ name, question: { ...this.state.question, text: name } });
+    this.setState({ name, question: { ...this.state.question, text: `<p>${name}</p>` } });
   }
 
   render() {
