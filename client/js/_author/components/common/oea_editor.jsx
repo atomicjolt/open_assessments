@@ -19,7 +19,7 @@ export class OeaEditor extends React.Component {
     uploadScopeId: React.PropTypes.string.isRequired,
     uploadMedia: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}).isRequired,
-    fileIds: React.PropTypes.shape({}).isRequired,
+    fileIds: React.PropTypes.object,
   };
 
   constructor() {
