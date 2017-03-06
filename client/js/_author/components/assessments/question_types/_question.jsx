@@ -1,6 +1,6 @@
 import React            from 'react';
 import _                from 'lodash';
-import MultipleChoice   from './multiple_choice';
+import MultipleChoice   from './multiple_choice/multiple_choice';
 import QuestionHeader   from './question_common/header/_header';
 import Settings         from './question_common/settings';
 import QuestionText     from './question_common/text';
