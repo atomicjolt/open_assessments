@@ -46,6 +46,13 @@
   }
 }
 
+.author--c-error-text{
+  color: $red;
+  @include semi-bold;
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
 .author--c-text-input--large{
   font-size: 3rem;
   @include semi-bold;
