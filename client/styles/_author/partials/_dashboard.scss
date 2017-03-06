@@ -169,8 +169,9 @@
     }
 
 .author--c-scrollable{
-  max-height: 90rem;
-  overflow: auto;
+  min-height: 60rem;
+  //max-height: 90rem;
+  //overflow: auto;
 }
 
 .author--c-input--purple{

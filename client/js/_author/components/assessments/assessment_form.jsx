@@ -102,7 +102,7 @@ export default class AssessmentForm extends React.Component {
                 { _.isEmpty(this.state.title) ?
                   <div>
                     <div className="author--c-input__bottom has-error" />
-                    <div style={{ color: 'red' }}>Name is required in order to edit</div>
+                    <div className="author--c-error-text">Name is required in order to edit</div>
                   </div> :
                   <div className="author--c-input__bottom" />
                 }

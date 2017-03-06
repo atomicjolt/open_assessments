@@ -29,7 +29,7 @@ export default function navigationBarContent(props) {
 
       <div className="author--c-header-bottom__right">
         <button
-          className="author--c-btn c-btn--sm author--c-btn--maroon author--c-btn--new u-ml-md"
+          className="author--c-btn author--c-btn--sm author--c-btn--maroon author--c-btn--new u-ml-md"
           onClick={() => appHistory.push(`banks/${props.currentBankId}/new_assessment`)}
         >
           New
