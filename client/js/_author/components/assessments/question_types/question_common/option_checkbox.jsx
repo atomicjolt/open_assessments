@@ -11,7 +11,7 @@ export default function optionRadio(props) {
         checked={props.isCorrect}
         onChange={e => props.updateChoice({ isCorrect: e.target.checked })}
       />
-      <label htmlFor={`option_radio_${props.id}`} />
+      <label htmlFor={`option_checkbox_${props.id}`} />
     </div>
   );
 }
