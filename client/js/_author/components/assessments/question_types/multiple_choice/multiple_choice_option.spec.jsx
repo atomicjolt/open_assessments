@@ -1,8 +1,6 @@
 import React        from 'react';
-import TestUtils    from 'react-addons-test-utils';
 import { shallow }  from 'enzyme';
 import OeaEditor    from '../../../common/oea_editor';
-import Stub         from '../../../../../../specs_support/stub';
 import Option       from './multiple_choice_option';
 
 describe('Multiple Choice Option', () => {
@@ -15,7 +13,7 @@ describe('Multiple Choice Option', () => {
     props = {
       isCorrect: true,
       key: 'assessmentChoice_1',
-      updateChoice: attr =>  { updatedChoice = attr; },
+      updateChoice: (attr) =>  { updatedChoice = attr; },
       text: 'This is dummy text',
       deleteChoice: (e) => { moveChoice = e.target.innerText; },
       shuffle: false,
@@ -24,12 +22,6 @@ describe('Multiple Choice Option', () => {
       isActive: true,
     };
     result = shallow(<Option {...props} />);
-  });
-
-  it('clicks the first input', () => {
-    expect(updatedChoice.isCorrect).toBe(undefined);
-    result.find('optionRadio').props().updateChoice({ isCorrect: true });
-    expect(updatedChoice.isCorrect).toBe(true);
   });
 
   it('checks defaultValue of question text', () => {
