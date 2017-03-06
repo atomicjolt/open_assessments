@@ -13,7 +13,7 @@ describe('Multiple Choice Option', () => {
     props = {
       isCorrect: true,
       key: 'assessmentChoice_1',
-      updateChoice: (attr) =>  { updatedChoice = attr; },
+      updateChoice: (attr) => { updatedChoice = attr; },
       text: 'This is dummy text',
       deleteChoice: (e) => { moveChoice = e.target.innerText; },
       shuffle: false,
