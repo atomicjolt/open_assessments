@@ -20,15 +20,13 @@ export default class AssessmentForm extends React.Component {
     deleteAssessmentItem: React.PropTypes.func,
   };
 
-  constructor(props) {
-    super(props);
-
+  constructor() {
+    super();
     this.state = {
       addingItem: false,
       activeItem: '',
       reorderActive: false,
-      title: 'start',
-      first: true,
+      title: 'start'
     };
   }
 
