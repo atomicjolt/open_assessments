@@ -11,6 +11,7 @@ export default function correctSelector(props) {
     return (
       <CheckBox
         id={props.id}
+        itemId={props.itemId}
         isCorrect={props.isCorrect}
         updateChoice={props.updateChoice}
       />
@@ -19,6 +20,7 @@ export default function correctSelector(props) {
   return (
     <Radio
       id={props.id}
+      itemId={props.itemId}
       isCorrect={props.isCorrect}
       updateChoice={props.updateChoice}
     />
@@ -28,6 +30,7 @@ export default function correctSelector(props) {
 correctSelector.propTypes = {
   itemType: React.PropTypes.string.isRequired,
   id: React.PropTypes.string,
+  itemId: React.PropTypes.string,
   isCorrect: React.PropTypes.bool,
   updateChoice: React.PropTypes.func.isRequired,
 };
