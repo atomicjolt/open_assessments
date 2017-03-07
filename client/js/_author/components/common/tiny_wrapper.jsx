@@ -8,8 +8,8 @@ import 'tinymce/plugins/autolink/plugin';
 import 'tinymce/plugins/paste/plugin';
 import 'tinymce/plugins/link/plugin';
 import 'tinymce/plugins/code/plugin';
-import 'tinymce/plugins/image/plugin';
 import 'tinymce/plugins/media/plugin';
+import 'tinymce/plugins/image/plugin';
 import 'tinymce/plugins/charmap/plugin';
 import 'tinymce/plugins/lists/plugin';
 
@@ -19,10 +19,10 @@ export default class TinyWrapper extends React.Component {
   static propTypes = {
     text: React.PropTypes.string,
     uploadMedia: React.PropTypes.func.isRequired,
-    editorKey: React.PropTypes.string.isRequired,
+    editorKey: React.PropTypes.string,
     onBlur: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func.isRequired,
-    openAudioModal: React.PropTypes.func.isRequired,
+    openModal: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -45,39 +45,34 @@ export default class TinyWrapper extends React.Component {
       skin: false,
       menubar: false,
       statusbar: false,
-      file_picker_types: 'file image media',
-      file_picker_callback: (callback, value, meta) => {
-        switch (meta.filetype) {
-          case 'image':
-          case 'media':
-            this.filePicker.onchange = e => this.props.uploadMedia(
-              e.target.files[0],
-              callback
-            );
-            this.filePicker.click();
-            break;
-          default:
-            break;
-        }
-      },
-      video_template_callback: (data) => {
-        // const type = data.source1mime ? ` type='${data.source1mime}'` : '';
-        // return `<audio controls><source src='${data.source1}'${type}/></audio>`;
-        // <span contenteditable="false" data-mce-object="audio" class="mce-preview-object mce-object-audio" data-mce-selected="1">
-        return `<audio controls><source src='${data.source1}'/></audio>`;
-      },
-      plugins: 'autolink link image lists paste code charmap media',
-      toolbar: 'bold italic removeformat | bullist numlist  blockquote | code charmap subscript superscript | image media audio_upload',
+      plugins: 'autolink link lists paste code charmap media image',
+      toolbar: 'bold italic removeformat | bullist numlist  blockquote | code charmap subscript superscript | image audio video',
       inline: true,
       paste_data_images: true,
       browser_spellcheck: true,
       setup: (editor) => {
-        editor.addButton('audio_upload', {
+        editor.addButton('image', {
           text: '',
           icon: 'media',
-          tooltip: 'Audio Upload',
+          tooltip: 'Insert Image',
           onclick: () => {
-            this.props.openAudioModal(editor);
+            this.props.openModal(editor, 'img');
+          },
+        });
+        editor.addButton('audio', {
+          text: '',
+          icon: 'media',
+          tooltip: 'Insert Audio',
+          onclick: () => {
+            this.props.openModal(editor, 'audio');
+          },
+        });
+        editor.addButton('video', {
+          text: '',
+          icon: 'media',
+          tooltip: 'Insert Video',
+          onclick: () => {
+            this.props.openModal(editor, 'video');
           }
         });
       },

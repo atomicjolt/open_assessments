@@ -81,7 +81,8 @@
   font-size: 1.4rem;
   color: $text-color;
   width: 100%;
-  overflow: hidden;
+  overflow: scroll;
+  white-space: nowrap;
 }
 
 .author--c-input--file{
