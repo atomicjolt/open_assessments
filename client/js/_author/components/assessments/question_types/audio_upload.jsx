@@ -94,10 +94,15 @@ export default class AudioUpload extends React.Component {
             { this.state.displayWarning ? AudioUpload.rangeWarning() : null }
           </div>
         </div>
-        <Feedback
-          item={this.props.item}
-          updateItem={this.props.updateItem}
-        />
+        <div className="author--c-question__feedback">
+          <Feedback
+            feedbackType="correctFeedback"
+            feedback={_.get(this.props.item, 'question.correctFeedback')}
+            updateItem={this.props.updateItem}
+            labelText="Feedback"
+            bankId={this.props.item.bankId}
+          />
+        </div>
       </div>
     );
   }
