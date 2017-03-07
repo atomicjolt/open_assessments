@@ -30,13 +30,16 @@ export default function multipleChoiceOptions(props) {
           updateChoice={props.updateChoice}
         />
         <label htmlFor="option1" />
-        <Editor
-          fileIds={props.questionFileIds}
-          text={props.text}
-          bankId={props.bankId}
-          uploadScopeId={props.itemId}
-          onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
-        />
+        <div className="author--c-text-input--small">
+          <Editor
+            isActive={props.isActive}
+            fileIds={props.questionFileIds}
+            text={props.text}
+            bankId={props.bankId}
+            uploadScopeId={props.itemId}
+            onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
+          />
+        </div>
 
         <AnswerIcons
           first={props.first}

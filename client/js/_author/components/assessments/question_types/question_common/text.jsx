@@ -5,14 +5,16 @@ export default function questionText(props) {
   return (
     <div className="author--c-input c-question-text">
       <label htmlFor={`question_text_${props.itemId}`} />
-      <Editor
-        fileIds={props.fileIds}
-        text={props.text}
-        editorKey={props.editorKey}
-        onBlur={(val, fileIds) => props.updateItem({ question: { text: val, fileIds } })}
-        bankId={props.bankId}
-        uploadScopeId={props.itemId}
-      />
+      <div className="author--c-text-input--medium">
+        <Editor
+          fileIds={props.fileIds}
+          text={props.text}
+          editorKey={props.editorKey}
+          onBlur={(val, fileIds) => props.updateItem({ question: { text: val, fileIds } })}
+          bankId={props.bankId}
+          uploadScopeId={props.itemId}
+        />
+      </div>
     </div>
   );
 }

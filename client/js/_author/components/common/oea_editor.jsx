@@ -91,11 +91,11 @@ export class OeaEditor extends React.Component {
   }
 
   render() {
-    const active = this.state.focused ? 'is-focused' : '';
+    const active = this.state.focused ? 'is-focused' : 'no-border';
 
     return (
       <div className="author--c-input__contain">
-        <div className={`author--c-text-input author--c-text-input--medium author--c-wysiwyg ${active}`}>
+        <div className={`author--c-text-input author--c-wysiwyg ${active}`}>
           <TinyWrapper
             {...this.props}
             uploadMedia={(file, mediaCallback) => this.uploadMedia(file, mediaCallback)}

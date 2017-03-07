@@ -87,7 +87,9 @@ export default class AudioUpload extends React.Component {
                   onChange={e => this.handleTimeLimitUpdate(e)}
                   onBlur={e => this.handleBlur(e)}
                 />
-                <div className="author--c-input__bottom has-error" />
+                <div
+                  className={`author--c-input__bottom ${this.state.displayWarning ? 'has-error' : ''}`}
+                />
               </div>
             </div>
             <span>seconds. (240 maximum)</span>

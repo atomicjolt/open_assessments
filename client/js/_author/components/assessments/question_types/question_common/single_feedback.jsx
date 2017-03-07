@@ -42,7 +42,7 @@ export default class SingleFeedback extends React.Component {
     return (
       <div className="author--c-input author--c-input-label--left author--c-feedback">
         <label htmlFor="feedbackCorrect">{this.props.labelText}</label>
-        <div className="author--c-input__contain">
+        <div className="author--c-text-input--smaller">
           <Editor
             fileIds={_.get(this.props.feedback, 'fileIds')}
             text={_.get(this.props.feedback, 'text')}

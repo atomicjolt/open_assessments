@@ -26,6 +26,10 @@
       border-color: $blue;
       background: $blue;
     }
+    & + .author--c-input__bottom.has-error{
+      border-color: $red;
+      background: $red;
+    }
   }
 }
 
@@ -34,15 +38,15 @@
   background: none;
   border-top: $border;
 
-  &.no-border{
+  &.no-border {
     border-top: none;
-  }
-  &.has-error{
-    border-color: $red;
   }
   &.is-focused{
     border-color: $blue;
     background: $blue;
+  }
+  &.has-error{
+    border-color: $red;
   }
 }
 

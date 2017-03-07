@@ -76,6 +76,7 @@
 
   &.is-active{
     .author--c-question__answers{
+      display: block;
       margin-bottom: 2.5rem;
     }
     .author--c-question-settings{
@@ -114,6 +115,7 @@
   }
 
   .author--c-question__answers{
+    display: none;
     margin-top: 3rem;
     margin-bottom: 0;
   }
