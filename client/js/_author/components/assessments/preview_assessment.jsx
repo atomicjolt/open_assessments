@@ -30,7 +30,7 @@ export class PreviewAssessment extends React.Component {
     getAssessments: React.PropTypes.func.isRequired,
     getAssessmentItems: React.PropTypes.func.isRequired,
     parsedParams: React.PropTypes.object.isRequired,
-  }
+  };
 
   componentDidMount() {
     if (_.isEmpty(this.props.assessment)) {

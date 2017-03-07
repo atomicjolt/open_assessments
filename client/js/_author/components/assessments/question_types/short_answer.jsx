@@ -1,6 +1,6 @@
 import React          from 'react';
 import _              from 'lodash';
-import SingleFeedback from './question_common/single_feedback';
+import Feedback       from './question_common/single_feedback';
 
 const BOX_SIZES = {
   small: {
@@ -58,11 +58,15 @@ export default function ShortAnswer(props) {
           <span>{_.capitalize(boxSize)} Box</span>
         </div>
       </div>
-
-      <SingleFeedback
-        item={props.item}
-        updateItem={props.updateItem}
-      />
+      <div className="author--c-question__feedback">
+        <Feedback
+          feedbackType="correctFeedback"
+          feedback={question.correctFeedback}
+          updateItem={props.updateItem}
+          labelText="Feedback"
+          bankId={props.item.bankId}
+        />
+      </div>
     </div>
   );
 }
@@ -71,7 +75,8 @@ ShortAnswer.propTypes = {
   item: React.PropTypes.shape({
     question: React.PropTypes.shape({
       lines: React.PropTypes.number
-    })
+    }),
+    bankId: React.PropTypes.string,
   }),
   updateItem: React.PropTypes.func.isRequired
 };

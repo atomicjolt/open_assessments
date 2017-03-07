@@ -10,14 +10,14 @@ const requests = [
 
 export const Constants = wrapper(actions, requests);
 
-export function uploadMedia(file, guid, itemId, bankId) {
+export function uploadMedia(file, guid, uploadScopeId, bankId) {
   const formData = new FormData();
   formData.append('inputFile', file);
   formData.append('returnUrl', true);
 
   return {
     bankId,
-    itemId,
+    uploadScopeId,
     file,
     guid,
     apiCall: true,

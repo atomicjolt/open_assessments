@@ -7,10 +7,11 @@ export default function optionFeedback(props) {
     <div className="author--c-input author--c-input-label--left author--c-feedback">
       <label htmlFor="feedback1">Feedback</label>
       <Editor
+        fileIds={props.fileIds}
         text={props.feedback}
         bankId={props.bankId}
-        itemId={props.itemId}
-        onBlur={(text, fileIds) => props.updateChoice({ feedback: text }, fileIds)}
+        uploadScopeId={props.id}
+        onBlur={(text, fileIds) => props.updateChoice({ feedback: text, fileIds })}
       />
     </div>
   );

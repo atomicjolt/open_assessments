@@ -1,10 +1,9 @@
 import React            from 'react';
 import _                from 'lodash';
 import TestUtils        from 'react-addons-test-utils';
+import { shallow }      from 'enzyme';
 import genusTypes       from '../../../../constants/genus_types.js';
 import Question         from './_question';
-import { Provider }     from 'react-redux';
-import { createStore }  from 'redux';
 
 describe('question component', () => {
   let props;
@@ -44,119 +43,65 @@ describe('question component', () => {
       moveItem: () => {movedUp = true},
     };
 
-    result = TestUtils.renderIntoDocument(
-      <Provider store={createStore(()=>({ settings: {} }))}>
-        <Question {...props} />
-      </Provider>
-    );
+    result = shallow(<Question {...props} />);
   });
 
   it('handles moveQuestionUp', () => {
     expect(movedUp).toBeFalsy();
-    props.reorderActive = true;
-    props.isActive = true;
-    result = TestUtils.renderIntoDocument(
-      <Provider store={createStore(()=>({ settings: {} }))}>
-        <Question {...props} />
-      </Provider>
-    );
-    const buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
-    expect(buttons.length).toBe(3);
-    TestUtils.Simulate.click(buttons[0]);
+    result.instance().moveQuestionUp();
     expect(movedUp).toBeTruthy();
   });
 
   it('handles moveQuestionDown', () => {
     expect(movedUp).toBeFalsy();
-    props.reorderActive = true;
-    props.isActive = true;
-    result = TestUtils.renderIntoDocument(
-      <Provider store={createStore(()=>({ settings: {} }))}>
-        <Question {...props} />
-      </Provider>
-    );
-    const buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
-    expect(buttons.length).toBe(3);
-    TestUtils.Simulate.click(buttons[1]);
+    result.instance().moveQuestionDown();
     expect(movedUp).toBeTruthy();
   });
 
   it('handles updateItem', () => {
     expect(itemUpdated).toBeFalsy();
-    const inputs = TestUtils.scryRenderedDOMComponentsWithTag(result, 'input');
-    expect(inputs.length).toBe(2);
-    const input = inputs[0];
-    TestUtils.Simulate.blur(input, { target: { value: 'NEWVALUE' }});
+    result.instance().updateItem({ text: "asdf" });
     expect(itemUpdated).toBeTruthy();
   });
 
   it('shows renders Multiple Choice', () => {
     props.item.type = 'multipleChoice';
-    result = TestUtils.renderIntoDocument(
-      <Provider store={createStore(()=>({ settings: {} }))}>
-        <Question {...props} />
-      </Provider>
-    );
-    const multipleChoice = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'author--c-question__answers--maintain',
-    );
-    expect(multipleChoice).toBeDefined();
+    result = shallow(<Question {...props} />);
+
+    const multipleChoice = result.find('MultipleChoice');
+    expect(multipleChoice.length).toBe(1);
   });
 
   it('shows renders Audio Upload', () => {
     props.item.type = 'audioUpload';
-    result = TestUtils.renderIntoDocument(
-      <Provider store={createStore(()=>({ settings: {} }))}>
-        <Question {...props} />
-      </Provider>
-    );
-    const audioUpload = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'author--c-file-upload__audio-settings',
-    );
-    expect(audioUpload).toBeDefined();
+    result = shallow(<Question {...props} />);
+
+    const audioUpload = result.find('AudioUpload');
+
+    expect(audioUpload.length).toBe(1);
   });
 
   it('shows renders fileUpload', () => {
     props.item.type = 'fileUpload';
-    result = TestUtils.renderIntoDocument(
-      <Provider store={createStore(()=>({ settings: {} }))}>
-        <Question {...props} />
-      </Provider>
-    );
-    const fileUpload = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'author--c-question__feedback',
-    );
-    expect(fileUpload).toBeDefined();
+    result = shallow(<Question {...props} />);
+
+    const fileUpload = result.find('FileUpload');
+    expect(fileUpload.length).toBe(1);
   });
 
   it('shows renders shortAnswer', () => {
     props.item.type = 'shortAnswer';
-    result = TestUtils.renderIntoDocument(
-      <Provider store={createStore(()=>({ settings: {} }))}>
-        <Question {...props} />
-      </Provider>
-    );
-    const shortAnswer = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'author--c-short-answer__answers',
-    );
-    expect(shortAnswer).toBeDefined();
+    result = shallow(<Question {...props} />);
+
+    const shortAnswer = result.find('ShortAnswer');
+    expect(shortAnswer.length).toBe(1);
   });
 
   it('returns correct value from getClassName', () => {
     props.isActive = true;
-    result = TestUtils.renderIntoDocument(
-      <Provider store={createStore(()=>({ settings: {} }))}>
-        <Question {...props} />
-      </Provider>
-    );
-    const secondGetClassName = TestUtils.scryRenderedDOMComponentsWithClass(
-      result,
-      'is-active'
-    );
-    expect(secondGetClassName.length).toBe(1);
+    result = shallow(<Question {...props} />);
+
+    const div = result.find('.is-active');
+    expect(div.length).toBe(1);
   });
 });

@@ -1,21 +1,14 @@
-import _           from 'lodash';
-import $           from 'jquery';
-import React       from 'react';
-import { connect } from 'react-redux';
-
-import TinyWrapper from './tiny_wrapper';
-import guid        from '../../../utils/guid';
-
+import _                 from 'lodash';
+import $                 from 'jquery';
+import React             from 'react';
+import { connect }       from 'react-redux';
+import TinyWrapper       from './tiny_wrapper';
+import guid              from '../../../utils/guid';
 import * as AssetActions from '../../../actions/qbank/assets';
 
 function select(state, props) {
   return {
-    uploadedAssets: state.uploadedAssets,
-    existingFileIds: _.get(
-      state,
-      `items['${props.bankId}']['${props.itemId}'].question.fileIds`,
-      {}
-    )
+    uploadedAssets: state.uploadedAssets[props.uploadScopeId]
   };
 }
 
@@ -23,10 +16,10 @@ export class OeaEditor extends React.Component {
   static propTypes = {
     onBlur: React.PropTypes.func.isRequired,
     bankId: React.PropTypes.string.isRequired,
-    itemId: React.PropTypes.string.isRequired,
+    uploadScopeId: React.PropTypes.string.isRequired,
     uploadMedia: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}).isRequired,
-    existingFileIds: React.PropTypes.shape({})
+    fileIds: React.PropTypes.shape({}).isRequired,
   };
 
   constructor() {
@@ -37,7 +30,7 @@ export class OeaEditor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const assetPath = `uploadedAssets['${this.props.itemId}']['${this.state.mediaGuid}']`;
+    const assetPath = `uploadedAssets['${this.state.mediaGuid}']`;
     if (!_.get(this.props, assetPath) && _.get(nextProps, assetPath)) {
       const imageUrl = _.get(nextProps, `${assetPath}.assetContents[0].url`);
       this.state.mediaCallback(imageUrl);
@@ -50,25 +43,7 @@ export class OeaEditor extends React.Component {
     if (!isChanged) return;
 
     let text = editorText;
-    const uploadedAssets = this.props.uploadedAssets;
     const fileIds = {};
-
-    _.each(uploadedAssets[this.props.itemId], (asset, uploadedGuid) => {
-      const assetContentId = asset.assetContents[0].id;
-
-      // If we already have the image uploaded, don't make a new fileId entry
-      // for it.
-      const mediaGuid = _.findKey(this.props.existingFileIds, fileData => (
-        fileData.assetContentId === assetContentId
-      )) || uploadedGuid;
-
-      fileIds[mediaGuid] = {
-        assetId: asset.id,
-        assetContentId,
-        assetContentTypeId: asset.assetContents[0].genusTypeId
-      };
-      text = text.replace(asset.assetContents[0].url, `AssetContent:${mediaGuid}`);
-    });
 
     const doc = $(`<div>${text}</div>`);
     $('img, source', doc).each((i, el) => {
@@ -76,16 +51,29 @@ export class OeaEditor extends React.Component {
       const match = /.*\/(.*)\/stream$/.exec(media.attr('src'));
       if (match) {
         const assetContentId = match[1];
-        const mediaGuid = _.findKey(this.props.existingFileIds, fileData => (
-          fileData.assetContentId === assetContentId
-        ));
-        media.attr('src', `AssetContent:${mediaGuid}`);
+        const mediaGuid = this.findMediaGuid(assetContentId);
+        text = text.replace(media.attr('src'), `AssetContent:${mediaGuid}`);
       }
     });
 
-    text = doc.html();
+    _.each(this.props.uploadedAssets, (asset, mediaGuid) => {
+      fileIds[mediaGuid] = {
+        assetId: asset.id,
+        assetContentId: asset.assetContents[0].id,
+        assetContentTypeId: asset.assetContents[0].genusTypeId
+      };
+    });
 
     this.props.onBlur(text, fileIds);
+  }
+
+  findMediaGuid(assetContentId) {
+    // try to find in existing fileIds, otherwise try to find in newly uploaded fileIds.
+    return _.findKey(this.props.fileIds, fileData => (
+      fileData.assetContentId === assetContentId
+    )) || _.findKey(this.props.uploadedAssets, fileData => (
+      fileData.assetContents[0].id === assetContentId
+    ));
   }
 
   uploadMedia(file, mediaCallback) {
@@ -93,7 +81,7 @@ export class OeaEditor extends React.Component {
     this.props.uploadMedia(
       file,
       mediaGuid,
-      this.props.itemId,
+      this.props.uploadScopeId,
       this.props.bankId
     );
     this.setState({
