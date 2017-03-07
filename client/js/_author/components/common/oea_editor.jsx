@@ -2,6 +2,7 @@ import _                 from 'lodash';
 import $                 from 'jquery';
 import React             from 'react';
 import { connect }       from 'react-redux';
+import Modal             from 'react-modal';
 import TinyWrapper       from './tiny_wrapper';
 import guid              from '../../../utils/guid';
 import * as AssetActions from '../../../actions/qbank/assets';
@@ -26,6 +27,8 @@ export class OeaEditor extends React.Component {
     super();
     this.state = {
       focused: false,
+      editor: null,
+      modalOpen: false,
     };
   }
 
@@ -90,6 +93,15 @@ export class OeaEditor extends React.Component {
     });
   }
 
+  openAudioModal(editor) {
+    this.setState({ editor, modalOpen: true, mediaType: 'audio', modalText: "Upload Audio" });
+  }
+
+  uploadAudio() {
+    this.state.editor.insertContent('&nbsp;<b>It\'s my button!</b>&nbsp;');
+    this.setState({ editor: null, modalOpen: false });
+  }
+
   render() {
     const active = this.state.focused ? 'is-focused' : '';
 
@@ -101,9 +113,30 @@ export class OeaEditor extends React.Component {
             uploadMedia={(file, mediaCallback) => this.uploadMedia(file, mediaCallback)}
             onBlur={(editorText, isChanged) => this.onBlur(editorText, isChanged)}
             onFocus={() => this.setState({ focused: true })}
+            openAudioModal={editor => this.openAudioModal(editor)}
           />
         </div>
         <div className={`author--c-input__bottom ${active}`} />
+        <Modal
+          overlayClassName="c-wysiwyg-modal-background"
+          className="c-wysiwyg-modal"
+          isOpen={this.state.modalOpen}
+          onRequestClose={() => this.setState({ modalOpen: false })}
+        >
+          <div>
+            <h3>{this.state.modalText}</h3>
+            <label htmlFor="file-picker">
+              Select a file
+              <input
+                id="file-picker"
+                className="author--c-image-uploader author--c-file"
+                type="file"
+                ref={ref => (this.filePicker = ref)}
+              />
+            </label>
+            <label>Source<input /></label>
+          </div>
+        </Modal>
       </div>
     );
   }

@@ -22,6 +22,7 @@ export default class TinyWrapper extends React.Component {
     editorKey: React.PropTypes.string.isRequired,
     onBlur: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func.isRequired,
+    openAudioModal: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -59,17 +60,27 @@ export default class TinyWrapper extends React.Component {
             break;
         }
       },
-      media_url_resolver: (data, resolve) => {
+      video_template_callback: (data) => {
         // const type = data.source1mime ? ` type='${data.source1mime}'` : '';
         // return `<audio controls><source src='${data.source1}'${type}/></audio>`;
         // <span contenteditable="false" data-mce-object="audio" class="mce-preview-object mce-object-audio" data-mce-selected="1">
-        resolve({ html: `<audio controls><source src='${data.url}'/></audio>` })
+        return `<audio controls><source src='${data.source1}'/></audio>`;
       },
       plugins: 'autolink link image lists paste code charmap media',
-      toolbar: 'bold italic removeformat | bullist numlist  blockquote | code charmap subscript superscript | image media',
+      toolbar: 'bold italic removeformat | bullist numlist  blockquote | code charmap subscript superscript | image media audio_upload',
       inline: true,
       paste_data_images: true,
       browser_spellcheck: true,
+      setup: (editor) => {
+        editor.addButton('audio_upload', {
+          text: '',
+          icon: 'media',
+          tooltip: 'Audio Upload',
+          onclick: () => {
+            this.props.openAudioModal(editor);
+          }
+        });
+      },
     };
   }
 
