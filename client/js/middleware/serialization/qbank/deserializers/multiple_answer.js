@@ -11,7 +11,6 @@ function deserializeChoices(choices, answers) {
       answerId: null,
       text: choice.text,
       order: index,
-      fileIds: [],
       isCorrect: false,
     };
     _.forEach(answers, (answer) => {
@@ -41,10 +40,12 @@ export default function multipleAnswer(item) {
     correctFeedback: {
       text: _.get(correctAnswer, 'feedback.text'),
       answerId: _.get(correctAnswer, 'id'),
+      fileIds: _.get(correctAnswer, 'fileIds')
     },
     incorrectFeedback: {
       text: _.get(incorrectAnswer, 'feedback.text'),
       answerId: _.get(incorrectAnswer, 'id'),
+      fileIds: _.get(incorrectAnswer, 'fileIds')
     },
   };
 
