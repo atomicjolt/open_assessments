@@ -1,7 +1,5 @@
 import React            from 'react';
-import TestUtils        from 'react-addons-test-utils';
 import { shallow }      from 'enzyme';
-import _                from 'lodash';
 import MultipleChoice   from './multiple_choice';
 
 describe('multiple choice component', () => {
@@ -45,8 +43,8 @@ describe('multiple choice component', () => {
         },
         answers: [{}],
       },
-      updateItem: () => {choiceUpdated = true},
-      updateChoice: () => {choiceUpdated = true},
+      updateItem: () => { choiceUpdated = true; },
+      updateChoice: () => { choiceUpdated = true; },
       isActive: false,
     };
     result = shallow(<MultipleChoice {...props} />);
@@ -54,7 +52,7 @@ describe('multiple choice component', () => {
 
   it('renders', () => {
     const divs = result.find('.author--c-question__answers--maintain');
-    expect(divs.length).toBe(1)
+    expect(divs.length).toBe(1);
   });
 
   it('calls updateChoice', () => {
