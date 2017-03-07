@@ -6,6 +6,7 @@ export default function DefaultHeader(props) {
       <button
         className="author--c-btn author--c-btn--square"
         tabIndex="0"
+        onClick={props.togglePreview}
       >
         <i className="material-icons">remove_red_eye</i>
       </button>
@@ -31,4 +32,5 @@ DefaultHeader.propTypes = {
   id: React.PropTypes.string,
   deleteAssessmentItem: React.PropTypes.func,
   toggleReorder: React.PropTypes.func,
+  togglePreview: React.PropTypes.func,
 };

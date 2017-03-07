@@ -9,12 +9,15 @@ import FileUpload       from './file_upload';
 import ShortAnswer      from './short_answer';
 import types            from '../../../../constants/question_types';
 import languages        from '../../../../constants/language_types';
+import Preview          from './preview_question';
 
 export default class Question extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
+      id: React.PropTypes.string,
       type: React.PropTypes.string,
       bankId: React.PropTypes.string,
+      name: React.PropTypes.string,
     }).isRequired,
     isActive: React.PropTypes.bool,
     itemIndex: React.PropTypes.number,
@@ -33,7 +36,8 @@ export default class Question extends React.Component {
     super(props);
     this.state = {
       reorderActive: false,
-      language: languages.languageTypeId.english
+      language: languages.languageTypeId.english,
+      preview: false,
     };
   }
 
@@ -154,45 +158,27 @@ export default class Question extends React.Component {
     }
   }
 
-  render() {
+  editContent() {
     const { item } = this.props;
     const { name, type, id, question, bankId } = item;
+    const { multipleAnswer, multipleReflection, reflection } = types;
     const defaultLanguage = this.state.language;
-    const className = this.getClassName();
-    const choosenLanguage = _.find(item.question.texts, (textObj) => {
+    const chosenLanguage = _.find(item.question.texts, (textObj) => {
       return textObj.languageTypeId === defaultLanguage;
     });
-    const questionText = _.get(choosenLanguage, 'text', '');
-    const languageTypeId = _.get(choosenLanguage, 'languageTypeId');
+    const questionText = _.get(chosenLanguage, 'text', '');
+    const languageTypeId = _.get(chosenLanguage, 'languageTypeId');
 
     return (
-      <div
-        className={`author--o-item author--c-question ${className}`}
-        tabIndex="0"
-        onClick={() => this.props.activateItem(item.id)}
-        onFocus={() => this.props.activateItem(item.id)}
-      >
-        <QuestionHeader
-          name={name}
-          type={type}
-          deleteAssessmentItem={this.props.deleteAssessmentItem}
-          id={id}
-          index={this.props.itemIndex}
-          topItem={this.props.topItem}
-          bottomItem={this.props.bottomItem}
-          toggleReorder={this.props.toggleReorder}
-          reorderActive={this.props.isActive && this.props.reorderActive}
-          moveUp={() => this.moveQuestionUp()}
-          moveDown={() => this.moveQuestionDown()}
-        />
+      <div>
         <Settings
           id={id}
           updateItem={newProps => this.updateItem(newProps)}
           defaultName={name}
           language={this.state.language}
           shuffle={question.shuffle}
-          multipleAnswer={item.type === types.multipleAnswer || item.type === types.multipleReflection}
-          reflection={_.includes([types.reflection, types.multipleReflection], item.type)}
+          multipleAnswer={item.type === multipleAnswer || item.type === multipleReflection}
+          reflection={_.includes([reflection, multipleReflection], item.type)}
           makeReflection={reflect => this.makeReflection(reflect)}
           makeMultipleAnswer={multi => this.makeMultipleAnswer(multi)}
           type={type}
@@ -208,6 +194,44 @@ export default class Question extends React.Component {
           />
           {this.content()}
         </div>
+      </div>
+    );
+  }
+
+  previewContent() {
+    return (
+      <Preview
+        item={this.props.item}
+      />
+    );
+  }
+
+  render() {
+    const { name, type, id } = this.props.item;
+    const className = this.getClassName();
+
+    return (
+      <div
+        className={`author--o-item author--c-question ${className}`}
+        tabIndex="0"
+        onClick={() => this.props.activateItem(id)}
+        onFocus={() => this.props.activateItem(id)}
+      >
+        <QuestionHeader
+          name={name}
+          type={type}
+          deleteAssessmentItem={this.props.deleteAssessmentItem}
+          id={id}
+          index={this.props.itemIndex}
+          topItem={this.props.topItem}
+          bottomItem={this.props.bottomItem}
+          toggleReorder={this.props.toggleReorder}
+          reorderActive={this.props.isActive && this.props.reorderActive}
+          moveUp={() => this.moveQuestionUp()}
+          moveDown={() => this.moveQuestionDown()}
+          togglePreview={() => this.setState({ preview: !this.state.preview })}
+        />
+        {this.state.preview && this.props.isActive ? this.previewContent() : this.editContent()}
       </div>
     );
   }
