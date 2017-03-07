@@ -46,14 +46,14 @@ export default class TinyWrapper extends React.Component {
       menubar: false,
       statusbar: false,
       plugins: 'autolink link lists paste code charmap media image',
-      toolbar: 'bold italic removeformat | bullist numlist  blockquote | code charmap subscript superscript | image audio video',
+      toolbar: 'bold italic removeformat | bullist numlist  blockquote | code charmap subscript superscript | insert_image audio video',
       inline: true,
       paste_data_images: true,
       browser_spellcheck: true,
       setup: (editor) => {
-        editor.addButton('image', {
+        editor.addButton('insert_image', {
           text: '',
-          icon: 'media',
+          icon: 'image',
           tooltip: 'Insert Image',
           onclick: () => {
             this.props.openModal(editor, 'img');
@@ -61,7 +61,7 @@ export default class TinyWrapper extends React.Component {
         });
         editor.addButton('audio', {
           text: '',
-          icon: 'media',
+          icon: 'audio',
           tooltip: 'Insert Audio',
           onclick: () => {
             this.props.openModal(editor, 'audio');
@@ -69,7 +69,7 @@ export default class TinyWrapper extends React.Component {
         });
         editor.addButton('video', {
           text: '',
-          icon: 'media',
+          icon: 'video',
           tooltip: 'Insert Video',
           onclick: () => {
             this.props.openModal(editor, 'video');
