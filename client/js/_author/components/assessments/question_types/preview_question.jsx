@@ -62,7 +62,7 @@ export default class PreviewQuestion extends React.Component {
       } else {
         this.setState({ response: [...this.state.response, id] });
       }
-    } else {
+    } else if (type === types.multipleChoice || type === types.reflection) {
       this.setState({ response: [id] });
     }
   }
@@ -70,6 +70,17 @@ export default class PreviewQuestion extends React.Component {
 
   render() {
     const item = this.serializeForPlayer(this.props.item);
+
+    const localizedStrings = {
+      fileUpload: {
+        chooseFile: 'Choose File'
+      },
+      audioUpload: {
+        stop: 'Stop',
+        record: 'Record',
+      }
+    };
+
     return (
       <div>
         <Item
@@ -80,7 +91,8 @@ export default class PreviewQuestion extends React.Component {
           questionCount={1}
           questionResult={false}
           selectAnswer={id => this.selectAnswer(id)}
-          localizedStrings={false}
+          localizedStrings={localizedStrings}
+          sendSize={() => {}}
           videoPlay={false}
           videoPause={false}
           audioPlay={false}
