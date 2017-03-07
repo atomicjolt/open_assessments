@@ -86,7 +86,7 @@ export class EditAssessment extends React.Component {
     this.props.createItemInAssessment(
       this.props.params.bankId,
       this.props.params.id,
-      _.map(this.props.assessment.items, 'id'),
+      _.map(this.props.items, 'id'),
       newItem,
     );
   }
