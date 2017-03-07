@@ -118,23 +118,49 @@ export class OeaEditor extends React.Component {
         </div>
         <div className={`author--c-input__bottom ${active}`} />
         <Modal
-          overlayClassName="c-wysiwyg-modal-background"
-          className="c-wysiwyg-modal"
+          overlayClassName="author--c-wysiwyg-modal-background"
+          className="author--c-wysiwyg-modal"
           isOpen={this.state.modalOpen}
           onRequestClose={() => this.setState({ modalOpen: false })}
         >
-          <div>
-            <h3>{this.state.modalText}</h3>
-            <label htmlFor="file-picker">
-              Select a file
-              <input
-                id="file-picker"
-                className="author--c-image-uploader author--c-file"
-                type="file"
-                ref={ref => (this.filePicker = ref)}
-              />
-            </label>
-            <label>Source<input /></label>
+          <div className="author--c-wysiwyg-modal__header">
+            <h3 className="author--c-wysiwyg-modal__title">Insert/edit media</h3>
+            <button className="author--c-wysiwyg-modal__close"><i className="material-icons">close</i></button>
+          </div>
+
+          <div className="author--c-wysiwyg-modal__main">
+            <div className="author--o-flex-center  author--u-mb-md">
+              <span className="author--c-wysiwyg-media__label">Source</span>
+              <div className="author--c-wysiwyg-media__source-text" tabIndex="0"></div>
+              <div className="author--c-input--file  author--u-ml-sm">
+                <input id="fileid" type="file"/>
+                <label htmlFor="fileid"><i className="material-icons">find_in_page</i></label>
+              </div>
+            </div>
+
+            <div className="author--o-flex-center  author--c-wysiwyg-media__main2">
+              <span className="author--c-wysiwyg-media__label">Dimensions</span>
+              <div className="author--c-input  author--c-input--white">
+								<label></label>
+								<div className="author--c-input__contain">
+									<input className="author--c-text-input  author--c-text-input--small" type="text"/>
+									<div className="author--c-input__bottom"></div>
+								</div>
+							</div>
+              <span className="author--c-wysiwyg-media__x-divider">x</span>
+              <div className="author--c-input  author--c-input--white">
+								<label></label>
+								<div className="author--c-input__contain">
+									<input className="author--c-text-input  author--c-text-input--small" type="text"/>
+									<div className="author--c-input__bottom"></div>
+								</div>
+							</div>
+            </div>
+          </div>
+
+          <div className="author--c-wysiwyg-modal__footer">
+            <button className="author--u-right  author--c-btn author--c-btn--sm author--c-btn--gray">Cancel</button>
+            <button className="author--c-btn author--c-btn--sm author--c-btn--maroon author--u-ml-sm">OK</button>
           </div>
         </Modal>
       </div>
