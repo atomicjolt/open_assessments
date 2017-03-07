@@ -1,9 +1,9 @@
-import React        from 'react';
-import _            from 'lodash';
-import Option       from './multiple_choice_option';
-import Add          from './add_option';
-import Feedback     from '../question_common/feedback';
-import types        from '../../../../../constants/question_types';
+import React          from 'react';
+import _              from 'lodash';
+import Option         from './multiple_choice_option';
+import Add            from './add_option';
+import Feedback       from '../question_common/single_feedback';
+import types          from '../../../../../constants/question_types';
 
 export default class MultipleChoice extends React.Component {
   static propTypes = {
@@ -21,12 +21,6 @@ export default class MultipleChoice extends React.Component {
     updateChoice: React.PropTypes.func.isRequired,
     isActive: React.PropTypes.bool,
   };
-
-  markedForDeletion(choice) {
-    const newChoices = _.cloneDeep(this.props.item.question.choices);
-    newChoices[choice.id].delete = true;
-    return newChoices;
-  }
 
   deleteChoice(choice) {
     if (confirm('Are you sure you want to delete this option?')) {
@@ -56,6 +50,42 @@ export default class MultipleChoice extends React.Component {
 
   addNewChoice(id) {
     this.props.updateChoice(id, 'new', { id: 'new' });
+  }
+
+  getFeedback() {
+    const { question, type } = this.props.item;
+
+    if (type !== types.multipleChoice) {
+      return (
+        <div className="author--c-question__feedback">
+          <Feedback
+            updateItem={this.props.updateItem}
+            feedbackType="correctFeedback"
+            feedback={question.correctFeedback}
+            labelText="Correct Feedback"
+            bankId={this.props.item.bankId}
+          />
+          {type === types.reflection || type === types.multipleReflection ?
+            null :
+            <Feedback
+              updateItem={this.props.updateItem}
+              feedbackType="incorrectFeedback"
+              feedback={question.incorrectFeedback}
+              labelText="Incorrect Feedback"
+              bankId={this.props.item.bankId}
+            />
+          }
+        </div>
+      );
+    }
+
+    return null;
+  }
+
+  markedForDeletion(choice) {
+    const newChoices = _.cloneDeep(this.props.item.question.choices);
+    newChoices[choice.id].delete = true;
+    return newChoices;
   }
 
   render() {
@@ -89,14 +119,9 @@ export default class MultipleChoice extends React.Component {
             updateChoice={() => this.addNewChoice(id)}
           /> : null
         }
-        {
-          type !== types.multipleChoice ? <Feedback
-            updateItem={this.props.updateItem}
-            onlyShowCorrect={type === types.reflection || type === types.multipleReflection}
-            correct={_.get(question, 'correctFeedback.text')}
-            incorrect={_.get(question, 'incorrectFeedback.text')}
-          /> : null
-        }
+        <div className="author--c-question__feedback">
+          { this.getFeedback() }
+        </div>
       </div>
     );
   }
