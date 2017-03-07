@@ -31,7 +31,7 @@ export default class AssessmentForm extends React.Component {
   }
 
   createItem(newItem) {
-    this.props.createItem({ ...newItem, question: { text: newItem.name, } });
+    this.props.createItem(newItem);
     this.setState({ addingItem: false });
   }
 
