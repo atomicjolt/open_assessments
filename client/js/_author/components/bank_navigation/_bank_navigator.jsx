@@ -84,7 +84,7 @@ export class BankNavigator extends React.Component {
 
     let sortedBanks = this.props.banks;
     if (sortName) {
-      sortedBanks = _.orderBy(sortedBanks, bank => bank.displayName.text, sortName);
+      sortedBanks = _.orderBy(sortedBanks, bank => _.lowerCase(bank.displayName.text), sortName);
     }
     if (sortPublished) {
       sortedBanks = _.orderBy(sortedBanks, bank => _.find(bank.assignedBankIds, { id: 'the publishedBankId' }), sortPublished);
