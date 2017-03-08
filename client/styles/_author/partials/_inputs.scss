@@ -94,6 +94,9 @@
       outline: none;
     }
 
+    .mce-panel{
+      display: block !important;
+    }
   }
 
   .mce-content-body{
@@ -106,7 +109,7 @@
     border-bottom: none;
     border-left: none;
     border-right: none;
-    border-top-color: $gray3;
+    border-top: 0.1rem solid $blue;
   }
 
   .mce-btn{
@@ -390,6 +393,7 @@ input.au-c-file{
   height: 0.01rem;
   width: 0.01rem;
   position: absolute;
+  z-index: -1;
 }
 
 .au-c-answer{

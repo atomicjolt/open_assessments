@@ -22,6 +22,14 @@ export default class MultipleChoice extends React.Component {
     isActive: React.PropTypes.bool,
   };
 
+  constructor() {
+    super();
+
+    this.state = {
+      activeChoice: null
+    };
+  }
+
   deleteChoice(choice) {
     if (confirm('Are you sure you want to delete this option?')) {
       this.props.updateItem({

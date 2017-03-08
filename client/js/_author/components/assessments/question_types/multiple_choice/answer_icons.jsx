@@ -2,7 +2,10 @@ import React    from 'react';
 
 export default function answerIcons(props) {
 
-  const spacer = <div className="au-c-answer__icons__spacer" />;
+  let spacer = <button tabIndex="-1" className="au-c-answer__icons__spacer inactive" />;
+  if (props.shuffle) {
+    spacer = null;
+  }
   const upButton = (
     <button
       className="au-c-answer__icons__spacer"

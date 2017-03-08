@@ -67,5 +67,5 @@ EditorUploadModal.propTypes = {
   closeModal: React.PropTypes.func.isRequired,
   mediaType: React.PropTypes.string,
   mediaName: React.PropTypes.string,
-  insertMedia: React.PropTypes.string,
+  insertMedia: React.PropTypes.func.isRequired,
 };

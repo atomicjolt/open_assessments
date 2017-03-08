@@ -20,11 +20,15 @@ export default function multipleChoiceOptions(props) {
     );
   }
 
+  const isActive = props.isActive ? 'is-active' : '';
+  const isOrdered = props.shuffle ? 'is-ordered' : '';
+
   return (
     <div
       onFocus={() => props.setActiveChoice(props.id)}
       onClick={() => props.setActiveChoice(props.id)}
-      className={`au-c-answer ${props.isActive ? 'is-active' : ''}`}>
+      className={`au-c-answer ${isActive} ${isOrdered}`}
+    >
       <div className="au-c-input">
         <Selector
           itemType={props.itemType}
@@ -53,17 +57,14 @@ export default function multipleChoiceOptions(props) {
           deleteChoice={props.deleteChoice}
         />
       </div>
-      {
-        hideFeedback ? null : (
-          <Feedback
-            feedback={props.feedback}
-            bankId={props.bankId}
-            itemId={props.itemId}
-            updateChoice={props.updateChoice}
-            fileIds={props.fileIds}
-          />
-        )
-      }
+      <Feedback
+        feedback={props.feedback}
+        bankId={props.bankId}
+        itemId={props.itemId}
+        updateChoice={props.updateChoice}
+        fileIds={props.fileIds}
+        hidden={hideFeedback}
+      />
     </div>
   );
 }

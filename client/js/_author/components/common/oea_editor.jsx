@@ -35,6 +35,7 @@ export class OeaEditor extends React.Component {
   }
 
   onBlur(editorText, isChanged) {
+    console.log("here");
     this.setState({ focused: false });
     if (!isChanged) return;
 
@@ -126,7 +127,7 @@ export class OeaEditor extends React.Component {
   }
 
   render() {
-    const active = this.state.focused ? 'is-focused' : 'no-border';
+    const active = this.state.focused || this.state.modalOpen ? 'is-focused' : 'no-border';
     const { textSize } = this.props;
     const uploadedAsset = _.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0]`);
 

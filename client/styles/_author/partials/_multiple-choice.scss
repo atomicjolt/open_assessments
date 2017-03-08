@@ -16,6 +16,15 @@
     }
   }
 
+  &.is-ordered{
+    padding-right: 5.5rem;
+
+    .au-c-answer__icons{
+      width: 3rem;
+      right: -4rem;
+    }
+  }
+
   .au-c-answer__icons{
     position: absolute;
     width: 11rem;
@@ -44,6 +53,10 @@
       background: none;
       padding: 0;
 
+      &.inactive{
+        pointer-events: none;
+      }
+
       &:last-of-type{
         margin: 0;
         i{
@@ -57,11 +70,11 @@
     }
 
   &.is-active{
-    .au-c-feedback{
-      @include display-flex;
-    }
     .au-c-answer__icons i{
       display: inline-block;
+    }
+    .au-c-input__bottom.no-border{
+      border-top: $border;
     }
   }
 }

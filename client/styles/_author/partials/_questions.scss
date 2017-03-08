@@ -169,3 +169,11 @@
   .au-c-question-add__buttons{
     margin-top: 3rem;
   }
+
+.au-c-feedback{
+  @include display-flex;
+
+  &.is-hidden{
+    display: none;
+  }
+}

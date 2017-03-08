@@ -1,6 +1,8 @@
-.au-c-short-answer__answers{
-  @include display-flex;
-  @include align-items(stretch);
+.au-c-question.is-active{
+  .au-c-question__answers.au-c-short-answer__answers{
+    @include display-flex;
+    @include align-items(stretch);
+  }
 }
 
 .au-c-short-answer__example{
