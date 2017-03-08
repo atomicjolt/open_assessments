@@ -4,6 +4,7 @@ import shortAnswer      from './short_answer';
 import multipleChoice   from './multiple_choice';
 import multipleAnswer   from './multiple_answer';
 import fileUpload       from './file_upload';
+import dragAndDrop      from './drag_and_drop';
 import genusTypes       from '../../../../constants/genus_types';
 
 export default function factory(type) {
@@ -24,6 +25,9 @@ export default function factory(type) {
 
     case genusTypes.item.fileUpload:
       return fileUpload;
+
+    case genusTypes.item.dragAndDrop:
+      return dragAndDrop;
 
     default:
       return base;

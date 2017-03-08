@@ -7,6 +7,7 @@ export const types = {
     shortAnswer: 'item-genus-type%3Aqti-extended-text-interaction%40ODL.MIT.EDU',
     reflection: 'item-genus-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
     multipleReflection: 'item-genus-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',
+    dragAndDrop: 'notMadeYet',
   },
   question: {
     multipleChoice: 'question-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
@@ -25,6 +26,14 @@ export const types = {
     fillInTheBlank: 'answer-record-type%3Ainline-choice-answer%40ODL.MIT.EDU',
     file: 'answer-record-type%3Afiles-submission%40ODL.MIT.EDU', // for any moveable word sandbox, audio record tool, and generic file submission
     shortAnswer: 'answer-record-type%3Ashort-text-answer%40ODL.MIT.EDU',
+  },
+  target: {
+    drop: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
+    reject: 'drop.behavior%3Areject%40ODL.MIT.EDU',
+  },
+  zone: {
+    drop: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
+    snap: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
   },
   default: 'GenusType%3ADEFAULT%40DLKIT.MIT.EDU',
 };
