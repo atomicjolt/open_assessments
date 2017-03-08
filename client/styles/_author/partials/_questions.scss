@@ -121,6 +121,10 @@
     display: none;
     margin-top: 3rem;
     margin-bottom: 0;
+
+    .au-no-outline {
+      outline: none;
+    }
   }
 
   .au-c-question__answers--maintain{

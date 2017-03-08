@@ -24,7 +24,6 @@ export default function multipleChoiceOptions(props) {
     <div
       onFocus={() => props.setActiveChoice(props.id)}
       onClick={() => props.setActiveChoice(props.id)}
-      onBlur={() => props.setActiveChoice(null)}
       className={`au-c-answer ${props.isActive ? 'is-active' : ''}`}>
       <div className="au-c-input">
         <Selector
