@@ -42,7 +42,7 @@ describe('New Assessments View', () => {
     expect(isEditOrPublishAssessment).toBeTruthy();
   });
 
-  it('Determins Icon status', () => {
+  it('Determines Icon status', () => {
     result = TestUtils.renderIntoDocument(<Stub><AssessmentView {...props} /></Stub>);
     let icons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'i');
     expect(icons[1].textContent).toBe('cloud_done');
