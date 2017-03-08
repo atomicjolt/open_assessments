@@ -30,36 +30,6 @@ export default class MultipleChoice extends React.Component {
     };
   }
 
-  deleteChoice(choice) {
-    if (confirm('Are you sure you want to delete this option?')) {
-      this.props.updateItem({
-        question: {
-          choices: this.markedForDeletion(choice)
-        }
-      });
-    }
-  }
-
-  moveChoice(choice, up) {
-    const newChoices = _.cloneDeep(this.props.item.question.choices);
-    const oldPosition = choice.order;
-    const newPosition = up ? oldPosition - 1 : oldPosition + 1;
-    const swapChoice = _.find(newChoices, { order: newPosition });
-
-    newChoices[choice.id].order = newPosition;
-    newChoices[swapChoice.id].order = oldPosition;
-
-    this.props.updateItem({
-      question: {
-        choices: newChoices,
-      }
-    });
-  }
-
-  addNewChoice(id) {
-    this.props.updateChoice(id, 'new', { id: 'new' });
-  }
-
   getFeedback() {
     const { question, type } = this.props.item;
 
@@ -90,6 +60,36 @@ export default class MultipleChoice extends React.Component {
     return null;
   }
 
+  addNewChoice(id) {
+    this.props.updateChoice(id, 'new', { id: 'new' });
+  }
+
+  moveChoice(choice, up) {
+    const newChoices = _.cloneDeep(this.props.item.question.choices);
+    const oldPosition = choice.order;
+    const newPosition = up ? oldPosition - 1 : oldPosition + 1;
+    const swapChoice = _.find(newChoices, { order: newPosition });
+
+    newChoices[choice.id].order = newPosition;
+    newChoices[swapChoice.id].order = oldPosition;
+
+    this.props.updateItem({
+      question: {
+        choices: newChoices,
+      }
+    });
+  }
+
+  deleteChoice(choice) {
+    if (confirm('Are you sure you want to delete this option?')) {
+      this.props.updateItem({
+        question: {
+          choices: this.markedForDeletion(choice)
+        }
+      });
+    }
+  }
+
   markedForDeletion(choice) {
     const newChoices = _.cloneDeep(this.props.item.question.choices);
     newChoices[choice.id].delete = true;
@@ -102,9 +102,7 @@ export default class MultipleChoice extends React.Component {
 
   blurOptions(e) {
     const currentTarget = e.currentTarget;
-    const originalTarget = e.target;
     setTimeout(() => {
-      const a = originalTarget;
       if (!currentTarget.contains(document.activeElement) ||
         (currentTarget === document.activeElement)
       ) {
@@ -118,7 +116,7 @@ export default class MultipleChoice extends React.Component {
     return (
       <div className="au-c-question__answers au-c-question__answers--maintain">
         <div className="au-no-outline" onBlur={e => this.blurOptions(e)} tabIndex="-1">
-        {
+          {
             _.map(_.orderBy(question.choices, 'order'), choice => (
               <Option
                 key={`assessmentChoice_${choice.id}`}
