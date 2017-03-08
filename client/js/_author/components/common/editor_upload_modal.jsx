@@ -36,7 +36,7 @@ export default function EditorUploadModal(props) {
       className="author--c-wysiwyg-modal"
       isOpen={props.isOpen}
       onRequestClose={props.closeModal}
-      contentLabel="Example Modal"
+      contentLabel={`Insert ${tagNameMap[props.mediaType]} Modal`}
     >
       <div className="author--c-wysiwyg-modal__header">
         <h3 className="author--c-wysiwyg-modal__title">
