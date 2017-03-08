@@ -105,7 +105,7 @@ export class OeaEditor extends React.Component {
   insertMedia(mediaUrl) {
     if (!mediaUrl) return;
 
-    let editorContent;
+    let editorContent = `<video><source src="${mediaUrl}" /></video>`;
 
     switch (this.state.mediaType) {
       case 'img':
@@ -118,7 +118,7 @@ export class OeaEditor extends React.Component {
         break;
 
       default:
-        editorContent = `<video><source src="${mediaUrl}" /></video>`;
+        break;
     }
 
     this.state.editor.insertContent(editorContent);
