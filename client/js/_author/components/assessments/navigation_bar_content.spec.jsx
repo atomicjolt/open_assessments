@@ -21,7 +21,8 @@ describe('New Assessments View', () => {
         bankId: 'id12345',
         assessmentId: 'assessmentId46587'
       },
-      getBankChildren: (id) => { bankerId = id }
+      bankId: '1222',
+      getBankChildren: (id) => { bankerId = id; }
     };
     result = TestUtils.renderIntoDocument(<Stub><AssessmentView {...props} /></Stub>);
   });
