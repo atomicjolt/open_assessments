@@ -52,7 +52,7 @@ export default function EditorUploadModal(props) {
           Cancel
         </button>
         <button
-          onClick={() => { props.insertMedia(); props.closeModal(); }}
+          onClick={() => { props.insertMedia(); }}
           className="author--c-btn author--c-btn--sm author--c-btn--maroon author--u-ml-sm"
         >
           OK

@@ -102,9 +102,7 @@ export class OeaEditor extends React.Component {
     });
   }
 
-  insertMedia() {
-    const uploadedAsset = _.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0]`);
-    const mediaUrl = _.get(uploadedAsset, 'url');
+  insertMedia(mediaUrl) {
     if (!mediaUrl) return;
 
     let editorContent;
@@ -124,6 +122,7 @@ export class OeaEditor extends React.Component {
     }
 
     this.state.editor.insertContent(editorContent);
+    this.closeModal();
   }
 
   render() {
@@ -147,7 +146,7 @@ export class OeaEditor extends React.Component {
           className="author--c-wysiwyg-modal"
           isOpen={this.state.modalOpen}
           closeModal={() => this.closeModal()}
-          insertMedia={() => this.insertMedia()}
+          insertMedia={() => this.insertMedia(_.get(uploadedAsset, 'url'))}
           mediaName={_.get(uploadedAsset, 'displayName.text')}
           mediaType={this.state.mediaType}
           uploadMedia={file => this.uploadMedia(file)}
