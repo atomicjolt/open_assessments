@@ -2,6 +2,7 @@ import _                 from 'lodash';
 import $                 from 'jquery';
 import React             from 'react';
 import { connect }       from 'react-redux';
+import Modal             from './editor_upload_modal';
 import TinyWrapper       from './tiny_wrapper';
 import guid              from '../../../utils/guid';
 import * as AssetActions from '../../../actions/qbank/assets';
@@ -18,24 +19,19 @@ export class OeaEditor extends React.Component {
     bankId: React.PropTypes.string.isRequired,
     uploadScopeId: React.PropTypes.string.isRequired,
     uploadMedia: React.PropTypes.func.isRequired,
-    uploadedAssets: React.PropTypes.shape({}).isRequired,
-    fileIds: React.PropTypes.shape({}).isRequired,
+    uploadedAssets: React.PropTypes.shape({}),
+    fileIds: React.PropTypes.shape({}),
   };
 
   constructor() {
     super();
     this.state = {
       focused: false,
+      editor: null,
+      modalOpen: false,
+      mediaType: null,
+      mediaGuid: null,
     };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const assetPath = `uploadedAssets['${this.state.mediaGuid}']`;
-    if (!_.get(this.props, assetPath) && _.get(nextProps, assetPath)) {
-      const imageUrl = _.get(nextProps, `${assetPath}.assetContents[0].url`);
-      this.state.mediaCallback(imageUrl);
-      this.setState({ mediaCallback: null, mediaGuid: null });
-    }
   }
 
   onBlur(editorText, isChanged) {
@@ -76,7 +72,24 @@ export class OeaEditor extends React.Component {
     ));
   }
 
-  uploadMedia(file, mediaCallback) {
+  openModal(editor, type) {
+    this.setState({
+      editor,
+      modalOpen: true,
+      mediaType: type
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      editor: null,
+      modalOpen: false,
+      mediaType: null,
+      mediaGuid: null,
+    });
+  }
+
+  uploadMedia(file) {
     const mediaGuid = guid();
     this.props.uploadMedia(
       file,
@@ -85,14 +98,38 @@ export class OeaEditor extends React.Component {
       this.props.bankId
     );
     this.setState({
-      mediaGuid,
-      mediaCallback,
+      mediaGuid
     });
+  }
+
+  insertMedia(mediaUrl) {
+    if (!mediaUrl) return;
+
+    let editorContent = `<video><source src="${mediaUrl}" /></video>`;
+
+    switch (this.state.mediaType) {
+      case 'img':
+        editorContent = `<img src="${mediaUrl}" />`;
+        break;
+
+      case 'audio':
+      case 'video':
+        editorContent = `<${this.state.mediaType}><source src="${mediaUrl}" /></${this.state.mediaType}>`;
+        break;
+
+      default:
+        break;
+    }
+
+    this.state.editor.insertContent(editorContent);
+    this.closeModal();
   }
 
   render() {
     const active = this.state.focused ? 'is-focused' : 'no-border';
     const { textSize } = this.props;
+    const uploadedAsset = _.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0]`);
+
     return (
       <div className="au-c-input__contain">
         <div className={`au-c-text-input au-c-text-input--${textSize} au-c-wysiwyg ${active}`}>
@@ -101,9 +138,21 @@ export class OeaEditor extends React.Component {
             uploadMedia={(file, mediaCallback) => this.uploadMedia(file, mediaCallback)}
             onBlur={(editorText, isChanged) => this.onBlur(editorText, isChanged)}
             onFocus={() => this.setState({ focused: true })}
+            openModal={(editor, type) => this.openModal(editor, type)}
           />
         </div>
         <div className={`au-c-input__bottom ${active}`} />
+        <Modal
+          editor={this.state.editor}
+          overlayClassName="au-c-wysiwyg-modal-background"
+          className="au-c-wysiwyg-modal"
+          isOpen={this.state.modalOpen}
+          closeModal={() => this.closeModal()}
+          insertMedia={() => this.insertMedia(_.get(uploadedAsset, 'url'))}
+          mediaName={_.get(uploadedAsset, 'displayName.text')}
+          mediaType={this.state.mediaType}
+          uploadMedia={file => this.uploadMedia(file)}
+        />
       </div>
     );
   }
