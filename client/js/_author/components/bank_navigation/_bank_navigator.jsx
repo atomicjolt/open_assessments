@@ -11,7 +11,6 @@ function select(state) {
   const path = state.bankNavigation.location;
   const currentBankId = !_.isEmpty(path) ? _.last(path).id : null;
   let banks = state.banks;
-
   _.forEach(path, (folder) => {
     const currentBank = _.find(banks, { id: folder.id });
     banks = currentBank.childNodes;
@@ -57,14 +56,11 @@ export class BankNavigator extends React.Component {
     };
   }
 
-  componentWillMount() {
-    this.props.getBanks();
-  }
-
-  getBankChildren(bank) {
-    this.props.updatePath(bank.id, bank.displayName.text);
-    this.props.getAssessments(bank.id);
-    this.props.getItems(bank.id);
+  getBankChildren(bankId) {
+    const bank = _.find(this.props.banks, b => b.id === bankId);
+    bank ? this.props.updatePath(bankId, bank.displayName.text) : null;
+    this.props.getAssessments(bankId);
+    this.props.getItems(bankId);
   }
 
   sortBy(type) {
@@ -114,13 +110,14 @@ export class BankNavigator extends React.Component {
           createAssessment={createAssessment}
           currentBankId={currentBankId}
           updatePath={updatePath}
+          getBankChildren={bankId => this.getBankChildren(bankId)}
         />
         <BankList
           baseEmbedUrl={settings.baseEmbedUrl}
           banks={this.sortBanks()}
           getEmbedCode={(assessId, bankId) => { this.getEmbedCode(assessId, bankId); }}
           publishedBankId={settings.publishedBankId}
-          getBankChildren={bank => this.getBankChildren(bank)}
+          getBankChildren={bankId => this.getBankChildren(bankId)}
           sortBy={type => this.sortBy(type)}
           sortName={this.state.sortName}
           sortPublished={this.state.sortPublished}
