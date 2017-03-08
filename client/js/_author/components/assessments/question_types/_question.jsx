@@ -7,6 +7,7 @@ import QuestionText     from './question_common/text';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
 import ShortAnswer      from './short_answer';
+import DragAndDrop      from './drag_and_drop/_drag_and_drop';
 import types            from '../../../../constants/question_types';
 import languages        from '../../../../constants/language_types';
 import Preview          from './preview_question';
@@ -148,6 +149,13 @@ export default class Question extends React.Component {
       case types.shortAnswer:
         return (
           <ShortAnswer
+            updateItem={newProps => this.updateItem(newProps)}
+            item={this.props.item}
+          />
+        );
+      case types.dragAndDrop:
+        return (
+          <DragAndDrop
             updateItem={newProps => this.updateItem(newProps)}
             item={this.props.item}
           />
