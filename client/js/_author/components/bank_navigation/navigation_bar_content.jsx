@@ -21,6 +21,7 @@ export default function navigationBarContent(props) {
               {...folder}
               current={props.currentBankId === folder.id}
               updatePath={props.updatePath}
+              getBankChildren={props.getBankChildren}
             />
             )
           )

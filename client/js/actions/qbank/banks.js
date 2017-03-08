@@ -19,10 +19,11 @@ export function getBanks() {
   };
 }
 
-export function updatePath(id, name) {
+export function updatePath(id, name, back) {
   return {
     id,
     name,
+    back,
     type: Constants.UPDATE_PATH,
   };
 }

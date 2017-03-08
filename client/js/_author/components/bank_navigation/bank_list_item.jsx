@@ -20,7 +20,7 @@ export default function bankListItem(props) {
     if (isAssessment) {
       appHistory.push(`banks/${bank.bankId}/assessments/${bank.id}`);
     } else {
-      props.getBankChildren(bank);
+      props.getBankChildren(bank.id);
     }
   };
 

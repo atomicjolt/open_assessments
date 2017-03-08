@@ -27,18 +27,17 @@ export default class NavigationBarContent extends React.Component {
     return null;
   }
 
-  handlePreviewClick() {
-    const bankId = this.props.assessment.bankId;
-    const assessmentId = this.props.assessment.id;
-    hashHistory.push(`banks/${bankId}/assessments/${assessmentId}/preview`);
+  backButton(bankId) {
+    this.props.getBankChildren(bankId);
   }
 
   render() {
+    const { bankId, assessmentId } = this.props.assessment;
     return (
       <div className="au-c-header-bottom">
         <div className="au-c-header-bottom__left">
           <button
-            onClick={() => hashHistory.push('/')}
+            onClick={() => this.backButton(bankId)}
             className="au-c-btn au-c-btn--sm au-c-btn--outline au-c-btn--back"
           >
             <i className="material-icons">keyboard_arrow_left</i>
@@ -52,7 +51,7 @@ export default class NavigationBarContent extends React.Component {
             this.props.isPublished ?
               <button
                 className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"
-                onClick={() => this.handlePreviewClick()}
+                onClick={() => hashHistory.push(`banks/${bankId}/assessments/${assessmentId}/preview`)}
               >
                 <i className="material-icons">remove_red_eye</i>
               Preview Assessment
@@ -66,6 +65,7 @@ export default class NavigationBarContent extends React.Component {
 
 NavigationBarContent.propTypes = {
   editOrPublishAssessment: React.PropTypes.func.isRequired,
+  getBankChildren: React.PropTypes.func.isRequired,
   isPublished: React.PropTypes.bool.isRequired,
   items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
 };

@@ -2,6 +2,7 @@ import React                  from 'react';
 import { connect }            from 'react-redux';
 import _                      from 'lodash';
 
+import hashHistory            from '../../history';
 import { transformAssessment } from '../../selectors/assessment';
 import Heading                from  '../common/heading';
 import AssessmentForm         from './assessment_form';
@@ -14,10 +15,12 @@ function select(state, props) {
   const id = encodeURIComponent(props.params.id);
   const bankAssessments = state.assessments[bankId];
   const assessmentItemIds = state.assessmentItems[id];
+
   return {
     assessment: (bankAssessments && transformAssessment(bankAssessments[id])) || {},
     items: _.compact(_.at(state.items[bankId], assessmentItemIds)),
     settings: state.settings,
+    banks: state.banks,
     params: { // override react router because we want the escaped ids
       bankId,
       id,
@@ -42,6 +45,9 @@ export class EditAssessment extends React.Component {
       publishedBankId: React.PropTypes.string
     }),
     editOrPublishAssessment: React.PropTypes.func.isRequired,
+    updatePath: React.PropTypes.func.isRequired,
+    getItems: React.PropTypes.func.isRequired,
+    banks: React.PropTypes.shape({}).isRequired,
     deleteAssignedAssessment: React.PropTypes.func.isRequired,
     createAssessmentOffered: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
@@ -135,6 +141,26 @@ export class EditAssessment extends React.Component {
     this.updateItem(updateAttributes);
   }
 
+  flattenBanks(banks, flatBanks) {
+    _.forEach(banks, (bank) => {
+      flatBanks[bank.id] = bank;
+      if (!_.isEmpty(bank.childNodes)) {
+        return this.flattenBanks(bank.childNodes, flatBanks);
+      }
+    });
+    return flatBanks;
+  }
+
+  getBankChildren(bankId) {
+    let flatBanks = {};
+    const banks = this.flattenBanks(this.props.banks, flatBanks);
+
+    this.props.updatePath(bankId, banks[bankId].displayName.text, true);
+    this.props.getAssessments(bankId);
+    this.props.getItems(bankId);
+    hashHistory.push('/');
+  }
+
   render() {
     const { assessment, settings } = this.props;
     const isPublished =  assessment ? _.includes(assessment.assignedBankIds, settings.publishedBankId) : false;
@@ -147,6 +173,7 @@ export class EditAssessment extends React.Component {
           isPublished={isPublished}
           assessment={this.props.assessment}
           items={this.props.items}
+          getBankChildren={bankId => this.getBankChildren(bankId)}
         />
         <AssessmentForm
           publishedAndOffered={publishedAndOffered}
