@@ -126,6 +126,33 @@
         border: $border;
       }
     }
+    .mce-i-audio{
+      font-family: 'Material Icons';
+      font-size: 2rem;
+      width: auto;
+
+      &:before{
+        content: '\e050';
+      }
+    }
+    .mce-i-image{
+      font-family: 'Material Icons';
+      font-size: 2rem;
+      width: auto;
+
+      &:before{
+        content: '\e251';
+      }
+    }
+    .mce-i-video{
+      font-family: 'Material Icons';
+      font-size: 2rem;
+      width: auto;
+
+      &:before{
+        content: '\e04B';
+      }
+    }
   }
 
   .mce-flow-layout-item{
