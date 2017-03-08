@@ -49,9 +49,9 @@ export default function EditorUploadModal(props) {
 
       <div className="author--c-wysiwyg-modal__main">
         <div className="author--o-flex-center  author--u-mb-md">
-          <span className="author--c-wysiwyg-media__label">Source</span>
+          <span className="author--c-wysiwyg-media__label">File</span>
           <div className="author--c-wysiwyg-media__source-text" tabIndex="0">
-            {props.mediaUrl}
+            {props.mediaName}
           </div>
           <div className="author--c-input--file  author--u-ml-sm">
             <input
@@ -89,4 +89,5 @@ EditorUploadModal.propTypes = {
   closeModal: React.PropTypes.func.isRequired,
   mediaUrl: React.PropTypes.string,
   mediaType: React.PropTypes.string,
+  mediaName: React.PropTypes.string,
 };

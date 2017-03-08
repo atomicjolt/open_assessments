@@ -104,7 +104,7 @@ export class OeaEditor extends React.Component {
 
   render() {
     const active = this.state.focused ? 'is-focused' : '';
-
+    const uploadedAsset = _.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0]`)
     return (
       <div className="author--c-input__contain">
         <div className={`author--c-text-input author--c-text-input--medium author--c-wysiwyg ${active}`}>
@@ -123,7 +123,8 @@ export class OeaEditor extends React.Component {
           className="author--c-wysiwyg-modal"
           isOpen={this.state.modalOpen}
           closeModal={() => this.closeModal()}
-          mediaUrl={_.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0].url`)}
+          mediaUrl={_.get(uploadedAsset, `url`)}
+          mediaName={_.get(uploadedAsset, `displayName.text`)}
           mediaType={this.state.mediaType}
           uploadMedia={file => this.uploadMedia(file)}
         />

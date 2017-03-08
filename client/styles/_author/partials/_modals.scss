@@ -75,14 +75,13 @@
 }
 
 .author--c-wysiwyg-media__source-text{
-  height: 3rem;
+  @include truncate;
+  height: 2.5rem;
   border-bottom: $border;
   @include regular;
   font-size: 1.4rem;
   color: $text-color;
   width: 100%;
-  overflow: scroll;
-  white-space: nowrap;
 }
 
 .author--c-input--file{
