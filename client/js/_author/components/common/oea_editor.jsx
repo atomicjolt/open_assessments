@@ -102,6 +102,30 @@ export class OeaEditor extends React.Component {
     });
   }
 
+  insertMedia() {
+    const uploadedAsset = _.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0]`);
+    const mediaUrl = _.get(uploadedAsset, 'url');
+    if (!mediaUrl) return;
+
+    let editorContent;
+
+    switch (this.state.mediaType) {
+      case 'img':
+        editorContent = `<img src="${mediaUrl}" />`;
+        break;
+
+      case 'audio':
+      case 'video':
+        editorContent = `<${this.state.mediaType}><source src="${mediaUrl}" /></${this.state.mediaType}>`;
+        break;
+
+      default:
+        editorContent = `<video><source src="${mediaUrl}" /></video>`;
+    }
+
+    this.state.editor.insertContent(editorContent);
+  }
+
   render() {
     const active = this.state.focused ? 'is-focused' : '';
     const uploadedAsset = _.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0]`)
@@ -123,8 +147,8 @@ export class OeaEditor extends React.Component {
           className="author--c-wysiwyg-modal"
           isOpen={this.state.modalOpen}
           closeModal={() => this.closeModal()}
-          mediaUrl={_.get(uploadedAsset, `url`)}
-          mediaName={_.get(uploadedAsset, `displayName.text`)}
+          insertMedia={() => this.insertMedia()}
+          mediaName={_.get(uploadedAsset, 'displayName.text')}
           mediaType={this.state.mediaType}
           uploadMedia={file => this.uploadMedia(file)}
         />

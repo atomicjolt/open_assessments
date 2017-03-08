@@ -8,28 +8,6 @@ const tagNameMap = {
 };
 
 export default function EditorUploadModal(props) {
-  function insertMedia() {
-    if (!props.mediaUrl) return;
-
-    let editorContent;
-
-    switch (props.mediaType) {
-      case 'img':
-        editorContent = `<img src="${props.mediaUrl}" />`;
-        break;
-
-      case 'audio':
-      case 'video':
-        editorContent = `<${props.mediaType}><source src="${props.mediaUrl}" /></${props.mediaType}>`;
-        break;
-
-      default:
-        editorContent = `<video><source src="${props.mediaUrl}" /></video>`;
-    }
-
-    props.editor.insertContent(editorContent);
-  }
-
   return (
     <Modal
       overlayClassName="author--c-wysiwyg-modal-background"
@@ -74,7 +52,7 @@ export default function EditorUploadModal(props) {
           Cancel
         </button>
         <button
-          onClick={() => { insertMedia(); props.closeModal(); }}
+          onClick={() => { props.insertMedia(); props.closeModal(); }}
           className="author--c-btn author--c-btn--sm author--c-btn--maroon author--u-ml-sm"
         >
           OK
@@ -87,7 +65,7 @@ export default function EditorUploadModal(props) {
 EditorUploadModal.propTypes = {
   isOpen: React.PropTypes.bool,
   closeModal: React.PropTypes.func.isRequired,
-  mediaUrl: React.PropTypes.string,
   mediaType: React.PropTypes.string,
   mediaName: React.PropTypes.string,
+  insertMedia: React.PropTypes.string,
 };
