@@ -127,7 +127,7 @@ export class OeaEditor extends React.Component {
 
   render() {
     const active = this.state.focused ? 'is-focused' : '';
-    const uploadedAsset = _.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0]`)
+    const uploadedAsset = _.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0]`);
     return (
       <div className="author--c-input__contain">
         <div className={`author--c-text-input author--c-text-input--medium author--c-wysiwyg ${active}`}>
