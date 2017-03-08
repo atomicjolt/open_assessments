@@ -14,7 +14,7 @@ export default function settingsCheckbox(props) {
         />
         <label htmlFor={`check02_${props.id}`}>Maintain choice order</label>
       </div>
-      <div className="author--c-checkbox u-ml-md">
+      <div className="author--c-checkbox author--u-ml-md">
         <input
           type="checkbox"
           id={`check03_${props.id}`}
