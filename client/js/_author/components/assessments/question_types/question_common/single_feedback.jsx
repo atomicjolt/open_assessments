@@ -40,17 +40,16 @@ export default class SingleFeedback extends React.Component {
 
   render() {
     return (
-      <div className="author--c-input author--c-input-label--left author--c-feedback">
+      <div className="au-c-input au-c-input-label--left au-c-feedback">
         <label htmlFor="feedbackCorrect">{this.props.labelText}</label>
-        <div className="author--c-text-input--smaller">
-          <Editor
-            fileIds={_.get(this.props.feedback, 'fileIds')}
-            text={_.get(this.props.feedback, 'text')}
-            bankId={this.props.bankId}
-            uploadScopeId={this.editorScopeId}
-            onBlur={(text, fileIds) => this.updateItem(text, fileIds)}
-          />
-        </div>
+        <Editor
+          textSize="smaller"
+          fileIds={_.get(this.props.feedback, 'fileIds')}
+          text={_.get(this.props.feedback, 'text')}
+          bankId={this.props.bankId}
+          uploadScopeId={this.editorScopeId}
+          onBlur={(text, fileIds) => this.updateItem(text, fileIds)}
+        />
       </div>
     );
   }

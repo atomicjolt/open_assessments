@@ -16,7 +16,7 @@ export default class NavigationBarContent extends React.Component {
     if (!_.isEmpty(this.props.items)) {
       return (
         <button
-          className="author--c-btn author--c-btn--sm author--c-btn--green"
+          className="au-c-btn au-c-btn--sm au-c-btn--green"
           onClick={() => this.props.editOrPublishAssessment(this.props.isPublished)}
         >
           <Icon type={this.props.isPublished ? 'Published' : 'Publish'} />
@@ -35,23 +35,23 @@ export default class NavigationBarContent extends React.Component {
 
   render() {
     return (
-      <div className="author--c-header-bottom">
-        <div className="author--c-header-bottom__left">
+      <div className="au-c-header-bottom">
+        <div className="au-c-header-bottom__left">
           <button
             onClick={() => hashHistory.push('/')}
-            className="author--c-btn author--c-btn--sm author--c-btn--outline author--c-btn--back"
+            className="au-c-btn au-c-btn--sm au-c-btn--outline au-c-btn--back"
           >
             <i className="material-icons">keyboard_arrow_left</i>
             Back
           </button>
         </div>
 
-        <div className="author--c-header-bottom__right">
+        <div className="au-c-header-bottom__right">
           { this.publishButton() }
           {
             this.props.isPublished ?
               <button
-                className="author--c-btn author--c-btn--sm author--c-btn--maroon author--u-ml-md"
+                className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"
                 onClick={() => this.handlePreviewClick()}
               >
                 <i className="material-icons">remove_red_eye</i>

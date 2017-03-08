@@ -2,8 +2,8 @@ import React      from 'react';
 
 export default function settingsCheckbox(props) {
   return (
-    <div className="author--o-right">
-      <div className="author--c-checkbox author--u-ml-md">
+    <div className="au-o-right">
+      <div className="au-c-checkbox au-u-ml-md">
         <input
           type="checkbox"
           id={`check02_${props.id}`}
@@ -14,7 +14,7 @@ export default function settingsCheckbox(props) {
         />
         <label htmlFor={`check02_${props.id}`}>Maintain choice order</label>
       </div>
-      <div className="author--c-checkbox u-ml-md">
+      <div className="au-c-checkbox u-ml-md">
         <input
           type="checkbox"
           id={`check03_${props.id}`}
@@ -25,7 +25,7 @@ export default function settingsCheckbox(props) {
         />
         <label htmlFor={`check03_${props.id}`}>Multiple answer</label>
       </div>
-      <div className="author--c-checkbox author--u-ml-md">
+      <div className="au-c-checkbox au-u-ml-md">
         <input
           type="checkbox"
           id={`check04_${props.id}`}

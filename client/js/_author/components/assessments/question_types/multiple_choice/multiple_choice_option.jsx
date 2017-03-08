@@ -7,12 +7,13 @@ import AnswerIcons  from './answer_icons';
 import Feedback     from './option_feedback';
 
 export default function multipleChoiceOptions(props) {
-  const hideFeedback = props.itemType !== types.multipleChoice;
+  const hideFeedback = (props.itemType !== types.multipleChoice) ||
+    !(props.isActive || props.feedback);
 
   if (props.id === 'new') {
     return (
-      <div className={`author--c-answer ${props.isActive ? 'is-active' : ''}`}>
-        <div className="author--c-input">
+      <div className={`au-c-answer ${props.isActive ? 'is-active' : ''}`}>
+        <div className="au-c-input">
           <Loader />
         </div>
       </div>
@@ -20,8 +21,12 @@ export default function multipleChoiceOptions(props) {
   }
 
   return (
-    <div className={`author--c-answer ${props.isActive ? 'is-active' : ''}`}>
-      <div className="author--c-input">
+    <div
+      onFocus={() => props.setActiveChoice(props.id)}
+      onClick={() => props.setActiveChoice(props.id)}
+      onBlur={() => props.setActiveChoice(null)}
+      className={`au-c-answer ${props.isActive ? 'is-active' : ''}`}>
+      <div className="au-c-input">
         <Selector
           itemType={props.itemType}
           id={props.id}
@@ -30,16 +35,15 @@ export default function multipleChoiceOptions(props) {
           updateChoice={props.updateChoice}
         />
         <label htmlFor="option1" />
-        <div className="author--c-text-input--small">
-          <Editor
-            isActive={props.isActive}
-            fileIds={props.questionFileIds}
-            text={props.text}
-            bankId={props.bankId}
-            uploadScopeId={props.itemId}
-            onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
-          />
-        </div>
+        <Editor
+          textSize="small"
+          isActive={props.isActive}
+          fileIds={props.questionFileIds}
+          text={props.text}
+          bankId={props.bankId}
+          uploadScopeId={props.itemId}
+          onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
+        />
 
         <AnswerIcons
           first={props.first}

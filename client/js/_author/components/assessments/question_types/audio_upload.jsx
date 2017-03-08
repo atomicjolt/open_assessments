@@ -23,7 +23,7 @@ export default class AudioUpload extends React.Component {
 
   static rangeWarning() {
     return (
-      <span className="author--c-inline-error">Please enter a positive number under 240</span>
+      <span className="au-c-inline-error">Please enter a positive number under 240</span>
     );
   }
 
@@ -72,14 +72,14 @@ export default class AudioUpload extends React.Component {
   render() {
     return (
       <div>
-        <div className="author--c-question__answers author--o-row" role="radiogroup">
-          <div className="author--c-file-upload__audio-settings is-active">
+        <div className="au-c-question__answers au-o-row" role="radiogroup">
+          <div className="au-c-file-upload__audio-settings is-active">
             <span>Audio record limit</span>
-            <div className="author--c-input author--c-input--inline">
+            <div className="au-c-input au-c-input--inline">
               <label htmlFor="audio-limit" />
-              <div className="author--c-input__contain">
+              <div className="au-c-input__contain">
                 <input
-                  className="author--c-text-input author--c-text-input--smaller"
+                  className="au-c-text-input au-c-text-input--smaller"
                   id="audio-limit"
                   type="text"
                   maxLength="3"
@@ -88,7 +88,7 @@ export default class AudioUpload extends React.Component {
                   onBlur={e => this.handleBlur(e)}
                 />
                 <div
-                  className={`author--c-input__bottom ${this.state.displayWarning ? 'has-error' : ''}`}
+                  className={`au-c-input__bottom ${this.state.displayWarning ? 'has-error' : ''}`}
                 />
               </div>
             </div>
@@ -96,7 +96,7 @@ export default class AudioUpload extends React.Component {
             { this.state.displayWarning ? AudioUpload.rangeWarning() : null }
           </div>
         </div>
-        <div className="author--c-question__feedback">
+        <div className="au-c-question__feedback">
           <Feedback
             feedbackType="correctFeedback"
             feedback={_.get(this.props.item, 'question.correctFeedback')}

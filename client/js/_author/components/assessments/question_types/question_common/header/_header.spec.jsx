@@ -20,7 +20,7 @@ describe('header component', () => {
   it('displays the index number + 1', () => {
     const questionNumber = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'author--c-question__number',
+      'au-c-question__number',
     );
     expect(questionNumber.textContent).toEqual('Question 8');
   });
@@ -30,7 +30,7 @@ describe('header component', () => {
     result = TestUtils.renderIntoDocument(<Stub><Header {...props} /></Stub>);
     const questionType = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'author--c-question__type',
+      'au-c-question__type',
     );
     expect(questionType.textContent).toContain('Multiple Choice');
   });
@@ -38,11 +38,11 @@ describe('header component', () => {
   it('renders DefaultHeader when props.reorderActive is false', () => {
     const defaultHeader = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'author--c-question-icons',
+      'au-c-question-icons',
     );
     const reorderHeader = TestUtils.scryRenderedDOMComponentsWithClass(
       result,
-      'author--c-question-icons--reorder',
+      'au-c-question-icons--reorder',
     );
     expect(defaultHeader).toBeDefined();
     expect(reorderHeader).toEqual([]);
@@ -53,11 +53,11 @@ describe('header component', () => {
     result = TestUtils.renderIntoDocument(<Stub><Header {...props} /></Stub>);
     const defaultHeader = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'author--c-question-icons',
+      'au-c-question-icons',
     );
     const reorderHeader = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'author--c-question-icons--reorder',
+      'au-c-question-icons--reorder',
     );
     expect(defaultHeader).toBeDefined();
     expect(reorderHeader).toBeDefined();

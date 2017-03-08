@@ -1,4 +1,4 @@
-.author--c-btn{
+.au-c-btn{
   border: none;
   background: none;
   @include bold;
@@ -14,7 +14,7 @@
   }
 }
 
-.author--c-btn--sm{
+.au-c-btn--sm{
   height: 3rem;
   padding: 0 2rem;
 
@@ -25,7 +25,7 @@
   }
 }
 
-.author--c-btn--md{
+.au-c-btn--md{
   height: 4rem;
   padding: 0 2rem;
 
@@ -36,7 +36,7 @@
   }
 }
 
-.author--c-btn--square{
+.au-c-btn--square{
   height: 3rem;
   width: 3rem;
   text-align: center;
@@ -46,11 +46,11 @@
   }
 }
 
-.author--c-btn--md{
+.au-c-btn--md{
 
 }
 
-.author--c-btn--outline{
+.au-c-btn--outline{
   border: 0.2rem solid $maroon;
   color: $maroon;
   @include transition(all 0.1s ease);
@@ -61,7 +61,7 @@
   }
 }
 
-  .author--c-btn--back{
+  .au-c-btn--back{
     padding: 0 1.5rem;
 
     i{
@@ -70,7 +70,7 @@
     }
   }
 
-.author--c-btn--green{
+.au-c-btn--green{
   border: 0.2rem solid $green;
   background-color: $green;
   color: $white;
@@ -82,7 +82,7 @@
   }
 }
 
-.author--c-btn--gray{
+.au-c-btn--gray{
   border: 0.2rem solid $gray2;
   background-color: $gray2;
   color: $gray8;
@@ -95,7 +95,7 @@
   }
 }
 
-.author--c-btn--white{
+.au-c-btn--white{
   border: 0.2rem solid $white;
   background-color: $white;
   color: $blue;
@@ -107,7 +107,7 @@
   }
 }
 
-.author--c-btn--maroon{
+.au-c-btn--maroon{
   border: 0.2rem solid $maroon;
   background-color: $maroon;
   color: $white;
@@ -119,12 +119,12 @@
   }
 }
 
-  .author--c-btn--new{
+  .au-c-btn--new{
     min-width: 15rem;
     @include justify-content(center);
   }
 
-.author--c-btn--breadcrumb{
+.au-c-btn--breadcrumb{
   text-transform: none;
   font-size: 1.6rem;
   @include regular;
@@ -150,7 +150,7 @@
   }
 }
 
-.author--c-btn--table{
+.au-c-btn--table{
   background-color: $purple2;
   margin-left: 1rem;
   color: $white;

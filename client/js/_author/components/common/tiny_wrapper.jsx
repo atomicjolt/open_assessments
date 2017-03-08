@@ -86,7 +86,7 @@ export default class TinyWrapper extends React.Component {
           onFocus={this.props.onFocus}
         />
         <input
-          className="author--c-image-uploader author--c-file"
+          className="au-c-image-uploader au-c-file"
           type="file"
           ref={ref => (this.filePicker = ref)}
         />

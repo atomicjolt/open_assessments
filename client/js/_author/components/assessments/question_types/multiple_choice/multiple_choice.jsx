@@ -57,7 +57,7 @@ export default class MultipleChoice extends React.Component {
 
     if (type !== types.multipleChoice) {
       return (
-        <div className="author--c-question__feedback">
+        <div className="au-c-question__feedback">
           <Feedback
             updateItem={this.props.updateItem}
             feedbackType="correctFeedback"
@@ -88,10 +88,14 @@ export default class MultipleChoice extends React.Component {
     return newChoices;
   }
 
+  selectChoice = _.debounce((choiceId) => {
+    this.setState({ activeChoice: choiceId });
+  }, 1);
+
   render() {
     const { question, id, type } = this.props.item;
     return (
-      <div className="author--c-question__answers author--c-question__answers--maintain">
+      <div className="au-c-question__answers au-c-question__answers--maintain">
         {
           _.map(_.orderBy(question.choices, 'order'), choice => (
             <Option
@@ -107,10 +111,11 @@ export default class MultipleChoice extends React.Component {
               moveDown={() => this.moveChoice(choice)}
               first={choice.order === 0}
               last={question ? choice.order === _.size(question.choices) - 1 : true}
-              isActive={this.props.isActive}
               bankId={this.props.item.bankId}
               itemId={this.props.item.id}
               questionFileIds={question.fileIds}
+              setActiveChoice={choiceId => this.selectChoice(choiceId)}
+              isActive={this.props.isActive && choice.id === this.state.activeChoice}
             />
           ))
         }
@@ -119,7 +124,7 @@ export default class MultipleChoice extends React.Component {
             updateChoice={() => this.addNewChoice(id)}
           /> : null
         }
-        <div className="author--c-question__feedback">
+        <div className="au-c-question__feedback">
           { this.getFeedback() }
         </div>
       </div>

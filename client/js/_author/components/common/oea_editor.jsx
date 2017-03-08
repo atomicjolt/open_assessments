@@ -92,10 +92,10 @@ export class OeaEditor extends React.Component {
 
   render() {
     const active = this.state.focused ? 'is-focused' : 'no-border';
-
+    const { textSize } = this.props;
     return (
-      <div className="author--c-input__contain">
-        <div className={`author--c-text-input author--c-wysiwyg ${active}`}>
+      <div className="au-c-input__contain">
+        <div className={`au-c-text-input au-c-text-input--${textSize} au-c-wysiwyg ${active}`}>
           <TinyWrapper
             {...this.props}
             uploadMedia={(file, mediaCallback) => this.uploadMedia(file, mediaCallback)}
@@ -103,7 +103,7 @@ export class OeaEditor extends React.Component {
             onFocus={() => this.setState({ focused: true })}
           />
         </div>
-        <div className={`author--c-input__bottom ${active}`} />
+        <div className={`au-c-input__bottom ${active}`} />
       </div>
     );
   }
