@@ -9,6 +9,7 @@ describe('New Assessments View', () => {
   let props;
   const isPublished = true;
   let isEditOrPublishAssessment = false;
+  let bankerId;
 
   beforeEach(() => {
     props = {
@@ -16,15 +17,13 @@ describe('New Assessments View', () => {
       editOrPublishAssessment: () => isEditOrPublishAssessment = !isEditOrPublishAssessment,
       isPublished,
       items: ['stuff', 'boom'],
+      assessment: {
+        bankId: 'id12345',
+        assessmentId: 'assessmentId46587'
+      },
+      getBankChildren: (id) => { bankerId = id }
     };
     result = TestUtils.renderIntoDocument(<Stub><AssessmentView {...props} /></Stub>);
-  });
-
-  it('calls button onClick for hashHistory', () => {
-    const buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
-    spyOn(hashHistory, 'push');
-    TestUtils.Simulate.click(buttons[0]);
-    expect(hashHistory.push).toHaveBeenCalledWith('/');
   });
 
   it('determines amount of buttons from number of items', () => {
