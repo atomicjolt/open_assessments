@@ -35,7 +35,6 @@ export class OeaEditor extends React.Component {
   }
 
   onBlur(editorText, isChanged) {
-    console.log("here");
     this.setState({ focused: false });
     if (!isChanged) return;
 
