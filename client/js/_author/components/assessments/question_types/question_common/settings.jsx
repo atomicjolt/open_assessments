@@ -1,48 +1,16 @@
-import React      from 'react';
-import types      from '../../../../../constants/question_types';
-import languages  from '../../../../../constants/language_types';
+import React            from 'react';
+import _                from 'lodash';
+import types            from '../../../../../constants/question_types';
+import languages        from '../../../../../constants/language_types';
+import SettingsCheckbox from './settings_checkbox';
 
 export default function questionSettings(props) {
-  const extraOptionTypes = [types.multipleChoice, types.reflection, types.multipleReflection, types.multipleAnswer];
-  function checkboxOptions() {
-    return (
-      <div className="author--o-right">
-        <div className="author--c-checkbox author--u-ml-md">
-          <input
-            type="checkbox"
-            id={`check02_${props.id}`}
-            name="check"
-            tabIndex="0"
-            onChange={e => props.updateItem({ question: { shuffle: !e.target.checked } })}
-            checked={!props.shuffle}
-          />
-          <label htmlFor={`check02_${props.id}`}>Maintain choice order</label>
-        </div>
-        <div className="author--c-checkbox author--u-ml-md">
-          <input
-            type="checkbox"
-            id={`check03_${props.id}`}
-            name="check"
-            tabIndex="0"
-            onChange={() => props.makeMultipleAnswer()}
-            checked={props.multipleAnswer ? 'checked' : null}
-          />
-          <label htmlFor={`check03_${props.id}`}>Multiple answer</label>
-        </div>
-        <div className="author--c-checkbox author--u-ml-md">
-          <input
-            type="checkbox"
-            id={`check04_${props.id}`}
-            name="check"
-            tabIndex="0"
-            onChange={e => props.makeReflection(e.target.checked)}
-            checked={props.reflection ? 'checked' : null}
-          />
-          <label htmlFor={`check04_${props.id}`}>Reflection</label>
-        </div>
-      </div>
-    );
-  }
+  const extraOptionTypes = [
+    types.multipleChoice,
+    types.reflection,
+    types.multipleReflection,
+    types.multipleAnswer
+  ];
 
   return (
     <div className="author--c-question-settings">
@@ -76,7 +44,7 @@ export default function questionSettings(props) {
           </select>
         </div>
       </div>
-      {_.includes(extraOptionTypes, props.type) ? checkboxOptions() : null}
+      {_.includes(extraOptionTypes, props.type) ? <SettingsCheckbox {...props} /> : null}
     </div>
   );
 }
@@ -88,7 +56,6 @@ questionSettings.propTypes = {
   language: React.PropTypes.string,
   updateItem: React.PropTypes.func.isRequired,
   makeReflection: React.PropTypes.func.isRequired,
-  maintainOrder: React.PropTypes.bool,
   multipleAnswer: React.PropTypes.bool,
   reflection: React.PropTypes.bool,
 };
