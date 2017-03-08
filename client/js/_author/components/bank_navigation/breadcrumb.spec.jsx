@@ -15,7 +15,8 @@ describe('breadcrumbs', () => {
       id: '123',
       name: 'TestCrumbs',
       current: false,
-      updatePath: () => { updater = true; }
+      updatePath: () => { updater = true; },
+      getBankChildren: () => {}
     };
 
     result = TestUtils.renderIntoDocument(<Stub><Breadcrumbs {...props} /></Stub>);
