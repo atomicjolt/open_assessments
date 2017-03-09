@@ -66,4 +66,19 @@ describe('editor upload modal', () => {
     result = shallow(<Modal {...props} />);
     expect(result.find('dotLoader').length).toBe(1);
   });
+
+  it('displays the error when it is loading and there is an error', () => {
+    props.inProgress = true;
+    props.error = 'error message';
+    result = shallow(<Modal {...props} />);
+    expect(result.find('.au-c-error-text').length).toBe(1);
+    expect(result.find('.au-c-error-text').text()).toContain('error message');
+  });
+
+  it('displays the error when it is not loading and there is an error', () => {
+    props.error = 'error message';
+    result = shallow(<Modal {...props} />);
+    expect(result.find('.au-c-error-text').length).toBe(1);
+    expect(result.find('.au-c-error-text').text()).toContain('error message');
+  });
 });

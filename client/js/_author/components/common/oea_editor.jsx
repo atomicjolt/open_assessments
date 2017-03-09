@@ -108,8 +108,10 @@ export class OeaEditor extends React.Component {
   }
 
   insertMedia(mediaUrl) {
-    this.closeModal();
-    if (!mediaUrl) return;
+    if (!mediaUrl) {
+      this.closeModal();
+      return;
+    }
 
     let editorContent = `<video><source src="${mediaUrl}" /></video>`;
 
@@ -128,6 +130,7 @@ export class OeaEditor extends React.Component {
     }
 
     this.state.editor.insertContent(editorContent);
+    this.closeModal();
   }
 
   render() {
