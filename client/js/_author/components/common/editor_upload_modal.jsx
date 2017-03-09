@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
+import Loader from './dot_loader';
 
 const tagNameMap = {
   audio: 'Audio',
@@ -29,7 +30,7 @@ export default function EditorUploadModal(props) {
         <div className="au-o-flex-center  au-u-mb-md">
           <span className="au-c-wysiwyg-media__label">File</span>
           <div className="au-c-wysiwyg-media__source-text" tabIndex="0">
-            {props.mediaName}
+            {props.inProgress ? <Loader /> : props.mediaName}
           </div>
           <div className="au-c-input--file  au-u-ml-sm">
             <input
@@ -69,4 +70,5 @@ EditorUploadModal.propTypes = {
   mediaName: React.PropTypes.string,
   insertMedia: React.PropTypes.func.isRequired,
   uploadMedia: React.PropTypes.func,
+  inProgress: React.PropTypes.bool,
 };

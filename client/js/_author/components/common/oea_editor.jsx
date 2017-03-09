@@ -150,6 +150,7 @@ export class OeaEditor extends React.Component {
           mediaName={_.get(uploadedAsset, 'displayName.text')}
           mediaType={this.state.mediaType}
           uploadMedia={file => this.uploadMedia(file)}
+          inProgress={this.state.mediaGuid && !_.get(uploadedAsset, 'displayName.text')}
         />
       </div>
     );
