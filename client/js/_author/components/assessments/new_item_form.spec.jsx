@@ -62,16 +62,4 @@ describe('New Item Form', () => {
     TestUtils.Simulate.click(button);
     expect(called.type).toBe('item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU');
   });
-
-  it('sets language on new assessments', () => {
-    const input = TestUtils.scryRenderedDOMComponentsWithTag(result, 'select')[1];
-    const button = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'au-c-btn--maroon',
-    );
-    TestUtils.Simulate.change(input, { target: { value: 'french' } });
-    TestUtils.Simulate.click(button);
-    expect(called.language).toBe('french');
-  });
-
 });
