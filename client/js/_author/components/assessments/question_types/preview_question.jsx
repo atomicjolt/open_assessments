@@ -93,12 +93,12 @@ export default class PreviewQuestion extends React.Component {
           selectAnswer={id => this.selectAnswer(id)}
           localizedStrings={localizedStrings}
           sendSize={() => {}}
-          videoPlay={false}
-          videoPause={false}
-          audioPlay={false}
-          audioPause={false}
-          audioRecordStart={false}
-          audioRecordStop={false}
+          videoPlay={() => {}}
+          videoPause={() => {}}
+          audioPlay={() => {}}
+          audioPause={() => {}}
+          audioRecordStart={() => {}}
+          audioRecordStop={() => {}}
         />
       </div>
     );
