@@ -8,248 +8,266 @@
   @include align-items(stretch);
 }
 
-  .c-answer-container{
-    @include flex(0 0 49%);
-    @include answer-styling;
-    border-radius: $radius;
-    min-height: 3.5rem;
-    position: relative;
-    padding: 0.8rem 0.8rem 0;
-    margin-bottom: 1.5rem;
+.c-answer-container{
+  @include flex(0 0 49%);
+  @include answer-styling;
+  border-radius: $radius;
+  min-height: 3.5rem;
+  position: relative;
+  padding: 0.8rem 0.8rem 0;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+  @include transition(all 0.1s ease);
+
+  &:hover{
+    @include answer-hover;
+  }
+
+  &.is-clicked{
+    @include answer-clicked;
+
+    .c-answer-container__content{
+      p{
+        color: $answer-text-clicked;
+      }
+    }
+
+    .c-feedback{
+      background: $answer-result-background-clicked;
+    }
+  }
+}
+
+.c-answer-container__radio{
+  width: 2rem;
+  position: absolute;
+  left: 0.8rem;
+  top: 0.8rem;
+}
+
+.c-radio-button{
+
+  .c-radio-button__border{
+    display: inline-block;
     cursor: pointer;
-    @include transition(all 0.1s ease);
-
-    &:hover{
-      @include answer-hover;
-    }
-
-    &.is-clicked{
-      @include answer-clicked;
-
-      .c-answer-container__content{
-        p{
-          color: $answer-text-clicked;
-        }
-      }
-
-      .c-feedback{
-        background: $answer-result-background-clicked;
-      }
-    }
+    position: relative;
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 50%;
+    border: 0.2rem solid $radio-color;
+    margin: 0.2rem;
   }
 
-  .c-answer-container__radio{
-    width: 2rem;
+  input[type="radio"]:checked + .c-radio-button__border:before{
+    content: '';
+    width: .7rem;
+    height: .7rem;
+    background: $radio-selected;
+    border-radius: 50%;
     position: absolute;
-    left: 0.8rem;
-    top: 0.8rem;
+    top: 0.2rem;
+    left: 0.2rem;
   }
 
-  .c-radio-button{
-
-    .c-radio-button__border{
-      display: inline-block;
-      cursor: pointer;
-      position: relative;
-      height: 1.5rem;
-      width: 1.5rem;
-      border-radius: 50%;
-      border: 0.2rem solid $radio-color;
-      margin: 0.2rem;
-    }
-
-    input[type="radio"]:checked + .c-radio-button__border:before{
-      content: '';
-      width: .7rem;
-      height: .7rem;
-      background: $radio-selected;
-      border-radius: 50%;
-      position: absolute;
-      top: 0.2rem;
-      left: 0.2rem;
-    }
-
-    input[type="radio"]:checked + .c-radio-button__border{
-      border-color: $radio-selected;
-    }
-
-    input{
-      display: none;
-      margin: 0;
-      height: 0.01rem;
-      width: 0.01rem;
-    }
+  input[type="radio"]:checked + .c-radio-button__border{
+    border-color: $radio-selected;
   }
 
-  .c-checkbox{
+  input{
+    display: none;
+    margin: 0;
+    height: 0.01rem;
+    width: 0.01rem;
+  }
+}
 
-    .c-checkbox__border{
-      display: inline-block;
-      cursor: pointer;
-      position: relative;
-      height: 1.5rem;
-      width: 1.5rem;
-      border-radius: 0.3rem;
-      border: 0.2rem solid $radio-color;
-      margin: 0.2rem;
-    }
+.c-checkbox{
 
-    input[type="checkbox"]:checked + .c-checkbox__border:before{
-      content: '';
-      width: 0.3rem;
-      height: 0.8rem;
-      border: solid $primary;
-      border-width: 0 0.2rem 0.2rem 0;
-      position: absolute;
-      transform: rotate(45deg);
-      top: 0;
-      left: 0.3rem;
-    }
-
-    input[type="checkbox"]:checked + .c-checkbox__border{
-      border-color: $radio-selected;
-      background: $radio-selected;
-    }
-
-    input{
-      display: none;
-      margin: 0;
-      height: 0.01rem;
-      width: 0.01rem;
-    }
+  .c-checkbox__border{
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 0.3rem;
+    border: 0.2rem solid $radio-color;
+    margin: 0.2rem;
   }
 
-  .c-answer-container__content{
+  input[type="checkbox"]:checked + .c-checkbox__border:before{
+    content: '';
+    width: 0.3rem;
+    height: 0.8rem;
+    border: solid $primary;
+    border-width: 0 0.2rem 0.2rem 0;
+    position: absolute;
+    transform: rotate(45deg);
+    top: 0;
+    left: 0.3rem;
+  }
+
+  input[type="checkbox"]:checked + .c-checkbox__border{
+    border-color: $radio-selected;
+    background: $radio-selected;
+  }
+
+  input{
+    display: none;
+    margin: 0;
+    height: 0.01rem;
+    width: 0.01rem;
+  }
+}
+
+.c-answer-container__content{
+  width: 100%;
+  padding-left: 3rem;
+  @include regular;
+  font-size: 1.4rem;
+  color: $answer-text;
+
+  & > * {
+    margin-bottom: 1rem;
+  }
+
+  img{
+    display: inline-block;
+    max-width: 20rem;
+  }
+
+  audio{
     width: 100%;
-    padding-left: 3rem;
-    @include regular;
-    font-size: 1.4rem;
-    color: $answer-text;
+  }
+}
 
-    & > * {
-      margin-bottom: 1rem;
-    }
+.c-record{
+  padding: 2rem 3rem 1rem;
+  @include display-flex;
+  @include align-items(center);
+}
 
-    img{
-      display: inline-block;
-      max-width: 20rem;
-    }
+.c-audio-holder{
+    padding: .5rem 1.14rem .65rem 0;
+    @include flex(1);
+    margin-left: 1rem;
 
     audio{
       width: 100%;
     }
+}
+
+.c-audio-timer{
+  padding: .08rem 1.14rem .1rem 0;
+  color: #5a5a5a;
+  @include light;
+  font-size: 2.2rem;
+
+  small{
+    @include regular;
+    font-size: 1.3rem;
   }
+}
 
-  .c-record{
-    padding: 2rem 3rem 1rem;
-    @include display-flex;
-    @include align-items(center);
+.c-btn--record{
+  border-color: $incorrect;
+  width: 10.5rem;
+  @include transition(all 0.1s ease);
 
-    audio{
-      @include flex(1);
-      margin-left: 1rem;
-    }
-  }
-
-  .c-btn--record{
-    border-color: $incorrect;
-    width: 10.5rem;
-    @include transition(all 0.1s ease);
-
-    &:hover{
-      background: $incorrect;
-
-      span{
-        color: $white;
-        &:before{
-          background: $white;
-        }
-      }
-    }
+  &:hover{
+    background: $incorrect;
 
     span{
-      padding-left: 1.7rem;
-      color: $incorrect;
-      position: relative;
-      @include transition(all 0.1s ease);
-
+      color: $white;
       &:before{
-        content: '';
-        position: absolute;
-        left: -0.5rem;
-        top: 0.9rem;
-        width: 1.2rem;
-        height: 1.2rem;
-        border-radius: 50%;
-        background: $incorrect;
+        background: $white;
       }
     }
+  }
 
-    &.c-btn--stop{
-      span{
-        color: $white;
-        &:before{
-          background: $white;
-        }
-      }
+  span{
+    padding-left: 1.7rem;
+    color: $incorrect;
+    position: relative;
+    @include transition(all 0.1s ease);
+
+    &:before{
+      content: '';
+      position: absolute;
+      left: -0.5rem;
+      top: 0.9rem;
+      width: 1.2rem;
+      height: 1.2rem;
+      border-radius: 50%;
       background: $incorrect;
-      span:before{
-        animation: blink 2s linear infinite;
-        -webkit-animation: blink 2s linear infinite;
+    }
+  }
+
+  &.c-btn--stop{
+    span{
+      color: $white;
+      &:before{
+        background: $white;
       }
     }
-    &.c-btn--stop:active{
-      background: darken($incorrect, 15%);
-      border-color: darken($incorrect, 15%);
+    background: $incorrect;
+    span:before{
+      animation: blink 2s linear infinite;
+      -webkit-animation: blink 2s linear infinite;
     }
   }
-
-  @keyframes blink {
-    0%{
-      opacity: 1;
-    }
-    50%{
-      opacity: 0;
-    }
-    100%{
-      opacity: 1;
-    }
+  &.c-btn--stop:active{
+    background: darken($incorrect, 15%);
+    border-color: darken($incorrect, 15%);
   }
+}
 
-  .c-text-answer{
-    padding: 2rem 3rem 1rem;
-
-    textarea{
-      border: 0.1rem solid $light-gray;
-      border-radius: $radius;
-      // min-height: 10rem;
-      width: 100%;
-      resize: none;
-      padding: 0.5rem 1rem;
-      @include regular;
-      font-size: 1.4rem;
-      color: $text-color;
-    }
+@keyframes blink {
+  0%{
+    opacity: 1;
   }
+  50%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+.c-text-answer{
+  padding: 2rem 3rem 1rem;
+
+  textarea{
+    border: 0.1rem solid $light-gray;
+    border-radius: $radius;
+    // min-height: 10rem;
+    width: 100%;
+    resize: none;
+    padding: 0.5rem 1rem;
+    @include regular;
+    font-size: 1.4rem;
+    color: $text-color;
+  }
+}
 
 .c-file-upload{
    margin: 1rem 0;
-   display: inline-block;
    padding: 0 1.5rem;
-   height: 3.5rem;
-   border-radius: $radius;
-   border-width: 0.2rem;
-   border-style: solid;
-   text-transform: uppercase;
-   @include bold;
-   font-size: 1.4rem;
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
    position: relative;
+   border-radius: $radius;
+   border: 0.2rem solid $primary;
+   @include regular;
+   font-size: 1.4rem;
+   line-height: 1.5rem;
    @include center(horizontal);
    background: $primary;
    color: $white;
-   border-color: $primary;
    cursor: pointer;
    @include transition(all 0.1s ease);
+   width: 60vw;
 
  &:hover{
    background: $white;
@@ -257,18 +275,34 @@
  }
 
  span{
-   display: inline-block;
-   height: 100%;
-   line-height: 3rem;
+  padding-top: 0.15rem;
+   @include bold;
+   text-transform: uppercase;
    @include transition(all 0.1s ease);
  }
 
  input[type="file"]{
    width: 0.1px;
-     height: 0.1px;
-     opacity: 0;
-     overflow: hidden;
-     position: absolute;
-     z-index: -1;
+   height:0.1px;
+   opacity: 0;
+   overflow: hidden;
+   position: absolute;
+   z-index: -1;
  }
+
+  input[type="text"]{
+    min-height: 3.5rem;
+    overflow: hidden;
+    position: relative;
+    left: 1.5rem;
+    padding: 0.25rem 1rem;
+    border: none;
+    border-left: 0.25rem solid $primary;
+    color: $primary;
+    text-overflow: ellipsis;
+    width: 50%;
+    @include transition(all 0.1s ease);
+  }
 }
+
+
