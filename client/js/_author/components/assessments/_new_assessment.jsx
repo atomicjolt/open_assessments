@@ -52,6 +52,10 @@ export class NewAssessment extends React.Component {
         <Heading
           view="assessments"
           publishAssessment={this.props.publishAssessment}
+          isPublished={false}
+          assessment={{ bankId: this.props.params.id, assessmentId: null }}
+          items={[]}
+          getBankChildren={{}}
         />
         <AssessmentForm
           updateAssessment={assessment => this.createAssessment(assessment)}

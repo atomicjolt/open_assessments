@@ -17,7 +17,7 @@ describe('Add Question Button', () => {
   });
 
   it('adds a new item', () => {
-    const button = TestUtils.findRenderedDOMComponentWithClass(result, 'author--c-question-add__button');
+    const button = TestUtils.findRenderedDOMComponentWithClass(result, 'au-c-question-add__button');
     TestUtils.Simulate.click(button);
     expect(called).toBeTruthy();
   });

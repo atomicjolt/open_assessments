@@ -46,16 +46,18 @@ function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers, corr
   let correctAnswer = {
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.rightAnswer }), 'id'),
     genusTypeId: genusTypes.answer.rightAnswer,
-    feedback: correctFeedback,
+    feedback: _.get(correctFeedback, 'text'),
     type: genusTypes.answer.multipleAnswer,
     choiceIds: [],
+    fileIds: _.get(correctFeedback, 'fileIds'),
   };
   let incorrectAnswer = {
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.wrongAnswer }), 'id'),
     genusTypeId: genusTypes.answer.wrongAnswer,
-    feedback: incorrectFeedback,
+    feedback: _.get(incorrectFeedback, 'text'),
     type: genusTypes.answer.multipleAnswer,
     choiceIds: [],
+    fileIds: _.get(incorrectFeedback, 'fileIds'),
   };
 
   _.forEach(originalChoices, (choice) => {
@@ -100,8 +102,8 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
           originalItem.question.choices,
           question.choices,
           _.get(originalItem, 'originalItem.answers'),
-          _.get(question, 'correctFeedback.text'),
-          _.get(question, 'incorrectFeedback.text')
+          _.get(question, 'correctFeedback'),
+          _.get(question, 'incorrectFeedback')
         );
       }
     }
