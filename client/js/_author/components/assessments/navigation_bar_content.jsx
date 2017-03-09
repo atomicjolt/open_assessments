@@ -32,7 +32,7 @@ export default class NavigationBarContent extends React.Component {
   }
 
   render() {
-    const { bankId, assessmentId } = this.props.assessment;
+    const { bankId, id } = this.props.assessment;
     return (
       <div className="au-c-header-bottom">
         <div className="au-c-header-bottom__left">
@@ -51,7 +51,7 @@ export default class NavigationBarContent extends React.Component {
             this.props.isPublished ?
               <button
                 className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"
-                onClick={() => hashHistory.push(`banks/${bankId}/assessments/${assessmentId}/preview`)}
+                onClick={() => hashHistory.push(`banks/${bankId}/assessments/${id}/preview`)}
               >
                 <i className="material-icons">remove_red_eye</i>
               Preview Assessment
