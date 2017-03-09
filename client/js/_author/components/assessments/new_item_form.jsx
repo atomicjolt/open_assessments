@@ -80,6 +80,7 @@ export default class newItemForm extends React.Component {
                 </div>
               </div>
             </div>
+<<<<<<< Updated upstream
 
             <div className="au-o-half">
               <div className="au-c-input au-u-mt-md">
@@ -98,6 +99,8 @@ export default class newItemForm extends React.Component {
                 </div>
               </div>
             </div>
+=======
+>>>>>>> Stashed changes
           </div>
 
           <div className="au-o-flex-contain au-c-question-add__buttons">
