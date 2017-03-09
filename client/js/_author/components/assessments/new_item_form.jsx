@@ -94,7 +94,7 @@ export default class newItemForm extends React.Component {
                 onClick={() => this.props.create(this.state)}
                 className="au-c-btn au-c-btn--md au-c-btn--maroon au-u-ml-md"
               >
-                Create New Question
+                Save New Question
               </button>
             </div>
           </div>
