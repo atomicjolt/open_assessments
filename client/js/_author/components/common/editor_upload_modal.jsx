@@ -9,6 +9,16 @@ const tagNameMap = {
 };
 
 export default function EditorUploadModal(props) {
+  let name = props.mediaName;
+
+  if (props.inProgress) {
+    name = <Loader />;
+  }
+
+  if (props.error) {
+    name = <div className="au-c-error-text">Error: {props.error}</div>;
+  }
+
   return (
     <Modal
       overlayClassName="au-c-wysiwyg-modal-background"
@@ -30,7 +40,7 @@ export default function EditorUploadModal(props) {
         <div className="au-o-flex-center  au-u-mb-md">
           <span className="au-c-wysiwyg-media__label">File</span>
           <div className="au-c-wysiwyg-media__source-text" tabIndex="0">
-            {props.inProgress ? <Loader /> : props.mediaName}
+            {name}
           </div>
           <div className="au-c-input--file  au-u-ml-sm">
             <input
@@ -71,4 +81,5 @@ EditorUploadModal.propTypes = {
   insertMedia: React.PropTypes.func.isRequired,
   uploadMedia: React.PropTypes.func,
   inProgress: React.PropTypes.bool,
+  error: React.PropTypes.string,
 };

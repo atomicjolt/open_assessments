@@ -22,6 +22,7 @@ export function uploadMedia(file, guid, uploadScopeId, bankId) {
     guid,
     apiCall: true,
     type: Constants.UPLOAD_MEDIA,
-    body: formData
+    body: formData,
+    timeout: 1000000,
   };
 }
