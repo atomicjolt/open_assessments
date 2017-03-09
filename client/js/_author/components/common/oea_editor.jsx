@@ -21,6 +21,7 @@ export class OeaEditor extends React.Component {
     uploadMedia: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}),
     fileIds: React.PropTypes.shape({}),
+    textSize: React.PropTypes.string,
   };
 
   constructor() {
@@ -143,9 +144,6 @@ export class OeaEditor extends React.Component {
         </div>
         <div className={`au-c-input__bottom ${active}`} />
         <Modal
-          editor={this.state.editor}
-          overlayClassName="au-c-wysiwyg-modal-background"
-          className="au-c-wysiwyg-modal"
           isOpen={this.state.modalOpen}
           closeModal={() => this.closeModal()}
           insertMedia={() => this.insertMedia(_.get(uploadedAsset, 'url'))}
