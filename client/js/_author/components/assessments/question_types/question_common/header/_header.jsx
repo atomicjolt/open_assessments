@@ -7,7 +7,7 @@ export default function QuestionHeader(props) {
   const typeName = _.words(_.upperFirst(props.type)).join(' ');
 
   let currentHeader = <DefaultHeader {...props} />;
-  if (props.reorderActive) {
+  if (props.reorderActive || props.preview) {
     currentHeader =  <ReorderHeader {...props} />;
   }
 
@@ -26,4 +26,5 @@ QuestionHeader.propTypes = {
   reorderActive: React.PropTypes.bool,
   type: React.PropTypes.string,
   index: React.PropTypes.number,
+  preview: React.PropTypes.bool,
 };
