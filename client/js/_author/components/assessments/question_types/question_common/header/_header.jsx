@@ -2,6 +2,7 @@ import React            from 'react';
 import _                from 'lodash';
 import DefaultHeader    from './default';
 import ReorderHeader    from './reorder';
+import PreviewHeader    from './preview';
 
 export default function QuestionHeader(props) {
   const typeName = _.words(_.upperFirst(props.type)).join(' ');
@@ -9,6 +10,9 @@ export default function QuestionHeader(props) {
   let currentHeader = <DefaultHeader {...props} />;
   if (props.reorderActive) {
     currentHeader =  <ReorderHeader {...props} />;
+  }
+  if (props.preview) {
+    currentHeader =  <PreviewHeader {...props} />;
   }
 
   return (
@@ -26,4 +30,5 @@ QuestionHeader.propTypes = {
   reorderActive: React.PropTypes.bool,
   type: React.PropTypes.string,
   index: React.PropTypes.number,
+  preview: React.PropTypes.bool,
 };

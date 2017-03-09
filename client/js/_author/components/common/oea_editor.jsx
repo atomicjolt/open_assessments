@@ -122,7 +122,7 @@ export class OeaEditor extends React.Component {
 
       case 'audio':
       case 'video':
-        editorContent = `<${this.state.mediaType}><source src="${mediaUrl}" /></${this.state.mediaType}>`;
+        editorContent = `<${this.state.mediaType} controls><source src="${mediaUrl}" /></${this.state.mediaType}>`;
         break;
 
       default:

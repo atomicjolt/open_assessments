@@ -42,7 +42,7 @@ export default class Question extends React.Component {
   }
 
   getClassName() {
-    if (this.props.isActive && this.props.reorderActive) {
+    if (this.props.isActive && (this.props.reorderActive || this.state.preview)) {
       return 'reorder-active';
     }
 
@@ -231,6 +231,7 @@ export default class Question extends React.Component {
           moveDown={() => this.moveQuestionDown()}
           togglePreview={() => this.setState({ preview: !this.state.preview })}
           itemIndex={this.props.itemIndex}
+          preview={this.state.preview}
         />
         {this.state.preview && this.props.isActive ? this.previewContent() : this.editContent()}
       </div>
