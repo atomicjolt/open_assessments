@@ -19,20 +19,18 @@ export default class ReorderHeader extends React.Component {
 
     return (
       <div ref={ref => (this.header = ref)} className="au-o-right au-c-question-icons au-c-question-icons--reorder">
-        <div>
-          <button
-            className={`au-c-btn au-c-btn--square ${hideUp}`}
-            onClick={!this.props.topItem && this.props.moveUp}
-          >
-            <i className="material-icons">arrow_upward</i>
-          </button>
-          <button
-            className={`au-c-btn au-c-btn--square ${hideDown}`}
-            onClick={!this.props.bottomItem && this.props.moveDown}
-          >
-            <i className="material-icons">arrow_downward</i>
-          </button>
-        </div>
+        <button
+          className={`au-c-btn au-c-btn--square ${hideUp}`}
+          onClick={!this.props.topItem && this.props.moveUp}
+        >
+          <i className="material-icons">arrow_upward</i>
+        </button>
+        <button
+          className={`au-c-btn au-c-btn--square ${hideDown}`}
+          onClick={!this.props.bottomItem && this.props.moveDown}
+        >
+          <i className="material-icons">arrow_downward</i>
+        </button>
         <button
           onClick={this.props.toggleReorder}
           className="au-c-btn au-c-btn--sm au-c-btn--white"
