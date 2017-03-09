@@ -126,11 +126,13 @@ export class OeaEditor extends React.Component {
   }
 
   render() {
-    const active = this.state.focused ? 'is-focused' : '';
+    const active = this.state.focused || this.state.modalOpen ? 'is-focused' : 'no-border';
+    const { textSize } = this.props;
     const uploadedAsset = _.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0]`);
+
     return (
-      <div className="author--c-input__contain">
-        <div className={`author--c-text-input author--c-text-input--medium author--c-wysiwyg ${active}`}>
+      <div className="au-c-input__contain">
+        <div className={`au-c-text-input au-c-text-input--${textSize} au-c-wysiwyg ${active}`}>
           <TinyWrapper
             {...this.props}
             uploadMedia={(file, mediaCallback) => this.uploadMedia(file, mediaCallback)}
@@ -139,11 +141,11 @@ export class OeaEditor extends React.Component {
             openModal={(editor, type) => this.openModal(editor, type)}
           />
         </div>
-        <div className={`author--c-input__bottom ${active}`} />
+        <div className={`au-c-input__bottom ${active}`} />
         <Modal
           editor={this.state.editor}
-          overlayClassName="author--c-wysiwyg-modal-background"
-          className="author--c-wysiwyg-modal"
+          overlayClassName="au-c-wysiwyg-modal-background"
+          className="au-c-wysiwyg-modal"
           isOpen={this.state.modalOpen}
           closeModal={() => this.closeModal()}
           insertMedia={() => this.insertMedia(_.get(uploadedAsset, 'url'))}

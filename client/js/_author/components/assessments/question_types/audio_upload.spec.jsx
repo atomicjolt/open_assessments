@@ -52,7 +52,7 @@ describe('audio_upload component', () => {
   });
 
   it('runs the getAudioLimit static function', () => {
-    const inputs = result.find('.author--c-text-input--smaller');
+    const inputs = result.find('.au-c-text-input--smaller');
     expect(inputs.at(0).nodes[0].props.value).toBe('7900');
   });
 
@@ -63,7 +63,7 @@ describe('audio_upload component', () => {
       seconds: '700',
     };
     const newResult = shallow(<AudioUpload {...props} />);
-    const secondInput = newResult.find('.author--c-text-input--smaller');
+    const secondInput = newResult.find('.au-c-text-input--smaller');
     expect(secondInput.at(0).nodes[0].props.value).toBe('30100');
   });
 });

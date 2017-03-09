@@ -2,10 +2,10 @@ import React    from 'react';
 
 export default function addQuestionButton(props) {
   return (
-    <div className="author--c-question-add">
+    <div className="au-c-question-add">
       <button
         onClick={props.newItem}
-        className="author--c-question-add__button"
+        className="au-c-question-add__button"
       >
         Add Question
       </button>

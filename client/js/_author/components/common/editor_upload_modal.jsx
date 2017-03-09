@@ -10,28 +10,28 @@ const tagNameMap = {
 export default function EditorUploadModal(props) {
   return (
     <Modal
-      overlayClassName="author--c-wysiwyg-modal-background"
-      className="author--c-wysiwyg-modal"
+      overlayClassName="au-c-wysiwyg-modal-background"
+      className="au-c-wysiwyg-modal"
       isOpen={props.isOpen}
       onRequestClose={props.closeModal}
       contentLabel={`Insert ${tagNameMap[props.mediaType]} Modal`}
     >
-      <div className="author--c-wysiwyg-modal__header">
-        <h3 className="author--c-wysiwyg-modal__title">
+      <div className="au-c-wysiwyg-modal__header">
+        <h3 className="au-c-wysiwyg-modal__title">
           Insert {tagNameMap[props.mediaType]}
         </h3>
-        <button onClick={props.closeModal} className="author--c-wysiwyg-modal__close">
+        <button onClick={props.closeModal} className="au-c-wysiwyg-modal__close">
           <i className="material-icons">close</i>
         </button>
       </div>
 
-      <div className="author--c-wysiwyg-modal__main">
-        <div className="author--o-flex-center  author--u-mb-md">
-          <span className="author--c-wysiwyg-media__label">File</span>
-          <div className="author--c-wysiwyg-media__source-text" tabIndex="0">
+      <div className="au-c-wysiwyg-modal__main">
+        <div className="au-o-flex-center  au-u-mb-md">
+          <span className="au-c-wysiwyg-media__label">File</span>
+          <div className="au-c-wysiwyg-media__source-text" tabIndex="0">
             {props.mediaName}
           </div>
-          <div className="author--c-input--file  author--u-ml-sm">
+          <div className="au-c-input--file  au-u-ml-sm">
             <input
               onChange={e => props.uploadMedia(e.target.files[0])}
               id="fileid"
@@ -44,16 +44,16 @@ export default function EditorUploadModal(props) {
         </div>
       </div>
 
-      <div className="author--c-wysiwyg-modal__footer">
+      <div className="au-c-wysiwyg-modal__footer">
         <button
           onClick={props.closeModal}
-          className="author--u-right  author--c-btn author--c-btn--sm author--c-btn--gray"
+          className="au-u-right  au-c-btn au-c-btn--sm au-c-btn--gray"
         >
           Cancel
         </button>
         <button
           onClick={() => { props.insertMedia(); }}
-          className="author--c-btn author--c-btn--sm author--c-btn--maroon author--u-ml-sm"
+          className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-sm"
         >
           OK
         </button>
@@ -67,5 +67,5 @@ EditorUploadModal.propTypes = {
   closeModal: React.PropTypes.func.isRequired,
   mediaType: React.PropTypes.string,
   mediaName: React.PropTypes.string,
-  insertMedia: React.PropTypes.string,
+  insertMedia: React.PropTypes.func.isRequired,
 };

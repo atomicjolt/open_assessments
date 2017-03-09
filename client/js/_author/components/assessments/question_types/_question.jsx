@@ -183,7 +183,7 @@ export default class Question extends React.Component {
           makeMultipleAnswer={multi => this.makeMultipleAnswer(multi)}
           type={type}
         />
-        <div className={`author--c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
+        <div className={`au-c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
             fileIds={question.fileIds}
             itemId={id}
@@ -212,7 +212,7 @@ export default class Question extends React.Component {
 
     return (
       <div
-        className={`author--o-item author--c-question ${className}`}
+        className={`au-o-item au-c-question ${className}`}
         tabIndex="0"
         onClick={() => this.props.activateItem(id)}
         onFocus={() => this.props.activateItem(id)}
@@ -230,6 +230,7 @@ export default class Question extends React.Component {
           moveUp={() => this.moveQuestionUp()}
           moveDown={() => this.moveQuestionDown()}
           togglePreview={() => this.setState({ preview: !this.state.preview })}
+          itemIndex={this.props.itemIndex}
         />
         {this.state.preview && this.props.isActive ? this.previewContent() : this.editContent()}
       </div>

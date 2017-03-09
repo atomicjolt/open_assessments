@@ -1,9 +1,9 @@
-.author--c-header{
+.au-c-header{
   background: $white;
   box-shadow: 0 0.3rem 0.6rem rgba(0,0,0,0.15);
 }
 
-  .author--c-header-top{
+  .au-c-header-top{
     height: 6rem;
     background: $white;
     padding: 0 2rem;
@@ -11,11 +11,11 @@
     @include align-items(center);
   }
 
-    .author--c-logo{
+    .au-c-logo{
       height: 3.4rem;
     }
 
-  .author--c-header-bottom{
+  .au-c-header-bottom{
     height: 5rem;
     border-top: $border;
     padding: 0 2rem;
@@ -25,12 +25,12 @@
     @include justify-content(space-between);
   }
 
-    .author--c-header-bottom__right, .author--c-header-bottom__left{
+    .au-c-header-bottom__right, .au-c-header-bottom__left{
       @include display-flex;
       @include align-items(center);
     }
 
-      .author--c-breadcrumb__divider{
+      .au-c-breadcrumb__divider{
         @include regular;
         font-size: 1.6rem;
         color: $gray8;

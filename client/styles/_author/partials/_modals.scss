@@ -1,10 +1,10 @@
-.author--c-wysiwyg-modal {
+.au-c-wysiwyg-modal {
   width: 50rem;
   margin: 5rem auto 0;
   background: #fff;
 }
 
-.author--c-wysiwyg-modal-background {
+.au-c-wysiwyg-modal-background {
   z-index: 100;
   zoom: 1;
   position: fixed;
@@ -15,7 +15,7 @@
   background: rgba(0,0,0,0.3);
 }
 
-.author--c-wysiwyg-modal__header{
+.au-c-wysiwyg-modal__header{
   height: 5rem;
   background: $gray1;
   border-bottom: $border;
@@ -25,13 +25,13 @@
   padding: 0 2.5rem;
 }
 
-.author--c-wysiwyg-modal__title{
+.au-c-wysiwyg-modal__title{
   @include semi-bold;
   font-size: 1.8rem;
   color: $text-color;
 }
 
-.author--c-wysiwyg-modal__close{
+.au-c-wysiwyg-modal__close{
   width: 3rem;
   height: 3rem;
   display: inline-block;
@@ -51,14 +51,14 @@
 }
 
 
-.author--c-wysiwyg-modal__main{
+.au-c-wysiwyg-modal__main{
   padding: 3rem 2.5rem 0;
 
 
 }
 
-.author--c-wysiwyg-media__main2{
-  .author--c-input{
+.au-c-wysiwyg-media__main2{
+  .au-c-input{
     max-width: 5rem;
     input{
       text-align: center;
@@ -66,7 +66,7 @@
   }
 }
 
-.author--c-wysiwyg-media__label{
+.au-c-wysiwyg-media__label{
   @include semi-bold;
   font-size: 1.4rem;
   color: $text-color;
@@ -74,7 +74,7 @@
   display: inline-block;
 }
 
-.author--c-wysiwyg-media__source-text{
+.au-c-wysiwyg-media__source-text{
   @include truncate;
   height: 2.5rem;
   border-bottom: $border;
@@ -84,7 +84,7 @@
   width: 100%;
 }
 
-.author--c-input--file{
+.au-c-input--file{
   input + label{
     width: 5rem;
     height: 3rem;
@@ -117,7 +117,7 @@
   }
 }
 
-.author--c-wysiwyg-media__x-divider{
+.au-c-wysiwyg-media__x-divider{
   margin: 0 1rem;
   @include semi-bold;
   color: $text-color;
@@ -125,7 +125,7 @@
 
 
 
-.author--c-wysiwyg-modal__footer{
+.au-c-wysiwyg-modal__footer{
   height: 7.5rem;
   padding: 0 2.5rem;
   @include display-flex;

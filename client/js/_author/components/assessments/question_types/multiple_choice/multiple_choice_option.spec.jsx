@@ -35,12 +35,12 @@ describe('Multiple Choice Option', () => {
   });
 
   it('isActive??', () => {
-    let div = result.find('.author--c-answer');
+    let div = result.find('.au-c-answer');
     expect(div.props().className).toContain('is-active');
 
     props.isActive = false;
     result = shallow(<Option {...props} />);
-    div = result.find('.author--c-answer');
+    div = result.find('.au-c-answer');
     expect(div.props().className).not.toContain('is-active');
   });
 });

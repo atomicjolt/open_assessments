@@ -29,7 +29,7 @@ describe('addOption component', () => {
   it('calls props.updateChoice', () => {
     const clickableDiv = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'author--c-answer--add',
+      'au-c-answer--add',
     );
     expect(clickableDiv).toBeDefined();
     expect(choiceUpdated).toBeFalsy();

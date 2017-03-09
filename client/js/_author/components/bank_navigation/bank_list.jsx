@@ -5,16 +5,16 @@ import ListItem   from './bank_list_item';
 
 export default function bankList(props) {
   return (
-    <div className="author--o-contain">
+    <div className="au-o-contain">
 
-      <div className="author--o-item">
+      <div className="au-o-item">
         <Header
           sortBy={props.sortBy}
           sortName={props.sortName}
           sortPublished={props.sortPublished}
         />
-        <div className="author--c-scrollable">
-          <table className="author--c-table">
+        <div className="au-c-scrollable">
+          <table className="au-c-table">
             <tbody>
               {
                 _.map(props.banks, bank => (

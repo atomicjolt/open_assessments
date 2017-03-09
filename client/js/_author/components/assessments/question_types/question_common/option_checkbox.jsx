@@ -2,7 +2,7 @@ import React      from 'react';
 
 export default function optionRadio(props) {
   return (
-    <div className="author--c-checkbox">
+    <div className="au-c-checkbox">
       <input
         type="checkbox"
         id={`option_checkbox_${props.id}`}
