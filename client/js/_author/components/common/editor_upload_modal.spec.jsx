@@ -15,6 +15,7 @@ describe('editor upload modal', () => {
       mediaName: 'filename.jpg',
       insertMedia: () => { functionCalled = true; },
       uploadMedia: (file) => { fileUploaded = file },
+      inProgress: false,
     }
     result = shallow(<Modal {...props} />);
   });
@@ -58,5 +59,11 @@ describe('editor upload modal', () => {
   it('calls uploadMedia when a file is uploaded', () => {
     result.find('input').simulate('change', { target: { files: ["file"] } });
     expect(fileUploaded).toBe('file');
+  });
+
+  it('displays the loader when inProgress is true', () => {
+    props.inProgress = true;
+    result = shallow(<Modal {...props} />);
+    expect(result.find('dotLoader').length).toBe(1);
   });
 });
