@@ -2,13 +2,13 @@ import React        from 'react';
 
 export default function bankListHeader(props) {
   return (
-    <table className="author--c-table">
+    <table className="au-c-table">
       <thead>
         <tr>
           <th />
           <th>
             <button
-              className={props.sortName ? 'author--c-table__filter is-active' : 'author--c-table__filter'}
+              className={props.sortName ? 'au-c-table__filter is-active' : 'au-c-table__filter'}
               onClick={() => props.sortBy('sortName')}
             >
               Name
@@ -22,7 +22,7 @@ export default function bankListHeader(props) {
           </th>
           <th>
             <button
-              className={props.sortPublished ? 'author--c-table__filter is-active' : 'author--c-table__filter'}
+              className={props.sortPublished ? 'au-c-table__filter is-active' : 'au-c-table__filter'}
               onClick={() => props.sortBy('sortPublished')}
             >
               Published
