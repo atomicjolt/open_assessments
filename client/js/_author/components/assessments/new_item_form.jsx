@@ -80,27 +80,6 @@ export default class newItemForm extends React.Component {
                 </div>
               </div>
             </div>
-<<<<<<< Updated upstream
-
-            <div className="au-o-half">
-              <div className="au-c-input au-u-mt-md">
-                <label htmlFor="questionType" />
-                <div className="au-c-dropdown au-c-dropdown--medium">
-                  <select
-                    onChange={e => this.setState({ language: e.target.value })}
-                    name=""
-                    id="questionType"
-                  >
-                    <option value={languages.languageTypeId.english}>Select a language</option>
-                    <option value={languages.languageTypeId.english}>English</option>
-                    <option value={languages.languageTypeId.hindi}>Hindi</option>
-                    <option value={languages.languageTypeId.telugu}>Telugu</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-=======
->>>>>>> Stashed changes
           </div>
 
           <div className="au-o-flex-contain au-c-question-add__buttons">
