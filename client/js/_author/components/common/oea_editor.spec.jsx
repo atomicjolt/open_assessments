@@ -3,11 +3,10 @@ import { shallow }    from 'enzyme';
 import  { OeaEditor } from './oea_editor';
 
 describe('qbank editor', () => {
-  let result, props, functionCalled, fileUploaded, blurText, uploadedFileIds;
+  let result, props, functionCalled, blurText, uploadedFileIds;
 
   beforeEach(() => {
     functionCalled = false;
-    fileUploaded = null;
     props = {
       onBlur: (text, fileIds) => {
         functionCalled = true;
@@ -98,6 +97,52 @@ describe('qbank editor', () => {
       expect(uploadedFileIds.new_uploaded_guid.assetId).toBe('asset_id');
       expect(uploadedFileIds.new_uploaded_guid.assetContentId).toBe('new_content_id');
       expect(uploadedFileIds.new_uploaded_guid.assetContentTypeId).toBe('genus_type_id');
+    });
+  });
+
+  describe('insert media', () => {
+    let insertText, insertContentCalled;
+
+    beforeEach(() => {
+      insertContentCalled = false;
+      result.instance().setState({
+        editor: {
+          insertContent: (text) => {
+            insertContentCalled = true;
+            insertText = text;
+          }
+        }
+      });
+    });
+
+    it('does not insert anything if mediaUrl is falsey', () => {
+      expect(insertContentCalled).toBeFalsy();
+      result.instance().insertMedia(undefined);
+      expect(insertContentCalled).toBeFalsy();
+    });
+
+    it('correctly inserts an img tag if state.mediaType is img', () => {
+      result.instance().setState({ mediaType: 'img' });
+      expect(insertContentCalled).toBeFalsy();
+      result.instance().insertMedia('http://example.com/image');
+      expect(insertContentCalled).toBeTruthy();
+      expect(insertText).toContain('<img src="http://example.com/image" />');
+    });
+
+    it('correctly inserts a video tag if state.mediaType is video', () => {
+      result.instance().setState({ mediaType: 'video' });
+      expect(insertContentCalled).toBeFalsy();
+      result.instance().insertMedia('http://example.com/image');
+      expect(insertContentCalled).toBeTruthy();
+      expect(insertText).toContain('<video><source src="http://example.com/image" /></video>');
+    });
+
+    it('correctly inserts an audio tag if state.mediaType is audio', () => {
+      result.instance().setState({ mediaType: 'audio' });
+      expect(insertContentCalled).toBeFalsy();
+      result.instance().insertMedia('http://example.com/image');
+      expect(insertContentCalled).toBeTruthy();
+      expect(insertText).toContain('<audio><source src="http://example.com/image" /></audio>');
     });
   });
 });
