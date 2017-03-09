@@ -3,7 +3,11 @@ import { shallow }    from 'enzyme';
 import  { OeaEditor } from './oea_editor';
 
 describe('qbank editor', () => {
-  let result, props, functionCalled, blurText, uploadedFileIds;
+  let result;
+  let props;
+  let functionCalled;
+  let blurText;
+  let uploadedFileIds;
 
   beforeEach(() => {
     functionCalled = false;
@@ -134,7 +138,7 @@ describe('qbank editor', () => {
       expect(insertContentCalled).toBeFalsy();
       result.instance().insertMedia('http://example.com/image');
       expect(insertContentCalled).toBeTruthy();
-      expect(insertText).toContain('<video><source src="http://example.com/image" /></video>');
+      expect(insertText).toContain('<video controls><source src="http://example.com/image" /></video>');
     });
 
     it('correctly inserts an audio tag if state.mediaType is audio', () => {
@@ -142,7 +146,7 @@ describe('qbank editor', () => {
       expect(insertContentCalled).toBeFalsy();
       result.instance().insertMedia('http://example.com/image');
       expect(insertContentCalled).toBeTruthy();
-      expect(insertText).toContain('<audio><source src="http://example.com/image" /></audio>');
+      expect(insertText).toContain('<audio controls><source src="http://example.com/image" /></audio>');
     });
   });
 });
