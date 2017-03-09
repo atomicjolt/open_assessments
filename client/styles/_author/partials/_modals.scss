@@ -82,6 +82,10 @@
   font-size: 1.4rem;
   color: $text-color;
   width: 100%;
+
+  .loader {
+    font-size: 9px;
+  }
 }
 
 .au-c-input--file{
