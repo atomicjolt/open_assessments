@@ -2,13 +2,17 @@ import React            from 'react';
 import _                from 'lodash';
 import DefaultHeader    from './default';
 import ReorderHeader    from './reorder';
+import PreviewHeader    from './preview';
 
 export default function QuestionHeader(props) {
   const typeName = _.words(_.upperFirst(props.type)).join(' ');
 
   let currentHeader = <DefaultHeader {...props} />;
-  if (props.reorderActive || props.preview) {
+  if (props.reorderActive) {
     currentHeader =  <ReorderHeader {...props} />;
+  }
+  if (props.preview) {
+    currentHeader =  <PreviewHeader {...props} />;
   }
 
   return (
