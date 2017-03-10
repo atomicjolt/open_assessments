@@ -76,6 +76,12 @@ export default class AssessmentForm extends React.Component {
     );
   }
 
+  updateAssessment(e) {
+    if (e.target.value) {
+      this.props.updateAssessment({ name: e.target.value });
+    }
+  }
+
   render() {
     const reorderActive = this.state.reorderActive;
     const canAddItem = !this.state.addingItem && this.props.name;
@@ -95,7 +101,7 @@ export default class AssessmentForm extends React.Component {
                   id="title_field"
                   placeholder="Untitled Assessment"
                   onChange={e => this.setState({ title: e.target.value })}
-                  onBlur={e => this.props.updateAssessment({ name: e.target.value })}
+                  onBlur={e => this.updateAssessment(e)}
                 />
                 { _.isEmpty(this.state.title) ?
                   <div>
