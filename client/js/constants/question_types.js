@@ -1,9 +1,10 @@
 export default {
-  multipleChoice: 'multipleChoice',
-  shortAnswer: 'shortAnswer',
-  fileUpload: 'fileUpload',
   audioUpload: 'audioUpload',
-  reflection: 'reflection',
-  multipleReflection: 'multipleReflection',
+  fileUpload: 'fileUpload',
+  movableFillBlank: 'movableFillBlank',
   multipleAnswer: 'multipleAnswer',
-}
+  multipleChoice: 'multipleChoice',
+  multipleReflection: 'multipleReflection',
+  reflection: 'reflection',
+  shortAnswer: 'shortAnswer',
+};

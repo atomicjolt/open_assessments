@@ -1,9 +1,10 @@
+import audioUpload      from './audio_upload';
+import fileUpload       from './file_upload';
+import movableFillBlank from './movable_fill_blank';
+import multipleAnswer   from './multiple_answer';
 import multipleChoice   from './multiple_choice';
 import shortAnswer      from './short_answer';
-import audioUpload      from './audio_upload';
 import survey           from './reflection';
-import multipleAnswer   from './multiple_answer';
-import fileUpload       from './file_upload';
 import types            from '../../../../constants/question_types.js';
 
 export default function factory(type) {
@@ -26,6 +27,9 @@ export default function factory(type) {
 
     case types.fileUpload:
       return fileUpload;
+
+    case types.movableFillBlank:
+      return movableFillBlank;
 
     default:
       throw 'We could not find a type for serializing';

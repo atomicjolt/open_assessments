@@ -1,9 +1,10 @@
 import audioUpload      from './audio_upload';
 import base             from './base';
-import shortAnswer      from './short_answer';
-import multipleChoice   from './multiple_choice';
-import multipleAnswer   from './multiple_answer';
 import fileUpload       from './file_upload';
+import movableFillBlank from './movable_fill_blank';
+import multipleAnswer   from './multiple_answer';
+import multipleChoice   from './multiple_choice';
+import shortAnswer      from './short_answer';
 import genusTypes       from '../../../../constants/genus_types';
 
 export default function factory(type) {
@@ -24,6 +25,9 @@ export default function factory(type) {
 
     case genusTypes.item.fileUpload:
       return fileUpload;
+
+    case genusTypes.item.movableFillBlank:
+      return movableFillBlank;
 
     default:
       return base;
