@@ -29,6 +29,11 @@ export default class AssessmentForm extends React.Component {
       title: 'start'
     };
   }
+  componentWillUpdate(nextProps) {
+    if (this.props.items && this.props.items.length + 1 === nextProps.items.length) {
+      this.setState({ activeItem: _.last(nextProps.items).id });
+    }
+  }
 
   createItem(newItem) {
     this.props.createItem(newItem);
@@ -56,8 +61,8 @@ export default class AssessmentForm extends React.Component {
   showSinglePageOption() {
     if (this.props.publishedAndOffered) {
       return (
-        <div className="author--o-item__top">
-          <div className="author--c-checkbox author--u-right">
+        <div className="au-o-item__top">
+          <div className="au-c-checkbox au-u-right">
             <input type="checkbox" id="assessmentFormCheck01" name="check" onChange={e => this.props.updateSingleItemOrPage(e.target.checked)} />
             <label htmlFor="assessmentFormCheck01">Single page assessment</label>
           </div>
@@ -76,33 +81,39 @@ export default class AssessmentForm extends React.Component {
     );
   }
 
+  updateAssessment(e) {
+    if (e.target.value) {
+      this.props.updateAssessment({ name: e.target.value });
+    }
+  }
+
   render() {
     const reorderActive = this.state.reorderActive;
     const canAddItem = !this.state.addingItem && this.props.name;
 
     return (
-      <div className="author--o-contain">
-        <div className="author--o-item">
+      <div className="au-o-contain">
+        <div className="au-o-item">
           {this.showSinglePageOption()}
-          <div className="author--c-assessment-title">
-            <label htmlFor="title_field" className="author--c-input test_label">
-              <div className="author--c-input__contain">
+          <div className="au-c-assessment-title">
+            <label htmlFor="title_field" className="au-c-input test_label">
+              <div className="au-c-input__contain">
                 <input
                   key={this.props.name}
                   defaultValue={this.props.name}
-                  className="author--c-text-input author--c-text-input--large"
+                  className="au-c-text-input au-c-text-input--large"
                   type="text"
                   id="title_field"
                   placeholder="Untitled Assessment"
                   onChange={e => this.setState({ title: e.target.value })}
-                  onBlur={e => this.props.updateAssessment({ name: e.target.value })}
+                  onBlur={e => this.updateAssessment(e)}
                 />
                 { _.isEmpty(this.state.title) ?
                   <div>
-                    <div className="author--c-input__bottom has-error" />
-                    <div className="author--c-error-text">Name is required in order to edit</div>
+                    <div className="au-c-input__bottom has-error" />
+                    <div className="au-c-error-text">Name is required in order to edit</div>
                   </div> :
-                  <div className="author--c-input__bottom" />
+                  <div className="au-c-input__bottom" />
                 }
               </div>
             </label>

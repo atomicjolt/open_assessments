@@ -9,7 +9,8 @@ import * as AssetActions from '../../../actions/qbank/assets';
 
 function select(state, props) {
   return {
-    uploadedAssets: state.uploadedAssets[props.uploadScopeId]
+    uploadedAssets: state.uploadedAssets[props.uploadScopeId],
+    error: _.get(state, `uploadedAssets["${props.uploadScopeId}"].error.message`)
   };
 }
 
@@ -21,6 +22,8 @@ export class OeaEditor extends React.Component {
     uploadMedia: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}),
     fileIds: React.PropTypes.shape({}),
+    textSize: React.PropTypes.string,
+    error: React.PropTypes.string,
   };
 
   constructor() {
@@ -53,11 +56,13 @@ export class OeaEditor extends React.Component {
     });
 
     _.each(this.props.uploadedAssets, (asset, mediaGuid) => {
-      fileIds[mediaGuid] = {
-        assetId: asset.id,
-        assetContentId: asset.assetContents[0].id,
-        assetContentTypeId: asset.assetContents[0].genusTypeId
-      };
+      if(!asset.error) {
+        fileIds[mediaGuid] = {
+          assetId: asset.id,
+          assetContentId: asset.assetContents[0].id,
+          assetContentTypeId: asset.assetContents[0].genusTypeId
+        };
+      }
     });
 
     this.props.onBlur(text, fileIds);
@@ -103,7 +108,10 @@ export class OeaEditor extends React.Component {
   }
 
   insertMedia(mediaUrl) {
-    if (!mediaUrl) return;
+    if (!mediaUrl) {
+      this.closeModal();
+      return;
+    }
 
     let editorContent = `<video><source src="${mediaUrl}" /></video>`;
 
@@ -114,7 +122,7 @@ export class OeaEditor extends React.Component {
 
       case 'audio':
       case 'video':
-        editorContent = `<${this.state.mediaType}><source src="${mediaUrl}" /></${this.state.mediaType}>`;
+        editorContent = `<${this.state.mediaType} controls><source src="${mediaUrl}" /></${this.state.mediaType}>`;
         break;
 
       default:
@@ -126,11 +134,13 @@ export class OeaEditor extends React.Component {
   }
 
   render() {
-    const active = this.state.focused ? 'is-focused' : '';
+    const active = this.state.focused || this.state.modalOpen ? 'is-focused' : 'no-border';
+    const { textSize } = this.props;
     const uploadedAsset = _.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0]`);
+
     return (
-      <div className="author--c-input__contain">
-        <div className={`author--c-text-input author--c-text-input--medium author--c-wysiwyg ${active}`}>
+      <div className="au-c-input__contain">
+        <div className={`au-c-text-input au-c-text-input--${textSize} au-c-wysiwyg ${active}`}>
           <TinyWrapper
             {...this.props}
             uploadMedia={(file, mediaCallback) => this.uploadMedia(file, mediaCallback)}
@@ -139,17 +149,16 @@ export class OeaEditor extends React.Component {
             openModal={(editor, type) => this.openModal(editor, type)}
           />
         </div>
-        <div className={`author--c-input__bottom ${active}`} />
+        <div className={`au-c-input__bottom ${active}`} />
         <Modal
-          editor={this.state.editor}
-          overlayClassName="author--c-wysiwyg-modal-background"
-          className="author--c-wysiwyg-modal"
           isOpen={this.state.modalOpen}
           closeModal={() => this.closeModal()}
           insertMedia={() => this.insertMedia(_.get(uploadedAsset, 'url'))}
           mediaName={_.get(uploadedAsset, 'displayName.text')}
           mediaType={this.state.mediaType}
           uploadMedia={file => this.uploadMedia(file)}
+          inProgress={this.state.mediaGuid && !_.get(uploadedAsset, 'displayName.text')}
+          error={this.props.error}
         />
       </div>
     );

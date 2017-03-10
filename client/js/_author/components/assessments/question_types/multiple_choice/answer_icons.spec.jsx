@@ -2,7 +2,7 @@ import React            from 'react';
 import { shallow }      from 'enzyme';
 import AnswerIcons      from './answer_icons';
 
-fdescribe('Correct answer selector', () => {
+describe('Correct answer selector', () => {
   let result;
   let props;
   let funcResult;

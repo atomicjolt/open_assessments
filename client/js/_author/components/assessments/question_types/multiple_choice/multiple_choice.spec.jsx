@@ -51,7 +51,7 @@ describe('multiple choice component', () => {
   });
 
   it('renders', () => {
-    const divs = result.find('.author--c-question__answers--maintain');
+    const divs = result.find('.au-c-question__answers--maintain');
     expect(divs.length).toBe(1);
   });
 

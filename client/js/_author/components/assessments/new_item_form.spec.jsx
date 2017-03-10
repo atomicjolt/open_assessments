@@ -20,7 +20,7 @@ describe('New Item Form', () => {
   it('calls cancel when cancelled', () => {
     const button = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'author--c-btn--gray',
+      'au-c-btn--gray',
     );
     TestUtils.Simulate.click(button);
     expect(called).toBe('cancel');
@@ -29,7 +29,7 @@ describe('New Item Form', () => {
   it('sets default settings on new assessments', () => {
     const button = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'author--c-btn--maroon',
+      'au-c-btn--maroon',
     );
     TestUtils.Simulate.click(button);
     expect(called.type).toBeDefined();
@@ -41,11 +41,11 @@ describe('New Item Form', () => {
   it('sets name on new assessments', () => {
     const input = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'author--c-text-input',
+      'au-c-text-input',
     );
     const button = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'author--c-btn--maroon',
+      'au-c-btn--maroon',
     );
     TestUtils.Simulate.change(input, { target: { value: 'tacos' } });
     TestUtils.Simulate.click(button);
@@ -56,22 +56,10 @@ describe('New Item Form', () => {
     const input = TestUtils.scryRenderedDOMComponentsWithTag(result, 'select')[0];
     const button = TestUtils.findRenderedDOMComponentWithClass(
       result,
-      'author--c-btn--maroon',
+      'au-c-btn--maroon',
     );
     TestUtils.Simulate.change(input, { target: { value: 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU' } });
     TestUtils.Simulate.click(button);
     expect(called.type).toBe('item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU');
   });
-
-  it('sets language on new assessments', () => {
-    const input = TestUtils.scryRenderedDOMComponentsWithTag(result, 'select')[1];
-    const button = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'author--c-btn--maroon',
-    );
-    TestUtils.Simulate.change(input, { target: { value: 'french' } });
-    TestUtils.Simulate.click(button);
-    expect(called.language).toBe('french');
-  });
-
 });

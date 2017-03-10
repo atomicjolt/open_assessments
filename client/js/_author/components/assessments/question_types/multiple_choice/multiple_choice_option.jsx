@@ -7,21 +7,29 @@ import AnswerIcons  from './answer_icons';
 import Feedback     from './option_feedback';
 
 export default function multipleChoiceOptions(props) {
-  const hideFeedback = props.itemType !== types.multipleChoice;
+  const hideFeedback = (props.itemType !== types.multipleChoice) ||
+    !(props.isActive || props.feedback);
 
   if (props.id === 'new') {
     return (
-      <div className={`author--c-answer ${props.isActive ? 'is-active' : ''}`}>
-        <div className="author--c-input">
+      <div className={`au-c-answer ${props.isActive ? 'is-active' : ''}`}>
+        <div className="au-c-input">
           <Loader />
         </div>
       </div>
     );
   }
 
+  const isActive = props.isActive ? 'is-active' : '';
+  const isOrdered = props.shuffle ? 'is-ordered' : '';
+
   return (
-    <div className={`author--c-answer ${props.isActive ? 'is-active' : ''}`}>
-      <div className="author--c-input">
+    <div
+      onFocus={() => props.setActiveChoice(props.id)}
+      onClick={() => props.setActiveChoice(props.id)}
+      className={`au-c-answer ${isActive} ${isOrdered}`}
+    >
+      <div className="au-c-input">
         <Selector
           itemType={props.itemType}
           id={props.id}
@@ -31,6 +39,8 @@ export default function multipleChoiceOptions(props) {
         />
         <label htmlFor="option1" />
         <Editor
+          textSize="small"
+          isActive={props.isActive}
           fileIds={props.questionFileIds}
           text={props.text}
           bankId={props.bankId}
@@ -47,17 +57,14 @@ export default function multipleChoiceOptions(props) {
           deleteChoice={props.deleteChoice}
         />
       </div>
-      {
-        hideFeedback ? null : (
-          <Feedback
-            feedback={props.feedback}
-            bankId={props.bankId}
-            itemId={props.itemId}
-            updateChoice={props.updateChoice}
-            fileIds={props.fileIds}
-          />
-        )
-      }
+      <Feedback
+        feedback={props.feedback}
+        bankId={props.bankId}
+        itemId={props.itemId}
+        updateChoice={props.updateChoice}
+        fileIds={props.fileIds}
+        hidden={hideFeedback}
+      />
     </div>
   );
 }

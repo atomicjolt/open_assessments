@@ -2,10 +2,13 @@ import React    from 'react';
 
 export default function answerIcons(props) {
 
-  const spacer = <div className="author--c-answer__icons__spacer" />;
+  let spacer = <button tabIndex="-1" className="au-c-answer__icons__spacer inactive" />;
+  if (props.shuffle) {
+    spacer = null;
+  }
   const upButton = (
     <button
-      className="author--c-answer__icons__spacer"
+      className="au-c-answer__icons__spacer"
       tabIndex="0"
       onClick={props.moveUp}
     >
@@ -14,7 +17,7 @@ export default function answerIcons(props) {
   );
   const downButton = (
     <button
-      className="author--c-answer__icons__spacer"
+      className="au-c-answer__icons__spacer"
       tabIndex="0"
       onClick={props.moveDown}
     >
@@ -23,11 +26,11 @@ export default function answerIcons(props) {
   );
 
   return (
-    <div className="author--c-answer__icons">
+    <div className="au-c-answer__icons">
       { props.first || props.shuffle ? spacer : upButton }
       { props.last || props.shuffle ? spacer : downButton }
       <button
-        className="author--c-answer__icons__spacer"
+        className="au-c-answer__icons__spacer"
         tabIndex="0"
         onClick={props.deleteChoice}
       >

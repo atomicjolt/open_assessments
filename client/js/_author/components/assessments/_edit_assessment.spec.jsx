@@ -69,12 +69,12 @@ describe('_edit_assessment component', () => {
   });
 
   it('renders Assessment Form to DOM', () => {
-    const assessmentForm = TestUtils.scryRenderedDOMComponentsWithClass(result, 'author--c-assessment-title');
+    const assessmentForm = TestUtils.scryRenderedDOMComponentsWithClass(result, 'au-c-assessment-title');
     expect(assessmentForm.length).toBe(1);
   });
 
   it('renders Heading to DOM', () => {
-    const heading = TestUtils.scryRenderedDOMComponentsWithClass(result, 'author--c-logo');
+    const heading = TestUtils.scryRenderedDOMComponentsWithClass(result, 'au-c-logo');
     expect(heading.length).toBe(1);
   });
 
