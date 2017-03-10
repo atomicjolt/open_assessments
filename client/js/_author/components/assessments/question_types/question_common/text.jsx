@@ -3,14 +3,16 @@ import Editor     from '../../../common/oea_editor';
 
 export default function questionText(props) {
   return (
-    <div className="author--c-input c-question-text">
+    <div className="au-c-input au-c-question__text">
       <label htmlFor={`question_text_${props.itemId}`} />
       <Editor
+        textSize="medium"
+        fileIds={props.fileIds}
         text={props.text}
         editorKey={props.editorKey}
         onBlur={(val, fileIds) => props.updateItem({ question: { text: val, fileIds } })}
         bankId={props.bankId}
-        itemId={props.itemId}
+        uploadScopeId={props.itemId}
       />
     </div>
   );

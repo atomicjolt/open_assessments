@@ -38,7 +38,7 @@ describe('AssessmentForm component', () => {
   });
 
   it('renders to the DOM', () => {
-    expect(result.find('.author--c-assessment-title').length).toBe(1);
+    expect(result.find('.au-c-assessment-title').length).toBe(1);
   });
 
   it('renders one labels', () => {

@@ -5,11 +5,11 @@ import Breadcrumb               from './breadcrumb';
 
 export default function navigationBarContent(props) {
   return (
-    <div className="author--c-header-bottom">
-      <div className="author--c-header-bottom__left">
+    <div className="au-c-header-bottom">
+      <div className="au-c-header-bottom__left">
         <button
           onClick={() => props.updatePath(null)}
-          className={props.currentBankId ? 'author--c-btn author--c-btn--breadcrumb' : 'author--c-btn author--c-btn--breadcrumb is-active'}
+          className={props.currentBankId ? 'au-c-btn au-c-btn--breadcrumb' : 'au-c-btn au-c-btn--breadcrumb is-active'}
         >
           <i className="material-icons">home</i>
           Assessments
@@ -21,15 +21,16 @@ export default function navigationBarContent(props) {
               {...folder}
               current={props.currentBankId === folder.id}
               updatePath={props.updatePath}
+              getBankChildren={props.getBankChildren}
             />
             )
           )
         }
       </div>
 
-      <div className="author--c-header-bottom__right">
+      <div className="au-c-header-bottom__right">
         <button
-          className="author--c-btn c-btn--sm author--c-btn--maroon author--c-btn--new u-ml-md"
+          className="au-c-btn au-c-btn--sm au-c-btn--maroon au-c-btn--new u-ml-md"
           onClick={() => appHistory.push(`banks/${props.currentBankId}/new_assessment`)}
         >
           New

@@ -16,7 +16,7 @@
         <fieldlabel>qmd_organization</fieldlabel>
         <fieldentry>Open Stax</fieldentry>
       </qtimetadatafield>
-      <!-- author-->
+      <!-- author -->
       <qtimetadatafield>
         <fieldlabel>qmd_author</fieldlabel>
         <fieldentry>David Wiley</fieldentry>

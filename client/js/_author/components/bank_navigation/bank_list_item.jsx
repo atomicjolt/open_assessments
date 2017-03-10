@@ -20,7 +20,7 @@ export default function bankListItem(props) {
     if (isAssessment) {
       appHistory.push(`banks/${bank.bankId}/assessments/${bank.id}`);
     } else {
-      props.getBankChildren(bank);
+      props.getBankChildren(bank.id);
     }
   };
 
@@ -44,19 +44,19 @@ export default function bankListItem(props) {
         const embedUrlCode = `${baseEmbedUrl}&bank=${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}#/assessment`;
 
         return (
-          <div className="author--c-embed-contain">
-            <label className="author--c-input--purple" htmlFor="embedInput">
+          <div className="au-c-embed-contain">
+            <label className="au-c-input--purple" htmlFor="embedInput">
               <input
                 id="embedInput"
                 onClick={e => e.stopPropagation()}
-                className="author--c-text-input author--c-text-input--smaller"
+                className="au-c-text-input au-c-text-input--smaller"
                 readOnly
                 type="text"
                 value={`<iframe src="${embedUrlCode}"/>`}
               />
             </label>
             <CopyToClipboard text={`<iframe src="${embedUrlCode}"/>`}>
-              <button className="author--c-btn author--c-btn--square author--c-btn--embed " onClick={e => e.stopPropagation()}>
+              <button className="au-c-btn au-c-btn--square au-c-btn--embed " onClick={e => e.stopPropagation()}>
                 <i className="material-icons">content_paste</i>
               </button>
             </CopyToClipboard>
@@ -66,7 +66,7 @@ export default function bankListItem(props) {
 
       return (
         <button
-          className="author--c-btn author--c-btn--sm author--c-btn--table"
+          className="au-c-btn au-c-btn--sm au-c-btn--table"
           onClick={e => getEmbedCode(e, bank)}
         >
           embed code
@@ -83,7 +83,7 @@ export default function bankListItem(props) {
 
     return (
       <button
-        className="author--c-btn author--c-btn--square author--c-btn--table"
+        className="au-c-btn au-c-btn--square au-c-btn--table"
         onClick={(e) => {
           e.stopPropagation();
           appHistory.push(
@@ -105,19 +105,19 @@ export default function bankListItem(props) {
       <td><Icon type={bank.type} /></td>
       <td>{bank.displayName ? bank.displayName.text : null}</td>
       <td>
-        <button className={`author--c-btn author--c-btn--square author--c-publish ${published}`} style={buttonContainer}>
+        <button className={`au-c-btn au-c-btn--square au-c-publish ${published}`} style={buttonContainer}>
           <Icon type={isPublished ? 'Published' : 'Publish'} />
         </button>
       </td>
       <td>
-        <div className="author--c-table__icons" style={buttonContainer}>
+        <div className="au-c-table__icons" style={buttonContainer}>
           {embedButtonOrUrl()}
-          <button className="author--c-btn author--c-btn--square author--c-btn--table">
+          <button className="au-c-btn au-c-btn--square au-c-btn--table">
             <i className="material-icons">edit</i>
           </button>
           {getPreviewButton(bank.bankId, bank.id)}
           {!isPublished ? <button
-            className="author--c-btn author--c-btn--square author--c-btn--table"
+            className="au-c-btn au-c-btn--square au-c-btn--table"
             onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
           >
             <i className="material-icons">delete</i>

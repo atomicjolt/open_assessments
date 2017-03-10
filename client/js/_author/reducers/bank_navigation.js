@@ -8,29 +8,32 @@ const initialState = {
 export default function bankNavigation(state = initialState, action) {
   switch (action.type) {
     case 'GET_BANKS_HIERARCHY': {
-      return { ...state, ...{ loading: true } };
+      return { ...state, loading: true };
     }
     case 'GET_BANKS_HIERARCHY_DONE': {
-      return { ...state, ...{ loading: false } };
+      return { ...state, loading: false };
     }
 
     case 'UPDATE_PATH': {
+
       if (!action.id) {
-        return { ...state, ...{ location: [] } };
+        return { ...state, location: [] };
       }
 
       const pathIndex = _.findIndex(state.location, { id: action.id });
-      const newLocation = _.cloneDeep(state.location);
+      const newLocation = _.cloneDeep(state).location;
 
       if (pathIndex > -1) {
         newLocation.length = pathIndex + 1;
+        newLocation[pathIndex].back = action.back;
       } else {
         newLocation.push({
           id    : action.id,
           name  : action.name,
+          back  : action.back,
         });
       }
-      return { ...state, ...{ location: newLocation } };
+      return { ...state, location: newLocation };
     }
 
     default:

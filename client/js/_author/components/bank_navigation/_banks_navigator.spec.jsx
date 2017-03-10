@@ -53,13 +53,8 @@ describe('Bank Navigator', () => {
     expect(divs.length).toBeGreaterThan(0);
   });
 
-  it('gets the banks', () => {
-    expect(_.indexOf(calledFuncts, 'getBanks')).toBeGreaterThan(-1);
-  });
-
-  it('updates the path, gets assessments, and gets items, when a back is selected', () => {
+  it('updates the path, gets assessments, and gets items, when a bank is selected', () => {
     result.getBankChildren({ id: 1, displayName: { text: 'tacos' } });
-    expect(_.indexOf(calledFuncts, 'updatePath')).toBeGreaterThan(-1);
     expect(_.indexOf(calledFuncts, 'getAssessments')).toBeGreaterThan(-1);
     expect(_.indexOf(calledFuncts, 'getItems')).toBeGreaterThan(-1);
   });

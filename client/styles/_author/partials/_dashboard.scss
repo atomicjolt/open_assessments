@@ -1,4 +1,4 @@
-.author--c-table{
+.au-c-table{
   width: 100%;
   border-collapse: collapse;
 
@@ -26,7 +26,7 @@
       padding-right: 2rem;
     }
 
-    .author--c-table__filter{
+    .au-c-table__filter{
       position: relative;
       background: none;
       border: none;
@@ -86,10 +86,10 @@
 
         }
       }
-      .author--c-table__icons{
+      .au-c-table__icons{
         @include display-flex;
       }
-      .author--c-publish{
+      .au-c-publish{
         background-color: $purple2;
         color: $white;
 
@@ -158,25 +158,26 @@
   }
 }
 
-  .author--c-table__icons{
+  .au-c-table__icons{
     display: none;
     @include align-items(center);
     float: right;
   }
 
-    .author--c-publish{
+    .au-c-publish{
 
     }
 
-.author--c-scrollable{
-  max-height: 90rem;
-  overflow: auto;
+.au-c-scrollable{
+  min-height: 60rem;
+  //max-height: 90rem;
+  //overflow: auto;
 }
 
-.author--c-input--purple{
+.au-c-input--purple{
   @include flex(1);
 
-  .author--c-text-input{
+  .au-c-text-input{
     color: $white;
     border: 0.2rem solid $purple2;
     border-right: none;
@@ -192,14 +193,14 @@
   }
 }
 
-.author--c-embed-contain{
+.au-c-embed-contain{
   width: 100%;
   @include flex(1);
   @include display-flex;
   @include align-items(center);
 }
 
-.author--c-btn--embed{
+.au-c-btn--embed{
   border-radius: 0 $radius $radius 0;
   border: 0.2rem solid $purple2;
   background-color: $purple2;
