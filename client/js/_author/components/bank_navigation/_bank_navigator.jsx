@@ -38,7 +38,6 @@ export class BankNavigator extends React.Component {
     }),
     path               : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
     updatePath         : React.PropTypes.func.isRequired,
-    getBanks           : React.PropTypes.func.isRequired,
     getAssessments     : React.PropTypes.func.isRequired,
     getAssessmentOffered     : React.PropTypes.func.isRequired,
     getItems           : React.PropTypes.func.isRequired,
@@ -83,7 +82,7 @@ export class BankNavigator extends React.Component {
       sortedBanks = _.orderBy(sortedBanks, bank => _.lowerCase(bank.displayName.text), sortName);
     }
     if (sortPublished) {
-      sortedBanks = _.orderBy(sortedBanks, bank => _.find(bank.assignedBankIds, { id: 'the publishedBankId' }), sortPublished);
+      sortedBanks = _.orderBy(sortedBanks, bank => _.includes(bank.assignedBankIds, this.props.settings.publishedBankId), sortPublished);
     }
     return sortedBanks;
   }
