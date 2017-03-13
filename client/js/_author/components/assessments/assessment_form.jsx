@@ -29,6 +29,11 @@ export default class AssessmentForm extends React.Component {
       title: 'start'
     };
   }
+  componentWillUpdate(nextProps) {
+    if (this.props.items && this.props.items.length + 1 === nextProps.items.length) {
+      this.setState({ activeItem: _.last(nextProps.items).id });
+    }
+  }
 
   createItem(newItem) {
     this.props.createItem(newItem);
