@@ -48,14 +48,14 @@ export default class NavigationBarContent extends React.Component {
           { this.publishButton() }
           {
             this.props.isPublished ?
-              <button
+              <Link
                 className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"
+                to={`banks/${bankId}/assessments/${id}/preview`}
+                target="_blank"
               >
-                <Link  to={`banks/${bankId}/assessments/${id}/preview`} target="_blank">
-                  <i className="material-icons">remove_red_eye</i>
-                  Preview Assessment
-                </Link>
-              </button> : null
+                <i className="material-icons">remove_red_eye</i>
+                Preview Assessment
+              </Link> : null
          }
         </div>
       </div>

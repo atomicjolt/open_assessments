@@ -1,7 +1,6 @@
 import React            from 'react';
 import TestUtils        from 'react-addons-test-utils';
 import Stub             from '../../../../specs_support/stub';
-import { hashHistory }  from 'react-router';
 import AssessmentView   from './navigation_bar_content';
 
 describe('New Assessments View', () => {
@@ -29,11 +28,11 @@ describe('New Assessments View', () => {
 
   it('determines amount of buttons from number of items', () => {
     let buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
-    expect(buttons.length).toBe(3);
+    expect(buttons.length).toBe(2);
     props.items = [];
     result = TestUtils.renderIntoDocument(<Stub><AssessmentView {...props} /></Stub>);
     buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
-    expect(buttons.length).toBe(2);
+    expect(buttons.length).toBe(1);
   });
 
   it('click editPublish button', () => {
