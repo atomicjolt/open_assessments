@@ -3,7 +3,7 @@ import React    from 'react';
 export default function breadcrumbs(props) {
   const { name, id } = props;
   const fetchAndUpdate = () => {
-    props.updatePath(id, name);
+    props.updatePath(id, name, -1);
     props.getBankChildren(id);
   };
   return (
