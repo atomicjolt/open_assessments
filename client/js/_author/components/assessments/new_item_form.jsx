@@ -76,6 +76,9 @@ export default class newItemForm extends React.Component {
                     <option value={types.audioUpload}>
                       Audio Upload
                     </option>
+                    <option value={types.moveableWordSandbox}>
+                      Moveable Word Sandbox
+                    </option>
                   </select>
                 </div>
               </div>
