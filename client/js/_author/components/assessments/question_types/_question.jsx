@@ -153,6 +153,8 @@ export default class Question extends React.Component {
           />
         );
 
+      case types.moveableWordSentence:
+        return (<h1>MoveableWord</h1>);
       default:
         return null;
     }
