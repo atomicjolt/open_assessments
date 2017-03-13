@@ -1,10 +1,14 @@
 import _    from 'lodash';
 import genusTypes from '../../constants/genus_types';
 
-export function scrub(item) {
+export function scrub(item, protectedKeys) {
   let scrubbedItem = _.cloneDeep(item);
-  scrubbedItem = _.omitBy(scrubbedItem, _.isNil);
-  scrubbedItem = _.omitBy(scrubbedItem, temp => _.isObject(temp) && _.isEmpty(temp));
+  scrubbedItem = _.omitBy(scrubbedItem, (val, key) => (
+    _.isNil(val) && !_.includes(protectedKeys, key)
+  ));
+  scrubbedItem = _.omitBy(scrubbedItem, (val, key) => (
+    _.isObject(val) && _.isEmpty(val) && !_.includes(protectedKeys, key)
+  ));
   return scrubbedItem;
 }
 
