@@ -69,3 +69,58 @@
     margin-left: 1rem;
   }
 }
+
+
+
+
+// Image Sequence
+.au-c-image-sequence__answers{
+  margin: 3rem 0 3rem;
+
+  &.au-o-row{
+    margin-left: -2rem;
+    @include align-items(stretch);
+  }
+}
+
+.au-c-image-sequence-answer{
+  padding: 1rem;
+  height: 100%;
+  border-radius: $radius;
+  background: $white;
+  box-shadow: 0 0 0.5rem rgba(0,0,0,0.15);
+  cursor: pointer;
+
+  &:hover{
+    box-shadow: 0 0 0.7rem rgba(0,0,0,0.3);
+  }
+
+  .au-c-input-label--left{
+    display: none;
+    min-width: auto;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .au-c-dropdown{
+    display: none;
+  }
+
+  &.is-active{
+    .au-c-dropdown{
+      display: block;
+    }
+    .au-c-input-label--left{
+      @include display-flex;
+    }
+    .au-c-drop-zone-answer__image{
+      margin-top: -7.7rem; //offset the dropdown and label for centering
+      padding-top: 7.7rem;
+      max-height: 32.7rem;
+    }
+  }
+}
+
+.au-c-image-sequence-answer__top{
+  @include display-flex;
+  @include align-items(center);
+}
