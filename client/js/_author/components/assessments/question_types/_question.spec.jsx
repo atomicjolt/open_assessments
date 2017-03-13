@@ -42,6 +42,7 @@ describe('question component', () => {
       toggleReorder: () => {},
       deleteAssessmentItem: () => {},
       moveItem: () => {movedUp = true},
+      uploadedAssets: () => {},
     };
 
     result = TestUtils.renderIntoDocument(

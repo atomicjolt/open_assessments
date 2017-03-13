@@ -12,8 +12,12 @@ describe('navigationBarContent', () => {
     updater = false;
     props = {
       view: 'banks',
-      path: ['123', '345', '567'],
-      currentBankId: 123456,
+      path: [
+        {id: '123', name: 'IMASPEC'},
+        {id: '345', name: 'ANOTHERONE'},
+        {id: '567', name: 'YETANOTHER'},
+      ],
+      currentBankId: '123456',
       updatePath: () => { updater = true; }
     };
 

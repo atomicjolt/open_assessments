@@ -15,7 +15,7 @@ describe('New Assessments View', () => {
       view: 'assessments',
       editOrPublishAssessment: () => isEditOrPublishAssessment = !isEditOrPublishAssessment,
       isPublished,
-      items: ['stuff', 'boom'],
+      items: [{name: 'stuff'}, {name: 'boom'}],
     };
     result = TestUtils.renderIntoDocument(<Stub><AssessmentView {...props} /></Stub>);
   });

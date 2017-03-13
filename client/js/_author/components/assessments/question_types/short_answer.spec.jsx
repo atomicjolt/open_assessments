@@ -11,7 +11,7 @@ describe('Sets size for short answer', () => {
   beforeEach(() => {
     props = {
       updateItem: newProps => this.updateItem(newProps),
-      item: items
+      item: {items},
     };
     result = TestUtils.renderIntoDocument(<Stub><ShortAnswer {...props} /></Stub>);
   });

@@ -11,6 +11,7 @@ describe('Multiple Choice Option', () => {
 
   beforeEach(() => {
     props = {
+      id: '7',
       isCorrect: true,
       key: 'assessmentChoice_1',
       updateChoice: attr =>  { updatedChoice = attr; },
@@ -20,6 +21,7 @@ describe('Multiple Choice Option', () => {
       moveUp: (e) => { moveChoice = e.target.innerText; },
       moveDown: (e) => { moveChoice = e.target.innerText; },
       isActive: true,
+      updateItem: () => {},
     };
     result = TestUtils.renderIntoDocument(<Stub><Option {...props} /></Stub>);
   });

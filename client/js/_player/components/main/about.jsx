@@ -13,7 +13,7 @@ const select = (state, props) => {
 export class About extends React.Component {
 
   static propTypes = {
-    localizedStrings: React.PropTypes.func.isRequired,
+    localizedStrings: React.PropTypes.object.isRequired,
   }
 
   render() {
