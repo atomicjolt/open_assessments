@@ -57,7 +57,7 @@ export class BankNavigator extends React.Component {
 
   getBankChildren(bankId) {
     const bank = _.find(this.props.banks, b => b.id === bankId);
-    if (bank) { this.props.updatePath(bankId, bank.displayName.text); }
+    if (bank) { this.props.updatePath(bankId, bank); }
     this.props.getAssessments(bankId);
     this.props.getItems(bankId);
   }
