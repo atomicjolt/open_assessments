@@ -1,15 +1,16 @@
-import React            from 'react';
-import _                from 'lodash';
-import MultipleChoice   from './multiple_choice/multiple_choice';
-import QuestionHeader   from './question_common/header/_header';
-import Settings         from './question_common/settings';
-import QuestionText     from './question_common/text';
-import AudioUpload      from './audio_upload';
-import FileUpload       from './file_upload';
-import ShortAnswer      from './short_answer';
-import types            from '../../../../constants/question_types';
-import languages        from '../../../../constants/language_types';
-import Preview          from './preview_question';
+import React               from 'react';
+import _                   from 'lodash';
+import MultipleChoice      from './multiple_choice/multiple_choice';
+import QuestionHeader      from './question_common/header/_header';
+import Settings            from './question_common/settings';
+import QuestionText        from './question_common/text';
+import AudioUpload         from './audio_upload';
+import FileUpload          from './file_upload';
+import ShortAnswer         from './short_answer';
+import MoveableWordSandbox from './moveable_words_sandbox';
+import types               from '../../../../constants/question_types';
+import languages           from '../../../../constants/language_types';
+import Preview             from './preview_question';
 
 export default class Question extends React.Component {
   static propTypes = {
@@ -152,6 +153,9 @@ export default class Question extends React.Component {
             item={this.props.item}
           />
         );
+
+      case types.moveableWordSandbox:
+        return <MoveableWordSandbox />;
 
       default:
         return null;
