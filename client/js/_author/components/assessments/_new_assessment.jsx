@@ -62,7 +62,7 @@ export class NewAssessment extends React.Component {
     const id = encodeURIComponent(bankId);
     let flatBanks = {};
     const banks = this.flattenBanks(this.props.banks, flatBanks);
-    this.props.updatePath(id, banks[id].displayName.text, true);
+    this.props.updatePath(id, banks[id], true);
     this.props.getAssessments(id);
     this.props.getItems(id);
     hashHistory.push('/');

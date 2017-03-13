@@ -155,7 +155,7 @@ export class EditAssessment extends React.Component {
     let flatBanks = {};
     const banks = this.flattenBanks(this.props.banks, flatBanks);
 
-    this.props.updatePath(bankId, banks[bankId].displayName.text, true);
+    this.props.updatePath(bankId, banks[bankId], true);
     this.props.getAssessments(bankId);
     this.props.getItems(bankId);
     hashHistory.push('/');
