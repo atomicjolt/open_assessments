@@ -1,10 +1,11 @@
-import audioUpload      from './audio_upload';
-import base             from './base';
-import shortAnswer      from './short_answer';
-import multipleChoice   from './multiple_choice';
-import multipleAnswer   from './multiple_answer';
-import fileUpload       from './file_upload';
-import genusTypes       from '../../../../constants/genus_types';
+import audioUpload         from './audio_upload';
+import base                from './base';
+import shortAnswer         from './short_answer';
+import multipleChoice      from './multiple_choice';
+import multipleAnswer      from './multiple_answer';
+import fileUpload          from './file_upload';
+import moveableWordSandbox from './moveable_words_sandbox';
+import genusTypes          from '../../../../constants/genus_types';
 
 export default function factory(type) {
   switch (type) {
@@ -24,6 +25,9 @@ export default function factory(type) {
 
     case genusTypes.item.fileUpload:
       return fileUpload;
+
+    case genusTypes.item.moveableWordSandbox:
+      return moveableWordSandbox;
 
     default:
       return base;
