@@ -2570,6 +2570,10 @@ electron-to-chromium@^1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.2.2.tgz#e41bc9488c88e3cfa1e94bde28e8420d7d47c47c"
 
+element-class@^0.2.0:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/element-class/-/element-class-0.2.2.tgz#9d3bbd0767f9013ef8e1c8ebe722c1402a60050e"
+
 emoji-regex@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.1.0.tgz#d14ef743a7dfa6eaf436882bd1920a4aed84dd94"
@@ -2648,12 +2652,6 @@ ent@~2.2.0:
 entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
-
-enzyme-matchers@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/enzyme-matchers/-/enzyme-matchers-2.1.2.tgz#da2c20c3d55b128db3de6a5016f2531066b8061f"
-  dependencies:
-    deep-equal-ident "^1.1.1"
 
 enzyme@^2.7.1:
   version "2.7.1"
@@ -3006,6 +3004,10 @@ events@^1.0.0:
 eventsource-polyfill@^0.9.6:
   version "0.9.6"
   resolved "https://registry.yarnpkg.com/eventsource-polyfill/-/eventsource-polyfill-0.9.6.tgz#10e0d187f111b167f28fdab918843ce7d818f13c"
+
+exenv@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.0.tgz#3835f127abf075bfe082d0aed4484057c78e3c89"
 
 exit-hook@^1.0.0:
   version "1.1.1"
@@ -4083,6 +4085,10 @@ init-package-json@~1.9.4:
     validate-npm-package-license "^3.0.1"
     validate-npm-package-name "^2.0.1"
 
+inline-worker@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/inline-worker/-/inline-worker-0.1.0.tgz#b290c336eb54a721ed3d22f72a2b9aacdf680e84"
+
 inquirer@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-0.7.1.tgz#b8acf140165bd581862ed1198fb6d26430091fac"
@@ -4482,12 +4488,6 @@ jasmine-core@2.5.2, jasmine-core@~2.5.2:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.5.2.tgz#6f61bd79061e27f43e6f9355e44b3c6cab6ff297"
 
-jasmine-enzyme@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/jasmine-enzyme/-/jasmine-enzyme-2.1.2.tgz#f5191f46b8f94b24ad6fece77be4c5a57ef7cadd"
-  dependencies:
-    enzyme-matchers "^2.1.2"
-
 jasmine-jquery@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/jasmine-jquery/-/jasmine-jquery-2.1.1.tgz#d4095e646944a26763235769ab018d9f30f0d47b"
@@ -4861,14 +4861,6 @@ lodash._baseindexof@^3.0.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/lodash._baseindexof/-/lodash._baseindexof-3.1.0.tgz#fe52b53a1c6761e42618d654e4a25789ed61822c"
 
-lodash._baseisequal@^3.0.0:
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/lodash._baseisequal/-/lodash._baseisequal-3.0.7.tgz#d8025f76339d29342767dcc887ce5cb95a5b51f1"
-  dependencies:
-    lodash.isarray "^3.0.0"
-    lodash.istypedarray "^3.0.0"
-    lodash.keys "^3.0.0"
-
 lodash._basetostring@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/lodash._basetostring/-/lodash._basetostring-3.0.1.tgz#d1861d877f824a52f669832dcaf3ee15566a07d5"
@@ -4876,10 +4868,6 @@ lodash._basetostring@^3.0.0:
 lodash._basevalues@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._basevalues/-/lodash._basevalues-3.0.0.tgz#5b775762802bde3d3297503e26300820fdf661b7"
-
-lodash._bindcallback@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/lodash._bindcallback/-/lodash._bindcallback-3.0.1.tgz#e531c27644cf8b57a99e17ed95b35c748789392e"
 
 lodash._cacheindexof@^3.0.0:
   version "3.0.2"
@@ -5020,13 +5008,6 @@ lodash.isarray@^3.0.0:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
 
-lodash.isequal@^3.0:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-3.0.4.tgz#1c35eb3b6ef0cd1ff51743e3ea3cf7fdffdacb64"
-  dependencies:
-    lodash._baseisequal "^3.0.0"
-    lodash._bindcallback "^3.0.0"
-
 lodash.isequal@^4.0.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
@@ -5040,10 +5021,6 @@ lodash.isobject@~2.4.1:
   resolved "https://registry.yarnpkg.com/lodash.isobject/-/lodash.isobject-2.4.1.tgz#5a2e47fe69953f1ee631a7eba1fe64d2d06558f5"
   dependencies:
     lodash._objecttypes "~2.4.1"
-
-lodash.istypedarray@^3.0.0:
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/lodash.istypedarray/-/lodash.istypedarray-3.0.6.tgz#c9a477498607501d8e8494d283b87c39281cef62"
 
 lodash.keys@^3.0.0:
   version "3.1.2"
@@ -6864,6 +6841,14 @@ react-localization@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/react-localization/-/react-localization-0.0.2.tgz#fb9ae5c3ac161a5a1d23a32e982e2b2897910d0a"
 
+react-modal@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-1.7.1.tgz#ad6cacd41ce7a7f779a431781e6df53337a6edc1"
+  dependencies:
+    element-class "^0.2.0"
+    exenv "1.2.0"
+    lodash.assign "^4.2.0"
+
 react-proxy-loader@0.3.4:
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/react-proxy-loader/-/react-proxy-loader-0.3.4.tgz#49dfeafa49d6637b0c7428ba7c0d39abb08094ca"
@@ -7084,9 +7069,11 @@ rechoir@^0.6.2:
   dependencies:
     resolve "^1.1.6"
 
-recorderjs@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/recorderjs/-/recorderjs-1.0.1.tgz#f8211a0f90bdcdcfa2f431a597b6cb94a1b93571"
+"recorderjs@git+https://github.com/nick-benoit14/Recorderjs":
+  version "0.1.0"
+  resolved "git+https://github.com/nick-benoit14/Recorderjs#64682b37001a9f14a061485323fbed4110ba82e1"
+  dependencies:
+    inline-worker "^0.1.0"
 
 redbox-react@^1.2.5, redbox-react@^1.3.3:
   version "1.3.3"

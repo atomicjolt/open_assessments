@@ -2,12 +2,16 @@ import React    from 'react';
 
 export default function breadcrumbs(props) {
   const { name, id } = props;
+  const fetchAndUpdate = () => {
+    props.updatePath(id, name, -1);
+    props.getBankChildren(id);
+  };
   return (
-    <span className="author--o-flex-center">
-      <span className="author--c-breadcrumb__divider">/</span>
+    <span className="au-o-flex-center">
+      <span className="au-c-breadcrumb__divider">/</span>
       <button
-        className={props.current ? 'author--c-btn author--c-btn--breadcrumb is-active' : 'author--c-btn author--c-btn--breadcrumb'}
-        onClick={() => props.updatePath(id, name)}
+        className={props.current ? 'au-c-btn au-c-btn--breadcrumb is-active' : 'au-c-btn au-c-btn--breadcrumb'}
+        onClick={() => fetchAndUpdate()}
       >
         {name}
       </button>

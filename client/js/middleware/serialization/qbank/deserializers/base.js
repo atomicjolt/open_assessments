@@ -5,17 +5,27 @@ import { getLanguage }      from '../../../../constants/language_types';
 export default function base(item) {
   return {
     id: item.id,
+    originalItem: item,
     type: getQbankType(item.genusTypeId),
     bankId: item.bankId,
     assessmentId: null, // TODO
     name: _.get(item, 'displayName.text'),
-    language: getLanguage(_.get(item, 'displayName.languageTypeId')), // TODO: How does the language even work?
+    language: getLanguage(_.get(item, 'question.text.languageTypeId')),
     question: {
       id: _.get(item, 'question.id'),
       type: getQbankType(_.get(item, 'question.genusTypeId')),
       text: _.get(item, 'question.text.text'),
-      fileIds: {},
+      fileIds: _.get(item, 'question.fileIds'),
       choices: null, // implement in type
+      texts: _.get(item, 'question.texts'),
+      correctFeedback: {
+        text: null,
+        answerId: null,
+      },
+      incorrectFeedback: {
+        text: null,
+        answerId: null,
+      },
     },
   };
 }

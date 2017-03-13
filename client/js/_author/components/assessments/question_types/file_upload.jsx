@@ -3,10 +3,15 @@ import Feedback from './question_common/single_feedback';
 
 export default function FileUpload(props) {
   return (
-    <Feedback
-      item={props.item}
-      updateItem={props.updateItem}
-    />
+    <div className="au-c-question__feedback">
+      <Feedback
+        bankId={props.item.bankId}
+        feedbackType="correctFeedback"
+        feedback={_.get(props.item, 'question.correctFeedback')}
+        updateItem={props.updateItem}
+        labelText="Feedback"
+      />
+    </div>
   );
 }
 

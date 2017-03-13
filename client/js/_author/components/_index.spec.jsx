@@ -1,11 +1,20 @@
-import React      from 'react';
-import TestUtils  from 'react-addons-test-utils';
-import Index      from './_index';
+import React        from 'react';
+import { shallow }  from 'enzyme';
+import { Index }    from './_index';
 
 describe('index', () => {
+  let props;
+  let result;
+
+  beforeEach(() => {
+    props = {
+      getBanks: () => {},
+    };
+
+    result = shallow(<Index {...props} >test text</Index>);
+  });
+
   it('renders children', () => {
-    const result = TestUtils.renderIntoDocument(<Index>test text</Index>);
-    const content = TestUtils.findRenderedDOMComponentWithTag(result, 'div');
-    expect(content.textContent).toContain('test text');
+    expect(result.text()).toContain('test text');
   });
 });

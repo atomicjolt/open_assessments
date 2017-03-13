@@ -4,6 +4,7 @@ import genusTypes from '../../../../constants/genus_types';
 import Feedback   from './question_common/single_feedback';
 
 export default class AudioUpload extends React.Component {
+  static MAX_TIME = 240;
   static propTypes = {
     updateItem: React.PropTypes.func.isRequired,
     item: React.PropTypes.object
@@ -20,6 +21,24 @@ export default class AudioUpload extends React.Component {
     return seconds;
   }
 
+  static rangeWarning() {
+    return (
+      <span className="au-c-inline-error">Please enter a positive number under 240</span>
+    );
+  }
+
+  constructor(props) {
+    super(props);
+    const timeLimit = AudioUpload.getAudioLimit(props.item)
+      || AudioUpload.MAX_TIME;
+    const displayWarning = timeLimit > AudioUpload.MAX_TIME;
+
+    this.state = {
+      timeLimit: _.toString(timeLimit),
+      displayWarning,
+    };
+  }
+
   handleBlur(e) {
     this.props.updateItem({
       question:{
@@ -33,42 +52,59 @@ export default class AudioUpload extends React.Component {
     });
   }
 
-  static rangeWarning(){
-    return (
-      <span className="author--c-inline-error">Please enter a number under 240</span>
-    );
+  handleTimeLimitUpdate(e) {
+    let timeLimit = e.target.value;
+    const timeVal = parseInt(timeLimit, 10);
+    let displayWarning = false;
+    if (timeVal > AudioUpload.MAX_TIME) {
+      timeLimit = _.toString(AudioUpload.MAX_TIME);
+      displayWarning = true;
+    } else if (_.isNaN(timeVal) || timeVal < 0) {
+      displayWarning = true;
+    }
+
+    this.setState({
+      timeLimit,
+      displayWarning
+    });
   }
 
   render() {
-    const audioLimit = AudioUpload.getAudioLimit(this.props.item);
-    const warning = audioLimit >= 240 ? AudioUpload.rangeWarning() : null;
     return (
       <div>
-        <div className="author--c-question__answers author--o-row" role="radiogroup">
-          <div className="author--c-file-upload__audio-settings is-active">
+        <div className="au-c-question__answers au-o-row" role="radiogroup">
+          <div className="au-c-file-upload__audio-settings is-active">
             <span>Audio record limit</span>
-            <div className="author--c-input author--c-input--inline">
+            <div className="au-c-input au-c-input--inline">
               <label htmlFor="audio-limit" />
-              <div className="author--c-input__contain">
+              <div className="au-c-input__contain">
                 <input
-                  className="author--c-text-input author--c-text-input--smaller"
+                  className="au-c-text-input au-c-text-input--smaller"
                   id="audio-limit"
                   type="text"
                   maxLength="3"
-                  defaultValue={audioLimit}
+                  value={this.state.timeLimit}
+                  onChange={e => this.handleTimeLimitUpdate(e)}
                   onBlur={e => this.handleBlur(e)}
                 />
-                <div className="author--c-input__bottom has-error" />
+                <div
+                  className={`au-c-input__bottom ${this.state.displayWarning ? 'has-error' : ''}`}
+                />
               </div>
             </div>
             <span>seconds. (240 maximum)</span>
-            {warning}
+            { this.state.displayWarning ? AudioUpload.rangeWarning() : null }
           </div>
         </div>
-        <Feedback
-          item={this.props.item}
-          updateItem={this.props.updateItem}
-        />
+        <div className="au-c-question__feedback">
+          <Feedback
+            feedbackType="correctFeedback"
+            feedback={_.get(this.props.item, 'question.correctFeedback')}
+            updateItem={this.props.updateItem}
+            labelText="Feedback"
+            bankId={this.props.item.bankId}
+          />
+        </div>
       </div>
     );
   }

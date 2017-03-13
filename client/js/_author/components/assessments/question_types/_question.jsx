@@ -1,5 +1,6 @@
 import React            from 'react';
-import MultipleChoice   from './multiple_choice';
+import _                from 'lodash';
+import MultipleChoice   from './multiple_choice/multiple_choice';
 import QuestionHeader   from './question_common/header/_header';
 import Settings         from './question_common/settings';
 import QuestionText     from './question_common/text';
@@ -7,12 +8,16 @@ import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
 import ShortAnswer      from './short_answer';
 import types            from '../../../../constants/question_types';
+import languages        from '../../../../constants/language_types';
+import Preview          from './preview_question';
 
 export default class Question extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
+      id: React.PropTypes.string,
       type: React.PropTypes.string,
       bankId: React.PropTypes.string,
+      name: React.PropTypes.string,
     }).isRequired,
     isActive: React.PropTypes.bool,
     itemIndex: React.PropTypes.number,
@@ -31,11 +36,13 @@ export default class Question extends React.Component {
     super(props);
     this.state = {
       reorderActive: false,
+      language: languages.languageTypeId.english,
+      preview: false,
     };
   }
 
   getClassName() {
-    if (this.props.isActive && this.props.reorderActive) {
+    if (this.props.isActive && (this.props.reorderActive || this.state.preview)) {
       return 'reorder-active';
     }
 
@@ -51,8 +58,20 @@ export default class Question extends React.Component {
   }
 
   updateItem(newItemProperties) {
+
     const { item } = this.props;
-    this.props.updateItem({ id: item.id, ...newItemProperties });
+
+    if (newItemProperties.language) {
+      if (newItemProperties.language && this.state.language !== newItemProperties.language) {
+        this.setState({ language: newItemProperties.language });
+      }
+    } else {
+      this.props.updateItem({
+        id: item.id,
+        language: newItemProperties.language || this.state.language,
+        ...newItemProperties
+      });
+    }
   }
 
   changeType(type) {
@@ -139,18 +158,64 @@ export default class Question extends React.Component {
     }
   }
 
-  render() {
+  editContent() {
     const { item } = this.props;
-    const { name, type, id, question, language, bankId } = item;
+    const { name, type, id, question, bankId } = item;
+    const { multipleAnswer, multipleReflection, reflection } = types;
+    const defaultLanguage = this.state.language;
+    const chosenLanguage = _.find(item.question.texts, (textObj) => {
+      return textObj.languageTypeId === defaultLanguage;
+    });
+    const questionText = _.get(chosenLanguage, 'text', '');
+    const languageTypeId = _.get(chosenLanguage, 'languageTypeId');
+
+    return (
+      <div>
+        <Settings
+          id={id}
+          updateItem={newProps => this.updateItem(newProps)}
+          defaultName={name}
+          language={this.state.language}
+          shuffle={question.shuffle}
+          multipleAnswer={item.type === multipleAnswer || item.type === multipleReflection}
+          reflection={_.includes([reflection, multipleReflection], item.type)}
+          makeReflection={reflect => this.makeReflection(reflect)}
+          makeMultipleAnswer={multi => this.makeMultipleAnswer(multi)}
+          type={type}
+        />
+        <div className={`au-c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
+          <QuestionText
+            fileIds={question.fileIds}
+            itemId={id}
+            editorKey={languageTypeId}
+            text={questionText}
+            updateItem={newProps => this.updateItem(newProps)}
+            bankId={bankId}
+          />
+          {this.content()}
+        </div>
+      </div>
+    );
+  }
+
+  previewContent() {
+    return (
+      <Preview
+        item={this.props.item}
+      />
+    );
+  }
+
+  render() {
+    const { name, type, id } = this.props.item;
     const className = this.getClassName();
-    const questionText = question ? question.text : '';
 
     return (
       <div
-        className={`author--o-item author--c-question ${className}`}
+        className={`au-o-item au-c-question ${className}`}
         tabIndex="0"
-        onClick={() => this.props.activateItem(item.id)}
-        onFocus={() => this.props.activateItem(item.id)}
+        onClick={() => this.props.activateItem(id)}
+        onFocus={() => this.props.activateItem(id)}
       >
         <QuestionHeader
           name={name}
@@ -164,28 +229,11 @@ export default class Question extends React.Component {
           reorderActive={this.props.isActive && this.props.reorderActive}
           moveUp={() => this.moveQuestionUp()}
           moveDown={() => this.moveQuestionDown()}
+          togglePreview={() => this.setState({ preview: !this.state.preview })}
+          itemIndex={this.props.itemIndex}
+          preview={this.state.preview}
         />
-        <Settings
-          id={id}
-          updateItem={newProps => this.updateItem(newProps)}
-          defaultName={name}
-          language={language}
-          maintainOrder={question && !question.shuffle}
-          multipleAnswer={item.type === types.multipleAnswer || item.type === types.multipleReflection}
-          reflection={_.includes([types.reflection, types.multipleReflection], item.type)}
-          makeReflection={reflect => this.makeReflection(reflect)}
-          makeMultipleAnswer={multi => this.makeMultipleAnswer(multi)}
-          type={type}
-        />
-        <div className={`author--c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
-          <QuestionText
-            itemId={id}
-            text={questionText}
-            updateItem={newProps => this.updateItem(newProps)}
-            bankId={bankId}
-          />
-          {this.content()}
-        </div>
+        {this.state.preview && this.props.isActive ? this.previewContent() : this.editContent()}
       </div>
     );
   }

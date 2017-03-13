@@ -34,9 +34,9 @@ describe('_new_assessment component', () => {
   });
 
   it('renders Heading and Assessment Form to DOM', () => {
-    const heading = TestUtils.findRenderedDOMComponentWithClass(result, 'author--c-logo');
+    const heading = TestUtils.findRenderedDOMComponentWithClass(result, 'au-c-logo');
     expect(heading).toBeDefined();
-    const assessmentForm = TestUtils.findRenderedDOMComponentWithClass(result, 'author--c-assessment-title');
+    const assessmentForm = TestUtils.findRenderedDOMComponentWithClass(result, 'au-c-assessment-title');
     expect(assessmentForm).toBeDefined();
   });
 

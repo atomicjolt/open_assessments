@@ -1,4 +1,4 @@
-  .author--c-radio--file{
+  .au-c-radio--file{
 
     label{
       display: block;
@@ -31,7 +31,7 @@
     }
   }
 
-  .author--c-file-upload__audio-settings{
+  .au-c-file-upload__audio-settings{
     display: none;
     width: 100%;
     padding-left: 3rem;
@@ -44,7 +44,7 @@
       color: $gray8;
     }
 
-    .author--c-input--inline{
+    .au-c-input--inline{
       margin: 0 0.5rem;
       max-width: 5rem;
 
@@ -58,7 +58,7 @@
       @include display-flex;
     }
 
-    .author--c-inline-error{
+    .au-c-inline-error{
       color: $red;
       margin-left: 1rem;
     }

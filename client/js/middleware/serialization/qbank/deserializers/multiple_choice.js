@@ -12,7 +12,7 @@ function deserializeChoices(choices, answers) {
       text: choice.text,
       order: index,
       feedback: null,
-      fileIds: [],
+      fileIds: {},
       isCorrect: false,
     };
     _.forEach(answers, (answer) => {
@@ -22,6 +22,10 @@ function deserializeChoices(choices, answers) {
           feedback: _.get(answer, 'feedback.text'),
           isCorrect: answer.genusTypeId === genusTypes.answer.rightAnswer,
           answerId: answer.id,
+          fileIds: {
+            ...newChoices[choice.id].fileIds,
+            ...answer.fileIds,
+          },
         };
       }
     });
@@ -35,7 +39,6 @@ export default function multipleChoice(item) {
 
   newItem.question = {
     ...newItem.question,
-    multipleAnswer: _.get(item, 'question.multiAnswer'),
     shuffle: _.get(item, 'question.shuffle'),
     choices: deserializeChoices(_.get(item, 'question.choices'), item.answers)
   };

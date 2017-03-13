@@ -1,3 +1,4 @@
+import _       from 'lodash';
 import React   from 'react';
 import TinyMCE from 'react-tinymce';
 
@@ -7,6 +8,7 @@ import 'tinymce/plugins/autolink/plugin';
 import 'tinymce/plugins/paste/plugin';
 import 'tinymce/plugins/link/plugin';
 import 'tinymce/plugins/code/plugin';
+import 'tinymce/plugins/media/plugin';
 import 'tinymce/plugins/image/plugin';
 import 'tinymce/plugins/charmap/plugin';
 import 'tinymce/plugins/lists/plugin';
@@ -16,9 +18,11 @@ import guid    from '../../../utils/guid';
 export default class TinyWrapper extends React.Component {
   static propTypes = {
     text: React.PropTypes.string,
-    uploadImage: React.PropTypes.func.isRequired,
+    uploadMedia: React.PropTypes.func.isRequired,
+    editorKey: React.PropTypes.string,
     onBlur: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func.isRequired,
+    openModal: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -26,12 +30,12 @@ export default class TinyWrapper extends React.Component {
     this.id = guid();
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate(nextProps) {
     // TinyMCE doesn't handle rerendering very well, and everything dealing
     // with the content inside of it is completely managed by tinyMCE, so we
-    // never rerender. All state that needs to be updated is done so in
-    // componentWillReceiveProps or in callbacks from tinyMCE.
-    return false;
+    // only render when the editorKey changes. All state that needs to be
+    // updated is done so in componentWillReceiveProps or in callbacks from tinyMCE.
+    return nextProps.editorKey !== this.props.editorKey;
   }
 
   tinyMCEConfig() {
@@ -41,37 +45,51 @@ export default class TinyWrapper extends React.Component {
       skin: false,
       menubar: false,
       statusbar: false,
-      file_picker_types: 'image',
-      file_picker_callback: (imageCallback, value, meta) => {
-        if (meta.filetype === 'image') {
-          this.imageFilePicker.onchange = e => this.props.uploadImage(
-            e.target.files[0],
-            imageCallback
-          );
-          this.imageFilePicker.click();
-        }
-      },
-      plugins: 'autolink link image lists paste code charmap',
-      toolbar: 'bold italic removeformat | bullist numlist  blockquote | code charmap subscript superscript | image',
+      plugins: 'autolink link lists paste code charmap media image',
+      toolbar: 'bold italic removeformat | bullist numlist  blockquote | code charmap subscript superscript | insert_image audio video',
       inline: true,
       paste_data_images: true,
+      browser_spellcheck: true,
+      setup: (editor) => {
+        editor.addButton('insert_image', {
+          text: '',
+          icon: 'image',
+          tooltip: 'Insert Image',
+          onclick: () => {
+            this.props.openModal(editor, 'img');
+          },
+        });
+        editor.addButton('audio', {
+          text: '',
+          icon: 'audio',
+          tooltip: 'Insert Audio',
+          onclick: () => {
+            this.props.openModal(editor, 'audio');
+          },
+        });
+        editor.addButton('video', {
+          text: '',
+          icon: 'video',
+          tooltip: 'Insert Video',
+          onclick: () => {
+            this.props.openModal(editor, 'video');
+          }
+        });
+      },
     };
   }
 
   render() {
     return (
       <div>
+        <label htmlFor={`${this.id}-tinymce`} />
         <div id={this.id} />
         <TinyMCE
+          id={`${this.id}-tinymce`}
           content={this.props.text}
           config={this.tinyMCEConfig()}
-          onBlur={e => this.props.onBlur(e.target.getContent())}
+          onBlur={e => { this.props.onBlur(e.target.getContent(), e.target.isDirty()); }}
           onFocus={this.props.onFocus}
-        />
-        <input
-          className="author--c-image-uploader author--c-file"
-          type="file"
-          ref={ref => (this.imageFilePicker = ref)}
         />
       </div>
     );

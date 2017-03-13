@@ -1,6 +1,5 @@
 import _                         from 'lodash';
 import baseSerializer            from './base';
-import { baseSerializeQuestion } from './base';
 import { scrub }                 from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
@@ -8,10 +7,11 @@ import guid                      from '../../../../utils/guid';
 function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
+    const newOrder = _.get(updateValues, 'order');
     return {
       id: choice.id,
       text: _.get(updateValues, 'text') || choice.text,
-      order: _.get(updateValues, 'order') || choice.order,
+      order: _.isNil(newOrder) ? choice.order : newOrder,
       delete: _.get(updateValues, 'delete'),
     };
   });
@@ -29,16 +29,13 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
-    multiAnswer: newQuestionAttributes.multiAnswer,
-    shuffle: newQuestionAttributes.shuffle,
+    shuffle: _.isNil(newQuestionAttributes.shuffle) ? null : newQuestionAttributes.shuffle,
     timeValue: newQuestionAttributes.timeValue,
     choices: null,
   };
 
   if (newQuestionAttributes.choices) {
-    newQuestion.choices = scrub(
-      serializeChoices(originalQuestion.choices, newQuestionAttributes.choices)
-    );
+    newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
   }
 
   return scrub(newQuestion);
@@ -65,8 +62,13 @@ function serializeAnswers(originalChoices, newChoiceAttributes) {
       feedback: _.get(updateValues, 'feedback') || choice.feedback,
       type: genusTypes.answer.multipleChoice,
       choiceIds: [choice.id],
+      fileIds: _.get(updateValues, 'fileIds'),
     });
   });
+}
+
+function killAnswers(answers) {
+  return _.map(answers, answer => ({ id: answer.id, delete: true }));
 }
 
 export default function multipleChoiceSerializer(originalItem, newItemAttributes) {
@@ -80,7 +82,11 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
     };
 
     if (question.choices) {
-      newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
+      if (newItemAttributes.type && originalItem.type !== newItemAttributes.type) {
+        newItem.answers = killAnswers(_.get(originalItem, 'originalItem.answers'));
+      } else {
+        newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
+      }
     }
   }
   return scrub(newItem);

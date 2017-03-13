@@ -1,74 +1,37 @@
-import React          from 'react';
-import TestUtils      from 'react-addons-test-utils';
-import Settings       from './settings';
-import types          from '../../../../../constants/question_types';
-import Stub           from '../../../../../../specs_support/stub';
+import React            from 'react';
+import { shallow }      from 'enzyme';
+import Settings         from './settings';
 
-describe('settings component', () => {
-  let props;
+describe('Correct answer selector', () => {
   let result;
-  let itemUpdated;
+  let props;
+  let updateItemValue;
 
   beforeEach(() => {
-    itemUpdated = false;
+    updateItemValue = null;
     props = {
-      id: '7',
-      defaultName: 'IMALITTLESPEC',
-      type: '',
-      language: 'hindi',
-      updateItem: () => {itemUpdated = true},
-      makeReflection: () => {},
-      maintainOrder: false,
-      multipleAnswer: false,
-      reflection: false,
+      id: 'bestIdEver',
+      defaultName: 'Charles Bender',
+      language: 'American',
+      updateItem: (value) => { updateItemValue = value; },
     };
-    result = TestUtils.renderIntoDocument(<Stub><Settings {...props} /></Stub>);
+    result = shallow(<Settings {...props} />);
   });
 
-  it('renders an input and a select', () => {
-    const input = TestUtils.findRenderedDOMComponentWithTag(
-      result,
-      'input',
-    );
-    expect(input).toBeDefined();
-    const select = TestUtils.findRenderedDOMComponentWithTag(
-      result,
-      'input',
-    );
-    expect(select).toBeDefined();
+  it('verifies defaultValue', () => {
+    const input = result.find('input');
+    expect(input.at(0).nodes[0].props.defaultValue).toBe('Charles Bender');
   });
 
-  it('renders more inputs when extraOptionTypes has props.type', () => {
-    props.type = 'multipleChoice';
-    result = TestUtils.renderIntoDocument(<Stub><Settings {...props} /></Stub>);
-    const inputs = TestUtils.scryRenderedDOMComponentsWithTag(
-      result,
-      'input',
-    );
-    expect(inputs.length).toBe(4);
+  it('call onBlur and sets value', () => {
+    const input = result.find('input');
+    input.at(0).nodes[0].props.onBlur({ target: { value: 'lasers are neat' } });
+    expect(updateItemValue.name).toBe('lasers are neat');
   });
 
-  it('first input calls props.updateItem and has a defaultName', () => {
-    expect(itemUpdated).toBeFalsy();
-    const input = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'author--c-text-input'
-    );
-    expect(input.defaultValue).toBe('IMALITTLESPEC');
-    TestUtils.Simulate.blur(input);
-    expect(itemUpdated).toBeTruthy();
+  it('call onBlur and sets value', () => {
+    const select = result.find('select');
+    select.at(0).nodes[0].props.onChange({ target: { value: 'American' } });
+    expect(updateItemValue.language).toBe('American');
   });
-
-  it('has hindi as the select value', () => {
-    expect(itemUpdated).toBeFalsy();
-    const select = TestUtils.findRenderedDOMComponentWithTag(
-      result,
-      'select',
-    );
-    expect(select.name).toBe('');
-    expect(select.value).toBe('hindi');
-    TestUtils.Simulate.change(select);
-    expect(itemUpdated).toBeTruthy();
-  });
-
 });

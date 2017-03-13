@@ -2,11 +2,11 @@ import React      from 'react';
 
 export default function optionRadio(props) {
   return (
-    <div className="author--c-radio">
+    <div className="au-c-radio">
       <input
         type="radio"
         id={`option_radio_${props.id}`}
-        name="radio"
+        name={`option_radio_${props.itemId}`}
         tabIndex="0"
         checked={props.isCorrect}
         onChange={e => props.updateChoice({ isCorrect: e.target.checked })}
@@ -18,6 +18,7 @@ export default function optionRadio(props) {
 
 optionRadio.propTypes = {
   id: React.PropTypes.string.isRequired,
+  itemId: React.PropTypes.string.isRequired,
   isCorrect: React.PropTypes.bool,
   updateChoice: React.PropTypes.func.isRequired,
 };

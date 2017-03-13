@@ -5,23 +5,25 @@ const actions = [];
 
 // Actions that make an api request
 const requests = [
-  'UPLOAD_IMAGE',
+  'UPLOAD_MEDIA',
 ];
 
 export const Constants = wrapper(actions, requests);
 
-export function uploadImage(file, guid, itemId, bankId) {
+export function uploadMedia(file, guid, uploadScopeId, bankId) {
   const formData = new FormData();
   formData.append('inputFile', file);
   formData.append('returnUrl', true);
+  formData.append('createNew', true);
 
   return {
     bankId,
-    itemId,
+    uploadScopeId,
     file,
     guid,
     apiCall: true,
-    type: Constants.UPLOAD_IMAGE,
-    body: formData
+    type: Constants.UPLOAD_MEDIA,
+    body: formData,
+    timeout: 1000000,
   };
 }

@@ -1,18 +1,18 @@
-.author--c-input{
+.au-c-input{
   position: relative;
   width: 100%;
 }
 
-.author--c-input--inline{
+.au-c-input--inline{
   display: inline-block;
   width: auto;
 }
 
-  .author--c-input__contain{
+  .au-c-input__contain{
     @include flex(1);
   }
 
-.author--c-text-input{
+.au-c-text-input{
   width: 100%;
   color: $text-color;
   border: none;
@@ -22,53 +22,71 @@
   &:focus{
     outline: none;
 
-    & + .author--c-input__bottom{
+    & + .au-c-input__bottom{
       border-color: $blue;
       background: $blue;
+    }
+    & + .au-c-input__bottom.has-error{
+      border-color: $red;
+      background: $red;
     }
   }
 }
 
-.author--c-input__bottom{
+.au-c-input__bottom{
   height: 0.2rem;
   background: none;
   border-top: $border;
 
-  &.no-border{
+  &.no-border {
     border-top: none;
-  }
-  &.has-error{
-    border-color: $red;
   }
   &.is-focused{
     border-color: $blue;
     background: $blue;
   }
+  &.has-error{
+    border-color: $red;
+  }
 }
 
-.author--c-text-input--large{
+.au-c-error-text{
+  color: $red;
+  @include semi-bold;
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.au-c-text-input--large{
   font-size: 3rem;
   @include semi-bold;
 }
 
-.author--c-text-input--medium{
+.au-c-text-input--medium{
+  min-height: 4rem;
   font-size: 2rem;
   @include semi-bold;
 }
 
-.author--c-text-input--small{
-  height: 3.5rem;
+.au-c-text-input--small{
+  min-height: 3.5rem;
   font-size: 1.6rem;
   @include semi-bold;
 }
 
-.author--c-text-input--smaller{
-  height: 3rem;
+.au-c-text-input--smaller{
+  min-height: 3rem;
   font-size: 1.2rem;
   @include semi-bold;
 }
 
-.author--c-wysiwyg{
+.au-c-wysiwyg{
+  ul {
+    list-style-type: disc;
+    margin: 20px 0;
+    padding-left: 40px;
+  }
+
   &.is-focused{
 
     .mce-content-body{
@@ -76,6 +94,9 @@
       outline: none;
     }
 
+    .mce-panel{
+      display: block !important;
+    }
   }
 
   .mce-content-body{
@@ -88,7 +109,7 @@
     border-bottom: none;
     border-left: none;
     border-right: none;
-    border-top-color: $gray3;
+    border-top: 0.1rem solid $blue;
   }
 
   .mce-btn{
@@ -111,6 +132,33 @@
       &:hover{
         background: $gray3;
         border: $border;
+      }
+    }
+    .mce-i-audio{
+      font-family: 'Material Icons';
+      font-size: 2rem;
+      width: auto;
+
+      &:before{
+        content: '\e050';
+      }
+    }
+    .mce-i-image{
+      font-family: 'Material Icons';
+      font-size: 2rem;
+      width: auto;
+
+      &:before{
+        content: '\e251';
+      }
+    }
+    .mce-i-video{
+      font-family: 'Material Icons';
+      font-size: 2rem;
+      width: auto;
+
+      &:before{
+        content: '\e04B';
       }
     }
   }
@@ -171,7 +219,7 @@
   }
 }
 
-.author--c-input-label--left{
+.au-c-input-label--left{
   @include display-flex;
   @include align-items(center);
   @include semi-bold;
@@ -179,28 +227,28 @@
   font-size: 1.2rem;
   min-width: 25rem;
 
-  .author--c-input__contain{
+  .au-c-input__contain{
     margin-left: 1rem;
   }
 }
 
-.author--c-input-label--top{
+.au-c-input-label--top{
   @include semi-bold;
   color: $text-alt;
   font-size: 1.2rem;
   min-width: 25rem;
   height: 1.7rem;
 
-  .author--c-input__contain, select{
+  .au-c-input__contain, select{
     margin-top: 0.5rem;
   }
 }
 
-.author--c-input-label--large{
+.au-c-input-label--large{
   font-size: 1.6rem;
 }
 
-.author--c-dropdown{
+.au-c-dropdown{
   min-width: 20rem;
   position: relative;
 
@@ -228,12 +276,12 @@
   }
 }
 
-.author--c-dropdown--small select{
+.au-c-dropdown--small select{
   font-size: 1.2rem;
   padding: 0 1rem;
 }
 
-.author--c-dropdown--medium {
+.au-c-dropdown--medium {
   select{
     height: 4rem;
     font-size: 1.6rem;
@@ -243,13 +291,13 @@
     top: 1rem;
     right: 2rem;
   }
-  &.c-input-label--top:before{
+  &.au-c-input-label--top:before{
     top: 3.2rem;
     right: 1.5rem;
   }
 }
 
-.author--c-checkbox{
+.au-c-checkbox{
 
   label{
     display: inline-block;
@@ -294,7 +342,7 @@
   }
 }
 
-.author--c-radio{
+.au-c-radio{
 
   label{
     min-width: 3rem;
@@ -339,17 +387,18 @@
   }
 }
 
-input.c-file{
+input.au-c-file{
   opacity: 0;
   margin: 0;
   height: 0.01rem;
   width: 0.01rem;
   position: absolute;
+  z-index: -1;
 }
 
-.author--c-answer{
+.au-c-answer{
 
-  .author--c-checkbox, .author--c-radio{
+  .au-c-checkbox, .au-c-radio{
     position: absolute;
     left: -4rem;
     top: 0.2rem;
@@ -363,7 +412,7 @@ input.c-file{
     }
   }
 
-  .author--c-radio{
+  .au-c-radio{
 
     input[type="radio"] + label:before{
       font-size: 3rem;
@@ -374,7 +423,7 @@ input.c-file{
     }
   }
 
-  .author--c-checkbox{
+  .au-c-checkbox{
 
     input[type="checkbox"] + label:before{
       font-size: 3rem;
