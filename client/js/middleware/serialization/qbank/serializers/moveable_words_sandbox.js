@@ -2,6 +2,6 @@
 
 import { baseItem } from './base';
 
-export default function fileUploadSerializer(originalItem, newItemAttributes) {
+export default function movableWordsSerializer(originalItem, newItemAttributes) {
   return baseItem(originalItem, newItemAttributes);
 }
