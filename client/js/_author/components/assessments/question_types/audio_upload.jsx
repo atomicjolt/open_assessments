@@ -3,6 +3,10 @@ import _          from 'lodash';
 import genusTypes from '../../../../constants/genus_types';
 import Feedback   from './question_common/single_feedback';
 
+const audioLimit = (props) => {
+  return null;
+};
+
 export default class AudioUpload extends React.Component {
   static MAX_TIME = 240;
   static propTypes = {

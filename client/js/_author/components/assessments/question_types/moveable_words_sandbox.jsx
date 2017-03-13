@@ -25,21 +25,8 @@ export default function() {
           seconds. (240 maximum)
         </span>
       </div>
-
-
       <div className="au-c-question__answers au-c-moveable__answers">
         <div className="au-c-answer au-o-flex-center is-active">
-          <div className="au-c-dropdown au-c-dropdown--tiny au-u-mr-sm">
-            <label htmlFor />
-            <select name id>
-              <option value>N/A</option>
-              <option value>1</option>
-              <option value>2</option>
-              <option value>3</option>
-              <option value>4</option>
-              <option value>5</option>
-            </select>
-          </div>
           <div className="au-c-input">
             <label htmlFor="option1" />
             <div className="au-c-input__contain">
@@ -68,17 +55,6 @@ export default function() {
           </button>
         </div>
         <div className="au-c-answer au-o-flex-center">
-          <div className="au-c-dropdown au-c-dropdown--tiny au-u-mr-sm is-ordered">
-            <label htmlFor />
-            <select name id>
-              <option value>N/A</option>
-              <option value>1</option>
-              <option value>2</option>
-              <option value>3</option>
-              <option value>4</option>
-              <option value>5</option>
-            </select>
-          </div>
           <div className="au-c-input">
             <label htmlFor="option2" />
             <div className="au-c-input__contain">
@@ -114,7 +90,8 @@ export default function() {
                 className="au-c-text-input au-c-text-input--small au-c-wysiwyg au-c-option"
                 id="option2"
                 type="text"
-                defaultValue="Add Option" />
+                defaultValue="Add Option"
+              />
               <div className="au-c-input__bottom no-border" />
             </div>
           </div>
