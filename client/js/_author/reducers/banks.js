@@ -2,11 +2,13 @@
 const initialState = [];
 
 function setParents(payload, parents) {
-  let parent = _.last(parents);
+  const parent = _.last(parents);
   _.forEach(payload, (bank) => {
-    bank.parent = parent;
-    parents.push(bank);
-    setParents(bank.childNodes, parents);
+    if (bank) {
+      bank.parent = parent;
+      parents.push(bank);
+      setParents(bank.childNodes, parents);
+    }
   });
 }
 
