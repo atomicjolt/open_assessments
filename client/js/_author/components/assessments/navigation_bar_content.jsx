@@ -1,8 +1,7 @@
 import React            from 'react';
 import _                from 'lodash';
-import { hashHistory }  from 'react-router';
+import { Link }         from 'react-router';
 import Icon             from '../bank_navigation/bank_icon';
-import appHistory       from '../../history';
 
 export default class NavigationBarContent extends React.Component {
   static propTypes = {
@@ -32,7 +31,7 @@ export default class NavigationBarContent extends React.Component {
   }
 
   render() {
-    const { bankId, assessmentId } = this.props.assessment;
+    const { bankId, id } = this.props.assessment;
     return (
       <div className="au-c-header-bottom">
         <div className="au-c-header-bottom__left">
@@ -49,13 +48,14 @@ export default class NavigationBarContent extends React.Component {
           { this.publishButton() }
           {
             this.props.isPublished ?
-              <button
+              <Link
                 className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"
-                onClick={() => hashHistory.push(`banks/${bankId}/assessments/${assessmentId}/preview`)}
+                to={`banks/${bankId}/assessments/${id}/preview`}
+                target="_blank"
               >
                 <i className="material-icons">remove_red_eye</i>
-              Preview Assessment
-            </button> : null
+                Preview Assessment
+              </Link> : null
          }
         </div>
       </div>

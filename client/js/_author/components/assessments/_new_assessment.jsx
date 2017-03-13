@@ -1,6 +1,7 @@
 import React                  from 'react';
 import { connect }            from 'react-redux';
 import AssessmentForm         from './assessment_form';
+import hashHistory            from '../../history';
 import Heading                from  '../common/heading';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
@@ -9,6 +10,7 @@ import * as ItemActions       from '../../../actions/qbank/items';
 function select(state) {
   return {
     editableBankId: state.settings.editableBankId,
+    banks: state.banks,
   };
 }
 export class NewAssessment extends React.Component {
@@ -46,6 +48,26 @@ export class NewAssessment extends React.Component {
     );
   }
 
+  flattenBanks(banks, flatBanks) {
+    _.forEach(banks, (bank) => {
+      flatBanks[bank.id] = bank;
+      if (!_.isEmpty(bank.childNodes)) {
+        return this.flattenBanks(bank.childNodes, flatBanks);
+      }
+    });
+    return flatBanks;
+  }
+
+  getBankChildren(bankId) {
+    const id = encodeURIComponent(bankId);
+    let flatBanks = {};
+    const banks = this.flattenBanks(this.props.banks, flatBanks);
+    this.props.updatePath(id, banks[id], true);
+    this.props.getAssessments(id);
+    this.props.getItems(id);
+    hashHistory.push('/');
+  }
+
   render() {
     return (
       <div>
@@ -55,7 +77,7 @@ export class NewAssessment extends React.Component {
           isPublished={false}
           assessment={{ bankId: this.props.params.id, assessmentId: null }}
           items={[]}
-          getBankChildren={{}}
+          getBankChildren={bankId => this.getBankChildren(bankId)}
         />
         <AssessmentForm
           updateAssessment={assessment => this.createAssessment(assessment)}

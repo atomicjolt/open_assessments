@@ -79,6 +79,26 @@
   }
 }
 
+.au-c-answer--delete{
+  margin-left: 1rem;
+  width: 3rem;
+  height: 3rem;
+  display: inline-block;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+
+  i{
+    font-size: 3rem;
+    color: $gray4;
+
+    &:hover{
+      color: $blue;
+    }
+  }
+}
+
 .au-c-answer--add{
   box-shadow: none;
   min-height: 5rem;

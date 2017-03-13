@@ -7,7 +7,9 @@ export default function previewHeader(props) {
       <button
         onClick={props.togglePreview}
         className="au-c-btn au-c-btn--sm au-c-btn--white"
-      > Done </button>
+      >
+        Close Preview
+      </button>
     </div>
   );
 }
