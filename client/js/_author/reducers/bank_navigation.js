@@ -32,7 +32,6 @@ export default function bankNavigation(state = initialState, action) {
 
       const pathIndex = _.findIndex(state.location, { id: action.id });
       const newLocation = _.cloneDeep(state).location;
-      // debugger
       if (pathIndex > -1) {
         newLocation.length = pathIndex + 1;
         newLocation[pathIndex].back = action.back;
