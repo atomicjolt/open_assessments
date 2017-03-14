@@ -38,3 +38,21 @@ export function updateItem(bankId, item) {
     body    : item
   };
 }
+
+export function createChoice(bankId, itemId) {
+  const newItem = {
+    id: itemId,
+    question: {
+      choices: {
+        new: { id: 'new' },
+      },
+    }
+  };
+  return {
+    bankId,
+    itemId,
+    apiCall : true,
+    type    : Constants.UPDATE_ITEM,
+    body    : newItem
+  };
+}

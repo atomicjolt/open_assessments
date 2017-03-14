@@ -6,4 +6,5 @@ export default {
   reflection: 'reflection',
   multipleReflection: 'multipleReflection',
   multipleAnswer: 'multipleAnswer',
+  moveableWordSentence: 'moveableWordSentence',
 };

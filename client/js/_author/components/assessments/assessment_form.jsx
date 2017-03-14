@@ -18,6 +18,7 @@ export default class AssessmentForm extends React.Component {
     updateSingleItemOrPage: React.PropTypes.func,
     updateChoice: React.PropTypes.func,
     deleteAssessmentItem: React.PropTypes.func,
+    createChoice: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -130,6 +131,7 @@ export default class AssessmentForm extends React.Component {
             updateChoice={this.props.updateChoice}
             deleteAssessmentItem={this.props.deleteAssessmentItem}
             moveItem={(oldIndex, newIndex) => this.moveItem(oldIndex, newIndex)}
+            createChoice={this.props.createChoice}
           /> : null
         }
         {this.showNewModal() ? this.newItem() : null }
