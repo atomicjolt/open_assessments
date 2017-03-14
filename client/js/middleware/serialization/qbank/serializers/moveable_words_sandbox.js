@@ -11,5 +11,10 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
     );
   }
 
+  _.merge(
+    newItem.question.choices,
+    _.get(newItemAttributes, 'question.choices', [])
+  );
+
   return newItem;
 }
