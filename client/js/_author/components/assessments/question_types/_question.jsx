@@ -19,6 +19,9 @@ export default class Question extends React.Component {
       type: React.PropTypes.string,
       bankId: React.PropTypes.string,
       name: React.PropTypes.string,
+      question: React.PropTypes.shape({
+        choices: React.PropTypes.shape({}),
+      }),
     }).isRequired,
     isActive: React.PropTypes.bool,
     itemIndex: React.PropTypes.number,
@@ -29,6 +32,7 @@ export default class Question extends React.Component {
     updateChoice: React.PropTypes.func.isRequired,
     activateItem: React.PropTypes.func.isRequired,
     toggleReorder: React.PropTypes.func.isRequired,
+    createChoice: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
     moveItem: React.PropTypes.func.isRequired,
   };
@@ -41,6 +45,7 @@ export default class Question extends React.Component {
     [types.shortAnswer]: ShortAnswer,
     [types.fileUpload]: FileUpload,
     [types.audioUpload]: AudioUpload,
+    [types.moveableWordSentence]: WordSentence,
   };
 
   constructor(props) {
@@ -143,6 +148,21 @@ export default class Question extends React.Component {
     }, 0);
   }
 
+  deleteChoice(choice) {
+    if (confirm('Are you sure you want to delete this option?')) {
+      this.props.updateItem({
+        question: {
+          choices: this.markedForDeletion(choice)
+        }
+      });
+    }
+  }
+
+  markedForDeletion(choice) {
+    const newChoices = _.cloneDeep(this.props.item.question.choices);
+    newChoices[choice.id].delete = true;
+    return newChoices;
+  }
 
   content() {
     const Component = Question.questionComponents[this.props.item.type];
@@ -156,6 +176,8 @@ export default class Question extends React.Component {
           activeChoice={this.state.activeChoice}
           selectChoice={choiceId => this.selectChoice(choiceId)}
           blurOptions={e => this.blurOptions(e)}
+          createChoice={this.props.createChoice}
+          deleteChoice={choice => this.deleteChoice(choice)}
         />
       );
     }

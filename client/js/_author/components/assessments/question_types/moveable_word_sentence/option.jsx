@@ -47,5 +47,6 @@ export default function option(props) {
 }
 
 option.propTypes = {
-
+  isActive: React.PropTypes.bool,
+  setActiveChoice: React.PropTypes.func.isRequired,
 };

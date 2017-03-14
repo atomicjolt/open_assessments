@@ -1,4 +1,5 @@
 import React      from 'react';
+import _          from 'lodash';
 import Option     from './option';
 import Add        from '../question_common/add_option';
 
@@ -10,30 +11,12 @@ export default class MoveableWordSentence extends React.Component {
       type: React.PropTypes.string,
     }).isRequired,
     updateChoice: React.PropTypes.func.isRequired,
+    deleteChoice: React.PropTypes.func.isRequired,
+    blurOptions: React.PropTypes.func.isRequired,
+    createChoice: React.PropTypes.func.isRequired,
+    isActive: React.PropTypes.bool,
+    activeChoice: React.PropTypes.string,
   };
-
-  constructor() {
-    super();
-    this.state = {
-      activeOption: '',
-    };
-  }
-
-  selectChoice(choiceId) {
-    this.setState({ activeChoice: choiceId });
-  }
-
-  //TODO: move up to question
-  blurOptions(e) {
-    const currentTarget = e.currentTarget;
-    setTimeout(() => {
-      if (!currentTarget.contains(document.activeElement) ||
-        (currentTarget === document.activeElement)
-      ) {
-        this.selectChoice(null);
-      }
-    }, 0);
-  }
 
   render() {
     console.log(this.props);
@@ -41,13 +24,21 @@ export default class MoveableWordSentence extends React.Component {
     return (
       <div
         className="au-c-question__answers au-c-moveable__answers"
-        onBlur={e => this.blurOptions(e)} tabIndex="-1"
+        onBlur={e => this.props.blurOptions(e)} tabIndex="-1"
       >
-        <Option
-          updateChoice={(newChoice, fileIds) => this.props.updateChoice(id, choice.id, newChoice, fileIds)}
-        />
+        {
+          _.map(question.choices, choice => (
+            <Option
+              key={`assessmentChoice_${choice.id}`}
+              {...choice}
+              updateChoice={(newChoice, fileIds) => this.props.updateChoice(id, choice.id, newChoice, fileIds)}
+              isActive={this.props.isActive && choice.id === this.props.activeChoice}
+              deleteChoice={() => this.props.deleteChoice(choice)}
+            />
+          ))
+        }
         <Add
-
+          createChoice={this.props.createChoice}
         />
       </div>
     );
