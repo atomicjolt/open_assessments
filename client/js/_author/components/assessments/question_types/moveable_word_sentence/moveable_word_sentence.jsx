@@ -19,7 +19,6 @@ export default class MoveableWordSentence extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     const { question, id, type } = this.props.item;
     return (
       <div
@@ -38,7 +37,7 @@ export default class MoveableWordSentence extends React.Component {
           ))
         }
         <Add
-          createChoice={this.props.createChoice}
+          createChoice={() => this.props.createChoice(id)}
         />
       </div>
     );

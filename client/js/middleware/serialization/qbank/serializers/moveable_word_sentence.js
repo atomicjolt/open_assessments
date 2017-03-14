@@ -49,7 +49,7 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
 function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers, correctFeedback) {
 
   return scrub({
-    id: oldAnswers[0].id, // TODO: make sure this works
+    id: _.get(oldAnswers, '[0].id'), // TODO: make sure this works
     genusTypeId: genusTypes.answer.rightAnswer,
     feedback: _.get(correctFeedback, 'text'),
     type: genusTypes.answer.multipleAnswer,
