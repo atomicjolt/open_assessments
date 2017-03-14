@@ -155,7 +155,10 @@ export default class Question extends React.Component {
         );
 
       case types.moveableWordSandbox:
-        return <MoveableWordSandbox />;
+        return (<MoveableWordSandbox
+          updateItem={newProps => this.updateItem(newProps)}
+          item={this.props.item}
+        />);
 
       default:
         return null;

@@ -13,7 +13,7 @@ export default class AudioLimit extends React.Component {
     const original = _.get(item, ['question', 'timeValue'], {
       hours: '00',
       minutes: '00',
-      seconds: '100'
+      seconds: _.toString(AudioLimit.MAX_TIME)
     });
     const time = _.mapValues(original, t => parseInt(t, 10));
     const seconds = (time.hours * 3600) + (time.minutes * 60) + time.seconds;
