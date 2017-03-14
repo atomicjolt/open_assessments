@@ -7,6 +7,7 @@ import QuestionText     from './question_common/text';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
 import ShortAnswer      from './short_answer';
+import WordSentence     from './moveable_word_sentence/moveable_word_sentence';
 import types            from '../../../../constants/question_types';
 import languages        from '../../../../constants/language_types';
 import Preview          from './preview_question';
@@ -154,7 +155,12 @@ export default class Question extends React.Component {
         );
 
       case types.moveableWordSentence:
-        return (<h1>MoveableWord</h1>);
+        return (
+          <WordSentence
+            updateItem={newProps => this.updateItem(newProps)}
+            item={this.props.item}
+          />
+        );
       default:
         return null;
     }
