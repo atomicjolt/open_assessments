@@ -4,19 +4,20 @@ import { scrub }                 from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
-//     question: {
-//       choices: [
-//         {"id": "bbb", "order": 0},
-//         {"id", "ccc", "order": 1}
-//       ]
-//     }
+function buildChoiceText(text, wordType) {
+  return `<p ${wordType ? `class="${wordType}"` : ''}>${text}</p>`;
+}
+
 function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
     const newOrder = _.get(updateValues, 'order');
     return {
       id: choice.id,
-      text: _.get(updateValues, 'text') || choice.text,
+      text: buildChoiceText(
+        _.get(updateValues, 'text') || choice.text,
+        _.get(updateValues, 'wordType') || choice.wordType,
+      ),
       order: _.isNil(newOrder) ? choice.order : newOrder,
       delete: _.get(updateValues, 'delete'),
     };
@@ -46,16 +47,31 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   return scrub(newQuestion);
 }
 
-function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers, correctFeedback) {
-
-  return scrub({
-    id: _.get(oldAnswers, '[0].id'), // TODO: make sure this works
+function serializeAnswers(choices, oldAnswers, correctFeedback, incorrectFeedback) {
+  const answers = [];
+  let correctAnswer = {
+    id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.rightAnswer }), 'id'),
     genusTypeId: genusTypes.answer.rightAnswer,
     feedback: _.get(correctFeedback, 'text'),
     type: genusTypes.answer.multipleAnswer,
-    choiceIds: _.map(originalChoices, 'id'),
-    // fileIds: _.get(updateValues, 'fileIds'),  what here?
-  });
+    choiceIds: _.map(_.orderBy(choices, 'order'), 'id'),
+    fileIds: _.get(correctFeedback, 'fileIds'),
+  };
+  let incorrectAnswer = {
+    id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.wrongAnswer }), 'id'),
+    genusTypeId: genusTypes.answer.wrongAnswer,
+    feedback: _.get(incorrectFeedback, 'text'),
+    type: genusTypes.answer.multipleAnswer,
+    choiceIds: [],
+    fileIds: _.get(incorrectFeedback, 'fileIds'),
+  };
+
+  correctAnswer = scrub(correctAnswer);
+  incorrectAnswer = scrub(incorrectAnswer);
+  answers.push(correctAnswer);
+  answers.push(incorrectAnswer);
+
+  return answers;
 }
 
 export default function moveableWordSentence(originalItem, newItemAttributes) {
@@ -68,70 +84,14 @@ export default function moveableWordSentence(originalItem, newItemAttributes) {
       ...serializeQuestion(originalItem.question, question)
     };
 
-    if (question.choices || question.correctFeedback) {
+    if (question.choices || question.correctFeedback || question.incorrectFeedback) {
       newItem.answers = serializeAnswers(
-        originalItem.question.choices,
-        question.choices,
+        newItem.question.choices,
         _.get(originalItem, 'originalItem.answers'),
-        _.get(question, 'correctFeedback')
+        _.get(question, 'correctFeedback'),
+        _.get(question, 'incorrectFeedback')
       );
     }
   }
   return scrub(newItem);
 }
-
-
-// Question text gets sent to: {question: {questionString: ""foo""}}"
-//
-// Word classes are: "noun", "adverb", "other", "adjective", "prep", "verb".
-// They should be in a <p class=""noun"">choice word</p>"
-//
-// {question: {shuffle: true}}
-//
-// For a certain combination of choice order:
-//   {
-//     answers: [{
-//       choiceIds: [1, 2, 3],
-//       genusTypeId: "answer-type%3Aright-answer%40ODL.MIT.EDU",
-//       feedback: "yay!",
-//       type: "answer-record-type%3Amulti-choice-answer%40ODL.MIT.EDU"
-//     }]
-//   }
-//
-// For a certain combination of choice order:
-//   {
-//     answers: [{
-//       choiceIds: [1, 2, 3],
-//       genusTypeId: "answer-type%3Aright-answer%40ODL.MIT.EDU",
-//       feedback: "yay!",
-//       type: "answer-record-type%3Amulti-choice-answer%40ODL.MIT.EDU"
-//     }]
-//   }
-//
-// Use the `order` attribute on `choiceIds`, like:
-//   {
-//     question: {
-//       choices: [
-//         {"id": "bbb", "order": 0},
-//         {"id", "ccc", "order": 1}
-//       ]
-//     }
-//   }
-//
-// Should be equivalent to deleting the choice:
-//   {
-//     question: {
-//       choices: [{"id": "abc", "delete": true}]
-//     }
-//   }
-//
-// {question: {shuffle: true}}"
-//
-//   {
-//     answers: [{
-//       choiceIds: [1, 2, 3],
-//       genusTypeId: "answer-type%3Aright-answer%40ODL.MIT.EDU",
-//       feedback: "yay!",
-//       type: "answer-record-type%3Amulti-choice-answer%40ODL.MIT.EDU"}]
-//   }
-
