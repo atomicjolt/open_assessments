@@ -9,6 +9,8 @@ describe('Bank Navigator', () => {
   let calledFuncts = [];
 
   beforeEach(() => {
+    calledFuncts = []; 
+
     props = {
       banks: [
         {

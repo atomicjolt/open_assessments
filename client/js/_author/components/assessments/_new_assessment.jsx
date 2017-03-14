@@ -18,7 +18,6 @@ export class NewAssessment extends React.Component {
     params: React.PropTypes.shape({ id: React.PropTypes.string }).isRequired,
     editableBankId: React.PropTypes.string.isRequired,
     createAssessment: React.PropTypes.func.isRequired,
-    publishAssessment: React.PropTypes.func.isRequired,
     createAssessmentWithItem: React.PropTypes.func.isRequired,
   };
 
