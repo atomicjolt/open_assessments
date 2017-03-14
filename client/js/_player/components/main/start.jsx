@@ -16,7 +16,7 @@ const select = (state, props) => {
 export class Start extends React.Component {
 
   static propTypes = {
-    assessment_kind: React.PropTypes.string.is,
+    assessment_kind: React.PropTypes.string.isRequired,
   }
 
   instructions() {

@@ -9,7 +9,7 @@ export default class FillTheBlankWordChain extends React.Component {
   static propTypes = {
     linkWord       : React.PropTypes.func.isRequired,
     sentenceWords  : React.PropTypes.array.isRequired,
-    selectedAnswer : React.PropTypes.object
+    selectedAnswer : React.PropTypes.array
   }
 
   getWords(words) {

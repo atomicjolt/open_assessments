@@ -5,7 +5,7 @@ import Icon             from '../bank_navigation/bank_icon';
 
 export default class NavigationBarContent extends React.Component {
   static propTypes = {
-    editOrPublishAssessment: React.PropTypes.func.isRequired,
+    editOrPublishAssessment: React.PropTypes.func,
     isPublished: React.PropTypes.bool.isRequired,
     items: React.PropTypes.array.isRequired,
     assessment: React.PropTypes.object.isRequired,
