@@ -24,7 +24,10 @@ describe('bank List Item', () => {
       baseEmbedUrl: 'IMASPEC',
     };
 
-    result = TestUtils.renderIntoDocument(<Stub><BankListItem {...props} /></Stub>);
+    result = TestUtils.renderIntoDocument(<Stub>
+      <table><tbody>
+        <BankListItem {...props} />
+      </tbody></table></Stub>);
   });
 
   it('it selectItem', () => {
