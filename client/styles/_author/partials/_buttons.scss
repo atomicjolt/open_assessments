@@ -88,14 +88,14 @@
 }
 
 .au-c-btn--gray{
-  border: 0.2rem solid $gray2;
+  border: 0.1rem solid $gray4;
   background-color: $gray2;
-  color: $gray8;
+  color: $gray9;
   @include transition(all 0.1s ease);
 
   &:hover{
     background-color: $white;
-    border-color: $gray4;
+    border-color: $gray8;
     color: $text-color;
   }
 }
@@ -173,5 +173,72 @@
     i{
       color: $purple;
     }
+  }
+}
+
+.au-c-button-dropdown{
+  & > li{
+    position: relative;
+    width: 100%;
+  }
+  li{
+    display: block;
+  }
+}
+
+  .au-c-button-dropdown__dropdown{
+    display: none;
+    position: absolute;
+    border-top: 0.2rem solid $maroon;
+    background: $maroon;
+    padding-bottom: 0.2rem;
+    top: 2.8rem;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+
+    &.is-active{
+      display: block;
+    }
+  }
+
+.au-c-btn--dropdown{
+  width: 15rem;
+  padding: 0 1rem;
+  border: 0.2rem solid $maroon;
+  background-color: $maroon;
+  color: $white;
+  @include transition(all 0.1s ease);
+  position: relative;
+  z-index: 101;
+
+  &:hover{
+    background-color: darken($maroon, 10%);
+    border-color: darken($maroon, 10%);
+  }
+
+  i{
+    margin-left: 1rem;
+    margin-right: -0.5rem;
+  }
+}
+
+.au-c-btn--dropdown-item{
+  width: 100%;
+  padding: 0 1rem;
+  border-top: 0.2rem solid $maroon;
+  background-color: darken($maroon, 10%);
+  color: $white;
+  @include transition(all 0.1s ease);
+  border-radius: 0;
+  height: 3.2rem;
+
+  &:hover{
+    background-color: darken($maroon, 15%);
+  }
+
+  i{
+    margin-right: 1rem;
+    margin-left: 0rem;
   }
 }

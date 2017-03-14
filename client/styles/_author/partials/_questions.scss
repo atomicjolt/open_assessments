@@ -4,6 +4,10 @@
 
 .au-c-assessment-title{
   padding: 3rem 2.5rem 4rem;
+
+  h1{
+    margin: 0;
+  }
 }
 
 .au-c-question-settings{
@@ -102,6 +106,7 @@
   &.reorder-active{
     .au-o-item__top{
       background-color: $blue;
+      border-left-color: $blue2;
     }
     .au-c-question__number, .au-c-question__type{
       color: $white;

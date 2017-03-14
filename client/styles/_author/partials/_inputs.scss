@@ -36,7 +36,7 @@
 .au-c-input__bottom{
   height: 0.2rem;
   background: none;
-  border-top: $border;
+  border-top: 0.1rem solid $gray4;
 
   &.no-border {
     border-top: none;
@@ -248,12 +248,35 @@
   font-size: 1.6rem;
 }
 
+.au-c-input--white{
+  label{
+    color: $gray2;
+  }
+  .au-c-text-input{
+    color: $white;
+    border-top: transparent;
+    height: 2.5rem;
+
+    &:focus{
+      border-top: 0.1rem solid $white;
+    }
+
+    &:focus + .au-c-input__bottom{
+      border-color: $white;
+      background: transparent;
+    }
+  }
+  .au-c-input__bottom{
+    border-color: $white;
+  }
+}
+
 .au-c-dropdown{
   min-width: 20rem;
   position: relative;
 
   select{
-    border: none;
+    border: 0.1rem solid $gray4;
     background-color: $gray2;
     @include semi-bold;
     color: $text-color;
@@ -279,6 +302,30 @@
 .au-c-dropdown--small select{
   font-size: 1.2rem;
   padding: 0 1rem;
+}
+
+.au-c-dropdown--smaller {
+  min-width: 15rem;
+
+  select{
+    font-size: 1.2rem;
+    padding: 0 1rem;
+  }
+  &:before{
+    right: 0.5rem;
+  }
+}
+
+.au-c-dropdown--tiny {
+  min-width: 6.5rem;
+
+  select{
+    font-size: 1.2rem;
+    padding: 0 1rem;
+  }
+  &:before{
+    right: 0.5rem;
+  }
 }
 
 .au-c-dropdown--medium {
