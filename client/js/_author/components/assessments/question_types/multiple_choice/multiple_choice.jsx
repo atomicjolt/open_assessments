@@ -22,6 +22,8 @@ export default class MultipleChoice extends React.Component {
     isActive: React.PropTypes.bool,
     selectChoice: React.PropTypes.func.isRequired,
     blurOptions: React.PropTypes.func.isRequired,
+    createChoice: React.PropTypes.func.isRequired,
+    deleteChoice: React.PropTypes.func.isRequired,
     activeChoice: React.PropTypes.bool,
   };
 
@@ -55,10 +57,6 @@ export default class MultipleChoice extends React.Component {
     return null;
   }
 
-  addNewChoice(id) {
-    this.props.updateChoice(id, 'new', { id: 'new' });
-  }
-
   moveChoice(choice, up) {
     const newChoices = _.cloneDeep(this.props.item.question.choices);
     const oldPosition = choice.order;
@@ -75,22 +73,6 @@ export default class MultipleChoice extends React.Component {
     });
   }
 
-  deleteChoice(choice) {
-    if (confirm('Are you sure you want to delete this option?')) {
-      this.props.updateItem({
-        question: {
-          choices: this.markedForDeletion(choice)
-        }
-      });
-    }
-  }
-
-  markedForDeletion(choice) {
-    const newChoices = _.cloneDeep(this.props.item.question.choices);
-    newChoices[choice.id].delete = true;
-    return newChoices;
-  }
-
   render() {
     const { question, id, type } = this.props.item;
     return (
@@ -105,7 +87,7 @@ export default class MultipleChoice extends React.Component {
                 multipleAnswer={_.get(question, 'multipleAnswer', false)}
                 updateChoice={(newChoice, fileIds) => this.props.updateChoice(id, choice.id, newChoice, fileIds)}
                 updateItem={() => this.props.updateItem({ question })}
-                deleteChoice={() => this.deleteChoice(choice)}
+                deleteChoice={() => this.props.deleteChoice(choice)}
                 shuffle={question.shuffle}
                 moveUp={() => this.moveChoice(choice, true)}
                 moveDown={() => this.moveChoice(choice)}
@@ -121,7 +103,7 @@ export default class MultipleChoice extends React.Component {
           }
           {
             this.props.isActive ? <Add
-              updateChoice={() => this.addNewChoice(id)}
+              createChoice={() => this.props.createChoice(id)}
             /> : null
           }
         </div>
