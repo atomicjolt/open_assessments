@@ -8,3 +8,5 @@ export default {
   multipleAnswer: 'multipleAnswer',
   moveableWordSandbox: 'moveableWordSandbox',
 };
+
+export const audioLimit = 240;

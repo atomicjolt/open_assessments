@@ -1,9 +1,9 @@
 import React      from 'react';
 import _          from 'lodash';
 
-export default class AudioLimit extends React.Component {
-  static MAX_TIME = 240;
+import { audioLimit as MAX_TIME }   from '../../../../../constants/question_types';
 
+export default class AudioLimit extends React.Component {
   static propTypes = {
     item: React.PropTypes.object.isRequired,
     handleBlur: React.PropTypes.func,
@@ -13,7 +13,7 @@ export default class AudioLimit extends React.Component {
     const original = _.get(item, ['question', 'timeValue'], {
       hours: '00',
       minutes: '00',
-      seconds: _.toString(AudioLimit.MAX_TIME)
+      seconds: _.toString(MAX_TIME)
     });
     const time = _.mapValues(original, t => parseInt(t, 10));
     const seconds = (time.hours * 3600) + (time.minutes * 60) + time.seconds;
@@ -30,9 +30,9 @@ export default class AudioLimit extends React.Component {
   constructor(props) {
     super(props);
     const timeLimit = AudioLimit.getAudioLimit(props.item)
-      || AudioLimit.MAX_TIME;
+      || MAX_TIME;
 
-    const displayWarning = timeLimit > AudioLimit.MAX_TIME;
+    const displayWarning = timeLimit > MAX_TIME;
 
     this.state = {
       timeLimit: _.toString(timeLimit),
@@ -44,8 +44,8 @@ export default class AudioLimit extends React.Component {
     let timeLimit = e.target.value;
     const timeVal = parseInt(timeLimit, 10);
     let displayWarning = false;
-    if (timeVal > AudioLimit.MAX_TIME) {
-      timeLimit = _.toString(AudioLimit.MAX_TIME);
+    if (timeVal > MAX_TIME) {
+      timeLimit = _.toString(MAX_TIME);
       displayWarning = true;
     } else if (_.isNaN(timeVal) || timeVal < 0) {
       displayWarning = true;
