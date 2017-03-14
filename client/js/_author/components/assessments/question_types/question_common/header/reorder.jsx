@@ -1,13 +1,12 @@
 import React    from 'react';
 
-export default class InactiveHeader extends React.Component {
+export default class ReorderHeader extends React.Component {
   static propTypes = {
     topItem: React.PropTypes.bool,
     bottomItem: React.PropTypes.bool,
     toggleReorder: React.PropTypes.func,
     moveUp: React.PropTypes.func,
     moveDown: React.PropTypes.func,
-    position: React.PropTypes.number,
   };
 
   componentDidMount() {

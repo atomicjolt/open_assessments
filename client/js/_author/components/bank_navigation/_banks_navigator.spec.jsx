@@ -95,5 +95,12 @@ describe('Bank Navigator', () => {
     expect(ascNameSorted[2].displayName.text).toBe('apple');
   });
 
+  it('has spinner', () => {
+    props.banks = [];
+    result = TestUtils.renderIntoDocument(<BankNavigator {...props} />);
+    const spinner = TestUtils.findRenderedDOMComponentWithClass(result, 'spinner');
+    expect(spinner).toBeDefined();
+  });
+
 //  TODO: when published is fully implemented write a spec to test it's sort
 });
