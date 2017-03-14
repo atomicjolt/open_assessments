@@ -72,25 +72,25 @@ describe('qbank editor', () => {
     });
 
     it('replaces newly uploaded image src with AssetContent:<media_guid>', () => {
-      const text = '<p><img src="/new_content_id/stream" /></p>';
+      const text = '<p><img src="/base/specs_support/fixtures/new_content_id/stream" /></p>';
       result.instance().onBlur(text, true);
       expect(blurText).toContain('AssetContent:new_uploaded_guid');
     });
 
     it('replaces previously uploaded image src with AssetContent:<media_guid>', () => {
-      const text = '<p><img src="/old_content_id/stream" /></p>';
+      const text = '<p><img src="/base/specs_support/fixtures/old_content_id/stream" /></p>';
       result.instance().onBlur(text, true);
       expect(blurText).toContain('AssetContent:old_uploaded_guid');
     });
 
     it('replaces src attributes on video source tags', () => {
-      const text = '<p><video><source src="/old_content_id/stream" /></video></p>';
+      const text = '<p><video><source src="/base/specs_support/fixtures/old_content_id/stream" /></video></p>';
       result.instance().onBlur(text, true);
       expect(blurText).toContain('AssetContent:old_uploaded_guid');
     });
 
     it('replaces src attributes on audio source tags', () => {
-      const text = '<p><audio><source src="/old_content_id/stream" /></audio></p>';
+      const text = '<p><audio><source src="/base/specs_support/fixtures/old_content_id/stream" /></audio></p>';
       result.instance().onBlur(text, true);
       expect(blurText).toContain('AssetContent:old_uploaded_guid');
     });
