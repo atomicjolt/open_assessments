@@ -9,7 +9,7 @@ describe('Bank Navigator', () => {
   let calledFuncts = [];
 
   beforeEach(() => {
-    calledFuncts = []; 
+    calledFuncts = [];
 
     props = {
       banks: [
