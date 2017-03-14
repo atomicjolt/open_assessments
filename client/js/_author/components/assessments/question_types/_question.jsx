@@ -7,7 +7,7 @@ import QuestionText        from './question_common/text';
 import AudioUpload         from './audio_upload';
 import FileUpload          from './file_upload';
 import ShortAnswer         from './short_answer';
-import MoveableWordSandbox from './moveable_words_sandbox';
+import MoveableWordSandbox from './moveable_words_sandbox/moveable_words_sandbox';
 import types               from '../../../../constants/question_types';
 import languages           from '../../../../constants/language_types';
 import Preview             from './preview_question';
