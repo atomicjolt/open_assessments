@@ -1,0 +1,97 @@
+import _                         from 'lodash';
+import baseSerializer            from './base';
+import { scrub }                 from '../../serializer_utils';
+import genusTypes                from '../../../../constants/genus_types';
+import guid                      from '../../../../utils/guid';
+
+function buildChoiceText(text, wordType) {
+  return `<p ${wordType ? `class="${wordType}"` : ''}>${text}</p>`;
+}
+
+function serializeChoices(originalChoices, newChoiceAttributes) {
+  const choices = _.map(originalChoices, (choice) => {
+    const updateValues = newChoiceAttributes[choice.id];
+    const newOrder = _.get(updateValues, 'order');
+    return {
+      id: choice.id,
+      text: buildChoiceText(
+        _.get(updateValues, 'text') || choice.text,
+        _.get(updateValues, 'wordType') || choice.wordType,
+      ),
+      order: _.isNil(newOrder) ? choice.order : newOrder,
+      delete: _.get(updateValues, 'delete'),
+    };
+  });
+
+  if (newChoiceAttributes.new) {
+    choices.push({
+      id: guid(),
+      text: '',
+      order: choices.length,
+    });
+  }
+
+  return choices;
+}
+
+function serializeQuestion(originalQuestion, newQuestionAttributes) {
+  const newQuestion = {
+    shuffle: _.isNil(newQuestionAttributes.shuffle) ? null : newQuestionAttributes.shuffle,
+    choices: null,
+  };
+
+  if (newQuestionAttributes.choices) {
+    newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
+  }
+
+  return scrub(newQuestion);
+}
+
+function serializeAnswers(choices, oldAnswers, correctFeedback, incorrectFeedback) {
+  const answers = [];
+  let correctAnswer = {
+    id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.rightAnswer }), 'id'),
+    genusTypeId: genusTypes.answer.rightAnswer,
+    feedback: _.get(correctFeedback, 'text'),
+    type: genusTypes.answer.multipleAnswer,
+    choiceIds: _.map(_.orderBy(choices, 'order'), 'id'),
+    fileIds: _.get(correctFeedback, 'fileIds'),
+  };
+  let incorrectAnswer = {
+    id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.wrongAnswer }), 'id'),
+    genusTypeId: genusTypes.answer.wrongAnswer,
+    feedback: _.get(incorrectFeedback, 'text'),
+    type: genusTypes.answer.multipleAnswer,
+    choiceIds: [],
+    fileIds: _.get(incorrectFeedback, 'fileIds'),
+  };
+
+  correctAnswer = scrub(correctAnswer);
+  incorrectAnswer = scrub(incorrectAnswer);
+  answers.push(correctAnswer);
+  answers.push(incorrectAnswer);
+
+  return answers;
+}
+
+export default function moveableWordSentence(originalItem, newItemAttributes) {
+  const newItem = baseSerializer(originalItem, newItemAttributes);
+
+  const { question } = newItemAttributes;
+  if (question) {
+    newItem.question = {
+      ...newItem.question,
+      ...serializeQuestion(originalItem.question, question)
+    };
+
+    if (question.choices || question.correctFeedback || question.incorrectFeedback) {
+      newItem.answers = serializeAnswers(
+        newItem.question.choices,
+        _.get(originalItem, 'originalItem.answers'),
+        _.get(question, 'correctFeedback'),
+        _.get(question, 'incorrectFeedback')
+      );
+    }
+  }
+  return scrub(newItem);
+}

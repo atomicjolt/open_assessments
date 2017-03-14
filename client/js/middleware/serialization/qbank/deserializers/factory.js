@@ -1,11 +1,12 @@
 import audioUpload      from './audio_upload';
 import base             from './base';
 import fileUpload       from './file_upload';
+import genusTypes       from '../../../../constants/genus_types';
 import movableFillBlank from './movable_fill_blank';
 import multipleAnswer   from './multiple_answer';
 import multipleChoice   from './multiple_choice';
 import shortAnswer      from './short_answer';
-import genusTypes       from '../../../../constants/genus_types';
+import wordSentence     from './moveable_word_sentence';
 
 export default function factory(type) {
   switch (type) {
@@ -28,6 +29,9 @@ export default function factory(type) {
 
     case genusTypes.item.movableFillBlank:
       return movableFillBlank;
+
+    case genusTypes.item.moveableWordSentence:
+      return wordSentence;
 
     default:
       return base;

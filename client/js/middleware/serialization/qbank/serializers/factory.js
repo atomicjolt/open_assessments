@@ -6,6 +6,7 @@ import multipleChoice   from './multiple_choice';
 import shortAnswer      from './short_answer';
 import survey           from './reflection';
 import types            from '../../../../constants/question_types.js';
+import wordSentence     from './moveable_word_sentence';
 
 export default function factory(type) {
   switch (type) {
@@ -30,6 +31,9 @@ export default function factory(type) {
 
     case types.movableFillBlank:
       return movableFillBlank;
+
+    case types.moveableWordSentence:
+      return wordSentence;
 
     default:
       throw 'We could not find a type for serializing';
