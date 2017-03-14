@@ -32,12 +32,23 @@ export default class Question extends React.Component {
     moveItem: React.PropTypes.func.isRequired,
   };
 
+  static questionComponents = {
+    [types.multipleChoice]: MultipleChoice,
+    [types.reflection]: MultipleChoice,
+    [types.multipleReflection]: MultipleChoice,
+    [types.multipleAnswer]: MultipleChoice,
+    [types.shortAnswer]: ShortAnswer,
+    [types.fileUpload]: FileUpload,
+    [types.audioUpload]: AudioUpload,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       reorderActive: false,
       language: languages.languageTypeId.english,
       preview: false,
+      activeChoice: null,
     };
   }
 
@@ -116,46 +127,38 @@ export default class Question extends React.Component {
     this.changeType(type);
   }
 
+  selectChoice(choiceId) {
+    this.setState({ activeChoice: choiceId });
+  }
+
+  blurOptions(e) {
+    const currentTarget = e.currentTarget;
+    setTimeout(() => {
+      if (!currentTarget.contains(document.activeElement) ||
+        (currentTarget === document.activeElement)
+      ) {
+        this.selectChoice(null);
+      }
+    }, 0);
+  }
+
+
   content() {
-    switch (this.props.item.type) {
-      case types.multipleChoice:
-      case types.reflection:
-      case types.multipleReflection:
-      case types.multipleAnswer:
-        return (
-          <MultipleChoice
-            {...this.props}
-            updateItem={newProps => this.updateItem(newProps)}
-            updateChoice={this.props.updateChoice}
-            isActive={this.props.isActive}
-          />
-        );
-      case types.audioUpload:
-        return (
-          <AudioUpload
-            updateItem={newProps => this.updateItem(newProps)}
-            item={this.props.item}
-          />
-        );
-      case types.fileUpload:
-        return (
-          <FileUpload
-            updateItem={newProps => this.updateItem(newProps)}
-            item={this.props.item}
-          />
-        );
-
-      case types.shortAnswer:
-        return (
-          <ShortAnswer
-            updateItem={newProps => this.updateItem(newProps)}
-            item={this.props.item}
-          />
-        );
-
-      default:
-        return null;
+    const Component = Question.questionComponents[this.props.item.type];
+    if (Component) {
+      return (
+        <Component
+          {...this.props}
+          updateItem={newProps => this.updateItem(newProps)}
+          updateChoice={this.props.updateChoice}
+          isActive={this.props.isActive}
+          activeChoice={this.state.activeChoice}
+          selectChoice={choiceId => this.selectChoice(choiceId)}
+          blurOptions={e => this.blurOptions(e)}
+        />
+      );
     }
+    return null;
   }
 
   editContent() {
