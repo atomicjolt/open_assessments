@@ -44,7 +44,7 @@ export class PreviewAssessment extends React.Component {
 
   render() {
     if (_.isEmpty(this.props.assessment)) {
-      return <div>Assessments are not loaded!</div>;
+      return <div className='not-loaded'>Assessments are not loaded!</div>;
     }
 
     return (

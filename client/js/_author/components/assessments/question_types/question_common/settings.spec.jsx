@@ -14,6 +14,7 @@ describe('Correct answer selector', () => {
       defaultName: 'Charles Bender',
       language: 'American',
       updateItem: (value) => { updateItemValue = value; },
+      makeReflection: () => {},
     };
     result = shallow(<Settings {...props} />);
   });

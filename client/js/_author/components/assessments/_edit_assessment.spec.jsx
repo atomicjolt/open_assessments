@@ -64,6 +64,10 @@ describe('_edit_assessment component', () => {
       updateChoice: () => {},
       updateAnswer: () => {},
       deleteAssessmentItem: () => { handleFunction = true; },
+      updatePath: () => {},
+      getItems: () => {},
+      banks: {},
+      updateSingleItemOrPage: () => {},
     };
     result = TestUtils.renderIntoDocument(<EditAssessment {...props} />);
   });

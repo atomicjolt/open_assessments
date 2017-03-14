@@ -66,11 +66,3 @@ export default class ItemResult extends React.Component{
   }
 
 }
-
-ItemResult.propTypes = {
-  question: React.PropTypes.object.isRequired,
-  confidence: React.PropTypes.string.isRequired,
-  isCorrect: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.bool]).isRequired
-}
