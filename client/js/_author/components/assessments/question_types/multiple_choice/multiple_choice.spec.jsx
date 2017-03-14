@@ -11,6 +11,7 @@ describe('multiple choice component', () => {
     choiceUpdated = false;
     props = {
       item: {
+        bankId: '',
         id: '76',
         displayName: {
           text: 'IMATITLESPEC',
@@ -46,6 +47,8 @@ describe('multiple choice component', () => {
       updateItem: () => { choiceUpdated = true; },
       updateChoice: () => { choiceUpdated = true; },
       isActive: false,
+      selectChoice: () => {},
+      blurOptions: () => {},
     };
     result = shallow(<MultipleChoice {...props} />);
   });

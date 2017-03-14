@@ -15,7 +15,7 @@ describe('New Assessments View', () => {
       view: 'assessments',
       editOrPublishAssessment: () => isEditOrPublishAssessment = !isEditOrPublishAssessment,
       isPublished,
-      items: ['stuff', 'boom'],
+      items: [{'something': 'stuff'}, {'something': 'boom'}],
       assessment: {
         bankId: 'id12345',
         assessmentId: 'assessmentId46587'

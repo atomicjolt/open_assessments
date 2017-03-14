@@ -27,7 +27,8 @@ describe('fill the blank word chain', () => {
         "<p>word2</p>",
         "<p class='interaction-placeholder'></p>"
       ],
-      selectAnswer: () => {}
+      selectAnswer: () => {},
+      linkWord: () => {},
     };
 
     WordChainRewireAPI.__Rewire__('FillTheBlankWordDropZone', WordDropZoneMock)

@@ -12,6 +12,7 @@ describe('audio_upload component', () => {
     props = {
       updateItem: () => {itemUpdated = true},
       item: {
+        bankId: '',
         id: '76',
         displayName: {
           text: 'IMATITLESPEC',
