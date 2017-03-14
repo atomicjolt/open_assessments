@@ -10,6 +10,7 @@ describe('Sets size for short answer', () => {
     props = {
       updateItem: newProps => this.updateItem(newProps),
       item: {
+        bankId: '',
         question: {
           correctFeedBack: 'salad'
         }

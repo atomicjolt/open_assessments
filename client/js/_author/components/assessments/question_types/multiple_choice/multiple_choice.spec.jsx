@@ -11,6 +11,7 @@ describe('multiple choice component', () => {
     choiceUpdated = false;
     props = {
       item: {
+        bankId: '',
         id: '76',
         displayName: {
           text: 'IMATITLESPEC',

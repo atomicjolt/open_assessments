@@ -16,6 +16,7 @@ describe('question component', () => {
     itemUpdated = false;
     props = {
       item: {
+        bankId: '',
         id: '76',
         displayName: {
           text: 'IMATITLESPEC',
@@ -42,6 +43,7 @@ describe('question component', () => {
       deleteAssessmentItem: () => {},
       moveItem: () => {movedUp = true},
       uploadedAssets: () => {},
+      makeReflection: () => {},
     };
 
     result = shallow(<Question {...props} />);
