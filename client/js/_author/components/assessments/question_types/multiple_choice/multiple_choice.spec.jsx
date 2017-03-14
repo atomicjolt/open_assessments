@@ -47,6 +47,8 @@ describe('multiple choice component', () => {
       updateItem: () => { choiceUpdated = true; },
       updateChoice: () => { choiceUpdated = true; },
       isActive: false,
+      selectChoice: () => {},
+      blurOptions: () => {},
     };
     result = shallow(<MultipleChoice {...props} />);
   });
