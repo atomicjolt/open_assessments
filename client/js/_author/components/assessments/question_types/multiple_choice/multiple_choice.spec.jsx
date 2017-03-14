@@ -58,12 +58,6 @@ describe('multiple choice component', () => {
     expect(divs.length).toBe(1);
   });
 
-  it('calls updateChoice', () => {
-    expect(choiceUpdated).toBeFalsy();
-    result.instance().addNewChoice(props.item.id);
-    expect(choiceUpdated).toBeTruthy();
-  });
-
   it('the props.updateChoice function', () => {
     expect(choiceUpdated).toBeFalsy();
     result.instance().moveChoice(props.item.question.choices['bob']);
