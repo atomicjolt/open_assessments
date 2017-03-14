@@ -73,7 +73,6 @@ export class NewAssessment extends React.Component {
       <div>
         <Heading
           view="assessments"
-          editOrPublishAssessment={this.props.publishAssessment}
           isPublished={false}
           assessment={{ bankId: this.props.params.id, assessmentId: null }}
           items={[]}
