@@ -1,6 +1,7 @@
 import multipleChoice   from './multiple_choice';
 import shortAnswer      from './short_answer';
 import audioUpload      from './audio_upload';
+import imageSequence    from './image_sequence';
 import survey           from './reflection';
 import multipleAnswer   from './multiple_answer';
 import fileUpload       from './file_upload';
@@ -8,6 +9,7 @@ import wordSentence     from './moveable_word_sentence';
 import types            from '../../../../constants/question_types.js';
 
 export default function factory(type) {
+
   switch (type) {
     case types.multipleChoice:
       return multipleChoice;
@@ -27,6 +29,9 @@ export default function factory(type) {
 
     case types.fileUpload:
       return fileUpload;
+
+    case types.imageSequence:
+      return imageSequence;
 
     case types.moveableWordSentence:
       return wordSentence;

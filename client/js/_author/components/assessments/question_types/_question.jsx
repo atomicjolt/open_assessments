@@ -6,6 +6,7 @@ import Settings         from './question_common/settings';
 import QuestionText     from './question_common/text';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
+import ImageSequence    from './image_sequence/_image_sequence';
 import ShortAnswer      from './short_answer';
 import WordSentence     from './moveable_word_sentence/moveable_word_sentence';
 import types            from '../../../../constants/question_types';
@@ -46,6 +47,7 @@ export default class Question extends React.Component {
     [types.fileUpload]: FileUpload,
     [types.audioUpload]: AudioUpload,
     [types.moveableWordSentence]: WordSentence,
+    [types.imageSequence]: ImageSequence,
   };
 
   constructor(props) {
@@ -136,6 +138,7 @@ export default class Question extends React.Component {
   selectChoice(choiceId) {
     this.setState({ activeChoice: choiceId });
   }
+
 
   blurOptions(e) {
     const currentTarget = e.currentTarget;

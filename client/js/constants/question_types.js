@@ -1,5 +1,6 @@
 export default {
   multipleChoice: 'multipleChoice',
+  imageSequence: 'imageSequence',
   shortAnswer: 'shortAnswer',
   fileUpload: 'fileUpload',
   audioUpload: 'audioUpload',
