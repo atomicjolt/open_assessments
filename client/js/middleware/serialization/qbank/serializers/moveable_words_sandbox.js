@@ -34,10 +34,15 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
     );
   }
 
-
-  const choices =  _.get(newItem, 'question.choices', []);
+  let choices =  _.get(newItem, 'question.choices', []);
   const newChoiceAttributes = _.get(newItemAttributes, 'question.choices', {});
-  if (newChoiceAttributes.new) { choices.push(makeNewChoice()); }
+
+  if (newChoiceAttributes.new) {
+    choices.push(makeNewChoice());
+  } else if (_.isArray(newChoiceAttributes)) {
+    choices = choices.concat(newChoiceAttributes);
+  }
+
   _.set(newItem, 'question.choices', serializeChoices(choices));
 
   return newItem;

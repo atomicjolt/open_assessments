@@ -10,7 +10,7 @@ export default class MWSandbox extends React.Component {
     item: React.PropTypes.object.isRequired,
     updateItem: React.PropTypes.func.isRequired,
     createChoice: React.PropTypes.func.isRequired,
-    updateChoice: React.PropTypes.func.isRequired, //TODO use createChoice that will get merged in with Ben's code
+    updateChoice: React.PropTypes.func.isRequired,
     selectChoice: React.PropTypes.func.isRequired,
     blurOptions: React.PropTypes.func.isRequired,
     activeChoice: React.PropTypes.bool,
@@ -28,10 +28,26 @@ export default class MWSandbox extends React.Component {
     });
   }
 
+  updateChoice(newChoice) {
+    this.props.updateItem({
+      type: this.props.item.type,
+      id: this.props.item.id,
+      question: {
+        choices: [newChoice]
+      }
+    });
+  }
+
   getChoices(choices) {
-    const { question } = this.props.item;
-    return _.each(choices, choice =>
-      <Option />
+    // const  question = item.question;
+    return _.map(choices, (choice, index) =>
+      <Option
+        key={choice.id}
+        choice={choice}
+        index={index}
+        selectChoice={() => {}}
+        updateChoice={c => this.updateChoice(c)}
+      />
         // <Option
   //         key={`assessmentChoice_${choice.id}`}
   //         {...choice}
@@ -54,6 +70,7 @@ export default class MWSandbox extends React.Component {
 
   render() {
     const { id } = this.props.item;
+
     return (
       <div>
         <div className="au-c-moveable__audio-settings is-active">
@@ -63,8 +80,9 @@ export default class MWSandbox extends React.Component {
           />
         </div>
         <div className="au-c-question__answers au-c-moveable__answers">
-          <Option isActive />
-          <Option />
+          {
+            this.getChoices(_.get(this.props.item, 'question.choices', []))
+          }
           <AddOption updateChoice={() => this.props.createChoice(id)} />
         </div>
       </div>

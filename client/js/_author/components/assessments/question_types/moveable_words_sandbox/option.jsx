@@ -2,17 +2,27 @@ import React from 'react';
 
 export default function Option(props) {
   const activeClass = props.isActive ? 'is-active' : '';
+  const { id } = props.choice;
 
   return (
-    <div className={`au-c-answer au-o-flex-center ${activeClass}`}>
+    <div
+      onFocus={props.selectChoice}
+      onClick={props.selectChoice}
+      className={`au-c-answer au-o-flex-center ${activeClass}`}
+    >
       <div className="au-c-input">
         <label htmlFor="option1" />
         <div className="au-c-input__contain">
           <input
             className="au-c-text-input au-c-text-input--small au-c-wysiwyg"
-            id="option1"
+            id={id}
             type="text"
-            placeholder="Option 1"
+            defaultValue={props.choice.text}
+            placeholder={`Option ${props.index + 1}`}
+            onBlur={e => props.updateChoice({
+              id: props.choice.id,
+              text: e.target.value
+            })}
           />
           <div className="au-c-input__bottom" />
         </div>
@@ -35,3 +45,8 @@ export default function Option(props) {
   );
 
 }
+
+Option.propTypes = {
+  selectChoice: React.PropTypes.func.isRequired,
+
+};
