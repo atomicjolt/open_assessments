@@ -9,7 +9,7 @@ import wordSentence     from './moveable_word_sentence';
 import types            from '../../../../constants/question_types.js';
 
 export default function factory(type) {
-  debugger
+
   switch (type) {
     case types.multipleChoice:
       return multipleChoice;

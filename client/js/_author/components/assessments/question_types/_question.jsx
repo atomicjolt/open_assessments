@@ -47,6 +47,7 @@ export default class Question extends React.Component {
     [types.fileUpload]: FileUpload,
     [types.audioUpload]: AudioUpload,
     [types.moveableWordSentence]: WordSentence,
+    [types.imageSequence]: ImageSequence,
   };
 
   constructor(props) {
@@ -134,41 +135,10 @@ export default class Question extends React.Component {
     this.changeType(type);
   }
 
-<<<<<<< HEAD
-  content() {
-
-    switch (this.props.item.type) {
-      case types.multipleChoice:
-      case types.reflection:
-      case types.multipleReflection:
-      case types.multipleAnswer:
-        return (
-          <MultipleChoice
-            {...this.props}
-            updateItem={newProps => this.updateItem(newProps)}
-            updateChoice={this.props.updateChoice}
-            isActive={this.props.isActive}
-          />
-        );
-      case types.audioUpload:
-        return (
-          <AudioUpload
-            updateItem={newProps => this.updateItem(newProps)}
-            item={this.props.item}
-          />
-        );
-      case types.fileUpload:
-        return (
-          <FileUpload
-            updateItem={newProps => this.updateItem(newProps)}
-            item={this.props.item}
-          />
-        );
-=======
   selectChoice(choiceId) {
     this.setState({ activeChoice: choiceId });
   }
->>>>>>> 50645a784123e62bfd846f107786e94ee9824188
+
 
   blurOptions(e) {
     const currentTarget = e.currentTarget;
@@ -197,18 +167,6 @@ export default class Question extends React.Component {
     return newChoices;
   }
 
-<<<<<<< HEAD
-      case types.imageSequence:
-        return (
-          <ImageSequence
-            updateItem={newProps => this.updateItem(newProps)}
-            item={this.props.item}
-          />
-        );
-
-      default:
-        return null;
-=======
   content() {
     const Component = Question.questionComponents[this.props.item.type];
     if (Component) {
@@ -225,7 +183,6 @@ export default class Question extends React.Component {
           deleteChoice={choice => this.deleteChoice(choice)}
         />
       );
->>>>>>> 50645a784123e62bfd846f107786e94ee9824188
     }
     return null;
   }
