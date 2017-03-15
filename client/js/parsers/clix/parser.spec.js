@@ -5,7 +5,7 @@ import { AssessmentFormats, parse }  from "../assessment";
 import Parser                        from "./parser";
 import { parseFeedback }             from "./parser";
 
-fdescribe("CLIx assessment parser", () => {
+describe("CLIx assessment parser", () => {
 
   beforeAll(() => {
     jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";

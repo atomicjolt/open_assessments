@@ -22,8 +22,8 @@ export default class MultipleChoice extends React.Component {
     isActive: React.PropTypes.bool,
     selectChoice: React.PropTypes.func.isRequired,
     blurOptions: React.PropTypes.func.isRequired,
-    createChoice: React.PropTypes.func.isRequired,
-    deleteChoice: React.PropTypes.func.isRequired,
+    createChoice: React.PropTypes.func,
+    deleteChoice: React.PropTypes.func,
     activeChoice: React.PropTypes.bool,
   };
 
