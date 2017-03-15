@@ -84,12 +84,12 @@ export default class PreviewQuestion extends React.Component {
     return (
       <div>
         <Item
-          settings={false}
+          settings={{}}
           question={item}
           response={this.state.response}
-          currentItemIndex={false}
+          currentItemIndex={1}
           questionCount={1}
-          questionResult={false}
+          questionResult={{}}
           selectAnswer={id => this.selectAnswer(id)}
           localizedStrings={localizedStrings}
           sendSize={() => {}}
