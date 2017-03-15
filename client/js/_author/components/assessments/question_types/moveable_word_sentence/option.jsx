@@ -9,13 +9,13 @@ export default function option(props) {
       onClick={props.selectChoice}
       className={`au-c-answer au-o-flex-center ${props.isActive ? 'is-active' : ''}`}
     >
-      <div className={`au-c-dropdown au-c-dropdown--tiny au-u-mr-sm ${!_.isNil(props.order) ? 'is-ordered' : ''}`}>
+      <div className={`au-c-dropdown au-c-dropdown--tiny au-u-mr-sm ${!_.isNil(props.answerOrder) ? 'is-ordered' : ''}`}>
         <label htmlFor={`option_order_${props.id}`} />
         <select
           name=""
           id={`option_order_${props.id}`}
-          value={props.order}
-          onChange={e => props.updateChoice({ order: e.target.value })}
+          value={props.answerOrder}
+          onChange={e => props.updateChoice({ answerOrder: e.target.value })}
         >
           <option value={null}>N/A</option>
           {
@@ -58,7 +58,7 @@ option.propTypes = {
   id: React.PropTypes.string.isRequired,
   text: React.PropTypes.string,
   wordType: React.PropTypes.string,
-  order: React.PropTypes.number,
+  answerOrder: React.PropTypes.number,
   itemCount: React.PropTypes.number.isRequired,
   isActive: React.PropTypes.bool,
   selectChoice: React.PropTypes.func.isRequired,
