@@ -4,6 +4,7 @@ import shortAnswer      from './short_answer';
 import multipleChoice   from './multiple_choice';
 import multipleAnswer   from './multiple_answer';
 import fileUpload       from './file_upload';
+import wordSentence     from './moveable_word_sentence';
 import genusTypes       from '../../../../constants/genus_types';
 
 export default function factory(type) {
@@ -24,6 +25,9 @@ export default function factory(type) {
 
     case genusTypes.item.fileUpload:
       return fileUpload;
+
+    case genusTypes.item.moveableWordSentence:
+      return wordSentence;
 
     default:
       return base;
