@@ -47,14 +47,19 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   return scrub(newQuestion);
 }
 
-function serializeAnswers(choices, oldAnswers, correctFeedback, incorrectFeedback) {
+function serializeAnswers(choices, newChoiceAttributes, oldAnswers, correctFeedback, incorrectFeedback) {
   const answers = [];
+  const updatedChoices = _.cloneDeep(choices);
+  _.forEach(newChoiceAttributes, (choice, id) => {
+    updatedChoices[id] = { ...updatedChoices[id], ...choice };
+  });
+
   let correctAnswer = {
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.rightAnswer }), 'id'),
     genusTypeId: genusTypes.answer.rightAnswer,
     feedback: _.get(correctFeedback, 'text'),
     type: genusTypes.answer.multipleAnswer,
-    choiceIds: _.map(_.orderBy(choices, 'order'), 'id'),
+    choiceIds: _.map(_.orderBy(_.filter(updatedChoices, choice => !_.isNil(choice.answerOrder)), 'answerOrder'), 'id'),
     fileIds: _.get(correctFeedback, 'fileIds'),
   };
   let incorrectAnswer = {
@@ -62,7 +67,7 @@ function serializeAnswers(choices, oldAnswers, correctFeedback, incorrectFeedbac
     genusTypeId: genusTypes.answer.wrongAnswer,
     feedback: _.get(incorrectFeedback, 'text'),
     type: genusTypes.answer.multipleAnswer,
-    choiceIds: [],
+    choiceIds: _.map(_.filter(updatedChoices, { answerOrder: null }), 'id'),
     fileIds: _.get(incorrectFeedback, 'fileIds'),
   };
 
@@ -86,7 +91,8 @@ export default function moveableWordSentence(originalItem, newItemAttributes) {
 
     if (question.choices || question.correctFeedback || question.incorrectFeedback) {
       newItem.answers = serializeAnswers(
-        newItem.question.choices,
+        originalItem.question.choices,
+        question.choices,
         _.get(originalItem, 'originalItem.answers'),
         _.get(question, 'correctFeedback'),
         _.get(question, 'incorrectFeedback')
