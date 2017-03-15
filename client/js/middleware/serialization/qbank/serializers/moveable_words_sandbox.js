@@ -11,6 +11,8 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
     );
   }
 
+  debugger;
+
   _.merge(
     newItem.question.choices,
     _.get(newItemAttributes, 'question.choices', [])

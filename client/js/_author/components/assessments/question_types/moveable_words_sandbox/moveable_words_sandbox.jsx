@@ -9,6 +9,7 @@ export default class MWSandbox extends React.Component {
   static propTypes = {
     item: React.PropTypes.object.isRequired,
     updateItem: React.PropTypes.func.isRequired,
+    createChoice: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired, //TODO use createChoice that will get merged in with Ben's code
     selectChoice: React.PropTypes.func.isRequired,
     blurOptions: React.PropTypes.func.isRequired,
@@ -25,10 +26,6 @@ export default class MWSandbox extends React.Component {
         }
       }
     });
-  }
-
-  addNewChoice(id) {
-    // this.props.updateChoice(id, 'new', { id: 'new' });
   }
 
   getChoices(choices) {
@@ -68,7 +65,7 @@ export default class MWSandbox extends React.Component {
         <div className="au-c-question__answers au-c-moveable__answers">
           <Option isActive />
           <Option />
-          <AddOption updateChoice={() => this.addNewChoice(id)} />
+          <AddOption updateChoice={() => this.props.createChoice(id)} />
         </div>
       </div>
     );
