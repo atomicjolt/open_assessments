@@ -1,5 +1,4 @@
 import React      from 'react';
-// import Settings from '../question_common/settings';
 import Feedback    from '../question_common/single_feedback';
 import ImageOrder  from './image_order';
 import types       from '../../../../../constants/question_types';
@@ -19,40 +18,30 @@ export default class ImageSequence extends React.Component {
     updateItem: React.PropTypes.func,
   };
 
-  constructor() {
-    super();
-    this.state = {
-    };
-  }
-
   getFeedback() {
     const { question, type } = this.props.item;
 
-    if (type !== types.multipleChoice) {
-      return (
-        <div className="au-c-question__feedback">
+    return (
+      <div className="au-c-question__feedback">
+        <Feedback
+          updateItem={this.props.updateItem}
+          feedbackType="correctFeedback"
+          feedback={question.correctFeedback}
+          labelText="Correct Feedback"
+          bankId={this.props.item.bankId}
+        />
+        {type === types.reflection || type === types.multipleReflection ?
+          null :
           <Feedback
             updateItem={this.props.updateItem}
-            feedbackType="correctFeedback"
-            feedback={question.correctFeedback}
-            labelText="Correct Feedback"
+            feedbackType="incorrectFeedback"
+            feedback={question.incorrectFeedback}
+            labelText="Incorrect Feedback"
             bankId={this.props.item.bankId}
           />
-          {type === types.reflection || type === types.multipleReflection ?
-            null :
-            <Feedback
-              updateItem={this.props.updateItem}
-              feedbackType="incorrectFeedback"
-              feedback={question.incorrectFeedback}
-              labelText="Incorrect Feedback"
-              bankId={this.props.item.bankId}
-            />
-          }
-        </div>
-      );
-    }
-
-    return null;
+        }
+      </div>
+    );
   }
 
   render() {

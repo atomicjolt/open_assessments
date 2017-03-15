@@ -25,7 +25,3 @@ breadcrumbs.propTypes = {
   current     : React.PropTypes.bool.isRequired,
   updatePath  : React.PropTypes.func.isRequired,
 };
-
-<div class="au-o-item au-c-question is-active">
-
-</div>
