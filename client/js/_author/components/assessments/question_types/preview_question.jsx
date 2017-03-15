@@ -33,6 +33,8 @@ export default class PreviewQuestion extends React.Component {
         return 'file_upload_question';
       case types.audioUpload:
         return 'audio_upload_question';
+      case types.moveableWordSentence:
+        return 'movable_words_sentence';
       default:
         return null;
     }
