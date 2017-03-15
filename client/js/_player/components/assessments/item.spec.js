@@ -19,6 +19,14 @@ describe('item', function() {
 
   var renderItem = () => {
     result = TestUtils.renderIntoDocument(<Item
+      response={[]}
+      selectAnswer={() => {}}
+      videoPlay={() => {}}
+      videoPause={() => {}}
+      audioPlay={() => {}}
+      audioPause={() => {}}
+      audioRecordStart={() => {}}
+      audioRecordStop={() => {}}
       question={question}
       questionResult={questionResult}
       currentItemIndex={currentItemIndex}

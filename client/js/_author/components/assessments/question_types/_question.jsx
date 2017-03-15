@@ -1,16 +1,17 @@
-import React               from 'react';
-import _                   from 'lodash';
-import MultipleChoice      from './multiple_choice/multiple_choice';
-import QuestionHeader      from './question_common/header/_header';
-import Settings            from './question_common/settings';
-import QuestionText        from './question_common/text';
-import AudioUpload         from './audio_upload';
-import FileUpload          from './file_upload';
-import ShortAnswer         from './short_answer';
+import React            from 'react';
+import _                from 'lodash';
+import MultipleChoice   from './multiple_choice/multiple_choice';
+import QuestionHeader   from './question_common/header/_header';
+import Settings         from './question_common/settings';
+import QuestionText     from './question_common/text';
+import AudioUpload      from './audio_upload';
+import FileUpload       from './file_upload';
+import ShortAnswer      from './short_answer';
+import WordSentence     from './moveable_word_sentence/moveable_word_sentence';
 import MoveableWordSandbox from './moveable_words_sandbox/moveable_words_sandbox';
-import types               from '../../../../constants/question_types';
-import languages           from '../../../../constants/language_types';
-import Preview             from './preview_question';
+import types            from '../../../../constants/question_types';
+import languages        from '../../../../constants/language_types';
+import Preview          from './preview_question';
 
 export default class Question extends React.Component {
   static propTypes = {
@@ -19,6 +20,9 @@ export default class Question extends React.Component {
       type: React.PropTypes.string,
       bankId: React.PropTypes.string,
       name: React.PropTypes.string,
+      question: React.PropTypes.shape({
+        choices: React.PropTypes.shape({}),
+      }),
     }).isRequired,
     isActive: React.PropTypes.bool,
     itemIndex: React.PropTypes.number,
@@ -29,6 +33,7 @@ export default class Question extends React.Component {
     updateChoice: React.PropTypes.func.isRequired,
     activateItem: React.PropTypes.func.isRequired,
     toggleReorder: React.PropTypes.func.isRequired,
+    createChoice: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
     moveItem: React.PropTypes.func.isRequired,
   };
@@ -42,6 +47,7 @@ export default class Question extends React.Component {
     [types.fileUpload]: FileUpload,
     [types.audioUpload]: AudioUpload,
     [types.moveableWordSandbox]: MoveableWordSandbox,
+    [types.moveableWordSentence]: WordSentence,
   };
 
   constructor(props) {
@@ -144,6 +150,22 @@ export default class Question extends React.Component {
     }, 0);
   }
 
+  deleteChoice(choice) {
+    if (confirm('Are you sure you want to delete this option?')) {
+      this.props.updateItem({
+        question: {
+          choices: this.markedForDeletion(choice)
+        }
+      });
+    }
+  }
+
+  markedForDeletion(choice) {
+    const newChoices = _.cloneDeep(this.props.item.question.choices);
+    newChoices[choice.id].delete = true;
+    return newChoices;
+  }
+
   content() {
     const Component = Question.questionComponents[this.props.item.type];
     if (Component) {
@@ -156,6 +178,8 @@ export default class Question extends React.Component {
           activeChoice={this.state.activeChoice}
           selectChoice={choiceId => this.selectChoice(choiceId)}
           blurOptions={e => this.blurOptions(e)}
+          createChoice={this.props.createChoice}
+          deleteChoice={choice => this.deleteChoice(choice)}
         />
       );
     }

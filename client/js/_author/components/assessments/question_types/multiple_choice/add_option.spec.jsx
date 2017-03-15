@@ -11,7 +11,7 @@ describe('addOption component', () => {
   beforeEach(() => {
     choiceUpdated = false;
     props = {
-      updateChoice: () => {choiceUpdated = true},
+      createChoice: () => {choiceUpdated = true},
     };
     result = TestUtils.renderIntoDocument(<Stub><AddOption {...props} /></Stub>);
   });
@@ -26,7 +26,7 @@ describe('addOption component', () => {
     expect(inputs.length).toBe(2);
   });
 
-  it('calls props.updateChoice', () => {
+  it('calls props.createChoice', () => {
     const clickableDiv = TestUtils.findRenderedDOMComponentWithClass(
       result,
       'au-c-answer--add',

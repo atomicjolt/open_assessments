@@ -20,6 +20,7 @@ export default function AssessmentItems(props) {
           updateChoice={props.updateChoice}
           deleteAssessmentItem={props.deleteAssessmentItem}
           moveItem={props.moveItem}
+          createChoice={props.createChoice}
         />
       ))}
     </div>
@@ -29,4 +30,5 @@ export default function AssessmentItems(props) {
 AssessmentItems.propTypes = {
   items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
   moveItem: React.PropTypes.func.isRequired,
+  createChoice: React.PropTypes.func.isRequired,
 };
