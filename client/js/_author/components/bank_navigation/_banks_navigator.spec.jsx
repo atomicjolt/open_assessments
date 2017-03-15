@@ -34,7 +34,8 @@ describe('Bank Navigator', () => {
       ],
       settings: {
         editableBankId   : 'bankId123',
-        publishedBankId  : 'publishedId123'
+        publishedBankId  : 'publishedId123',
+        baseEmbedUrl     : 'LOOKASPEC',
       },
       path               : [],
       updatePath         : () => { calledFuncts.push('updatePath'); },
@@ -44,6 +45,7 @@ describe('Bank Navigator', () => {
       createAssessment   : () => { calledFuncts.push('createAssessment'); },
       deleteAssessment   : () => { calledFuncts.push('deleteAssessment'); },
       currentBankId      : '',
+      getAssessmentOffered: () => {},
     };
     result = TestUtils.renderIntoDocument(<BankNavigator {...props} />);
   });

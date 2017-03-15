@@ -11,6 +11,7 @@ describe('radio component', () => {
   beforeEach(() => {
     choiceUpdated = false;
     props = {
+      itemId: '',
       id: '7',
       isCorrect: false,
       updateChoice: () => {choiceUpdated = true},

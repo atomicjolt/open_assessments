@@ -12,6 +12,7 @@ describe('file upload component', () => {
     props = {
       updateItem: () => {},
       item: {
+        bankId: '',
         id: '76',
         displayName: {
           text: 'IMATITLESPEC',

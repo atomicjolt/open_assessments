@@ -8,6 +8,7 @@ import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
 import ImageSequence    from './image_sequence/_image_sequence';
 import ShortAnswer      from './short_answer';
+import WordSentence     from './moveable_word_sentence/moveable_word_sentence';
 import types            from '../../../../constants/question_types';
 import languages        from '../../../../constants/language_types';
 import Preview          from './preview_question';
@@ -19,6 +20,9 @@ export default class Question extends React.Component {
       type: React.PropTypes.string,
       bankId: React.PropTypes.string,
       name: React.PropTypes.string,
+      question: React.PropTypes.shape({
+        choices: React.PropTypes.shape({}),
+      }),
     }).isRequired,
     isActive: React.PropTypes.bool,
     itemIndex: React.PropTypes.number,
@@ -29,8 +33,20 @@ export default class Question extends React.Component {
     updateChoice: React.PropTypes.func.isRequired,
     activateItem: React.PropTypes.func.isRequired,
     toggleReorder: React.PropTypes.func.isRequired,
+    createChoice: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
     moveItem: React.PropTypes.func.isRequired,
+  };
+
+  static questionComponents = {
+    [types.multipleChoice]: MultipleChoice,
+    [types.reflection]: MultipleChoice,
+    [types.multipleReflection]: MultipleChoice,
+    [types.multipleAnswer]: MultipleChoice,
+    [types.shortAnswer]: ShortAnswer,
+    [types.fileUpload]: FileUpload,
+    [types.audioUpload]: AudioUpload,
+    [types.moveableWordSentence]: WordSentence,
   };
 
   constructor(props) {
@@ -39,6 +55,7 @@ export default class Question extends React.Component {
       reorderActive: false,
       language: languages.languageTypeId.english,
       preview: false,
+      activeChoice: null,
     };
   }
 
@@ -117,6 +134,7 @@ export default class Question extends React.Component {
     this.changeType(type);
   }
 
+<<<<<<< HEAD
   content() {
 
     switch (this.props.item.type) {
@@ -146,15 +164,40 @@ export default class Question extends React.Component {
             item={this.props.item}
           />
         );
+=======
+  selectChoice(choiceId) {
+    this.setState({ activeChoice: choiceId });
+  }
+>>>>>>> 50645a784123e62bfd846f107786e94ee9824188
 
-      case types.shortAnswer:
-        return (
-          <ShortAnswer
-            updateItem={newProps => this.updateItem(newProps)}
-            item={this.props.item}
-          />
-        );
+  blurOptions(e) {
+    const currentTarget = e.currentTarget;
+    setTimeout(() => {
+      if (!currentTarget.contains(document.activeElement) ||
+        (currentTarget === document.activeElement)
+      ) {
+        this.selectChoice(null);
+      }
+    }, 0);
+  }
 
+  deleteChoice(choice) {
+    if (confirm('Are you sure you want to delete this option?')) {
+      this.props.updateItem({
+        question: {
+          choices: this.markedForDeletion(choice)
+        }
+      });
+    }
+  }
+
+  markedForDeletion(choice) {
+    const newChoices = _.cloneDeep(this.props.item.question.choices);
+    newChoices[choice.id].delete = true;
+    return newChoices;
+  }
+
+<<<<<<< HEAD
       case types.imageSequence:
         return (
           <ImageSequence
@@ -165,7 +208,26 @@ export default class Question extends React.Component {
 
       default:
         return null;
+=======
+  content() {
+    const Component = Question.questionComponents[this.props.item.type];
+    if (Component) {
+      return (
+        <Component
+          {...this.props}
+          updateItem={newProps => this.updateItem(newProps)}
+          updateChoice={this.props.updateChoice}
+          isActive={this.props.isActive}
+          activeChoice={this.state.activeChoice}
+          selectChoice={choiceId => this.selectChoice(choiceId)}
+          blurOptions={e => this.blurOptions(e)}
+          createChoice={this.props.createChoice}
+          deleteChoice={choice => this.deleteChoice(choice)}
+        />
+      );
+>>>>>>> 50645a784123e62bfd846f107786e94ee9824188
     }
+    return null;
   }
 
   editContent() {
