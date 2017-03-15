@@ -38,8 +38,17 @@ export default class MWSandbox extends React.Component {
     });
   }
 
+  deleteChoice(choice) {
+    this.props.updateItem({
+      type: this.props.item.type,
+      id: this.props.item.id,
+      question: {
+        choices: [_.merge({}, choice, { delete: true })]
+      }
+    });
+  }
+
   getChoices(choices) {
-    // const  question = item.question;
     return _.map(choices, (choice, index) =>
       <Option
         key={choice.id}
@@ -47,24 +56,8 @@ export default class MWSandbox extends React.Component {
         index={index}
         selectChoice={() => {}}
         updateChoice={c => this.updateChoice(c)}
+        deleteChoice={() => this.deleteChoice(choice)}
       />
-        // <Option
-  //         key={`assessmentChoice_${choice.id}`}
-  //         {...choice}
-  //         updateChoice={() => {}/* (newChoice, fileIds) => this.props.updateChoice(id, choice.id, newChoice, fileIds)*/}
-  //         updateItem={() => this.props.updateItem({ question })}
-  //         deleteChoice={() => this.deleteChoice(choice)}
-  //         shuffle={false /* question.shuffle*/}
-  //         moveUp={()=>{} /* () => this.moveChoice(choice, true) */}
-  //         moveDown={()=>{} /* () => this.moveChoice(choice)*/}
-  //         first={choice.order === 0}
-  //         last={question ? choice.order === _.size(question.choices) - 1 : true}
-  //         bankId={this.props.item.bankId}
-  //         itemId={this.props.item.id}
-  //         questionFileIds={question.fileIds}
-  //         setActiveChoice={choiceId => this.props.selectChoice(choiceId)}
-  //         isActive={this.props.isActive && choice.id === this.props.activeChoice}
-  //       />
     );
   }
 

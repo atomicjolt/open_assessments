@@ -16,7 +16,8 @@ const makeChoiceText = choice => (
 const makeChoice = choice => (
   {
     id: choice.id,
-    text: makeChoiceText(choice)
+    text: makeChoiceText(choice),
+    delete: choice.delete,
   }
 );
 
