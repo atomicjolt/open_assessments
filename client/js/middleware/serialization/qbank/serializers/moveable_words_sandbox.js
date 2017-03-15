@@ -2,12 +2,27 @@ import _ from 'lodash';
 import { baseItem } from './base';
 import guid                      from '../../../../utils/guid';
 
-const newChoice = () => (
+const makeNewChoice = () => (
   {
     id: guid(),
     text: '',
   }
 );
+
+const makeChoiceText = choice => (
+  `<p class='${choice.wordType}'>${choice.text}</p>`
+);
+
+const makeChoice = choice => (
+  {
+    id: choice.id,
+    text: makeChoiceText(choice)
+  }
+);
+
+export function serializeChoices(choices) {
+  return choices.map(choice => makeChoice(choice));
+}
 
 export default function movableWordsSerializer(originalItem, newItemAttributes) {
   const newItem = baseItem(originalItem, newItemAttributes);
@@ -24,7 +39,7 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
   const choices =  _.get(newItem, 'question.choices', []);
 
   const newChoiceAttributes = _.get(newItemAttributes, 'question.choices', {});
-  if (newChoiceAttributes.new) { choices.push(newChoice()); }
+  if (newChoiceAttributes.new) { choices.push(makeNewChoice()); }
   //TODO serialize choices
   _.set(newItem, 'question.choices', choices);
 
