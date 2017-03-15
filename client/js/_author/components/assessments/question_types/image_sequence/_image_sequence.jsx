@@ -47,7 +47,7 @@ export default class ImageSequence extends React.Component {
   render() {
     return (
       <div>
-        <ImageOrder />
+        <ImageOrder {...this.props.item} />
         <div className="au-c-question__feedback">
           { this.getFeedback() }
         </div>
