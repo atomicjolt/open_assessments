@@ -17,7 +17,6 @@ function deserializeChoices(choices, correctAnswer, incorrectId) {
   const newChoices = {};
   _.forEach(choices, (choice, index) => {
     const answerIndex = correctAnswer.choiceIds.indexOf(choice.id);
-    console.log(answerIndex);
     const isCorrect = answerIndex >= 0;
     newChoices[choice.id] = {
       id: choice.id,

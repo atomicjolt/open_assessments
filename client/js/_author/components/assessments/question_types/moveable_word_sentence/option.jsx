@@ -47,7 +47,7 @@ export default function option(props) {
         updateChoice={props.updateChoice}
       />
 
-      <button className="au-c-answer--delete">
+      <button onClick={props.deleteChoice} className="au-c-answer--delete">
         <i className="material-icons">close</i>
       </button>
     </div>
@@ -63,4 +63,5 @@ option.propTypes = {
   isActive: React.PropTypes.bool,
   selectChoice: React.PropTypes.func.isRequired,
   updateChoice: React.PropTypes.func.isRequired,
+  deleteChoice: React.PropTypes.func.isRequired,
 };

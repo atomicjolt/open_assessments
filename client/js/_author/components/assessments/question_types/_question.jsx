@@ -153,7 +153,7 @@ export default class Question extends React.Component {
 
   deleteChoice(choice) {
     if (confirm('Are you sure you want to delete this option?')) {
-      this.props.updateItem({
+      this.updateItem({
         question: {
           choices: this.markedForDeletion(choice)
         }
