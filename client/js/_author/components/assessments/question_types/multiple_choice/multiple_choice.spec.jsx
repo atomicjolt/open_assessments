@@ -49,6 +49,8 @@ describe('multiple choice component', () => {
       isActive: false,
       selectChoice: () => {},
       blurOptions: () => {},
+      createChoice: () => {},
+      deleteChoice: () => {},
     };
     result = shallow(<MultipleChoice {...props} />);
   });

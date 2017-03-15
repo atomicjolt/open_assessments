@@ -39,7 +39,7 @@ export default class Item extends React.Component{
     audioPlay         : React.PropTypes.func.isRequired,
     audioPause        : React.PropTypes.func.isRequired,
     audioRecordStart  : React.PropTypes.func.isRequired,
-    audioRecordStop   : React.PropTypes.func.isRequired
+    audioRecordStop   : React.PropTypes.func.isRequired,
   };
 
   componentDidMount(){

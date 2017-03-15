@@ -99,6 +99,8 @@ export default class PreviewQuestion extends React.Component {
           audioPause={() => {}}
           audioRecordStart={() => {}}
           audioRecordStop={() => {}}
+          createChoice={() => {}}
+          deleteChoice={() => {}}
         />
       </div>
     );

@@ -44,6 +44,7 @@ describe('question component', () => {
       moveItem: () => {movedUp = true},
       uploadedAssets: () => {},
       makeReflection: () => {},
+      createChoice: () => {},
     };
 
     result = shallow(<Question {...props} />);

@@ -3,7 +3,7 @@ import QuestionText       from './text';
 import { shallow }        from 'enzyme';
 import Editor             from '../../../common/oea_editor';
 
-fdescribe('text component', () => {
+describe('text component', () => {
   let props;
   let result;
 
