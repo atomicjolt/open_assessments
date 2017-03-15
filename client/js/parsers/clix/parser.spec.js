@@ -5,7 +5,7 @@ import { AssessmentFormats, parse }  from "../assessment";
 import Parser                        from "./parser";
 import { parseFeedback }             from "./parser";
 
-describe("CLIx assessment parser", () => {
+fdescribe("CLIx assessment parser", () => {
 
   beforeAll(() => {
     jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
@@ -45,9 +45,10 @@ describe("CLIx assessment parser", () => {
     });
 
     it('handles bad xml', () => {
+      spyOn(console, 'error')
       var result = parseFeedback('<notxml>reallyNotXml');
 
-      expect(result).toEqual(undefined);
+      expect(console.error).toHaveBeenCalled();
     });
   });
 });
