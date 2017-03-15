@@ -6,6 +6,7 @@ import Settings         from './question_common/settings';
 import QuestionText     from './question_common/text';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
+import ImageSequence    from './image_sequence/_image_sequence';
 import ShortAnswer      from './short_answer';
 import types            from '../../../../constants/question_types';
 import languages        from '../../../../constants/language_types';
@@ -117,6 +118,7 @@ export default class Question extends React.Component {
   }
 
   content() {
+
     switch (this.props.item.type) {
       case types.multipleChoice:
       case types.reflection:
@@ -148,6 +150,14 @@ export default class Question extends React.Component {
       case types.shortAnswer:
         return (
           <ShortAnswer
+            updateItem={newProps => this.updateItem(newProps)}
+            item={this.props.item}
+          />
+        );
+
+      case types.imageSequence:
+        return (
+          <ImageSequence
             updateItem={newProps => this.updateItem(newProps)}
             item={this.props.item}
           />

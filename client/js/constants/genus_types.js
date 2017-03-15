@@ -1,6 +1,7 @@
 export const types = {
   item:{
     multipleChoice: 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
+    imageSequence: 'item-genus-type%3Aqti-order-interaction-object-manipulation%40ODL.MIT.EDU',
     multipleAnswer: 'item-genus-type%3Aqti-choice-interaction-multi-select%40ODL.MIT.EDU',
     fileUpload: 'item-genus-type%3Aqti-upload-interaction-generic%40ODL.MIT.EDU',
     audioUpload: 'item-genus-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU',
@@ -10,6 +11,7 @@ export const types = {
   },
   question: {
     multipleChoice: 'question-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
+    imageSequence: 'question-type%3Aqti-order-interaction-object-manipulation%40ODL.MIT.EDU',
     audioUpload: 'question-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU',
     multipleAnswer: 'question-type%3Aqti-choice-interaction-multi-select%40ODL.MIT.EDU',
     reflection: 'question-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
