@@ -33,6 +33,7 @@ describe('AssessmentForm component', () => {
       updateChoice: () => {},
       updateAnswer: () => {},
       deleteAssessmentItem: () => {},
+      createChoice: () => {},
     };
     result = shallow(<AssessmentForm {...props} />);
   });
