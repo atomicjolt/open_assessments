@@ -30,9 +30,12 @@ export default function fileUpload(item) {
     seconds: _.toString(audioLimit)
   });
 
+  const choices = deserializeChoices(_.get(item, 'question.choices', []));
+
   newItem.question = {
     ...newItem.question,
-    timeValue
+    timeValue,
+    choices
   };
 
 

@@ -35,13 +35,10 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
   }
 
 
-  // Serialize all choices
   const choices =  _.get(newItem, 'question.choices', []);
-
   const newChoiceAttributes = _.get(newItemAttributes, 'question.choices', {});
   if (newChoiceAttributes.new) { choices.push(makeNewChoice()); }
-  //TODO serialize choices
-  _.set(newItem, 'question.choices', choices);
+  _.set(newItem, 'question.choices', serializeChoices(choices));
 
   return newItem;
 }
