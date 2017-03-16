@@ -33,7 +33,7 @@ export default class Question extends React.Component {
     updateChoice: React.PropTypes.func.isRequired,
     activateItem: React.PropTypes.func.isRequired,
     toggleReorder: React.PropTypes.func.isRequired,
-    createChoice: React.PropTypes.func.isRequired,
+    createChoice: React.PropTypes.func,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
     moveItem: React.PropTypes.func.isRequired,
   };
@@ -152,7 +152,7 @@ export default class Question extends React.Component {
 
   deleteChoice(choice) {
     if (confirm('Are you sure you want to delete this option?')) {
-      this.props.updateItem({
+      this.updateItem({
         question: {
           choices: this.markedForDeletion(choice)
         }

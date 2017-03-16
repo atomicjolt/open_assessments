@@ -13,25 +13,19 @@ function parseChoiceWordType(text) {
   return $(parsedInput).attr('class');
 }
 
-function deserializeChoices(choices, answers) {
+function deserializeChoices(choices, correctAnswer, incorrectId) {
   const newChoices = {};
   _.forEach(choices, (choice, index) => {
+    const answerIndex = correctAnswer.choiceIds.indexOf(choice.id);
+    const isCorrect = answerIndex >= 0;
     newChoices[choice.id] = {
       id: choice.id,
-      answerId: null,
+      answerId: isCorrect ? correctAnswer.id : incorrectId,
       text: parseChoiceText(choice.text),
       wordType: parseChoiceWordType(choice.text),
       order: index,
+      answerOrder: isCorrect ? answerIndex : null,
     };
-    _.forEach(answers, (answer) => {
-      if (_.includes(answer.choiceIds, choice.id)) {
-        newChoices[choice.id] = {
-          ...newChoices[choice.id],
-          feedback: _.get(answer, 'feedback.text'),
-          answerId: answer.id,
-        };
-      }
-    });
   });
   return newChoices;
 }
@@ -45,7 +39,7 @@ export default function moveableWordSentence(item) {
   newItem.question = {
     ...newItem.question,
     shuffle: _.get(item, 'question.shuffle'),
-    choices: deserializeChoices(_.get(item, 'question.choices'), item.answers),
+    choices: deserializeChoices(_.get(item, 'question.choices'), correctAnswer, _.get(incorrectAnswer, 'id')),
     correctFeedback: {
       text: _.get(correctAnswer, 'feedback.text'),
       answerId: _.get(correctAnswer, 'id'),

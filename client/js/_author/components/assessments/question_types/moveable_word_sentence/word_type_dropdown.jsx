@@ -2,7 +2,7 @@ import React    from 'react';
 
 export default function wordType(props) {
   return (
-    <div className="au-c-dropdown au-c-dropdown--smaller au-u-ml-sm is-ordered">
+    <div className={`au-c-dropdown au-c-dropdown--smaller au-u-ml-sm ${props.wordType ? 'is-ordered' : null}`}>
       <label htmlFor={`option_word_${props.id}`} />
       <select
         name=""
@@ -10,7 +10,7 @@ export default function wordType(props) {
         value={props.wordType}
         onChange={e => props.updateChoice({ wordType: e.target.value })}
       >
-        <option value={null}>N/A</option>
+        <option value="">N/A</option>
         <option value="verb">Verb</option>
         <option value="adverb">Adverb</option>
         <option value="noun">Noun</option>

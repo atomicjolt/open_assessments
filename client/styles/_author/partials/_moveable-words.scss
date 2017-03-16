@@ -21,6 +21,14 @@
   .au-c-dropdown--smaller, .au-c-answer--delete{
     opacity: 0;
     pointer-events: none;
+
+    &.is-ordered {
+      opacity: 1;
+      pointer-events: auto;
+      select{
+        border-color: $green;
+      }
+    }
   }
 
   .au-c-dropdown--tiny{
