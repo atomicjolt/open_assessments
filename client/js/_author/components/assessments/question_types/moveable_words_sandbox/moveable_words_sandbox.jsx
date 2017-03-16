@@ -4,6 +4,7 @@ import _ from 'lodash';
 import AudioLimit from '../question_common/audio_limit';
 import Option from './option';
 import AddOption from './add_option';
+import Feedback   from '../question_common/single_feedback';
 
 export default class MWSandbox extends React.Component {
   static propTypes = {
@@ -15,8 +16,8 @@ export default class MWSandbox extends React.Component {
     selectChoice: React.PropTypes.func.isRequired,
     blurOptions: React.PropTypes.func.isRequired,
 
-    isActive: React.PropTypes.bool.isRequired,
-    activeChoice: React.PropTypes.string.isRequired,
+    isActive: React.PropTypes.bool,
+    activeChoice: React.PropTypes.string,
   };
 
   handleBlur(e) {
@@ -65,7 +66,7 @@ export default class MWSandbox extends React.Component {
   }
 
   render() {
-    const { id } = this.props.item;
+    const { question, id } = this.props.item;
     return (
       <div onBlur={e => this.props.blurOptions(e)}>
         <div className="au-c-moveable__audio-settings is-active">
@@ -79,6 +80,22 @@ export default class MWSandbox extends React.Component {
             this.getChoices(_.get(this.props.item, 'question.choices', []))
           }
           <AddOption updateChoice={() => this.props.createChoice(id)} />
+          <div className="au-c-question__feedback">
+            <Feedback
+              updateItem={this.props.updateItem}
+              feedbackType="correctFeedback"
+              feedback={question.correctFeedback}
+              labelText="Correct Feedback"
+              bankId={this.props.item.bankId}
+            />
+            <Feedback
+              updateItem={this.props.updateItem}
+              feedbackType="incorrectFeedback"
+              feedback={question.incorrectFeedback}
+              labelText="Incorrect Feedback"
+              bankId={this.props.item.bankId}
+            />
+          </div>
         </div>
       </div>
     );

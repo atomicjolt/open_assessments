@@ -1,6 +1,13 @@
 import _ from 'lodash';
 import { baseItem } from './base';
-import guid                      from '../../../../utils/guid';
+import { scrub }                 from '../../serializer_utils';
+import guid from '../../../../utils/guid';
+import genusTypes from '../../../../constants/genus_types';
+
+const defaultFeedback = {
+  text: '',
+  fileIds: {},
+};
 
 const makeNewChoice = () => (
   {
@@ -25,6 +32,20 @@ export function serializeChoices(choices) {
   return choices.map(choice => makeChoice(choice));
 }
 
+export function serializeAnswers(choices, correctFeedback, incorrectFeedback) {
+  return [{
+    genusTypeId: genusTypes.answer.rightAnswer,
+    choiceIds: _.map(choices, choice => choice.id),
+    feedback: _.get(correctFeedback, 'text', ''),
+    fileIds: _.get(correctFeedback, 'fileIds', {}),
+  }, {
+    genusTypeId: genusTypes.answer.wrongAnswer,
+    choiceIds: [],
+    feedback: _.get(incorrectFeedback, 'text', ''),
+    fileIds: _.get(incorrectFeedback, 'fileIds', {}),
+  }].map(scrub);
+}
+
 export default function movableWordsSerializer(originalItem, newItemAttributes) {
   const newItem = baseItem(originalItem, newItemAttributes);
 
@@ -45,6 +66,16 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
   }
 
   _.set(newItem, 'question.choices', serializeChoices(choices));
+
+  const correctFeedback = _.get(newItemAttributes, 'question.correctFeedback');
+  const incorrectFeedback = _.get(newItemAttributes, 'question.correctFeedback');
+
+  const answers = serializeAnswers(
+    _.get(originalItem, 'question.choices'), correctFeedback, incorrectFeedback
+  );
+
+  debugger;
+  newItem.answers = answers;
 
   return newItem;
 }
