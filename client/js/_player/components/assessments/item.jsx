@@ -1,12 +1,13 @@
-"use strict";
+'use strict';
 
-import React  from "react";
-
-import * as AssessmentActions  from "../../actions/assessment";
-import UniversalInput          from "./universal_input";
+import React  from 'react';
+import _ from 'lodash';
 import videojs from 'video.js';
+import * as AssessmentActions  from '../../actions/assessment';
+import UniversalInput          from './universal_input';
 
-export default class Item extends React.Component{
+
+export default class Item extends React.Component {
 
   static propTypes = {
     // Assessment configuration settings. these should never be modified.
@@ -42,36 +43,36 @@ export default class Item extends React.Component{
     audioRecordStop   : React.PropTypes.func.isRequired
   };
 
-  componentDidMount(){
+  componentDidMount() {
 
     if (typeof MathJax !== 'undefined') {
       MathJax.Hub.Queue(new Array('Typeset', MathJax.Hub));
     }
 
-    if(!_.isFunction(videojs)){return;}
+    if (!_.isFunction(videojs)) { return; }
     // Look for videos that should be using videojs.
-    var videoJSElements = document.querySelectorAll('video.video-js');
+    const videoJSElements = document.querySelectorAll('video.video-js');
     _.each(videoJSElements,(element) => videojs(element));
 
-    var material = document.getElementsByClassName("c-question")[0];
-    if(material !== undefined){
+    const material = document.getElementsByClassName('c-question')[0];
+    if (material !== undefined) {
       // loadElements are elements we expect to change the size of the DOM when
       // they load, and that support the 'load' event.
-      var loadElements = Array.from(material.querySelectorAll('img, object'));
+      const loadElements = Array.from(material.querySelectorAll('img, object'));
       loadElements.forEach((e) => {
         e.addEventListener('load', () => this.props.sendSize());
       });
 
       // mediaElements are elements that could change the size of the DOM, and
       // support media element events like 'loadstart', and 'loadedmetadata'.
-      var mediaElements = Array.from(material.querySelectorAll('video, audio'));
+      const mediaElements = Array.from(material.querySelectorAll('video, audio'));
       mediaElements.forEach((e) => {
         e.addEventListener('loadstart', () => this.props.sendSize());
         e.addEventListener('loadedmetadata', () => this.props.sendSize());
       });
     }
 
-    let videoElements = document.querySelectorAll('video');
+    const videoElements = document.querySelectorAll('video');
     _.each(videoElements, (element) => {
       element.addEventListener('play', (e) => {
         this.props.videoPlay(e.target.id || e.target.src, e.target.currentTime);
@@ -82,7 +83,7 @@ export default class Item extends React.Component{
       }, false);
     });
 
-    let audioElements = document.querySelectorAll('audio');
+    const audioElements = document.querySelectorAll('audio');
     _.each(audioElements, (element) => {
       element.addEventListener('play', (e) => {
         this.props.audioPlay(e.target.id || e.target.src, e.target.currentTime);
@@ -94,58 +95,69 @@ export default class Item extends React.Component{
     });
   }
 
-  getFeedback(){
-    var response = this.props.questionResult;
+  getFeedback() {
+    const response = this.props.questionResult;
+    const questionType = this.props.question.question_type;
+    let answerFeedback;
 
-    if(response){
-
-      if(response.correct === true) {
-        return (
-          <div className="c-question-feedback  c-feedback--correct">
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-              <path d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z"/>
-            </svg>
-            <div
-              dangerouslySetInnerHTML={{ __html:response.feedback }}>
-            </div>
-          </div>
-        );
-      } else if(response.correct === false) {
-        return (
+    if (response) {
+      if (response.correct === true) {
+        switch (questionType) {
+          case 'survey_question':
+            answerFeedback = (
+              <div className="c-question-feedback  c-feedback--correct">
+                <div dangerouslySetInnerHTML={{ __html:response.feedback }} />
+              </div>
+            );
+            break; // leaving this uncommented out makes linter complain
+          default:
+            answerFeedback = (
+              <div className="c-question-feedback  c-feedback--correct">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                  <path d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z" />
+                </svg>
+                <div dangerouslySetInnerHTML={{ __html:response.feedback }} />
+              </div>
+            );
+        }
+      } else if (response.correct === false) {
+        answerFeedback = (
           <div className="c-question-feedback  c-feedback--incorrect">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-              <path d="M24 4c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.95 20-20-8.95-20-20-20zm10 27.17l-2.83 2.83-7.17-7.17-7.17 7.17-2.83-2.83 7.17-7.17-7.17-7.17 2.83-2.83 7.17 7.17 7.17-7.17 2.83 2.83-7.17 7.17 7.17 7.17z"/>
+              <path d="M24 4c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.95 20-20-8.95-20-20-20zm10 27.17l-2.83 2.83-7.17-7.17-7.17 7.17-2.83-2.83 7.17-7.17-7.17-7.17 2.83-2.83 7.17 7.17 7.17-7.17 2.83 2.83-7.17 7.17 7.17 7.17z" />
             </svg>
-            <div
-              dangerouslySetInnerHTML={{ __html:response.feedback }}>
-            </div>
+            <div dangerouslySetInnerHTML={{ __html:response.feedback }} />
           </div>
         );
       }
     }
+    return (
+      <div>
+        {answerFeedback}
+      </div>
+    );
   }
 
   render() {
     return (
-        <div className="c-question">
-          <div className="c-question-prompt">
-            <div dangerouslySetInnerHTML={
-              {__html: this.props.question.material}}>
-            </div>
-          </div>
-          <div className="c-answers">
-            <UniversalInput
-              settings={this.props.settings}
-              item={this.props.question}
-              isResult={false}
-              selectAnswer={this.props.selectAnswer}
-              response={this.props.response}
-              localizedStrings={this.props.localizedStrings}
-              audioRecordStart={this.props.audioRecordStart}
-              audioRecordStop={this.props.audioRecordStop}/>
-          </div>
-          {this.getFeedback()}
+      <div className="c-question">
+        <div className="c-question-prompt">
+          <div dangerouslySetInnerHTML={{ __html: this.props.question.material }} />
         </div>
+        <div className="c-answers">
+          <UniversalInput
+            settings={this.props.settings}
+            item={this.props.question}
+            isResult={false}
+            selectAnswer={this.props.selectAnswer}
+            response={this.props.response}
+            localizedStrings={this.props.localizedStrings}
+            audioRecordStart={this.props.audioRecordStart}
+            audioRecordStop={this.props.audioRecordStop}
+          />
+        </div>
+        {this.getFeedback()}
+      </div>
     );
   }
 }
