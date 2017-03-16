@@ -32,7 +32,7 @@ export default function Option(props) {
         <select
           name=""
           id="word_drop_down"
-          value={null}
+          value={props.choice.wordType}
           onChange={e => props.updateChoice({
             id: props.choice.id,
             wordType: e.target.value
@@ -62,5 +62,5 @@ Option.propTypes = {
   selectChoice: React.PropTypes.func.isRequired,
   deleteChoice: React.PropTypes.func.isRequired,
   updateChoice: React.PropTypes.func.isRequired,
-
+  choice: React.PropTypes.object.isRequired,
 };
