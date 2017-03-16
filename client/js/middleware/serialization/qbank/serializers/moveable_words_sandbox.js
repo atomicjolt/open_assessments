@@ -28,6 +28,7 @@ const makeChoice = choice => (
   }
 );
 
+
 export function serializeChoices(choices) {
   return choices.map(choice => makeChoice(choice));
 }
@@ -58,23 +59,19 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
 
   let choices =  _.get(newItem, 'question.choices', []);
   const newChoiceAttributes = _.get(newItemAttributes, 'question.choices', {});
-
   if (newChoiceAttributes.new) {
     choices.push(makeNewChoice());
   } else if (_.isArray(newChoiceAttributes)) {
     choices = choices.concat(newChoiceAttributes);
   }
-
   _.set(newItem, 'question.choices', serializeChoices(choices));
 
-  const correctFeedback = _.get(newItemAttributes, 'question.correctFeedback');
-  const incorrectFeedback = _.get(newItemAttributes, 'question.correctFeedback');
 
   const answers = serializeAnswers(
-    _.get(originalItem, 'question.choices'), correctFeedback, incorrectFeedback
+    _.get(originalItem, 'question.choices'),
+    _.get(newItemAttributes, 'question.correctFeedback'),
+    _.get(newItemAttributes, 'question.incorrectFeedback'),
   );
-
-  debugger;
   newItem.answers = answers;
 
   return newItem;

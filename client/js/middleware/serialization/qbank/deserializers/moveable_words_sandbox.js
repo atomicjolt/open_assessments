@@ -38,6 +38,7 @@ export default function fileUpload(item) {
     choices
   };
 
+  //TODO deserialize feedback {text: '', fileIds: {}}
 
   return newItem;
 }

@@ -28,14 +28,23 @@ export default function Option(props) {
         </div>
       </div>
       <div className="au-c-dropdown au-c-dropdown--smaller au-u-ml-sm is-ordered">
-        <label htmlFor />
-        <select name id>
-          <option value>Verb</option>
-          <option value>Adverb</option>
-          <option value>Noun</option>
-          <option value>Pronoun</option>
-          <option value>Adjective</option>
-          <option value>Preposition</option>
+        <label htmlFor="word_drop_down" />
+        <select
+          name=""
+          id="word_drop_down"
+          value={null}
+          onChange={e => props.updateChoice({
+            id: props.choice.id,
+            wordType: e.target.value
+          })}
+        >
+          <option value={null}>N/A</option>
+          <option value="verb">Verb</option>
+          <option value="adverb">Adverb</option>
+          <option value="noun">Noun</option>
+          <option value="pronoun">Pronoun</option>
+          <option value="adjective">Adjective</option>
+          <option value="preposition">Preposition</option>
         </select>
       </div>
       <button
