@@ -1,17 +1,19 @@
 import genusTypes from '../../../../constants/genus_types';
 import { deserializeChoices, deserializeFeedback } from './moveable_words_sandbox';
 
-fdescribe('MoveableWordsSandbox', () => {
+describe('MoveableWordsSandbox', () => {
 
   let item;
 
   beforeEach(() => {
     item = {
       answers: [{
+        id: '1',
         feedback: { text: '<p>Howdy</p>' },
         genusTypeId: genusTypes.answer.rightAnswer,
         fileIds: {}
       }, {
+        id: '2',
         feedback: { text: '<p>hiya</p>' },
         genusTypeId: genusTypes.answer.wrongAnswer,
         fileIds: {}
@@ -49,10 +51,12 @@ fdescribe('MoveableWordsSandbox', () => {
   it('should deserialize feedback', () => {
     const expectedFeedback = {
       correctFeedback: {
+        id: '1',
         text: '<p>Howdy</p>',
         fileIds: {},
       },
       incorrectFeedback: {
+        id: '2',
         text: '<p>hiya</p>',
         fileIds: {},
       },

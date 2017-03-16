@@ -24,11 +24,13 @@ export function deserializeFeedback(answers) {
   return _.reduce(answers, (feedbacks, feedback) => {
     if (feedback.genusTypeId === genusTypes.answer.rightAnswer) {
       feedbacks.correctFeedback = {
+        id: feedback.id,
         text: feedback.feedback.text,
         fileIds: feedback.fileIds,
       };
     } else if (feedback.genusTypeId === genusTypes.answer.wrongAnswer) {
       feedbacks.incorrectFeedback = {
+        id: feedback.id,
         text: feedback.feedback.text,
         fileIds: feedback.fileIds,
       };

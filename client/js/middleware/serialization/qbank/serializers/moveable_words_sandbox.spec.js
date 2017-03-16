@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { serializeChoices, serializeAnswers } from './moveable_words_sandbox';
 import genusTypes from '../../../../constants/genus_types';
 
@@ -41,19 +40,23 @@ describe('MoveableWordsSandbox', () => {
     const correctFeedback = {
       text: 'correctText',
       fileIds: {},
+      id: '1',
     };
 
     const incorrectFeedback = {
       text: 'incorrectText',
       fileIds: {},
+      id: '2',
     };
 
     const expectedAnswers = [{
       genusTypeId: genusTypes.answer.rightAnswer,
-      feedback: _.get(correctFeedback, 'text', ''),
+      feedback: correctFeedback.text,
+      id: correctFeedback.id,
     }, {
       genusTypeId: genusTypes.answer.wrongAnswer,
-      feedback: _.get(incorrectFeedback, 'text', ''),
+      feedback: incorrectFeedback.text,
+      id: incorrectFeedback.id,
     }];
 
     const result = serializeAnswers(correctFeedback, incorrectFeedback);

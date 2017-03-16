@@ -32,15 +32,24 @@ export function serializeChoices(choices) {
   return _.map(choices, (choice => makeChoice(choice)));
 }
 
-export function serializeAnswers(correctFeedback, incorrectFeedback) {
+export function serializeAnswers(correctFeedback, incorrectFeedback, originalItem) {
+  const originalCorrect = _.get(originalItem, 'question.correctFeedback', {});
+  const originalIncorrect = _.get(originalItem, 'question.incorrectFeedback', {});
+
   return [{
+    id: originalCorrect.id,
     genusTypeId: genusTypes.answer.rightAnswer,
-    feedback: _.get(correctFeedback, 'text', ''),
+    feedback: _.get(correctFeedback, 'text') ||
+      originalCorrect.text,
   }, {
+    id: _.get(originalItem, 'question.incorrectFeedback.id') ||
+      originalIncorrect.text,
     genusTypeId: genusTypes.answer.wrongAnswer,
     feedback: _.get(incorrectFeedback, 'text', ''),
   }].map(scrub);
 }
+
+//TODO serialize fileIds
 
 export default function movableWordsSerializer(originalItem, newItemAttributes) {
   const newItem = baseItem(originalItem, newItemAttributes);
@@ -76,11 +85,19 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
   }
 
   // Serialize answers
-  const answers = serializeAnswers(
-    _.get(newItemAttributes, 'question.correctFeedback'),
-    _.get(newItemAttributes, 'question.incorrectFeedback'),
-  );
-  newItem.answers = answers;
+  const correctFeedback =
+    _.get(newItemAttributes, 'question.correctFeedback');
+  const incorrectFeedback =
+    _.get(newItemAttributes, 'question.incorrectFeedback');
+
+  if (correctFeedback || incorrectFeedback) {
+    const answers = serializeAnswers(
+      correctFeedback,
+      incorrectFeedback,
+      originalItem,
+    );
+    newItem.answers = answers;
+  }
 
   return newItem;
 }
