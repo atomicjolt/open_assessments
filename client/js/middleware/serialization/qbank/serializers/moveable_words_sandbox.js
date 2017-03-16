@@ -33,6 +33,13 @@ export function serializeChoices(choices) {
   return _.map(choices, (choice => makeChoice(choice)));
 }
 
+export function serializeFileIds(correctFeedback, incorrectFeedback) {
+  return {
+    ..._.get(correctFeedback, 'fileIds', {}),
+    ..._.get(incorrectFeedback, 'fileIds', {}),
+  };
+}
+
 export function serializeAnswers(correctFeedback, incorrectFeedback, originalItem) {
   const originalCorrect = _.get(originalItem, 'question.correctFeedback', {});
   const originalIncorrect = _.get(originalItem, 'question.incorrectFeedback', {});
@@ -47,8 +54,6 @@ export function serializeAnswers(correctFeedback, incorrectFeedback, originalIte
     feedback: _.get(incorrectFeedback, 'text', '') || originalIncorrect.text,
   }].map(scrub);
 }
-
-//TODO serialize fileIds
 
 export default function movableWordsSerializer(originalItem, newItemAttributes) {
   const newItem = baseItem(originalItem, newItemAttributes);
@@ -96,6 +101,8 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
       originalItem,
     );
     newItem.answers = answers;
+    const fileIds = serializeFileIds(correctFeedback, incorrectFeedback);
+    _.set(newItem, 'question.fileIds', fileIds);
   }
 
   return newItem;

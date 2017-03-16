@@ -57,7 +57,7 @@ export default function fileUpload(item) {
     ...feedback,
   };
 
-  //TODO deserialize feedback {text: '', fileIds: {}}
-
+  // TODO deserialize feedback {text: '', fileIds: {}}
+  // TODO deserialize fileIds
   return newItem;
 }
