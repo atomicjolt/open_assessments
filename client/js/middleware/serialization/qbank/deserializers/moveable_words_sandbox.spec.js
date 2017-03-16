@@ -1,6 +1,6 @@
 import { deserializeChoices } from './moveable_words_sandbox';
 
-describe('MoveableWordsSandbox', () => {
+fdescribe('MoveableWordsSandbox', () => {
 
   let item;
 
@@ -19,18 +19,18 @@ describe('MoveableWordsSandbox', () => {
 
 
   it('should deserialize choices', () => {
-    const expectedChoices = [
-      {
+    const expectedChoices = {
+      'id14a6824a-79f2-4c00-ac6a-b41cbb64db45': {
         id: 'id14a6824a-79f2-4c00-ac6a-b41cbb64db45',
         text: 'the bus',
         wordType: 'noun',
       },
-      {
+      'id969e920d-6d22-4d06-b4ac-40a821e350c6': {
         id: 'id969e920d-6d22-4d06-b4ac-40a821e350c6',
         text: 'the airport',
         wordType: 'noun',
       }
-    ];
+    };
 
     const result = deserializeChoices(item.choices);
     expect(result).toEqual(expectedChoices);

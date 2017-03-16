@@ -8,14 +8,15 @@ import { audioLimit } from '../../../../constants/question_types';
 
 
 export function deserializeChoices(choices) {
-  return choices.map((choice) => {
+  return choices.reduce((all, choice) => {
     const nodes = $.parseHTML(choice.text);
-    return {
+    all[choice.id] = {
       id: choice.id,
       text: _.get(nodes, '[0].innerText', ''),
       wordType: _.get(nodes, '[0].className', ''),
     };
-  });
+    return all;
+  }, {});
 }
 
 export function deserializeAnswers(choices) {
@@ -30,7 +31,7 @@ export default function fileUpload(item) {
     seconds: _.toString(audioLimit)
   });
 
-  const choices = deserializeChoices(_.get(item, 'question.choices', []));
+  const choices = deserializeChoices(_.get(item, 'question.choices', {}));
 
   newItem.question = {
     ...newItem.question,

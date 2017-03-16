@@ -12,6 +12,7 @@ export default class MWSandbox extends React.Component {
     updateItem: React.PropTypes.func.isRequired,
     createChoice: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
+    deleteChoice: React.PropTypes.func.isRequired,
 
     selectChoice: React.PropTypes.func.isRequired,
     blurOptions: React.PropTypes.func.isRequired,
@@ -32,35 +33,40 @@ export default class MWSandbox extends React.Component {
     });
   }
 
-  updateChoice(newChoice) {
-    this.props.updateItem({
-      type: this.props.item.type,
-      id: this.props.item.id,
-      question: {
-        choices: [newChoice]
-      }
-    });
-  }
-
-  deleteChoice(choice) {
-    this.props.updateItem({
-      type: this.props.item.type,
-      id: this.props.item.id,
-      question: {
-        choices: [_.merge({}, choice, { delete: true })]
-      }
-    });
-  }
+  // updateChoice(newChoice) {
+  //   this.props.updateItem({
+  //     type: this.props.item.type,
+  //     id: this.props.item.id,
+  //     question: {
+  //       choices: [newChoice]
+  //     }
+  //   });
+  // }
+  //
+  // deleteChoice(choice) {
+  //   this.props.updateItem({
+  //     type: this.props.item.type,
+  //     id: this.props.item.id,
+  //     question: {
+  //       choices: [_.merge({}, choice, { delete: true })]
+  //     }
+  //   });
+  // }
 
   getChoices(choices) {
+    const { id } = this.props.item;
+
     return _.map(choices, (choice, index) =>
       <Option
         key={choice.id}
         choice={choice}
         index={index}
         selectChoice={() => this.props.selectChoice(choice.id)}
-        updateChoice={c => this.updateChoice(c)}
-        deleteChoice={() => this.deleteChoice(choice)}
+        updateChoice={
+          (newChoice, fileIds) => this.props.updateChoice(
+              id, choice.id, newChoice, fileIds)
+        }
+        deleteChoice={() => this.props.deleteChoice(choice)}
         isActive={this.props.isActive && choice.id === this.props.activeChoice}
       />);
   }
@@ -77,7 +83,7 @@ export default class MWSandbox extends React.Component {
         </div>
         <div className="au-c-question__answers au-c-moveable__answers">
           {
-            this.getChoices(_.get(this.props.item, 'question.choices', []))
+            this.getChoices(_.get(this.props.item, 'question.choices', {}))
           }
           <AddOption updateChoice={() => this.props.createChoice(id)} />
           <div className="au-c-question__feedback">
