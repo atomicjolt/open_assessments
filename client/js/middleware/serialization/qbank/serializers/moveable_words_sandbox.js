@@ -21,10 +21,11 @@ const makeChoiceText = choice => (
 );
 
 const makeChoice = choice => (
-  {
+  scrub({
+    delete: choice.delete,
     id: choice.id,
     text: makeChoiceText(choice),
-  }
+  })
 );
 
 
