@@ -22,7 +22,7 @@ export default class AudioLimit extends React.Component {
 
   static rangeWarning() {
     return (
-      <span className="au-c-inline-error">Please enter a positive number under 240</span>
+      <span className="au-c-inline-error">Please enter a positive number under {`${MAX_TIME}`}</span>
     );
   }
 
@@ -78,7 +78,7 @@ export default class AudioLimit extends React.Component {
             />
           </div>
         </div>
-        <span>seconds. (240 maximum)</span>
+        <span>seconds. ({`${MAX_TIME}`} maximum)</span>
         { this.state.displayWarning ? AudioLimit.rangeWarning() : null }
       </div>
     );
