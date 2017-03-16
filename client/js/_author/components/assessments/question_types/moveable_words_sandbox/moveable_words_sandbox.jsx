@@ -11,9 +11,12 @@ export default class MWSandbox extends React.Component {
     updateItem: React.PropTypes.func.isRequired,
     createChoice: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
+
     selectChoice: React.PropTypes.func.isRequired,
     blurOptions: React.PropTypes.func.isRequired,
-    activeChoice: React.PropTypes.bool,
+
+    isActive: React.PropTypes.bool.isRequired,
+    activeChoice: React.PropTypes.string.isRequired,
   };
 
   handleBlur(e) {
@@ -54,18 +57,17 @@ export default class MWSandbox extends React.Component {
         key={choice.id}
         choice={choice}
         index={index}
-        selectChoice={() => {}}
+        selectChoice={() => this.props.selectChoice(choice.id)}
         updateChoice={c => this.updateChoice(c)}
         deleteChoice={() => this.deleteChoice(choice)}
-      />
-    );
+        isActive={this.props.isActive && choice.id === this.props.activeChoice}
+      />);
   }
 
   render() {
     const { id } = this.props.item;
-
     return (
-      <div>
+      <div onBlur={e => this.props.blurOptions(e)}>
         <div className="au-c-moveable__audio-settings is-active">
           <AudioLimit
             item={this.props.item}
