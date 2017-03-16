@@ -12,11 +12,12 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
     const newOrder = _.get(updateValues, 'order');
+    const newWordType = _.get(updateValues, 'wordType');
     return {
       id: choice.id,
       text: buildChoiceText(
         _.get(updateValues, 'text') || choice.text,
-        _.get(updateValues, 'wordType') || choice.wordType,
+        _.isNil(newWordType) ? choice.wordType : newWordType,
       ),
       order: _.isNil(newOrder) ? choice.order : newOrder,
       delete: _.get(updateValues, 'delete'),
