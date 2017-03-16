@@ -62,5 +62,9 @@ Option.propTypes = {
   selectChoice: React.PropTypes.func.isRequired,
   deleteChoice: React.PropTypes.func.isRequired,
   updateChoice: React.PropTypes.func.isRequired,
-  choice: React.PropTypes.object.isRequired,
+  choice: React.PropTypes.shape({
+    wordType: React.PropTypes.string.isRequired,
+    id: React.PropTypes.string.isRequired,
+    text: React.PropTypes.string.isRequired,
+  }).isRequired,
 };
