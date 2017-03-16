@@ -1,6 +1,6 @@
 import { serializeChoices } from './moveable_words_sandbox';
 
-fdescribe('MoveableWordsSandbox', () => {
+describe('MoveableWordsSandbox', () => {
 
   let item;
 
