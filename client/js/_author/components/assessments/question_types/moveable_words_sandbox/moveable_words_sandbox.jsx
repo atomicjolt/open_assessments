@@ -33,26 +33,6 @@ export default class MWSandbox extends React.Component {
     });
   }
 
-  // updateChoice(newChoice) {
-  //   this.props.updateItem({
-  //     type: this.props.item.type,
-  //     id: this.props.item.id,
-  //     question: {
-  //       choices: [newChoice]
-  //     }
-  //   });
-  // }
-  //
-  // deleteChoice(choice) {
-  //   this.props.updateItem({
-  //     type: this.props.item.type,
-  //     id: this.props.item.id,
-  //     question: {
-  //       choices: [_.merge({}, choice, { delete: true })]
-  //     }
-  //   });
-  // }
-
   getChoices(choices) {
     const { id } = this.props.item;
 

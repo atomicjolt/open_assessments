@@ -1,5 +1,3 @@
-// Should be mostly the same and MW sentance, except needs to display audio time limit
-
 import _ from 'lodash';
 import $ from 'jquery';
 
@@ -57,7 +55,5 @@ export default function fileUpload(item) {
     ...feedback,
   };
 
-  // TODO deserialize feedback {text: '', fileIds: {}}
-  // TODO deserialize fileIds
   return newItem;
 }
