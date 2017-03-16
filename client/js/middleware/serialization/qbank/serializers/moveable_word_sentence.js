@@ -60,7 +60,7 @@ function serializeAnswers(choices, newChoiceAttributes, oldAnswers, correctFeedb
     genusTypeId: genusTypes.answer.rightAnswer,
     feedback: _.get(correctFeedback, 'text'),
     type: genusTypes.answer.multipleAnswer,
-    choiceIds: _.map(_.orderBy(_.filter(updatedChoices, choice => !_.isNil(choice.answerOrder)), 'answerOrder'), 'id'),
+    choiceIds: _.map(_.orderBy(_.filter(updatedChoices, choice => choice.answerOrder !== ''), 'answerOrder'), 'id'),
     fileIds: _.get(correctFeedback, 'fileIds'),
   };
   let incorrectAnswer = {
