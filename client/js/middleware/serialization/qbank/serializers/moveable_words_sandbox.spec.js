@@ -49,6 +49,13 @@ describe('MoveableWordsSandbox', () => {
       id: '2',
     };
 
+    const originalItem = {
+      question: {
+        correctFeedback: { id: '1' },
+        incorrectFeedback: { id: '2' }
+      }
+    };
+
     const expectedAnswers = [{
       genusTypeId: genusTypes.answer.rightAnswer,
       feedback: correctFeedback.text,
@@ -59,9 +66,7 @@ describe('MoveableWordsSandbox', () => {
       id: incorrectFeedback.id,
     }];
 
-    const result = serializeAnswers(correctFeedback, incorrectFeedback);
-
-    expect(result)
-      .toEqual(expectedAnswers);
+    const result = serializeAnswers(correctFeedback, incorrectFeedback, originalItem);
+    expect(result).toEqual(expectedAnswers);
   });
 });

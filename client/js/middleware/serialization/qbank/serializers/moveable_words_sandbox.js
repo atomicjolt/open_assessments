@@ -40,13 +40,11 @@ export function serializeAnswers(correctFeedback, incorrectFeedback, originalIte
   return [{
     id: originalCorrect.id,
     genusTypeId: genusTypes.answer.rightAnswer,
-    feedback: _.get(correctFeedback, 'text') ||
-      originalCorrect.text,
+    feedback: _.get(correctFeedback, 'text') || originalCorrect.text,
   }, {
-    id: _.get(originalItem, 'question.incorrectFeedback.id') ||
-      originalIncorrect.text,
+    id: originalIncorrect.id,
     genusTypeId: genusTypes.answer.wrongAnswer,
-    feedback: _.get(incorrectFeedback, 'text', ''),
+    feedback: _.get(incorrectFeedback, 'text', '') || originalIncorrect.text,
   }].map(scrub);
 }
 
