@@ -4,6 +4,7 @@ import _ from 'lodash';
 import $ from 'jquery';
 
 import baseDeserializer from './base';
+import genusTypes                from '../../../../constants/genus_types';
 import { audioLimit } from '../../../../constants/question_types';
 
 
@@ -19,8 +20,21 @@ export function deserializeChoices(choices) {
   }, {});
 }
 
-export function deserializeAnswers(choices) {
-  return choices;
+export function deserializeFeedback(answers) {
+  return _.reduce(answers, (feedbacks, feedback) => {
+    if (feedback.genusTypeId === genusTypes.answer.rightAnswer) {
+      feedbacks.correctFeedback = {
+        text: feedback.feedback.text,
+        fileIds: feedback.fileIds,
+      };
+    } else if (feedback.genusTypeId === genusTypes.answer.wrongAnswer) {
+      feedbacks.incorrectFeedback = {
+        text: feedback.feedback.text,
+        fileIds: feedback.fileIds,
+      };
+    }
+    return feedbacks;
+  }, {});
 }
 
 export default function fileUpload(item) {

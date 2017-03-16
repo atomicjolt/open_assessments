@@ -1,11 +1,21 @@
-import { deserializeChoices } from './moveable_words_sandbox';
+import genusTypes from '../../../../constants/genus_types';
+import { deserializeChoices, deserializeFeedback } from './moveable_words_sandbox';
 
-fdescribe('MoveableWordsSandbox', () => {
+describe('MoveableWordsSandbox', () => {
 
   let item;
 
   beforeEach(() => {
     item = {
+      answers: [{
+        feedback: { text: '<p>Howdy</p>' },
+        genusTypeId: genusTypes.answer.rightAnswer,
+        fileIds: {}
+      }, {
+        feedback: { text: '<p>hiya</p>' },
+        genusTypeId: genusTypes.answer.wrongAnswer,
+        fileIds: {}
+      }],
       choices: [
         {
           id: 'id14a6824a-79f2-4c00-ac6a-b41cbb64db45',
@@ -36,7 +46,20 @@ fdescribe('MoveableWordsSandbox', () => {
     expect(result).toEqual(expectedChoices);
   });
 
-  it('should deserialize answers', () => {
-    expect(true).toBe(false);
+  fit('should deserialize feedback', () => {
+    const expectedFeedback = {
+      correctFeedback: {
+        text: '<p>Howdy</p>',
+        fileIds: {},
+      },
+      incorrectFeedback: {
+        text: '<p>hiya</p>',
+        fileIds: {},
+      },
+    };
+
+    const result = deserializeFeedback(item.answers);
+
+    expect(result).toEqual(expectedFeedback);
   });
 });
