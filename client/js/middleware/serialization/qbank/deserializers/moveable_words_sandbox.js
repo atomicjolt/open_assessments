@@ -46,11 +46,13 @@ export default function fileUpload(item) {
   });
 
   const choices = deserializeChoices(_.get(item, 'question.choices', {}));
+  const feedback = deserializeFeedback(_.get(item, 'answers', []));
 
   newItem.question = {
     ...newItem.question,
     timeValue,
-    choices
+    choices,
+    ...feedback,
   };
 
   //TODO deserialize feedback {text: '', fileIds: {}}

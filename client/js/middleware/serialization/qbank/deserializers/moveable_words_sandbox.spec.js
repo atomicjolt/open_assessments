@@ -1,7 +1,7 @@
 import genusTypes from '../../../../constants/genus_types';
 import { deserializeChoices, deserializeFeedback } from './moveable_words_sandbox';
 
-describe('MoveableWordsSandbox', () => {
+fdescribe('MoveableWordsSandbox', () => {
 
   let item;
 
@@ -46,7 +46,7 @@ describe('MoveableWordsSandbox', () => {
     expect(result).toEqual(expectedChoices);
   });
 
-  fit('should deserialize feedback', () => {
+  it('should deserialize feedback', () => {
     const expectedFeedback = {
       correctFeedback: {
         text: '<p>Howdy</p>',

@@ -24,7 +24,6 @@ const makeChoice = choice => (
   {
     id: choice.id,
     text: makeChoiceText(choice),
-    delete: choice.delete,
   }
 );
 
@@ -33,23 +32,20 @@ export function serializeChoices(choices) {
   return _.map(choices, (choice => makeChoice(choice)));
 }
 
-export function serializeAnswers(choices, correctFeedback, incorrectFeedback) {
+export function serializeAnswers(correctFeedback, incorrectFeedback) {
   return [{
     genusTypeId: genusTypes.answer.rightAnswer,
-    choiceIds: _.map(choices, choice => choice.id),
     feedback: _.get(correctFeedback, 'text', ''),
-    fileIds: _.get(correctFeedback, 'fileIds', {}),
   }, {
     genusTypeId: genusTypes.answer.wrongAnswer,
-    choiceIds: [],
     feedback: _.get(incorrectFeedback, 'text', ''),
-    fileIds: _.get(incorrectFeedback, 'fileIds', {}),
   }].map(scrub);
 }
 
 export default function movableWordsSerializer(originalItem, newItemAttributes) {
   const newItem = baseItem(originalItem, newItemAttributes);
 
+  // Serialize timeValue
   if (!_.isEmpty(_.get(newItemAttributes, 'question.timeValue', {}))) {
     newItem.question.timeValue = _.merge(
       {},
@@ -57,6 +53,7 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
     );
   }
 
+  // Serialize choices
   let choices =  _.get(newItem, 'question.choices', {});
   const newChoiceAttributes = _.get(newItemAttributes, 'question.choices', {});
   if (newChoiceAttributes.new) {
@@ -78,8 +75,8 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
     _.set(newItem, 'question.choices', serializeChoices(choices));
   }
 
+  // Serialize answers
   const answers = serializeAnswers(
-    _.get(originalItem, 'question.choices'),
     _.get(newItemAttributes, 'question.correctFeedback'),
     _.get(newItemAttributes, 'question.incorrectFeedback'),
   );
