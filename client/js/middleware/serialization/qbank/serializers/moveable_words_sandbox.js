@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { baseItem } from './base';
-import { scrub }                 from '../../serializer_utils';
+import { scrub } from '../../serializer_utils';
 import guid from '../../../../utils/guid';
 import genusTypes from '../../../../constants/genus_types';
 

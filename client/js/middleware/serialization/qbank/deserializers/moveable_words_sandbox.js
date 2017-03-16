@@ -2,9 +2,8 @@ import _ from 'lodash';
 import $ from 'jquery';
 
 import baseDeserializer from './base';
-import genusTypes                from '../../../../constants/genus_types';
+import genusTypes from '../../../../constants/genus_types';
 import { audioLimit } from '../../../../constants/question_types';
-
 
 export function deserializeChoices(choices) {
   return choices.reduce((all, choice) => {
