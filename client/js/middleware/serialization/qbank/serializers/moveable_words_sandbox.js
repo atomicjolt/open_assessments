@@ -4,18 +4,6 @@ import { scrub } from '../../serializer_utils';
 import guid from '../../../../utils/guid';
 import genusTypes from '../../../../constants/genus_types';
 
-const defaultFeedback = {
-  text: '',
-  fileIds: {},
-};
-
-const makeNewChoice = () => (
-  {
-    id: guid(),
-    text: '',
-  }
-);
-
 const makeChoiceText = (choice) => {
   if (choice.wordType) {
     return `<p class='${choice.wordType}'>${choice.text}</p>`;

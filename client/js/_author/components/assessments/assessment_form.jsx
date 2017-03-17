@@ -18,7 +18,7 @@ export default class AssessmentForm extends React.Component {
     updateSingleItemOrPage: React.PropTypes.func,
     updateChoice: React.PropTypes.func,
     deleteAssessmentItem: React.PropTypes.func,
-    createChoice: React.PropTypes.func,
+    createChoice: React.PropTypes.func.isRequired,
   };
 
   constructor() {
