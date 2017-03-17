@@ -18,7 +18,7 @@ export default function Option(props) {
             id={id}
             type="text"
             defaultValue={props.choice.text}
-            placeholder={`Option ${props.index + 1}`}
+            placeholder={`Option ${props.index}`}
             onBlur={e => props.updateChoice({
               id: props.choice.id,
               text: e.target.value
@@ -67,4 +67,6 @@ Option.propTypes = {
     id: React.PropTypes.string.isRequired,
     text: React.PropTypes.string.isRequired,
   }).isRequired,
+  index: React.PropTypes.number.isRequired,
+  isActive: React.PropTypes.bool.isRequired,
 };

@@ -35,9 +35,10 @@ export default class MWSandbox extends React.Component {
 
   getChoices(choices) {
     const { id } = this.props.item;
-
-    return _.map(choices, (choice, index) =>
-      <Option
+    let index = 0;
+    return _.map(choices, (choice) => {
+      index += 1;
+      return (<Option
         key={choice.id}
         choice={choice}
         index={index}
@@ -49,6 +50,7 @@ export default class MWSandbox extends React.Component {
         deleteChoice={() => this.props.deleteChoice(choice)}
         isActive={this.props.isActive && choice.id === this.props.activeChoice}
       />);
+    });
   }
 
   render() {
