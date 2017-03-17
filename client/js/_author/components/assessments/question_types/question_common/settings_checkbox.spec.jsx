@@ -1,9 +1,9 @@
-import React from 'react';
-import TestUtils from 'react-addons-test-utils';
-import { shallow } from 'enzyme';
-import SettingsCheckbox from './settings_checkbox';
+import React              from 'react';
+import TestUtils          from 'react-addons-test-utils';
+import { shallow }        from 'enzyme';
+import SettingsCheckbox   from './settings_checkbox';
 
-fdescribe('the settings_checkbox component', () => {
+describe('the settings_checkbox component', () => {
   let props;
   let result;
 
