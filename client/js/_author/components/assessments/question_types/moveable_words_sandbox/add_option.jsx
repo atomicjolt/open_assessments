@@ -1,10 +1,11 @@
-import React    from 'react';
+import React      from 'react';
 
-export default function addOption(props) {
+export default function AddOption(props) {
   return (
     <div
       className="au-c-answer au-o-flex-center au-c-answer--add"
-      onClick={props.createChoice}
+      tabIndex="0"
+      onClick={() => props.updateChoice()}
     >
       <div className="au-c-input">
         <label htmlFor="option2" />
@@ -13,17 +14,15 @@ export default function addOption(props) {
             className="au-c-text-input au-c-text-input--small au-c-wysiwyg au-c-option"
             id="option2"
             type="text"
-            value="Add Option"
-            disabled
+            defaultValue="Add Option"
           />
           <div className="au-c-input__bottom no-border" />
         </div>
       </div>
-
     </div>
   );
 }
 
-addOption.propTypes = {
-  createChoice: React.PropTypes.func.isRequired,
+AddOption.propTypes = {
+  updateChoice: React.PropTypes.func.isRequired,
 };

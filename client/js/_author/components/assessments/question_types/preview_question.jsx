@@ -33,6 +33,8 @@ export default class PreviewQuestion extends React.Component {
         return 'file_upload_question';
       case types.audioUpload:
         return 'audio_upload_question';
+      case types.moveableWordSentence:
+        return 'movable_words_sentence';
       default:
         return null;
     }
@@ -84,12 +86,12 @@ export default class PreviewQuestion extends React.Component {
     return (
       <div>
         <Item
-          settings={false}
+          settings={{}}
           question={item}
           response={this.state.response}
-          currentItemIndex={false}
+          currentItemIndex={1}
           questionCount={1}
-          questionResult={false}
+          questionResult={{}}
           selectAnswer={id => this.selectAnswer(id)}
           localizedStrings={localizedStrings}
           sendSize={() => {}}
@@ -99,6 +101,8 @@ export default class PreviewQuestion extends React.Component {
           audioPause={() => {}}
           audioRecordStart={() => {}}
           audioRecordStop={() => {}}
+          createChoice={() => {}}
+          deleteChoice={() => {}}
         />
       </div>
     );

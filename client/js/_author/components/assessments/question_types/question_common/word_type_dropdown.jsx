@@ -2,7 +2,7 @@ import React    from 'react';
 
 export default function wordType(props) {
   return (
-    <div className="au-c-dropdown au-c-dropdown--smaller au-u-ml-sm is-ordered">
+    <div className={`au-c-dropdown au-c-dropdown--smaller au-u-ml-sm ${props.wordType ? 'is-ordered' : null}`}>
       <label htmlFor={`option_word_${props.id}`} />
       <select
         name=""

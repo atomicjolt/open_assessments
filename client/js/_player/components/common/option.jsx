@@ -17,7 +17,7 @@ export default class Option extends React.Component{
   render(){
 
     var materialItems = this.props.item.material.map((mat) =>{
-      return <option value={mat} name={this.props.name}>{mat}</option>;
+      return <option key={mat} value={mat} name={this.props.name}>{mat}</option>;
     });
 
     return(

@@ -9,18 +9,23 @@ export default function option(props) {
       onClick={props.selectChoice}
       className={`au-c-answer au-o-flex-center ${props.isActive ? 'is-active' : ''}`}
     >
-      <div className={`au-c-dropdown au-c-dropdown--tiny au-u-mr-sm ${!_.isNil(props.order) ? 'is-ordered' : ''}`}>
+      <div className={`au-c-dropdown au-c-dropdown--tiny au-u-mr-sm ${!_.isNil(props.answerOrder) ? 'is-ordered' : ''}`}>
         <label htmlFor={`option_order_${props.id}`} />
         <select
           name=""
           id={`option_order_${props.id}`}
-          value={props.order}
-          onChange={e => props.updateChoice({ order: e.target.value })}
+          value={props.answerOrder}
+          onChange={e => props.updateChoice({ answerOrder: e.target.value })}
         >
-          <option value={null}>N/A</option>
+          <option value="">N/A</option>
           {
             _.map(_.range(0, props.itemCount), index => (
-              <option value={index}>{index + 1}</option>
+              <option
+                key={`moveableWordOrderOption_${props.id}_${index}`}
+                value={index}
+              >
+                {index + 1}
+              </option>
             ))
           }
         </select>
@@ -47,7 +52,7 @@ export default function option(props) {
         updateChoice={props.updateChoice}
       />
 
-      <button className="au-c-answer--delete">
+      <button onClick={props.deleteChoice} className="au-c-answer--delete">
         <i className="material-icons">close</i>
       </button>
     </div>
@@ -58,9 +63,10 @@ option.propTypes = {
   id: React.PropTypes.string.isRequired,
   text: React.PropTypes.string,
   wordType: React.PropTypes.string,
-  order: React.PropTypes.number,
+  answerOrder: React.PropTypes.number,
   itemCount: React.PropTypes.number.isRequired,
   isActive: React.PropTypes.bool,
   selectChoice: React.PropTypes.func.isRequired,
   updateChoice: React.PropTypes.func.isRequired,
+  deleteChoice: React.PropTypes.func.isRequired,
 };

@@ -45,9 +45,10 @@ describe("CLIx assessment parser", () => {
     });
 
     it('handles bad xml', () => {
+      spyOn(console, 'error')
       var result = parseFeedback('<notxml>reallyNotXml');
 
-      expect(result).toEqual(undefined);
+      expect(console.error).toHaveBeenCalled();
     });
   });
 });

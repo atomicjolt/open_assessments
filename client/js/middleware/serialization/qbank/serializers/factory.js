@@ -1,12 +1,13 @@
 import audioUpload      from './audio_upload';
 import fileUpload       from './file_upload';
 import movableFillBlank from './movable_fill_blank';
+import moveableWordSandbox from './moveable_words_sandbox';
 import multipleAnswer   from './multiple_answer';
 import multipleChoice   from './multiple_choice';
 import shortAnswer      from './short_answer';
 import survey           from './reflection';
-import types            from '../../../../constants/question_types.js';
 import wordSentence     from './moveable_word_sentence';
+import types            from '../../../../constants/question_types.js';
 
 export default function factory(type) {
   switch (type) {
@@ -31,6 +32,9 @@ export default function factory(type) {
 
     case types.movableFillBlank:
       return movableFillBlank;
+
+    case types.moveableWordSandbox:
+      return moveableWordSandbox;
 
     case types.moveableWordSentence:
       return wordSentence;

@@ -62,10 +62,3 @@ export default class NavigationBarContent extends React.Component {
     );
   }
 }
-
-NavigationBarContent.propTypes = {
-  editOrPublishAssessment: React.PropTypes.func.isRequired,
-  getBankChildren: React.PropTypes.func.isRequired,
-  isPublished: React.PropTypes.bool.isRequired,
-  items: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
-};
