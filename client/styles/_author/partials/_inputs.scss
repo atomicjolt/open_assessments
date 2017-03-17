@@ -227,6 +227,10 @@
   font-size: 1.2rem;
   min-width: 25rem;
 
+  label{
+    white-space: nowrap;
+  }
+
   .au-c-input__contain{
     margin-left: 1rem;
   }
