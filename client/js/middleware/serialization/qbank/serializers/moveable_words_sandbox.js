@@ -16,9 +16,12 @@ const makeNewChoice = () => (
   }
 );
 
-const makeChoiceText = choice => (
-  `<p class='${choice.wordType}'>${choice.text}</p>`
-);
+const makeChoiceText = (choice) => {
+  if (choice.wordType) {
+    return `<p class='${choice.wordType}'>${choice.text}</p>`;
+  }
+  return choice.text;
+};
 
 const makeChoice = choice => (
   scrub({
