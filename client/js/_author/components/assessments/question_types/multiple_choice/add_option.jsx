@@ -4,7 +4,6 @@ export default function addOption(props) {
   return (
     <div
       className="au-c-answer au-c-answer--add"
-      tabIndex="0"
       onClick={() => props.createChoice()}
     >
       <div className="au-c-input">
