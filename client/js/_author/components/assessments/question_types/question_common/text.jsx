@@ -9,6 +9,7 @@ export default function questionText(props) {
         textSize="medium"
         fileIds={props.fileIds}
         text={props.text}
+        placeholder="Question Text"
         editorKey={props.editorKey}
         onBlur={(val, fileIds) => props.updateItem({ question: { text: val, fileIds } })}
         bankId={props.bankId}

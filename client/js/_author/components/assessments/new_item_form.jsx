@@ -25,7 +25,7 @@ export default class newItemForm extends React.Component {
   }
 
   updateName(name) {
-    this.setState({ name, question: { ...this.state.question, text: `<p>${name}</p>` } });
+    this.setState({ name });
   }
 
   render() {
