@@ -8,6 +8,7 @@ import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
 import ShortAnswer      from './short_answer';
 import WordSentence     from './moveable_word_sentence/moveable_word_sentence';
+import MoveableWordSandbox from './moveable_words_sandbox/moveable_words_sandbox';
 import types            from '../../../../constants/question_types';
 import languages        from '../../../../constants/language_types';
 import Preview          from './preview_question';
@@ -45,6 +46,7 @@ export default class Question extends React.Component {
     [types.shortAnswer]: ShortAnswer,
     [types.fileUpload]: FileUpload,
     [types.audioUpload]: AudioUpload,
+    [types.moveableWordSandbox]: MoveableWordSandbox,
     [types.moveableWordSentence]: WordSentence,
   };
 

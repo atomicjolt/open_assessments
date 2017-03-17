@@ -6,5 +6,8 @@ export default {
   reflection: 'reflection',
   multipleReflection: 'multipleReflection',
   multipleAnswer: 'multipleAnswer',
+  moveableWordSandbox: 'moveableWordSandbox',
   moveableWordSentence: 'moveableWordSentence',
 };
+
+export const audioLimit = 240;
