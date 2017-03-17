@@ -129,19 +129,6 @@ export class EditAssessment extends React.Component {
     this.props.updateSingleItemOrPage(assessmentOffered[0], genusTypeId);
   }
 
-  updateChoice(itemId, choiceId, choice, fileIds) {
-    const updateAttributes = {
-      id: itemId,
-      question: {
-        choices: {
-          [choiceId]: choice,
-        },
-        fileIds,
-      }
-    };
-    this.updateItem(updateAttributes);
-  }
-
   flattenBanks(banks, flatBanks) {
     _.forEach(banks, (bank) => {
       flatBanks[bank.id] = bank;

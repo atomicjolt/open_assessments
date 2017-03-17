@@ -21,6 +21,11 @@
   .au-c-dropdown--smaller, .au-c-answer--delete{
     opacity: 0;
     pointer-events: none;
+
+    &.is-ordered {
+      opacity: 1;
+      pointer-events: auto;
+    }
   }
 
   .au-c-dropdown--tiny{

@@ -62,6 +62,12 @@ export default class MoveableWordSentence extends React.Component {
             bankId={this.props.item.bankId}
           />
         </div>
+        <button
+          className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"
+          onClick={this.props.save}
+        >
+          Save
+        </button>
       </div>
     );
   }

@@ -79,6 +79,9 @@ export default class newItemForm extends React.Component {
                     <option value={types.imageSequence}>
                       Image Sequence
                     </option>
+                    <option value={types.moveableWordSandbox}>
+                      Moveable Word Sandbox
+                    </option>
                     <option value={types.moveableWordSentence}>
                       Moveable Word Sentence
                     </option>

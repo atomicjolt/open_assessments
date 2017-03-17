@@ -9,10 +9,12 @@ import FileUpload       from './file_upload';
 import ImageSequence    from './image_sequence/_image_sequence';
 import ShortAnswer      from './short_answer';
 import WordSentence     from './moveable_word_sentence/moveable_word_sentence';
+import MoveableWordSandbox from './moveable_words_sandbox/moveable_words_sandbox';
 import types            from '../../../../constants/question_types';
 import languages        from '../../../../constants/language_types';
 import Preview          from './preview_question';
 
+// TODO: connect this component
 export default class Question extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
@@ -46,9 +48,12 @@ export default class Question extends React.Component {
     [types.shortAnswer]: ShortAnswer,
     [types.fileUpload]: FileUpload,
     [types.audioUpload]: AudioUpload,
+    [types.moveableWordSandbox]: MoveableWordSandbox,
     [types.moveableWordSentence]: WordSentence,
     [types.imageSequence]: ImageSequence,
   };
+
+  static stateDrivenTypes = [types.moveableWordSentence];
 
   constructor(props) {
     super(props);
@@ -57,6 +62,11 @@ export default class Question extends React.Component {
       language: languages.languageTypeId.english,
       preview: false,
       activeChoice: null,
+      item: {
+        question: {
+          choices: {}
+        }
+      }
     };
   }
 
@@ -77,13 +87,14 @@ export default class Question extends React.Component {
   }
 
   updateItem(newItemProperties) {
-
     const { item } = this.props;
 
     if (newItemProperties.language) {
       if (newItemProperties.language && this.state.language !== newItemProperties.language) {
         this.setState({ language: newItemProperties.language });
       }
+    } else if (_.includes(Question.stateDrivenTypes, item.type)) {
+      this.setState({ ...item, ...newItemProperties });
     } else {
       this.props.updateItem({
         id: item.id,
@@ -91,6 +102,28 @@ export default class Question extends React.Component {
         ...newItemProperties
       });
     }
+  }
+
+  updateChoice(itemId, choiceId, choice, fileIds) {
+    const { item } = this.props;
+    const updateAttributes = {
+      id: itemId,
+      question: {
+        choices: {
+          [choiceId]: choice,
+        },
+        fileIds,
+      }
+    };
+    if (_.includes(Question.stateDrivenTypes, item.type)) {
+      this.setState({ item: _.merge(this.state.item, updateAttributes) });
+    } else {
+      this.updateItem(updateAttributes);
+    }
+  }
+
+  saveStateItem() {
+    this.props.updateItem(this.state.item);
   }
 
   changeType(type) {
@@ -172,15 +205,16 @@ export default class Question extends React.Component {
     if (Component) {
       return (
         <Component
-          {...this.props}
+          item={_.merge(this.props.item, this.state.item)}
           updateItem={newProps => this.updateItem(newProps)}
-          updateChoice={this.props.updateChoice}
+          updateChoice={(itemId,choiceId, choice, fileIds) => this.updateChoice(itemId, choiceId, choice, fileIds)}
           isActive={this.props.isActive}
           activeChoice={this.state.activeChoice}
           selectChoice={choiceId => this.selectChoice(choiceId)}
           blurOptions={e => this.blurOptions(e)}
           createChoice={this.props.createChoice}
           deleteChoice={choice => this.deleteChoice(choice)}
+          save={() => this.saveStateItem()}
         />
       );
     }

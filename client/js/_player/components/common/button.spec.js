@@ -45,7 +45,7 @@ describe('button', () => {
       buttonClass:"test-type"
     };
     var result = TestUtils.renderIntoDocument(
-      <Button>
+      <Button buttonClass='test-type'>
         <p>Hola</p>
       </Button>
     );

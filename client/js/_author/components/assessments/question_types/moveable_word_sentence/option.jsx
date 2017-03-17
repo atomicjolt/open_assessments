@@ -17,10 +17,15 @@ export default function option(props) {
           value={props.answerOrder}
           onChange={e => props.updateChoice({ answerOrder: e.target.value })}
         >
-          <option value={null}>N/A</option>
+          <option value="">N/A</option>
           {
             _.map(_.range(0, props.itemCount), index => (
-              <option value={index}>{index + 1}</option>
+              <option
+                key={`moveableWordOrderOption_${props.id}_${index}`}
+                value={index}
+              >
+                {index + 1}
+              </option>
             ))
           }
         </select>
