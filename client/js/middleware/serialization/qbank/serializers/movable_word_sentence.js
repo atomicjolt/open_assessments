@@ -76,7 +76,7 @@ function serializeAnswers(choices, newChoiceAttributes, oldAnswers, correctFeedb
   return answers;
 }
 
-export default function moveableWordSentence(originalItem, newItemAttributes) {
+export default function movableWordSentence(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
 
   const { question } = newItemAttributes;

@@ -1,7 +1,7 @@
-import { serializeChoices, serializeAnswers } from './moveable_words_sandbox';
+import { serializeChoices, serializeAnswers } from './movable_words_sandbox';
 import genusTypes from '../../../../constants/genus_types';
 
-describe('MoveableWordsSandbox', () => {
+describe('MovableWordsSandbox', () => {
 
   let item;
 

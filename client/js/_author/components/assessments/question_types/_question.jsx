@@ -8,8 +8,8 @@ import QuestionText     from './question_common/text';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
 import ShortAnswer      from './short_answer';
-import WordSentence     from './moveable_word_sentence/moveable_word_sentence';
-import MoveableWordSandbox from './moveable_words_sandbox/moveable_words_sandbox';
+import WordSentence     from './movable_word_sentence/movable_word_sentence';
+import MovableWordSandbox from './movable_words_sandbox/movable_words_sandbox';
 import types            from '../../../../constants/question_types';
 import languages        from '../../../../constants/language_types';
 import Preview          from './preview_question';
@@ -44,8 +44,8 @@ export default class Question extends React.Component {
     [types.audioUpload]: AudioUpload,
     [types.fileUpload]: FileUpload,
     [types.movableFillBlank]: MovableFillBlank,
-    [types.moveableWordSandbox]: MoveableWordSandbox,
-    [types.moveableWordSentence]: WordSentence,
+    [types.movableWordSandbox]: MovableWordSandbox,
+    [types.movableWordSentence]: WordSentence,
     [types.multipleAnswer]: MultipleChoice,
     [types.multipleChoice]: MultipleChoice,
     [types.multipleReflection]: MultipleChoice,
@@ -53,7 +53,7 @@ export default class Question extends React.Component {
     [types.shortAnswer]: ShortAnswer,
   };
 
-  static stateDrivenTypes = [types.moveableWordSentence];
+  static stateDrivenTypes = [types.movableWordSentence];
 
   constructor(props) {
     super(props);

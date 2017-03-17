@@ -21,7 +21,7 @@ export default function option(props) {
           {
             _.map(_.range(0, props.itemCount), index => (
               <option
-                key={`moveableWordOrderOption_${props.id}_${index}`}
+                key={`movableWordOrderOption_${props.id}_${index}`}
                 value={index}
               >
                 {index + 1}

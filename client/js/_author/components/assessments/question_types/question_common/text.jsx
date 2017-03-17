@@ -21,7 +21,7 @@ export default class questionText extends React.Component {
       case types.movableFillBlank:
         return (
           <div>
-            <div className="au-c-moveable__answers__label">
+            <div className="au-c-movable__answers__label">
               To insert blank, add &#91; &#95; &#93; where you want the blank to show up.
             </div>
             <div className="au-c-input au-c-fill-in-the-blank-text">

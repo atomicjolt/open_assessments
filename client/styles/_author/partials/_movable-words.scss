@@ -1,4 +1,4 @@
-.au-c-moveable__answers{
+.au-c-movable__answers{
 
   .au-c-answer{
     padding: 0 1.5rem;
@@ -42,13 +42,13 @@
   }
 }
 
-.au-c-moveable__answers--maintain {
+.au-c-movable__answers--maintain {
   .au-c-answer{
     padding: 0.75rem 5.5rem;
   }
 }
 
-.au-c-moveable__audio-settings{
+.au-c-movable__audio-settings{
   display: none;
   width: 100%;
   margin-top: 3rem;
@@ -207,7 +207,7 @@
   }
 }
 
-.au-c-moveable__answers__label{
+.au-c-movable__answers__label{
   @include semi-bold;
   font-size: 1.2rem;
   color: $text-alt;

@@ -3,11 +3,11 @@ import base             from './base';
 import fileUpload       from './file_upload';
 import genusTypes       from '../../../../constants/genus_types';
 import movableFillBlank from './movable_fill_blank';
-import moveableWordSandbox from './moveable_words_sandbox';
+import movableWordSandbox from './movable_words_sandbox';
 import multipleAnswer   from './multiple_answer';
 import multipleChoice   from './multiple_choice';
 import shortAnswer      from './short_answer';
-import wordSentence     from './moveable_word_sentence';
+import wordSentence     from './movable_word_sentence';
 
 export default function factory(type) {
   switch (type) {
@@ -31,10 +31,10 @@ export default function factory(type) {
     case genusTypes.item.movableFillBlank:
       return movableFillBlank;
 
-    case genusTypes.item.moveableWordSandbox:
-      return moveableWordSandbox;
+    case genusTypes.item.movableWordSandbox:
+      return movableWordSandbox;
 
-    case genusTypes.item.moveableWordSentence:
+    case genusTypes.item.movableWordSentence:
       return wordSentence;
 
     default:

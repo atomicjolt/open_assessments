@@ -22,7 +22,7 @@ function deserializeChoices(choices, correctAnswer, incorrectId) {
 }
 
 
-export default function moveableWordSentence(item) {
+export default function movableWordSentence(item) {
   const newItem = baseDeserializer(item);
   const correctAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.rightAnswer });
   const incorrectAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.wrongAnswer });
