@@ -37,6 +37,12 @@
   }
 }
 
+.au-c-moveable__answers--maintain {
+  .au-c-answer{
+    padding: 0.75rem 5.5rem;
+  }
+}
+
 .au-c-moveable__audio-settings{
   display: none;
   width: 100%;
@@ -200,7 +206,6 @@
   @include semi-bold;
   font-size: 1.2rem;
   color: $text-alt;
-  margin-top: 3rem;
 }
 
 .au-c-fill-in-the-blank-text{

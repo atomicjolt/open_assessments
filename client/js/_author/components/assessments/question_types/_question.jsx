@@ -1,5 +1,6 @@
 import React            from 'react';
 import _                from 'lodash';
+import MovableFillBlank from './movable_fill_blank/movable_fill_blank';
 import MultipleChoice   from './multiple_choice/multiple_choice';
 import QuestionHeader   from './question_common/header/_header';
 import Settings         from './question_common/settings';
@@ -38,14 +39,15 @@ export default class Question extends React.Component {
   };
 
   static questionComponents = {
-    [types.multipleChoice]: MultipleChoice,
-    [types.reflection]: MultipleChoice,
-    [types.multipleReflection]: MultipleChoice,
-    [types.multipleAnswer]: MultipleChoice,
-    [types.shortAnswer]: ShortAnswer,
-    [types.fileUpload]: FileUpload,
     [types.audioUpload]: AudioUpload,
+    [types.fileUpload]: FileUpload,
+    [types.movableFillBlank]: MovableFillBlank,
     [types.moveableWordSentence]: WordSentence,
+    [types.multipleAnswer]: MultipleChoice,
+    [types.multipleChoice]: MultipleChoice,
+    [types.multipleReflection]: MultipleChoice,
+    [types.reflection]: MultipleChoice,
+    [types.shortAnswer]: ShortAnswer,
   };
 
   constructor(props) {
@@ -151,6 +153,7 @@ export default class Question extends React.Component {
   deleteChoice(choice) {
     if (confirm('Are you sure you want to delete this option?')) {
       this.props.updateItem({
+        id: this.props.item.id,
         question: {
           choices: this.markedForDeletion(choice)
         }
@@ -211,6 +214,7 @@ export default class Question extends React.Component {
         />
         <div className={`au-c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
+            itemType={type}
             fileIds={question.fileIds}
             itemId={id}
             editorKey={languageTypeId}
@@ -235,7 +239,6 @@ export default class Question extends React.Component {
   render() {
     const { name, type, id } = this.props.item;
     const className = this.getClassName();
-
     return (
       <div
         className={`au-o-item au-c-question ${className}`}

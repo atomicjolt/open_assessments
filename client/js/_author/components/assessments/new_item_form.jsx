@@ -79,6 +79,9 @@ export default class newItemForm extends React.Component {
                     <option value={types.moveableWordSentence}>
                       Moveable Word Sentence
                     </option>
+                    <option value={types.movableFillBlank}>
+                      Movable Words - Fill the Blank
+                    </option>
                   </select>
                 </div>
               </div>

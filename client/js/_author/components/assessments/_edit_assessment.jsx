@@ -47,7 +47,7 @@ export class EditAssessment extends React.Component {
     editOrPublishAssessment: React.PropTypes.func.isRequired,
     updatePath: React.PropTypes.func.isRequired,
     getItems: React.PropTypes.func.isRequired,
-    banks: React.PropTypes.shape({}).isRequired,
+    banks: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
     deleteAssignedAssessment: React.PropTypes.func.isRequired,
     createAssessmentOffered: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,

@@ -1,4 +1,5 @@
 import _    from 'lodash';
+import $    from 'jquery';
 import genusTypes from '../../constants/genus_types';
 
 export function scrub(item, protectedKeys) {
@@ -32,4 +33,18 @@ export function createSingleCorrectFeedback(item) {
     answerId: _.get(item, 'answers[0].id'),
     fileIds: _.get(item, 'answers[0].fileIds'),
   };
+}
+
+export function buildChoiceText(text, wordType) {
+  return `<p ${wordType ? `class="${wordType}"` : ''}>${text}</p>`;
+}
+
+export function parseChoiceText(text) {
+  const parsedInput = $.parseHTML(text);
+  return $(parsedInput).text();
+}
+
+export function parseChoiceWordType(text) {
+  const parsedInput = $.parseHTML(text);
+  return $(parsedInput).attr('class');
 }

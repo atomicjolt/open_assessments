@@ -1,17 +1,8 @@
-import _                  from 'lodash';
-import $                  from 'jquery';
-import baseDeserializer   from './base';
-import genusTypes         from '../../../../constants/genus_types';
-
-function parseChoiceText(text) {
-  const parsedInput = $.parseHTML(text);
-  return $(parsedInput).text();
-}
-
-function parseChoiceWordType(text) {
-  const parsedInput = $.parseHTML(text);
-  return $(parsedInput).attr('class');
-}
+import _                       from 'lodash';
+import baseDeserializer        from './base';
+import genusTypes              from '../../../../constants/genus_types';
+import { parseChoiceText,
+         parseChoiceWordType } from '../../serializer_utils';
 
 function deserializeChoices(choices, answers) {
   const newChoices = {};

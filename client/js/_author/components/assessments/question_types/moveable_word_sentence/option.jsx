@@ -1,6 +1,6 @@
 import React    from 'react';
 import _        from 'lodash';
-import WordType from './word_type_dropdown';
+import WordType from '../question_common/word_type_dropdown';
 
 export default function option(props) {
   return (
