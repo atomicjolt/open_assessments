@@ -31,16 +31,22 @@ function deserializeChoices(choices, answers, blankId) {
 }
 
 function convertToText(text) {
-  const newText = _.cloneDeep(text);
-  const html = $('<div></div>').html(newText.text);
+  const html = $('<div></div>').html(text);
   const nodeTexts = $('p, inlineChoiceInteraction', html).map((index, node) => {
     if (node.nodeName === 'INLINECHOICEINTERACTION') {
       return '[_]';
     }
     return node.textContent;
   });
-  newText.text = nodeTexts.toArray().join(' ');
-  return newText;
+  return nodeTexts.toArray().join(' ');
+}
+
+function handleTexts(texts) {
+  return _.map(texts, (text) => {
+    const newText = _.cloneDeep(text);
+    newText.text = convertToText(newText.text);
+    return newText;
+  });
 }
 
 function findTextInlineRegionId(text) {
@@ -72,7 +78,8 @@ export default function movableFillBlank(item) {
 
   newItem.question = {
     ...newItem.question,
-    texts: _.map(newItem.question.texts, convertToText),
+    text: convertToText(newItem.question.text),
+    texts: handleTexts(newItem.question.texts),
     choices: deserializeChoices(
       _.get(item, `question.choices["${inlineRegionId}"]`),
       item.answers,
