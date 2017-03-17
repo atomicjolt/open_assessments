@@ -43,7 +43,7 @@ export default class MoveableWordSentence extends React.Component {
           ))
         }
         <Add
-          createChoice={() => this.props.createChoice(id)}
+          createChoice={this.props.createChoice}
         />
 
         <div className="au-c-question__feedback">

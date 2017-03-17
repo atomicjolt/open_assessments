@@ -63,7 +63,7 @@ option.propTypes = {
   id: React.PropTypes.string.isRequired,
   text: React.PropTypes.string,
   wordType: React.PropTypes.string,
-  answerOrder: React.PropTypes.number,
+  answerOrder: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string]),
   itemCount: React.PropTypes.number.isRequired,
   isActive: React.PropTypes.bool,
   selectChoice: React.PropTypes.func.isRequired,
