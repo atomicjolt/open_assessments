@@ -23,7 +23,8 @@ const API = store => next => (action) => {
         handler.method,
         handler.url(url, action),
         handler.params ? handler.params(action) : action.params,
-        handler.body ? handler.body(action) : action.body
+        handler.body ? handler.body(action) : action.body,
+        handler.timeout ? handler.timeout : action.timeout,
       );
     } else {
       throw `No handler implemented for ${action.type}`;

@@ -3,7 +3,7 @@ import Feedback from './question_common/single_feedback';
 
 export default function FileUpload(props) {
   return (
-    <div className="author--c-question__feedback">
+    <div className="au-c-question__feedback">
       <Feedback
         bankId={props.item.bankId}
         feedbackType="correctFeedback"

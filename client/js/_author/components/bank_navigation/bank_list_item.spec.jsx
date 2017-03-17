@@ -18,10 +18,16 @@ describe('bank List Item', () => {
         type: 'OsidNode',
         published: true
       },
-      getBankChildren: () => { shouldShow =  true; }
+      getBankChildren: () => { shouldShow =  true; },
+      getEmbedCode: () => {},
+      publishedBankId: '7',
+      baseEmbedUrl: 'IMASPEC',
     };
 
-    result = TestUtils.renderIntoDocument(<Stub><BankListItem {...props} /></Stub>);
+    result = TestUtils.renderIntoDocument(<Stub>
+      <table><tbody>
+        <BankListItem {...props} />
+      </tbody></table></Stub>);
   });
 
   it('it selectItem', () => {

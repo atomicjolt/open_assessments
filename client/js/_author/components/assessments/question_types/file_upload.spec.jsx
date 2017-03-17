@@ -1,5 +1,6 @@
 import React        from 'react';
 import TestUtils    from 'react-addons-test-utils';
+import { shallow }  from 'enzyme';
 import FileUpload   from './file_upload';
 import Stub         from '../../../../../specs_support/stub';
 
@@ -11,6 +12,7 @@ describe('file upload component', () => {
     props = {
       updateItem: () => {},
       item: {
+        bankId: '',
         id: '76',
         displayName: {
           text: 'IMATITLESPEC',
@@ -31,7 +33,7 @@ describe('file upload component', () => {
         },
       },
     };
-    result = TestUtils.renderIntoDocument(<Stub><FileUpload {...props} /></Stub>);
+    result = shallow(<FileUpload {...props} />);
   });
 
   it('renders component', () => {

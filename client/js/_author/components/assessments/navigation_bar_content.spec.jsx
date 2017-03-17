@@ -1,7 +1,6 @@
 import React            from 'react';
 import TestUtils        from 'react-addons-test-utils';
 import Stub             from '../../../../specs_support/stub';
-import { hashHistory }  from 'react-router';
 import AssessmentView   from './navigation_bar_content';
 
 describe('New Assessments View', () => {
@@ -9,31 +8,31 @@ describe('New Assessments View', () => {
   let props;
   const isPublished = true;
   let isEditOrPublishAssessment = false;
+  let bankerId;
 
   beforeEach(() => {
     props = {
       view: 'assessments',
       editOrPublishAssessment: () => isEditOrPublishAssessment = !isEditOrPublishAssessment,
       isPublished,
-      items: ['stuff', 'boom'],
+      items: [{'something': 'stuff'}, {'something': 'boom'}],
+      assessment: {
+        bankId: 'id12345',
+        assessmentId: 'assessmentId46587'
+      },
+      bankId: '1222',
+      getBankChildren: (id) => { bankerId = id; }
     };
     result = TestUtils.renderIntoDocument(<Stub><AssessmentView {...props} /></Stub>);
   });
 
-  it('calls button onClick for hashHistory', () => {
-    const buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
-    spyOn(hashHistory, 'push');
-    TestUtils.Simulate.click(buttons[0]);
-    expect(hashHistory.push).toHaveBeenCalledWith('/');
-  });
-
   it('determines amount of buttons from number of items', () => {
     let buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
-    expect(buttons.length).toBe(3);
+    expect(buttons.length).toBe(2);
     props.items = [];
     result = TestUtils.renderIntoDocument(<Stub><AssessmentView {...props} /></Stub>);
     buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
-    expect(buttons.length).toBe(2);
+    expect(buttons.length).toBe(1);
   });
 
   it('click editPublish button', () => {
@@ -43,7 +42,7 @@ describe('New Assessments View', () => {
     expect(isEditOrPublishAssessment).toBeTruthy();
   });
 
-  it('Determins Icon status', () => {
+  it('Determines Icon status', () => {
     result = TestUtils.renderIntoDocument(<Stub><AssessmentView {...props} /></Stub>);
     let icons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'i');
     expect(icons[1].textContent).toBe('cloud_done');

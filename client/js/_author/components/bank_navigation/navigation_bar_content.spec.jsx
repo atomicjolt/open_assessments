@@ -12,8 +12,12 @@ describe('navigationBarContent', () => {
     updater = false;
     props = {
       view: 'banks',
-      path: ['123', '345', '567'],
-      currentBankId: 123456,
+      path: [
+        {id: '123', name: 'IMASPEC'},
+        {id: '345', name: 'ANOTHERONE'},
+        {id: '567', name: 'YETANOTHER'},
+      ],
+      currentBankId: '123456',
       updatePath: () => { updater = true; }
     };
 
@@ -22,12 +26,12 @@ describe('navigationBarContent', () => {
 
   it('it button has correct className', () => {
     let buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
-    expect(buttons[0].className).toBe('author--c-btn author--c-btn--breadcrumb');
+    expect(buttons[0].className).toBe('au-c-btn au-c-btn--breadcrumb');
 
     props.currentBankId = null;
     result = TestUtils.renderIntoDocument(<Stub><NavigationBarContent {...props} /></Stub>);
     buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
-    expect(buttons[0].className).toBe('author--c-btn author--c-btn--breadcrumb is-active');
+    expect(buttons[0].className).toBe('au-c-btn au-c-btn--breadcrumb is-active');
   });
 
   it('it clicks button for updatePath', () => {

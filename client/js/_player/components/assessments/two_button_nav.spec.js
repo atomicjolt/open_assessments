@@ -20,8 +20,9 @@ describe('Two Button Nav', () => {
       props = {
         localizedStrings: localizeStrings({settings:{locale:"en"}}).twoButtonNav,
         goToPreviousQuestions: () => {},
+        submitAssessment: () => {},
         secondaryAction: {buttonState: SECONDARY_ACTION.PREV},
-        primaryAction: null
+        primaryAction: '',
       };
     });
 
@@ -41,7 +42,7 @@ describe('Two Button Nav', () => {
     });
 
     it('does not render previous button when not enabled', () => {
-      props.secondaryAction = SECONDARY_ACTION.NONE;
+      props.secondaryAction = {buttonState: SECONDARY_ACTION.NONE};
       render();
 
       expect(subject.innerHTML).not.toContain('Previous');

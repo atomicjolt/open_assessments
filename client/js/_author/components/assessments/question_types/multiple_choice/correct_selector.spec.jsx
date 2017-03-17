@@ -1,6 +1,7 @@
 import React            from 'react';
 import { shallow }      from 'enzyme';
 import CorrectSelector  from './correct_selector';
+import Radio            from '../question_common/option_radio';
 
 describe('Correct answer selector', () => {
   let result;
@@ -8,7 +9,8 @@ describe('Correct answer selector', () => {
 
   beforeEach(() => {
     props = {
-      itemType: '',
+      itemType: 'TypeOfItem',
+      itemId: '',
       id: 'TacoId',
       isCorrect: true,
       updateChoice: () => {},
@@ -17,7 +19,7 @@ describe('Correct answer selector', () => {
   });
 
   it('checks if input.checked is true', () => {
-    expect(result.find('optionRadio').props().isCorrect).toBeTruthy();
+    expect(result.find(Radio).props().isCorrect).toBeTruthy();
   });
 
 });

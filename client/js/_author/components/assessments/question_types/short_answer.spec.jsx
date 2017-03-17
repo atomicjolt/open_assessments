@@ -1,23 +1,26 @@
 import React        from 'react';
-import TestUtils    from 'react-addons-test-utils';
-import Stub         from '../../../../../specs_support/stub';
+import { shallow }  from 'enzyme';
 import ShortAnswer  from './short_answer';
 
 describe('Sets size for short answer', () => {
   let result;
   let props;
-  const items = ['first', 'second'];
 
   beforeEach(() => {
     props = {
       updateItem: newProps => this.updateItem(newProps),
-      item: items
+      item: {
+        bankId: '',
+        question: {
+          correctFeedBack: 'salad'
+        }
+      }
     };
-    result = TestUtils.renderIntoDocument(<Stub><ShortAnswer {...props} /></Stub>);
+    result = shallow(<ShortAnswer {...props} />);
   });
 
   it('verifies initial size', () => {
-    const select = TestUtils.scryRenderedDOMComponentsWithTag(result, 'select')[0];
-    expect(select.value).toBe('large');
+    const select = result.find('select');
+    expect(select.nodes[0].props.value).toBe('large');
   });
 });

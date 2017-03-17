@@ -2,6 +2,7 @@ import React                  from 'react';
 import { connect }            from 'react-redux';
 import _                      from 'lodash';
 
+import hashHistory            from '../../history';
 import { transformAssessment } from '../../selectors/assessment';
 import Heading                from  '../common/heading';
 import AssessmentForm         from './assessment_form';
@@ -14,10 +15,12 @@ function select(state, props) {
   const id = encodeURIComponent(props.params.id);
   const bankAssessments = state.assessments[bankId];
   const assessmentItemIds = state.assessmentItems[id];
+
   return {
     assessment: (bankAssessments && transformAssessment(bankAssessments[id])) || {},
     items: _.compact(_.at(state.items[bankId], assessmentItemIds)),
     settings: state.settings,
+    banks: state.banks,
     params: { // override react router because we want the escaped ids
       bankId,
       id,
@@ -42,6 +45,9 @@ export class EditAssessment extends React.Component {
       publishedBankId: React.PropTypes.string
     }),
     editOrPublishAssessment: React.PropTypes.func.isRequired,
+    updatePath: React.PropTypes.func.isRequired,
+    getItems: React.PropTypes.func.isRequired,
+    banks: React.PropTypes.shape({}).isRequired,
     deleteAssignedAssessment: React.PropTypes.func.isRequired,
     createAssessmentOffered: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
@@ -53,6 +59,7 @@ export class EditAssessment extends React.Component {
     updateItem: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
     deleteAssessmentItem: React.PropTypes.func,
+    createChoice: React.PropTypes.func,
   };
 
   componentDidMount() {
@@ -122,17 +129,24 @@ export class EditAssessment extends React.Component {
     this.props.updateSingleItemOrPage(assessmentOffered[0], genusTypeId);
   }
 
-  updateChoice(itemId, choiceId, choice, fileIds) {
-    const updateAttributes = {
-      id: itemId,
-      question: {
-        choices: {
-          [choiceId]: choice,
-        },
-        fileIds,
+  flattenBanks(banks, flatBanks) {
+    _.forEach(banks, (bank) => {
+      flatBanks[bank.id] = bank;
+      if (!_.isEmpty(bank.childNodes)) {
+        return this.flattenBanks(bank.childNodes, flatBanks);
       }
-    };
-    this.updateItem(updateAttributes);
+    });
+    return flatBanks;
+  }
+
+  getBankChildren(bankId) {
+    let flatBanks = {};
+    const banks = this.flattenBanks(this.props.banks, flatBanks);
+
+    this.props.updatePath(bankId, banks[bankId], true);
+    this.props.getAssessments(bankId);
+    this.props.getItems(bankId);
+    hashHistory.push('/');
   }
 
   render() {
@@ -147,6 +161,7 @@ export class EditAssessment extends React.Component {
           isPublished={isPublished}
           assessment={this.props.assessment}
           items={this.props.items}
+          getBankChildren={bankId => this.getBankChildren(bankId)}
         />
         <AssessmentForm
           publishedAndOffered={publishedAndOffered}
@@ -158,6 +173,7 @@ export class EditAssessment extends React.Component {
           updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}
           updateChoice={(itemId, choiceId, choice, fileIds) => this.updateChoice(itemId, choiceId, choice, fileIds)}
+          createChoice={itemId => this.props.createChoice(this.props.params.bankId, itemId)}
           deleteAssessmentItem={itemId => this.deleteAssessmentItem(itemId)}
         />
       </div>

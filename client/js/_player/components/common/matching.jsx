@@ -59,7 +59,7 @@ export class Matching extends React.Component {
 
     var materialItems = responses.map((item, index)=>{
       var name = "answer-" + index;
-      var ref = "answer-" + item.id;
+      var ref = "response-" + item.id;
 
       var answers = (this.props.studentAnswers) ? this.props.studentAnswers[index] : {selectedAnswer: ""};
       var selectedAnswer;
@@ -67,16 +67,16 @@ export class Matching extends React.Component {
         if(answers && (answers.selectedAnswer.trim() == answer.material.trim())){
           selectedAnswer = answers.selectedAnswer.trim();
         }
-        return <option key={makeId()} value={answer.material.trim()} id={answer.id}>{answer.material.trim()}</option>;
+        return <option key={"answer-" + answer.id} value={answer.material.trim()} id={answer.id}>{answer.material.trim()}</option>;
       });
-      var select = !this.props.isDisabled ? <select key={ref} name={name} value={selectedAnswer} onChange={(e, key) => {this.answerSelected(e, key); }}>
-                                              <option key={"default-option-key" + makeId()} selected={null} id="0000">[Select Answer]</option>
+      var select = !this.props.isDisabled ? <select name={name} value={selectedAnswer} onChange={(e, key) => {this.answerSelected(e, key); }}>
+                                              <option selected={null} id="0000">[Select Answer]</option>
                                               { options }
-                                            </select> : <select disabled="true" key={ref} name={name} onChange={(e, key) => {this.answerSelected(e, key); }}>
-                                                          <option key={"default-option-key" + makeId()} selected={null} id="0000"></option>
-                                                          <option key={"default-option-key" + makeId()} selected={null} id="0000">--------------------------------------</option>
+                                            </select> : <select disabled="true" name={name} onChange={(e, key) => {this.answerSelected(e, key); }}>
+                                                          <option selected={null} id="0000"></option>
+                                                          <option selected={null} id="0000">--------------------------------------</option>
                                                         </select>;
-      return <div>
+      return <div key={ref} >
         {materialNames[index]}
         {select}
       </div>;

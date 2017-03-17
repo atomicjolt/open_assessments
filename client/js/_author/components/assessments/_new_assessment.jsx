@@ -1,6 +1,7 @@
 import React                  from 'react';
 import { connect }            from 'react-redux';
 import AssessmentForm         from './assessment_form';
+import hashHistory            from '../../history';
 import Heading                from  '../common/heading';
 import * as BankActions       from '../../../actions/qbank/banks';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
@@ -9,6 +10,7 @@ import * as ItemActions       from '../../../actions/qbank/items';
 function select(state) {
   return {
     editableBankId: state.settings.editableBankId,
+    banks: state.banks,
   };
 }
 export class NewAssessment extends React.Component {
@@ -16,7 +18,6 @@ export class NewAssessment extends React.Component {
     params: React.PropTypes.shape({ id: React.PropTypes.string }).isRequired,
     editableBankId: React.PropTypes.string.isRequired,
     createAssessment: React.PropTypes.func.isRequired,
-    publishAssessment: React.PropTypes.func.isRequired,
     createAssessmentWithItem: React.PropTypes.func.isRequired,
   };
 
@@ -46,16 +47,40 @@ export class NewAssessment extends React.Component {
     );
   }
 
+  flattenBanks(banks, flatBanks) {
+    _.forEach(banks, (bank) => {
+      flatBanks[bank.id] = bank;
+      if (!_.isEmpty(bank.childNodes)) {
+        return this.flattenBanks(bank.childNodes, flatBanks);
+      }
+    });
+    return flatBanks;
+  }
+
+  getBankChildren(bankId) {
+    const id = encodeURIComponent(bankId);
+    let flatBanks = {};
+    const banks = this.flattenBanks(this.props.banks, flatBanks);
+    this.props.updatePath(id, banks[id], true);
+    this.props.getAssessments(id);
+    this.props.getItems(id);
+    hashHistory.push('/');
+  }
+
   render() {
     return (
       <div>
         <Heading
           view="assessments"
-          publishAssessment={this.props.publishAssessment}
+          isPublished={false}
+          assessment={{ bankId: this.props.params.id, assessmentId: null }}
+          items={[]}
+          getBankChildren={bankId => this.getBankChildren(bankId)}
         />
         <AssessmentForm
           updateAssessment={assessment => this.createAssessment(assessment)}
           createItem={newItem => this.createItem(newItem)}
+          createChoice={() => {}}
         />
       </div>
     );

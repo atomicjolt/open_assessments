@@ -42,6 +42,11 @@ describe('assessment items component', () => {
       updateChoice: () => {},
       updateAnswer: () => {},
       moveItem: () => {},
+      updateItem: () => {},
+      activateItem: () => {},
+      toggleReorder: () => {},
+      deleteAssessmentItem: () => {},
+      createChoice: () => {},
     };
     result = shallow(<AssessmentItems {...props} />);
   });

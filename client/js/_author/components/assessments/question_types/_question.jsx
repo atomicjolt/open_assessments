@@ -8,10 +8,13 @@ import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
 import ShortAnswer      from './short_answer';
 import DragAndDrop      from './drag_and_drop/_drag_and_drop';
+import WordSentence     from './moveable_word_sentence/moveable_word_sentence';
+import MoveableWordSandbox from './moveable_words_sandbox/moveable_words_sandbox';
 import types            from '../../../../constants/question_types';
 import languages        from '../../../../constants/language_types';
 import Preview          from './preview_question';
 
+// TODO: connect this component
 export default class Question extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
@@ -19,6 +22,9 @@ export default class Question extends React.Component {
       type: React.PropTypes.string,
       bankId: React.PropTypes.string,
       name: React.PropTypes.string,
+      question: React.PropTypes.shape({
+        choices: React.PropTypes.shape({}),
+      }),
     }).isRequired,
     isActive: React.PropTypes.bool,
     itemIndex: React.PropTypes.number,
@@ -29,9 +35,25 @@ export default class Question extends React.Component {
     updateChoice: React.PropTypes.func.isRequired,
     activateItem: React.PropTypes.func.isRequired,
     toggleReorder: React.PropTypes.func.isRequired,
+    createChoice: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
     moveItem: React.PropTypes.func.isRequired,
   };
+
+  static questionComponents = {
+    [types.multipleChoice]: MultipleChoice,
+    [types.reflection]: MultipleChoice,
+    [types.multipleReflection]: MultipleChoice,
+    [types.multipleAnswer]: MultipleChoice,
+    [types.shortAnswer]: ShortAnswer,
+    [types.fileUpload]: FileUpload,
+    [types.audioUpload]: AudioUpload,
+    [types.moveableWordSandbox]: MoveableWordSandbox,
+    [types.moveableWordSentence]: WordSentence,
+    [types.dragAndDrop]: DragAndDrop,
+  };
+
+  static stateDrivenTypes = [types.moveableWordSentence];
 
   constructor(props) {
     super(props);
@@ -39,11 +61,17 @@ export default class Question extends React.Component {
       reorderActive: false,
       language: languages.languageTypeId.english,
       preview: false,
+      activeChoice: null,
+      item: {
+        question: {
+          choices: {}
+        }
+      }
     };
   }
 
   getClassName() {
-    if (this.props.isActive && this.props.reorderActive) {
+    if (this.props.isActive && (this.props.reorderActive || this.state.preview)) {
       return 'reorder-active';
     }
 
@@ -59,13 +87,14 @@ export default class Question extends React.Component {
   }
 
   updateItem(newItemProperties) {
-
     const { item } = this.props;
 
     if (newItemProperties.language) {
       if (newItemProperties.language && this.state.language !== newItemProperties.language) {
         this.setState({ language: newItemProperties.language });
       }
+    } else if (_.includes(Question.stateDrivenTypes, item.type)) {
+      this.setState({ ...item, ...newItemProperties });
     } else {
       this.props.updateItem({
         id: item.id,
@@ -73,6 +102,28 @@ export default class Question extends React.Component {
         ...newItemProperties
       });
     }
+  }
+
+  updateChoice(itemId, choiceId, choice, fileIds) {
+    const { item } = this.props;
+    const updateAttributes = {
+      id: itemId,
+      question: {
+        choices: {
+          [choiceId]: choice,
+        },
+        fileIds,
+      }
+    };
+    if (_.includes(Question.stateDrivenTypes, item.type)) {
+      this.setState({ item: _.merge(this.state.item, updateAttributes) });
+    } else {
+      this.updateItem(updateAttributes);
+    }
+  }
+
+  saveStateItem() {
+    this.props.updateItem(this.state.item);
   }
 
   changeType(type) {
@@ -117,53 +168,56 @@ export default class Question extends React.Component {
     this.changeType(type);
   }
 
-  content() {
-    switch (this.props.item.type) {
-      case types.multipleChoice:
-      case types.reflection:
-      case types.multipleReflection:
-      case types.multipleAnswer:
-        return (
-          <MultipleChoice
-            {...this.props}
-            updateItem={newProps => this.updateItem(newProps)}
-            updateChoice={this.props.updateChoice}
-            isActive={this.props.isActive}
-          />
-        );
-      case types.audioUpload:
-        return (
-          <AudioUpload
-            updateItem={newProps => this.updateItem(newProps)}
-            item={this.props.item}
-          />
-        );
-      case types.fileUpload:
-        return (
-          <FileUpload
-            updateItem={newProps => this.updateItem(newProps)}
-            item={this.props.item}
-          />
-        );
+  selectChoice(choiceId) {
+    this.setState({ activeChoice: choiceId });
+  }
 
-      case types.shortAnswer:
-        return (
-          <ShortAnswer
-            updateItem={newProps => this.updateItem(newProps)}
-            item={this.props.item}
-          />
-        );
-      case types.dragAndDrop:
-        return (
-          <DragAndDrop
-            updateItem={newProps => this.updateItem(newProps)}
-            item={this.props.item}
-          />
-        );
+  blurOptions(e) {
+    const currentTarget = e.currentTarget;
+    setTimeout(() => {
+      if (!currentTarget.contains(document.activeElement) ||
+        (currentTarget === document.activeElement)
+      ) {
+        this.selectChoice(null);
+      }
+    }, 0);
+  }
 
-      default:
-        return null;
+  deleteChoice(choice) {
+    if (confirm('Are you sure you want to delete this option?')) {
+      this.updateItem({
+        question: {
+          choices: this.markedForDeletion(choice)
+        }
+      });
     }
+  }
+
+  markedForDeletion(choice) {
+    const newChoices = _.cloneDeep(this.props.item.question.choices);
+    newChoices[choice.id].delete = true;
+    return newChoices;
+  }
+
+  content() {
+    const Component = Question.questionComponents[this.props.item.type];
+    if (Component) {
+      return (
+        <Component
+          item={_.merge(this.props.item, this.state.item)}
+          updateItem={newProps => this.updateItem(newProps)}
+          updateChoice={(itemId,choiceId, choice, fileIds) => this.updateChoice(itemId, choiceId, choice, fileIds)}
+          isActive={this.props.isActive}
+          activeChoice={this.state.activeChoice}
+          selectChoice={choiceId => this.selectChoice(choiceId)}
+          blurOptions={e => this.blurOptions(e)}
+          createChoice={this.props.createChoice}
+          deleteChoice={choice => this.deleteChoice(choice)}
+          save={() => this.saveStateItem()}
+        />
+      );
+    }
+    return null;
   }
 
   editContent() {
@@ -191,7 +245,7 @@ export default class Question extends React.Component {
           makeMultipleAnswer={multi => this.makeMultipleAnswer(multi)}
           type={type}
         />
-        <div className={`author--c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
+        <div className={`au-c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
             fileIds={question.fileIds}
             itemId={id}
@@ -220,7 +274,7 @@ export default class Question extends React.Component {
 
     return (
       <div
-        className={`author--o-item author--c-question ${className}`}
+        className={`au-o-item au-c-question ${className}`}
         tabIndex="0"
         onClick={() => this.props.activateItem(id)}
         onFocus={() => this.props.activateItem(id)}
@@ -238,6 +292,8 @@ export default class Question extends React.Component {
           moveUp={() => this.moveQuestionUp()}
           moveDown={() => this.moveQuestionDown()}
           togglePreview={() => this.setState({ preview: !this.state.preview })}
+          itemIndex={this.props.itemIndex}
+          preview={this.state.preview}
         />
         {this.state.preview && this.props.isActive ? this.previewContent() : this.editContent()}
       </div>

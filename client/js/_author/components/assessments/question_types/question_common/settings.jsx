@@ -13,24 +13,24 @@ export default function questionSettings(props) {
   ];
 
   return (
-    <div className="author--c-question-settings">
-      <div className="author--o-left">
-        <div className="author--c-input author--c-input-label--left">
+    <div className="au-c-question-settings">
+      <div className="au-o-left">
+        <div className="au-c-input au-c-input-label--left">
           <label htmlFor={`question_name_${props.id}`}>Name</label>
-          <div className="author--c-input__contain">
+          <div className="au-c-input__contain">
             <input
-              className="author--c-text-input author--c-text-input--smaller"
+              className="au-c-text-input au-c-text-input--smaller"
               id={`question_name_${props.id}`}
               type="text"
               tabIndex="0"
               defaultValue={props.defaultName}
               onBlur={e => props.updateItem({ name: e.target.value })}
             />
-            <div className="author--c-input__bottom" />
+            <div className="au-c-input__bottom" />
           </div>
         </div>
 
-        <div className="author--c-dropdown author--c-dropdown--small author--u-ml-md">
+        <div className="au-c-dropdown au-c-dropdown--small au-u-ml-md">
           <select
             name=""
             id=""

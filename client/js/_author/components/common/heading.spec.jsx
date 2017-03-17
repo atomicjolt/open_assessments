@@ -10,6 +10,8 @@ describe('Heading', () => {
   beforeEach(() => {
     props = {
       view: 'banks',
+      path: [],
+      updatePath: () => {},
     };
 
     result = TestUtils.renderIntoDocument(<Stub><Heading {...props} /></Stub>);
@@ -20,6 +22,6 @@ describe('Heading', () => {
   });
 
   it('renders the Bank view content', () => {
-    expect(TestUtils.findRenderedDOMComponentWithClass(result, 'author--c-header-bottom')).toBeDefined();
+    expect(TestUtils.findRenderedDOMComponentWithClass(result, 'au-c-header-bottom')).toBeDefined();
   });
 });

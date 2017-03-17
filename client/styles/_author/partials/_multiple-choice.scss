@@ -1,4 +1,4 @@
-.author--c-answer{
+.au-c-answer{
   padding: 0.75rem 5.5rem;
   background: $white;
   box-shadow: 0 0 0.6rem rgba(0,0,0,0.15);
@@ -7,16 +7,25 @@
   cursor: pointer;
 
   &:hover{
-    .author--c-answer__icons .author--c-answer__icons__spacer:last-of-type i{
+    .au-c-answer__icons .au-c-answer__icons__spacer:last-of-type i{
       display: inline-block;
     }
 
-    .author--c-input__bottom{
+    .au-c-input__bottom.no-border{
       border-top: $border;
     }
   }
 
-  .author--c-answer__icons{
+  &.is-ordered{
+    padding-right: 5.5rem;
+
+    .au-c-answer__icons{
+      width: 3rem;
+      right: -4rem;
+    }
+  }
+
+  .au-c-answer__icons{
     position: absolute;
     width: 11rem;
     height: 3rem;
@@ -35,7 +44,7 @@
     }
   }
 
-    .author--c-answer__icons__spacer{
+    .au-c-answer__icons__spacer{
       width: 3rem;
       height: 3rem;
       margin-right: 1rem;
@@ -43,6 +52,10 @@
       border: none;
       background: none;
       padding: 0;
+
+      &.inactive{
+        pointer-events: none;
+      }
 
       &:last-of-type{
         margin: 0;
@@ -56,21 +69,37 @@
       }
     }
 
-  .author--c-feedback{
-    display: none;
-  }
-
   &.is-active{
-    .author--c-feedback{
-      @include display-flex;
-    }
-    .author--c-answer__icons i{
+    .au-c-answer__icons i{
       display: inline-block;
+    }
+    .au-c-input__bottom.no-border{
+      border-top: $border;
     }
   }
 }
 
-.author--c-answer--add{
+.au-c-answer--delete{
+  margin-left: 1rem;
+  width: 3rem;
+  height: 3rem;
+  display: inline-block;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+
+  i{
+    font-size: 3rem;
+    color: $gray4;
+
+    &:hover{
+      color: $blue;
+    }
+  }
+}
+
+.au-c-answer--add{
   box-shadow: none;
   min-height: 5rem;
   margin-bottom: 0;
@@ -78,18 +107,18 @@
 
   &:hover{
 
-    .author--c-input .author--c-text-input{
+    .au-c-input .au-c-text-input{
       color: lighten($gray8, 10%);
     }
 
-    .author--c-radio{
+    .au-c-radio{
 
       input[type="radio"] + label:before{
         color: $gray8;
       }
     }
 
-    .author--c-checkbox{
+    .au-c-checkbox{
 
       input[type="checkbox"] + label:before{
         color: $gray8;
@@ -97,16 +126,16 @@
     }
   }
 
-  .author--c-input{
+  .au-c-input{
     pointer-events: none;
 
-    .author--c-text-input{
+    .au-c-text-input{
       color: $gray4;
       @include transition(color 0.1s ease);
     }
   }
 
-  .author--c-radio{
+  .au-c-radio{
 
     input[type="radio"] + label:before{
       color: $gray3;
@@ -114,7 +143,7 @@
     }
   }
 
-  .author--c-checkbox{
+  .au-c-checkbox{
 
     input[type="checkbox"] + label:before{
       color: $gray3;

@@ -1,5 +1,5 @@
 import React        from 'react';
-import TestUtils    from 'react-addons-test-utils';
+import { shallow }  from 'enzyme';
 import AudioUpload  from './audio_upload';
 
 describe('audio_upload component', () => {
@@ -12,6 +12,7 @@ describe('audio_upload component', () => {
     props = {
       updateItem: () => {itemUpdated = true},
       item: {
+        bankId: '',
         id: '76',
         displayName: {
           text: 'IMATITLESPEC',
@@ -32,12 +33,7 @@ describe('audio_upload component', () => {
         },
       },
     };
-    result = TestUtils.renderIntoDocument(<AudioUpload {...props} />);
-  });
-
-  it('renders 3 spans', () => {
-    const spans = TestUtils.scryRenderedDOMComponentsWithTag(result, 'span');
-    expect(spans.length).toBe(3);
+    result = shallow(<AudioUpload {...props} />);
   });
 
   it('handles updateItem through handleBlur', () => {
@@ -47,29 +43,7 @@ describe('audio_upload component', () => {
         value: 7,
       },
     };
-    result.handleBlur(input);
+    result.instance().handleBlur(input);
     expect(itemUpdated).toBeTruthy();
-  });
-
-  it('runs the getAudioLimit static function', () => {
-    const inputs = TestUtils.scryRenderedDOMComponentsWithClass(
-      result,
-      'author--c-text-input--smaller',
-    );
-    expect(inputs[0].value).toBe('7900');
-  });
-
-  it('runs the getAudioLimit static function', () => {
-    props.item.question.timeValue = {
-      hours: '7',
-      minutes: '70',
-      seconds: '700',
-    };
-    const newResult = TestUtils.renderIntoDocument(<AudioUpload {...props} />);
-    const secondInput = TestUtils.scryRenderedDOMComponentsWithClass(
-      newResult,
-      'author--c-text-input--smaller',
-    );
-    expect(secondInput[0].value).toBe('30100')
   });
 });

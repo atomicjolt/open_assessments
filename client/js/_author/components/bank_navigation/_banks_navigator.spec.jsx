@@ -34,7 +34,8 @@ describe('Bank Navigator', () => {
       ],
       settings: {
         editableBankId   : 'bankId123',
-        publishedBankId  : 'publishedId123'
+        publishedBankId  : 'publishedId123',
+        baseEmbedUrl     : 'LOOKASPEC',
       },
       path               : [],
       updatePath         : () => { calledFuncts.push('updatePath'); },
@@ -44,6 +45,7 @@ describe('Bank Navigator', () => {
       createAssessment   : () => { calledFuncts.push('createAssessment'); },
       deleteAssessment   : () => { calledFuncts.push('deleteAssessment'); },
       currentBankId      : '',
+      getAssessmentOffered: () => {},
     };
     result = TestUtils.renderIntoDocument(<BankNavigator {...props} />);
   });
@@ -53,13 +55,8 @@ describe('Bank Navigator', () => {
     expect(divs.length).toBeGreaterThan(0);
   });
 
-  it('gets the banks', () => {
-    expect(_.indexOf(calledFuncts, 'getBanks')).toBeGreaterThan(-1);
-  });
-
-  it('updates the path, gets assessments, and gets items, when a back is selected', () => {
+  it('updates the path, gets assessments, and gets items, when a bank is selected', () => {
     result.getBankChildren({ id: 1, displayName: { text: 'tacos' } });
-    expect(_.indexOf(calledFuncts, 'updatePath')).toBeGreaterThan(-1);
     expect(_.indexOf(calledFuncts, 'getAssessments')).toBeGreaterThan(-1);
     expect(_.indexOf(calledFuncts, 'getItems')).toBeGreaterThan(-1);
   });
@@ -98,6 +95,13 @@ describe('Bank Navigator', () => {
     expect(ascNameSorted[0].displayName.text).toBe('taco');
     expect(ascNameSorted[1].displayName.text).toBe('rice');
     expect(ascNameSorted[2].displayName.text).toBe('apple');
+  });
+
+  it('has spinner', () => {
+    props.banks = [];
+    result = TestUtils.renderIntoDocument(<BankNavigator {...props} />);
+    const spinner = TestUtils.findRenderedDOMComponentWithClass(result, 'spinner');
+    expect(spinner).toBeDefined();
   });
 
 //  TODO: when published is fully implemented write a spec to test it's sort
