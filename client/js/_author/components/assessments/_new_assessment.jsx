@@ -80,6 +80,7 @@ export class NewAssessment extends React.Component {
         <AssessmentForm
           updateAssessment={assessment => this.createAssessment(assessment)}
           createItem={newItem => this.createItem(newItem)}
+          createChoice={() => {}}
         />
       </div>
     );
