@@ -1,13 +1,13 @@
 export default {
-  multipleChoice: 'multipleChoice',
-  shortAnswer: 'shortAnswer',
-  fileUpload: 'fileUpload',
   audioUpload: 'audioUpload',
-  reflection: 'reflection',
-  multipleReflection: 'multipleReflection',
-  multipleAnswer: 'multipleAnswer',
+  fileUpload: 'fileUpload',
   moveableWordSandbox: 'moveableWordSandbox',
   moveableWordSentence: 'moveableWordSentence',
+  multipleAnswer: 'multipleAnswer',
+  multipleChoice: 'multipleChoice',
+  multipleReflection: 'multipleReflection',
+  reflection: 'reflection',
+  shortAnswer: 'shortAnswer',
 };
 
 export const audioLimit = 240;
