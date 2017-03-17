@@ -1,5 +1,6 @@
 import React            from 'react';
 import _                from 'lodash';
+import MovableFillBlank from './movable_fill_blank/movable_fill_blank';
 import MultipleChoice   from './multiple_choice/multiple_choice';
 import QuestionHeader   from './question_common/header/_header';
 import Settings         from './question_common/settings';
@@ -7,8 +8,8 @@ import QuestionText     from './question_common/text';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
 import ShortAnswer      from './short_answer';
-import WordSentence     from './moveable_word_sentence/moveable_word_sentence';
-import MoveableWordSandbox from './moveable_words_sandbox/moveable_words_sandbox';
+import WordSentence     from './movable_word_sentence/movable_word_sentence';
+import MovableWordSandbox from './movable_words_sandbox/movable_words_sandbox';
 import types            from '../../../../constants/question_types';
 import languages        from '../../../../constants/language_types';
 import Preview          from './preview_question';
@@ -40,18 +41,19 @@ export default class Question extends React.Component {
   };
 
   static questionComponents = {
-    [types.multipleChoice]: MultipleChoice,
-    [types.reflection]: MultipleChoice,
-    [types.multipleReflection]: MultipleChoice,
-    [types.multipleAnswer]: MultipleChoice,
-    [types.shortAnswer]: ShortAnswer,
-    [types.fileUpload]: FileUpload,
     [types.audioUpload]: AudioUpload,
-    [types.moveableWordSandbox]: MoveableWordSandbox,
-    [types.moveableWordSentence]: WordSentence,
+    [types.fileUpload]: FileUpload,
+    [types.movableFillBlank]: MovableFillBlank,
+    [types.movableWordSandbox]: MovableWordSandbox,
+    [types.movableWordSentence]: WordSentence,
+    [types.multipleAnswer]: MultipleChoice,
+    [types.multipleChoice]: MultipleChoice,
+    [types.multipleReflection]: MultipleChoice,
+    [types.reflection]: MultipleChoice,
+    [types.shortAnswer]: ShortAnswer,
   };
 
-  static stateDrivenTypes = [types.moveableWordSentence];
+  static stateDrivenTypes = [types.movableWordSentence];
 
   constructor(props) {
     super(props);
@@ -245,6 +247,7 @@ export default class Question extends React.Component {
         />
         <div className={`au-c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
+            itemType={type}
             fileIds={question.fileIds}
             itemId={id}
             editorKey={languageTypeId}
@@ -269,7 +272,6 @@ export default class Question extends React.Component {
   render() {
     const { name, type, id } = this.props.item;
     const className = this.getClassName();
-
     return (
       <div
         className={`au-o-item au-c-question ${className}`}

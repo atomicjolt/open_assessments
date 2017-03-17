@@ -1,13 +1,14 @@
 export default {
-  multipleChoice: 'multipleChoice',
-  shortAnswer: 'shortAnswer',
-  fileUpload: 'fileUpload',
   audioUpload: 'audioUpload',
-  reflection: 'reflection',
-  multipleReflection: 'multipleReflection',
+  fileUpload: 'fileUpload',
+  movableFillBlank: 'movableFillBlank',
+  movableWordSandbox: 'movableWordSandbox',
+  movableWordSentence: 'movableWordSentence',
   multipleAnswer: 'multipleAnswer',
-  moveableWordSandbox: 'moveableWordSandbox',
-  moveableWordSentence: 'moveableWordSentence',
+  multipleChoice: 'multipleChoice',
+  multipleReflection: 'multipleReflection',
+  reflection: 'reflection',
+  shortAnswer: 'shortAnswer',
 };
 
 export const audioLimit = 240;

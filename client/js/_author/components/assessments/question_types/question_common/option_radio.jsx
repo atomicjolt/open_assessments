@@ -18,7 +18,7 @@ export default function optionRadio(props) {
 
 optionRadio.propTypes = {
   id: React.PropTypes.string.isRequired,
-  itemId: React.PropTypes.string.isRequired,
+  itemId: React.PropTypes.string,
   isCorrect: React.PropTypes.bool,
   updateChoice: React.PropTypes.func.isRequired,
 };
