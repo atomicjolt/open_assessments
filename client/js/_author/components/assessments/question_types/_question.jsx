@@ -207,7 +207,7 @@ export default class Question extends React.Component {
         <Component
           item={_.merge(this.props.item, this.state.item)}
           updateItem={newProps => this.updateItem(newProps)}
-          updateChoice={(itemId,choiceId, choice, fileIds) => this.updateChoice(itemId, choiceId, choice, fileIds)}
+          updateChoice={(itemId, choiceId, choice, fileIds) => this.updateChoice(itemId, choiceId, choice, fileIds)}
           isActive={this.props.isActive}
           activeChoice={this.state.activeChoice}
           selectChoice={choiceId => this.selectChoice(choiceId)}
@@ -226,9 +226,7 @@ export default class Question extends React.Component {
     const { name, type, id, question, bankId } = item;
     const { multipleAnswer, multipleReflection, reflection } = types;
     const defaultLanguage = this.state.language;
-    const chosenLanguage = _.find(item.question.texts, (textObj) => {
-      return textObj.languageTypeId === defaultLanguage;
-    });
+    const chosenLanguage = _.find(item.question.texts, textObj => (textObj.languageTypeId === defaultLanguage));
     const questionText = _.get(chosenLanguage, 'text', '');
     const languageTypeId = _.get(chosenLanguage, 'languageTypeId');
 

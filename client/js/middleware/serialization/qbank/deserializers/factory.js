@@ -6,6 +6,7 @@ import multipleAnswer   from './multiple_answer';
 import fileUpload       from './file_upload';
 import moveableWordSandbox from './moveable_words_sandbox';
 import wordSentence     from './moveable_word_sentence';
+import imageSequence    from './image_sequence';
 import genusTypes       from '../../../../constants/genus_types';
 
 export default function factory(type) {
@@ -32,6 +33,9 @@ export default function factory(type) {
 
     case genusTypes.item.moveableWordSentence:
       return wordSentence;
+
+    case genusTypes.item.imageSequence:
+      return imageSequence;
 
     default:
       return base;

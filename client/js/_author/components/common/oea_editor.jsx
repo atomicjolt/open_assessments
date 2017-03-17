@@ -56,7 +56,7 @@ export class OeaEditor extends React.Component {
     });
 
     _.each(this.props.uploadedAssets, (asset, mediaGuid) => {
-      if(!asset.error) {
+      if (!asset.error) {
         fileIds[mediaGuid] = {
           assetId: asset.id,
           assetContentId: asset.assetContents[0].id,

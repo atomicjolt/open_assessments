@@ -1,7 +1,6 @@
 import React      from 'react';
 import Feedback    from '../question_common/single_feedback';
 import ImageOrder  from './image_order';
-import types       from '../../../../../constants/question_types';
 
 export default class ImageSequence extends React.Component {
   static propTypes = {
@@ -16,10 +15,18 @@ export default class ImageSequence extends React.Component {
       }),
     }).isRequired,
     updateItem: React.PropTypes.func,
+    activateChoice: React.PropTypes.func,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      choiceId: null,
+    };
+  }
+
   getFeedback() {
-    const { question, type } = this.props.item;
+    const { question } = this.props.item;
 
     return (
       <div className="au-c-question__feedback">
@@ -30,24 +37,29 @@ export default class ImageSequence extends React.Component {
           labelText="Correct Feedback"
           bankId={this.props.item.bankId}
         />
-        {type === types.reflection || type === types.multipleReflection ?
-          null :
-          <Feedback
-            updateItem={this.props.updateItem}
-            feedbackType="incorrectFeedback"
-            feedback={question.incorrectFeedback}
-            labelText="Incorrect Feedback"
-            bankId={this.props.item.bankId}
-          />
-        }
+        <Feedback
+          updateItem={this.props.updateItem}
+          feedbackType="incorrectFeedback"
+          feedback={question.incorrectFeedback}
+          labelText="Incorrect Feedback"
+          bankId={this.props.item.bankId}
+        />
       </div>
     );
+  }
+
+  activateChoice(choiceId) {
+    this.setState({ activeChoice: choiceId });
   }
 
   render() {
     return (
       <div>
-        <ImageOrder {...this.props.item} />
+        <ImageOrder
+          {...this.props}
+          activateChoice={choiceId => this.activateChoice(choiceId)}
+          activeChoice={this.state.activeChoice}
+        />
         <div className="au-c-question__feedback">
           { this.getFeedback() }
         </div>
