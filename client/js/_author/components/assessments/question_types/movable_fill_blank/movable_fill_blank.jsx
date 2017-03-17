@@ -29,25 +29,27 @@ export default class MovableFillBlank extends React.Component {
   render() {
     const { question, id } = this.props.item;
     return (
-      <div className="au-c-question__answers au-c-fill-in-the-blank__answers">
-        <div className="au-no-outline" onBlur={e => this.props.blurOptions(e)} tabIndex="-1">
-          {
-            _.map(_.orderBy(question.choices, 'order'), choice => (
-              <Option
-                key={`assessmentChoice_${choice.id}`}
-                {...choice}
-                updateChoice={newChoice => this.props.updateChoice(id, choice.id, newChoice)}
-                deleteChoice={() => this.props.deleteChoice(choice)}
-                setActiveChoice={this.props.selectChoice}
-                isActive={this.props.isActive && choice.id === this.props.activeChoice}
-              />
-            ))
-          }
-          {
-            this.props.isActive ? <Add
-              createChoice={() => this.props.createChoice(id)}
-            /> : null
-          }
+      <div>
+        <div className="au-c-question__answers au-c-fill-in-the-blank__answers">
+          <div className="au-no-outline" onBlur={e => this.props.blurOptions(e)} tabIndex="-1">
+            {
+              _.map(_.orderBy(question.choices, 'order'), choice => (
+                <Option
+                  key={`assessmentChoice_${choice.id}`}
+                  {...choice}
+                  updateChoice={newChoice => this.props.updateChoice(id, choice.id, newChoice)}
+                  deleteChoice={() => this.props.deleteChoice(choice)}
+                  setActiveChoice={this.props.selectChoice}
+                  isActive={this.props.isActive && choice.id === this.props.activeChoice}
+                />
+              ))
+            }
+            {
+              this.props.isActive ? <Add
+                createChoice={() => this.props.createChoice(id)}
+              /> : null
+            }
+          </div>
         </div>
         <div className="au-c-question__feedback">
           <Feedback
