@@ -1,11 +1,12 @@
+import audioUpload      from './audio_upload';
+import fileUpload       from './file_upload';
+import movableFillBlank from './movable_fill_blank';
+import movableWordSandbox from './movable_words_sandbox';
+import multipleAnswer   from './multiple_answer';
 import multipleChoice   from './multiple_choice';
 import shortAnswer      from './short_answer';
-import audioUpload      from './audio_upload';
 import survey           from './reflection';
-import multipleAnswer   from './multiple_answer';
-import fileUpload       from './file_upload';
-import wordSentence     from './moveable_word_sentence';
-import moveableWordSandbox from './moveable_words_sandbox';
+import wordSentence     from './movable_word_sentence';
 import types            from '../../../../constants/question_types.js';
 
 export default function factory(type) {
@@ -29,10 +30,13 @@ export default function factory(type) {
     case types.fileUpload:
       return fileUpload;
 
-    case types.moveableWordSandbox:
-      return moveableWordSandbox;
+    case types.movableFillBlank:
+      return movableFillBlank;
 
-    case types.moveableWordSentence:
+    case types.movableWordSandbox:
+      return movableWordSandbox;
+
+    case types.movableWordSentence:
       return wordSentence;
 
     default:

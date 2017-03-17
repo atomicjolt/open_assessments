@@ -4,7 +4,7 @@ import Option     from './option';
 import Add        from '../question_common/add_option';
 import Feedback   from '../question_common/single_feedback';
 
-export default class MoveableWordSentence extends React.Component {
+export default class MovableWordSentence extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
       question: React.PropTypes.shape({}),
@@ -26,7 +26,7 @@ export default class MoveableWordSentence extends React.Component {
     const { question, id } = this.props.item;
     return (
       <div
-        className="au-c-question__answers au-c-moveable__answers"
+        className="au-c-question__answers au-c-movable__answers"
         onBlur={e => this.props.blurOptions(e)} tabIndex="-1"
       >
         {

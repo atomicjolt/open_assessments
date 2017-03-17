@@ -1,8 +1,9 @@
 export default {
   audioUpload: 'audioUpload',
   fileUpload: 'fileUpload',
-  moveableWordSandbox: 'moveableWordSandbox',
-  moveableWordSentence: 'moveableWordSentence',
+  movableFillBlank: 'movableFillBlank',
+  movableWordSandbox: 'movableWordSandbox',
+  movableWordSentence: 'movableWordSentence',
   multipleAnswer: 'multipleAnswer',
   multipleChoice: 'multipleChoice',
   multipleReflection: 'multipleReflection',
