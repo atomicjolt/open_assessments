@@ -49,6 +49,7 @@ export default class questionText extends React.Component {
               textSize="medium"
               fileIds={this.props.fileIds}
               text={this.state.text}
+              placeholder="Question Text"
               editorKey={this.props.editorKey}
               onBlur={(val, fileIds) => this.props.updateItem({ question: { text: val, fileIds } })}
               bankId={this.props.bankId}
