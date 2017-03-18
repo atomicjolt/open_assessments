@@ -10,6 +10,7 @@ export const types = {
     multipleReflection: 'item-genus-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',
     reflection: 'item-genus-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
     shortAnswer: 'item-genus-type%3Aqti-extended-text-interaction%40ODL.MIT.EDU',
+    imageSequence: 'item-genus-type%3Aqti-order-interaction-object-manipulation%40ODL.MIT.EDU',
   },
   question: {
     audioUpload: 'question-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU',
@@ -22,6 +23,7 @@ export const types = {
     multipleReflection: 'question-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',
     reflection: 'question-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
     shortAnswer: 'question-type%3Aqti-extended-text-interaction%40ODL.MIT.EDU',
+    imageSequence: 'question-type%3Aqti-order-interaction-object-manipulation%40ODL.MIT.EDU',
   },
   answer: {
     file: 'answer-record-type%3Afiles-submission%40ODL.MIT.EDU', // for any movable word sandbox, audio record tool, and generic file submission

@@ -10,6 +10,7 @@ import Settings         from './question_common/settings';
 import QuestionText     from './question_common/text';
 import AudioUpload      from './audio_upload';
 import FileUpload       from './file_upload';
+import ImageSequence    from './image_sequence/_image_sequence';
 import ShortAnswer      from './short_answer';
 import WordSentence     from './movable_word_sentence/movable_word_sentence';
 import MovableWordSandbox from './movable_words_sandbox/movable_words_sandbox';
@@ -53,6 +54,7 @@ export class Question extends React.Component {
     [types.multipleReflection]: MultipleChoice,
     [types.reflection]: MultipleChoice,
     [types.shortAnswer]: ShortAnswer,
+    [types.imageSequence]: ImageSequence,
   };
 
   static stateDrivenTypes = [types.movableWordSentence];
@@ -173,6 +175,7 @@ export class Question extends React.Component {
   selectChoice(choiceId) {
     this.setState({ activeChoice: choiceId });
   }
+
 
   blurOptions(e) {
     const currentTarget = e.currentTarget;

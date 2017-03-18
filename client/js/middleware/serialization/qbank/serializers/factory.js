@@ -8,8 +8,10 @@ import shortAnswer      from './short_answer';
 import survey           from './reflection';
 import wordSentence     from './movable_word_sentence';
 import types            from '../../../../constants/question_types.js';
+import imageSequence    from './image_sequence';
 
 export default function factory(type) {
+
   switch (type) {
     case types.multipleChoice:
       return multipleChoice;
@@ -38,6 +40,9 @@ export default function factory(type) {
 
     case types.movableWordSentence:
       return wordSentence;
+
+    case types.imageSequence:
+      return imageSequence;
 
     default:
       throw 'We could not find a type for serializing';

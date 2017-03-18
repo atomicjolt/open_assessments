@@ -8,6 +8,7 @@ import multipleAnswer   from './multiple_answer';
 import multipleChoice   from './multiple_choice';
 import shortAnswer      from './short_answer';
 import wordSentence     from './movable_word_sentence';
+import imageSequence    from './image_sequence';
 
 export default function factory(type) {
   switch (type) {
@@ -36,6 +37,9 @@ export default function factory(type) {
 
     case genusTypes.item.movableWordSentence:
       return wordSentence;
+
+    case genusTypes.item.imageSequence:
+      return imageSequence;
 
     default:
       return base;

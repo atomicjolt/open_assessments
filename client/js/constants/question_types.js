@@ -9,6 +9,7 @@ export default {
   multipleReflection: 'multipleReflection',
   reflection: 'reflection',
   shortAnswer: 'shortAnswer',
+  imageSequence: 'imageSequence',
 };
 
 export const audioLimit = 240;
