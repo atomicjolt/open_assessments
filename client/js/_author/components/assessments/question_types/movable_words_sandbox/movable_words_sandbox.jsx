@@ -66,22 +66,22 @@ export default class MWSandbox extends React.Component {
             this.getChoices(_.get(this.props.item, 'question.choices', {}))
           }
           <AddOption updateChoice={() => this.props.createChoice(id)} />
-          <div className="au-c-question__feedback">
-            <Feedback
-              updateItem={this.props.updateItem}
-              feedbackType="correctFeedback"
-              feedback={question.correctFeedback}
-              labelText="Correct Feedback"
-              bankId={this.props.item.bankId}
-            />
-            <Feedback
-              updateItem={this.props.updateItem}
-              feedbackType="incorrectFeedback"
-              feedback={question.incorrectFeedback}
-              labelText="Incorrect Feedback"
-              bankId={this.props.item.bankId}
-            />
-          </div>
+        </div>
+        <div className="au-c-question__feedback">
+          <Feedback
+            updateItem={this.props.updateItem}
+            feedbackType="correctFeedback"
+            feedback={question.correctFeedback}
+            labelText="Correct Feedback"
+            bankId={this.props.item.bankId}
+          />
+          <Feedback
+            updateItem={this.props.updateItem}
+            feedbackType="incorrectFeedback"
+            feedback={question.incorrectFeedback}
+            labelText="Incorrect Feedback"
+            bankId={this.props.item.bankId}
+          />
         </div>
       </div>
     );
