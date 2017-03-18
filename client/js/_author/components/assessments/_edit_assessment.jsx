@@ -59,7 +59,6 @@ export class EditAssessment extends React.Component {
     updateItem: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
     deleteAssessmentItem: React.PropTypes.func,
-    createChoice: React.PropTypes.func,
   };
 
   componentDidMount() {
@@ -164,16 +163,14 @@ export class EditAssessment extends React.Component {
           getBankChildren={bankId => this.getBankChildren(bankId)}
         />
         <AssessmentForm
+          bankId={this.props.params.bankId}
           publishedAndOffered={publishedAndOffered}
           updateSingleItemOrPage={setSinglePage => this.updateSingleItemOrPage(setSinglePage)}
           {...this.props.assessment}
           updateAssessment={newFields => this.updateAssessment(newFields)}
           updateItemOrder={itemIds => this.updateItemOrder(itemIds)}
           items={this.props.items}
-          updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}
-          updateChoice={(itemId, choiceId, choice, fileIds) => this.updateChoice(itemId, choiceId, choice, fileIds)}
-          createChoice={itemId => this.props.createChoice(this.props.params.bankId, itemId)}
           deleteAssessmentItem={itemId => this.deleteAssessmentItem(itemId)}
         />
       </div>

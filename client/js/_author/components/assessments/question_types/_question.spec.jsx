@@ -1,9 +1,6 @@
 import React            from 'react';
-import _                from 'lodash';
-import TestUtils        from 'react-addons-test-utils';
 import { shallow }      from 'enzyme';
-import genusTypes       from '../../../../constants/genus_types.js';
-import Question         from './_question';
+import { Question }     from './_question';
 
 describe('question component', () => {
   let props;
