@@ -42,6 +42,7 @@ export default function multipleChoiceOptions(props) {
           textSize="small"
           isActive={props.isActive}
           fileIds={props.questionFileIds}
+          placeholder="Option Text"
           text={props.text}
           bankId={props.bankId}
           uploadScopeId={props.itemId}

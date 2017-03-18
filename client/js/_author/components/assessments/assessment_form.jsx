@@ -1,8 +1,8 @@
 import React           from 'react';
 import _               from 'lodash';
-import AssessmentItems from './assessment_items';
 import NewItem         from './new_item_form';
 import AddQuestion     from './add_question_button';
+import Question        from './question_types/_question';
 
 export default class AssessmentForm extends React.Component {
   static propTypes = {
@@ -10,15 +10,13 @@ export default class AssessmentForm extends React.Component {
       [React.PropTypes.shape({}), React.PropTypes.arrayOf(React.PropTypes.shape({}))]
     ),
     name: React.PropTypes.string,
+    bankId: React.PropTypes.string.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
     updateItemOrder: React.PropTypes.func,
     publishedAndOffered: React.PropTypes.bool,
     createItem: React.PropTypes.func,
-    updateItem: React.PropTypes.func,
     updateSingleItemOrPage: React.PropTypes.func,
-    updateChoice: React.PropTypes.func,
     deleteAssessmentItem: React.PropTypes.func,
-    createChoice: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -121,18 +119,22 @@ export default class AssessmentForm extends React.Component {
           </div>
         </div>
         { this.props.name ?
-          <AssessmentItems
-            items={this.props.items}
-            activeItem={this.state.activeItem}
-            reorderActive={reorderActive}
-            activateItem={itemId => this.activateItem(itemId)}
-            toggleReorder={() => this.setState({ reorderActive: !reorderActive })}
-            updateItem={this.props.updateItem}
-            updateChoice={this.props.updateChoice}
-            deleteAssessmentItem={this.props.deleteAssessmentItem}
-            moveItem={(oldIndex, newIndex) => this.moveItem(oldIndex, newIndex)}
-            createChoice={this.props.createChoice}
-          /> : null
+          _.map(_.compact(this.props.items), (item, index) => (
+            <Question
+              key={`question_${index}`}
+              item={item}
+              bankId={this.props.bankId}
+              itemIndex={index}
+              topItem={index === 0}
+              bottomItem={index === (this.props.items.length - 1)}
+              isActive={this.state.activeItem === item.id}
+              reorderActive={reorderActive}
+              activateItem={itemId => this.activateItem(itemId)}
+              toggleReorder={() => this.setState({ reorderActive: !reorderActive })}
+              deleteAssessmentItem={this.props.deleteAssessmentItem}
+              moveItem={(oldIndex, newIndex) => this.moveItem(oldIndex, newIndex)}
+            />
+          )) : null
         }
         {this.showNewModal() ? this.newItem() : null }
         {canAddItem ? <AddQuestion newItem={() => this.setState({ addingItem: true })} /> : null}

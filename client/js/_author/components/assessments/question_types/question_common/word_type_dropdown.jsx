@@ -10,7 +10,7 @@ export default function wordType(props) {
         value={props.wordType}
         onChange={e => props.updateChoice({ wordType: e.target.value })}
       >
-        <option value="">N/A</option>
+        <option value="other">Other</option>
         <option value="verb">Verb</option>
         <option value="adverb">Adverb</option>
         <option value="noun">Noun</option>

@@ -1,7 +1,7 @@
 import genusTypes from '../../../../constants/genus_types';
-import { deserializeChoices, deserializeFeedback } from './moveable_words_sandbox';
+import { deserializeChoices, deserializeFeedback } from './movable_words_sandbox';
 
-describe('MoveableWordsSandbox', () => {
+describe('MovableWordsSandbox', () => {
 
   let item;
 

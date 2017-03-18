@@ -128,7 +128,7 @@ describe('qbank editor', () => {
     it('correctly inserts an img tag if state.mediaType is img', () => {
       result.instance().setState({ mediaType: 'img' });
       expect(insertContentCalled).toBeFalsy();
-      result.instance().insertMedia('http://example.com/image');
+      result.instance().insertMedia('http://example.com/image', 'image.jpg');
       expect(insertContentCalled).toBeTruthy();
       expect(insertText).toContain('<img src="http://example.com/image" />');
     });
@@ -136,17 +136,17 @@ describe('qbank editor', () => {
     it('correctly inserts a video tag if state.mediaType is video', () => {
       result.instance().setState({ mediaType: 'video' });
       expect(insertContentCalled).toBeFalsy();
-      result.instance().insertMedia('http://example.com/image');
+      result.instance().insertMedia('http://example.com/image', 'image.mp4');
       expect(insertContentCalled).toBeTruthy();
-      expect(insertText).toContain('<video controls><source src="http://example.com/image" /></video>');
+      expect(insertText).toContain('<video autoplay name="media" controls><source src="http://example.com/image" type="video/mp4"/></video>');
     });
 
     it('correctly inserts an audio tag if state.mediaType is audio', () => {
       result.instance().setState({ mediaType: 'audio' });
       expect(insertContentCalled).toBeFalsy();
-      result.instance().insertMedia('http://example.com/image');
+      result.instance().insertMedia('http://example.com/image', 'image.mp3');
       expect(insertContentCalled).toBeTruthy();
-      expect(insertText).toContain('<audio controls><source src="http://example.com/image" /></audio>');
+      expect(insertText).toContain('<audio autoplay name="media" controls><source src="http://example.com/image" type="audio/mp3"/></audio>');
     });
   });
 });

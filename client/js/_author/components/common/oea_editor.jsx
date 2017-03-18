@@ -19,6 +19,8 @@ export class OeaEditor extends React.Component {
     onBlur: React.PropTypes.func.isRequired,
     bankId: React.PropTypes.string.isRequired,
     uploadScopeId: React.PropTypes.string.isRequired,
+    placeholder: React.PropTypes.string,
+    text: React.PropTypes.string,
     uploadMedia: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}),
     fileIds: React.PropTypes.shape({}),
@@ -26,24 +28,25 @@ export class OeaEditor extends React.Component {
     error: React.PropTypes.string,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       focused: false,
       editor: null,
       modalOpen: false,
       mediaType: null,
       mediaGuid: null,
+      newText: this.props.text,
     };
   }
 
   onBlur(editorText, isChanged) {
-    this.setState({ focused: false });
+    this.setState({ focused: false, newText: editorText });
     if (!isChanged) return;
 
     let text = editorText;
     const fileIds = {};
-
+    text = text.replace('autoplay', 'autoplay-placeholder');
     const doc = $(`<div>${text}</div>`);
     $('img, source', doc).each((i, el) => {
       const media = $(el);
@@ -56,7 +59,7 @@ export class OeaEditor extends React.Component {
     });
 
     _.each(this.props.uploadedAssets, (asset, mediaGuid) => {
-      if(!asset.error) {
+      if (!asset.error) {
         fileIds[mediaGuid] = {
           assetId: asset.id,
           assetContentId: asset.assetContents[0].id,
@@ -64,6 +67,8 @@ export class OeaEditor extends React.Component {
         };
       }
     });
+
+    text = text.replace('autoplay-placeholder', 'autoplay');
 
     this.props.onBlur(text, fileIds);
   }
@@ -107,7 +112,7 @@ export class OeaEditor extends React.Component {
     });
   }
 
-  insertMedia(mediaUrl) {
+  insertMedia(mediaUrl, mediaName) {
     if (!mediaUrl) {
       this.closeModal();
       return;
@@ -122,7 +127,9 @@ export class OeaEditor extends React.Component {
 
       case 'audio':
       case 'video':
-        editorContent = `<${this.state.mediaType} controls><source src="${mediaUrl}" /></${this.state.mediaType}>`;
+        editorContent = `<${this.state.mediaType} autoplay name="media" controls>` +
+          `<source src="${mediaUrl}" type="${this.state.mediaType}/${_.last(mediaName.split('.'))}"/>` +
+          `</${this.state.mediaType}>`;
         break;
 
       default:
@@ -134,13 +141,17 @@ export class OeaEditor extends React.Component {
   }
 
   render() {
-    const active = this.state.focused || this.state.modalOpen ? 'is-focused' : 'no-border';
+    const isActive = this.state.focused || this.state.modalOpen;
+    const activeClass = isActive ? 'is-focused' : 'no-border';
+    const hidePlaceholder = this.state.newText || isActive ? 'is-hidden' : '';
+
     const { textSize } = this.props;
     const uploadedAsset = _.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0]`);
-
+    const mediaName = _.get(uploadedAsset, 'displayName.text');
     return (
       <div className="au-c-input__contain">
-        <div className={`au-c-text-input au-c-text-input--${textSize} au-c-wysiwyg ${active}`}>
+        <div className={`au-c-text-input au-c-text-input--${textSize} au-c-wysiwyg ${activeClass}`}>
+          <div className={`au-c-placeholder ${hidePlaceholder}`}>{this.props.placeholder}</div>
           <TinyWrapper
             {...this.props}
             uploadMedia={(file, mediaCallback) => this.uploadMedia(file, mediaCallback)}
@@ -149,12 +160,12 @@ export class OeaEditor extends React.Component {
             openModal={(editor, type) => this.openModal(editor, type)}
           />
         </div>
-        <div className={`au-c-input__bottom ${active}`} />
+        <div className={`au-c-input__bottom ${activeClass}`} />
         <Modal
           isOpen={this.state.modalOpen}
           closeModal={() => this.closeModal()}
-          insertMedia={() => this.insertMedia(_.get(uploadedAsset, 'url'))}
-          mediaName={_.get(uploadedAsset, 'displayName.text')}
+          insertMedia={() => this.insertMedia(_.get(uploadedAsset, 'url'), mediaName)}
+          mediaName={mediaName}
           mediaType={this.state.mediaType}
           uploadMedia={file => this.uploadMedia(file)}
           inProgress={this.state.mediaGuid && !_.get(uploadedAsset, 'displayName.text')}

@@ -9,7 +9,7 @@ function serializeQuestionString(originalItem, item) {
     return null;
   }
   let text = _.get(item, 'question.text', '');
-  if (!_.isEmpty(originalItem.question) && _.isEmpty(text)) {
+  if (!_.isEmpty(originalItem.question) && _.isEmpty(text) && text !== '') {
     text = originalItem.question.text;
   }
 
