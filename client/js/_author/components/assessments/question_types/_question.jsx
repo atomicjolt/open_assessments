@@ -17,8 +17,6 @@ import types            from '../../../../constants/question_types';
 import languages        from '../../../../constants/language_types';
 import Preview          from './preview_question';
 
-function select() { return {} }
-
 export class Question extends React.Component {
   static propTypes = {
     bankId: React.PropTypes.string.isRequired,
@@ -306,4 +304,4 @@ export class Question extends React.Component {
   }
 }
 
-export default connect(select, ItemActions)(Question);
+export default connect(null, ItemActions)(Question);
