@@ -55,13 +55,13 @@ export default class MWSandbox extends React.Component {
     const { question, id } = this.props.item;
     return (
       <div onBlur={e => this.props.blurOptions(e)}>
-        <div className="au-c-moveable__audio-settings is-active">
+        <div className="au-c-movable__audio-settings is-active">
           <AudioLimit
             item={this.props.item}
             handleBlur={e => this.handleBlur(e)}
           />
         </div>
-        <div className="au-c-question__answers au-c-moveable__answers">
+        <div className="au-c-question__answers au-c-movable__answers">
           {
             this.getChoices(_.get(this.props.item, 'question.choices', {}))
           }

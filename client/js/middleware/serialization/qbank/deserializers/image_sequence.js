@@ -1,17 +1,7 @@
 import _                  from 'lodash';
-import $                  from 'jquery';
 import baseDeserializer   from './base';
 import genusTypes         from '../../../../constants/genus_types';
 
-function parseChoiceText(text) {
-  const parsedInput = $.parseHTML(text);
-  return $(parsedInput).text();
-}
-
-function parseChoiceWordType(text) {
-  const parsedInput = $.parseHTML(text);
-  return $(parsedInput).attr('class');
-}
 
 function deserializeChoices(choices, correctAnswer, incorrectId) {
   const newChoices = {};
@@ -21,8 +11,7 @@ function deserializeChoices(choices, correctAnswer, incorrectId) {
     newChoices[choice.id] = {
       id: choice.id,
       answerId: isCorrect ? correctAnswer.id : incorrectId,
-      text: parseChoiceText(choice.text),
-      wordType: parseChoiceWordType(choice.text),
+      text: choice.text,
       order: index,
       answerOrder: isCorrect ? answerIndex : null,
     };
@@ -31,7 +20,7 @@ function deserializeChoices(choices, correctAnswer, incorrectId) {
 }
 
 
-export default function moveableWordSentence(item) {
+export default function imageSequence(item) {
   const newItem = baseDeserializer(item);
   const correctAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.rightAnswer });
   const incorrectAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.wrongAnswer });
