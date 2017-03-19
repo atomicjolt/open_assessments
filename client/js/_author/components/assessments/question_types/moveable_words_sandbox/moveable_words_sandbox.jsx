@@ -73,14 +73,7 @@ export default class MWSandbox extends React.Component {
               updateItem={this.props.updateItem}
               feedbackType="correctFeedback"
               feedback={question.correctFeedback}
-              labelText="Correct Feedback"
-              bankId={this.props.item.bankId}
-            />
-            <Feedback
-              updateItem={this.props.updateItem}
-              feedbackType="incorrectFeedback"
-              feedback={question.incorrectFeedback}
-              labelText="Incorrect Feedback"
+              labelText="Feedback"
               bankId={this.props.item.bankId}
             />
           </div>
