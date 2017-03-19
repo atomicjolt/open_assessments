@@ -1,8 +1,19 @@
 import React from 'react';
+import Loader from '../../../common/dot_loader';
 
 export default function Option(props) {
   const activeClass = props.isActive ? 'is-active' : '';
   const { id } = props.choice;
+
+  if (id === 'new') {
+    return (
+      <div className={`au-c-answer ${activeClass}`}>
+        <div className="au-c-input">
+          <Loader />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
