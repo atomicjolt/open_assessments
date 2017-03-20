@@ -4,21 +4,12 @@ import { scrub } from '../../serializer_utils';
 import guid from '../../../../utils/guid';
 import genusTypes from '../../../../constants/genus_types';
 
-const defaultFeedback = {
-  text: '',
-  fileIds: {},
-};
-
-const makeNewChoice = () => (
-  {
-    id: guid(),
-    text: '',
+const makeChoiceText = (choice) => {
+  if (choice.wordType) {
+    return `<p class='${choice.wordType}'>${choice.text}</p>`;
   }
-);
-
-const makeChoiceText = choice => (
-  `<p class='${choice.wordType}'>${choice.text}</p>`
-);
+  return choice.text;
+};
 
 const makeChoice = choice => (
   scrub({
@@ -48,10 +39,12 @@ export function serializeAnswers(correctFeedback, incorrectFeedback, originalIte
     id: originalCorrect.id,
     genusTypeId: genusTypes.answer.rightAnswer,
     feedback: _.get(correctFeedback, 'text') || originalCorrect.text,
+    fileIds: _.get(correctFeedback, 'fileIds', {}),
   }, {
     id: originalIncorrect.id,
     genusTypeId: genusTypes.answer.wrongAnswer,
     feedback: _.get(incorrectFeedback, 'text', '') || originalIncorrect.text,
+    fileIds: _.get(incorrectFeedback, 'fileIds', {}),
   }].map(scrub);
 }
 
@@ -101,8 +94,6 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
       originalItem,
     );
     newItem.answers = answers;
-    const fileIds = serializeFileIds(correctFeedback, incorrectFeedback);
-    _.set(newItem, 'question.fileIds', fileIds);
   }
 
   return newItem;

@@ -1,8 +1,19 @@
 import React from 'react';
+import Loader from '../../../common/dot_loader';
 
 export default function Option(props) {
   const activeClass = props.isActive ? 'is-active' : '';
   const { id } = props.choice;
+
+  if (id === 'new') {
+    return (
+      <div className={`au-c-answer ${activeClass}`}>
+        <div className="au-c-input">
+          <Loader />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -18,7 +29,7 @@ export default function Option(props) {
             id={id}
             type="text"
             defaultValue={props.choice.text}
-            placeholder={`Option ${props.index + 1}`}
+            placeholder={`Option ${props.index}`}
             onBlur={e => props.updateChoice({
               id: props.choice.id,
               text: e.target.value
@@ -63,8 +74,10 @@ Option.propTypes = {
   deleteChoice: React.PropTypes.func.isRequired,
   updateChoice: React.PropTypes.func.isRequired,
   choice: React.PropTypes.shape({
-    wordType: React.PropTypes.string.isRequired,
+    wordType: React.PropTypes.string,
     id: React.PropTypes.string.isRequired,
-    text: React.PropTypes.string.isRequired,
+    text: React.PropTypes.string,
   }).isRequired,
+  index: React.PropTypes.number.isRequired,
+  isActive: React.PropTypes.bool.isRequired,
 };
