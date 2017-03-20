@@ -15,12 +15,12 @@ export default class PreviewContainer extends React.Component {
       || _.isEmpty(assessment.assessmentOffered[0]));
   }
 
-  static buildEmbedUrl(props) {
-    const { assessmentPlayerUrl, apiUrl, assessment } = props;
+  buildEmbedUrl() {
+    const { assessmentPlayerUrl, apiUrl, assessment } = this.props;
 
     const bankId = assessment.bankId;
     const assessmentOfferedId = _.get(assessment, 'assessmentOffered[0].id');
-    const previewSettings = _.get(props, 'authoringToolPreviewSettings', []).join('&');
+    const previewSettings = _.get(this.props, 'authoringToolPreviewSettings', []).join('&');
 
     return `${assessmentPlayerUrl}?${previewSettings}&api_url=${apiUrl}&bank=${bankId}&assessment_offered_id=${assessmentOfferedId}#/assessment`;
   }
@@ -36,7 +36,7 @@ export default class PreviewContainer extends React.Component {
   render() {
     if (PreviewContainer.hasOffered(this.props.assessment)) {
       return (
-        <iframe height="10000" width="100%" src={PreviewContainer.buildEmbedUrl(this.props)} />
+        <iframe height="10000" width="100%" src={this.buildEmbedUrl()} />
       );
     }
     return null;

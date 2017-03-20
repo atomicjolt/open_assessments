@@ -37,9 +37,9 @@ describe('preview container component', () => {
   describe('buildEmbedUrl', () => {
     it('build embed url', () => {
       const expectedResult = 'http://example.com?unlock_next=ON_CORRECT&api_url=http://api.example.com&bank=bankId&assessment_offered_id=assessOfferedId#/assessment';
-      result = PreviewContainer.buildEmbedUrl(props);
+      const url = result.buildEmbedUrl(props);
 
-      expect(result).toEqual(expectedResult);
+      expect(url).toEqual(expectedResult);
     });
   });
 });
