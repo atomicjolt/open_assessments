@@ -15,7 +15,7 @@ function deserializeChoices(choices, correctAnswer, incorrectId) {
       text: parseChoiceText(choice.text),
       wordType: parseChoiceWordType(choice.text),
       order: index,
-      answerOrder: isCorrect ? answerIndex : null,
+      answerOrder: isCorrect ? answerIndex : '',
     };
   });
   return newChoices;
