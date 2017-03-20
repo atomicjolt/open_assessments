@@ -90,14 +90,14 @@ export class Question extends React.Component {
     this.props.moveItem(this.props.itemIndex, this.props.itemIndex + 1);
   }
 
-  updateItem(newItemProperties) {
+  updateItem(newItemProperties, deletingChoice) {
     const { item } = this.props;
 
     if (newItemProperties.language) {
       if (newItemProperties.language && this.state.language !== newItemProperties.language) {
         this.setState({ language: newItemProperties.language });
       }
-    } else if (_.includes(Question.stateDrivenTypes, item.type)) {
+    } else if (_.includes(Question.stateDrivenTypes, item.type) && !deletingChoice) {
       this.setState({ ...item, ...newItemProperties });
     } else {
       this.props.updateItem(this.props.bankId, {
@@ -127,7 +127,10 @@ export class Question extends React.Component {
   }
 
   saveStateItem() {
-    this.props.updateItem(this.props.bankId, this.state.item);
+    const { item } = this.props;
+    const saveItem = _.cloneDeep(this.state.item);
+    saveItem.id = item.id;
+    this.props.updateItem(this.props.bankId, saveItem);
   }
 
   changeType(type) {
@@ -194,7 +197,7 @@ export class Question extends React.Component {
         question: {
           choices: this.markedForDeletion(choice)
         }
-      });
+      }, true);
     }
   }
 

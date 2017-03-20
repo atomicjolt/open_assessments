@@ -9,7 +9,7 @@ export default function option(props) {
       onClick={props.selectChoice}
       className={`au-c-answer au-o-flex-center ${props.isActive ? 'is-active' : ''}`}
     >
-      <div className={`au-c-dropdown au-c-dropdown--tiny au-u-mr-sm ${!_.isNil(props.answerOrder) ? 'is-ordered' : ''}`}>
+      <div className={`au-c-dropdown au-c-dropdown--tiny au-u-mr-sm ${!_.isNil(props.answerOrder) && props.answerOrder !== '' ? 'is-ordered' : ''}`}>
         <label htmlFor={`option_order_${props.id}`} />
         <select
           name=""
