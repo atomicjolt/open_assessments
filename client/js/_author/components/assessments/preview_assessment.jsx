@@ -25,7 +25,11 @@ export class PreviewAssessment extends React.Component {
   static propTypes = {
     params: React.PropTypes.object.isRequired,
     assessment: React.PropTypes.object.isRequired,
-    settings: React.PropTypes.object.isRequired,
+    settings: React.PropTypes.shape({
+      assessmentPlayerUrl: React.PropTypes.string.isRequired,
+      api_url: React.PropTypes.string.isRequired,
+      unlock_next: React.PropTypes.string.isRequired,
+    }).isRequired,
     getAssessmentOffered: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
     getAssessmentItems: React.PropTypes.func.isRequired,
@@ -44,7 +48,7 @@ export class PreviewAssessment extends React.Component {
 
   render() {
     if (_.isEmpty(this.props.assessment)) {
-      return <div className='not-loaded'>Assessments are not loaded!</div>;
+      return <div className="not-loaded">Loading Preview...</div>;
     }
 
     return (
@@ -53,6 +57,7 @@ export class PreviewAssessment extends React.Component {
         assessmentPlayerUrl={this.props.settings.assessmentPlayerUrl}
         apiUrl={this.props.settings.api_url}
         getAssessmentOffered={this.props.getAssessmentOffered}
+        unlockNext={this.props.settings.unlock_next}
       />
     );
   }
