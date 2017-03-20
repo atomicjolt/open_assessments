@@ -15,6 +15,7 @@ function deserializeChoices(choices, answers, blankId) {
       text: parseChoiceText(choice.text),
       wordType: parseChoiceWordType(choice.text),
       isCorrect: false,
+      blankId,
     };
     _.forEach(answers, (answer) => {
       if (_.includes(_.get(answer, `inlineRegions.${blankId}.choiceIds`), choice.id)) {

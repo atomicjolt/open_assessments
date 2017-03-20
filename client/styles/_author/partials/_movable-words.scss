@@ -192,7 +192,7 @@
 
     &.is-active{
 
-      .au-c-dropdown--smaller, .au-c-answer--delete{
+      .au-c-answer--delete{
         opacity: 1;
         pointer-events: auto;
       }
@@ -205,7 +205,7 @@
     }
   }
 
-  .au-c-dropdown--smaller, .au-c-answer--delete{
+  .au-c-answer--delete{
     opacity: 0;
     pointer-events: none;
   }
