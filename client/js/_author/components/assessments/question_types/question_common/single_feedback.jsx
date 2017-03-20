@@ -26,7 +26,7 @@ export default class SingleFeedback extends React.Component {
     *  to qbank. We make it here instead of in the editor, because the editor
     *  needs uploadScopeId in the select function.
     */
-    this.editorScopeId = _.get(this.props.feedback, 'answerId', guid());
+    this.editorScopeId = _.get(this.props.feedback, 'answerId') || guid();
   }
 
 
