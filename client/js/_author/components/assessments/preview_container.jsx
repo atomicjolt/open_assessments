@@ -16,11 +16,11 @@ export default class PreviewContainer extends React.Component {
   }
 
   static buildEmbedUrl(props) {
-    const { assessmentPlayerUrl, apiUrl, assessment, authoringToolPreviewSettings } = props;
+    const { assessmentPlayerUrl, apiUrl, assessment } = props;
 
     const bankId = assessment.bankId;
     const assessmentOfferedId = _.get(assessment, 'assessmentOffered[0].id');
-    const previewSettings = authoringToolPreviewSettings.join('&');
+    const previewSettings = _.get(props, 'authoringToolPreviewSettings', []).join('&');
 
     return `${assessmentPlayerUrl}?${previewSettings}&api_url=${apiUrl}&bank=${bankId}&assessment_offered_id=${assessmentOfferedId}#/assessment`;
   }
