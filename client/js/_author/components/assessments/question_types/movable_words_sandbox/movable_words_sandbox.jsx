@@ -35,9 +35,10 @@ export default class MWSandbox extends React.Component {
 
   getChoices(choices) {
     const { id } = this.props.item;
-
-    return _.map(choices, (choice, index) =>
-      <Option
+    let index = 0;
+    return _.map(choices, (choice) => {
+      index += 1;
+      return (<Option
         key={choice.id}
         choice={choice}
         index={index}
@@ -49,19 +50,20 @@ export default class MWSandbox extends React.Component {
         deleteChoice={() => this.props.deleteChoice(choice)}
         isActive={this.props.isActive && choice.id === this.props.activeChoice}
       />);
+    });
   }
 
   render() {
     const { question, id } = this.props.item;
     return (
       <div onBlur={e => this.props.blurOptions(e)}>
-        <div className="au-c-moveable__audio-settings is-active">
+        <div className="au-c-movable__audio-settings is-active">
           <AudioLimit
             item={this.props.item}
             handleBlur={e => this.handleBlur(e)}
           />
         </div>
-        <div className="au-c-question__answers au-c-moveable__answers">
+        <div className="au-c-question__answers au-c-movable__answers">
           {
             this.getChoices(_.get(this.props.item, 'question.choices', {}))
           }
@@ -71,14 +73,7 @@ export default class MWSandbox extends React.Component {
               updateItem={this.props.updateItem}
               feedbackType="correctFeedback"
               feedback={question.correctFeedback}
-              labelText="Correct Feedback"
-              bankId={this.props.item.bankId}
-            />
-            <Feedback
-              updateItem={this.props.updateItem}
-              feedbackType="incorrectFeedback"
-              feedback={question.incorrectFeedback}
-              labelText="Incorrect Feedback"
+              labelText="Feedback"
               bankId={this.props.item.bankId}
             />
           </div>

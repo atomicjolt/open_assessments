@@ -1,6 +1,6 @@
 import React      from 'react';
 
-export default function optionRadio(props) {
+export default function optionCheckbox(props) {
   return (
     <div className="au-c-checkbox">
       <input
@@ -16,9 +16,9 @@ export default function optionRadio(props) {
   );
 }
 
-optionRadio.propTypes = {
+optionCheckbox.propTypes = {
   id: React.PropTypes.string.isRequired,
-  itemId: React.PropTypes.string.isRequired,
+  itemId: React.PropTypes.string,
   isCorrect: React.PropTypes.bool,
   updateChoice: React.PropTypes.func.isRequired,
 };
