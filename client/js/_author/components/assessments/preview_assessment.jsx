@@ -53,6 +53,7 @@ export class PreviewAssessment extends React.Component {
         assessmentPlayerUrl={this.props.settings.assessmentPlayerUrl}
         apiUrl={this.props.settings.api_url}
         getAssessmentOffered={this.props.getAssessmentOffered}
+        authoringToolSettings={this.props.settings.authoring_tool_settings}
       />
     );
   }

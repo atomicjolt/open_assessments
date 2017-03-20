@@ -14,6 +14,7 @@ describe('preview assessment component', () => {
       settings: {
         assessmentPlayerUrl: 'IMANASSEMENTPLAYERURL',
         api_url: 'IMAURL',
+        authoring_tool_settings: ['unlock_next=ON_CORRECT']
       },
       getAssessmentOffered: () => {},
       getAssessments: () => {},
