@@ -1,6 +1,6 @@
 import React    from 'react';
 import _        from 'lodash';
-import WordType from './word_type_dropdown';
+import WordType from '../question_common/word_type_dropdown';
 
 export default function option(props) {
   return (
@@ -21,7 +21,7 @@ export default function option(props) {
           {
             _.map(_.range(0, props.itemCount), index => (
               <option
-                key={`moveableWordOrderOption_${props.id}_${index}`}
+                key={`movableWordOrderOption_${props.id}_${index}`}
                 value={index}
               >
                 {index + 1}
@@ -63,7 +63,7 @@ option.propTypes = {
   id: React.PropTypes.string.isRequired,
   text: React.PropTypes.string,
   wordType: React.PropTypes.string,
-  answerOrder: React.PropTypes.number,
+  answerOrder: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string]),
   itemCount: React.PropTypes.number.isRequired,
   isActive: React.PropTypes.bool,
   selectChoice: React.PropTypes.func.isRequired,

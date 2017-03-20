@@ -24,7 +24,7 @@ export default class MultipleChoice extends React.Component {
     blurOptions: React.PropTypes.func.isRequired,
     createChoice: React.PropTypes.func.isRequired,
     deleteChoice: React.PropTypes.func.isRequired,
-    activeChoice: React.PropTypes.bool,
+    activeChoice: React.PropTypes.string,
   };
 
   getFeedback() {
@@ -76,36 +76,38 @@ export default class MultipleChoice extends React.Component {
   render() {
     const { question, id, type } = this.props.item;
     return (
-      <div className="au-c-question__answers au-c-question__answers--maintain">
-        <div className="au-no-outline" onBlur={e => this.props.blurOptions(e)} tabIndex="-1">
-          {
-            _.map(_.orderBy(question.choices, 'order'), choice => (
-              <Option
-                key={`assessmentChoice_${choice.id}`}
-                {...choice}
-                itemType={type}
-                multipleAnswer={_.get(question, 'multipleAnswer', false)}
-                updateChoice={(newChoice, fileIds) => this.props.updateChoice(id, choice.id, newChoice, fileIds)}
-                updateItem={() => this.props.updateItem({ question })}
-                deleteChoice={() => this.props.deleteChoice(choice)}
-                shuffle={question.shuffle}
-                moveUp={() => this.moveChoice(choice, true)}
-                moveDown={() => this.moveChoice(choice)}
-                first={choice.order === 0}
-                last={question ? choice.order === _.size(question.choices) - 1 : true}
-                bankId={this.props.item.bankId}
-                itemId={this.props.item.id}
-                questionFileIds={question.fileIds}
-                setActiveChoice={choiceId => this.props.selectChoice(choiceId)}
-                isActive={this.props.isActive && choice.id === this.props.activeChoice}
-              />
-            ))
-          }
-          {
-            this.props.isActive ? <Add
-              createChoice={() => this.props.createChoice(id)}
-            /> : null
-          }
+      <div>
+        <div className="au-c-question__answers au-c-question__answers--maintain">
+          <div className="au-no-outline" onBlur={e => this.props.blurOptions(e)} tabIndex="-1">
+            {
+              _.map(_.orderBy(question.choices, 'order'), choice => (
+                <Option
+                  key={`assessmentChoice_${choice.id}`}
+                  {...choice}
+                  itemType={type}
+                  multipleAnswer={_.get(question, 'multipleAnswer', false)}
+                  updateChoice={(newChoice, fileIds) => this.props.updateChoice(id, choice.id, newChoice, fileIds)}
+                  updateItem={() => this.props.updateItem({ question })}
+                  deleteChoice={() => this.props.deleteChoice(choice)}
+                  shuffle={question.shuffle}
+                  moveUp={() => this.moveChoice(choice, true)}
+                  moveDown={() => this.moveChoice(choice)}
+                  first={choice.order === 0}
+                  last={question ? choice.order === _.size(question.choices) - 1 : true}
+                  bankId={this.props.item.bankId}
+                  itemId={this.props.item.id}
+                  questionFileIds={question.fileIds}
+                  setActiveChoice={choiceId => this.props.selectChoice(choiceId)}
+                  isActive={this.props.isActive && choice.id === this.props.activeChoice}
+                />
+              ))
+            }
+            {
+              this.props.isActive ? <Add
+                createChoice={() => this.props.createChoice(id)}
+              /> : null
+            }
+          </div>
         </div>
         <div className="au-c-question__feedback">
           { this.getFeedback() }
