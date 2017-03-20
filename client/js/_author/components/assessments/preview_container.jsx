@@ -7,7 +7,6 @@ export default class PreviewContainer extends React.Component {
     getAssessmentOffered: React.PropTypes.func.isRequired,
     assessmentPlayerUrl: React.PropTypes.string.isRequired,
     apiUrl: React.PropTypes.string.isRequired,
-    authoringToolPreviewSettings: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
   };
 
   static hasOffered(assessment) {
@@ -15,22 +14,21 @@ export default class PreviewContainer extends React.Component {
       || _.isEmpty(assessment.assessmentOffered[0]));
   }
 
-  buildEmbedUrl() {
-    const { assessmentPlayerUrl, apiUrl, assessment } = this.props;
-
-    const bankId = assessment.bankId;
-    const assessmentOfferedId = _.get(assessment, 'assessmentOffered[0].id');
-    const previewSettings = _.get(this.props, 'authoringToolPreviewSettings', []).join('&');
-
-    return `${assessmentPlayerUrl}?${previewSettings}&api_url=${apiUrl}&bank=${bankId}&assessment_offered_id=${assessmentOfferedId}#/assessment`;
-  }
-
-
   componentDidMount() {
     const assessment = this.props.assessment;
     if (!PreviewContainer.hasOffered(assessment)) {
       this.props.getAssessmentOffered(assessment.bankId, assessment.id);
     }
+  }
+
+  buildEmbedUrl() {
+    const { assessmentPlayerUrl, apiUrl, assessment, unlockNext } = this.props;
+
+    const bankId = assessment.bankId;
+    const assessmentOfferedId = _.get(assessment, 'assessmentOffered[0].id');
+    const previewSettings = [`unlock_next=${unlockNext}`].join('&');
+
+    return `${assessmentPlayerUrl}?${previewSettings}&api_url=${apiUrl}&bank=${bankId}&assessment_offered_id=${assessmentOfferedId}#/assessment`;
   }
 
   render() {

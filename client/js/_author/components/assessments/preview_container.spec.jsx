@@ -16,7 +16,7 @@ describe('preview container component', () => {
       getAssessmentOffered: () => {},
       assessmentPlayerUrl: 'http://example.com',
       apiUrl: 'http://api.example.com',
-      authoringToolPreviewSettings: ['unlock_next=ON_CORRECT']
+      unlockNext: 'ON_CORRECT'
     };
 
     result = TestUtils.renderIntoDocument(<PreviewContainer {...props} />);

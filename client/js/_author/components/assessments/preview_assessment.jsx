@@ -28,9 +28,7 @@ export class PreviewAssessment extends React.Component {
     settings: React.PropTypes.shape({
       assessmentPlayerUrl: React.PropTypes.string.isRequired,
       api_url: React.PropTypes.string.isRequired,
-      authoring_tool_preview_settings: React.PropTypes.arrayOf(
-        React.PropTypes.string
-      ).isRequired,
+      unlock_next: React.PropTypes.string.isRequired,
     }).isRequired,
     getAssessmentOffered: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
@@ -59,7 +57,7 @@ export class PreviewAssessment extends React.Component {
         assessmentPlayerUrl={this.props.settings.assessmentPlayerUrl}
         apiUrl={this.props.settings.api_url}
         getAssessmentOffered={this.props.getAssessmentOffered}
-        authoringToolPreviewSettings={this.props.settings.authoring_tool_preview_settings}
+        unlockNext={this.props.settings.unlock_next}
       />
     );
   }
