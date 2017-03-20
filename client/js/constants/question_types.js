@@ -1,6 +1,8 @@
 export default {
   audioUpload: 'audioUpload',
+  dragAndDrop: 'dragAndDrop',
   fileUpload: 'fileUpload',
+  imageSequence: 'imageSequence',
   movableFillBlank: 'movableFillBlank',
   movableWordSandbox: 'movableWordSandbox',
   movableWordSentence: 'movableWordSentence',
@@ -9,8 +11,6 @@ export default {
   multipleReflection: 'multipleReflection',
   reflection: 'reflection',
   shortAnswer: 'shortAnswer',
-  imageSequence: 'imageSequence',
-  dragAndDrop: 'dragAndDrop',
 };
 
 export const audioLimit = 240;
