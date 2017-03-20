@@ -1,7 +1,9 @@
 export const types = {
   item:{
     audioUpload: 'item-genus-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU',
+    dragAndDrop: 'item-genus-type%3Adrag-and-drop%40ODL.MIT.EDU',
     fileUpload: 'item-genus-type%3Aqti-upload-interaction-generic%40ODL.MIT.EDU',
+    imageSequence: 'item-genus-type%3Aqti-order-interaction-object-manipulation%40ODL.MIT.EDU',
     movableFillBlank: 'item-genus-type%3Aqti-inline-choice-interaction-mw-fill-in-the-blank%40ODL.MIT.EDU',
     movableWordSandbox: 'item-genus-type%3Aqti-order-interaction-mw-sandbox%40ODL.MIT.EDU',
     movableWordSentence: 'item-genus-type%3Aqti-order-interaction-mw-sentence%40ODL.MIT.EDU',
@@ -10,12 +12,12 @@ export const types = {
     multipleReflection: 'item-genus-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',
     reflection: 'item-genus-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
     shortAnswer: 'item-genus-type%3Aqti-extended-text-interaction%40ODL.MIT.EDU',
-    imageSequence: 'item-genus-type%3Aqti-order-interaction-object-manipulation%40ODL.MIT.EDU',
-    dragAndDrop: 'notMadeYet',
   },
   question: {
     audioUpload: 'question-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU',
+    dragAndDrop: 'question-type%3Adrag-and-drop%40ODL.MIT.EDU',
     fileUpload: 'question-type%3Aqti-upload-interaction-generic%40ODL.MIT.EDU',
+    imageSequence: 'question-type%3Aqti-order-interaction-object-manipulation%40ODL.MIT.EDU',
     movableFillBlank: 'question-type%3Aqti-inline-choice-interaction-mw-fill-in-the-blank%40ODL.MIT.EDU',
     movableWordSandbox: 'question-type%3Aqti-order-interaction-mw-sandbox%40ODL.MIT.EDU',
     movableWordSentence: 'question-type%3Aqti-order-interaction-mw-sentence%40ODL.MIT.EDU',
@@ -24,7 +26,6 @@ export const types = {
     multipleReflection: 'question-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',
     reflection: 'question-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
     shortAnswer: 'question-type%3Aqti-extended-text-interaction%40ODL.MIT.EDU',
-    imageSequence: 'question-type%3Aqti-order-interaction-object-manipulation%40ODL.MIT.EDU',
   },
   answer: {
     file: 'answer-record-type%3Afiles-submission%40ODL.MIT.EDU', // for any movable word sandbox, audio record tool, and generic file submission
