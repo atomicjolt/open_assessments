@@ -1,13 +1,13 @@
 import React            from 'react';
 import { shallow }      from 'enzyme';
 import TestUtils        from 'react-addons-test-utils';
-import MoveableWords    from './moveable_words_sandbox';
+import MovableWords    from './movable_words_sandbox';
 import AudioLimit       from '../question_common/audio_limit';
 import Feedback         from '../question_common/single_feedback';
 import Option           from './option';
 import AddOption        from './add_option';
 
-describe('the moveable words sandbox component', () => {
+describe('the movable words sandbox component', () => {
   let props;
   let result;
   let calledFunc;
@@ -46,11 +46,11 @@ describe('the moveable words sandbox component', () => {
       activeChoice: '',
     };
 
-    result = shallow(<MoveableWords {...props} />);
+    result = shallow(<MovableWords {...props} />);
   });
 
   it('renders the component', () => {
-    expect(result.find('.au-c-moveable__audio-settings').length).toBe(1);
+    expect(result.find('.au-c-movable__audio-settings').length).toBe(1);
   });
 
   it('renders AudioLimit', () => {

@@ -13,6 +13,7 @@ describe('_new_assessment component', () => {
       params: {
         id: '7',
       },
+      bankId: '',
       editableBankId: '77',
       createAssessment: () => { callFunction = true; },
       publishAssessment: () => {},

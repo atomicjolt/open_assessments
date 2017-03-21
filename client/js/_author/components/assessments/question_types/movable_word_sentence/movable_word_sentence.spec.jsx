@@ -1,11 +1,11 @@
 import React                  from 'react';
 import { shallow }            from 'enzyme';
-import MoveableWordSentence   from './moveable_word_sentence';
+import MovableWordSentence   from './movable_word_sentence';
 import Option                 from './option';
 import Add                    from '../question_common/add_option';
 import Feedback               from '../question_common/single_feedback';
 
-describe('moveable word sentece component', () => {
+describe('movable word sentece component', () => {
   let props;
   let result;
   let calledFunc;
@@ -51,11 +51,11 @@ describe('moveable word sentece component', () => {
       isActive: false,
       activeChoice: '',
     };
-    result = shallow(<MoveableWordSentence {...props} />);
+    result = shallow(<MovableWordSentence {...props} />);
   });
 
-  it('renders the moveable word sentence component', () => {
-    expect(result.find('.au-c-moveable__answers'))
+  it('renders the movable word sentence component', () => {
+    expect(result.find('.au-c-movable__answers'))
   });
 
   it('renders Option', () => {
@@ -107,7 +107,7 @@ describe('moveable word sentece component', () => {
 
   it('handles the onBlur function', () => {
     expect(calledFunc).toBeFalsy();
-    result.find('.au-c-moveable__answers').simulate('blur', { target: { value: 'Preposition' } });
+    result.find('.au-c-movable__answers').simulate('blur', { target: { value: 'Preposition' } });
     expect(calledFunc).toBeTruthy();
   });
 });

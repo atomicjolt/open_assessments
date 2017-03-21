@@ -1,7 +1,6 @@
 import React          from 'react';
 import { shallow }    from 'enzyme';
 import Option         from './option';
-import WordType       from './word_type_dropdown';
 import _              from 'lodash';
 
 describe('option component', () => {
@@ -27,10 +26,6 @@ describe('option component', () => {
 
   it('renders option component', () => {
     expect(result.find('label').length).toBe(2);
-  });
-
-  it('renders WordType', () => {
-    expect(result.find(WordType)).toBeDefined();
   });
 
   it('renders Button', () => {

@@ -19,6 +19,8 @@ describe('the option component', () => {
         id: '',
         text: '',
       },
+      index: 7,
+      isActive: false,
     };
     result = shallow(<Option {...props} />);
   });
