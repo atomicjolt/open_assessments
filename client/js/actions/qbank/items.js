@@ -20,15 +20,6 @@ export function getItems(bankId) {
   };
 }
 
-export function createItem(bankId, item) {
-  return {
-    bankId,
-    apiCall : true,
-    type    : Constants.CREATE_ITEM,
-    body    : item
-  };
-}
-
 export function updateItem(bankId, item) {
   return {
     bankId,

@@ -1,4 +1,4 @@
-.au-c-moveable__answers{
+.au-c-movable__answers{
 
   .au-c-answer{
     padding: 0 1.5rem;
@@ -25,9 +25,6 @@
     &.is-ordered {
       opacity: 1;
       pointer-events: auto;
-      select{
-        border-color: $green;
-      }
     }
   }
 
@@ -43,9 +40,19 @@
       }
     }
   }
+
+  .au-c-answer--add {
+    padding-left: 5.5rem;
+  }
 }
 
-.au-c-moveable__audio-settings{
+.au-c-movable__answers--maintain {
+  .au-c-answer{
+    padding: 0.75rem 5.5rem;
+  }
+}
+
+.au-c-movable__audio-settings{
   display: none;
   width: 100%;
   margin-top: 3rem;
@@ -178,14 +185,14 @@
 
 
 
-
+// Fill in the Blank
 .au-c-fill-in-the-blank__answers{
   .au-c-answer{
     padding: 0 1.5rem 0 5.5rem;
 
     &.is-active{
 
-      .au-c-dropdown--smaller, .au-c-answer--delete{
+      .au-c-answer--delete{
         opacity: 1;
         pointer-events: auto;
       }
@@ -198,26 +205,18 @@
     }
   }
 
-  .au-c-dropdown--smaller, .au-c-answer--delete{
+  .au-c-answer--delete{
     opacity: 0;
     pointer-events: none;
   }
 }
 
-.au-c-moveable__answers__label{
+.au-c-movable__answers__label{
   @include semi-bold;
   font-size: 1.2rem;
   color: $text-alt;
-  margin-top: 3rem;
 }
 
 .au-c-fill-in-the-blank-text{
-  margin-top: 0.5rem;
-  input{
-    border: 0.1rem solid $gray4;
-    padding: 0 1rem;
-  }
-  .au-c-input__bottom{
-    border-top: none;
-  }
+  //margin-bottom: 0.5rem;
 }

@@ -14,7 +14,6 @@ export default class PreviewContainer extends React.Component {
       || _.isEmpty(assessment.assessmentOffered[0]));
   }
 
-
   componentDidMount() {
     const assessment = this.props.assessment;
     if (!PreviewContainer.hasOffered(assessment)) {
@@ -23,11 +22,13 @@ export default class PreviewContainer extends React.Component {
   }
 
   buildEmbedUrl() {
-    const { assessmentPlayerUrl, apiUrl, assessment } = this.props;
+    const { assessmentPlayerUrl, apiUrl, assessment, unlockNext } = this.props;
 
     const bankId = assessment.bankId;
     const assessmentOfferedId = _.get(assessment, 'assessmentOffered[0].id');
-    return `${assessmentPlayerUrl}?unlock_next=ON_ANSWER&api_url=${apiUrl}&bank=${bankId}&assessment_offered_id=${assessmentOfferedId}#/assessment`;
+    const previewSettings = [`unlock_next=${unlockNext}`].join('&');
+
+    return `${assessmentPlayerUrl}?${previewSettings}&api_url=${apiUrl}&bank=${bankId}&assessment_offered_id=${assessmentOfferedId}#/assessment`;
   }
 
   render() {

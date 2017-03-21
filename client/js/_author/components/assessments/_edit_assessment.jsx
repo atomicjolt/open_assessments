@@ -47,7 +47,7 @@ export class EditAssessment extends React.Component {
     editOrPublishAssessment: React.PropTypes.func.isRequired,
     updatePath: React.PropTypes.func.isRequired,
     getItems: React.PropTypes.func.isRequired,
-    banks: React.PropTypes.shape({}).isRequired,
+    banks: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
     deleteAssignedAssessment: React.PropTypes.func.isRequired,
     createAssessmentOffered: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
@@ -59,7 +59,6 @@ export class EditAssessment extends React.Component {
     updateItem: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
     deleteAssessmentItem: React.PropTypes.func,
-    createChoice: React.PropTypes.func,
   };
 
   componentDidMount() {
@@ -129,19 +128,6 @@ export class EditAssessment extends React.Component {
     this.props.updateSingleItemOrPage(assessmentOffered[0], genusTypeId);
   }
 
-  updateChoice(itemId, choiceId, choice, fileIds) {
-    const updateAttributes = {
-      id: itemId,
-      question: {
-        choices: {
-          [choiceId]: choice,
-        },
-        fileIds,
-      }
-    };
-    this.updateItem(updateAttributes);
-  }
-
   flattenBanks(banks, flatBanks) {
     _.forEach(banks, (bank) => {
       flatBanks[bank.id] = bank;
@@ -177,16 +163,14 @@ export class EditAssessment extends React.Component {
           getBankChildren={bankId => this.getBankChildren(bankId)}
         />
         <AssessmentForm
+          bankId={this.props.params.bankId}
           publishedAndOffered={publishedAndOffered}
           updateSingleItemOrPage={setSinglePage => this.updateSingleItemOrPage(setSinglePage)}
           {...this.props.assessment}
           updateAssessment={newFields => this.updateAssessment(newFields)}
           updateItemOrder={itemIds => this.updateItemOrder(itemIds)}
           items={this.props.items}
-          updateItem={item => this.updateItem(item)}
           createItem={newItem => this.createItem(newItem)}
-          updateChoice={(itemId, choiceId, choice, fileIds) => this.updateChoice(itemId, choiceId, choice, fileIds)}
-          createChoice={itemId => this.props.createChoice(this.props.params.bankId, itemId)}
           deleteAssessmentItem={itemId => this.deleteAssessmentItem(itemId)}
         />
       </div>

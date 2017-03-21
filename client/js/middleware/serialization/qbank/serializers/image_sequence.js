@@ -4,21 +4,13 @@ import { scrub }                 from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
-function buildChoiceText(text, wordType) {
-  return `<p ${wordType ? `class="${wordType}"` : ''}>${text}</p>`;
-}
-
 function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
     const newOrder = _.get(updateValues, 'order');
-    const newWordType = _.get(updateValues, 'wordType');
     return {
       id: choice.id,
-      text: buildChoiceText(
-        _.get(updateValues, 'text') || choice.text,
-        _.isNil(newWordType) ? choice.wordType : newWordType,
-      ),
+      text: _.get(updateValues, 'text') || choice.text,
       order: _.isNil(newOrder) ? choice.order : newOrder,
       delete: _.get(updateValues, 'delete'),
     };
@@ -27,7 +19,7 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
   if (newChoiceAttributes.new) {
     choices.push({
       id: guid(),
-      text: '',
+      text: newChoiceAttributes.new.text,
       order: choices.length,
     });
   }
@@ -37,7 +29,6 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
-    shuffle: _.isNil(newQuestionAttributes.shuffle) ? null : newQuestionAttributes.shuffle,
     choices: null,
   };
 
@@ -80,9 +71,8 @@ function serializeAnswers(choices, newChoiceAttributes, oldAnswers, correctFeedb
   return answers;
 }
 
-export default function moveableWordSentence(originalItem, newItemAttributes) {
+export default function imageSequenceSerializer(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
-
   const { question } = newItemAttributes;
   if (question) {
     newItem.question = {
