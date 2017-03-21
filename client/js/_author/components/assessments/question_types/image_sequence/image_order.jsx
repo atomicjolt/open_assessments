@@ -21,7 +21,7 @@ export default function ImageOrder(props) {
               activateChoice={props.activateChoice}
               activeChoice={props.activeChoice}
               deleteChoice={props.deleteChoice}
-              numChoices={choices.length}
+              numChoices={_.size(choices)}
             />
           </div>
         )
