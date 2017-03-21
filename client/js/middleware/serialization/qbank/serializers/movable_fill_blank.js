@@ -49,7 +49,7 @@ function serializeQuestion(originalQuestion, newQuestionAttributes, questionStri
     const newQuestionString = _.cloneDeep(questionString);
     newQuestionString.text = _.map(newQuestionString.text.split(' '), (word) => {
       if (word === '[_]' || word === '[ _ ]') {
-        return `<inlineChoiceInteraction id="${inlineRegionId}"></inlineChoiceInteraction>`;
+        return `<inlineChoiceInteraction responseIdentifier="${inlineRegionId}"></inlineChoiceInteraction>`;
       }
       return buildChoiceText(word, 'other');
     }).join('');
