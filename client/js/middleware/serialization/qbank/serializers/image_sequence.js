@@ -4,16 +4,16 @@ import { scrub }                 from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
-function serializeChoices(originalChoices, newChoiceAttributes) {
+export function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
-    const newOrder = _.get(updateValues, 'order');
-    return {
+    const order = _.get(updateValues, 'order', choice.order);
+    return scrub({
       id: choice.id,
       text: _.get(updateValues, 'text') || choice.text,
-      order: _.isNil(newOrder) ? choice.order : newOrder,
+      order,
       delete: _.get(updateValues, 'delete'),
-    };
+    });
   });
 
   if (newChoiceAttributes.new) {
@@ -24,7 +24,13 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
     });
   }
 
-  return choices;
+  return choices.sort((a, b) => {
+    if (a.order === null || b.order === null) { return 1; }
+    return a.order - b.order;
+  }).map(choice => ({
+    id: choice.id,
+    text: choice.text,
+  }));
 }
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
@@ -32,6 +38,7 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
     choices: null,
   };
 
+  debugger;
   if (newQuestionAttributes.choices) {
     newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
   }

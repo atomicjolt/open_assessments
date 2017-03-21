@@ -18,7 +18,7 @@ export default function ImageOption(props) {
               id="image_option_order"
               onChange={e => props.updateChoice({
                 id: props.id,
-                order: parseInt(e.target.value, 10)
+                order: parseInt(e.target.value, 10) - 1
               })}
             >
               <option value={null}>N/A</option>
