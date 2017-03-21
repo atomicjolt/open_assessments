@@ -8,7 +8,8 @@ export function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
     const order = _.get(updateValues, 'order', choice.order);
-    const orderUpdated = _.isUndefined(_.get(updateValues, 'order'));
+    const orderUpdated = !_.isUndefined(_.get(updateValues, 'order'));
+
     return scrub({
       id: choice.id,
       text: _.get(updateValues, 'text') || choice.text,
@@ -18,6 +19,13 @@ export function serializeChoices(originalChoices, newChoiceAttributes) {
     });
   });
 
+  const updated = _.find(choices, choice => choice.orderUpdated);
+  if (updated) {
+    const other = _.find(choices, choice => choice.order === updated.order);
+    other.order = null;
+    delete updated.orderUpdated;
+  }
+
   if (newChoiceAttributes.new) {
     choices.push({
       id: guid(),
@@ -26,25 +34,7 @@ export function serializeChoices(originalChoices, newChoiceAttributes) {
     });
   }
 
-  return choices.sort((a, b) => {
-    if (a.order === null) {
-      return -1;
-    } else if (b.order === null) { return 1; }
-
-    if (a.order === b.order) {
-      if (a.orderUpdated) {
-        return 1;
-      } else if (b.orderUpdated) { return -1; }
-    }
-
-    return a.order - b.order;
-  }).map(choice => ({
-    //TODO make this better
-    id: choice.id,
-    text: choice.text,
-    order: choice.order,
-    delete: choice.delete,
-  }));
+  return choices;
 }
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {

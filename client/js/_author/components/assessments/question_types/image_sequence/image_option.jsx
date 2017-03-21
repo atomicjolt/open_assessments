@@ -21,7 +21,7 @@ export default function ImageOption(props) {
                 id: props.id,
                 order: parseInt(e.target.value, 10) - 1
               })}
-              defaultValue={props.order + 1}
+              defaultValue={props.order}
             >
               {
                 _.map([null].concat(_.range(1, props.numChoices + 1)), (val, index) =>
