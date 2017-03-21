@@ -39,10 +39,11 @@ export function serializeChoices(originalChoices, newChoiceAttributes) {
 
     return a.order - b.order;
   }).map(choice => ({
+    //TODO make this better
     id: choice.id,
     text: choice.text,
     order: choice.order,
-    delete: choices.delete,
+    delete: choice.delete,
   }));
 }
 
