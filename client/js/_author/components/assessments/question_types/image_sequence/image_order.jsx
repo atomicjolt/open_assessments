@@ -10,10 +10,10 @@ export default function ImageOrder(props) {
   return (
     <div className="au-c-image-sequence__answers au-o-row">
       {
-        _.map(choices, choice =>
-          <div className="au-o-quarter">
+        _.map(choices, (choice, id) =>
+          <div key={id} className="au-o-quarter">
             <ImageOption
-              key={choice.text} {...choice}
+              {...choice}
               updateChoice={
                 (newChoice, fileIds) => props.updateChoice(
                     props.item.id, choice.id, newChoice, fileIds)

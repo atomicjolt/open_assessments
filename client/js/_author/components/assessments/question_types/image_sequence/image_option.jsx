@@ -24,8 +24,13 @@ export default function ImageOption(props) {
               defaultValue={props.order + 1}
             >
               {
-                _.map([null].concat(_.range(1, props.numChoices + 1)), val =>
-                  <option value={val}>{val === null ? 'N/A' : val}</option>
+                _.map([null].concat(_.range(1, props.numChoices + 1)), (val, index) =>
+                  <option
+                    key={`option_key_${index}`}
+                    value={val}
+                  >
+                    {val === null ? 'N/A' : val}
+                  </option>
                 )
               }
             </select>
