@@ -20,6 +20,7 @@ export default function ImageOption(props) {
                 id: props.id,
                 order: parseInt(e.target.value, 10) - 1
               })}
+              defaultValue={props.order + 1}
             >
               <option value={null}>N/A</option>
               <option value={1}>1</option>
@@ -54,4 +55,5 @@ ImageOption.propTypes = {
   id: React.PropTypes.string,
   activeChoice: React.PropTypes.string,
   text: React.PropTypes.string,
+  order: React.PropTypes.number.isRequired,
 };

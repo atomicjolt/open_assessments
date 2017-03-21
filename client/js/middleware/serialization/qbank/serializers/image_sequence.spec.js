@@ -1,7 +1,7 @@
 import { serializeChoices } from './image_sequence';
 import genusTypes from '../../../../constants/genus_types';
 
-fdescribe('ImageSequence', () => {
+describe('ImageSequence', () => {
 
   let item;
 
