@@ -41,6 +41,7 @@ export function serializeChoices(originalChoices, newChoiceAttributes) {
   }).map(choice => ({
     id: choice.id,
     text: choice.text,
+    order: choice.order
   }));
 }
 
@@ -49,7 +50,6 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
     choices: null,
   };
 
-  debugger;
   if (newQuestionAttributes.choices) {
     newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
   }
