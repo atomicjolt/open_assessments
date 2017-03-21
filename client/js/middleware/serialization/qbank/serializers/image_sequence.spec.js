@@ -1,7 +1,7 @@
 import { serializeChoices } from './image_sequence';
 import genusTypes from '../../../../constants/genus_types';
 
-describe('ImageSequence', () => {
+fdescribe('ImageSequence', () => {
 
   let item;
 
@@ -50,20 +50,20 @@ describe('ImageSequence', () => {
 
   it('should update choices', () => {
     const expectedChoices = [{
-      id: 'choice_3',
-      text: 'Hola'
+      id: 'choice_1',
+      text: 'Howdy'
     }, {
       id: 'choice_2',
       text: 'Hello'
     }, {
-      id: 'choice_1',
-      text: 'Howdy'
+      id: 'choice_3',
+      text: 'Hola'
     }];
 
     const result = serializeChoices(item.question.choices, {
       choice_3: {
         id: 'choice_3',
-        order: 0,
+        order: 2,
       },
       choice_2: {
         id: 'choice_2',
@@ -71,9 +71,31 @@ describe('ImageSequence', () => {
       },
       choice_1: {
         id: 'choice_1',
-        order: 2,
+        order: 0,
       }
     });
+    expect(result).toEqual(expectedChoices);
+  });
+
+  it('should update single choice', () => {
+    const expectedChoices = [{
+      id: 'choice_1',
+      text: 'Howdy'
+    }, {
+      id: 'choice_2',
+      text: 'Hello'
+    }, {
+      id: 'choice_3',
+      text: 'Hola'
+    }];
+
+    const result = serializeChoices(item.question.choices, {
+      choice_2: {
+        id: 'choice_2',
+        order: 1,
+      },
+    });
+
     expect(result).toEqual(expectedChoices);
   });
 

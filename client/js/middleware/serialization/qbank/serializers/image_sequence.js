@@ -8,11 +8,13 @@ export function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
     const order = _.get(updateValues, 'order', choice.order);
+    const orderUpdated = _.isUndefined(_.get(updateValues, 'order'));
     return scrub({
       id: choice.id,
       text: _.get(updateValues, 'text') || choice.text,
       order,
       delete: _.get(updateValues, 'delete'),
+      orderUpdated,
     });
   });
 
@@ -25,7 +27,16 @@ export function serializeChoices(originalChoices, newChoiceAttributes) {
   }
 
   return choices.sort((a, b) => {
-    if (a.order === null || b.order === null) { return 1; }
+    if (a.order === null) {
+      return -1;
+    } else if (b.order === null) { return 1; }
+
+    if (a.order === b.order) {
+      if (a.orderUpdated) {
+        return 1;
+      } else if (b.orderUpdated) { return -1; }
+    }
+
     return a.order - b.order;
   }).map(choice => ({
     id: choice.id,
