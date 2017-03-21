@@ -10,6 +10,8 @@ describe('Heading', () => {
   beforeEach(() => {
     props = {
       view: 'banks',
+      path: [],
+      updatePath: () => {},
     };
 
     result = TestUtils.renderIntoDocument(<Stub><Heading {...props} /></Stub>);

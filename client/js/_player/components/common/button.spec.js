@@ -31,7 +31,8 @@ describe('button', () => {
 
   it('renders button text', () => {
     var props = {
-      buttonText:"Howdy"
+      buttonText:"Howdy",
+      buttonClass:'test-type',
     };
     var result = TestUtils.renderIntoDocument(<Button {...props} />);
     var subject = ReactDOM.findDOMNode(result);
@@ -40,8 +41,11 @@ describe('button', () => {
   });
 
   it('renders child components', () => {
+    var props = {
+      buttonClass:"test-type"
+    };
     var result = TestUtils.renderIntoDocument(
-      <Button>
+      <Button buttonClass='test-type'>
         <p>Hola</p>
       </Button>
     );

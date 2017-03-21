@@ -4,8 +4,7 @@ export default function addOption(props) {
   return (
     <div
       className="au-c-answer au-c-answer--add"
-      tabIndex="0"
-      onClick={() => props.updateChoice()}
+      onClick={() => props.createChoice()}
     >
       <div className="au-c-input">
         <div className="au-c-radio">
@@ -30,5 +29,5 @@ export default function addOption(props) {
 }
 
 addOption.propTypes = {
-  updateChoice: React.PropTypes.func.isRequired,
+  createChoice: React.PropTypes.func.isRequired,
 };

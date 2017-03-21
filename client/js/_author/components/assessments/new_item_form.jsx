@@ -1,4 +1,5 @@
 import React      from 'react';
+import _          from 'lodash';
 import types      from '../../../constants/question_types';
 import languages  from '../../../constants/language_types';
 
@@ -25,7 +26,7 @@ export default class newItemForm extends React.Component {
   }
 
   updateName(name) {
-    this.setState({ name, question: { ...this.state.question, text: `<p>${name}</p>` } });
+    this.setState({ name });
   }
 
   render() {
@@ -64,18 +65,13 @@ export default class newItemForm extends React.Component {
                     name=""
                     id="questionType"
                   >
-                    <option value={types.multipleChoice}>
-                      Multiple Choice
-                    </option>
-                    <option value={types.shortAnswer}>
-                      Short Answer
-                    </option>
-                    <option value={types.fileUpload}>
-                      File Upload
-                    </option>
-                    <option value={types.audioUpload}>
-                      Audio Upload
-                    </option>
+                    {
+                      _.map(types, type => (
+                        <option key={`new_item_${type}`} value={type}>
+                          {_.startCase(type)}
+                        </option>
+                      ))
+                    }
                   </select>
                 </div>
               </div>

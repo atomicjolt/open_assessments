@@ -66,18 +66,30 @@
   min-height: 4rem;
   font-size: 2rem;
   @include semi-bold;
+
+  .au-c-placeholder{
+    line-height: 4rem;
+  }
 }
 
 .au-c-text-input--small{
   min-height: 3.5rem;
   font-size: 1.6rem;
   @include semi-bold;
+
+  .au-c-placeholder{
+    line-height: 3.5rem;
+  }
 }
 
 .au-c-text-input--smaller{
   min-height: 3rem;
   font-size: 1.2rem;
   @include semi-bold;
+
+  .au-c-placeholder{
+    line-height: 3rem;
+  }
 }
 
 .au-c-wysiwyg{
@@ -226,6 +238,10 @@
   color: $text-alt;
   font-size: 1.2rem;
   min-width: 25rem;
+
+  label{
+    white-space: nowrap;
+  }
 
   .au-c-input__contain{
     margin-left: 1rem;
@@ -479,5 +495,16 @@ input.au-c-file{
     input[type="checkbox"]:checked + label:before{
       color: $green;
     }
+  }
+}
+
+.au-c-placeholder{
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: $gray5;
+
+  &.is-hidden{
+    display: none;
   }
 }

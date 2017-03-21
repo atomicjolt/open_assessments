@@ -33,25 +33,53 @@ export default class PreviewQuestion extends React.Component {
         return 'file_upload_question';
       case types.audioUpload:
         return 'audio_upload_question';
+      case types.movableWordSentence:
+        return 'movable_words_sentence';
+      case types.movableFillBlank:
+        return 'fill_the_blank_question';
       default:
         return null;
     }
   }
 
   serializeForPlayer(item) {
-    return {
-      id: item.id,
-      question_type: this.convertType(item.type),
-      material: item.question.text,
-      isHtml: true,
-      answers: _.map(item.question.choices, answer => ({
-        id: answer.id,
-        material: answer.text,
-      })),
-      question_meta: {
-        expectedLines: 1,
-      }
-    };
+    switch (item.type) {
+      case types.movableFillBlank:
+        return {
+          id: item.id,
+          question_type: this.convertType(item.type),
+          material: item.question.text,
+          isHtml: true,
+          answers: _.map(item.question.choices, answer => ({
+            id: answer.id,
+            material: `<p class="${answer.wordType}">${answer.text}</p>`,
+          })),
+          question_meta: {
+            fillTheBlankSentence: _.map(item.question.text.split(' '), (word) => {
+              if (word === '[_]') {
+                return '<p class="interaction-placeholder"></p>';
+              }
+              return `<p class="other">${word}</p>`;
+            }),
+            expectedLines: 1,
+          }
+        };
+
+      default:
+        return {
+          id: item.id,
+          question_type: this.convertType(item.type),
+          material: item.question.text,
+          isHtml: true,
+          answers: _.map(item.question.choices, answer => ({
+            id: answer.id,
+            material: answer.text,
+          })),
+          question_meta: {
+            expectedLines: 1,
+          }
+        };
+    }
   }
 
   selectAnswer(id) {
@@ -84,12 +112,12 @@ export default class PreviewQuestion extends React.Component {
     return (
       <div>
         <Item
-          settings={false}
+          settings={{}}
           question={item}
           response={this.state.response}
-          currentItemIndex={false}
+          currentItemIndex={1}
           questionCount={1}
-          questionResult={false}
+          questionResult={{}}
           selectAnswer={id => this.selectAnswer(id)}
           localizedStrings={localizedStrings}
           sendSize={() => {}}
@@ -99,6 +127,8 @@ export default class PreviewQuestion extends React.Component {
           audioPause={() => {}}
           audioRecordStart={() => {}}
           audioRecordStop={() => {}}
+          createChoice={() => {}}
+          deleteChoice={() => {}}
         />
       </div>
     );

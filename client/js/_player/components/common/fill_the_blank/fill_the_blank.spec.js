@@ -15,7 +15,8 @@ describe('fill the blank', () => {
         text: "Word1"
       }],
       question: "<p>word1</p><div class=\"interaction-placeholder\"></div><p>word2</p>",
-      selectAnswer: () => {}
+      selectAnswer: () => {},
+      linkWord: () => {},
     };
 
     FillTheBlankRewireApi.__Rewire__('FillTheBlankWordChain', () => { return <div>WordChain</div>; })
