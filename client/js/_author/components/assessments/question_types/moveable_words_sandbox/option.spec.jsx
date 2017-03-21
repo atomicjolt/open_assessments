@@ -1,9 +1,9 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import TestUtils from 'react-addons-test-utils';
-import Option from './option';
+import React          from 'react';
+import { shallow }    from 'enzyme';
+import TestUtils      from 'react-addons-test-utils';
+import Option         from './option';
 
-fdescribe('the option component', () => {
+describe('the option component', () => {
   let props;
   let result;
   let calledFunc;
