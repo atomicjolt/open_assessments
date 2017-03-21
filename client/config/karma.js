@@ -18,12 +18,10 @@ module.exports = () => {
     port: 9876,
 
     files: [
-      './specs_support/mocks/*.js',
-      './specs_support/spec_helper.js',
-
       // fixtures
-      { pattern: './specs_support/**/*.json', watched: true, served: true, included: false },
-      { pattern: './specs_support/**/*.xml', watched: true, served: true, included: false },
+      { pattern: './specs_support/fixtures/**/*.json', watched: true, served: true, included: false },
+      { pattern: './specs_support/fixtures/**/*.xml', watched: true, served: true, included: false },
+      { pattern: './specs_support/fixtures/**/stream', watched: false, served: true, included: false },
 
       // Use webpack to build each test individually. If changed here, change in preprocessors
       // './js/**/*.js'

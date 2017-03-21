@@ -17,6 +17,9 @@ describe('_new_assessment component', () => {
       createAssessment: () => { callFunction = true; },
       publishAssessment: () => {},
       createAssessmentWithItem: () => { callFunction = true; },
+      updateItem: () => {},
+      updateChoice: () => {},
+      createChoice: () => {},
     };
     result = TestUtils.renderIntoDocument(<NewAssessment {...props} />);
   });

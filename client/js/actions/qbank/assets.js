@@ -15,7 +15,6 @@ export function uploadMedia(file, guid, uploadScopeId, bankId) {
   formData.append('inputFile', file);
   formData.append('returnUrl', true);
   formData.append('createNew', true);
-
   return {
     bankId,
     uploadScopeId,

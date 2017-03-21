@@ -103,7 +103,13 @@ function reset(){
     sendSize: () => {},
     settings,
     submitAssessment: () => {},
-    application: {}
+    application: {},
+    videoPlay: () => {},
+    videoPause: () => {},
+    audioPlay: () => {},
+    audioPause: () => {},
+    audioRecordStart: () => {},
+    audioRecordStop: () => {},
   };
 
   result = TestUtils.renderIntoDocument(

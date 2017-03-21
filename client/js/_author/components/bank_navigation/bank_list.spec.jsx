@@ -28,7 +28,12 @@ describe('bank List', () => {
           assignedBankIds: [],
           type: 'OsidNode'
         },
-      ]
+      ],
+      getEmbedCode: () => {},
+      publishedBankId: '7',
+      sortBy: () => {},
+      getBankChildren: () => {},
+      baseEmbedUrl: 'LOOKASPEC',
     };
 
     result = TestUtils.renderIntoDocument(<Stub><BankList {...props} /></Stub>);

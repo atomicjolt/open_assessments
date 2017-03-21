@@ -11,6 +11,7 @@ describe('multiple choice component', () => {
     choiceUpdated = false;
     props = {
       item: {
+        bankId: '',
         id: '76',
         displayName: {
           text: 'IMATITLESPEC',
@@ -46,6 +47,10 @@ describe('multiple choice component', () => {
       updateItem: () => { choiceUpdated = true; },
       updateChoice: () => { choiceUpdated = true; },
       isActive: false,
+      selectChoice: () => {},
+      blurOptions: () => {},
+      createChoice: () => {},
+      deleteChoice: () => {},
     };
     result = shallow(<MultipleChoice {...props} />);
   });
@@ -53,12 +58,6 @@ describe('multiple choice component', () => {
   it('renders', () => {
     const divs = result.find('.au-c-question__answers--maintain');
     expect(divs.length).toBe(1);
-  });
-
-  it('calls updateChoice', () => {
-    expect(choiceUpdated).toBeFalsy();
-    result.instance().addNewChoice(props.item.id);
-    expect(choiceUpdated).toBeTruthy();
   });
 
   it('the props.updateChoice function', () => {
