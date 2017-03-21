@@ -8,16 +8,19 @@ export default function ImageOrder(props) {
   return (
     <div className="au-c-image-sequence__answers au-o-row">
       {
-        _.map(props.item.question.choices, choice => (
+        _.map(props.item.question.choices, choice =>
           <div className="au-o-quarter">
             <ImageOption
               key={choice.text} {...choice}
+              updateChoice={
+                (newChoice, fileIds) => props.updateChoice(
+                    props.item.id, choice.id, newChoice, fileIds)
+              }
               activateChoice={props.activateChoice}
               activeChoice={props.activeChoice}
               deleteChoice={props.deleteChoice}
             />
           </div>
-          )
         )
       }
       <div className="au-o-quarter">
@@ -38,4 +41,5 @@ ImageOrder.propTypes = {
     })
   }),
   deleteChoice: React.PropTypes.func,
+  updateChoice: React.PropTypes.func.isRequired,
 };

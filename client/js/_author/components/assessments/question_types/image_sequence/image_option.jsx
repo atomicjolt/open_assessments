@@ -12,14 +12,21 @@ export default function ImageOption(props) {
       { isActive ?
         <div className="au-c-image-sequence-answer__top">
           <div className="au-c-dropdown au-c-dropdown--tiny">
-            <label htmlFor=""></label>
-            <select name="" id="">
-              <option value="">N/A</option>
-              <option value="">1</option>
-              <option value="">2</option>
-              <option value="">3</option>
-              <option value="">4</option>
-              <option value="">5</option>
+            <label htmlFor="image_option_order" />
+            <select
+              name=""
+              id="image_option_order"
+              onChange={e => props.updateChoice({
+                id: props.id,
+                order: parseInt(e.target.value, 10)
+              })}
+            >
+              <option value={null}>N/A</option>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
             </select>
           </div>
           <button className="au-c-answer--delete au-u-right" onClick={() => props.deleteChoice(props)}>
