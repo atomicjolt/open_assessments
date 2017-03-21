@@ -5,10 +5,12 @@ import AddImage         from './add_image';
 
 
 export default function ImageOrder(props) {
+  const choices = props.item.question.choices;
+
   return (
     <div className="au-c-image-sequence__answers au-o-row">
       {
-        _.map(props.item.question.choices, choice =>
+        _.map(choices, choice =>
           <div className="au-o-quarter">
             <ImageOption
               key={choice.text} {...choice}
@@ -19,6 +21,7 @@ export default function ImageOrder(props) {
               activateChoice={props.activateChoice}
               activeChoice={props.activeChoice}
               deleteChoice={props.deleteChoice}
+              numChoices={choices.length}
             />
           </div>
         )

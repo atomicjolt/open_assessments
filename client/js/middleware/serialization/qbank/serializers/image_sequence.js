@@ -41,7 +41,8 @@ export function serializeChoices(originalChoices, newChoiceAttributes) {
   }).map(choice => ({
     id: choice.id,
     text: choice.text,
-    order: choice.order
+    order: choice.order,
+    delete: choices.delete,
   }));
 }
 

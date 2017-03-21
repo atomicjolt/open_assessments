@@ -56,4 +56,5 @@ ImageOption.propTypes = {
   activeChoice: React.PropTypes.string,
   text: React.PropTypes.string,
   order: React.PropTypes.number.isRequired,
+  numChoices: React.PropTypes.number.isRequired,
 };
