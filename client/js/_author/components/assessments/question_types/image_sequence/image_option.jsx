@@ -60,6 +60,6 @@ ImageOption.propTypes = {
   id: React.PropTypes.string,
   activeChoice: React.PropTypes.string,
   text: React.PropTypes.string,
-  order: React.PropTypes.number.isRequired,
+  order: React.PropTypes.number,
   numChoices: React.PropTypes.number.isRequired,
 };
