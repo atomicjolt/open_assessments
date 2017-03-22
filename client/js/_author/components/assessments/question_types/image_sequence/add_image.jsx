@@ -31,6 +31,7 @@ export class AddImage extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
+    // debugger
     const { uploadedAssets, uploadScopeId, item } = this.props;
     if (uploadedAssets
       && nextProps.uploadedAssets[uploadScopeId]
@@ -44,7 +45,7 @@ export class AddImage extends React.Component {
         };
       });
       const text = `<img src="AssetContent:${this.state.mediaGuid}" />`;
-      this.props.updateChoice(item.id, 'new', { text }, fileIds);
+      this.props.createChoice(text, fileIds);
     }
   }
 
@@ -69,7 +70,6 @@ export class AddImage extends React.Component {
     this.setState({
       mediaGuid,
     });
-
     this.props.uploadMedia(
       file,
       mediaGuid,
