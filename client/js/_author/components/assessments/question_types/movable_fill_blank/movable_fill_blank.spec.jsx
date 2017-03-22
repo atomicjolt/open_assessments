@@ -6,7 +6,7 @@ import Feedback           from '../question_common/single_feedback';
 import Option             from './option';
 import Add                from '../question_common/add_option';
 
-fdescribe('movable_fill_blank component', () => {
+describe('movable_fill_blank component', () => {
   let props;
   let result;
   let calledFunc;
