@@ -89,7 +89,7 @@ export class Assessment extends React.Component {
     hideLMSNavigation: React.PropTypes.func,
     submitAssessment: React.PropTypes.func,
     allQuestions: React.PropTypes.arrayOf(React.PropTypes.shape({})),
-    responses: React.PropTypes.arrayOf(React.PropTypes.shape({})),
+    responses: React.PropTypes.arrayOf(React.PropTypes.arrayOf(React.PropTypes.shape({}))),
     outcomes: React.PropTypes.shape({}),
     answerSelected: React.PropTypes.func,
     questionsPerPage: React.PropTypes.number,
