@@ -50,19 +50,19 @@ export default class MovableWordSentence extends React.Component {
             className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"
             onClick={this.props.save}
           >
-            Save
+            Save Options
           </button>
         </div>
         <div className="au-c-question__feedback">
           <Feedback
-            updateItem={this.props.updateItem}
+            updateItem={item => this.props.updateItem(item, true)}
             feedbackType="correctFeedback"
             feedback={question.correctFeedback}
             labelText="Correct Feedback"
             bankId={this.props.item.bankId}
           />
           <Feedback
-            updateItem={this.props.updateItem}
+            updateItem={item => this.props.updateItem(item, true)}
             feedbackType="incorrectFeedback"
             feedback={question.incorrectFeedback}
             labelText="Incorrect Feedback"
