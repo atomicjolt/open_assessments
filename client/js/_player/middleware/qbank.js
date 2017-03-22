@@ -110,9 +110,10 @@ function getBody(userInput, question) {
     case 'clix_drag_and_drop': {
       return {
         type,
-        zoneConditions: _.map(userInput, input => ({
-          zoneId: input.zoneIndex,
+        coordinateConditions: _.map(userInput, input => ({
+          containerId: input.zoneIndex,
           droppableId: input.id,
+          coordinateValues: input.coordinateValues,
         }))
       };
     }
