@@ -61,7 +61,6 @@ export class Dropzone extends React.Component {
   }
 }
 
-export const ClixDropZone = DropTarget(ItemTypes.CLIX_DROPPABLE, defaultTarget, collect)(Dropzone);
 export const WordDropZone = DropTarget(ItemTypes.WORD, defaultTarget, collect)(Dropzone);
 export const GroupDropZone = DropTarget(
   [ItemTypes.WORD_GROUP, ItemTypes.WORD],
