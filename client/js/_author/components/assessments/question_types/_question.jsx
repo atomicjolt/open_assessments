@@ -96,14 +96,14 @@ export class Question extends React.Component {
     this.props.moveItem(this.props.itemIndex, this.props.itemIndex + 1);
   }
 
-  updateItem(newItemProperties, deletingChoice) {
+  updateItem(newItemProperties, forceSkipState) {
     const { item } = this.props;
 
     if (newItemProperties.language) {
       if (newItemProperties.language && this.state.language !== newItemProperties.language) {
         this.setState({ language: newItemProperties.language });
       }
-    } else if (_.includes(Question.stateDrivenTypes, item.type) && !deletingChoice) {
+    } else if (_.includes(Question.stateDrivenTypes, item.type) && !forceSkipState) {
       this.setState({ ...item, ...newItemProperties });
     } else {
       this.props.updateItem(this.props.bankId, {
@@ -267,7 +267,7 @@ export class Question extends React.Component {
             itemId={id}
             editorKey={languageTypeId}
             text={questionText}
-            updateItem={newProps => this.updateItem(newProps)}
+            updateItem={newProps => this.updateItem(newProps, true)}
             bankId={bankId}
           />
           {this.content()}

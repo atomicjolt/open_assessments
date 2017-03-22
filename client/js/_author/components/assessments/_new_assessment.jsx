@@ -81,6 +81,7 @@ export class NewAssessment extends React.Component {
           updateAssessment={assessment => this.createAssessment(assessment)}
           createItem={newItem => this.createItem(newItem)}
           createChoice={() => {}}
+          bankId=''
         />
       </div>
     );
