@@ -28,6 +28,7 @@ describe('question component', () => {
           shuffle: true,
         },
       },
+      bankId: '',
       isActive: false,
       itemIndex: 7,
       topItem: false,
