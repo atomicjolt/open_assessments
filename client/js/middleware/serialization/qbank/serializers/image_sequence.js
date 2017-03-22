@@ -4,27 +4,17 @@ import { scrub }                 from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
-export function serializeChoices(originalChoices, newChoiceAttributes) {
+function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
-    const order = _.get(updateValues, 'order', choice.order);
-    const orderUpdated = !_.isUndefined(_.get(updateValues, 'order'));
-
-    return scrub({
+    const newOrder = _.get(updateValues, 'order');
+    return {
       id: choice.id,
       text: _.get(updateValues, 'text') || choice.text,
-      order,
+      order: _.isNil(newOrder) ? choice.order : newOrder,
       delete: _.get(updateValues, 'delete'),
-      orderUpdated,
-    });
+    };
   });
-
-  const updated = _.find(choices, choice => choice.orderUpdated);
-  if (updated) {
-    const other = _.find(choices, choice => choice.order === updated.order);
-    other.order = null;
-    delete updated.orderUpdated;
-  }
 
   if (newChoiceAttributes.new) {
     choices.push({

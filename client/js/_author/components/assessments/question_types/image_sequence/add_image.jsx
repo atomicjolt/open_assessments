@@ -31,7 +31,6 @@ export class AddImage extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    // debugger
     const { uploadedAssets, uploadScopeId, item } = this.props;
     if (uploadedAssets
       && nextProps.uploadedAssets[uploadScopeId]
