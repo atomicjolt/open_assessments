@@ -214,7 +214,7 @@ export class Question extends React.Component {
       return (
         <Component
           item={_.merge(item, this.state.item)}
-          updateItem={newProps => this.updateItem(newProps)}
+          updateItem={(newProps, forceSkipState) => this.updateItem(newProps, forceSkipState)}
           updateChoice={(itemId, choiceId, choice, fileIds) =>
             this.updateChoice(itemId, choiceId, choice, fileIds)}
           isActive={this.props.isActive}
