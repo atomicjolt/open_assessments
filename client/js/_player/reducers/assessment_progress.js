@@ -44,7 +44,11 @@ export default (state = initialState, action) => {
         responses = Immutable.List();
       }
 
-      var answerIndex = responses.indexOf(action.answerId);
+      // answerData will usually be a string, but if it's not this will let
+      // us search for it anyways. Immutable.fromJS on a string returns a string.
+      const answerData = Immutable.fromJS(action.answerData);
+
+      var answerIndex = responses.indexOf(answerData);
       var shouldToggle = !action.exclusive;
 
       // Only add answer to responses array if it doesn't exist
@@ -53,7 +57,7 @@ export default (state = initialState, action) => {
         if(shouldToggle){responses = responses.delete(answerIndex);}
 
       } else {
-        responses = responses.push(action.answerId);
+        responses = responses.push(answerData);
       }
 
       state = state.setIn(["responses", `${action.questionIndex}`], responses);
