@@ -1,3 +1,5 @@
+import _    from 'lodash';
+
 export const types = {
   item:{
     audioUpload: 'item-genus-type%3Aqti-upload-interaction-audio%40ODL.MIT.EDU',
@@ -43,12 +45,18 @@ export const types = {
   zone: {
     drop: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
     snap: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
+    rectangle: 'osid.mapping.SpatialUnit%3Arectangle%40ODL.MIT.EDU',
   },
   default: 'GenusType%3ADEFAULT%40DLKIT.MIT.EDU',
 };
 
 export function getQbankType(type) {
-  return _.findKey(types.item, genusType => type === genusType) || null;
+  return _.findKey(types.item, genusType => type === genusType)
+    || _.findKey(types.question, genusType => type === genusType)
+    || _.findKey(types.answer, genusType => type === genusType)
+    || _.findKey(types.target, genusType => type === genusType)
+    || _.findKey(types.zone, genusType => type === genusType)
+    || null;
 }
 
 export default types;
