@@ -1,5 +1,3 @@
-"use strict";
-
 import Immutable  from 'immutable';
 import { Constants as AssessmentConstants }   from '../actions/assessment_progress';
 
@@ -20,26 +18,25 @@ const initialState = Immutable.fromJS({
 
 export default (state = initialState, action) => {
 
-  switch(action.type){
-    case AssessmentConstants.ASSESSMENT_NEXT_QUESTIONS:
-      var currentItemIndex = state.get("currentItemIndex");
-      var increment = action.pageSize;
-      state = state.set("currentItemIndex", currentItemIndex + increment);
-      break;
+  switch (action.type) {
+    case AssessmentConstants.ASSESSMENT_NEXT_QUESTIONS: {
+      const currentItemIndex = state.get('currentItemIndex');
+      const increment = action.pageSize;
+      return state.set('currentItemIndex', currentItemIndex + increment);
+    }
 
-    case AssessmentConstants.ASSESSMENT_PREVIOUS_QUESTIONS:
-      var currentItemIndex = state.get("currentItemIndex");
-      var decrement = action.pageSize;
-      state = state.set("currentItemIndex", currentItemIndex - decrement);
-      break;
+    case AssessmentConstants.ASSESSMENT_PREVIOUS_QUESTIONS: {
+      const currentItemIndex = state.get('currentItemIndex');
+      const decrement = action.pageSize;
+      return state.set('currentItemIndex', currentItemIndex - decrement);
+    }
 
     case AssessmentConstants.ASSESSMENT_VIEWED:
-      state = state.set("startedAt", Date.now());
-      break;
+      return state.set('startedAt', Date.now());
 
-    case AssessmentConstants.ANSWER_SELECTED:
-      var responses = state.getIn(['responses', `${action.questionIndex}`]);
-      if(responses === undefined || action.exclusive === true){
+    case AssessmentConstants.ANSWER_SELECTED: {
+      let responses = state.getIn(['responses', `${action.questionIndex}`]);
+      if (responses === undefined || action.exclusive === true) {
         // Create new list if no list exists or multi answer is not allowed
         responses = Immutable.List();
       }
@@ -48,56 +45,57 @@ export default (state = initialState, action) => {
       // us search for it anyways. Immutable.fromJS on a string returns a string.
       const answerData = Immutable.fromJS(action.answerData);
 
-      var answerIndex = responses.indexOf(answerData);
-      var shouldToggle = !action.exclusive;
+      const answerIndex = responses.indexOf(answerData);
+      const shouldToggle = !action.exclusive;
 
       // Only add answer to responses array if it doesn't exist
-      if(answerIndex > -1){
+      if (answerIndex > -1) {
         // Don't toggle Radio buttons
-        if(shouldToggle){responses = responses.delete(answerIndex);}
-
+        if (shouldToggle) {
+          responses = responses.delete(answerIndex);
+        }
       } else {
         responses = responses.push(answerData);
       }
 
-      state = state.setIn(["responses", `${action.questionIndex}`], responses);
-      break;
+      return state.setIn(['responses', `${action.questionIndex}`], responses);
+    }
 
-    case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE:
-      if(!action.error){
-        var checkedResponses = Immutable.Map();
+    case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE: {
+      if (!action.error) {
+        let checkedResponses = Immutable.Map();
 
         // TODO: Currently we are setting the same response for all userInput.
         // When we have an example of multi answer feedback we should figure out
         // how to assign feedback to each answer.
         action.userInput.forEach((id) => {
-          var feedback = Immutable.Map(action.payload);
-          checkedResponses = checkedResponses.set(id,feedback);
+          const feedback = Immutable.Map(action.payload);
+          checkedResponses = checkedResponses.set(id, feedback);
         });
 
-        state = state.setIn(
+        return state.setIn(
           ['checkedResponses', `${action.questionIndex}`],
           checkedResponses
         );
       }
 
       // Decrement number of questions being checked
-      var checked = state.get('numQuestionsChecking');
-      if(checked <= 0){
-        throw "ASSESSMENT_CHECK_ANSWER_DONE dispatched when no answers were being checked";
+      const checked = state.get('numQuestionsChecking');
+      if (checked <= 0) {
+        throw new Error('ASSESSMENT_CHECK_ANSWER_DONE dispatched when no answers were being checked');
       }
-      state = state.set('numQuestionsChecking', checked - 1);
-      break;
+      return state.set('numQuestionsChecking', checked - 1);
+    }
 
-    case AssessmentConstants.CHECK_QUESTIONS:
-      var checking = state.get('numQuestionsChecking');
-      state = state.set('numQuestionsChecking', action.numQuestions + checking);
-      break;
+    case AssessmentConstants.CHECK_QUESTIONS: {
+      const checking = state.get('numQuestionsChecking');
+      return state.set('numQuestionsChecking', action.numQuestions + checking);
+    }
 
-    case AssessmentConstants.ASSESSMENT_SUBMITTED_DONE:
-      state = state.set("finishedAt", Date.now());
-      state = state.set("isSubmitted", true);
-      break;
+    case AssessmentConstants.ASSESSMENT_SUBMITTED_DONE: {
+      const newState = state.set('finishedAt', Date.now());
+      return newState.set('isSubmitted', true);
+    }
 
     default:
 
