@@ -65,7 +65,10 @@ export default function (props) {
       <div className="au-o-quarter">
         <div className="au-c-drop-zone-answer-add">
 
-          <button className="au-c-drop-zone-answer-add__button">
+          <button
+            className="au-c-drop-zone-answer-add__button"
+            onClick={() => props.createChoice('dropObjects')}
+          >
             Add Image
           </button>
 

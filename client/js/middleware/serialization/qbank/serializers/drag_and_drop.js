@@ -17,6 +17,7 @@ function serializeTargets(originalTarget, newTarget) {
 }
 
 function serializeZones(originalZones, newZones, targetId) {
+  if (newZones && newZones.new) debugger;
   return _.map(originalZones, (zone) => {
     const newZone = newZones[zone.id];
     return {
@@ -39,22 +40,33 @@ function serializeZones(originalZones, newZones, targetId) {
 }
 
 function serializeDroppables(originalDroppables, newDroppables) {
-  return _.map(originalDroppables, (droppable) => {
+  const droppables =  _.map(originalDroppables, (droppable) => {
     const newDroppable = newDroppables[droppable.id];
     // TODO: not spider-man
     return {
+      id: droppable.id,
       text: `<p><img src="http://i0.kym-cdn.com/photos/images/facebook/000/110/268/tumblr_lisp6ohmdy1qb3l9fo1_500.jpg" alt="${_.get(newDroppable, 'label', droppable.label)}" /></p>`,
       dropBehaviorType: genusTypes.zone[_.get(newDroppable, 'type', droppable.type)],
       name: _.get(newDroppable, 'label', droppable.label),
       reuse: 1,  // an integer field to indicate how many times something can be re-used (zone or droppable) 0 is infinite
     };
   });
+
+  if (newDroppables.new) {
+    droppables.push({
+      id: guid(),
+      text: `<p><img src="http://i0.kym-cdn.com/photos/images/facebook/000/110/268/tumblr_lisp6ohmdy1qb3l9fo1_500.jpg" alt="Spider-Man" /></p>`,
+      dropBehaviorType: genusTypes.zone.snap,
+    });
+  }
+
+  return droppables;
 }
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
     targets: serializeTargets(originalQuestion.targets, newQuestionAttributes.targets),
-    droppables: serializeDroppables(originalQuestion.droppables, newQuestionAttributes.droppables),
+    droppables: serializeDroppables(originalQuestion.dropObjects, newQuestionAttributes.dropObjects),
     zones: serializeZones(originalQuestion.zones, newQuestionAttributes.zones),
   };
 

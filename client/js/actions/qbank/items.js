@@ -30,11 +30,11 @@ export function updateItem(bankId, item) {
   };
 }
 
-export function createChoice(bankId, itemId) {
+export function createChoice(bankId, itemId, choiceType) {
   const newItem = {
     id: itemId,
     question: {
-      choices: {
+      [choiceType || 'choices']: {
         new: { id: 'new' },
       },
     }
