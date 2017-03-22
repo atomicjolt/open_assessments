@@ -25,6 +25,7 @@ describe('AssessmentForm component', () => {
           choices: [],
         },
       }],
+      bankId: '',
       name: 'IMASPEC',
       updateAssessment: () => {},
       updateItemOrder: () => { updateItemOrderFunction = true; },

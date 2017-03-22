@@ -8,7 +8,7 @@ const makeChoiceText = (choice) => {
   if (choice.wordType) {
     return `<p class='${choice.wordType}'>${choice.text}</p>`;
   }
-  return choice.text;
+  return `<p>${choice.text}</p>`;
 };
 
 const makeChoice = choice => (
