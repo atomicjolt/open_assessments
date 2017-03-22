@@ -107,6 +107,16 @@ function getBody(userInput, question) {
       return formData;
     }
 
+    case 'clix_drag_and_drop': {
+      return {
+        type,
+        zoneConditions: _.map(userInput, input => ({
+          zoneId: input.zoneIndex,
+          droppableId: input.id,
+        }))
+      };
+    }
+
     default:
       return {
         type,
