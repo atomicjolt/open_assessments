@@ -4,23 +4,27 @@ import { scrub }                 from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
+function buildImageTag(url, alt) {
+  return `<p><img src="${url}" alt="${alt}"/></p>`;
+}
+
 // _.get is my new cocaine
 function serializeTargets(originalTarget, newTarget) {
   // TODO: not spider-man
   // const label = _.get(newTarget, 'label', originalTarget.label);
-  return [{
+  return [scrub({
     id: _.get(originalTarget, 'id', guid()),
     text: `<p><img src="http://i1.kym-cdn.com/photos/images/facebook/000/741/494/bcf.jpg" alt="target_area" /></p>`,
     // name: label,
     dropBehaviorType: genusTypes.target.reject,
-  }];
+  })];
 }
 
 function serializeZones(originalZones, newZones, targetId) {
   if (newZones && newZones.new) debugger;
   return _.map(originalZones, (zone) => {
     const newZone = newZones[zone.id];
-    return {
+    return scrub({
       id: _.get(zone, 'id', guid()),
       spatialUnit: {
         height: _.get(newZone, 'height', zone.height),
@@ -35,7 +39,7 @@ function serializeZones(originalZones, newZones, targetId) {
       visible: true,    // Right?
       containerId: targetId,
       // description: 'left of ball'   // Dunno what this is for
-    };
+    });
   });
 }
 
@@ -43,20 +47,21 @@ function serializeDroppables(originalDroppables, newDroppables) {
   const droppables =  _.map(originalDroppables, (droppable) => {
     const newDroppable = newDroppables[droppable.id];
     // TODO: not spider-man
-    return {
+    return scrub({
       id: droppable.id,
-      text: `<p><img src="http://i0.kym-cdn.com/photos/images/facebook/000/110/268/tumblr_lisp6ohmdy1qb3l9fo1_500.jpg" alt="${_.get(newDroppable, 'label', droppable.label)}" /></p>`,
+      text: buildImageTag('http://i0.kym-cdn.com/photos/images/facebook/000/110/268/tumblr_lisp6ohmdy1qb3l9fo1_500.jpg', _.get(newDroppable, 'label', droppable.label)),
       dropBehaviorType: genusTypes.zone[_.get(newDroppable, 'type', droppable.type)],
       name: _.get(newDroppable, 'label', droppable.label),
       reuse: 1,  // an integer field to indicate how many times something can be re-used (zone or droppable) 0 is infinite
-    };
+    });
   });
 
   if (newDroppables.new) {
     droppables.push({
       id: guid(),
-      text: `<p><img src="http://i0.kym-cdn.com/photos/images/facebook/000/110/268/tumblr_lisp6ohmdy1qb3l9fo1_500.jpg" alt="Spider-Man" /></p>`,
+      text: buildImageTag('http://i0.kym-cdn.com/photos/images/facebook/000/110/268/tumblr_lisp6ohmdy1qb3l9fo1_500.jpg', 'Spider-Man'),
       dropBehaviorType: genusTypes.zone.snap,
+      reuse: 1,
     });
   }
 
