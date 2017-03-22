@@ -62,6 +62,7 @@ export default (state = initialState, action) => {
     }
 
     case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE: {
+      let newState = state;
       if (!action.error) {
         let checkedResponses = Immutable.Map();
 
@@ -73,7 +74,7 @@ export default (state = initialState, action) => {
           checkedResponses = checkedResponses.set(id, feedback);
         });
 
-        return state.setIn(
+        newState = state.setIn(
           ['checkedResponses', `${action.questionIndex}`],
           checkedResponses
         );
@@ -84,7 +85,7 @@ export default (state = initialState, action) => {
       if (checked <= 0) {
         throw new Error('ASSESSMENT_CHECK_ANSWER_DONE dispatched when no answers were being checked');
       }
-      return state.set('numQuestionsChecking', checked - 1);
+      return newState.set('numQuestionsChecking', checked - 1);
     }
 
     case AssessmentConstants.CHECK_QUESTIONS: {
