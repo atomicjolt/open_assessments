@@ -39,66 +39,66 @@ function getAnswerSelectedData(store, action) {
   switch (question.question_type) {
     case 'movable_words_sentence':
     case 'movable_words_sandbox':
-      if (action.answerId instanceof String) {
-        if (currentAnswers.includes(action.answerId)) {
+      if (action.answerData instanceof String) {
+        if (currentAnswers.includes(action.answerData)) {
           return {
             action          : 'disconnect word',
-            targetWord      : answersById[action.answerId].material,
-            currentSentence : currentAnswers.map(answerId => (answersById[answerId].material))
+            targetWord      : answersById[action.answerData].material,
+            currentSentence : currentAnswers.map(answerData => (answersById[answerData].material))
           };
         }
         return {
           action          : 'connect word',
-          targetWord      : answersById[action.answerId].material,
-          currentSentence : currentAnswers.map(answerId => (answersById[answerId].material))
+          targetWord      : answersById[action.answerData].material,
+          currentSentence : currentAnswers.map(answerData => (answersById[answerData].material))
         };
       }
       break;
 
     case 'movable_object_chain':
-      if (currentAnswers.includes(action.answerId)) {
+      if (currentAnswers.includes(action.answerData)) {
         return {
           action             : 'disconnect object',
-          targetObject       : answersById[action.answerId].material,
-          currentObjectChain : currentAnswers.map(answerId => (answersById[answerId].material))
+          targetObject       : answersById[action.answerData].material,
+          currentObjectChain : currentAnswers.map(answerData => (answersById[answerData].material))
         };
       }
       return {
         action             : 'connect object',
-        targetObject       : answersById[action.answerId].material,
-        currentObjectChain : currentAnswers.map(answerId => (answersById[answerId].material))
+        targetObject       : answersById[action.answerData].material,
+        currentObjectChain : currentAnswers.map(answerData => (answersById[answerData].material))
       };
 
     case 'fill_the_blank_question':
       if (_.isEmpty(currentAnswers)) {
         return {
           action     : 'connect word',
-          targetWord : answersById[action.answerId].material
+          targetWord : answersById[action.answerData].material
         };
       }
       return {
         action     : 'disconnect word',
-        targetWord : answersById[action.answerId].material
+        targetWord : answersById[action.answerData].material
       };
 
     case 'multiple_choice_question':
       return {
         action       : 'select answer',
-        targetAnswer : answersById[action.answerId].material
+        targetAnswer : answersById[action.answerData].material
       };
 
     case 'multiple_answers_question':
-      if (currentAnswers.includes(action.answerId)) {
+      if (currentAnswers.includes(action.answerData)) {
         return {
           action         : 'deselect answer',
-          targetAnswer   : answersById[action.answerId].material,
-          currentAnswers : currentAnswers.map(answerId => (answersById[answerId].material))
+          targetAnswer   : answersById[action.answerData].material,
+          currentAnswers : currentAnswers.map(answerData => (answersById[answerData].material))
         };
       }
       return {
         action         : 'select answer',
-        targetAnswer   : answersById[action.answerId].material,
-        currentAnswers : currentAnswers.map(answerId => (answersById[answerId].material))
+        targetAnswer   : answersById[action.answerData].material,
+        currentAnswers : currentAnswers.map(answerData => (answersById[answerData].material))
       };
 
     default:

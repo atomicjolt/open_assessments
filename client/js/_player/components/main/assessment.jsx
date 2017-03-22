@@ -177,8 +177,8 @@ export class Assessment extends React.Component {
         audioPause={props.audioPause}
         audioRecordStart={props.audioRecordStart}
         audioRecordStop={props.audioRecordStop}
-        selectAnswer={(answerId, exclusive) => (
-          this.props.answerSelected(index, answerId, exclusive)
+        selectAnswer={(answerData, exclusive) => (
+          this.props.answerSelected(index, answerData, exclusive)
         )}
       />
     );
