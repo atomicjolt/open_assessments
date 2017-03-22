@@ -57,7 +57,10 @@ export class Question extends React.Component {
     [types.imageSequence]: ImageSequence,
   };
 
-  static stateDrivenTypes = [types.movableWordSentence];
+  static stateDrivenTypes = [
+    types.movableWordSentence,
+    types.imageSequence,
+  ];
 
   constructor(props) {
     super(props);

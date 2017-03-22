@@ -60,6 +60,12 @@ export default class ImageSequence extends React.Component {
           activateChoice={choiceId => this.activateChoice(choiceId)}
           activeChoice={this.state.activeChoice}
         />
+        <button
+          className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"
+          onClick={this.props.save}
+        >
+          Save
+        </button>
         <div className="au-c-question__feedback">
           { this.getFeedback() }
         </div>
