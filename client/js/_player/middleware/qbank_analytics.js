@@ -44,15 +44,14 @@ function getAnswerSelectedData(store, action) {
           return {
             action          : 'disconnect word',
             targetWord      : answersById[action.answerId].material,
-            currentSentence : currentAnswers.map((answerId) => (answersById[answerId].material))
-          };
-        } else {
-          return {
-            action          : 'connect word',
-            targetWord      : answersById[action.answerId].material,
-            currentSentence : currentAnswers.map((answerId) => (answersById[answerId].material))
+            currentSentence : currentAnswers.map(answerId => (answersById[answerId].material))
           };
         }
+        return {
+          action          : 'connect word',
+          targetWord      : answersById[action.answerId].material,
+          currentSentence : currentAnswers.map(answerId => (answersById[answerId].material))
+        };
       }
       break;
 
@@ -61,16 +60,14 @@ function getAnswerSelectedData(store, action) {
         return {
           action             : 'disconnect object',
           targetObject       : answersById[action.answerId].material,
-          currentObjectChain : currentAnswers.map((answerId) => (answersById[answerId].material))
-        };
-      } else {
-        return {
-          action             : 'connect object',
-          targetObject       : answersById[action.answerId].material,
-          currentObjectChain : currentAnswers.map((answerId) => (answersById[answerId].material))
+          currentObjectChain : currentAnswers.map(answerId => (answersById[answerId].material))
         };
       }
-      break;
+      return {
+        action             : 'connect object',
+        targetObject       : answersById[action.answerId].material,
+        currentObjectChain : currentAnswers.map(answerId => (answersById[answerId].material))
+      };
 
     case 'fill_the_blank_question':
       if (_.isEmpty(currentAnswers)) {
@@ -78,36 +75,31 @@ function getAnswerSelectedData(store, action) {
           action     : 'connect word',
           targetWord : answersById[action.answerId].material
         };
-      } else {
-        return {
-          action     : 'disconnect word',
-          targetWord : answersById[action.answerId].material
-        };
       }
-      break;
+      return {
+        action     : 'disconnect word',
+        targetWord : answersById[action.answerId].material
+      };
 
     case 'multiple_choice_question':
       return {
         action       : 'select answer',
         targetAnswer : answersById[action.answerId].material
       };
-      break;
 
     case 'multiple_answers_question':
       if (currentAnswers.includes(action.answerId)) {
         return {
           action         : 'deselect answer',
           targetAnswer   : answersById[action.answerId].material,
-          currentAnswers : currentAnswers.map((answerId) => (answersById[answerId].material))
-        };
-      } else {
-        return {
-          action         : 'select answer',
-          targetAnswer   : answersById[action.answerId].material,
-          currentAnswers : currentAnswers.map((answerId) => (answersById[answerId].material))
+          currentAnswers : currentAnswers.map(answerId => (answersById[answerId].material))
         };
       }
-      break;
+      return {
+        action         : 'select answer',
+        targetAnswer   : answersById[action.answerId].material,
+        currentAnswers : currentAnswers.map(answerId => (answersById[answerId].material))
+      };
 
     default:
       break;
@@ -116,7 +108,7 @@ function getAnswerSelectedData(store, action) {
 }
 
 export default {
-  [AssessmentProgressConstants.ASSESSMENT_NEXT_QUESTIONS]: (store, action) => {
+  [AssessmentProgressConstants.ASSESSMENT_NEXT_QUESTIONS]: (store) => {
     const analyticsData = {
       action: 'click next button'
     };
@@ -124,7 +116,7 @@ export default {
     postAnalytics(store, analyticsData);
   },
 
-  [AssessmentProgressConstants.ASSESSMENT_PREVIOUS_QUESTIONS]: (store, action) => {
+  [AssessmentProgressConstants.ASSESSMENT_PREVIOUS_QUESTIONS]: (store) => {
     const state = store.getState();
 
     if (state.assessment.requireNAnswers !== -1) {
