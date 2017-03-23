@@ -11,8 +11,11 @@ function collect(connect, monitor) {
 
 const target = {
   drop(props, monitor) {
-    props.dropItem(monitor.getItem());
+    props.dropItem(monitor.getItem(), monitor.getClientOffset());
     return monitor.getItem();
+  },
+  canDrop(props) {
+    return props.canDrop;
   }
 };
 

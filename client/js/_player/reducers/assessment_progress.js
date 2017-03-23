@@ -45,7 +45,25 @@ export default (state = initialState, action) => {
       // us search for it anyways. Immutable.fromJS on a string returns a string.
       const answerData = Immutable.fromJS(action.answerData);
 
-      const answerIndex = responses.indexOf(answerData);
+      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      // This is finding specific to drag and drop.
+      // THIS WILL NOT WORK FOR ANY OTHER QUESTION TYPE
+      const answerIndex = responses.findIndex(answer => (
+        answer.getIn(['droppable', 'id']) === answerData.getIn(['droppable', 'id']) &&
+        answer.get('zoneIndex') === answerData.get('zoneIndex')
+      ));
       const shouldToggle = !action.exclusive;
 
       // Only add answer to responses array if it doesn't exist

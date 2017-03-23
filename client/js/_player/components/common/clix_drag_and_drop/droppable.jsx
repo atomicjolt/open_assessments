@@ -3,9 +3,15 @@ import { DragSource }    from 'react-dnd';
 
 import ItemTypes         from '../draggable_item_types';
 
-const wordSource = {
-  beginDrag(props) {
-    return props.droppable;
+const droppableSource = {
+  beginDrag(props, monitor, component) {
+    const bounds = component.node.getBoundingClientRect();
+    return {
+      height: bounds.height,
+      width: bounds.width,
+      droppable: props.droppable,
+      previousZoneIndex: props.zoneIndex,
+    };
   }
 };
 
@@ -23,6 +29,7 @@ export class DraggableWord extends React.Component {
     text: React.PropTypes.string,
     className: React.PropTypes.string,
     hide: React.PropTypes.bool,
+    style: React.PropTypes.shape({}),
   };
 
   render() {
@@ -30,11 +37,14 @@ export class DraggableWord extends React.Component {
     const hide = this.props.hide || isDragging ? 'is-hidden' : '';
     return connectDragSource(
       <div
-        className={`${this.props.className} ${hide}`}
+        ref={ref => (this.node = ref)}
+        className={`${this.props.className || ''} ${hide}`}
+        style={this.props.style}
         dangerouslySetInnerHTML={{ __html: this.props.text }}
       />
     );
   }
 }
 
-export default DragSource(ItemTypes.CLIX_DROPPABLE, wordSource, collect)(DraggableWord);
+export default DragSource(ItemTypes.CLIX_DROPPABLE, droppableSource, collect)(DraggableWord);
+1687

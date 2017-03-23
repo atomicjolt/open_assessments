@@ -52,11 +52,13 @@ export function transformItem(item) {
         genusTypeId: 'question-type%3Adrag-and-drop%40ODL.MIT.EDU',
         shuffleDroppables: true,
         droppables: [{
+          id: '58d31d7d6bd87136ab09b45d',
           text: '<p><img src="http://www.example.com/draggable_green_dot_png" alt="Green dot" /></p>',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Green dot',
           reuse: 1
         }, {
+          id: '58d31d7d6bd87136ab09b45e',
           text: '<p><img src="http://www.example.com/draggable_red_dot_png" alt="Red dot" /></p>',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Red dot',
