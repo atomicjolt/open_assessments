@@ -104,9 +104,7 @@ export function getQuestionMaterial(xml, interactionName) {
 
   switch(interactionName) {
     case "inlineChoiceInteraction":
-      let item = xml.find("itemBody").clone();
-      item.find(interactionName).parent().remove();
-      return item.children();
+      return $(""); // Fill in the blank has no question material
   }
 
   return xml.find(`itemBody > *:not(${interactionName})`).clone()

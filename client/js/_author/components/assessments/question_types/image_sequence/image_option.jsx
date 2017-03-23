@@ -1,4 +1,5 @@
-import React   from 'react';
+import React from 'react';
+import _ from 'lodash';
 
 export default function ImageOption(props) {
 
@@ -12,14 +13,26 @@ export default function ImageOption(props) {
       { isActive ?
         <div className="au-c-image-sequence-answer__top">
           <div className="au-c-dropdown au-c-dropdown--tiny">
-            <label htmlFor=""></label>
-            <select name="" id="">
-              <option value="">N/A</option>
-              <option value="">1</option>
-              <option value="">2</option>
-              <option value="">3</option>
-              <option value="">4</option>
-              <option value="">5</option>
+            <label htmlFor="image_option_order" />
+            <select
+              name=""
+              id="image_option_order"
+              onChange={e => props.updateChoice({
+                id: props.id,
+                order: parseInt(e.target.value, 10)
+              })}
+              defaultValue={props.order}
+            >
+              {
+                _.map([null].concat(_.range(1, props.numChoices + 1)), (val, index) =>
+                  <option
+                    key={`option_key_${index}`}
+                    value={val}
+                  >
+                    {val === null ? 'N/A' : val}
+                  </option>
+                )
+              }
             </select>
           </div>
           <button className="au-c-answer--delete au-u-right" onClick={() => props.deleteChoice(props)}>
@@ -47,4 +60,6 @@ ImageOption.propTypes = {
   id: React.PropTypes.string,
   activeChoice: React.PropTypes.string,
   text: React.PropTypes.string,
+  order: React.PropTypes.number,
+  numChoices: React.PropTypes.number.isRequired,
 };
