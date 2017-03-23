@@ -11,21 +11,20 @@ import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 
 function select(state, props) {
-  const bankId = encodeURIComponent(props.params.bankId);
-  const id = encodeURIComponent(props.params.id);
-  const bankAssessments = state.assessments[bankId];
-  const assessmentItemIds = state.assessmentItems[id];
-  const assessment =
-    (bankAssessments && assessmentSelectors.transformAssessment(bankAssessments[id])) || {};
-  const settings = state.settings;
-
+  const bankId = assessmentSelectors.bankId(state, props);
+  const id = assessmentSelectors.id(state, props);
+  const assessment = assessmentSelectors.assessment(state, props);
   const items = assessmentSelectors.items(state, props);
+  const settings = assessmentSelectors.settings(state, props);
+  const banks = assessmentSelectors.banks(state, props);
+  const isPublished = assessmentSelectors.isPublished(state, props);
+
   return {
     assessment,
     items,
     settings,
-    banks: state.banks,
-    isPublished: assessmentSelectors.isPublished(assessment, settings),
+    banks,
+    isPublished,
     params: { // override react router because we want the escaped ids
       bankId,
       id,
@@ -64,7 +63,7 @@ export class EditAssessment extends React.Component {
     updateItem: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
     deleteAssessmentItem: React.PropTypes.func,
-    isPublished: React.PropTypes.func.isRequired,
+    isPublished: React.PropTypes.bool.isRequired,
   };
 
   componentDidMount() {
