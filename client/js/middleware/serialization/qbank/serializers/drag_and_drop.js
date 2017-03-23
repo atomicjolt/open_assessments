@@ -13,9 +13,9 @@ function serializeTargets(originalTarget, newTarget) {
   // TODO: not spider-man
   // const label = _.get(newTarget, 'label', originalTarget.label);
   return [scrub({
-    id: _.get(originalTarget, 'id', guid()),
+    id: _.get(originalTarget, 'id'),
     text: `<p><img src="http://i1.kym-cdn.com/photos/images/facebook/000/741/494/bcf.jpg" alt="target_area" /></p>`,
-    // name: label,
+    name: 'spiderman',
     dropBehaviorType: genusTypes.target.reject,
   })];
 }
@@ -25,7 +25,7 @@ function serializeZones(originalZones, newZones, targetId) {
   return _.map(originalZones, (zone) => {
     const newZone = newZones[zone.id];
     return scrub({
-      id: _.get(zone, 'id', guid()),
+      id: _.get(zone, 'id'),
       spatialUnit: {
         height: _.get(newZone, 'height', zone.height),
         width: _.get(newZone, 'width', zone.width),
@@ -58,10 +58,10 @@ function serializeDroppables(originalDroppables, newDroppables) {
 
   if (newDroppables.new) {
     droppables.push({
-      id: guid(),
       text: buildImageTag('http://i0.kym-cdn.com/photos/images/facebook/000/110/268/tumblr_lisp6ohmdy1qb3l9fo1_500.jpg', 'Spider-Man'),
       dropBehaviorType: genusTypes.zone.snap,
       reuse: 1,
+      name: 'droppable-x',
     });
   }
 
