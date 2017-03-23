@@ -12,7 +12,7 @@ function deserializeChoices(choices, correctAnswer, incorrectId) {
       id: choice.id,
       answerId: isCorrect ? correctAnswer.id : incorrectId,
       text: choice.text,
-      order: index,
+      order: index + 1,
       answerOrder: isCorrect ? answerIndex : null,
     };
   });
