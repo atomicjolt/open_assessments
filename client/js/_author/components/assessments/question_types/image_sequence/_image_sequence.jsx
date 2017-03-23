@@ -1,6 +1,7 @@
-import React      from 'react';
-import Feedback    from '../question_common/single_feedback';
-import ImageOrder  from './image_order';
+import React        from 'react';
+import Feedback     from '../question_common/single_feedback';
+import ImageOrder   from './image_order';
+import SaveOptions  from '../question_common/save_option_button';
 
 export default class ImageSequence extends React.Component {
   static propTypes = {
@@ -61,12 +62,7 @@ export default class ImageSequence extends React.Component {
           activateChoice={choiceId => this.activateChoice(choiceId)}
           activeChoice={this.state.activeChoice}
         />
-        <button
-          className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"
-          onClick={this.props.save}
-        >
-          Save
-        </button>
+        <SaveOptions save={this.props.save} />
         <div className="au-c-question__feedback">
           { this.getFeedback() }
         </div>
