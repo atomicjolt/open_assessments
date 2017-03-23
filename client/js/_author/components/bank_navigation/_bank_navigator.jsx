@@ -99,6 +99,23 @@ export class BankNavigator extends React.Component {
     }
   }
 
+  // editOrPublishAssessment(published) {
+  //   const { assessment, settings } = this.props;
+  //   if (published) {
+  //     this.props.deleteAssignedAssessment(assessment, settings.publishedBankId);
+  //     this.props.editOrPublishAssessment(assessment, settings.editableBankId);
+  //   } else {
+  //     if (_.includes(assessment.assignedBankIds, this.props.settings.editableBankId)) {
+  //       this.props.deleteAssignedAssessment(assessment, settings.editableBankId);
+  //     }
+  //     if (_.isEmpty(assessment.assessmentOffered) && !_.isEmpty(this.props.items)) {
+  //       this.props.createAssessmentOffered(assessment.bankId, assessment.id);
+  //     }
+  //     this.props.editOrPublishAssessment(assessment, settings.publishedBankId);
+  //   }
+  // }
+
+
   render() {
     const { createAssessment, currentBankId, updatePath, settings } = this.props;
     return (
