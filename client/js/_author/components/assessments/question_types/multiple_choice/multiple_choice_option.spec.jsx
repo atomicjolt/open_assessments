@@ -20,6 +20,8 @@ describe('Multiple Choice Option', () => {
       moveUp: (e) => { moveChoice = e.target.innerText; },
       moveDown: (e) => { moveChoice = e.target.innerText; },
       isActive: true,
+      itemType: '',
+      bankId: '',
     };
     result = shallow(<Option {...props} />);
   });

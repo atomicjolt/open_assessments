@@ -20,15 +20,6 @@ export function getItems(bankId) {
   };
 }
 
-export function createItem(bankId, item) {
-  return {
-    bankId,
-    apiCall : true,
-    type    : Constants.CREATE_ITEM,
-    body    : item
-  };
-}
-
 export function updateItem(bankId, item) {
   return {
     bankId,
@@ -36,5 +27,23 @@ export function updateItem(bankId, item) {
     apiCall : true,
     type    : Constants.UPDATE_ITEM,
     body    : item
+  };
+}
+
+export function createChoice(bankId, itemId) {
+  const newItem = {
+    id: itemId,
+    question: {
+      choices: {
+        new: { id: 'new' },
+      },
+    }
+  };
+  return {
+    bankId,
+    itemId,
+    apiCall : true,
+    type    : Constants.UPDATE_ITEM,
+    body    : newItem
   };
 }

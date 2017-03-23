@@ -12,6 +12,7 @@ describe('audio_upload component', () => {
     props = {
       updateItem: () => {itemUpdated = true},
       item: {
+        bankId: '',
         id: '76',
         displayName: {
           text: 'IMATITLESPEC',
@@ -35,11 +36,6 @@ describe('audio_upload component', () => {
     result = shallow(<AudioUpload {...props} />);
   });
 
-  it('renders 3 spans', () => {
-    const spans = result.find('span');
-    expect(spans.length).toBe(3);
-  });
-
   it('handles updateItem through handleBlur', () => {
     expect(itemUpdated).toBeFalsy();
     const input = {
@@ -49,21 +45,5 @@ describe('audio_upload component', () => {
     };
     result.instance().handleBlur(input);
     expect(itemUpdated).toBeTruthy();
-  });
-
-  it('runs the getAudioLimit static function', () => {
-    const inputs = result.find('.au-c-text-input--smaller');
-    expect(inputs.at(0).nodes[0].props.value).toBe('7900');
-  });
-
-  it('runs the getAudioLimit static function', () => {
-    props.item.question.timeValue = {
-      hours: '7',
-      minutes: '70',
-      seconds: '700',
-    };
-    const newResult = shallow(<AudioUpload {...props} />);
-    const secondInput = newResult.find('.au-c-text-input--smaller');
-    expect(secondInput.at(0).nodes[0].props.value).toBe('30100');
   });
 });

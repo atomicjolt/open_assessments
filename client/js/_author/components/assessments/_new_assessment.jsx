@@ -18,7 +18,6 @@ export class NewAssessment extends React.Component {
     params: React.PropTypes.shape({ id: React.PropTypes.string }).isRequired,
     editableBankId: React.PropTypes.string.isRequired,
     createAssessment: React.PropTypes.func.isRequired,
-    publishAssessment: React.PropTypes.func.isRequired,
     createAssessmentWithItem: React.PropTypes.func.isRequired,
   };
 
@@ -73,7 +72,6 @@ export class NewAssessment extends React.Component {
       <div>
         <Heading
           view="assessments"
-          publishAssessment={this.props.publishAssessment}
           isPublished={false}
           assessment={{ bankId: this.props.params.id, assessmentId: null }}
           items={[]}
@@ -82,6 +80,7 @@ export class NewAssessment extends React.Component {
         <AssessmentForm
           updateAssessment={assessment => this.createAssessment(assessment)}
           createItem={newItem => this.createItem(newItem)}
+          createChoice={() => {}}
         />
       </div>
     );

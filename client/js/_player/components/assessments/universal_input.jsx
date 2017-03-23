@@ -29,7 +29,7 @@ export default class UniversalInput extends React.Component{
     // Item to be displayed
     item: React.PropTypes.object.isRequired,
 
-    selectAnswer: React.PropTypes.func.isRequired,
+    selectAnswer: React.PropTypes.func,
 
     // Whether or not entire question should be disabled
     isResult: React.PropTypes.bool,
@@ -38,11 +38,11 @@ export default class UniversalInput extends React.Component{
     response: React.PropTypes.array,
 
     // User facing strings of the language specified by the 'locale' setting
-    localizedStrings: React.PropTypes.object.isRequired,
+    localizedStrings: React.PropTypes.object,
 
     // Actions to trigger when recordings are started or stopped
-    audioRecordStart: React.PropTypes.func.isRequired,
-    audioRecordStop: React.PropTypes.func.isRequired
+    audioRecordStart: React.PropTypes.func,
+    audioRecordStop: React.PropTypes.func
   }
 
   wasSelected(id) {
@@ -211,7 +211,7 @@ export default class UniversalInput extends React.Component{
         break;
       case "movable_words_sandbox":
         var selectAnswer = _.partialRight(props.selectAnswer, false);
-        // Moveable words sandbox stores both audio files, and word id's in global
+        // Movable words sandbox stores both audio files, and word id's in global
         // state. Grab only the word id's for the word chain.
         const words = props.response.filter((item) => typeof item === 'string');
         answerInputs = <SentenceSandbox
