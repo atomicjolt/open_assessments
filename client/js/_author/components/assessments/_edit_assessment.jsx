@@ -19,9 +19,10 @@ function select(state, props) {
     (bankAssessments && assessmentSelectors.transformAssessment(bankAssessments[id])) || {};
   const settings = state.settings;
 
+  const items = assessmentSelectors.items(state, props);
   return {
     assessment,
-    items: _.compact(_.at(state.items[bankId], assessmentItemIds)),
+    items,
     settings,
     banks: state.banks,
     isPublished: assessmentSelectors.isPublished(assessment, settings),
@@ -112,6 +113,7 @@ export class EditAssessment extends React.Component {
 
   editOrPublishAssessment(published) {
     const { assessment, settings } = this.props;
+    debugger;
     if (published) {
       this.props.deleteAssignedAssessment(assessment, settings.publishedBankId);
       this.props.editOrPublishAssessment(assessment, settings.editableBankId);
