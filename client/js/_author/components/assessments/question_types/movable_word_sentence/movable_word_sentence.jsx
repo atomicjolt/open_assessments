@@ -1,8 +1,9 @@
-import React      from 'react';
-import _          from 'lodash';
-import Option     from './option';
-import Add        from '../question_common/add_option';
-import Feedback   from '../question_common/single_feedback';
+import React       from 'react';
+import _           from 'lodash';
+import Option      from './option';
+import Add         from '../question_common/add_option';
+import Feedback    from '../question_common/single_feedback';
+import SaveOptions from '../question_common/save_option_button';
 
 export default class MovableWordSentence extends React.Component {
   static propTypes = {
@@ -46,23 +47,18 @@ export default class MovableWordSentence extends React.Component {
           <Add
             createChoice={() => this.props.createChoice(id)}
           />
-          <button
-            className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"
-            onClick={this.props.save}
-          >
-            Save
-          </button>
+        <SaveOptions save={this.props.save} />
         </div>
         <div className="au-c-question__feedback">
           <Feedback
-            updateItem={this.props.updateItem}
+            updateItem={item => this.props.updateItem(item, true)}
             feedbackType="correctFeedback"
             feedback={question.correctFeedback}
             labelText="Correct Feedback"
             bankId={this.props.item.bankId}
           />
           <Feedback
-            updateItem={this.props.updateItem}
+            updateItem={item => this.props.updateItem(item, true)}
             feedbackType="incorrectFeedback"
             feedback={question.incorrectFeedback}
             labelText="Incorrect Feedback"

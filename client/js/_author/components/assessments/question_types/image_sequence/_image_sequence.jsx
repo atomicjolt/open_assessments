@@ -1,6 +1,7 @@
-import React      from 'react';
-import Feedback    from '../question_common/single_feedback';
-import ImageOrder  from './image_order';
+import React        from 'react';
+import Feedback     from '../question_common/single_feedback';
+import ImageOrder   from './image_order';
+import SaveOptions  from '../question_common/save_option_button';
 
 export default class ImageSequence extends React.Component {
   static propTypes = {
@@ -16,6 +17,7 @@ export default class ImageSequence extends React.Component {
     }).isRequired,
     updateItem: React.PropTypes.func,
     activateChoice: React.PropTypes.func,
+    save: React.PropTypes.func,
   };
 
   constructor(props) {
@@ -31,14 +33,14 @@ export default class ImageSequence extends React.Component {
     return (
       <div className="au-c-question__feedback">
         <Feedback
-          updateItem={this.props.updateItem}
+          updateItem={item => this.props.updateItem(item, true)}
           feedbackType="correctFeedback"
           feedback={question.correctFeedback}
           labelText="Correct Feedback"
           bankId={this.props.item.bankId}
         />
         <Feedback
-          updateItem={this.props.updateItem}
+          updateItem={item => this.props.updateItem(item, true)}
           feedbackType="incorrectFeedback"
           feedback={question.incorrectFeedback}
           labelText="Incorrect Feedback"
@@ -60,6 +62,7 @@ export default class ImageSequence extends React.Component {
           activateChoice={choiceId => this.activateChoice(choiceId)}
           activeChoice={this.state.activeChoice}
         />
+        <SaveOptions save={this.props.save} />
         <div className="au-c-question__feedback">
           { this.getFeedback() }
         </div>

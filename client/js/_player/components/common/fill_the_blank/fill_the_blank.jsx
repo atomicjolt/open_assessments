@@ -1,9 +1,8 @@
 import _                              from "lodash";
 import React                          from "react";
 import ReactDOM                       from "react-dom";
-import { DragDropContext }            from 'react-dnd';
-import HTML5Backend                   from 'react-dnd-html5-backend';
 
+import withDragDropContext            from "../with_drag_drop_context";
 import { FillTheBlankDraggableWord }  from "../draggable_word";
 import { FillTheBlankWordDropZone }   from "../drop_zones";
 import { WordDropZone }               from "../drop_zones";
@@ -84,4 +83,4 @@ export class FillTheBlank extends React.Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(FillTheBlank);
+export default withDragDropContext(FillTheBlank);
