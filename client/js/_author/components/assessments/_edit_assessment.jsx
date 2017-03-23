@@ -3,7 +3,7 @@ import { connect }            from 'react-redux';
 import _                      from 'lodash';
 
 import hashHistory            from '../../history';
-import { transformAssessment } from '../../selectors/assessment';
+import  * as assessmentSelectors from '../../selectors/assessment';
 import Heading                from  '../common/heading';
 import AssessmentForm         from './assessment_form';
 import * as BankActions       from '../../../actions/qbank/banks';
@@ -15,12 +15,16 @@ function select(state, props) {
   const id = encodeURIComponent(props.params.id);
   const bankAssessments = state.assessments[bankId];
   const assessmentItemIds = state.assessmentItems[id];
+  const assessment =
+    (bankAssessments && assessmentSelectors.transformAssessment(bankAssessments[id])) || {};
+  const settings = state.settings;
 
   return {
-    assessment: (bankAssessments && transformAssessment(bankAssessments[id])) || {},
+    assessment,
     items: _.compact(_.at(state.items[bankId], assessmentItemIds)),
-    settings: state.settings,
+    settings,
     banks: state.banks,
+    isPublished: assessmentSelectors.isPublished(assessment, settings),
     params: { // override react router because we want the escaped ids
       bankId,
       id,
@@ -59,6 +63,7 @@ export class EditAssessment extends React.Component {
     updateItem: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
     deleteAssessmentItem: React.PropTypes.func,
+    isPublished: React.PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -149,8 +154,7 @@ export class EditAssessment extends React.Component {
   }
 
   render() {
-    const { assessment, settings } = this.props;
-    const isPublished =  assessment ? _.includes(assessment.assignedBankIds, settings.publishedBankId) : false;
+    const { assessment, isPublished } = this.props;
     const publishedAndOffered = isPublished && !_.isUndefined(assessment.assessmentOffered);
     return (
       <div>
