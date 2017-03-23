@@ -8,12 +8,13 @@ export const assessmentItems = state => state.assessmentItems;
 export const settings = state => state.settings;
 export const banks = state => state.banks;
 
-export function transformAssessment(assessment, items = []) {
+export function transformAssessment(assessment, items = [], published) {
   if (!assessment) return {};
   const fixedAssessment = {
     ...assessment,
     name: assessment.displayName.text,
-    items
+    items,
+    isPublished: published,
   };
 
   return fixedAssessment;
@@ -39,22 +40,28 @@ export const items = createSelector(
   (_items, _bankId, _assessmentItemIds) => _.compact(_.at(_items[_bankId], _assessmentItemIds))
 );
 
+const _isPublished = (_assessment, _settings) => _.includes(
+  _assessment.assignedBankIds,
+  _settings.publishedBankId,
+);
+
 export const assessment = createSelector(
   bankAssessments,
   id,
   items,
-  (_bankAssessments, _id, _items) => (
-    _bankAssessments && transformAssessment(_bankAssessments[_id], _items)
-  ) || {}
+  settings,
+  (_bankAssessments, _id, _items, _settings) => {
+    if (_.isUndefined(_bankAssessments)) { return {}; }
+    const _assessment = _bankAssessments[_id];
+    const _published = _isPublished(_assessment, _settings);
+    return transformAssessment(_assessment, _items, _published);
+  }
 );
 
 export const isPublished = createSelector(
   assessment,
   settings,
-  (_assessment, _settings) => _.includes(
-    _assessment.assignedBankIds,
-    _settings.publishedBankId,
-  )
+  _isPublished,
 );
 
 
