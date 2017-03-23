@@ -23,37 +23,37 @@ export function transformAssessment(assessment, items = []) {
 export const bankAssessments = createSelector(
   bankId,
   state => state.assessments,
-  (bankId, assessments) => assessments[bankId],
+  (_bankId, _assessments) => _assessments[_bankId],
 );
 
 export const assessmentItemIds = createSelector(
   assessmentItems,
   id,
-  (assessmentItems, id) => assessmentItems[id],
+  (_assessmentItems, _id) => _assessmentItems[_id],
 );
 
 export const items = createSelector(
   allItems,
   bankId,
   assessmentItemIds,
-  (items, bankId, assessmentItemIds) => _.compact(_.at(items[bankId], assessmentItemIds))
+  (_items, _bankId, _assessmentItemIds) => _.compact(_.at(_items[_bankId], _assessmentItemIds))
 );
 
 export const assessment = createSelector(
   bankAssessments,
   id,
   items,
-  (bankAssessments, id, items) => (
-    bankAssessments && transformAssessment(bankAssessments[id], items)
+  (_bankAssessments, _id, _items) => (
+    _bankAssessments && transformAssessment(_bankAssessments[_id], _items)
   ) || {}
 );
 
 export const isPublished = createSelector(
   assessment,
   settings,
-  (assessment, settings) => _.includes(
-    assessment.assignedBankIds,
-    settings.publishedBankId,
+  (_assessment, _settings) => _.includes(
+    _assessment.assignedBankIds,
+    _settings.publishedBankId,
   )
 );
 
