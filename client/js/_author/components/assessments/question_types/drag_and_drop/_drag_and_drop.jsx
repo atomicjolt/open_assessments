@@ -28,8 +28,9 @@ export default class DragAndDrop extends React.Component {
         />
         <div className="au-c-drop-zone__answers__label">Draggable answers</div>
         <DragArea
-          dragObjects={question.dragObjects}
+          dropObjects={question.dropObjects}
           createChoice={this.props.createChoice}
+          updateChoice={(choiceId, choice, fileIds) => this.props.updateChoice(id, choiceId, choice, fileIds, 'dropObjects')}
         />
 
         <div className="au-c-question__feedback">

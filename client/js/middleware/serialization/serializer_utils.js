@@ -50,6 +50,10 @@ export function parseChoiceWordType(text) {
 }
 
 export function getImageUrl(text) {
-  const parsedInput = $.parseHTML(text);
+  let parsedInput = $.parseHTML(text);
+  const img = $(parsedInput).find('img');
+  if (img) {
+    parsedInput = img;
+  }
   return $(parsedInput).attr('src');
 }
