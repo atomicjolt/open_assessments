@@ -16,10 +16,8 @@ export default class DragArea extends React.Component {
   render() {
     const logo = assets('./_author/images/CLIx-logo.png');
 
-    console.log(this.props.dropObjects);
     return (
       <div className="au-c-drop-zone__answers au-o-row">
-
         {
           _.map(this.props.dropObjects, object => (
             <div

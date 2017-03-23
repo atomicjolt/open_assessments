@@ -114,12 +114,12 @@ export class Question extends React.Component {
     }
   }
 
-  updateChoice(itemId, choiceId, choice, fileIds) {
+  updateChoice(itemId, choiceId, choice, fileIds, type) {
     const { item } = this.props;
     const updateAttributes = {
       id: itemId,
       question: {
-        choices: {
+        [type || 'choices']: {
           [choiceId]: choice,
         },
         fileIds,

@@ -56,12 +56,11 @@ function serializeDroppables(originalDroppables, newDroppables) {
     });
   });
 
-  if (newDroppables.new) {
+  if (newDroppables && newDroppables.new) {
     droppables.push({
       text: buildImageTag('http://i0.kym-cdn.com/photos/images/facebook/000/110/268/tumblr_lisp6ohmdy1qb3l9fo1_500.jpg', 'Spider-Man'),
       dropBehaviorType: genusTypes.zone.snap,
       reuse: 1,
-      name: 'droppable-x',
     });
   }
 
