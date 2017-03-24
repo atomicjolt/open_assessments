@@ -3,6 +3,7 @@ import { connect }       from 'react-redux';
 import _                 from 'lodash';
 import guid              from '../../../../../utils/guid';
 import * as AssetActions from '../../../../../actions/qbank/assets';
+import UploadModal       from '../../../common/editor_upload_modal';
 
 function select(state) {
   return {
@@ -27,6 +28,7 @@ export class AddImage extends React.Component {
     super();
     this.state = {
       mediaGuid: null,
+      modal: false,
     };
   }
 
@@ -80,8 +82,20 @@ export class AddImage extends React.Component {
   render() {
     return (
       <div className="au-c-image-sequence-answer-add">
-        <button className="au-c-image-sequence-answer-add__button">
-          {this.getImageFile()}
+        <button
+          className="au-c-image-sequence-answer-add__button"
+          onClick={() => this.setState({ modal: true })}
+        >
+          <UploadModal
+            isOpen={this.state.modal}
+            closeModal={() => this.setState({ modal: false })}
+            mediaType="video"
+            mediaName="SLAGATHOR THE DESTROYER"
+            insertMedia={() => console.log('Inserting Media')}
+            uploadMedia={e => console.log(e)}
+            inProgress={false}
+            error={null}
+          />
           Add Image
         </button>
       </div>
