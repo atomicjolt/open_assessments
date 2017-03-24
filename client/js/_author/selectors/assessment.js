@@ -63,26 +63,3 @@ export const isPublished = createSelector(
   settings,
   _isPublished,
 );
-
-
-export function togglePublishAssessment(assessment, settings) {
-  const published = isPublished(assessment, settings);
-  const shouldCreateOffered =
-    _.isEmpty(assessment.assessmentOffered) && !_.isEmpty(items);
-  const shouldDeleteAssessment =
-    _.includes(assessment.assignedBankIds, settings.editableBankId);
-
-  if (published) {
-    this.props.deleteAssignedAssessment(assessment, settings.publishedBankId);
-    this.props.editOrPublishAssessment(assessment, settings.editableBankId);
-    return;
-  }
-
-  if (shouldDeleteAssessment) {
-    this.props.deleteAssignedAssessment(assessment, settings.editableBankId);
-  }
-  if (shouldCreateOffered) {
-    this.props.createAssessmentOffered(assessment.bankId, assessment.id);
-  }
-  this.props.editOrPublishAssessment(assessment, settings.publishedBankId);
-}

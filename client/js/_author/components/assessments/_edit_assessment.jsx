@@ -112,7 +112,6 @@ export class EditAssessment extends React.Component {
 
   editOrPublishAssessment(published) {
     const { assessment, settings } = this.props;
-    debugger;
     if (published) {
       this.props.deleteAssignedAssessment(assessment, settings.publishedBankId);
       this.props.editOrPublishAssessment(assessment, settings.editableBankId);
