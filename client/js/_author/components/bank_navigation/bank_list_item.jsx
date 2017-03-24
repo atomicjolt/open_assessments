@@ -16,14 +16,8 @@ export default function bankListItem(props) {
     display: isAssessment ? '' : 'none',
   };
 
-  function getPreviewUrl(bankId, assessmentId) {
-    return (`banks/${bankId}/assessments/${assessmentId}/preview`);
-  }
-
   const selectItem = () => {
-    if (isAssessment && isPublished) {
-      appHistory.push(getPreviewUrl(bank.bankId, bank.id));
-    } else if (isAssessment) {
+    if (isAssessment) {
       appHistory.push(`banks/${bank.bankId}/assessments/${bank.id}`);
     } else {
       props.getBankChildren(bank.id);
@@ -92,7 +86,8 @@ export default function bankListItem(props) {
         className="au-c-btn au-c-btn--square au-c-btn--table"
         onClick={(e) => {
           e.stopPropagation();
-          appHistory.push(getPreviewButton(bankId, assessmentId));
+          appHistory.push(
+            `banks/${bankId}/assessments/${assessmentId}/preview`);
         }}
       >
         <i className="material-icons">remove_red_eye</i>
