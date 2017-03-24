@@ -23,6 +23,7 @@ export default class EditorUploadModal extends React.Component {
   constructor() {
     super();
     this.state = {
+      uploadedImage: null,
       description: '',
       altText: '',
       license: '',
@@ -58,6 +59,13 @@ export default class EditorUploadModal extends React.Component {
           </button>
         </div>
 
+        <div style={{ display: this.state.uploadedImage ? 'none' : 'block' }}>
+          <h3>Select an Image</h3>
+          // TODO: put images here
+
+          <h3>Upload a new Image</h3>
+        </div>
+
         <div className="au-c-wysiwyg-modal__main">
           <div className="au-o-flex-center  au-u-mb-md">
             <span className="au-c-wysiwyg-media__label">File</span>
@@ -66,7 +74,7 @@ export default class EditorUploadModal extends React.Component {
             </div>
             <div className="au-c-input--file  au-u-ml-sm">
               <input
-                onChange={e => this.props.uploadMedia(e.target.files[0])}
+                onChange={e => this.setState({ uploadedImage: e.target.files[0] })}
                 id="fileid"
                 type="file"
               />
@@ -77,7 +85,7 @@ export default class EditorUploadModal extends React.Component {
           </div>
         </div>
 
-        <div>
+        <div style={{ display: this.state.uploadedImage ? 'block' : 'none' }}>
           <div className="au-c-input au-c-input-label--left">
             <label htmlFor={`upload_desc_${this.props.id}`}>Description</label>
             <div className="au-c-input__contain">

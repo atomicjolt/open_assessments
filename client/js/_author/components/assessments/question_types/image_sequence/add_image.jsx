@@ -89,8 +89,8 @@ export class AddImage extends React.Component {
           <UploadModal
             isOpen={this.state.modal}
             closeModal={() => this.setState({ modal: false })}
-            mediaType="video"
-            mediaName="SLAGATHOR THE DESTROYER"
+            mediaType="img"
+            mediaName=""
             insertMedia={() => console.log('Inserting Media')}
             uploadMedia={e => console.log(e)}
             inProgress={false}
