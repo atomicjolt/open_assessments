@@ -1,8 +1,7 @@
 import React                from "react";
 import ReactDOM             from "react-dom";
-import { DragDropContext }  from 'react-dnd';
-import HTML5Backend         from 'react-dnd-html5-backend';
 
+import withDragDropContext  from "../with_drag_drop_context";
 import DraggableWord        from "../draggable_word";
 import { GroupDropZone }    from "../drop_zones";
 import ItemChain            from "../item_chain";
@@ -74,7 +73,7 @@ export class MovableWords extends React.Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(MovableWords);
+export default withDragDropContext(MovableWords);
 // This is code to absolutely position words in the word cloud when they are dragged.
 // We are not sure that MIT wants this, currently we are just hiding the words
 // and displaying all of them inline-block

@@ -61,6 +61,7 @@ export default class newItemForm extends React.Component {
                 <label htmlFor="questionType" />
                 <div className="au-c-dropdown au-c-dropdown--medium">
                   <select
+                    defaultValue={this.state.type}
                     onChange={e => this.updateType(e.target.value)}
                     name=""
                     id="questionType"
