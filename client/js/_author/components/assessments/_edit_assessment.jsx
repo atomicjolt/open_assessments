@@ -11,23 +11,15 @@ import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 
 function select(state, props) {
-  const bankId = assessmentSelectors.bankId(state, props);
-  const id = assessmentSelectors.id(state, props);
-  const assessment = assessmentSelectors.assessment(state, props);
-  const items = assessmentSelectors.items(state, props);
-  const settings = assessmentSelectors.settings(state, props);
-  const banks = assessmentSelectors.banks(state, props);
-  const isPublished = assessmentSelectors.isPublished(state, props);
-
   return {
-    assessment,
-    items,
-    settings,
-    banks,
-    isPublished,
+    assessment: assessmentSelectors.assessment(state, props),
+    items: assessmentSelectors.items(state, props),
+    settings: assessmentSelectors.settings(state, props),
+    banks: assessmentSelectors.banks(state, props),
+    isPublished: assessmentSelectors.isPublished(state, props),
     params: { // override react router because we want the escaped ids
-      bankId,
-      id,
+      bankId: assessmentSelectors.bankId(state, props),
+      id: assessmentSelectors.id(state, props),
     }
   };
 }
