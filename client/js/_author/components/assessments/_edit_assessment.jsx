@@ -160,7 +160,9 @@ export class EditAssessment extends React.Component {
       <div>
         <Heading
           view="assessments"
-          editOrPublishAssessment={(published) => { this.editOrPublishAssessment(published); }}
+          togglePublishAssessment={
+            () => this.props.togglePublishAssessment(this.props.assessment)
+          }
           isPublished={isPublished}
           assessment={this.props.assessment}
           items={this.props.items}

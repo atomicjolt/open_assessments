@@ -5,7 +5,7 @@ import Icon             from '../bank_navigation/bank_icon';
 
 export default class NavigationBarContent extends React.Component {
   static propTypes = {
-    editOrPublishAssessment: React.PropTypes.func,
+    togglePublishAssessment: React.PropTypes.func,
     isPublished: React.PropTypes.bool.isRequired,
     items: React.PropTypes.array.isRequired,
     assessment: React.PropTypes.object.isRequired,
@@ -16,7 +16,7 @@ export default class NavigationBarContent extends React.Component {
       return (
         <button
           className="au-c-btn au-c-btn--sm au-c-btn--green"
-          onClick={() => this.props.editOrPublishAssessment(this.props.isPublished)}
+          onClick={() => this.props.togglePublishAssessment()}
         >
           <Icon type={this.props.isPublished ? 'Published' : 'Publish'} />
           {this.props.isPublished ? 'Unpublish' : 'Publish'}
