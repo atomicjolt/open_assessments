@@ -30,6 +30,9 @@ export class DraggableWord extends React.Component {
     className: React.PropTypes.string,
     hide: React.PropTypes.bool,
     style: React.PropTypes.shape({}),
+    droppable: React.PropTypes.shape({
+      text: React.PropTypes.string,
+    })
   };
 
   render() {
@@ -40,11 +43,10 @@ export class DraggableWord extends React.Component {
         ref={ref => (this.node = ref)}
         className={`${this.props.className || ''} ${hide}`}
         style={this.props.style}
-        dangerouslySetInnerHTML={{ __html: this.props.text }}
+        dangerouslySetInnerHTML={{ __html: this.props.droppable.text }}
       />
     );
   }
 }
 
 export default DragSource(ItemTypes.CLIX_DROPPABLE, droppableSource, collect)(DraggableWord);
-1687

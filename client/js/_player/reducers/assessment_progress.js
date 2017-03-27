@@ -45,25 +45,20 @@ export default (state = initialState, action) => {
       // us search for it anyways. Immutable.fromJS on a string returns a string.
       const answerData = Immutable.fromJS(action.answerData);
 
-      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // DO NOT LEAVE THIS IN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-      // This is finding specific to drag and drop.
-      // THIS WILL NOT WORK FOR ANY OTHER QUESTION TYPE
-      const answerIndex = responses.findIndex(answer => (
-        answer.getIn(['droppable', 'id']) === answerData.getIn(['droppable', 'id']) &&
-        answer.get('zoneIndex') === answerData.get('zoneIndex')
-      ));
+      /*
+        If answerData is not a string we're assuming there will be an id field
+        and that it will be unique. For clix drag and drop, id will be a map
+        containing both id and zone. That's why we're using Immutable.is() for
+        the equality comparison.
+      */
+      const answerIndex = responses.findIndex((answer) => {
+        if (typeof answerData === 'string') {
+          return answerData === answer;
+        }
+
+        return Immutable.is(answer.get('id'), answerData.get('id'));
+      });
+
       const shouldToggle = !action.exclusive;
 
       // Only add answer to responses array if it doesn't exist
