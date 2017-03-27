@@ -20,14 +20,6 @@ export function getBanks() {
   };
 }
 
-export function getMedia(bankId) {
-  return {
-    apiCall : true,
-    bankId,
-    type    : Constants.GET_MEDIA,
-  };
-}
-
 export function updatePath(id, bank, back) {
   return {
     id,
