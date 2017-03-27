@@ -42,9 +42,14 @@ export default function ImageOption(props) {
         : null
       }
       <div className="au-c-input au-c-input-label--left">
-        <label htmlFor="">Label</label>
+        <label htmlFor="props.id">Label</label>
         <div className="au-c-input__contain">
-          <input className="au-c-text-input au-c-text-input--smaller" type="text" />
+          <input
+            onChange={e => this.updateName(e.target.value)}
+            className="au-c-text-input au-c-text-input--smaller"
+            type="text"
+            id="props.id"
+          />
           <div className="au-c-input__bottom" />
         </div>
       </div>

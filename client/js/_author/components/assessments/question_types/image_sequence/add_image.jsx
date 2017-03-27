@@ -19,7 +19,7 @@ export class AddImage extends React.Component {
     }),
     uploadScopeId: React.PropTypes.string.isRequired,
     uploadMedia: React.PropTypes.func.isRequired,
-    updateChoice: React.PropTypes.func.isRequired,
+    createChoice: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({})
   };
 
@@ -31,7 +31,7 @@ export class AddImage extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    const { uploadedAssets, uploadScopeId, item } = this.props;
+    const { uploadedAssets, uploadScopeId } = this.props;
     if (uploadedAssets
       && nextProps.uploadedAssets[uploadScopeId]
       && _.size(nextProps.uploadedAssets[uploadScopeId]) !== _.size(uploadedAssets[uploadScopeId])) {
