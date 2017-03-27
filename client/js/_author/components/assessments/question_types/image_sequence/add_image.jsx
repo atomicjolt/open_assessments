@@ -79,6 +79,11 @@ export class AddImage extends React.Component {
     );
   }
 
+  insertMedia() {
+    console.log('Inserting Media');
+    this.setState({ modal: false });
+  }
+
   render() {
     return (
       <div className="au-c-image-sequence-answer-add">
@@ -91,7 +96,7 @@ export class AddImage extends React.Component {
             closeModal={() => this.setState({ modal: false })}
             mediaType="img"
             mediaName=""
-            insertMedia={() => console.log('Inserting Media')}
+            insertMedia={() => this.insertMedia()}
             uploadMedia={e => console.log(e)}
             inProgress={false}
             error={null}
