@@ -129,7 +129,9 @@ export default function bankListItem(props) {
       <td>
         <div className="au-c-table__icons" style={buttonContainer}>
           {embedButtonOrUrl()}
-          <button className="au-c-btn au-c-btn--square au-c-btn--table">
+          <button
+            className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
+          >
             <i className="material-icons">edit</i>
           </button>
           {getPreviewButton(bank.bankId, bank.id)}
