@@ -21,9 +21,18 @@ const requests = [
   'DELETE_ASSIGNED_ASSESSMENT',
   'GET_ASSESSMENT_PREVIEW',
   'UPDATE_SINGLE_ITEM_OR_PAGE',
+  'TOGGLE_PUBLISH_ASSESSMENT'
 ];
 
 export const Constants = wrapper(actions, requests);
+
+export function togglePublishAssessment(assessment){
+  return {
+    assessment,
+    type: Constants.TOGGLE_PUBLISH_ASSESSMENT,
+    apiCall: true,
+  };
+}
 
 export function getAssessmentPreview(bankId, assessmentId) {
   return {
