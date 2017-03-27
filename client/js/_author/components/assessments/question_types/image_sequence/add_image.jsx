@@ -21,7 +21,7 @@ export class AddImage extends React.Component {
     uploadMedia: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({})
-  }
+  };
 
   constructor() {
     super();
@@ -31,11 +31,12 @@ export class AddImage extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (this.props.uploadedAssets && !this.props.uploadedAssets[this.props.uploadScopeId] &&
-      nextProps.uploadedAssets[this.props.uploadScopeId]
-    ) {
+    const { uploadedAssets, uploadScopeId, item } = this.props;
+    if (uploadedAssets
+      && nextProps.uploadedAssets[uploadScopeId]
+      && _.size(nextProps.uploadedAssets[uploadScopeId]) !== _.size(uploadedAssets[uploadScopeId])) {
       const fileIds = {};
-      _.each(nextProps.uploadedAssets[this.props.uploadScopeId], (asset, mediaGuid) => {
+      _.each(nextProps.uploadedAssets[uploadScopeId], (asset, mediaGuid) => {
         fileIds[mediaGuid] = {
           assetContentId: asset.assetContents[0].id,
           assetId: asset.id,
@@ -43,7 +44,7 @@ export class AddImage extends React.Component {
         };
       });
       const text = `<img src="AssetContent:${this.state.mediaGuid}" />`;
-      this.props.updateChoice(this.props.item.id, 'new', { text }, fileIds);
+      this.props.createChoice(text, fileIds);
     }
   }
 
@@ -68,7 +69,6 @@ export class AddImage extends React.Component {
     this.setState({
       mediaGuid,
     });
-
     this.props.uploadMedia(
       file,
       mediaGuid,

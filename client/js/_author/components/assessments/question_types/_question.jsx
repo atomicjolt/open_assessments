@@ -57,7 +57,10 @@ export class Question extends React.Component {
     [types.imageSequence]: ImageSequence,
   };
 
-  static stateDrivenTypes = [types.movableWordSentence];
+  static stateDrivenTypes = [
+    types.movableWordSentence,
+    types.imageSequence,
+  ];
 
   constructor(props) {
     super(props);
@@ -221,7 +224,7 @@ export class Question extends React.Component {
           activeChoice={this.state.activeChoice}
           selectChoice={choiceId => this.selectChoice(choiceId)}
           blurOptions={e => this.blurOptions(e)}
-          createChoice={() => this.props.createChoice(bankId, item.id)}
+          createChoice={(text, fileIds) => this.props.createChoice(bankId, item.id, text, fileIds)}
           deleteChoice={choice => this.deleteChoice(choice)}
           save={() => this.saveStateItem()}
         />
