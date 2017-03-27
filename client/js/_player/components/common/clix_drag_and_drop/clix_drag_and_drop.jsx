@@ -87,7 +87,14 @@ export class ClixDragAndDrop extends React.Component {
       the other use cases well. This also is only needed for non snap zones.
     */
 
-    if (isDrop && zoneIndex === item.previousZoneIndex) {
+    if (zoneIndex !== item.previousZoneIndex && item.previousZoneIndex > -1) {
+      this.props.selectAnswer({
+        id: {
+          id: item.droppable.id,
+          zoneIndex: item.previousZoneIndex,
+        }
+      });
+    } else if (isDrop && zoneIndex === item.previousZoneIndex) {
       this.props.selectAnswer(answer);
     }
   }

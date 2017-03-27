@@ -53,61 +53,61 @@ export function transformItem(item) {
         shuffleDroppables: true,
         droppables: [{
           id: '58d31d7d6bd87136ab09b45d',
-          text: '<img src="http://placehold.it/200x200" alt="Green dot" />',
+          text: '<img src="http://placehold.it/50x50" alt="Green dot" />',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Green dot',
           reuse: 1
         }, {
           id: '58d31d7d6bd87136ab09b45e',
-          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          text: '<img src="http://placehold.it/50x50" alt="Red dot" />',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Red dot',
           reuse: 4
         }, {
           id: '58d31d7d6bd87136ab09b45e',
-          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          text: '<img src="http://placehold.it/50x50" alt="Red dot" />',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Red dot',
           reuse: 4
         }, {
           id: '58d31d7d6bd87136ab09b45e',
-          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          text: '<img src="http://placehold.it/50x50" alt="Red dot" />',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Red dot',
           reuse: 4
         }, {
           id: '58d31d7d6bd87136ab09b45e',
-          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          text: '<img src="http://placehold.it/50x50" alt="Red dot" />',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Red dot',
           reuse: 4
         }, {
           id: '58d31d7d6bd87136ab09b45e',
-          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          text: '<img src="http://placehold.it/50x50" alt="Red dot" />',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Red dot',
           reuse: 4
         }, {
           id: '58d31d7d6bd87136ab09b45e',
-          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          text: '<img src="http://placehold.it/50x50" alt="Red dot" />',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Red dot',
           reuse: 4
         }, {
           id: '58d31d7d6bd87136ab09b45e',
-          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          text: '<img src="http://placehold.it/50x50" alt="Red dot" />',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Red dot',
           reuse: 4
         }, {
           id: '58d31d7d6bd87136ab09b45e',
-          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          text: '<img src="http://placehold.it/50x50" alt="Red dot" />',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Red dot',
           reuse: 4
         }, {
           id: '58d31d7d6bd87136ab09b45e',
-          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          text: '<img src="http://placehold.it/50x50" alt="Red dot" />',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Red dot',
           reuse: 4
