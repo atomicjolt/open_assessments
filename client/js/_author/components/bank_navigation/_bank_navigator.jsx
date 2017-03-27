@@ -17,9 +17,6 @@ function select(state, props) {
     banks = currentBank.childNodes;
   });
 
-  // const bankAssessments = assessmentSelectors.bankAssessments(state, props);
-  // debugger
-
   return {
     path,
     currentBankId,
@@ -125,7 +122,7 @@ export class BankNavigator extends React.Component {
           sortName={this.state.sortName}
           sortPublished={this.state.sortPublished}
           deleteAssessment={(bankId, assessmentId) => this.deleteAssessment(bankId, assessmentId)}
-          togglePublishAssessment={(assessment) => this.props.togglePublishAssessment(assessment)}
+          togglePublishAssessment={assessment => this.props.togglePublishAssessment(assessment)}
         />
       </div>
     );

@@ -116,7 +116,6 @@ export default function bankListItem(props) {
           onClick={(e) => {
             e.stopPropagation();
             props.togglePublishAssessment({
-              items: [],
               bankId: bank.bankId,
               id: bank.id,
               isPublished,

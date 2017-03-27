@@ -339,6 +339,7 @@ const qbank = {
       if (_.includes(assessment.assignedBankIds, editableBankId)) {
         actions.push(assessmentActions.deleteAssignedAssessment(assessment, publishedBankId));
       }
+      //TODO try creating assessment offered without items
       if (_.isEmpty(assessment.assessmentOffered) && !_.isEmpty(assessment.items)) {
         actions.push(assessmentActions.createAssessmentOffered(assessment.bankId, assessment.id));
       }
