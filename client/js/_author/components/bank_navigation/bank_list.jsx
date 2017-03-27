@@ -12,6 +12,7 @@ export default function bankList(props) {
         {
         _.map(props.banks, bank => (
           <ListItem
+            getMedia={props.getMedia}
             baseEmbedUrl={props.baseEmbedUrl}
             getEmbedCode={props.getEmbedCode}
             key={`bank_${bank.id}`}

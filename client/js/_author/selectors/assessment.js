@@ -40,10 +40,11 @@ export const items = createSelector(
   (_items, _bankId, _assessmentItemIds) => _.compact(_.at(_items[_bankId], _assessmentItemIds))
 );
 
-const _isPublished = (_assessment, _settings) => _.includes(
-  _assessment.assignedBankIds,
-  _settings.publishedBankId,
-);
+const _isPublished = (_assessment = {}, _settings = {}) =>
+   _.includes(
+      _assessment.assignedBankIds,
+      _settings.publishedBankId,
+  );
 
 export const assessment = createSelector(
   bankAssessments,
