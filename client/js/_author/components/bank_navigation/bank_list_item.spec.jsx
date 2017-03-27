@@ -7,9 +7,11 @@ describe('bank List Item', () => {
   let result;
   let props;
   let shouldShow;
+  let media;
 
   beforeEach(() => {
     shouldShow = false;
+    media = false;
     props = {
       bank: {
         id: '1',

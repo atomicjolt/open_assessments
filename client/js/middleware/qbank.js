@@ -118,14 +118,46 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
     });
   });
 
-
 }
 
 const qbank = {
-  [BankConstants.GET_BANKS_HIERARCHY]: {
-    method : Network.GET,
-    url    : url => `${url}`,
+
+  [BankConstants.GET_BANKS_HIERARCHY]: (store, action) => {
+    const state = store.getState();
+    api.get(
+      state.settings.lambda_url,
+      null,
+      state.jwt,
+      state.settings.csrf_token,
+      null,
+      null
+    ).then((res) => {
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: res.body
+      });
+
+      const bankId = res.body[0].id;
+      api.get(
+        `/repository/repositories/${bankId}/assets?fullUrls`,
+        state.settings.api_url,
+        state.jwt,
+        state.settings.csrf_token,
+        null,
+        null
+      ).then((res2) => {
+        store.dispatch({
+          type: 'GET_MEDIA_DONE',
+          original: { bankId },
+          payload: res2.body
+        });
+      });
+
+
+    });
   },
+
   [AssessmentConstants.GET_ASSESSMENT_PREVIEW]: {
     method: Network.GET,
     url: (url, action) => {
