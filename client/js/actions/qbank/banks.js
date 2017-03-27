@@ -8,6 +8,7 @@ const actions = [
 // Actions that make an api request
 const requests = [
   'GET_BANKS_HIERARCHY',
+  'GET_MEDIA',
 ];
 
 export const Constants = wrapper(actions, requests);
@@ -16,6 +17,14 @@ export function getBanks() {
   return {
     apiCall : true,
     type    : Constants.GET_BANKS_HIERARCHY,
+  };
+}
+
+export function getMedia(bankId) {
+  return {
+    apiCall : true,
+    bankId,
+    type    : Constants.GET_MEDIA,
   };
 }
 

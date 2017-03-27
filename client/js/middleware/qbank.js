@@ -139,6 +139,11 @@ const qbank = {
     url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments?isolated`,
   },
 
+  [BankConstants.GET_MEDIA]: {
+    method : Network.GET,
+    url    : (url, action) => `${url}/repository/repositories/${action.bankId}/assets?fullUrls`,
+  },
+
   [AssessmentConstants.CREATE_ASSESSMENT_OFFERED]: {
     method : Network.POST,
     url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assessmentsoffered`,
