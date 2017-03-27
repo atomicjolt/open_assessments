@@ -1,4 +1,5 @@
 import wrapper from '../../constants/wrapper';
+import { scrub } from '../../middleware/serialization/serializer_utils';
 
 // Local actions
 const actions = [];
@@ -30,12 +31,13 @@ export function updateItem(bankId, item) {
   };
 }
 
-export function createChoice(bankId, itemId) {
+export function createChoice(bankId, itemId, text, fileIds) {
   const newItem = {
     id: itemId,
     question: {
+      fileIds,
       choices: {
-        new: { id: 'new' },
+        new: { id: 'new', text },
       },
     }
   };
@@ -44,6 +46,6 @@ export function createChoice(bankId, itemId) {
     itemId,
     apiCall : true,
     type    : Constants.UPDATE_ITEM,
-    body    : newItem
+    body    : scrub(newItem)
   };
 }
