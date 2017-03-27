@@ -7,9 +7,11 @@ describe('bank List Item', () => {
   let result;
   let props;
   let shouldShow;
+  let media;
 
   beforeEach(() => {
     shouldShow = false;
+    media = false;
     props = {
       bank: {
         id: '1',
@@ -19,6 +21,7 @@ describe('bank List Item', () => {
         published: true
       },
       getBankChildren: () => { shouldShow =  true; },
+      getMedia: () => { media =  true; },
       getEmbedCode: () => {},
       publishedBankId: '7',
       baseEmbedUrl: 'IMASPEC',
@@ -34,6 +37,7 @@ describe('bank List Item', () => {
     const tr = TestUtils.findRenderedDOMComponentWithTag(result, 'tr');
     TestUtils.Simulate.click(tr);
     expect(shouldShow).toBeTruthy();
+    expect(media).toBeTruthy();
   });
 
   it('it has correct displayName', () => {
