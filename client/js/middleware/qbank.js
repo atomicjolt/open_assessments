@@ -42,19 +42,25 @@ function getAssessmentsTaken(state, bankId, assessmentsOffered) {
   return Promise.all(assessmentsTaken);
 }
 
-function deleteAssessmentsTaken(state, bankId, assessmentsTaken) {
+// takingAgentId is used to delete all assessmentsTaken for a specific user. It
+// should be in the format `osid.agent.Agent%3A${user_id}%40MIT-ODL`.
+// In the player it is set in qbank using the x-api-proxy header, which is set
+// via the eid setting.
+function deleteAssessmentsTaken(state, bankId, assessmentsTaken, takingAgentId = '') {
   const basePath = `assessment/banks/${bankId}/assessmentstaken/`;
   const deletedAssessmentsTaken = [];
 
   _.each(_.flatten(assessmentsTaken), (assessmentTaken) => {
-    deletedAssessmentsTaken.push(new Promise((resolve) => {
-      api.del(
-        basePath + assessmentTaken.id,
-        state.settings.api_url,
-        state.jwt,
-        state.settings.csrf_token,
-      ).then(res => resolve(res.body));
-    }));
+    if (!takingAgentId || assessmentTaken.takingAgentId === takingAgentId) {
+      deletedAssessmentsTaken.push(new Promise((resolve) => {
+        api.del(
+          basePath + assessmentTaken.id,
+          state.settings.api_url,
+          state.jwt,
+          state.settings.csrf_token,
+        ).then(res => resolve(res.body));
+      }));
+    }
   });
 
   return Promise.all(deletedAssessmentsTaken);
@@ -204,9 +210,39 @@ const qbank = {
     url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedbankids`,
   },
 
-  [AssessmentConstants.DELETE_ASSIGNED_ASSESSMENT]: {
-    method : Network.DEL,
-    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedbankids/${action.assignedId}`,
+  [AssessmentConstants.DELETE_ASSIGNED_ASSESSMENT]: (store, action) => {
+    const state = store.getState();
+    const { bankId, assessmentId, assignedId } = action;
+
+    api.del(
+      `assessment/banks/${bankId}/assessments/${assessmentId}/assignedbankids/${assignedId}`,
+      state.settings.api_url,
+      state.jwt,
+      state.settings.csrf_token,
+      null,
+      null
+    ).then((deleteRes) => {
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: deleteRes.body
+      });
+
+      // if we unpublished an assessment, we need to delete admin assessment
+      // takens. There should only be one assessmentOffered, but we're handling
+      // the case where there is more than one.
+      if (action.assignedId === state.settings.publishedBankId) {
+        getAssessmentsOffered(state, bankId, assessmentId).then(res =>
+          getAssessmentsTaken(state, bankId, res.body).then(
+            assessmentsTaken => deleteAssessmentsTaken(
+            state,
+            bankId,
+            assessmentsTaken,
+            `osid.agent.Agent%3A${state.settings.eid}%40MIT-ODL`
+          )
+        ));
+      }
+    });
   },
 
   [AssessmentConstants.UPDATE_ASSESSMENT]: {
