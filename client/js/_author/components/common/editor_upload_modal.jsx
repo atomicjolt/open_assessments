@@ -1,7 +1,7 @@
-import React from 'react';
-import Modal from 'react-modal';
-import Loader from './dot_loader';
-
+import React            from 'react';
+import Modal            from 'react-modal';
+import Loader           from './dot_loader';
+import LanguageSelect   from '../common/language_dropdown';
 const tagNameMap = {
   audio: 'Audio',
   img: 'Image',
@@ -28,7 +28,17 @@ export default class EditorUploadModal extends React.Component {
       altText: '',
       license: '',
       copyright: '',
+      baseScrollHeight: null,
     };
+  }
+
+  areaResize() {
+    const minRows = 1;
+    this.refs[`modal_textarea_${this.props.id}`].rows = minRows;
+    const scrollHeight = this.refs[`modal_textarea_${this.props.id}`].scrollHeight;
+    if (!this.state.baseScrollHeight) { this.setState({ baseScrollHeight: scrollHeight }); }
+    const rows = Math.ceil((scrollHeight - (this.state.baseScrollHeight || scrollHeight)) / 17);
+    this.refs[`modal_textarea_${this.props.id}`].rows = rows + minRows;
   }
 
   render() {
@@ -54,21 +64,22 @@ export default class EditorUploadModal extends React.Component {
           <h3 className="au-c-wysiwyg-modal__title">
             Insert {tagNameMap[this.props.mediaType]}
           </h3>
+          <LanguageSelect
+            updateItem={language => this.setState(language)}
+          />
           <button onClick={this.props.closeModal} className="au-c-wysiwyg-modal__close">
             <i className="material-icons">close</i>
           </button>
         </div>
 
-        <div style={{ display: this.state.uploadedImage ? 'none' : 'block' }}>
-          <h3>Select an Image</h3>
-          // TODO: put images here
-
-          <h3>Upload a new Image</h3>
-        </div>
-
         <div className="au-c-wysiwyg-modal__main">
+          <div style={{ display: this.state.uploadedImage ? 'none' : 'block' }}>
+            <div className="au-c-drop-zone__answers__label">Select an Image</div>
+            // TODO: put images here
+          </div>
+
           <div className="au-o-flex-center  au-u-mb-md">
-            <span className="au-c-wysiwyg-media__label">File</span>
+            <span className="au-c-wysiwyg-media__label">Upload {tagNameMap[this.props.mediaType]}</span>
             <div className="au-c-wysiwyg-media__source-text" tabIndex="0">
               {name}
             </div>
@@ -83,59 +94,61 @@ export default class EditorUploadModal extends React.Component {
               </label>
             </div>
           </div>
-        </div>
-
-        <div style={{ display: this.state.uploadedImage ? 'block' : 'none' }}>
-          <div className="au-c-input au-c-input-label--left">
-            <label htmlFor={`upload_desc_${this.props.id}`}>Description</label>
-            <div className="au-c-input__contain">
-              <input
-                className="au-c-text-input au-c-text-input--smaller"
-                id={`upload_desc_${this.props.id}`}
-                type="text"
-                tabIndex="0"
-                onBlur={e => this.setState({ description: e.target.value })}
-              />
-              <div className="au-c-input__bottom" />
+          <div style={{ display: this.state.uploadedImage ? 'block' : 'none' }}>
+            <div className="au-c-input au-c-input-label--left">
+              <label htmlFor={`upload_desc_${this.props.id}`}>Description</label>
+              <div className="au-c-input__contain">
+                <textarea
+                  ref={`modal_textarea_${this.props.id}`}
+                  className="au-c-textarea au-c-text-input--smaller"
+                  id={`upload_desc_${this.props.id}`}
+                  type="text"
+                  tabIndex="0"
+                  onBlur={e => this.setState({ description: e.target.value })}
+                  onChange={() => this.areaResize()}
+                  rows="1"
+                />
+                <div className="au-c-input__bottom" />
+              </div>
             </div>
-          </div>
-          <div className="au-c-input au-c-input-label--left">
-            <label htmlFor={`upload_alt_text_${this.props.id}`}>Alt-Text</label>
-            <div className="au-c-input__contain">
-              <input
-                className="au-c-text-input au-c-text-input--smaller"
-                id={`upload_alt_text_${this.props.id}`}
-                type="text"
-                tabIndex="0"
-                onBlur={e => this.setState({ altText: e.target.value })}
-              />
-              <div className="au-c-input__bottom" />
+            <div className="au-c-input au-c-input-label--left">
+              <label htmlFor={`upload_alt_text_${this.props.id}`}>Alt-Text</label>
+              <div className="au-c-input__contain">
+                <input
+                  className="au-c-text-input au-c-text-input--smaller"
+                  id={`upload_alt_text_${this.props.id}`}
+                  type="text"
+                  tabIndex="0"
+                  onBlur={e => this.setState({ altText: e.target.value })}
+                />
+                <div className="au-c-input__bottom" />
+              </div>
             </div>
-          </div>
-          <div className="au-c-input au-c-input-label--left">
-            <label htmlFor={`upload_license_${this.props.id}`}>License</label>
-            <div className="au-c-input__contain">
-              <input
-                className="au-c-text-input au-c-text-input--smaller"
-                id={`upload_license_${this.props.id}`}
-                type="text"
-                tabIndex="0"
-                onBlur={e => this.setState({ license: e.target.value })}
-              />
-              <div className="au-c-input__bottom" />
+            <div className="au-c-input au-c-input-label--left">
+              <label htmlFor={`upload_license_${this.props.id}`}>License</label>
+              <div className="au-c-input__contain">
+                <input
+                  className="au-c-text-input au-c-text-input--smaller"
+                  id={`upload_license_${this.props.id}`}
+                  type="text"
+                  tabIndex="0"
+                  onBlur={e => this.setState({ license: e.target.value })}
+                />
+                <div className="au-c-input__bottom" />
+              </div>
             </div>
-          </div>
-          <div className="au-c-input au-c-input-label--left">
-            <label htmlFor={`upload_copyright_${this.props.id}`}>Copyright</label>
-            <div className="au-c-input__contain">
-              <input
-                className="au-c-text-input au-c-text-input--smaller"
-                id={`upload_copyright_${this.props.id}`}
-                type="text"
-                tabIndex="0"
-                onBlur={e => this.setState({ copyright: e.target.value })}
-              />
-              <div className="au-c-input__bottom" />
+            <div className="au-c-input au-c-input-label--left">
+              <label htmlFor={`upload_copyright_${this.props.id}`}>Copyright</label>
+              <div className="au-c-input__contain">
+                <input
+                  className="au-c-text-input au-c-text-input--smaller"
+                  id={`upload_copyright_${this.props.id}`}
+                  type="text"
+                  tabIndex="0"
+                  onBlur={e => this.setState({ copyright: e.target.value })}
+                />
+                <div className="au-c-input__bottom" />
+              </div>
             </div>
           </div>
         </div>

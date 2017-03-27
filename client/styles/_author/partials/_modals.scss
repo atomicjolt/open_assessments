@@ -68,9 +68,9 @@
 
 .au-c-wysiwyg-media__label{
   @include semi-bold;
-  font-size: 1.4rem;
-  color: $text-color;
-  width: 10rem;
+  font-size: 1.2rem;
+  color: $text-alt;
+  min-width: 10rem;
   display: inline-block;
 }
 
@@ -134,4 +134,8 @@
   padding: 0 2.5rem;
   @include display-flex;
   @include align-items(center);
+}
+
+.au-c-wysiwyg-modal__contain{
+  padding: 0 2.5rem;
 }

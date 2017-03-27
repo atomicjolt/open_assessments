@@ -2,13 +2,13 @@ import React                  from 'react';
 import { connect }            from 'react-redux';
 import _                      from 'lodash';
 
-import hashHistory            from '../../history';
-import  * as assessmentSelectors from '../../selectors/assessment';
-import Heading                from  '../common/heading';
-import AssessmentForm         from './assessment_form';
-import * as BankActions       from '../../../actions/qbank/banks';
-import * as AssessmentActions from '../../../actions/qbank/assessments';
-import * as ItemActions       from '../../../actions/qbank/items';
+import hashHistory                from '../../history';
+import  * as assessmentSelectors  from '../../selectors/assessment';
+import Heading                    from  '../common/heading';
+import AssessmentForm             from './assessment_form';
+import * as BankActions           from '../../../actions/qbank/banks';
+import * as AssessmentActions     from '../../../actions/qbank/assessments';
+import * as ItemActions           from '../../../actions/qbank/items';
 
 function select(state, props) {
   return {
