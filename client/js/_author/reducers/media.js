@@ -1,7 +1,6 @@
 import _                          from 'lodash';
 import { getQbankMediaType }   from '../../constants/genus_types';
 
-// Leave this empty. It will hold assessments by bank id. IE `state[someId] = {a_bank}`
 const initialState = {};
 
 export default (state = initialState, action) => {
