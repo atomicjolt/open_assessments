@@ -110,7 +110,19 @@ export default function bankListItem(props) {
       <td><Icon type={bank.type} /></td>
       <td>{bank.displayName ? bank.displayName.text : null}</td>
       <td>
-        <button className={`au-c-btn au-c-btn--square au-c-publish ${published}`} style={buttonContainer}>
+        <button
+          className={`au-c-btn au-c-btn--square au-c-publish ${published}`}
+          style={buttonContainer}
+          onClick={(e) => {
+            e.stopPropagation();
+            props.togglePublishAssessment({
+              items: [],
+              bankId: bank.bankId,
+              id: bank.id,
+              isPublished,
+            });
+          }}
+        >
           <Icon type={isPublished ? 'Published' : 'Publish'} />
         </button>
       </td>
