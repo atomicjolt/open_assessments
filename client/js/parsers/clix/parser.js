@@ -47,20 +47,20 @@ export default class Parser {
             shuffleDroppables: true,
             droppables: [{
               id: '58d31d7d6bd87136ab09b45d',
-              text: '<p><img src="http://www.example.com/draggable_green_dot_png" alt="Green dot" /></p>',
+              text: '<p><img src="http://placehold.it/50x50" alt="Green dot" /></p>',
               dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
               name: 'Green dot',
               reuse: 1
             }, {
               id: '58d31d7d6bd87136ab09b45e',
-              text: '<p><img src="http://www.example.com/draggable_red_dot_png" alt="Red dot" /></p>',
+              text: '<p><img src="http://placehold.it/50x50" alt="Red dot" /></p>',
               dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
               name: 'Red dot',
               reuse: 4
             }],
             shuffleZones: true,
             targets: [{
-              text: '<p><img src="http://www.example.com/drag_and_drop_input_DPP-Concpt-BlkonRmp-Trgt_png" alt="Ramp" /></p>',
+              text: '<p><img src="http://placehold.it/500x500" alt="Ramp" /></p>',
               name: 'Image of ramp',
               dropBehaviorType: 'drop.behavior%3Areject%40ODL.MIT.EDU'
             }],

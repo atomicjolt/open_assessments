@@ -11,6 +11,8 @@ function collect(connect, monitor) {
 
 const target = {
   drop(props, monitor) {
+    const body = document.getElementsByTagName('body')[0];
+    body.className = '';
     props.dropItem(monitor.getItem(), monitor.getClientOffset());
     return monitor.getItem();
   },

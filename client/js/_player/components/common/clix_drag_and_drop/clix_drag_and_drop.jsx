@@ -4,16 +4,39 @@ import _      from 'lodash';
 import withDragDropContext  from '../with_drag_drop_context';
 import ClixDropZone         from './clix_drop_zone';
 import Droppable            from './droppable';
+import CustomDragLayer      from '../custom_drag_layer';
 
 export class ClixDragAndDrop extends React.Component {
   static propTypes = {
-    answers: React.PropTypes.arrayOf(React.PropTypes.shape({})),
-    zones: React.PropTypes.arrayOf(React.PropTypes.shape({})),
+    answers: React.PropTypes.arrayOf(React.PropTypes.shape({
+      id: React.PropTypes.string,
+      text: React.PropTypes.string,
+    })),
+    zones: React.PropTypes.arrayOf(React.PropTypes.shape({
+      spatialUnit: React.PropTypes.shape({
+        coordinateValues: React.PropTypes.arrayOf(
+          React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number])
+        ),
+        width: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
+        height: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number])
+      }),
+      dropBehaviorType: React.PropTypes.string,
+    })),
     targets: React.PropTypes.arrayOf(React.PropTypes.shape({
       text: React.PropTypes.string,
     })),
     selectAnswer: React.PropTypes.func,
-    selectedAnswers: React.PropTypes.arrayOf(React.PropTypes.shape({}))
+    selectedAnswers: React.PropTypes.arrayOf(React.PropTypes.shape({
+      id: React.PropTypes.shape({
+        id: React.PropTypes.string,
+        zoneIndex: React.PropTypes.number,
+      }),
+      droppable: React.PropTypes.shape({}),
+      zoneIndex: React.PropTypes.number,
+      coordinateValues: React.PropTypes.arrayOf(
+        React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number])
+      )
+    }))
   };
 
   deselectAnswer(item) {
@@ -71,17 +94,16 @@ export class ClixDragAndDrop extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="c-clix-drag-and-drop">
         {_.map(this.props.targets, (target, targetIndex) => (
           <div
+            className="c-drag-target"
             style={{
               position: 'relative',
-              height: '500px',
-              width: '500px',
-              background: 'grey',
             }}
           >
             <div
+              className="c-drag-target__background"
               ref={ref => (this[`target_${targetIndex}`] = ref)}
               dangerouslySetInnerHTML={{ __html: target.text }}
             />
@@ -92,21 +114,29 @@ export class ClixDragAndDrop extends React.Component {
                   (zone.dropBehaviorType.indexOf('snap') === -1)
                 );
 
+                const className = zone.dropBehaviorType.indexOf('%3Adrop%40') > -1
+                  ? 'c-drag-zone c-drag-zone--drop'
+                  : 'c-drag-zone c-drag-zone--snap';
+
+
                 return (
                   <ClixDropZone
+                    className={className}
                     canDrop={canDrop}
                     dropItem={(item, offset) => (
                       this.selectAnswer(zoneIndex, item, targetIndex, offset)
                     )}
                     style={{
-                      position: 'absolute',
                       left: zone.spatialUnit.coordinateValues[0] - (zone.spatialUnit.width / 2),
                       top: zone.spatialUnit.coordinateValues[1] - (zone.spatialUnit.height / 2),
                       height: zone.spatialUnit.height,
                       width: zone.spatialUnit.width,
-                      border: '2px solid red',
                     }}
-                  />
+                  >
+                    <div className="c-drag-zone__name">
+                      {zone.name}
+                    </div>
+                  </ClixDropZone>
                 );
               })
             }
@@ -118,6 +148,7 @@ export class ClixDragAndDrop extends React.Component {
                     left: answer.coordinateValues[0] - (answer.width / 2),
                     top: answer.coordinateValues[1] - (answer.height / 2),
                   }}
+                  className="c-droppable-item"
                   droppable={answer.droppable}
                   zoneIndex={answer.zoneIndex}
                 />
@@ -127,16 +158,16 @@ export class ClixDragAndDrop extends React.Component {
         ))}
         <ClixDropZone
           canDrop
+          className="c-droppable-container"
           dropItem={item => (
             this.deselectAnswer(item)
           )}
-          style={{ width: '500px', height: '200px', border: '2px solid grey' }}
         >
           {
             _.map(this.props.answers, answer => (
               <Droppable
+                className="c-droppable-item"
                 hide={!!_.find(this.props.selectedAnswers, { droppable: { id: answer.id } })}
-                style={{ width: '60px' }}
                 text={answer.text}
                 droppable={answer}
                 zoneIndex={-1}
@@ -144,6 +175,7 @@ export class ClixDragAndDrop extends React.Component {
             ))
           }
         </ClixDropZone>
+        <CustomDragLayer />
       </div>
     );
   }

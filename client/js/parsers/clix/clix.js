@@ -23,10 +23,10 @@ export function transformItem(item) {
         text: '<p>Clix Drag and Drop Question Text</p>',
         zones: [{
           spatialUnit: {
-            width: 50,
-            coordinateValues: [0, 0],
+            width: 100,
+            coordinateValues: [200, 200],
             recordType: 'osid.mapping.SpatialUnit%3Arectangle%40ODL.MIT.EDU',
-            height: 30
+            height: 100
           },
           reuse: 0,
           dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
@@ -36,10 +36,10 @@ export function transformItem(item) {
           description: 'left of ball'
         }, {
           spatialUnit: {
-            width: 30,
+            width: 100,
             coordinateValues: [100, 100],
             recordType: 'osid.mapping.SpatialUnit%3Arectangle%40ODL.MIT.EDU',
-            height: 50
+            height: 100
           },
           reuse: 2,
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
@@ -53,20 +53,68 @@ export function transformItem(item) {
         shuffleDroppables: true,
         droppables: [{
           id: '58d31d7d6bd87136ab09b45d',
-          text: '<p><img src="http://www.example.com/draggable_green_dot_png" alt="Green dot" /></p>',
+          text: '<img src="http://placehold.it/200x200" alt="Green dot" />',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Green dot',
           reuse: 1
         }, {
           id: '58d31d7d6bd87136ab09b45e',
-          text: '<p><img src="http://www.example.com/draggable_red_dot_png" alt="Red dot" /></p>',
+          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
+          name: 'Red dot',
+          reuse: 4
+        }, {
+          id: '58d31d7d6bd87136ab09b45e',
+          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
+          name: 'Red dot',
+          reuse: 4
+        }, {
+          id: '58d31d7d6bd87136ab09b45e',
+          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
+          name: 'Red dot',
+          reuse: 4
+        }, {
+          id: '58d31d7d6bd87136ab09b45e',
+          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
+          name: 'Red dot',
+          reuse: 4
+        }, {
+          id: '58d31d7d6bd87136ab09b45e',
+          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
+          name: 'Red dot',
+          reuse: 4
+        }, {
+          id: '58d31d7d6bd87136ab09b45e',
+          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
+          name: 'Red dot',
+          reuse: 4
+        }, {
+          id: '58d31d7d6bd87136ab09b45e',
+          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
+          name: 'Red dot',
+          reuse: 4
+        }, {
+          id: '58d31d7d6bd87136ab09b45e',
+          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
+          dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
+          name: 'Red dot',
+          reuse: 4
+        }, {
+          id: '58d31d7d6bd87136ab09b45e',
+          text: '<img src="http://placehold.it/200x200" alt="Red dot" />',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Red dot',
           reuse: 4
         }],
         shuffleZones: true,
         targets: [{
-          text: '<p><img src="http://www.example.com/drag_and_drop_input_DPP-Concpt-BlkonRmp-Trgt_png" alt="Ramp" /></p>',
+          text: '<img src="http://placehold.it/500x500" alt="Ramp" />',
           name: 'Image of ramp',
           dropBehaviorType: 'drop.behavior%3Areject%40ODL.MIT.EDU'
         }],

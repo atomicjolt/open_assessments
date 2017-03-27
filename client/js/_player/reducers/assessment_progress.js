@@ -52,7 +52,7 @@ export default (state = initialState, action) => {
         the equality comparison.
       */
       const answerIndex = responses.findIndex((answer) => {
-        if (typeof answerData === 'string') {
+        if (typeof answerData === 'string' || typeof answerData === 'number') {
           return answerData === answer;
         }
 
