@@ -135,12 +135,12 @@ export default function bankListItem(props) {
             <i className="material-icons">edit</i>
           </button>
           {getPreviewButton(bank.bankId, bank.id)}
-          {!isPublished ? <button
-            className="au-c-btn au-c-btn--square au-c-btn--table"
+          <button
+            className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
             onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
           >
             <i className="material-icons">delete</i>
-          </button> : null}
+          </button>
         </div>
       </td>
     </tr>
