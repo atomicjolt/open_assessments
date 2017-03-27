@@ -21,7 +21,6 @@ export default function bankListItem(props) {
       appHistory.push(`banks/${bank.bankId}/assessments/${bank.id}`);
     } else {
       props.getBankChildren(bank.id);
-      props.getMedia(bank.id);
     }
   };
 
