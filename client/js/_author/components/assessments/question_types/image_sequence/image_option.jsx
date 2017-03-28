@@ -34,14 +34,14 @@ export default function ImageOption(props) {
         </button>
       </div>
       <div className="au-c-input au-c-input-label--left">
-        <label htmlFor="props.id">Label</label>
+        <label htmlFor={`label_${id}`}>Label</label>
         <div className="au-c-input__contain">
           <input
             defaultValue={props.labelText}
             onBlur={e => props.updateChoice({ labelText: e.target.value }, null)}
             className="au-c-text-input au-c-text-input--smaller"
             type="text"
-            id="props.id"
+            id={`label_${id}`}
           />
           <div className="au-c-input__bottom" />
         </div>
