@@ -44,7 +44,6 @@ export class BankNavigator extends React.Component {
     getItems           : React.PropTypes.func.isRequired,
     createAssessment   : React.PropTypes.func.isRequired,
     deleteAssessment   : React.PropTypes.func.isRequired,
-    getMedia           : React.PropTypes.func.isRequired,
     currentBankId      : React.PropTypes.string,
     currentBank        : React.PropTypes.shape({}),
   };
@@ -115,7 +114,6 @@ export class BankNavigator extends React.Component {
         />
         <BankList
           baseEmbedUrl={settings.baseEmbedUrl}
-          getMedia={this.props.getMedia}
           banks={this.sortBanks()}
           getEmbedCode={(assessId, bankId) => { this.getEmbedCode(assessId, bankId); }}
           publishedBankId={settings.publishedBankId}

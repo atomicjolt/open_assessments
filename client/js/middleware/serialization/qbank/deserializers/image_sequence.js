@@ -13,7 +13,7 @@ function deserializeChoices(choices, correctAnswer, incorrectId) {
       answerId: isCorrect ? correctAnswer.id : incorrectId,
       text: choice.text,
       order: index + 1,
-      answerOrder: isCorrect ? answerIndex : null,
+      answerOrder: index,
     };
   });
   return newChoices;
