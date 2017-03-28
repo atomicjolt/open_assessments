@@ -19,7 +19,6 @@ function deserializeChoices(choices, correctAnswer, incorrectId) {
       text: image ? image.attr('src') : '',
       altText: image ? image.attr('alt') : '',
       order: index + 1,
-      answerOrder: isCorrect ? answerIndex : null,
       labelText: label ? label.text() : '',
     };
   });

@@ -9,8 +9,8 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
     const updateValues = newChoiceAttributes[choice.id];
     const newOrder = _.get(updateValues, 'order');
     const labelText = _.get(updateValues, 'labelText', choice.labelText);
-    const imageSrc = choice.text || '';
-    const imageAlt = choice.altText || '';
+    const imageSrc = choice.text;
+    const imageAlt = choice.altText;
     const text = `<p>${labelText}</p><img src='${imageSrc}' alt='${imageAlt}'>`;
     return {
       id: choice.id,
