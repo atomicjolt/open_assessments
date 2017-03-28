@@ -21,20 +21,10 @@ export default function ImageOption(props) {
             })}
             defaultValue={order}
           >
-            <option
-              key='option_key_null'
-              value={null}
-            >
-              {'N/A'}
-            </option>
+            <option key='option_key_null' value={null}> {'N/A'}</option>
             {
               _.map(_.range(1, numChoices + 1), (val, index) =>
-                <option
-                  key={`option_key_${index}`}
-                  value={val}
-                >
-                  { val }
-                </option>
+                <option key={`option_key_${index}`} value={val}>{ val }</option>
               )
             }
           </select>
