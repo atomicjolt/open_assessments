@@ -116,10 +116,13 @@ export default function bankListItem(props) {
           style={buttonContainer}
           onClick={(e) => {
             e.stopPropagation();
+            //TODO pass assessment down, so this isnt gross
             props.togglePublishAssessment({
               bankId: bank.bankId,
               id: bank.id,
               isPublished,
+              assignedBankIds: bank.assignedBankIds,
+              assessmentOffered: bank.assessmentOffered,
             });
           }}
         >
