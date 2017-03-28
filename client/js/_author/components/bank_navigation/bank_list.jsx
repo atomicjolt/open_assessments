@@ -19,6 +19,7 @@ export default function bankList(props) {
             publishedBankId={props.publishedBankId}
             getBankChildren={props.getBankChildren}
             deleteAssessment={props.deleteAssessment}
+            togglePublishAssessment={props.togglePublishAssessment}
           />
         ))
         }

@@ -17,7 +17,7 @@ export default function heading(props) {
           <AssessmentView {...props} />
         );
       default:
-        return null;
+        return props.children;
     }
   };
 

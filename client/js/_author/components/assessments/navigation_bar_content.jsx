@@ -2,10 +2,11 @@ import React            from 'react';
 import _                from 'lodash';
 import { Link }         from 'react-router';
 import Icon             from '../bank_navigation/bank_icon';
+import BackButton       from '../common/back_button';
 
 export default class NavigationBarContent extends React.Component {
   static propTypes = {
-    editOrPublishAssessment: React.PropTypes.func,
+    togglePublishAssessment: React.PropTypes.func,
     isPublished: React.PropTypes.bool.isRequired,
     items: React.PropTypes.array.isRequired,
     assessment: React.PropTypes.object.isRequired,
@@ -16,7 +17,7 @@ export default class NavigationBarContent extends React.Component {
       return (
         <button
           className="au-c-btn au-c-btn--sm au-c-btn--green"
-          onClick={() => this.props.editOrPublishAssessment(this.props.isPublished)}
+          onClick={() => this.props.togglePublishAssessment()}
         >
           <Icon type={this.props.isPublished ? 'Published' : 'Publish'} />
           {this.props.isPublished ? 'Unpublish' : 'Publish'}
@@ -35,13 +36,7 @@ export default class NavigationBarContent extends React.Component {
     return (
       <div className="au-c-header-bottom">
         <div className="au-c-header-bottom__left">
-          <button
-            onClick={() => this.backButton(bankId)}
-            className="au-c-btn au-c-btn--sm au-c-btn--outline au-c-btn--back"
-          >
-            <i className="material-icons">keyboard_arrow_left</i>
-            Back
-          </button>
+          <BackButton handleClick={() => this.backButton(bankId)} />
         </div>
 
         <div className="au-c-header-bottom__right">
