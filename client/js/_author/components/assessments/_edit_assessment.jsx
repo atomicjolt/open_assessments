@@ -3,7 +3,7 @@ import { connect }            from 'react-redux';
 import _                      from 'lodash';
 
 import hashHistory            from '../../history';
-import { transformAssessment } from '../../selectors/assessment';
+import  * as assessmentSelectors from '../../selectors/assessment';
 import Heading                from  '../common/heading';
 import AssessmentForm         from './assessment_form';
 import * as BankActions       from '../../../actions/qbank/banks';
@@ -11,19 +11,15 @@ import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 
 function select(state, props) {
-  const bankId = encodeURIComponent(props.params.bankId);
-  const id = encodeURIComponent(props.params.id);
-  const bankAssessments = state.assessments[bankId];
-  const assessmentItemIds = state.assessmentItems[id];
-
   return {
-    assessment: (bankAssessments && transformAssessment(bankAssessments[id])) || {},
-    items: _.compact(_.at(state.items[bankId], assessmentItemIds)),
-    settings: state.settings,
-    banks: state.banks,
+    assessment: assessmentSelectors.assessment(state, props),
+    items: assessmentSelectors.items(state, props),
+    settings: assessmentSelectors.settings(state, props),
+    banks: assessmentSelectors.banks(state, props),
+    isPublished: assessmentSelectors.isPublished(state, props),
     params: { // override react router because we want the escaped ids
-      bankId,
-      id,
+      bankId: assessmentSelectors.bankId(state, props),
+      id: assessmentSelectors.id(state, props),
     }
   };
 }
@@ -59,6 +55,7 @@ export class EditAssessment extends React.Component {
     updateItem: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
     deleteAssessmentItem: React.PropTypes.func,
+    isPublished: React.PropTypes.bool.isRequired,
   };
 
   componentDidMount() {
@@ -149,8 +146,7 @@ export class EditAssessment extends React.Component {
   }
 
   render() {
-    const { assessment, settings } = this.props;
-    const isPublished =  assessment ? _.includes(assessment.assignedBankIds, settings.publishedBankId) : false;
+    const { assessment, isPublished } = this.props;
     const publishedAndOffered = isPublished && !_.isUndefined(assessment.assessmentOffered);
     return (
       <div>

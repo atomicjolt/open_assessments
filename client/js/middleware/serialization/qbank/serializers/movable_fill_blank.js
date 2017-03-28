@@ -47,12 +47,18 @@ function serializeQuestion(originalQuestion, newQuestionAttributes, questionStri
 
   if (questionString) {
     const newQuestionString = _.cloneDeep(questionString);
-    newQuestionString.text = _.map(newQuestionString.text.split(' '), (word) => {
-      if (word === '[_]' || word === '[ _ ]') {
+
+    // we split on spaces, so we replace the placeholder with spaces in it
+    // with the one without spaces
+    const chunks = newQuestionString.text.replace('[ _ ]', '[_]').split(' ');
+
+    newQuestionString.text = _.map(chunks, (word) => {
+      if (word === '[_]') {
         return `<inlineChoiceInteraction responseIdentifier="${inlineRegionId}"></inlineChoiceInteraction>`;
       }
       return buildChoiceText(word, 'other');
     }).join('');
+
     newQuestion.questionString = newQuestionString;
   }
 

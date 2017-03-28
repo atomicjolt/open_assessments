@@ -6,6 +6,7 @@ import * as BankActions       from '../../actions/qbank/banks';
 function select(state) {
   return {
     bank: state.banks,
+    settings: state.settings,
   };
 }
 export class Index extends React.Component {

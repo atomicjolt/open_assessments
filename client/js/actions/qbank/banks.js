@@ -8,6 +8,7 @@ const actions = [
 // Actions that make an api request
 const requests = [
   'GET_BANKS_HIERARCHY',
+  'GET_MEDIA',
 ];
 
 export const Constants = wrapper(actions, requests);
