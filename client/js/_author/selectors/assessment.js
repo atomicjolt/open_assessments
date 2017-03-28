@@ -46,7 +46,6 @@ const _isPublished = (_assessment = {}, _settings = {}) =>
       _settings.publishedBankId,
   );
 
-
 export const assessment = createSelector(
   bankAssessments,
   id,

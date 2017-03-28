@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
 import { transformAssessment } from '../../selectors/assessment';
 import PreviewContainer from './preview_container';
+import NavigationBar from  './navigation_bar';
 
 function select(state, props) {
   const bankId = encodeURIComponent(props.params.bankId);
@@ -52,13 +53,16 @@ export class PreviewAssessment extends React.Component {
     }
 
     return (
-      <PreviewContainer
-        assessment={this.props.assessment}
-        assessmentPlayerUrl={this.props.settings.assessmentPlayerUrl}
-        apiUrl={this.props.settings.api_url}
-        getAssessmentOffered={this.props.getAssessmentOffered}
-        unlockNext={this.props.settings.unlock_next}
-      />
+      <div>
+        <NavigationBar />
+        <PreviewContainer
+          assessment={this.props.assessment}
+          assessmentPlayerUrl={this.props.settings.assessmentPlayerUrl}
+          apiUrl={this.props.settings.api_url}
+          getAssessmentOffered={this.props.getAssessmentOffered}
+          unlockNext={this.props.settings.unlock_next}
+        />
+      </div>
     );
   }
 }
