@@ -6,11 +6,13 @@ const actions = [];
 // Actions that make an api request
 const requests = [
   'UPLOAD_MEDIA',
+  'ADD_MEDIA_TO_ASSESSMENT',
 ];
 
 export const Constants = wrapper(actions, requests);
 
 export function uploadMedia(file, guid, uploadScopeId, bankId) {
+  // TODO: the formData implementation should probably move to the reducer
   const formData = new FormData();
   formData.append('inputFile', file);
   formData.append('returnUrl', true);
@@ -23,6 +25,21 @@ export function uploadMedia(file, guid, uploadScopeId, bankId) {
     apiCall: true,
     type: Constants.UPLOAD_MEDIA,
     body: formData,
+    timeout: 1000000,
+  };
+}
+
+export function addMediaToAssessment(file, guid, uploadScopeId, bankId, itemId, where) {
+  return {
+    bankId,
+    uploadScopeId,
+    file,
+    guid,
+    itemId,
+    where,
+    apiCall: true,
+    type: Constants.ADD_MEDIA_TO_ASSESSMENT,
+    body: file,
     timeout: 1000000,
   };
 }

@@ -71,11 +71,14 @@ export class AddImage extends React.Component {
     this.setState({
       mediaGuid,
     });
-    this.props.uploadMedia(
+    console.log(file);
+    this.props.addMediaToAssessment(
       file,
       mediaGuid,
       this.props.uploadScopeId,
       this.props.item.bankId,
+      this.props.item.id,
+      {}
     );
   }
 
@@ -96,8 +99,8 @@ export class AddImage extends React.Component {
             closeModal={() => this.setState({ modal: false })}
             mediaType="img"
             mediaName=""
-            insertMedia={() => this.insertMedia()}
-            uploadMedia={e => console.log(e)}
+            insertMedia={() => this.uploadMedia()}
+            uploadMedia={media => this.uploadMedia(media)}
             inProgress={false}
             error={null}
           />

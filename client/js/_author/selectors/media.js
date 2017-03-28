@@ -9,6 +9,7 @@ export const bankMedia = createSelector(
   media,
   bankId,
   (_media, _bankId) => {
+    console.log(media);
     return _media[_bankId];
   }
 );

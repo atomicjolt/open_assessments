@@ -42,6 +42,22 @@ function getAssessmentsTaken(state, bankId, assessmentsOffered) {
   return Promise.all(assessmentsTaken);
 }
 
+function uploadMedia(state, action) {
+  const formData = new FormData();
+  formData.append('inputFile', action.body);
+  formData.append('returnUrl', true);
+  formData.append('createNew', true);
+debugger;
+  return api.post(
+    `/repository/repositories/${action.bankId}/assets`,
+    state.settings.api_url,
+    state.jwt,
+    state.settings.csrf_token,
+    null,
+    formData
+  );
+}
+
 // takingAgentId is used to delete all assessmentsTaken for a specific user. It
 // should be in the format `osid.agent.Agent%3A${user_id}%40MIT-ODL`.
 // In the player it is set in qbank using the x-api-proxy header, which is set
@@ -298,11 +314,6 @@ const qbank = {
     });
   },
 
-  [AssetConstants.UPLOAD_MEDIA]: {
-    method : Network.POST,
-    url    : (url, action) => `${url}/repository/repositories/${action.bankId}/assets`,
-  },
-
   [AssessmentConstants.CREATE_ITEM_IN_ASSESSMENT]: (store, action) => {
     createItemInAssessment(
       store,
@@ -390,7 +401,20 @@ const qbank = {
         original : action,
       }));
     });
-  }
+  },
+
+  [AssetConstants.UPLOAD_MEDIA]: {
+    method : Network.POST,
+    url    : (url, action) => `${url}/repository/repositories/${action.bankId}/assets`,
+  },
+
+  [AssetConstants.ADD_MEDIA_TO_ASSESSMENT]: (store, action) => {
+    const state = store.getState();
+    uploadMedia(state, action).then((res) => {
+      debugger;
+      // Crap aint here yet
+    });
+  },
 };
 
 export default { ...server, ...qbank };

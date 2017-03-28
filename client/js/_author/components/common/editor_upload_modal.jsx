@@ -161,7 +161,7 @@ export default class EditorUploadModal extends React.Component {
             Cancel
           </button>
           <button
-            onClick={() => this.props.insertMedia()}
+            onClick={() => this.props.insertMedia(this.state.uploadedImage)}
             className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-sm"
           >
             OK
