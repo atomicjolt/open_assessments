@@ -56,7 +56,7 @@ export function transformItem(item) {
           text: '<img src="http://placehold.it/50x50" alt="Green dot" />',
           dropBehaviorType: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
           name: 'Green dot',
-          reuse: 1
+          reuse: 2
         }, {
           id: '58d31d7d6bd87136ab09b45e',
           text: '<img src="http://placehold.it/50x50" alt="Red dot" />',

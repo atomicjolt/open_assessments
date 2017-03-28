@@ -30,9 +30,9 @@ export class DraggableWord extends React.Component {
     connectDragSource: React.PropTypes.func.isRequired,
     connectDragPreview: React.PropTypes.func.isRequired,
     isDragging: React.PropTypes.bool.isRequired,
-    text: React.PropTypes.string,
     className: React.PropTypes.string,
     hide: React.PropTypes.bool,
+    showWhileDragging: React.PropTypes.bool,
     style: React.PropTypes.shape({}),
     droppable: React.PropTypes.shape({
       text: React.PropTypes.string,
@@ -44,14 +44,15 @@ export class DraggableWord extends React.Component {
   }
 
   render() {
-    const { connectDragSource, isDragging } = this.props;
-    const hide = this.props.hide || isDragging ? 'is-hidden' : '';
+    const { connectDragSource, isDragging, droppable, showWhileDragging } = this.props;
+    const hide = this.props.hide || (isDragging && !showWhileDragging) ? 'is-hidden' : '';
+
     return connectDragSource(
       <div
         ref={ref => (this.node = ref)}
         className={`${this.props.className || ''} ${hide}`}
         style={this.props.style}
-        dangerouslySetInnerHTML={{ __html: this.props.droppable.text }}
+        dangerouslySetInnerHTML={{ __html: droppable.text }}
       />
     );
   }

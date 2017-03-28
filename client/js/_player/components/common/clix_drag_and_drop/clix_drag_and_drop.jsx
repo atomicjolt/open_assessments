@@ -171,15 +171,23 @@ export class ClixDragAndDrop extends React.Component {
           )}
         >
           {
-            _.map(this.props.answers, answer => (
-              <Droppable
-                className="c-droppable-item"
-                hide={!!_.find(this.props.selectedAnswers, { droppable: { id: answer.id } })}
-                text={answer.text}
-                droppable={answer}
-                zoneIndex={-1}
-              />
-            ))
+            _.map(this.props.answers, (answer) => {
+              const useCount = _.filter(
+                this.props.selectedAnswers,
+                { droppable: { id: answer.id } }
+              ).length;
+
+              return (
+                <Droppable
+                  className="c-droppable-item"
+                  hide={useCount >= parseInt(answer.reuse, 10)}
+                  showWhileDragging={useCount < (answer.reuse - 1)}
+                  text={answer.text}
+                  droppable={answer}
+                  zoneIndex={-1}
+                />
+              );
+            })
           }
         </ClixDropZone>
         <CustomDragLayer />
