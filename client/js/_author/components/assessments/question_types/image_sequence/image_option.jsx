@@ -30,43 +30,39 @@ export default class ImageOption extends React.Component {
   render() {
 
     const { activateChoice, updateChoice, deleteChoice, id, order, numChoices } = this.props;
-    const isActive = _.get(this.props, 'id') === _.get(this.props, 'activeChoice');
     return (
       <div
-        className={`au-c-image-sequence-answer ${isActive ? 'is-active' : ''} tabIndex="0"`}
+        className='au-c-image-sequence-answer is-active tabIndex="0"'
         onClick={() => activateChoice(id)}
       >
-        { isActive ?
-          <div className="au-c-image-sequence-answer__top">
-            <div className="au-c-dropdown au-c-dropdown--tiny">
-              <label htmlFor="image_option_order" />
-              <select
-                name=""
-                id="image_option_order"
-                onChange={e => updateChoice({
-                  id,
-                  order: parseInt(e.target.value, 10)
-                })}
-                defaultValue={order}
-              >
-                {
-                  _.map([null].concat(_.range(1, numChoices + 1)), (val, index) =>
-                    <option
-                      key={`option_key_${index}`}
-                      value={val}
-                    >
-                      {val === null ? 'N/A' : val}
-                    </option>
-                  )
-                }
-              </select>
-            </div>
-            <button className="au-c-answer--delete au-u-right" onClick={() => deleteChoice(this.props)}>
-              <i className="material-icons">close</i>
-            </button>
+        <div className="au-c-image-sequence-answer__top">
+          <div className="au-c-dropdown au-c-dropdown--tiny">
+            <label htmlFor="image_option_order" />
+            <select
+              name=""
+              id="image_option_order"
+              onChange={e => updateChoice({
+                id,
+                order: parseInt(e.target.value, 10)
+              })}
+              defaultValue={order}
+            >
+              {
+                _.map([null].concat(_.range(1, numChoices + 1)), (val, index) =>
+                  <option
+                    key={`option_key_${index}`}
+                    value={val}
+                  >
+                    {val === null ? 'N/A' : val}
+                  </option>
+                )
+              }
+            </select>
           </div>
-          : null
-        }
+          <button className="au-c-answer--delete au-u-right" onClick={() => deleteChoice(this.props)}>
+            <i className="material-icons">close</i>
+          </button>
+        </div>
         <div className="au-c-input au-c-input-label--left">
           <label htmlFor="props.id">Label</label>
           <div className="au-c-input__contain">

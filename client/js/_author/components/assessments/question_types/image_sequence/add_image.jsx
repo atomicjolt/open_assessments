@@ -54,10 +54,10 @@ export class AddImage extends React.Component {
       <div>
         <input
           onChange={e => this.uploadMedia(e.target.files[0])}
-          id="newImageId"
+          id={`newImageId-${this.props.item.id}`}
           type="file"
         />
-        <label htmlFor="newImageId">
+        <label htmlFor={`newImageId-${this.props.item.id}`}>
           <i className="material-icons">find_in_page</i>
         </label>
       </div>

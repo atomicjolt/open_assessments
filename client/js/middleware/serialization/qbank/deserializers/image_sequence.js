@@ -22,13 +22,6 @@ function deserializeChoices(choices, correctAnswer, incorrectId) {
       answerOrder: isCorrect ? answerIndex : null,
       labelText: label ? label.text() : '',
     };
-    // newChoices[choice.id] = {
-    //   id: choice.id,
-    //   answerId: isCorrect ? correctAnswer.id : incorrectId,
-    //   text: choice.text,
-    //   order: index + 1,
-    //   answerOrder: index,
-    // };
   });
 
   return newChoices;
