@@ -10,33 +10,31 @@ export default class ImageOption extends React.Component {
     id: React.PropTypes.string,
     activeChoice: React.PropTypes.string,
     text: React.PropTypes.string,
+    labelText: React.PropTypes.string,
     order: React.PropTypes.number,
     numChoices: React.PropTypes.number.isRequired,
   };
 
-  constructor() {
-    super();
-    const text = _.get(this.props, 'text');
+  constructor(props) {
+    super(props);
     this.state = {
-      isActive: _.get(this.props, 'id') === _.get(this.props, 'activeChoice'),
-      url: text ? text.split('"')[1] : '',
       labelText: '',
     };
   }
 
   updateChoice() {
     const labelText = this.state.labelText;
-    debugger;
-    this.props.updateChoice(labelText, null);
+    this.props.updateChoice({ labelText, imageLabel: true }, null);
   }
 
   render() {
-    const { isActive, url } = this.state;
+
     const { activateChoice, updateChoice, deleteChoice, id, order, numChoices } = this.props;
+    const isActive = _.get(this.props, 'id') === _.get(this.props, 'activeChoice');
     return (
       <div
         className={`au-c-image-sequence-answer ${isActive ? 'is-active' : ''} tabIndex="0"`}
-        onClick={() => activateChoice(this.props.id)}
+        onClick={() => activateChoice(id)}
       >
         { isActive ?
           <div className="au-c-image-sequence-answer__top">
@@ -73,6 +71,7 @@ export default class ImageOption extends React.Component {
           <label htmlFor="props.id">Label</label>
           <div className="au-c-input__contain">
             <input
+              defaultValue={this.props.labelText}
               onChange={e => this.setState({ labelText: e.target.value })}
               onBlur={() => this.updateChoice()}
               className="au-c-text-input au-c-text-input--smaller"
@@ -83,7 +82,7 @@ export default class ImageOption extends React.Component {
           </div>
         </div>
         <div className="au-c-image-sequence-answer__image">
-          <img src={url} alt="" />
+          <img src={this.props.text} alt="" />
         </div>
       </div>
     );
