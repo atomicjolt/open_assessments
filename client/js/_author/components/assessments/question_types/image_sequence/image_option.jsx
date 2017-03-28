@@ -5,7 +5,8 @@ export default function ImageOption(props) {
   const { activateChoice, updateChoice, deleteChoice, id, order, numChoices } = props;
   return (
     <div
-      className='au-c-image-sequence-answer is-active tabIndex="0"'
+      className='au-c-image-sequence-answer is-active'
+      tabIndex="0"
       onClick={() => activateChoice(id)}
     >
       <div className="au-c-image-sequence-answer__top">
