@@ -16,8 +16,14 @@ export default function bankListItem(props) {
     display: isAssessment ? '' : 'none',
   };
 
+  function getPreviewUrl(bankId, assessmentId) {
+    return (`banks/${bankId}/assessments/${assessmentId}/preview`);
+  }
+
   const selectItem = () => {
-    if (isAssessment) {
+    if (isAssessment && isPublished) {
+      appHistory.push(getPreviewUrl(bank.bankId, bank.id));
+    } else if (isAssessment) {
       appHistory.push(`banks/${bank.bankId}/assessments/${bank.id}`);
     } else {
       props.getBankChildren(bank.id);
@@ -86,8 +92,7 @@ export default function bankListItem(props) {
         className="au-c-btn au-c-btn--square au-c-btn--table"
         onClick={(e) => {
           e.stopPropagation();
-          appHistory.push(
-            `banks/${bankId}/assessments/${assessmentId}/preview`);
+          appHistory.push(getPreviewButton(bankId, assessmentId));
         }}
       >
         <i className="material-icons">remove_red_eye</i>
@@ -105,23 +110,39 @@ export default function bankListItem(props) {
       <td><Icon type={bank.type} /></td>
       <td>{bank.displayName ? bank.displayName.text : null}</td>
       <td>
-        <button className={`au-c-btn au-c-btn--square au-c-publish ${published}`} style={buttonContainer}>
+        <button
+          className={`au-c-btn au-c-btn--square au-c-publish ${published}`}
+          style={buttonContainer}
+          onClick={(e) => {
+            e.stopPropagation();
+            //TODO pass assessment down, so this isnt gross
+            props.togglePublishAssessment({
+              bankId: bank.bankId,
+              id: bank.id,
+              isPublished,
+              assignedBankIds: bank.assignedBankIds,
+              assessmentOffered: bank.assessmentOffered,
+            });
+          }}
+        >
           <Icon type={isPublished ? 'Published' : 'Publish'} />
         </button>
       </td>
       <td>
         <div className="au-c-table__icons" style={buttonContainer}>
           {embedButtonOrUrl()}
-          <button className="au-c-btn au-c-btn--square au-c-btn--table">
+          <button
+            className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
+          >
             <i className="material-icons">edit</i>
           </button>
           {getPreviewButton(bank.bankId, bank.id)}
-          {!isPublished ? <button
-            className="au-c-btn au-c-btn--square au-c-btn--table"
+          <button
+            className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
             onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
           >
             <i className="material-icons">delete</i>
-          </button> : null}
+          </button>
         </div>
       </td>
     </tr>
