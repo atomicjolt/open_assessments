@@ -67,11 +67,11 @@ export class AddImage extends React.Component {
   }
 
   uploadMedia(file) {
+    this.setState({ modal: false });
     const mediaGuid = guid();
     this.setState({
       mediaGuid,
     });
-    console.log(file);
     this.props.addMediaToQuestion(
       file,
       mediaGuid,
@@ -80,11 +80,6 @@ export class AddImage extends React.Component {
       this.props.item.id,
       'question.choices.new',
     );
-  }
-
-  insertMedia() {
-    console.log('Inserting Media');
-    this.setState({ modal: false });
   }
 
   render() {
