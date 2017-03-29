@@ -40,12 +40,9 @@ export class EditAssessment extends React.Component {
       editableBankId: React.PropTypes.string,
       publishedBankId: React.PropTypes.string
     }),
-    editOrPublishAssessment: React.PropTypes.func.isRequired,
     updatePath: React.PropTypes.func.isRequired,
     getItems: React.PropTypes.func.isRequired,
     banks: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    deleteAssignedAssessment: React.PropTypes.func.isRequired,
-    createAssessmentOffered: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
     updateSingleItemOrPage: React.PropTypes.func.isRequired,
@@ -102,22 +99,6 @@ export class EditAssessment extends React.Component {
     );
   }
 
-  editOrPublishAssessment(published) {
-    const { assessment, settings } = this.props;
-    if (published) {
-      this.props.deleteAssignedAssessment(assessment, settings.publishedBankId);
-      this.props.editOrPublishAssessment(assessment, settings.editableBankId);
-    } else {
-      if (_.includes(assessment.assignedBankIds, this.props.settings.editableBankId)) {
-        this.props.deleteAssignedAssessment(assessment, settings.editableBankId);
-      }
-      if (_.isEmpty(assessment.assessmentOffered) && !_.isEmpty(this.props.items)) {
-        this.props.createAssessmentOffered(assessment.bankId, assessment.id);
-      }
-      this.props.editOrPublishAssessment(assessment, settings.publishedBankId);
-    }
-  }
-
   updateSingleItemOrPage(setSinglePage) {
     const { settings, assessment } = this.props;
     const { assessmentOffered } = assessment;
@@ -152,7 +133,9 @@ export class EditAssessment extends React.Component {
       <div>
         <Heading
           view="assessments"
-          editOrPublishAssessment={(published) => { this.editOrPublishAssessment(published); }}
+          togglePublishAssessment={
+            () => this.props.togglePublishAssessment(this.props.assessment)
+          }
           isPublished={isPublished}
           assessment={this.props.assessment}
           items={this.props.items}

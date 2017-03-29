@@ -6,8 +6,9 @@ import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 import Heading                from '../common/heading';
 import BankList               from './bank_list';
+import  * as assessmentSelectors from '../../selectors/assessment';
 
-function select(state) {
+function select(state, props) {
   const path = state.bankNavigation.location;
   const currentBankId = !_.isEmpty(path) ? _.last(path).id : null;
   let banks = state.banks;
@@ -121,6 +122,7 @@ export class BankNavigator extends React.Component {
           sortName={this.state.sortName}
           sortPublished={this.state.sortPublished}
           deleteAssessment={(bankId, assessmentId) => this.deleteAssessment(bankId, assessmentId)}
+          togglePublishAssessment={assessment => this.props.togglePublishAssessment(assessment)}
         />
       </div>
     );

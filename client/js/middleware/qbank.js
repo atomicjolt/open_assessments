@@ -11,6 +11,7 @@ import { Constants as AssetConstants }      from '../actions/qbank/assets';
 import serialize                            from './serialization/qbank/serializers/factory';
 import deserialize                          from './serialization/qbank/deserializers/factory';
 import { scrub }                            from './serialization/serializer_utils';
+import * as assessmentActions               from '../actions/qbank/assessments';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -401,6 +402,31 @@ const qbank = {
         original : action,
       }));
     });
+  },
+
+  [AssessmentConstants.TOGGLE_PUBLISH_ASSESSMENT] : (store, action) => {
+    const state = store.getState();
+    const { assessment } = action;
+    const { publishedBankId, editableBankId } = state.settings;
+
+    if (assessment.isPublished) {
+      [
+        assessmentActions.deleteAssignedAssessment(assessment, publishedBankId),
+        assessmentActions.editOrPublishAssessment(assessment, editableBankId),
+      ].forEach(newAction => store.dispatch(newAction));
+    } else {
+      const actions = [];
+      if (_.includes(assessment.assignedBankIds, editableBankId)) {
+        actions.push(assessmentActions.deleteAssignedAssessment(assessment, editableBankId));
+      }
+
+      if (_.isEmpty(assessment.assessmentOffered)) {
+        actions.push(assessmentActions.createAssessmentOffered(assessment.bankId, assessment.id));
+      }
+      actions.push(assessmentActions.editOrPublishAssessment(assessment, publishedBankId));
+
+      actions.forEach(newAction => store.dispatch(newAction));
+    }
   },
 
   [AssetConstants.UPLOAD_MEDIA]: {
