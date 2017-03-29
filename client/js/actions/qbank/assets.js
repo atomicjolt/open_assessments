@@ -38,7 +38,7 @@ export function addMediaToQuestion(file, guid, uploadScopeId, bankId, itemId, wh
     itemId,
     where,
     apiCall: true,
-    type: Constants.ADD_MEDIA_TO_ASSESSMENT,
+    type: Constants.ADD_MEDIA_TO_QUESTION,
     body: file,
     timeout: 1000000,
   };
