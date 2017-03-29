@@ -78,7 +78,7 @@ export class AddImage extends React.Component {
       this.props.uploadScopeId,
       this.props.item.bankId,
       this.props.item.id,
-      {}
+      'question.choices.new',
     );
   }
 

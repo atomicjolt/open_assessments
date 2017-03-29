@@ -456,7 +456,11 @@ const qbank = {
 
       // this needs to work for item.question.choices[choiceId].field, and item.question.dropObjects[objectId].field
       // TODO: fix alt text
-      item = _.set(item, action.where, { text: `assetContent:${action.guid}`, altText: action.file.altText });
+      item = _.set(item, action.where, {
+        text: `AssetContent:${action.guid}`,
+        altText: action.file.altText,
+        id: _.endsWith(action.where, 'new') ? 'new' : undefined
+      });
 
       const newAction = updateItem(action.bankId, item);
       updateQBankItem(store, newAction);
