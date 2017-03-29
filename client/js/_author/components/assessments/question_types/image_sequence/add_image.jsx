@@ -19,7 +19,7 @@ export class AddImage extends React.Component {
     }),
     uploadScopeId: React.PropTypes.string.isRequired,
     uploadMedia: React.PropTypes.func.isRequired,
-    updateChoice: React.PropTypes.func.isRequired,
+    createChoice: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({})
   };
 
@@ -31,7 +31,7 @@ export class AddImage extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    const { uploadedAssets, uploadScopeId, item } = this.props;
+    const { uploadedAssets, uploadScopeId } = this.props;
     if (uploadedAssets
       && nextProps.uploadedAssets[uploadScopeId]
       && _.size(nextProps.uploadedAssets[uploadScopeId]) !== _.size(uploadedAssets[uploadScopeId])) {
@@ -54,10 +54,10 @@ export class AddImage extends React.Component {
       <div>
         <input
           onChange={e => this.uploadMedia(e.target.files[0])}
-          id="newImageId"
+          id={`newImageId-${this.props.item.id}`}
           type="file"
         />
-        <label htmlFor="newImageId">
+        <label htmlFor={`newImageId-${this.props.item.id}`}>
           <i className="material-icons">find_in_page</i>
         </label>
       </div>
