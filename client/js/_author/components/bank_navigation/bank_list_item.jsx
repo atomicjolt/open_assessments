@@ -114,6 +114,7 @@ export default function bankListItem(props) {
           className={`au-c-btn au-c-btn--square au-c-publish ${published}`}
           style={buttonContainer}
           onClick={(e) => {
+            debugger;
             e.stopPropagation();
             //TODO pass assessment down, so this isnt gross
             props.togglePublishAssessment({
