@@ -6,7 +6,7 @@ const actions = [];
 // Actions that make an api request
 const requests = [
   'UPLOAD_MEDIA',
-  'ADD_MEDIA_TO_ASSESSMENT',
+  'ADD_MEDIA_TO_QUESTION',
 ];
 
 export const Constants = wrapper(actions, requests);
@@ -29,7 +29,7 @@ export function uploadMedia(file, guid, uploadScopeId, bankId) {
   };
 }
 
-export function addMediaToAssessment(file, guid, uploadScopeId, bankId, itemId, where) {
+export function addMediaToQuestion(file, guid, uploadScopeId, bankId, itemId, where) {
   return {
     bankId,
     uploadScopeId,

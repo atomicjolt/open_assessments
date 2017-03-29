@@ -72,7 +72,7 @@ export class AddImage extends React.Component {
       mediaGuid,
     });
     console.log(file);
-    this.props.addMediaToAssessment(
+    this.props.addMediaToQuestion(
       file,
       mediaGuid,
       this.props.uploadScopeId,
@@ -99,8 +99,7 @@ export class AddImage extends React.Component {
             closeModal={() => this.setState({ modal: false })}
             mediaType="img"
             mediaName=""
-            insertMedia={() => this.uploadMedia()}
-            uploadMedia={media => this.uploadMedia(media)}
+            insertMedia={media => this.uploadMedia(media)}
             inProgress={false}
             error={null}
           />

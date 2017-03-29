@@ -12,6 +12,7 @@ import serialize                            from './serialization/qbank/serializ
 import deserialize                          from './serialization/qbank/deserializers/factory';
 import { scrub }                            from './serialization/serializer_utils';
 import * as assessmentActions               from '../actions/qbank/assessments';
+import { updateItem }                       from '../actions/qbank/assessments';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -48,7 +49,7 @@ function uploadMedia(state, action) {
   formData.append('inputFile', action.body);
   formData.append('returnUrl', true);
   formData.append('createNew', true);
-debugger;
+
   return api.post(
     `/repository/repositories/${action.bankId}/assets`,
     state.settings.api_url,
@@ -57,6 +58,29 @@ debugger;
     null,
     formData
   );
+}
+
+function updateQBankItem(store, action) {
+  const state = store.getState();
+  const item = state.items[action.bankId][action.itemId];
+  const updatedAttributes = action.body;
+
+  const newItem = serialize(updatedAttributes.type || item.type)(item, updatedAttributes);
+
+  api.put(
+    `assessment/banks/${action.bankId}/items/${action.itemId}`,
+    state.settings.api_url,
+    state.jwt,
+    state.settings.csrf_token,
+    null,
+    newItem
+  ).then((res) => {
+    store.dispatch({
+      type: action.type + DONE,
+      original: action,
+      payload: deserialize(res.body.genusTypeId)(res.body)
+    });
+  });
 }
 
 // takingAgentId is used to delete all assessmentsTaken for a specific user. It
@@ -292,28 +316,7 @@ const qbank = {
     url    : (url, action) => `${url}/assessment/banks/${action.bankId}/items`,
   },
 
-  [ItemConstants.UPDATE_ITEM]: (store, action) => {
-    const state = store.getState();
-    const item = state.items[action.bankId][action.itemId];
-    const updatedAttributes = action.body;
-
-    const newItem = serialize(updatedAttributes.type || item.type)(item, updatedAttributes);
-
-    api.put(
-      `assessment/banks/${action.bankId}/items/${action.itemId}`,
-      state.settings.api_url,
-      state.jwt,
-      state.settings.csrf_token,
-      null,
-      newItem
-    ).then((res) => {
-      store.dispatch({
-        type: action.type + DONE,
-        original: action,
-        payload: deserialize(res.body.genusTypeId)(res.body)
-      });
-    });
-  },
+  [ItemConstants.UPDATE_ITEM]: updateQBankItem,
 
   [AssessmentConstants.CREATE_ITEM_IN_ASSESSMENT]: (store, action) => {
     createItemInAssessment(
@@ -434,11 +437,28 @@ const qbank = {
     url    : (url, action) => `${url}/repository/repositories/${action.bankId}/assets`,
   },
 
-  [AssetConstants.ADD_MEDIA_TO_ASSESSMENT]: (store, action) => {
+  [AssetConstants.ADD_MEDIA_TO_QUESTION]: (store, action) => {
     const state = store.getState();
     uploadMedia(state, action).then((res) => {
-      debugger;
-      // Crap aint here yet
+      const { url, id, assetId, genusTypeId } = _.get(res, 'body.assetContents[0]', {});
+      let item = {
+        question: {
+          fileIds: {
+            [action.guid] : {
+              assetContentId: id,
+              assetId,
+              assetContentTypeId: genusTypeId,
+            }
+          }
+        }
+      };
+
+      // this needs to work for item.question.choices[choiceId].field, and item.question.dropObjects[objectId].field
+      // TODO: fix alt text
+      item = _.set(item, action.where, { text: `assetContent:${action.guid}`, altText: action.file.altText });
+
+      const newAction = updateItem(action.bankId, item);
+      updateQBankItem(store, newAction);
     });
   },
 };
