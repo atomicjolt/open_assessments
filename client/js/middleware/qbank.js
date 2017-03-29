@@ -53,8 +53,8 @@ function uploadMedia(state, action) {
   formData.append('altText', action.metaData.altText || '');
 
   // qbank has not implemented licencse and copyright yet
-  // formData.append('license', action.metadata.license || '');
-  // formData.append('copyright', action.metadata.copyright || '');
+  // formData.append('license', action.metaData.license || '');
+  // formData.append('copyright', action.metaData.copyright || '');
 
   return api.post(
     `/repository/repositories/${action.bankId}/assets`,
