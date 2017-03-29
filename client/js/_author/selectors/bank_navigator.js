@@ -17,17 +17,23 @@ export const currentBankId = createSelector(
 export const rawAssessments = createSelector(
   common.assessments,
   currentBankId,
-  (_rawAssessments, _currentBankId) =>  _.get(_rawAssessments, _currentBankId, {})
+  (_rawAssessments, _currentBankId) => _.get(_rawAssessments, _currentBankId, {})
 );
 
 export const bankAssessments = createSelector(
 rawAssessments,
 common.settings,
-(_rawAssessments, _settings) =>
-  _.map(_rawAssessments, assessment =>
-     _assessment(assessment, [], _settings)
-  )
-);
+(_rawAssessments, _settings) => {
+  const transformedAssessments =
+    _.map(_rawAssessments, assessment => _assessment(assessment, [], _settings));
+  const assessmentHash = _.reduce(
+    transformedAssessments,
+    (assessments, assessment) => {
+      assessments[assessment.id] = assessment;
+      return assessments;
+    }, {});
+  return assessmentHash;
+});
 
 
 export const banks = createSelector(

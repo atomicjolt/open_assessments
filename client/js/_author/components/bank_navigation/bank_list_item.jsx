@@ -4,12 +4,15 @@ import CopyToClipboard  from 'react-copy-to-clipboard';
 import appHistory       from '../../history';
 import Icon             from './bank_icon';
 
+// export function _bankListItem(){
+//   return ();
+// }
+
 // TODO: think about breaking this into smaller components
 export default function bankListItem(props) {
-  const { bank, publishedBankId, baseEmbedUrl } = props;
+  const { bank, baseEmbedUrl } = props;
 
-  const isPublished = _.includes(bank.assignedBankIds, publishedBankId);
-  const published = isPublished ? 'is-published' : '';
+  const isPublished = bank.isPublished;
   const isAssessment = bank.type === 'Assessment';
   const assessOffered = bank.assessmentOffered ? bank.assessmentOffered[0] : undefined;
   const buttonContainer = {
@@ -111,19 +114,11 @@ export default function bankListItem(props) {
       <td>{bank.displayName ? bank.displayName.text : null}</td>
       <td>
         <button
-          className={`au-c-btn au-c-btn--square au-c-publish ${published}`}
+          className={`au-c-btn au-c-btn--square au-c-publish ${isPublished ? 'is-published' : ''}`}
           style={buttonContainer}
           onClick={(e) => {
-            debugger;
             e.stopPropagation();
-            //TODO pass assessment down, so this isnt gross
-            props.togglePublishAssessment({
-              bankId: bank.bankId,
-              id: bank.id,
-              isPublished,
-              assignedBankIds: bank.assignedBankIds,
-              assessmentOffered: bank.assessmentOffered,
-            });
+            props.togglePublishAssessment(bank);
           }}
         >
           <Icon type={isPublished ? 'Published' : 'Publish'} />
@@ -154,7 +149,6 @@ bankListItem.propTypes = {
   bank: React.PropTypes.shape({
     displayName : React.PropTypes.shape({}),
   }).isRequired,
-  publishedBankId: React.PropTypes.string.isRequired,
   baseEmbedUrl: React.PropTypes.string.isRequired,
   getEmbedCode: React.PropTypes.func.isRequired,
 };

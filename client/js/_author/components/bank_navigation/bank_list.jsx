@@ -10,7 +10,6 @@ export default function bankList(props) {
     <table className="au-c-table">
       <tbody>
         {
-          //TODO map over assessment and banks
         _.map(props.banks, bank => (
           <ListItem
             baseEmbedUrl={props.baseEmbedUrl}
