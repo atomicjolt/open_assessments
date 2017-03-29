@@ -12,7 +12,7 @@ import serialize                            from './serialization/qbank/serializ
 import deserialize                          from './serialization/qbank/deserializers/factory';
 import { scrub }                            from './serialization/serializer_utils';
 import * as assessmentActions               from '../actions/qbank/assessments';
-import { updateItem }                       from '../actions/qbank/assessments';
+import { updateItem }                       from '../actions/qbank/items';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -440,8 +440,9 @@ const qbank = {
   [AssetConstants.ADD_MEDIA_TO_QUESTION]: (store, action) => {
     const state = store.getState();
     uploadMedia(state, action).then((res) => {
-      const { url, id, assetId, genusTypeId } = _.get(res, 'body.assetContents[0]', {});
+      const { id, assetId, genusTypeId } = _.get(res, 'body.assetContents[0]', {});
       let item = {
+        id: action.itemId,
         question: {
           fileIds: {
             [action.guid] : {
