@@ -24,8 +24,8 @@ function select(state, props) {
     currentBankId: navigationSelectors.currentBankId(state),
     banks: navigationSelectors.banks(state),
     settings: commonSelectors.settings(state),
-    assessments: commonSelectors.assessments(state),
-    currentBank: navigationSelectors.currentBank(state),
+    assessments: navigationSelectors.bankAssessments(state),
+    // currentBank: navigationSelectors.currentBank(state),
   };
 }
 
@@ -48,7 +48,7 @@ export class BankNavigator extends React.Component {
     createAssessment   : React.PropTypes.func.isRequired,
     deleteAssessment   : React.PropTypes.func.isRequired,
     currentBankId      : React.PropTypes.string,
-    currentBank        : React.PropTypes.shape({}),
+    // currentBank        : React.PropTypes.shape({}),
   };
 
   constructor() {
@@ -96,7 +96,8 @@ export class BankNavigator extends React.Component {
   }
 
   getEmbedCode(assessId, bankId) {
-    const assessment = this.props.currentBank[assessId];
+    // const assessment = this.props.currentBank[assessId];
+    const assessment = this.props.assessments[assessId];
     const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
     if (_.isEmpty(assessOffered)) {
       this.props.getAssessmentOffered(bankId, assessId);
@@ -116,6 +117,7 @@ export class BankNavigator extends React.Component {
           getBankChildren={bankId => this.getBankChildren(bankId)}
         />
         <BankList
+          assessments={this.props.assessments}
           baseEmbedUrl={settings.baseEmbedUrl}
           banks={this.sortBanks()}
           getEmbedCode={(assessId, bankId) => { this.getEmbedCode(assessId, bankId); }}

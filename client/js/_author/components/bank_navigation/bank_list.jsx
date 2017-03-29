@@ -24,6 +24,20 @@ export default function bankList(props) {
           />
         ))
         }
+        {
+          _.map(props.assessments, assessment => (
+            <ListItem
+              baseEmbedUrl={props.baseEmbedUrl}
+              getEmbedCode={props.getEmbedCode}
+              key={`bank_${assessment.id}`}
+              bank={assessment}
+              publishedBankId={props.publishedBankId}
+              getBankChildren={props.getBankChildren}
+              deleteAssessment={props.deleteAssessment}
+              togglePublishAssessment={props.togglePublishAssessment}
+            />
+          ))
+        }
       </tbody>
     </table>
   );
