@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { createSelector }  from 'reselect';
 import * as common from './common';
+import { _assessment } from './assessment';
 
 export const path = state => state.bankNavigation.location;
 
@@ -13,11 +14,19 @@ export const currentBankId = createSelector(
   }
 );
 
-//TODO import _assessment from assessment.js
-export const bankAssessments = createSelector(
+export const rawAssessments = createSelector(
   common.assessments,
   currentBankId,
-  (_assessments, _currentBankId) => _.get(_assessments, _currentBankId, {})
+  (_rawAssessments, _currentBankId) =>  _.get(_rawAssessments, _currentBankId, {})
+);
+
+export const bankAssessments = createSelector(
+rawAssessments,
+common.settings,
+(_rawAssessments, _settings) =>
+  _.map(_rawAssessments, assessment =>
+     _assessment(assessment, [], _settings)
+  )
 );
 
 

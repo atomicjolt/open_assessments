@@ -46,19 +46,25 @@ const _isPublished = (_assessment = {}, _settings = {}) =>
       _settings.publishedBankId,
   );
 
-export const _assessment = (_bankAssessments, _id, _items, _settings) => {
-  if (_.isUndefined(_bankAssessments)) { return {}; }
-  const assessment = _bankAssessments[_id];
-  const _published = _isPublished(assessment, _settings);
-  return transformAssessment(assessment, _items, _published);
+export const _assessment = (_rawAssessment, _items, _settings) => {
+  const _published = _isPublished(_rawAssessment, _settings);
+  return transformAssessment(_rawAssessment, _items, _published);
 };
 
-export const assessment = createSelector(
+export const rawAssessment = createSelector(
   bankAssessments,
   id,
+  (_bankAssessments, _id) => {
+    if (_.isUndefined(_bankAssessments)) { return {}; }
+    return _bankAssessments[_id];
+  }
+);
+
+export const assessment = createSelector(
+  rawAssessment,
   items,
   settings,
-  _assessment
+  (_rawAssessment, _items, _settings) => _assessment(_rawAssessment, _items, _settings)
 );
 
 export const isPublished = createSelector(

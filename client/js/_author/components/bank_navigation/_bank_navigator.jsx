@@ -9,23 +9,13 @@ import BankList               from './bank_list';
 import  * as navigationSelectors from '../../selectors/bank_navigator';
 import * as commonSelectors   from '../../selectors/common';
 
-function select(state, props) {
-  // const path = state.bankNavigation.location;
-  // const currentBankId = !_.isEmpty(path) ? _.last(path).id : null;
-  //
-  // let banks = state.banks;
-  // _.forEach(path, (folder) => {
-  //   const currentBank = _.find(banks, { id: folder.id });
-  //   banks = currentBank.childNodes;
-  // });
-
+function select(state) {
   return {
     path: navigationSelectors.path(state),
     currentBankId: navigationSelectors.currentBankId(state),
     banks: navigationSelectors.banks(state),
     settings: commonSelectors.settings(state),
     assessments: navigationSelectors.bankAssessments(state),
-    // currentBank: navigationSelectors.currentBank(state),
   };
 }
 
@@ -48,7 +38,6 @@ export class BankNavigator extends React.Component {
     createAssessment   : React.PropTypes.func.isRequired,
     deleteAssessment   : React.PropTypes.func.isRequired,
     currentBankId      : React.PropTypes.string,
-    // currentBank        : React.PropTypes.shape({}),
   };
 
   constructor() {
