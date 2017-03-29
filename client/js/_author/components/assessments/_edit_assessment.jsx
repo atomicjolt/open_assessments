@@ -3,7 +3,7 @@ import { connect }            from 'react-redux';
 import _                      from 'lodash';
 
 import hashHistory            from '../../history';
-import { transformAssessment } from '../../selectors/assessment';
+import  * as assessmentSelectors from '../../selectors/assessment';
 import Heading                from  '../common/heading';
 import AssessmentForm         from './assessment_form';
 import * as BankActions       from '../../../actions/qbank/banks';
@@ -11,19 +11,15 @@ import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 
 function select(state, props) {
-  const bankId = encodeURIComponent(props.params.bankId);
-  const id = encodeURIComponent(props.params.id);
-  const bankAssessments = state.assessments[bankId];
-  const assessmentItemIds = state.assessmentItems[id];
-
   return {
-    assessment: (bankAssessments && transformAssessment(bankAssessments[id])) || {},
-    items: _.compact(_.at(state.items[bankId], assessmentItemIds)),
-    settings: state.settings,
-    banks: state.banks,
+    assessment: assessmentSelectors.assessment(state, props),
+    items: assessmentSelectors.items(state, props),
+    settings: assessmentSelectors.settings(state, props),
+    banks: assessmentSelectors.banks(state, props),
+    isPublished: assessmentSelectors.isPublished(state, props),
     params: { // override react router because we want the escaped ids
-      bankId,
-      id,
+      bankId: assessmentSelectors.bankId(state, props),
+      id: assessmentSelectors.id(state, props),
     }
   };
 }
@@ -44,12 +40,9 @@ export class EditAssessment extends React.Component {
       editableBankId: React.PropTypes.string,
       publishedBankId: React.PropTypes.string
     }),
-    editOrPublishAssessment: React.PropTypes.func.isRequired,
     updatePath: React.PropTypes.func.isRequired,
     getItems: React.PropTypes.func.isRequired,
     banks: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    deleteAssignedAssessment: React.PropTypes.func.isRequired,
-    createAssessmentOffered: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
     updateSingleItemOrPage: React.PropTypes.func.isRequired,
@@ -59,6 +52,7 @@ export class EditAssessment extends React.Component {
     updateItem: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
     deleteAssessmentItem: React.PropTypes.func,
+    isPublished: React.PropTypes.bool.isRequired,
   };
 
   componentDidMount() {
@@ -105,22 +99,6 @@ export class EditAssessment extends React.Component {
     );
   }
 
-  editOrPublishAssessment(published) {
-    const { assessment, settings } = this.props;
-    if (published) {
-      this.props.deleteAssignedAssessment(assessment, settings.publishedBankId);
-      this.props.editOrPublishAssessment(assessment, settings.editableBankId);
-    } else {
-      if (_.includes(assessment.assignedBankIds, this.props.settings.editableBankId)) {
-        this.props.deleteAssignedAssessment(assessment, settings.editableBankId);
-      }
-      if (_.isEmpty(assessment.assessmentOffered) && !_.isEmpty(this.props.items)) {
-        this.props.createAssessmentOffered(assessment.bankId, assessment.id);
-      }
-      this.props.editOrPublishAssessment(assessment, settings.publishedBankId);
-    }
-  }
-
   updateSingleItemOrPage(setSinglePage) {
     const { settings, assessment } = this.props;
     const { assessmentOffered } = assessment;
@@ -149,14 +127,15 @@ export class EditAssessment extends React.Component {
   }
 
   render() {
-    const { assessment, settings } = this.props;
-    const isPublished =  assessment ? _.includes(assessment.assignedBankIds, settings.publishedBankId) : false;
+    const { assessment, isPublished } = this.props;
     const publishedAndOffered = isPublished && !_.isUndefined(assessment.assessmentOffered);
     return (
       <div>
         <Heading
           view="assessments"
-          editOrPublishAssessment={(published) => { this.editOrPublishAssessment(published); }}
+          togglePublishAssessment={
+            () => this.props.togglePublishAssessment(this.props.assessment)
+          }
           isPublished={isPublished}
           assessment={this.props.assessment}
           items={this.props.items}

@@ -2,54 +2,52 @@ import React from 'react';
 import _ from 'lodash';
 
 export default function ImageOption(props) {
-
-  const isActive = props.id === props.activeChoice;
-  const url = props.text.split('"')[1];
+  const { activateChoice, updateChoice, deleteChoice, id, order, numChoices } = props;
   return (
     <div
-      className={`au-c-image-sequence-answer ${isActive ? 'is-active' : ''} tabIndex="0"`}
-      onClick={() => props.activateChoice(props.id)}
+      className='au-c-image-sequence-answer is-active'
+      tabIndex="0"
+      onClick={() => activateChoice(id)}
     >
-      { isActive ?
-        <div className="au-c-image-sequence-answer__top">
-          <div className="au-c-dropdown au-c-dropdown--tiny">
-            <label htmlFor="image_option_order" />
-            <select
-              name=""
-              id="image_option_order"
-              onChange={e => props.updateChoice({
-                id: props.id,
-                order: parseInt(e.target.value, 10)
-              })}
-              defaultValue={props.order}
-            >
-              {
-                _.map([null].concat(_.range(1, props.numChoices + 1)), (val, index) =>
-                  <option
-                    key={`option_key_${index}`}
-                    value={val}
-                  >
-                    {val === null ? 'N/A' : val}
-                  </option>
-                )
-              }
-            </select>
-          </div>
-          <button className="au-c-answer--delete au-u-right" onClick={() => props.deleteChoice(props)}>
-            <i className="material-icons">close</i>
-          </button>
+      <div className="au-c-image-sequence-answer__top">
+        <div className="au-c-dropdown au-c-dropdown--tiny">
+          <label htmlFor="image_option_order" />
+          <select
+            name=""
+            id="image_option_order"
+            onChange={e => updateChoice({
+              id,
+              order: parseInt(e.target.value, 10)
+            })}
+            defaultValue={order}
+          >
+            <option key='option_key_null' value={null}> {'N/A'}</option>
+            {
+              _.map(_.range(1, numChoices + 1), (val, index) =>
+                <option key={`option_key_${index}`} value={val}>{ val }</option>
+              )
+            }
+          </select>
         </div>
-        : null
-      }
+        <button className="au-c-answer--delete au-u-right" onClick={() => deleteChoice(props)}>
+          <i className="material-icons">close</i>
+        </button>
+      </div>
       <div className="au-c-input au-c-input-label--left">
-        <label htmlFor="">Label</label>
+        <label htmlFor={`label_${id}`}>Label</label>
         <div className="au-c-input__contain">
-          <input className="au-c-text-input au-c-text-input--smaller" type="text" />
+          <input
+            defaultValue={props.labelText}
+            onBlur={e => props.updateChoice({ labelText: e.target.value }, null)}
+            className="au-c-text-input au-c-text-input--smaller"
+            type="text"
+            id={`label_${id}`}
+          />
           <div className="au-c-input__bottom" />
         </div>
       </div>
       <div className="au-c-image-sequence-answer__image">
-        <img src={url} alt="" />
+        <img src={props.text} alt="" />
       </div>
     </div>
   );
@@ -57,9 +55,12 @@ export default function ImageOption(props) {
 
 ImageOption.propTypes = {
   deleteChoice: React.PropTypes.func,
+  updateChoice: React.PropTypes.func,
+  activateChoice: React.PropTypes.func,
   id: React.PropTypes.string,
   activeChoice: React.PropTypes.string,
   text: React.PropTypes.string,
+  labelText: React.PropTypes.string,
   order: React.PropTypes.number,
   numChoices: React.PropTypes.number.isRequired,
 };

@@ -1,6 +1,7 @@
 import React      from 'react';
 import _          from 'lodash';
 import types      from '../../../constants/question_types';
+import typeNames  from '../../../constants/question_names';
 import languages  from '../../../constants/language_types';
 
 export default class newItemForm extends React.Component {
@@ -69,7 +70,7 @@ export default class newItemForm extends React.Component {
                     {
                       _.map(types, type => (
                         <option key={`new_item_${type}`} value={type}>
-                          {_.startCase(type)}
+                          {typeNames[type]}
                         </option>
                       ))
                     }

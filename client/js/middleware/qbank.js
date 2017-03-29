@@ -11,6 +11,7 @@ import { Constants as AssetConstants }      from '../actions/qbank/assets';
 import serialize                            from './serialization/qbank/serializers/factory';
 import deserialize                          from './serialization/qbank/deserializers/factory';
 import { scrub }                            from './serialization/serializer_utils';
+import * as assessmentActions               from '../actions/qbank/assessments';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -42,19 +43,25 @@ function getAssessmentsTaken(state, bankId, assessmentsOffered) {
   return Promise.all(assessmentsTaken);
 }
 
-function deleteAssessmentsTaken(state, bankId, assessmentsTaken) {
+// takingAgentId is used to delete all assessmentsTaken for a specific user. It
+// should be in the format `osid.agent.Agent%3A${user_id}%40MIT-ODL`.
+// In the player it is set in qbank using the x-api-proxy header, which is set
+// via the eid setting.
+function deleteAssessmentsTaken(state, bankId, assessmentsTaken, takingAgentId = '') {
   const basePath = `assessment/banks/${bankId}/assessmentstaken/`;
   const deletedAssessmentsTaken = [];
 
   _.each(_.flatten(assessmentsTaken), (assessmentTaken) => {
-    deletedAssessmentsTaken.push(new Promise((resolve) => {
-      api.del(
-        basePath + assessmentTaken.id,
-        state.settings.api_url,
-        state.jwt,
-        state.settings.csrf_token,
-      ).then(res => resolve(res.body));
-    }));
+    if (!takingAgentId || assessmentTaken.takingAgentId === takingAgentId) {
+      deletedAssessmentsTaken.push(new Promise((resolve) => {
+        api.del(
+          basePath + assessmentTaken.id,
+          state.settings.api_url,
+          state.jwt,
+          state.settings.csrf_token,
+        ).then(res => resolve(res.body));
+      }));
+    }
   });
 
   return Promise.all(deletedAssessmentsTaken);
@@ -118,14 +125,46 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
     });
   });
 
-
 }
 
 const qbank = {
-  [BankConstants.GET_BANKS_HIERARCHY]: {
-    method : Network.GET,
-    url    : url => `${url}`,
+
+  [BankConstants.GET_BANKS_HIERARCHY]: (store, action) => {
+    const state = store.getState();
+    api.get(
+      state.settings.lambda_url,
+      null,
+      state.jwt,
+      state.settings.csrf_token,
+      null,
+      null
+    ).then((res) => {
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: res.body
+      });
+
+      const bankId = res.body[0].id;
+      api.get(
+        `/repository/repositories/${bankId}/assets?fullUrls`,
+        state.settings.api_url,
+        state.jwt,
+        state.settings.csrf_token,
+        null,
+        null
+      ).then((res2) => {
+        store.dispatch({
+          type: 'GET_MEDIA_DONE',
+          original: { bankId },
+          payload: res2.body
+        });
+      });
+
+
+    });
   },
+
   [AssessmentConstants.GET_ASSESSMENT_PREVIEW]: {
     method: Network.GET,
     url: (url, action) => {
@@ -172,9 +211,39 @@ const qbank = {
     url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedbankids`,
   },
 
-  [AssessmentConstants.DELETE_ASSIGNED_ASSESSMENT]: {
-    method : Network.DEL,
-    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assignedbankids/${action.assignedId}`,
+  [AssessmentConstants.DELETE_ASSIGNED_ASSESSMENT]: (store, action) => {
+    const state = store.getState();
+    const { bankId, assessmentId, assignedId } = action;
+
+    api.del(
+      `assessment/banks/${bankId}/assessments/${assessmentId}/assignedbankids/${assignedId}`,
+      state.settings.api_url,
+      state.jwt,
+      state.settings.csrf_token,
+      null,
+      null
+    ).then((deleteRes) => {
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: deleteRes.body
+      });
+
+      // if we unpublished an assessment, we need to delete admin assessment
+      // takens. There should only be one assessmentOffered, but we're handling
+      // the case where there is more than one.
+      if (action.assignedId === state.settings.publishedBankId) {
+        getAssessmentsOffered(state, bankId, assessmentId).then(res =>
+          getAssessmentsTaken(state, bankId, res.body).then(
+            assessmentsTaken => deleteAssessmentsTaken(
+            state,
+            bankId,
+            assessmentsTaken,
+            `osid.agent.Agent%3A${state.settings.eid}%40MIT-ODL`
+          )
+        ));
+      }
+    });
   },
 
   [AssessmentConstants.UPDATE_ASSESSMENT]: {
@@ -322,6 +391,30 @@ const qbank = {
         original : action,
       }));
     });
+  },
+  [AssessmentConstants.TOGGLE_PUBLISH_ASSESSMENT] : (store, action) => {
+    const state = store.getState();
+    const { assessment } = action;
+    const { publishedBankId, editableBankId } = state.settings;
+
+    if (assessment.isPublished) {
+      [
+        assessmentActions.deleteAssignedAssessment(assessment, publishedBankId),
+        assessmentActions.editOrPublishAssessment(assessment, editableBankId),
+      ].forEach(newAction => store.dispatch(newAction));
+    } else {
+      const actions = [];
+      if (_.includes(assessment.assignedBankIds, editableBankId)) {
+        actions.push(assessmentActions.deleteAssignedAssessment(assessment, editableBankId));
+      }
+
+      if (_.isEmpty(assessment.assessmentOffered)) {
+        actions.push(assessmentActions.createAssessmentOffered(assessment.bankId, assessment.id));
+      }
+      actions.push(assessmentActions.editOrPublishAssessment(assessment, publishedBankId));
+
+      actions.forEach(newAction => store.dispatch(newAction));
+    }
   }
 };
 

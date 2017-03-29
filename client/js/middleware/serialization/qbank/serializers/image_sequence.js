@@ -8,9 +8,13 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
     const newOrder = _.get(updateValues, 'order');
+    const labelText = _.get(updateValues, 'labelText', choice.labelText);
+    const imageSrc = choice.text;
+    const imageAlt = choice.altText;
+    const text = `<p>${labelText}</p><img src='${imageSrc}' alt='${imageAlt}'>`;
     return {
       id: choice.id,
-      text: _.get(updateValues, 'text') || choice.text,
+      text,
       order: _.isNil(newOrder) ? choice.order : newOrder,
       delete: _.get(updateValues, 'delete'),
     };
@@ -31,7 +35,6 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
     choices: null,
   };
-
   if (newQuestionAttributes.choices) {
     newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
   }
@@ -51,7 +54,7 @@ function serializeAnswers(choices, newChoiceAttributes, oldAnswers, correctFeedb
     genusTypeId: genusTypes.answer.rightAnswer,
     feedback: _.get(correctFeedback, 'text'),
     type: genusTypes.answer.multipleAnswer,
-    choiceIds: _.map(_.orderBy(_.filter(updatedChoices, choice => choice.answerOrder !== ''), 'answerOrder'), 'id'),
+    choiceIds: _.map(_.orderBy(_.filter(updatedChoices, choice => choice.order !== ''), 'order'), 'id'),
     fileIds: _.get(correctFeedback, 'fileIds'),
   };
   let incorrectAnswer = {
