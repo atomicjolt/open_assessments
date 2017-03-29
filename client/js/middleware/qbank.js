@@ -49,8 +49,8 @@ function uploadMedia(state, action) {
   formData.append('inputFile', action.body);
   formData.append('returnUrl', true);
   formData.append('createNew', true);
-  formData.append('mediaDescription', action.metadata.description || '');
-  formData.append('altText', action.metadata.altText || '');
+  formData.append('mediaDescription', action.metaData.description || '');
+  formData.append('altText', action.metaData.altText || '');
 
   // qbank has not implemented licencse and copyright yet
   // formData.append('license', action.metadata.license || '');
