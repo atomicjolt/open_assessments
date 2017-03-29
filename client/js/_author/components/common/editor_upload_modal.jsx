@@ -41,6 +41,16 @@ export default class EditorUploadModal extends React.Component {
     this.refs[`modal_textarea_${this.props.id}`].rows = rows + minRows;
   }
 
+  addMedia() {
+    const metaData = {
+      description: this.state.description,
+      altText: this.state.altText,
+      license: this.state.license,
+      copyright: this.state.copyright,
+    };
+    this.props.insertMedia(this.state.uploadedImage, metaData);
+  }
+
   render() {
     let name = this.props.mediaName;
 
@@ -161,7 +171,7 @@ export default class EditorUploadModal extends React.Component {
             Cancel
           </button>
           <button
-            onClick={() => this.props.insertMedia(this.state.uploadedImage)}
+            onClick={() => this.addMedia()}
             className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-sm"
           >
             OK
