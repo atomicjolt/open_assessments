@@ -42,7 +42,7 @@ export const banks = createSelector(
   (_path, _banks) => {
     let currentBanks = _banks;
     _.forEach(_path, (folder) => {
-      const currentBank = _.find(_banks, { id: folder.id });
+      const currentBank = _.find(currentBanks, { id: folder.id });
       currentBanks = currentBank.childNodes;
     });
     return _.merge(currentBanks);
