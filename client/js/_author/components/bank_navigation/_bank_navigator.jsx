@@ -6,23 +6,26 @@ import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 import Heading                from '../common/heading';
 import BankList               from './bank_list';
-import  * as assessmentSelectors from '../../selectors/assessment';
+import  * as navigationSelectors from '../../selectors/bank_navigator';
+import * as commonSelectors   from '../../selectors/common';
 
 function select(state, props) {
-  const path = state.bankNavigation.location;
-  const currentBankId = !_.isEmpty(path) ? _.last(path).id : null;
-  let banks = state.banks;
-  _.forEach(path, (folder) => {
-    const currentBank = _.find(banks, { id: folder.id });
-    banks = currentBank.childNodes;
-  });
+  // const path = state.bankNavigation.location;
+  // const currentBankId = !_.isEmpty(path) ? _.last(path).id : null;
+  //
+  // let banks = state.banks;
+  // _.forEach(path, (folder) => {
+  //   const currentBank = _.find(banks, { id: folder.id });
+  //   banks = currentBank.childNodes;
+  // });
 
   return {
-    path,
-    currentBankId,
-    banks: _.merge(state.assessments[currentBankId], banks),
-    settings: state.settings,
-    currentBank: state.assessments[currentBankId],
+    path: navigationSelectors.path(state),
+    currentBankId: navigationSelectors.currentBankId(state),
+    banks: navigationSelectors.banks(state),
+    settings: commonSelectors.settings(state),
+    assessments: commonSelectors.assessments(state),
+    currentBank: navigationSelectors.currentBank(state),
   };
 }
 
