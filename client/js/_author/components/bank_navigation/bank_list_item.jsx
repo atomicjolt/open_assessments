@@ -4,53 +4,6 @@ import CopyToClipboard  from 'react-copy-to-clipboard';
 import appHistory       from '../../history';
 import Icon             from './bank_icon';
 
-export function _bankListItem(props) {
-  const selectItem = () => {};
-  const { bank } = props;
-
-  //TODO figure out what can be extracted
-  return ( <div></div>
-    // <tr
-    //   onClick={() => selectItem()}
-    //   tabIndex="0"
-    //   role="button"
-    //   aria-label={bank.displayName ? bank.displayName.text : 'bank item'}
-    // >
-    //   <td><Icon type={bank.type} /></td>
-    //   <td>{bank.displayName ? bank.displayName.text : null}</td>
-    //   <td>
-    //     <button
-    //       className={`au-c-btn au-c-btn--square au-c-publish ${isPublished ? 'is-published' : ''}`}
-    //       style={buttonContainer}
-    //       onClick={(e) => {
-    //         e.stopPropagation();
-    //         props.togglePublishAssessment(bank);
-    //       }}
-    //     >
-    //       <Icon type={isPublished ? 'Published' : 'Publish'} />
-    //     </button>
-    //   </td>
-    //   <td>
-    //     <div className="au-c-table__icons" style={buttonContainer}>
-    //       {embedButtonOrUrl()}
-    //       <button
-    //         className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
-    //       >
-    //         <i className="material-icons">edit</i>
-    //       </button>
-    //       {getPreviewButton(bank.bankId, bank.id)}
-    //       <button
-    //         className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
-    //         onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
-    //       >
-    //         <i className="material-icons">delete</i>
-    //       </button>
-    //     </div>
-    //   </td>
-    // </tr>
-  );
-}
-
 // TODO: think about breaking this into smaller components
 export default function bankListItem(props) {
   const { bank, baseEmbedUrl } = props;
