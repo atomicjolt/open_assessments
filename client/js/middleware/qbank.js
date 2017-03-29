@@ -459,7 +459,7 @@ const qbank = {
       item = _.set(item, action.where, {
         text: `AssetContent:${action.guid}`,
         altText: action.file.altText,
-        id: _.endsWith(action.where, 'new') ? 'new' : undefined
+        id: _.last(action.where.split('.')),
       });
 
       const newAction = updateItem(action.bankId, item);
