@@ -85,7 +85,6 @@ export class BankNavigator extends React.Component {
   }
 
   getEmbedCode(assessId, bankId) {
-    // const assessment = this.props.currentBank[assessId];
     const assessment = this.props.assessments[assessId];
     const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
     if (_.isEmpty(assessOffered)) {
