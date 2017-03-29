@@ -7,13 +7,16 @@ export const path = state => state.bankNavigation.location;
 
 export const currentBankId = createSelector(
   path,
-  _path => _.get(_path, 'id', null)
+  (_path) => {
+    if (!_.isEmpty(_path)) return _.last(_path).id;
+    return null;
+  }
 );
 
-export const currentBank = createSelector(
+export const bankAssessments = createSelector(
   common.assessments,
   currentBankId,
-  (_assessments, _currentBankId) => _assessments[_currentBankId]
+  (_assessments, _currentBankId) => _.get(_assessments, _currentBankId, {})
 );
 
 
