@@ -40,6 +40,7 @@ export const banks = createSelector(
   path,
   state => state.banks,
   (_path, _banks) => {
+    // This is what makes bank navigation work
     let currentBanks = _banks;
     _.forEach(_path, (folder) => {
       const currentBank = _.find(currentBanks, { id: folder.id });
