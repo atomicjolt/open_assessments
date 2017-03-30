@@ -1,9 +1,7 @@
 import React      from 'react';
 import _          from 'lodash';
 import Header     from './bank_list_header';
-// import ListItem   from './bank_list_item';
 import Spinner    from '../common/spinner';
-// import { BankFolder } from './bank_list_item';
 import BankAssessment from './bank_assessment';
 import BankFolder from './bank_folder';
 
@@ -57,6 +55,12 @@ export default function bankList(props) {
 }
 
 bankList.propTypes = {
+  assessments: React.PropTypes.arrayOf(
+  React.PropTypes.shape({
+    isPublished: React.PropTypes.bool.isRequired,
+    bankId: React.PropTypes.string.isRequired,
+    id: React.PropTypes.string.isRequired,
+  })).isRequired,
   banks: React.PropTypes.oneOfType([
     React.PropTypes.arrayOf(React.PropTypes.shape({})),
     React.PropTypes.shape({})
@@ -66,4 +70,5 @@ bankList.propTypes = {
   sortName         : React.PropTypes.string,
   sortPublished    : React.PropTypes.string,
   deleteAssessment : React.PropTypes.func,
+  togglePublishAssessment: React.PropTypes.func,
 };

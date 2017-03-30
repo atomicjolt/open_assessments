@@ -21,6 +21,12 @@ function select(state) {
 
 export class BankNavigator extends React.Component {
   static propTypes = {
+    assessments: React.PropTypes.arrayOf(
+      React.PropTypes.shape({
+        isPublished: React.PropTypes.bool.isRequired,
+        bankId: React.PropTypes.string.isRequired,
+        id: React.PropTypes.string.isRequired,
+      })).isRequired,
     banks: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.shape({})),
       React.PropTypes.shape({})
@@ -28,16 +34,17 @@ export class BankNavigator extends React.Component {
     settings: React.PropTypes.shape({
       editableBankId: React.PropTypes.string,
       publishedBankId: React.PropTypes.string,
-      baseEmbedUrl       : React.PropTypes.string,
+      baseEmbedUrl: React.PropTypes.string,
     }),
-    path               : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
-    updatePath         : React.PropTypes.func.isRequired,
-    getAssessments     : React.PropTypes.func.isRequired,
-    getAssessmentOffered     : React.PropTypes.func.isRequired,
-    getItems           : React.PropTypes.func.isRequired,
-    createAssessment   : React.PropTypes.func.isRequired,
-    deleteAssessment   : React.PropTypes.func.isRequired,
-    currentBankId      : React.PropTypes.string,
+    path: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
+    updatePath: React.PropTypes.func.isRequired,
+    getAssessments: React.PropTypes.func.isRequired,
+    getAssessmentOffered: React.PropTypes.func.isRequired,
+    getItems: React.PropTypes.func.isRequired,
+    createAssessment: React.PropTypes.func.isRequired,
+    deleteAssessment: React.PropTypes.func.isRequired,
+    currentBankId: React.PropTypes.string,
+    togglePublishAssessment: React.PropTypes.func.isRequired,
   };
 
   constructor() {
