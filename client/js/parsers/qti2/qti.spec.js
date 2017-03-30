@@ -9,7 +9,7 @@ describe('QTI 2 Functions', () => {
 
   describe("transformItem", () => {
     it("sets isHtml to true", () => {
-      const data = fs.readFileSync("specs_support/fixtures/qti2/choice.xml", 'utf8');
+      const data = readFixture('qti2/choice.xml');
       const settings = Immutable.fromJS({ assessmentId: 1 });
       const assessment = parse(settings, data);
       const props = transformItem(assessment.item.xml);

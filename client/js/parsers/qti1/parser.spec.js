@@ -1,5 +1,5 @@
 import Parser                from './parser';
-import fs                    from 'fs';
+import { readFixture }       from '../../../specs_support/utils';
 import Immutable             from 'immutable';
 import $                     from 'jquery';
 import { AssessmentFormats, parse } from '../assessment';
@@ -12,7 +12,7 @@ describe('QTI1 assessment parser', () => {
   describe('parse', () => {
 
     it('parses "MIT" assessment xml from QTI into an object', () => {
-      const data          = fs.readFileSync("specs_support/fixtures/qti1/assessment.xml", 'utf8');
+      const data          = readFixture("qti1/assessment.xml");
       const xml           = $($.parseXML(data));
       const assessmentXml = xml.find('assessment').addBack('assessment');
       const settings = Immutable.fromJS({
@@ -33,7 +33,7 @@ describe('QTI1 assessment parser', () => {
     });
 
     it('parses the "Financial Markets and System" assessment xml from QTI into an assessment object', () => {
-      var data          = fs.readFileSync("specs_support/fixtures/qti1/text.xml", 'utf8');
+      var data          = readFixture("qti1/text.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
       var assessment = Parser.parse(1, assessmentXml, xml);
@@ -60,7 +60,7 @@ describe('QTI1 assessment parser', () => {
   describe('parseSections', () => {
 
     it('find sections in the given qti', () => {
-      var data = fs.readFileSync("specs_support/fixtures/qti1/cells.xml", 'utf8');
+      var data = readFixture("qti1/cells.xml");
       var sections = Parser.parseSections($(data));
       expect(sections.length).toEqual(1);
       var section = sections[0];

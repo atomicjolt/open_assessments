@@ -1,6 +1,6 @@
 import React                    from 'react';
 import ReactDOM                 from 'react-dom';
-
+import _                        from 'lodash';
 import { WordDropZone }         from './drop_zones';
 import DraggableGroupWord       from './movable_words/draggable_group_word';
 import { beginWrap, endWrap }   from '../../../constants/icons';

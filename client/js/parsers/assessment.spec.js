@@ -1,14 +1,11 @@
 import $                                                 from 'jquery';
 import Immutable                                         from 'immutable';
 import { parse, getAssessmentFormat, AssessmentFormats } from './assessment';
+import { readFixture }                                   from '../../specs_support/utils';
 
 const settings = Immutable.fromJS({});
 
 describe('assessment parser', () => {
-
-  beforeAll(() => {
-    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
-  });
 
   // Disabled until this gets refactored back out of parse().
   // describe('getAssessmentFormat', () => {
@@ -32,7 +29,7 @@ describe('assessment parser', () => {
   describe('parse', () => {
 
     it('parses assessment xml from QTI 1 into an object', () => {
-      var data       = readFixtures("qti1/assessment.xml");
+      var data       = readFixture("qti1/assessment.xml");
       var assessment = parse(settings, data);
 
       expect(assessment).toBeDefined();
@@ -48,7 +45,7 @@ describe('assessment parser', () => {
     });
 
     it('parses assessment xml from QTI 2 into an object', () => {
-      var data       = readFixtures("qti2/math_equation.xml");
+      var data       = readFixture("qti2/math_equation.xml");
       var assessment = parse(settings, data);
 
       expect(assessment).toBeDefined();
