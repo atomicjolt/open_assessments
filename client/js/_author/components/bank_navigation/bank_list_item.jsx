@@ -4,6 +4,8 @@ import CopyToClipboard  from 'react-copy-to-clipboard';
 import appHistory       from '../../history';
 import Icon             from './bank_icon';
 
+import PublishButton    from './buttons/publish_button';
+
 export function ListItem(props) {
   const { selectItem, bank } = props;
   return (
@@ -30,25 +32,6 @@ export function BankFolder(props) {
       <td />
       <td />
     </ListItem>
-  );
-}
-
-export function PublishButton(props) {
-  const { togglePublishAssessment, assessment } = props;
-  const isPublished = assessment.isPublished;
-  const icon = isPublished ?
-    <i className="material-icons is-published">cloud_done</i> :
-    <i className="material-icons">cloud_upload</i>;
-  return (
-    <button
-      className={`au-c-btn au-c-btn--square au-c-publish ${isPublished ? 'is-published' : ''}`}
-      onClick={(e) => {
-        e.stopPropagation();
-        togglePublishAssessment(assessment);
-      }}
-    >
-      { icon }
-    </button>
   );
 }
 
