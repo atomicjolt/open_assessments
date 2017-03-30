@@ -139,3 +139,81 @@
 .au-c-wysiwyg-modal__contain{
   padding: 0 2.5rem;
 }
+.au-c-fake-modal{
+  width: 50rem;
+  padding: 2.5rem;
+  margin: 3rem auto 30rem;
+  background: $white;
+}
+
+.au-c-wysiwyg-modal__media{
+  border: $border;
+  position: relative;
+}
+
+.au-c-modal-media__search{
+  padding: 0.5rem;
+}
+
+.au-c-input--search{
+
+  input{
+    border: $border;
+    padding: 0 4rem 0 1rem;
+  }
+  i{
+    position: absolute;
+    right: 0.8rem;
+    top: 0.6rem;
+    font-size: 2.2rem;
+    color: $gray9;
+  }
+}
+
+.au-c-modal-media__results{
+  // border-top: $border;
+  // border-bottom: $border;
+
+  table{
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr{
+    &:hover{
+      td{
+        background: $gray2;
+        cursor: pointer;
+      }
+    }
+    &.is-active{
+      td{
+        background: $purple;
+        color: $white;
+      }
+    }
+  }
+  td{
+    @include semi-bold;
+    font-size: 1.2rem;
+    height: 3rem;
+    vertical-align: middle;
+    border-top: $border;
+    border-bottom: $border;
+    &:nth-of-type(1){
+      width: 4rem;
+    }
+  }
+}
+
+.au-c-modal-media__thumbnail{
+  width: 2rem;
+  height: 1.5rem;
+  @include display-flex;
+  @include align-items(center);
+  @include justify-content(center);
+  margin: 0 1rem;
+}
+
+.au-c-modal-media__pagination{
+  height: 3rem;
+}

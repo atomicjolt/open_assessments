@@ -14,6 +14,7 @@ import { scrub }                            from './serialization/serializer_uti
 import * as assessmentActions               from '../actions/qbank/assessments';
 import { updateItem }                       from '../actions/qbank/items';
 import deserializeMedia                     from './serialization/qbank/deserializers/media';
+import { dispatchMany }                     from './utils';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -420,10 +421,10 @@ const qbank = {
     const { publishedBankId, editableBankId } = state.settings;
 
     if (assessment.isPublished) {
-      [
+      dispatchMany([
         assessmentActions.deleteAssignedAssessment(assessment, publishedBankId),
         assessmentActions.editOrPublishAssessment(assessment, editableBankId),
-      ].forEach(newAction => store.dispatch(newAction));
+      ], store);
     } else {
       const actions = [];
       if (_.includes(assessment.assignedBankIds, editableBankId)) {
@@ -435,7 +436,8 @@ const qbank = {
       }
       actions.push(assessmentActions.editOrPublishAssessment(assessment, publishedBankId));
 
-      actions.forEach(newAction => store.dispatch(newAction));
+      dispatchMany(actions, store);
+
     }
   },
 

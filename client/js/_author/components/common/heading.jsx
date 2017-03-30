@@ -32,5 +32,6 @@ export default function heading(props) {
 }
 
 heading.propTypes = {
-  view: React.PropTypes.string.isRequired,
+  view: React.PropTypes.string,
+  children: React.PropTypes.node,
 };
