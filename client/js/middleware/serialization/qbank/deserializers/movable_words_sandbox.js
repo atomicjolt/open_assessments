@@ -10,8 +10,8 @@ export function deserializeChoices(choices) {
     const nodes = $.parseHTML(choice.text);
     all[choice.id] = {
       id: choice.id,
-      text: _.get(nodes, '[0].innerText', ''),
-      wordType: _.get(nodes, '[0].className', ''),
+      text: $(nodes).text(),
+      wordType: $(nodes).attr('class'),
     };
     return all;
   }, {});
