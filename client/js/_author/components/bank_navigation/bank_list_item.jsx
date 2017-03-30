@@ -52,34 +52,126 @@ export function PublishButton(props) {
   );
 }
 
-export function BankAssessment() {
-  const {bank, togglePublishAssessment} = props;
-  const displayName = _.get(bank, 'displayName.text');
-  const isPublished = bank.isPublished;
+
+  function EmbedButton(props) {
+    const { assessment, baseEmbedUrl } = props;
+    const isPublished = assessment.isPublished;
+    const assessOffered = _.get(assessment, 'assessmentOffered[0]');
+
+    if (isPublished) {
+      if (assessOffered) {
+        const embedUrlCode = `${baseEmbedUrl}&bank=${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}#/assessment`;
+
+        return (
+          <div className="au-c-embed-contain">
+            <label className="au-c-input--purple" htmlFor="embedInput">
+              <input
+                id="embedInput"
+                onClick={e => e.stopPropagation()}
+                className="au-c-text-input au-c-text-input--smaller"
+                readOnly
+                type="text"
+                value={`<iframe src="${embedUrlCode}"/>`}
+              />
+            </label>
+            <CopyToClipboard text={`<iframe src="${embedUrlCode}"/>`}>
+              <button
+                className="au-c-btn au-c-btn--square au-c-btn--embed "
+                onClick={e => e.stopPropagation()}
+              >
+                <i className="material-icons">content_paste</i>
+              </button>
+            </CopyToClipboard>
+          </div>
+        );
+      }
+
+      return (
+        <button
+          className="au-c-btn au-c-btn--sm au-c-btn--table"
+          onClick={e => getEmbedCode(e, assessment)}
+        >
+          embed code
+        </button>
+      );
+    }
+    return null;
+  }
+
+export function EditButton(props) {
+  const isPublished = props.assessment.isPublished;
   return (
-    <ListItem>
+    <button
+      className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
+    >
+      <i className="material-icons">edit</i>
+    </button>
+  );
+}
+
+export function PreviewButton(props) {
+//
+//   if (!isPublished || _.isUndefined(bankId) || _.isUndefined(assessmentId)) {
+//   return null;
+// }
+
+  const isPublished = props.assessment.isPublished;
+  return (
+    <button
+      className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        appHistory.push(`banks/${props.assessment.bankId}/assessments/${props.assessment.id}/preview`);
+      }}
+    >
+      <i className="material-icons">remove_red_eye</i>
+    </button>
+  );
+}
+
+export function DeleteButton(props) {
+  const { deleteAssessment, assessment } = props;
+  const isPublished = assessment.isPublished;
+  return (
+    <button
+      className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
+      onClick={e => deleteAssessment(e, assessment.bankId, assessment.id)}
+    >
+      <i className="material-icons">delete</i>
+    </button>
+  );
+}
+
+export function BankAssessment(props) {
+  const {assessment, togglePublishAssessment} = props;
+  const displayName = _.get(assessment, 'displayName.text');
+
+  const selectItem = () => {
+    if (assessment.isPublished) {
+      appHistory.push(`banks/${assessment.bankId}/assessments/${assessment.id}/preview`);
+      return;
+    }
+    appHistory.push(`banks/${assessment.bankId}/assessments/${assessment.id}`);
+  };
+
+  return (
+    <ListItem {...props} bank={props.assessment} selectItem={selectItem}>
       <td>
         <i className="material-icons">description</i>
       </td>
       <td>{displayName}</td>
       <td>
-        <PublishButton bank={bank} togglePublishAssessment={togglePublishAssessment} />
+        <PublishButton
+          assessment={assessment}
+          togglePublishAssessment={togglePublishAssessment}
+        />
       </td>
       <td>
-        <div className="au-c-table__icons" style={buttonContainer}>
-          { embedButtonOrUrl() }
-          <button
-            className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
-          >
-            <i className="material-icons">edit</i>
-          </button>
-          { getPreviewButton(bank.bankId, bank.id) }
-          <button
-            className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
-            onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
-          >
-            <i className="material-icons">delete</i>
-          </button>
+        <div className="au-c-table__icons">
+          <EmbedButton {...props} />
+          <EditButton {...props} />
+          <PreviewButton {...props} />
+          <DeleteButton {...props} />
         </div>
       </td>
     </ListItem>

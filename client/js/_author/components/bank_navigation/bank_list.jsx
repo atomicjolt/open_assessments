@@ -3,7 +3,7 @@ import _          from 'lodash';
 import Header     from './bank_list_header';
 import ListItem   from './bank_list_item';
 import Spinner    from '../common/spinner';
-import { BankFolder } from './bank_list_item';
+import { BankFolder, BankAssessment } from './bank_list_item';
 
 export default function bankList(props) {
   const items = (
@@ -20,11 +20,12 @@ export default function bankList(props) {
         }
         {
           _.map(props.assessments, assessment => (
-            <ListItem
+            <BankAssessment
               baseEmbedUrl={props.baseEmbedUrl}
               getEmbedCode={props.getEmbedCode}
               key={`bank_${assessment.id}`}
               bank={assessment}
+              assessment={assessment}
               publishedBankId={props.publishedBankId}
               getBankChildren={props.getBankChildren}
               deleteAssessment={props.deleteAssessment}
