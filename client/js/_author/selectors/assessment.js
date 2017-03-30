@@ -12,7 +12,7 @@ export function transformAssessment(assessment, items = [], published) {
   if (!assessment) return {};
   const fixedAssessment = {
     ...assessment,
-    name: assessment.displayName.text,
+    name: _.get(assessment, 'displayName.text', ''),
     items,
     isPublished: published,
   };

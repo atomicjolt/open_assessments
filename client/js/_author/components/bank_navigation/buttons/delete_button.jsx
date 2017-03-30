@@ -6,7 +6,10 @@ export default function DeleteButton(props) {
   return (
     <button
       className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
-      onClick={e => deleteAssessment(e, assessment.bankId, assessment.id)}
+      onClick={(e) => {
+        e.stopPropagation();
+        deleteAssessment(assessment.bankId, assessment.id);
+      }}
     >
       <i className="material-icons">delete</i>
     </button>
