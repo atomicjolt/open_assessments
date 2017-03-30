@@ -11,54 +11,7 @@ import EditButton       from './buttons/edit_button';
 import DeleteButton     from './buttons/delete_button';
 import PreviewButton    from './buttons/preview_button';
 
-export function BankFolder(props) {
-  const { bank } = props;
-  const displayName = _.get(bank, 'displayName.text');
-  return (
-    <ListItem {...props} selectItem={() => props.getBankChildren(bank.id)}>
-      <td><i className="material-icons">folder</i></td>
-      <td>{displayName}</td>
-      <td />
-      <td />
-    </ListItem>
-  );
-}
 
-export function BankAssessment(props) {
-  const {assessment, togglePublishAssessment} = props;
-  const displayName = _.get(assessment, 'displayName.text');
-
-  const selectItem = () => {
-    if (assessment.isPublished) {
-      appHistory.push(`banks/${assessment.bankId}/assessments/${assessment.id}/preview`);
-      return;
-    }
-    appHistory.push(`banks/${assessment.bankId}/assessments/${assessment.id}`);
-  };
-
-  return (
-    <ListItem {...props} bank={props.assessment} selectItem={selectItem}>
-      <td>
-        <i className="material-icons">description</i>
-      </td>
-      <td>{displayName}</td>
-      <td>
-        <PublishButton
-          assessment={assessment}
-          togglePublishAssessment={togglePublishAssessment}
-        />
-      </td>
-      <td>
-        <div className="au-c-table__icons">
-          <EmbedButton {...props} />
-          <EditButton {...props} />
-          <PreviewButton {...props} />
-          <DeleteButton {...props} />
-        </div>
-      </td>
-    </ListItem>
-  );
-}
 // TODO: think about breaking this into smaller components
 // export default function bankListItem(props) {
 //   const { bank, baseEmbedUrl } = props;

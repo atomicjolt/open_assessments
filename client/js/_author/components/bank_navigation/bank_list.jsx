@@ -1,9 +1,11 @@
 import React      from 'react';
 import _          from 'lodash';
 import Header     from './bank_list_header';
-import ListItem   from './bank_list_item';
+// import ListItem   from './bank_list_item';
 import Spinner    from '../common/spinner';
-import { BankFolder, BankAssessment } from './bank_list_item';
+// import { BankFolder } from './bank_list_item';
+import BankAssessment from './bank_assessment';
+import BankFolder from './bank_folder';
 
 export default function bankList(props) {
   const items = (
