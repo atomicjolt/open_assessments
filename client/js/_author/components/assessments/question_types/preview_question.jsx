@@ -37,6 +37,8 @@ export default class PreviewQuestion extends React.Component {
         return 'movable_words_sentence';
       case types.movableFillBlank:
         return 'fill_the_blank_question';
+      case types.movableWordSandbox:
+        return 'movable_words_sandbox';
       default:
         return null;
     }
