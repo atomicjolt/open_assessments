@@ -4,40 +4,7 @@ import CopyToClipboard  from 'react-copy-to-clipboard';
 import appHistory       from '../../history';
 import Icon             from './bank_icon';
 
-
-// <td><Icon type={bank.type} /></td>
-// <td>{bank.displayName ? bank.displayName.text : null}</td>
-// <td>
-//   <button
-//     className={`au-c-btn au-c-btn--square au-c-publish ${isPublished ? 'is-published' : ''}`}
-//     style={buttonContainer}
-//     onClick={(e) => {
-//       e.stopPropagation();
-//       props.togglePublishAssessment(bank);
-//     }}
-//   >
-//     <Icon type={isPublished ? 'Published' : 'Publish'} />
-//   </button>
-// </td>
-// <td>
-//   <div className="au-c-table__icons" style={buttonContainer}>
-//     {embedButtonOrUrl()}
-//     <button
-//       className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
-//     >
-//       <i className="material-icons">edit</i>
-//     </button>
-//     {getPreviewButton(bank.bankId, bank.id)}
-//     <button
-//       className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
-//       onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
-//     >
-//       <i className="material-icons">delete</i>
-//     </button>
-//   </div>
-// </td>
-
-export function ListItem(props){
+export function ListItem(props) {
   const { selectItem, bank } = props;
   return (
     <tr
@@ -55,13 +22,66 @@ export function ListItem(props){
 
 export function BankFolder(props) {
   const { bank } = props;
-  const displayName = _.get(bank, 'displayName.text')
+  const displayName = _.get(bank, 'displayName.text');
   return (
     <ListItem {...props} selectItem={() => props.getBankChildren(bank.id)}>
       <td><i className="material-icons">folder</i></td>
       <td>{displayName}</td>
       <td />
       <td />
+    </ListItem>
+  );
+}
+
+export function PublishButton(props) {
+  const { togglePublishAssessment, assessment } = props;
+  const isPublished = assessment.isPublished;
+  const icon = isPublished ?
+    <i className="material-icons is-published">cloud_done</i> :
+    <i className="material-icons">cloud_upload</i>;
+  return (
+    <button
+      className={`au-c-btn au-c-btn--square au-c-publish ${isPublished ? 'is-published' : ''}`}
+      onClick={(e) => {
+        e.stopPropagation();
+        togglePublishAssessment(assessment);
+      }}
+    >
+      { icon }
+    </button>
+  );
+}
+
+export function BankAssessment() {
+  const {bank, togglePublishAssessment} = props;
+  const displayName = _.get(bank, 'displayName.text');
+  const isPublished = bank.isPublished;
+  return (
+    <ListItem>
+      <td>
+        <i className="material-icons">description</i>
+      </td>
+      <td>{displayName}</td>
+      <td>
+        <PublishButton bank={bank} togglePublishAssessment={togglePublishAssessment} />
+      </td>
+      <td>
+        <div className="au-c-table__icons" style={buttonContainer}>
+          { embedButtonOrUrl() }
+          <button
+            className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
+          >
+            <i className="material-icons">edit</i>
+          </button>
+          { getPreviewButton(bank.bankId, bank.id) }
+          <button
+            className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
+            onClick={e => deleteAssessment(e, bank.bankId, bank.id)}
+          >
+            <i className="material-icons">delete</i>
+          </button>
+        </div>
+      </td>
     </ListItem>
   );
 }
