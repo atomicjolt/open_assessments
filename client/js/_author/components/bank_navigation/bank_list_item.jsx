@@ -1,29 +1,15 @@
 import React            from 'react';
 import _                from 'lodash';
 import appHistory       from '../../history';
-import Icon             from './bank_icon';
+// import Icon             from './bank_icon';
+
+import ListItem         from './list_item';
 
 import PublishButton    from './buttons/publish_button';
 import EmbedButton      from './buttons/embed_button';
 import EditButton       from './buttons/edit_button';
 import DeleteButton     from './buttons/delete_button';
 import PreviewButton    from './buttons/preview_button';
-
-export function ListItem(props) {
-  const { selectItem, bank } = props;
-  return (
-    <tr
-      onClick={() => selectItem()}
-      tabIndex="0"
-      role="button"
-      aria-label={bank.displayName ? bank.displayName.text : 'bank item'}
-    >
-    {
-      props.children
-     }
-    </tr>
-  );
-}
 
 export function BankFolder(props) {
   const { bank } = props;
