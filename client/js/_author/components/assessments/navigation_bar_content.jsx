@@ -17,7 +17,10 @@ export default class NavigationBarContent extends React.Component {
       return (
         <button
           className="au-c-btn au-c-btn--sm au-c-btn--green"
-          onClick={() => this.props.togglePublishAssessment()}
+          onClick={() => {
+            this.props.togglePublishAssessment();
+            appHistory.push('/');
+          }}
         >
           <Icon type={this.props.isPublished ? 'Published' : 'Publish'} />
           {this.props.isPublished ? 'Unpublish' : 'Publish'}
