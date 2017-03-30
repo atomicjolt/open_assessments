@@ -54,7 +54,7 @@ export function PublishButton(props) {
 
 
   function EmbedButton(props) {
-    const { assessment, baseEmbedUrl } = props;
+    const { assessment, baseEmbedUrl, getEmbedCode } = props;
     const isPublished = assessment.isPublished;
     const assessOffered = _.get(assessment, 'assessmentOffered[0]');
 
@@ -89,7 +89,10 @@ export function PublishButton(props) {
       return (
         <button
           className="au-c-btn au-c-btn--sm au-c-btn--table"
-          onClick={e => getEmbedCode(e, assessment)}
+          onClick={(e) => {
+            e.stopPropagation();
+            getEmbedCode(assessment);
+          }}
         >
           embed code
         </button>
@@ -110,15 +113,10 @@ export function EditButton(props) {
 }
 
 export function PreviewButton(props) {
-//
-//   if (!isPublished || _.isUndefined(bankId) || _.isUndefined(assessmentId)) {
-//   return null;
-// }
-
   const isPublished = props.assessment.isPublished;
   return (
     <button
-      className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? 'is-inactive' : ''}`}
+      className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? '' : 'is-inactive'}`}
       onClick={(e) => {
         e.stopPropagation();
         appHistory.push(`banks/${props.assessment.bankId}/assessments/${props.assessment.id}/preview`);

@@ -84,11 +84,10 @@ export class BankNavigator extends React.Component {
     this.props.deleteAssessment(bankId, assessmentId);
   }
 
-  getEmbedCode(assessId, bankId) {
-    const assessment = this.props.assessments[assessId];
+  getEmbedCode(assessment) {
     const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
     if (_.isEmpty(assessOffered)) {
-      this.props.getAssessmentOffered(bankId, assessId);
+      this.props.getAssessmentOffered(assessment.bankId, assessment.id);
     }
   }
 
