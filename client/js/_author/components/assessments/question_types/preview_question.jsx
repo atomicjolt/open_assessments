@@ -69,6 +69,21 @@ export default class PreviewQuestion extends React.Component {
           }
         };
 
+      case types.imageSequence:
+        return {
+          id: item.id,
+          question_type: this.convertType(item.type),
+          material: item.question.text,
+          isHtml: true,
+          answers: _.map(item.question.choices, answer => ({
+            id: answer.id,
+            material: `<p><img src="${answer.text}"></p>`
+          })),
+          question_meta: {
+            expectedLines: 1,
+          }
+        };
+
       default:
         return {
           id: item.id,
