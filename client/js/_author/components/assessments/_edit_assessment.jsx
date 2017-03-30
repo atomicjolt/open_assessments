@@ -34,7 +34,7 @@ export class EditAssessment extends React.Component {
     assessment: React.PropTypes.shape({
       id: React.PropTypes.string,
       bankId: React.PropTypes.string,
-      assessmentOffered: React.PropTypes.arrayOf(React.PropTypes.shape({})),
+      assessmentOffered: React.PropTypes.shape({}),
       items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
     }),
     settings: React.PropTypes.shape({
