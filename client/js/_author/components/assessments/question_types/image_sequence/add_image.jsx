@@ -7,7 +7,8 @@ import UploadModal       from '../../../common/editor_upload_modal';
 
 function select(state) {
   return {
-    uploadedAssets: state.uploadedAssets,
+    loadingMedia: state.media.loading,
+    images: state.media.image,
   };
 }
 
@@ -95,6 +96,8 @@ export class AddImage extends React.Component {
             closeModal={() => this.setState({ modal: false })}
             mediaType="img"
             mediaName=""
+            loadingMedia={this.props.loadingMedia}
+            media={this.props.images}
             insertMedia={(media, metaData) => this.uploadMedia(media, metaData)}
             inProgress={false}
             error={null}

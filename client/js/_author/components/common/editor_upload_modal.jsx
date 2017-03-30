@@ -1,7 +1,9 @@
 import React            from 'react';
 import Modal            from 'react-modal';
+import _                from 'lodash';
 import Loader           from './dot_loader';
 import LanguageSelect   from '../common/language_dropdown';
+
 const tagNameMap = {
   audio: 'Audio',
   img: 'Image',
@@ -85,7 +87,11 @@ export default class EditorUploadModal extends React.Component {
         <div className="au-c-wysiwyg-modal__main">
           <div style={{ display: this.state.uploadedImage ? 'none' : 'block' }}>
             <div className="au-c-drop-zone__answers__label">Select an Image</div>
-            // TODO: put images here
+            {
+              _.map(this.props.media, media => (
+                <img src={_.get(media, 'assetContents[0].url')} width="25" />
+              ))
+            }
           </div>
 
           <div className="au-o-flex-center  au-u-mb-md">
