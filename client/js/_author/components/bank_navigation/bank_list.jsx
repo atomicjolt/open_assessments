@@ -55,20 +55,15 @@ export default function bankList(props) {
 }
 
 bankList.propTypes = {
-  assessments: React.PropTypes.arrayOf(
-  React.PropTypes.shape({
-    isPublished: React.PropTypes.bool.isRequired,
-    bankId: React.PropTypes.string.isRequired,
-    id: React.PropTypes.string.isRequired,
-  })).isRequired,
+  assessments: React.PropTypes.shape({}),
   banks: React.PropTypes.oneOfType([
     React.PropTypes.arrayOf(React.PropTypes.shape({})),
     React.PropTypes.shape({})
   ]).isRequired,
-  getBankChildren  : React.PropTypes.func.isRequired,
-  sortBy           : React.PropTypes.func.isRequired,
-  sortName         : React.PropTypes.string,
-  sortPublished    : React.PropTypes.string,
-  deleteAssessment : React.PropTypes.func,
+  getBankChildren: React.PropTypes.func.isRequired,
+  sortBy: React.PropTypes.func.isRequired,
+  sortName: React.PropTypes.string,
+  sortPublished: React.PropTypes.string,
+  deleteAssessment: React.PropTypes.func,
   togglePublishAssessment: React.PropTypes.func,
 };

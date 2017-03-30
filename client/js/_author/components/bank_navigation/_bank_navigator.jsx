@@ -21,12 +21,7 @@ function select(state) {
 
 export class BankNavigator extends React.Component {
   static propTypes = {
-    assessments: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        isPublished: React.PropTypes.bool.isRequired,
-        bankId: React.PropTypes.string.isRequired,
-        id: React.PropTypes.string.isRequired,
-      })).isRequired,
+    assessments: React.PropTypes.shape({}).isRequired,
     banks: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.shape({})),
       React.PropTypes.shape({})
