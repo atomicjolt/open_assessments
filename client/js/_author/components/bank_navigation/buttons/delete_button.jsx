@@ -16,7 +16,7 @@ export default function DeleteButton(props) {
 DeleteButton.propTypes = {
   deleteAssessment: React.PropTypes.func.isRequired,
   assessment: React.PropTypes.shape({
-    isPublished: React.PropTypes.boolean.isRequired,
+    isPublished: React.PropTypes.bool.isRequired,
     bankId: React.PropTypes.string.isRequired,
     id: React.PropTypes.string.isRequired,
   }).isRequired,

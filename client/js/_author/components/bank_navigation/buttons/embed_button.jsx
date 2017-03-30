@@ -34,7 +34,6 @@ export default function EmbedButton(props) {
         </div>
       );
     }
-
     return (
       <button
         className="au-c-btn au-c-btn--sm au-c-btn--table"
@@ -47,6 +46,8 @@ export default function EmbedButton(props) {
       </button>
     );
   }
+
+  return null;
 }
 
 EmbedButton.propTypes = {

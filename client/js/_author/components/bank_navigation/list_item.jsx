@@ -23,5 +23,5 @@ ListItem.propTypes = {
       text: React.PropTypes.string
     }).isRequired,
   }).isRequired,
-  children: React.PropTypes.element,
+  children: React.PropTypes.arrayOf(React.PropTypes.element),
 };

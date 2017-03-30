@@ -13,6 +13,6 @@ export default function EditButton(props) {
 
 EditButton.propTypes = {
   assessment: React.PropTypes.shape({
-    isPublished: React.PropTypes.boolean.isRequired,
+    isPublished: React.PropTypes.bool.isRequired,
   }).isRequired,
 };
