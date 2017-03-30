@@ -39,6 +39,8 @@ export default class PreviewQuestion extends React.Component {
         return 'fill_the_blank_question';
       case types.movableWordSandbox:
         return 'movable_words_sandbox';
+      case types.imageSequence:
+        return 'movable_object_chain';
       default:
         return null;
     }
