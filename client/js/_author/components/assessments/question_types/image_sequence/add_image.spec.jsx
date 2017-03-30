@@ -44,6 +44,7 @@ describe('add image component', () => {
       uploadScopeId: '7',
       uploadMedia: () => {calledFunc = true},
       updateChoice: () => {},
+      createChoice: () => {},
       uploadedAssets: {
         uploadScopeId: '7',
       },
@@ -53,14 +54,6 @@ describe('add image component', () => {
 
   it('renders add image component', () => {
     expect(result.find('.au-c-image-sequence-answer-add').length).toBe(1);
-  });
-
-  it('renders clickable button', () => {
-    expect(result.find('button').length).toBe(1);
-    const button = result.find('input');
-    expect(calledFunc).toBeFalsy();
-    result.find('#newImageId').simulate('change', { target: { files: 'SPECTASTIC' } });
-    expect(calledFunc).toBeTruthy();
   });
 
 });

@@ -3,6 +3,8 @@ import _                       from 'lodash';
 import TestUtils               from 'react-addons-test-utils';
 import { PreviewAssessment }   from './preview_assessment';
 
+jest.mock('../../../libs/assets');
+
 describe('preview assessment component', () => {
   let result;
   let props;
