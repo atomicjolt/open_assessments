@@ -12,5 +12,11 @@ export default {
 };
 
 export function readFixture(path, encoding = 'utf8') {
-  return fs.readFileSync(`./specs_support/fixtures/${path}`, encoding);
+  let basePath = '/specs_support/fixtures/';
+  if (_.endsWith(process.cwd(), 'client')) {
+    basePath = `${process.cwd()}${basePath}`;
+  } else {
+    basePath = `${process.cwd()}/client/${basePath}`;
+  }
+  return fs.readFileSync(`${basePath}${path}`, encoding);
 }
