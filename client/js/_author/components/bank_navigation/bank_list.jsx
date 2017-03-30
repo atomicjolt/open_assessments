@@ -1,26 +1,37 @@
 import React      from 'react';
 import _          from 'lodash';
 import Header     from './bank_list_header';
-import ListItem   from './bank_list_item';
 import Spinner    from '../common/spinner';
+import BankAssessment from './bank_assessment';
+import BankFolder from './bank_folder';
 
 export default function bankList(props) {
-
   const items = (
     <table className="au-c-table">
       <tbody>
         {
         _.map(props.banks, bank => (
-          <ListItem
-            baseEmbedUrl={props.baseEmbedUrl}
-            getEmbedCode={props.getEmbedCode}
+          <BankFolder
             key={`bank_${bank.id}`}
             bank={bank}
-            publishedBankId={props.publishedBankId}
             getBankChildren={props.getBankChildren}
-            deleteAssessment={props.deleteAssessment}
           />
         ))
+        }
+        {
+          _.map(props.assessments, assessment => (
+            <BankAssessment
+              baseEmbedUrl={props.baseEmbedUrl}
+              getEmbedCode={props.getEmbedCode}
+              key={`bank_${assessment.id}`}
+              bank={assessment}
+              assessment={assessment}
+              publishedBankId={props.publishedBankId}
+              getBankChildren={props.getBankChildren}
+              deleteAssessment={props.deleteAssessment}
+              togglePublishAssessment={props.togglePublishAssessment}
+            />
+          ))
         }
       </tbody>
     </table>
@@ -44,13 +55,15 @@ export default function bankList(props) {
 }
 
 bankList.propTypes = {
+  assessments: React.PropTypes.shape({}),
   banks: React.PropTypes.oneOfType([
     React.PropTypes.arrayOf(React.PropTypes.shape({})),
     React.PropTypes.shape({})
   ]).isRequired,
-  getBankChildren  : React.PropTypes.func.isRequired,
-  sortBy           : React.PropTypes.func.isRequired,
-  sortName         : React.PropTypes.string,
-  sortPublished    : React.PropTypes.string,
-  deleteAssessment : React.PropTypes.func,
+  getBankChildren: React.PropTypes.func.isRequired,
+  sortBy: React.PropTypes.func.isRequired,
+  sortName: React.PropTypes.string,
+  sortPublished: React.PropTypes.string,
+  deleteAssessment: React.PropTypes.func,
+  togglePublishAssessment: React.PropTypes.func,
 };

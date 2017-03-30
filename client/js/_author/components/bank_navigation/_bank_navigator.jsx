@@ -6,27 +6,22 @@ import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 import Heading                from '../common/heading';
 import BankList               from './bank_list';
+import  * as navigationSelectors from '../../selectors/bank_navigator';
+import * as commonSelectors   from '../../selectors/common';
 
 function select(state) {
-  const path = state.bankNavigation.location;
-  const currentBankId = !_.isEmpty(path) ? _.last(path).id : null;
-  let banks = state.banks;
-  _.forEach(path, (folder) => {
-    const currentBank = _.find(banks, { id: folder.id });
-    banks = currentBank.childNodes;
-  });
-
   return {
-    path,
-    currentBankId,
-    banks: _.merge(state.assessments[currentBankId], banks),
-    settings: state.settings,
-    currentBank: state.assessments[currentBankId],
+    path: navigationSelectors.path(state),
+    currentBankId: navigationSelectors.currentBankId(state),
+    banks: navigationSelectors.banks(state),
+    settings: commonSelectors.settings(state),
+    assessments: navigationSelectors.bankAssessments(state),
   };
 }
 
 export class BankNavigator extends React.Component {
   static propTypes = {
+    assessments: React.PropTypes.shape({}).isRequired,
     banks: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.shape({})),
       React.PropTypes.shape({})
@@ -34,17 +29,17 @@ export class BankNavigator extends React.Component {
     settings: React.PropTypes.shape({
       editableBankId: React.PropTypes.string,
       publishedBankId: React.PropTypes.string,
-      baseEmbedUrl       : React.PropTypes.string,
+      baseEmbedUrl: React.PropTypes.string,
     }),
-    path               : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
-    updatePath         : React.PropTypes.func.isRequired,
-    getAssessments     : React.PropTypes.func.isRequired,
-    getAssessmentOffered     : React.PropTypes.func.isRequired,
-    getItems           : React.PropTypes.func.isRequired,
-    createAssessment   : React.PropTypes.func.isRequired,
-    deleteAssessment   : React.PropTypes.func.isRequired,
-    currentBankId      : React.PropTypes.string,
-    currentBank        : React.PropTypes.shape({}),
+    path: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
+    updatePath: React.PropTypes.func.isRequired,
+    getAssessments: React.PropTypes.func.isRequired,
+    getAssessmentOffered: React.PropTypes.func.isRequired,
+    getItems: React.PropTypes.func.isRequired,
+    createAssessment: React.PropTypes.func.isRequired,
+    deleteAssessment: React.PropTypes.func.isRequired,
+    currentBankId: React.PropTypes.string,
+    togglePublishAssessment: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -91,11 +86,10 @@ export class BankNavigator extends React.Component {
     this.props.deleteAssessment(bankId, assessmentId);
   }
 
-  getEmbedCode(assessId, bankId) {
-    const assessment = this.props.currentBank[assessId];
+  getEmbedCode(assessment) {
     const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
     if (_.isEmpty(assessOffered)) {
-      this.props.getAssessmentOffered(bankId, assessId);
+      this.props.getAssessmentOffered(assessment.bankId, assessment.id);
     }
   }
 
@@ -112,6 +106,7 @@ export class BankNavigator extends React.Component {
           getBankChildren={bankId => this.getBankChildren(bankId)}
         />
         <BankList
+          assessments={this.props.assessments}
           baseEmbedUrl={settings.baseEmbedUrl}
           banks={this.sortBanks()}
           getEmbedCode={(assessId, bankId) => { this.getEmbedCode(assessId, bankId); }}
@@ -121,6 +116,7 @@ export class BankNavigator extends React.Component {
           sortName={this.state.sortName}
           sortPublished={this.state.sortPublished}
           deleteAssessment={(bankId, assessmentId) => this.deleteAssessment(bankId, assessmentId)}
+          togglePublishAssessment={assessment => this.props.togglePublishAssessment(assessment)}
         />
       </div>
     );
