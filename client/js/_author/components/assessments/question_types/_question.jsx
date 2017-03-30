@@ -291,7 +291,6 @@ export class Question extends React.Component {
   render() {
     const { name, type, id } = this.props.item;
     const className = this.getClassName();
-    console.log(this.props.media);
     return (
       <div
         className={`au-o-item au-c-question ${className}`}

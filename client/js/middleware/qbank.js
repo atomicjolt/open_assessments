@@ -13,6 +13,7 @@ import deserialize                          from './serialization/qbank/deserial
 import { scrub }                            from './serialization/serializer_utils';
 import * as assessmentActions               from '../actions/qbank/assessments';
 import { updateItem }                       from '../actions/qbank/items';
+import deserializeMedia                     from './serialization/qbank/deserializers/media';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -203,7 +204,7 @@ const qbank = {
         store.dispatch({
           type: 'GET_MEDIA_DONE',
           original: { bankId },
-          payload: res2.body
+          payload: deserializeMedia(res2.body)
         });
       });
 

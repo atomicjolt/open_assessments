@@ -89,7 +89,7 @@ export default class EditorUploadModal extends React.Component {
             <div className="au-c-drop-zone__answers__label">Select an Image</div>
             {
               _.map(this.props.media, media => (
-                <img src={_.get(media, 'assetContents[0].url')} width="25" />
+                <img src={media.url} width="25" />
               ))
             }
           </div>
