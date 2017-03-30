@@ -3,12 +3,9 @@ import { readFixture }       from '../../../specs_support/utils';
 import Immutable             from 'immutable';
 import $                     from 'jquery';
 import { AssessmentFormats, parse } from '../assessment';
+import { readFixture }       from '../../../specs_support/utils';
 
 describe('QTI1 assessment parser', () => {
-
-  beforeAll(() => {
-  });
-
   describe('parse', () => {
 
     it('parses "MIT" assessment xml from QTI into an object', () => {

@@ -2,6 +2,7 @@ import Qti1Parser                              from './parser';
 import { readFixture }                         from '../../../specs_support/utils';
 import { getItems, loadOutcomes, checkAnswer } from './qti';
 import $                                       from 'jquery';
+import { readFixture }                         from '../../../specs_support/utils';
 
 describe('QTI 1 Functions', () => {
 

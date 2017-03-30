@@ -3,9 +3,9 @@ import { readFixture }               from '../../../specs_support/utils';
 
 import { AssessmentFormats, parse }  from "../assessment";
 import Parser                        from "./parser";
+import { readFixture }               from '../../../specs_support/utils';
 
 describe("QTI2 assessment parser", () => {
-
   describe("parse", () => {
 
     it("parses \"choice\" assessment xml from QTI into an object", () => {

@@ -6,12 +6,11 @@ import { readFixture }                                   from '../../specs_suppo
 const settings = Immutable.fromJS({});
 
 describe('assessment parser', () => {
-
   // Disabled until this gets refactored back out of parse().
   // describe('getAssessmentFormat', () => {
 
   //   it('returns "QTI1" for Qti 1.x assessment', () => {
-  //     const data = readFixtures("qti1/assessment.xml");
+  //     const data = readFixture("qti1/assessment.xml");
   //     const xml    = $($.parseXML(data));
   //     expect(getAssessmentFormat(xml)).toEqual(AssessmentFormats.Qti1);
   //   });
