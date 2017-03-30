@@ -176,7 +176,18 @@
     width: 100%;
   }
   tr{
-
+    &:hover{
+      td{
+        background: $gray2;
+        cursor: pointer;
+      }
+    }
+    &.is-active{
+      td{
+        background: $purple;
+        color: $white;
+      }
+    }
   }
   td{
     @include semi-bold;
