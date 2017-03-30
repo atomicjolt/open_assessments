@@ -12,6 +12,7 @@ import serialize                            from './serialization/qbank/serializ
 import deserialize                          from './serialization/qbank/deserializers/factory';
 import { scrub }                            from './serialization/serializer_utils';
 import * as assessmentActions               from '../actions/qbank/assessments';
+import { dispatchMany }                     from './utils';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -398,10 +399,10 @@ const qbank = {
     const { publishedBankId, editableBankId } = state.settings;
 
     if (assessment.isPublished) {
-      [
+      dispatchMany([
         assessmentActions.deleteAssignedAssessment(assessment, publishedBankId),
         assessmentActions.editOrPublishAssessment(assessment, editableBankId),
-      ].forEach(newAction => store.dispatch(newAction));
+      ], store);
     } else {
       const actions = [];
       if (_.includes(assessment.assignedBankIds, editableBankId)) {
@@ -413,7 +414,8 @@ const qbank = {
       }
       actions.push(assessmentActions.editOrPublishAssessment(assessment, publishedBankId));
 
-      actions.forEach(newAction => store.dispatch(newAction));
+      dispatchMany(actions, store);
+
     }
   }
 };

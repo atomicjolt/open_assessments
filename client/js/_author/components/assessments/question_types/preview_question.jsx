@@ -37,6 +37,10 @@ export default class PreviewQuestion extends React.Component {
         return 'movable_words_sentence';
       case types.movableFillBlank:
         return 'fill_the_blank_question';
+      case types.movableWordSandbox:
+        return 'movable_words_sandbox';
+      case types.imageSequence:
+        return 'movable_object_chain';
       default:
         return null;
     }
@@ -61,6 +65,21 @@ export default class PreviewQuestion extends React.Component {
               }
               return `<p class="other">${word}</p>`;
             }),
+            expectedLines: 1,
+          }
+        };
+
+      case types.imageSequence:
+        return {
+          id: item.id,
+          question_type: this.convertType(item.type),
+          material: item.question.text,
+          isHtml: true,
+          answers: _.map(item.question.choices, answer => ({
+            id: answer.id,
+            material: `<p><img src="${answer.text}"></p>`
+          })),
+          question_meta: {
             expectedLines: 1,
           }
         };
