@@ -1,4 +1,5 @@
 import React from "react";
+import _     from 'lodash';
 
 export default class FileUpload extends React.Component {
 

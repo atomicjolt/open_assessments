@@ -2,7 +2,7 @@ import React        from 'react';
 import { shallow }  from 'enzyme';
 import ShortAnswer  from './short_answer';
 
-describe('Sets size for short answer', () => {
+test('Sets size for short answer', () => {
   let result;
   let props;
 
@@ -16,7 +16,9 @@ describe('Sets size for short answer', () => {
         }
       }
     };
-    result = shallow(<ShortAnswer {...props} />);
+    result = shallow(
+      <ShortAnswer {...props} />
+    );
   });
 
   it('verifies initial size', () => {

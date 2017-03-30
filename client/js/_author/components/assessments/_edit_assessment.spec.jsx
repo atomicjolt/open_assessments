@@ -68,6 +68,7 @@ describe('_edit_assessment component', () => {
       getItems: () => {},
       banks: [],
       updateSingleItemOrPage: () => {},
+      isPublished: false,
     };
     result = TestUtils.renderIntoDocument(<EditAssessment {...props} />);
   });

@@ -1,6 +1,5 @@
 import React          from 'react';
 import { shallow }    from 'enzyme';
-import TestUtils      from 'react-addons-test-utils';
 import AssessmentForm from './assessment_form';
 
 describe('AssessmentForm component', () => {
