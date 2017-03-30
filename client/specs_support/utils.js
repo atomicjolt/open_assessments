@@ -1,5 +1,6 @@
 import TestUtils from 'react-addons-test-utils';
 import _ from 'lodash';
+import fs from 'fs';
 
 export default {
   findTextField(textFields, labelText) {
@@ -9,3 +10,7 @@ export default {
     });
   },
 };
+
+export function readFixture(path, encoding = 'utf8') {
+  return fs.readFileSync(`./specs_support/fixtures/${path}`, encoding);
+}
