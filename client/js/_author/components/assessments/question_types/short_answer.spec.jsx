@@ -2,7 +2,7 @@ import React        from 'react';
 import { shallow }  from 'enzyme';
 import ShortAnswer  from './short_answer';
 
-test('Sets size for short answer', () => {
+describe('Sets size for short answer', () => {
   let result;
   let props;
 
