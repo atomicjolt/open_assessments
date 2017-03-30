@@ -6,6 +6,7 @@ import * as AssessmentMetaActions       from '../actions/assessment_meta';
 import * as AssessmentProgressActions   from '../actions/assessment_progress';
 import * as CommunicationsActions       from '../actions/communications';
 import * as JwtActions                  from '../../actions/jwt';
+import _                                from 'lodash';
 
 describe('api middleware', () => {
   Helper.stubAjax();

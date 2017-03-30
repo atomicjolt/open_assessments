@@ -3,7 +3,6 @@ import { readFixture }                      from '../../../specs_support/utils';
 import { Constants as AssessmentConstants } from '../actions/assessment';
 import { parse }                            from '../../parsers/assessment';
 import assessment                           from './assessment';
-import { readFixture }                      from '../../../specs_support/utils';
 
 describe('assessment reducer', () => {
 

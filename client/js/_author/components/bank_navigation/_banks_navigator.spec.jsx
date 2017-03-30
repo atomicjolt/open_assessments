@@ -3,6 +3,8 @@ import TestUtils          from 'react-addons-test-utils';
 import _                  from 'lodash';
 import { BankNavigator }  from './_bank_navigator';
 
+jest.mock('../../../libs/assets');
+
 describe('Bank Navigator', () => {
   let result;
   let props;
