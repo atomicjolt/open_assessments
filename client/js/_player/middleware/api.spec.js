@@ -9,7 +9,7 @@ import * as JwtActions                  from '../../actions/jwt';
 import _                                from 'lodash';
 
 describe('api middleware', () => {
-  Helper.stubAjax();
+  Helper.mockAllAjax();
 
   it('implements Redux middleware interface', () => {
     const store = { getState: () => {} };
