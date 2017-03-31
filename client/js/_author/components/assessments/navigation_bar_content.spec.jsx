@@ -26,6 +26,9 @@ describe('New Assessments View', () => {
   });
 
   it('determines amount of buttons from number of items', () => {
+    props.isPublished = false;
+    result = TestUtils.renderIntoDocument(<Stub><AssessmentView {...props} /></Stub>);
+
     let buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
     expect(buttons.length).toBe(2);
     props.items = [];
