@@ -14,6 +14,7 @@ describe('Bank Navigator', () => {
     calledFuncts = [];
 
     props = {
+      assessments: {},
       banks: [
         {
           id: '1',
@@ -46,6 +47,7 @@ describe('Bank Navigator', () => {
       getItems           : () => { calledFuncts.push('getItems'); },
       createAssessment   : () => { calledFuncts.push('createAssessment'); },
       deleteAssessment   : () => { calledFuncts.push('deleteAssessment'); },
+      togglePublishAssessment: () => {},
       currentBankId      : '',
       getAssessmentOffered: () => {},
     };
