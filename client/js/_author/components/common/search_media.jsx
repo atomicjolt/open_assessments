@@ -2,6 +2,7 @@ import React          from 'react';
 import _              from 'lodash';
 import ReactPaginate  from 'react-paginate';
 import MediaTable     from './media_table';
+import Loader         from './dot_loader';
 
 const perPage = 8;
 
@@ -12,7 +13,6 @@ export default class SearchMedia extends React.Component {
 
   constructor() {
     super();
-    // TODO: search
     this.state = {
       searchText: '',
       activeItem: null,
@@ -20,8 +20,21 @@ export default class SearchMedia extends React.Component {
     };
   }
 
-  paginateMedia() {
-    return _.slice(_.toArray(this.props.media), this.state.offset, this.state.offset + perPage);
+  paginateMedia(media) {
+    return _.slice(_.toArray(media), this.state.offset, this.state.offset + perPage);
+  }
+
+  // TODO: should I use a search library? Or is this fine?
+  searchMedia() {
+    const { searchText } = this.state;
+    if (searchText) {
+      return _.filter(this.props.media, (item) => {
+        return _.includes(item.description, searchText)
+        || _.includes(item.altText, searchText)
+        || _.includes(item.license, searchText);
+      });
+    }
+    return this.props.media;
   }
 
   handlePageClick(data) {
@@ -31,6 +44,8 @@ export default class SearchMedia extends React.Component {
   }
 
   render() {
+    const filteredMedia = this.searchMedia(this.props.media);
+
     return (
       <div className="au-c-wysiwyg-modal__media">
         <div className="au-c-modal-media__search">
@@ -38,14 +53,21 @@ export default class SearchMedia extends React.Component {
             <label htmlFor="name2" />
             <div className="au-c-input__contain">
               <i className="material-icons">search</i>
-              <input className="au-c-text-input au-c-text-input--small" id="name2" type="text" placeholder="Search..." />
+              <input
+                value={this.state.searchText}
+                onChange={e => this.setState({ searchText: e.target.value })}
+                className="au-c-text-input au-c-text-input--small"
+                id="name2"
+                type="text"
+                placeholder="Search..."
+              />
             </div>
           </div>
         </div>
 
         {
-          this.props.loading ? 'loading' : <MediaTable
-            media={this.paginateMedia()}
+          this.props.loading ? <Loader /> : <MediaTable
+            media={this.paginateMedia(filteredMedia)}
             selectItem={id => this.setState({ activeItem: id })}
             activeItem={this.state.activeItem}
           />
@@ -55,7 +77,7 @@ export default class SearchMedia extends React.Component {
           previousLabel={<i className="material-icons">keyboard_arrow_left</i>}
           nextLabel={<i className="material-icons">keyboard_arrow_right</i>}
           breakLabel={<span>...</span>}
-          pageCount={_.size(this.props.media) / 8}
+          pageCount={_.size(filteredMedia) / 8}
           marginPagesDisplayed={2}
           pageRangeDisplayed={3}
           onPageChange={data => this.handlePageClick(data)}
@@ -63,8 +85,8 @@ export default class SearchMedia extends React.Component {
           pageClassName={'au-c-modal-media__pagination-pages'}
           breakClassName={'au-c-modal-media__pagination-break'}
           activeClassName={'au-c-modal-media__pagination-active'}
-          previousClassName={'au-c-modal-media__pagination-previous'}
-          nextClassName={'au-c-modal-media__pagination-next'}
+          previousClassName={`au-c-modal-media__pagination-previous ${this.props.loading ? 'inactive' : ''}`}
+          nextClassName={`au-c-modal-media__pagination-next ${this.props.loading ? 'inactive' : ''}`}
           pageLinkClassName={'au-c-modal-media__pagination-page'}
         />
       </div>

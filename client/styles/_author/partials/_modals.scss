@@ -149,6 +149,7 @@
 .au-c-wysiwyg-modal__media{
   border: $border;
   position: relative;
+  min-height: 85px;
 }
 
 .au-c-modal-media__search{
@@ -234,6 +235,7 @@
   }
 }
 
+// This could all use some lovin
 .au-c-modal-media__pagination-pages {
   cursor: pointer;
 
@@ -245,16 +247,18 @@
 
 .au-c-modal-media__pagination-page {
   //How can I make this whole thing more click-able
-  //padding: 10px;
+  padding: 10px;
 }
 
 .au-c-modal-media__pagination-previous {
-  padding: 0 10px;
   cursor: pointer;
   float: left;
   &:hover{
     color: $white;
     background-color: $purple2;
+  }
+  &.inactive {
+    display: none;
   }
 }
 
@@ -264,6 +268,9 @@
   &:hover{
     color: $white;
     background-color: $purple2;
+  }
+  &.inactive {
+    display: none;
   }
 }
 
