@@ -1,7 +1,7 @@
 import React          from 'react';
 import _              from 'lodash';
 import ReactPaginate  from 'react-paginate';
-import MediaTable     from '../media_table';
+import MediaTable     from './media_table';
 import Loader         from '../dot_loader';
 
 const perPage = 8;
@@ -67,8 +67,9 @@ export default class SearchMedia extends React.Component {
         {
           this.props.loading ? <Loader /> : <MediaTable
             media={this.paginateMedia(filteredMedia)}
-            selectItem={id => this.setState({ activeItem: id })}
+            selectMedia={mediaItem => this.props.selectMedia(mediaItem)}
             activeItem={this.state.activeItem}
+            selectedMediaId={this.props.selectedMediaId}
           />
         }
 

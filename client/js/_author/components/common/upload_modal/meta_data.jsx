@@ -1,4 +1,5 @@
 import React      from 'react';
+import _          from 'lodash';
 
 export default class Metadata extends React.Component {
   static propTypes = {
@@ -23,7 +24,11 @@ export default class Metadata extends React.Component {
     this.textArea.rows = rows + minRows;
   }
 
+
+
   render() {
+    const metadataTypes = ['altText', 'license', 'copyright'];
+
     return (
       <div>
         <div className="au-c-input au-c-input-label--left">
@@ -42,45 +47,23 @@ export default class Metadata extends React.Component {
             <div className="au-c-input__bottom" />
           </div>
         </div>
-        <div className="au-c-input au-c-input-label--left">
-          <label htmlFor={`upload_alt_text_${this.props.id}`}>Alt-Text</label>
-          <div className="au-c-input__contain">
-            <input
-              className="au-c-text-input au-c-text-input--smaller"
-              id={`upload_alt_text_${this.props.id}`}
-              type="text"
-              tabIndex="0"
-              onBlur={e => this.setState({ altText: e.target.value })}
-            />
-            <div className="au-c-input__bottom" />
-          </div>
-        </div>
-        <div className="au-c-input au-c-input-label--left">
-          <label htmlFor={`upload_license_${this.props.id}`}>License</label>
-          <div className="au-c-input__contain">
-            <input
-              className="au-c-text-input au-c-text-input--smaller"
-              id={`upload_license_${this.props.id}`}
-              type="text"
-              tabIndex="0"
-              onBlur={e => this.setState({ license: e.target.value })}
-            />
-            <div className="au-c-input__bottom" />
-          </div>
-        </div>
-        <div className="au-c-input au-c-input-label--left">
-          <label htmlFor={`upload_copyright_${this.props.id}`}>Copyright</label>
-          <div className="au-c-input__contain">
-            <input
-              className="au-c-text-input au-c-text-input--smaller"
-              id={`upload_copyright_${this.props.id}`}
-              type="text"
-              tabIndex="0"
-              onBlur={e => this.setState({ copyright: e.target.value })}
-            />
-            <div className="au-c-input__bottom" />
-          </div>
-        </div>
+        {
+          _.map(metadataTypes, type => (
+            <div className="au-c-input au-c-input-label--left">
+              <label htmlFor={`upload_${type}_${this.props.id}`}>{_.capitalize(type)}</label>
+              <div className="au-c-input__contain">
+                <input
+                  className="au-c-text-input au-c-text-input--smaller"
+                  id={`upload_${type}_${this.props.id}`}
+                  type="text"
+                  tabIndex="0"
+                  onBlur={e => this.updateMetadata(type, e.target.value)}
+                />
+                <div className="au-c-input__bottom" />
+              </div>
+            </div>
+          ))
+        }
       </div>
     );
   }

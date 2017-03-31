@@ -1,5 +1,6 @@
 import React            from 'react';
 import Modal            from 'react-modal';
+import _                from 'lodash';
 import Loader           from '../dot_loader';
 import SearchMedia      from './search_media';
 import LanguageSelect   from '../language_dropdown';
@@ -28,7 +29,7 @@ export default class EditorUploadModal extends React.Component {
     super();
     this.state = {
       uploadedImage: null,
-      selectedImage: null,
+      selectedMedia: null,
       description: '',
       altText: '',
       license: '',
@@ -45,6 +46,17 @@ export default class EditorUploadModal extends React.Component {
       copyright: this.state.copyright,
     };
     this.props.insertMedia(this.state.uploadedImage, metaData);
+  }
+
+  selectMedia(item) {
+    const { description, altText, license, copyright } = item;
+    this.setState({
+      selectedMedia: item,
+      description,
+      altText,
+      license,
+      copyright,
+    });
   }
 
   render() {
@@ -81,10 +93,14 @@ export default class EditorUploadModal extends React.Component {
         <div className="au-c-wysiwyg-modal__main">
           <div style={{ display: this.state.uploadedImage ? 'none' : 'block' }}>
             <div className="au-c-drop-zone__answers__label">Select an Image</div>
+
             <SearchMedia
               media={this.props.media}
+              selectMedia={item => this.selectMedia(item)}
+              selectedMediaId={_.get(this.state.selectedMedia, 'id')}
               loading={this.props.loading}
             />
+
           </div>
 
           <div className="au-o-flex-center  au-u-mb-md au-u-mt-md">
@@ -104,10 +120,14 @@ export default class EditorUploadModal extends React.Component {
             </div>
           </div>
           {
-            this.state.uploadedImage ? <Metadata
-              selectedImage={null}
+            this.state.uploadedImage || this.state.selectedMedia ? <Metadata
+              selectedImage={this.state.uploadedImage || this.state.selectedMedia}
               id={this.props.id}
               updateMetadata={(key, val) => this.setState({ key: val })}
+              description={this.state.description}
+              altText={this.state.altText}
+              license={this.state.license}
+              copyright={this.state.copyright}
             /> : null
           }
 

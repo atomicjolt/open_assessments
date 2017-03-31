@@ -11,8 +11,8 @@ export default function mediaTable(props) {
             _.map(props.media, item => (
               <tr
                 key={`media_item_${item.id}`}
-                className={props.activeItem === item.id ? 'is-active' : ''}
-                onClick={() => props.selectItem(item.id)}
+                className={props.selectedMediaId === item.id ? 'is-active' : ''}
+                onClick={() => props.selectMedia(item)}
               >
                 <td>
                   <div className="au-c-modal-media__thumbnail">
