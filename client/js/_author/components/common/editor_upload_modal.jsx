@@ -2,6 +2,7 @@ import React            from 'react';
 import Modal            from 'react-modal';
 import _                from 'lodash';
 import Loader           from './dot_loader';
+import SearchMedia      from './search_media';
 import LanguageSelect   from '../common/language_dropdown';
 
 const tagNameMap = {
@@ -87,11 +88,10 @@ export default class EditorUploadModal extends React.Component {
         <div className="au-c-wysiwyg-modal__main">
           <div style={{ display: this.state.uploadedImage ? 'none' : 'block' }}>
             <div className="au-c-drop-zone__answers__label">Select an Image</div>
-            {
-              _.map(this.props.media, media => (
-                <img src={media.url} width="25" />
-              ))
-            }
+            <SearchMedia
+              media={this.props.media}
+              loading={this.props.loading}
+            />
           </div>
 
           <div className="au-o-flex-center  au-u-mb-md">

@@ -98,6 +98,7 @@ export class AddImage extends React.Component {
             mediaName=""
             loadingMedia={this.props.loadingMedia}
             media={this.props.images}
+            loading={this.props.loadingMedia}
             insertMedia={(media, metaData) => this.uploadMedia(media, metaData)}
             inProgress={false}
             error={null}

@@ -216,4 +216,58 @@
 
 .au-c-modal-media__pagination{
   height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+
+  ul {
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  li {
+    display: inline-block;
+  }
+
+   .break a {
+    cursor: default;
+  }
+}
+
+.au-c-modal-media__pagination-pages {
+  cursor: pointer;
+
+  &:hover{
+    color: $white;
+    background-color: $purple2;
+  }
+}
+
+.au-c-modal-media__pagination-page {
+  //How can I make this whole thing more click-able
+  //padding: 10px;
+}
+
+.au-c-modal-media__pagination-previous {
+  padding: 0 10px;
+  cursor: pointer;
+  float: left;
+  &:hover{
+    color: $white;
+    background-color: $purple2;
+  }
+}
+
+.au-c-modal-media__pagination-next {
+  cursor: pointer;
+  float: right;
+  &:hover{
+    color: $white;
+    background-color: $purple2;
+  }
+}
+
+.au-c-modal-media__pagination-active {
+  background-color: $purple;
+  color: $white;
 }
