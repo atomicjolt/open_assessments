@@ -1,8 +1,8 @@
 import React          from 'react';
 import _              from 'lodash';
 import ReactPaginate  from 'react-paginate';
-import MediaTable     from './media_table';
-import Loader         from './dot_loader';
+import MediaTable     from '../media_table';
+import Loader         from '../dot_loader';
 
 const perPage = 8;
 
@@ -15,7 +15,6 @@ export default class SearchMedia extends React.Component {
     super();
     this.state = {
       searchText: '',
-      activeItem: null,
       offset: 0,
     };
   }
@@ -78,13 +77,13 @@ export default class SearchMedia extends React.Component {
           nextLabel={<i className="material-icons">keyboard_arrow_right</i>}
           breakLabel={<span>...</span>}
           pageCount={_.size(filteredMedia) / 8}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={3}
+          marginPagesDisplayed={1}
+          pageRangeDisplayed={5}
           onPageChange={data => this.handlePageClick(data)}
           containerClassName={'au-c-modal-media__pagination'}
           pageClassName={'au-c-modal-media__pagination-pages'}
           breakClassName={'au-c-modal-media__pagination-break'}
-          activeClassName={'au-c-modal-media__pagination-active'}
+          activeClassName={'is-active'}
           previousClassName={`au-c-modal-media__pagination-previous ${this.props.loading ? 'inactive' : ''}`}
           nextClassName={`au-c-modal-media__pagination-next ${this.props.loading ? 'inactive' : ''}`}
           pageLinkClassName={'au-c-modal-media__pagination-page'}

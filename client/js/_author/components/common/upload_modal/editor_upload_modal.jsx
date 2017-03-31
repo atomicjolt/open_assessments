@@ -1,9 +1,9 @@
 import React            from 'react';
 import Modal            from 'react-modal';
-import _                from 'lodash';
-import Loader           from './dot_loader';
+import Loader           from '../dot_loader';
 import SearchMedia      from './search_media';
-import LanguageSelect   from '../common/language_dropdown';
+import LanguageSelect   from '../language_dropdown';
+import Metadata         from './meta_data';
 
 const tagNameMap = {
   audio: 'Audio',
@@ -15,6 +15,7 @@ export default class EditorUploadModal extends React.Component {
   static propTypes = {
     isOpen: React.PropTypes.bool,
     closeModal: React.PropTypes.func.isRequired,
+    id: React.PropTypes.string,
     mediaType: React.PropTypes.string,
     mediaName: React.PropTypes.string,
     insertMedia: React.PropTypes.func.isRequired,
@@ -27,21 +28,13 @@ export default class EditorUploadModal extends React.Component {
     super();
     this.state = {
       uploadedImage: null,
+      selectedImage: null,
       description: '',
       altText: '',
       license: '',
       copyright: '',
-      baseScrollHeight: null,
+      activeItem: null,
     };
-  }
-
-  areaResize() {
-    const minRows = 1;
-    this.refs[`modal_textarea_${this.props.id}`].rows = minRows;
-    const scrollHeight = this.refs[`modal_textarea_${this.props.id}`].scrollHeight;
-    if (!this.state.baseScrollHeight) { this.setState({ baseScrollHeight: scrollHeight }); }
-    const rows = Math.ceil((scrollHeight - (this.state.baseScrollHeight || scrollHeight)) / 17);
-    this.refs[`modal_textarea_${this.props.id}`].rows = rows + minRows;
   }
 
   addMedia() {
@@ -94,7 +87,7 @@ export default class EditorUploadModal extends React.Component {
             />
           </div>
 
-          <div className="au-o-flex-center  au-u-mb-md">
+          <div className="au-o-flex-center  au-u-mb-md au-u-mt-md">
             <span className="au-c-wysiwyg-media__label">Upload {tagNameMap[this.props.mediaType]}</span>
             <div className="au-c-wysiwyg-media__source-text" tabIndex="0">
               {name}
@@ -110,63 +103,14 @@ export default class EditorUploadModal extends React.Component {
               </label>
             </div>
           </div>
-          <div style={{ display: this.state.uploadedImage ? 'block' : 'none' }}>
-            <div className="au-c-input au-c-input-label--left">
-              <label htmlFor={`upload_desc_${this.props.id}`}>Description</label>
-              <div className="au-c-input__contain">
-                <textarea
-                  ref={`modal_textarea_${this.props.id}`}
-                  className="au-c-textarea au-c-text-input--smaller"
-                  id={`upload_desc_${this.props.id}`}
-                  type="text"
-                  tabIndex="0"
-                  onBlur={e => this.setState({ description: e.target.value })}
-                  onChange={() => this.areaResize()}
-                  rows="1"
-                />
-                <div className="au-c-input__bottom" />
-              </div>
-            </div>
-            <div className="au-c-input au-c-input-label--left">
-              <label htmlFor={`upload_alt_text_${this.props.id}`}>Alt-Text</label>
-              <div className="au-c-input__contain">
-                <input
-                  className="au-c-text-input au-c-text-input--smaller"
-                  id={`upload_alt_text_${this.props.id}`}
-                  type="text"
-                  tabIndex="0"
-                  onBlur={e => this.setState({ altText: e.target.value })}
-                />
-                <div className="au-c-input__bottom" />
-              </div>
-            </div>
-            <div className="au-c-input au-c-input-label--left">
-              <label htmlFor={`upload_license_${this.props.id}`}>License</label>
-              <div className="au-c-input__contain">
-                <input
-                  className="au-c-text-input au-c-text-input--smaller"
-                  id={`upload_license_${this.props.id}`}
-                  type="text"
-                  tabIndex="0"
-                  onBlur={e => this.setState({ license: e.target.value })}
-                />
-                <div className="au-c-input__bottom" />
-              </div>
-            </div>
-            <div className="au-c-input au-c-input-label--left">
-              <label htmlFor={`upload_copyright_${this.props.id}`}>Copyright</label>
-              <div className="au-c-input__contain">
-                <input
-                  className="au-c-text-input au-c-text-input--smaller"
-                  id={`upload_copyright_${this.props.id}`}
-                  type="text"
-                  tabIndex="0"
-                  onBlur={e => this.setState({ copyright: e.target.value })}
-                />
-                <div className="au-c-input__bottom" />
-              </div>
-            </div>
-          </div>
+          {
+            this.state.uploadedImage ? <Metadata
+              selectedImage={null}
+              id={this.props.id}
+              updateMetadata={(key, val) => this.setState({ key: val })}
+            /> : null
+          }
+
         </div>
 
         <div className="au-c-wysiwyg-modal__footer">

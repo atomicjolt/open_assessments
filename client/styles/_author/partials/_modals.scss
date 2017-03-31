@@ -219,11 +219,13 @@
   height: 3rem;
   line-height: 3rem;
   text-align: center;
+  @include display-flex;
+  @include justify-content(center);
 
   ul {
     display: inline-block;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   li {
@@ -235,24 +237,32 @@
   }
 }
 
-// This could all use some lovin
 .au-c-modal-media__pagination-pages {
   cursor: pointer;
 
   &:hover{
-    color: $white;
-    background-color: $purple2;
+    background: $gray2;
+    border-bottom: 0.2rem solid $gray10;
+  }
+  &.is-active{
+    border-bottom: 0.2rem solid $gray10;
+    a{
+      @include semi-bold;
+      font-size: 1.2rem;
+    }
   }
 }
 
 .au-c-modal-media__pagination-page {
   //How can I make this whole thing more click-able
-  padding: 10px;
+  padding: 1rem;
+  font-size: 1.2rem;
+  @include regular;
 }
 
-.au-c-modal-media__pagination-previous {
+.au-c-modal-media__pagination-previous, .au-c-modal-media__pagination-next {
   cursor: pointer;
-  float: left;
+  padding: 0.5rem;
   &:hover{
     color: $white;
     background-color: $purple2;
@@ -260,21 +270,8 @@
   &.inactive {
     display: none;
   }
-}
-
-.au-c-modal-media__pagination-next {
-  cursor: pointer;
-  float: right;
-  &:hover{
-    color: $white;
-    background-color: $purple2;
-  }
-  &.inactive {
-    display: none;
+  i{
+    font-size: 2rem;
   }
 }
 
-.au-c-modal-media__pagination-active {
-  background-color: $purple;
-  color: $white;
-}

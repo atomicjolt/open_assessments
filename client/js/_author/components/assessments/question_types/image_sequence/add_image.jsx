@@ -3,7 +3,7 @@ import { connect }       from 'react-redux';
 import _                 from 'lodash';
 import guid              from '../../../../../utils/guid';
 import * as AssetActions from '../../../../../actions/qbank/assets';
-import UploadModal       from '../../../common/editor_upload_modal';
+import UploadModal       from '../../../common/upload_modal/editor_upload_modal';
 
 function select(state) {
   return {
