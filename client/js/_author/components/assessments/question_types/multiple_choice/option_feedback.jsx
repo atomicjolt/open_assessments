@@ -1,12 +1,14 @@
 import React    from 'react';
 import Editor   from '../../../common/oea_editor';
 import guid     from '../../../../../utils/guid';
+import localize from '../../../../locales/localize';
 
-export default class optionFeedback extends React.Component {
+class optionFeedback extends React.Component {
   static propTypes = {
     feedback: React.PropTypes.string,
     bankId: React.PropTypes.string.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
     id: React.PropTypes.string,
     hidden: React.PropTypes.bool,
     fileIds: React.PropTypes.shape({}),
@@ -29,9 +31,10 @@ export default class optionFeedback extends React.Component {
 
   render() {
     const hidden = this.props.hidden ? 'is-hidden' : '';
+    const strings = this.props.localizeStrings();
     return (
       <div className={`au-c-input au-c-input-label--left au-c-feedback ${hidden}`}>
-        <label htmlFor="feedback1">Feedback</label>
+        <label htmlFor="feedback1">{strings.feedback}</label>
         <Editor
           textSize="smaller"
           fileIds={this.props.fileIds}
@@ -44,3 +47,5 @@ export default class optionFeedback extends React.Component {
     );
   }
 }
+
+export default localize(optionFeedback);

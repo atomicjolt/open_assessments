@@ -1,14 +1,12 @@
 import LocalizedStrings from 'react-localization';
 
 import en     from './en';
-import he     from './he';
 import hi     from './hi';
 import te     from './te';
 
 
 const locales = {
   ...en,
-  ...he,
   ...hi,
   ...te
 };

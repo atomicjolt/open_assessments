@@ -12,10 +12,21 @@ const questionTypes = {
   multipleReflection: 'Multiple Choice -- Multiple Select & Reflection',
 };
 
+const feedback = {
+  correctFeedback: 'Correct Feedback',
+  incorrectFeedback: 'Incorrect Feedback'
+}
+
 export default {
   en: {
     name: 'English',
     dir: 'ltr',
+    addImage: {
+      addImage: 'Add Image'
+    },
+    addOption:{
+      addOption: 'Add Option'
+    },
     addQuestionButton: {
       addQuestion: 'Add Question'
     },
@@ -31,11 +42,40 @@ export default {
     editAssessment: {
       confirm: 'Are you sure you want to delete this item?'
     },
+    imageOption: {
+      NA: 'N/A'
+    },
+    imageSequence: {
+      ...feedback
+    },
+    mcAddOption: {
+      addOption: 'Add Option'
+    },
+    movableFillBlank: {
+      ...feedback
+    },
+    movableWordSentanceOption: {
+      NA: 'N/A',
+      newOption: 'New Option'
+    },
+    movableWordSentence: {
+      ...feedback
+    },
+    multipleChoice: {
+      ...feedback
+    },
+    multipleChoiceOptions: {
+      optionText: 'Option Text'
+    },
+    mwSandbox: {
+      feedback: 'Feedback',
+    },
     navigationBarContent: {
       new: 'NEW',
       publish: 'Publish',
       unpublish: 'Unpublish',
-      preview: 'Preview Assessment'
+      preview: 'Preview Assessment',
+      assessment: 'Assessment',
     },
     newItemForm: {
       addQuestion: 'Add Question',
@@ -43,6 +83,29 @@ export default {
       cancel: 'Cancel',
       saveNewQuestion: 'Save New Question',
       ...questionTypes
+    },
+    optionFeedback: {
+      feedback: 'Feedback',
+    },
+    previewQuestion: {
+      fileUpload: {
+        chooseFile: 'Choose File'
+      },
+      audioUpload: {
+        stop: 'Stop',
+        record: 'Record',
+      }
+    },
+    shortAnswer: {
+      answerBox: 'Answer Box',
+      small: 'Small',
+      medium: 'Medium',
+      large: 'Large',
+      box: 'Box',
+      feedback: 'Feedback'
+    },
+    question: {
+      confirm: 'Are you sure you want to delete this option?'
     }
   }
 };

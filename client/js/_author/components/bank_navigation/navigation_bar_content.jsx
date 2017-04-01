@@ -16,7 +16,7 @@ function navigationBarContent(props) {
           className={props.currentBankId ? 'au-c-btn au-c-btn--breadcrumb' : 'au-c-btn au-c-btn--breadcrumb is-active'}
         >
           <i className="material-icons">home</i>
-          Assessments
+          {strings.assessment}
         </button>
         {
           _.map(props.path, folder => (

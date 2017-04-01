@@ -1,6 +1,8 @@
 import React      from 'react';
+import localize   from '../../../../locales/localize';
 
-export default function addOption(props) {
+function addOption(props) {
+  const strings = props.localizeStrings('mcAddOption');
   return (
     <div
       className="au-c-answer au-c-answer--add"
@@ -18,7 +20,7 @@ export default function addOption(props) {
             className="au-c-text-input au-c-text-input--small au-c-wysiwyg au-c-option"
             id="addOption"
             type="text"
-            placeholder="Add Option"
+            placeholder={strings.addOption}
             tabIndex="-1"
           />
           <div className="au-c-input__bottom no-border" />
@@ -30,4 +32,7 @@ export default function addOption(props) {
 
 addOption.propTypes = {
   createChoice: React.PropTypes.func.isRequired,
+  localizeStrings: React.PropTypes.func.isRequired,
 };
+
+export default localize(addOptions);
