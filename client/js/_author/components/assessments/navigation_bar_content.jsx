@@ -1,9 +1,9 @@
 import React            from 'react';
 import _                from 'lodash';
-import { Link }         from 'react-router';
 import Icon             from '../bank_navigation/bank_icon';
 import BackButton       from '../common/back_button';
 import localize         from '../../locales/localize';
+import appHistory       from '../../history';
 
 class NavigationBarContent extends React.Component {
   static propTypes = {
@@ -20,7 +20,10 @@ class NavigationBarContent extends React.Component {
       return (
         <button
           className="au-c-btn au-c-btn--sm au-c-btn--green"
-          onClick={() => this.props.togglePublishAssessment()}
+          onClick={() => {
+            this.props.togglePublishAssessment();
+            appHistory.push('/');
+          }}
         >
           <Icon type={this.props.isPublished ? 'Published' : 'Publish'} />
           {this.props.isPublished ? strings.unpublish : strings.publish}
@@ -47,14 +50,14 @@ class NavigationBarContent extends React.Component {
           { this.publishButton() }
           {
             this.props.isPublished ?
-              <Link
+              <button
                 className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"
-                to={`banks/${bankId}/assessments/${id}/preview`}
-                target="_blank"
+                onClick={() => appHistory.push(`banks/${bankId}/assessments/${id}/preview`)}
               >
                 <i className="material-icons">remove_red_eye</i>
+
                 {strings.preview}
-              </Link> : null
+              </button> : null
          }
         </div>
       </div>
