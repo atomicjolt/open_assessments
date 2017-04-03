@@ -49,6 +49,8 @@ describe('Bank Navigator', () => {
       deleteAssessment   : () => { calledFuncts.push('deleteAssessment'); },
       togglePublishAssessment: () => {},
       currentBankId      : '',
+      banksLoaded: false,
+      
       getAssessmentOffered: () => {},
     };
     result = TestUtils.renderIntoDocument(<BankNavigator {...props} />);
