@@ -2,13 +2,15 @@ import React        from 'react';
 import _            from 'lodash';
 import Item         from '../../../../_player/components/assessments/item';
 import types        from '../../../../constants/question_types';
+import localize     from '../../../locales/localize';
 
-export default class PreviewQuestion extends React.Component {
+class PreviewQuestion extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
       type: React.PropTypes.string,
       question: React.PropTypes.shape({}),
     }).isRequired,
+    localizeStrings: React.PropTypes.func.isRequired
   };
 
   constructor() {
@@ -37,6 +39,10 @@ export default class PreviewQuestion extends React.Component {
         return 'movable_words_sentence';
       case types.movableFillBlank:
         return 'fill_the_blank_question';
+      case types.movableWordSandbox:
+        return 'movable_words_sandbox';
+      case types.imageSequence:
+        return 'movable_object_chain';
       default:
         return null;
     }
@@ -63,6 +69,33 @@ export default class PreviewQuestion extends React.Component {
             }),
             expectedLines: 1,
           }
+        };
+
+      case types.imageSequence:
+        return {
+          id: item.id,
+          question_type: this.convertType(item.type),
+          material: item.question.text,
+          isHtml: true,
+          answers: _.map(item.question.choices, answer => ({
+            id: answer.id,
+            material: `<p><img src="${answer.text}"></p>`
+          })),
+          question_meta: {
+            expectedLines: 1,
+          }
+        };
+      case types.movableWordSandbox:
+      case types.movableWordSentence:
+        return {
+          id: item.id,
+          question_type: this.convertType(item.type),
+          material: item.question.text,
+          isHtml: true,
+          answers: _.map(item.question.choices, answer => ({
+            id: answer.id,
+            material: `<p class="${answer.wordType}">${answer.text}</p>`
+          })),
         };
 
       default:
@@ -99,16 +132,6 @@ export default class PreviewQuestion extends React.Component {
   render() {
     const item = this.serializeForPlayer(this.props.item);
 
-    const localizedStrings = {
-      fileUpload: {
-        chooseFile: 'Choose File'
-      },
-      audioUpload: {
-        stop: 'Stop',
-        record: 'Record',
-      }
-    };
-
     return (
       <div>
         <Item
@@ -119,7 +142,7 @@ export default class PreviewQuestion extends React.Component {
           questionCount={1}
           questionResult={{}}
           selectAnswer={id => this.selectAnswer(id)}
-          localizedStrings={localizedStrings}
+          localizedStrings={this.props.localizeStrings()}
           sendSize={() => {}}
           videoPlay={() => {}}
           videoPause={() => {}}
@@ -134,3 +157,5 @@ export default class PreviewQuestion extends React.Component {
     );
   }
 }
+
+export default localize(PreviewQuestion);

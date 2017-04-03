@@ -7,7 +7,7 @@ import Index                          from './components/_index';
 import BankNav                        from './components/bank_navigation/_bank_navigator';
 import NewAssessment                  from './components/assessments/_new_assessment';
 import EditAssessment                 from './components/assessments/_edit_assessment';
-import PreviewAssessment              from './components/assessments/preview_assessment';
+import PreviewAssessment              from './components/preview/preview_assessment';
 import NotFound                       from './components/common/not_found';
 
 export default (

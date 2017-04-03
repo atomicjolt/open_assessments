@@ -49,7 +49,8 @@ export default function Option(props) {
             wordType: e.target.value
           })}
         >
-          <option value={null}>N/A</option>
+          {/* TODO figure out parts of speech with other languages */}
+          <option value={null}>Other</option>
           <option value="verb">Verb</option>
           <option value="adverb">Adverb</option>
           <option value="noun">Noun</option>

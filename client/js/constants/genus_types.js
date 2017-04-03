@@ -38,6 +38,40 @@ export const types = {
     shortAnswer: 'answer-record-type%3Ashort-text-answer%40ODL.MIT.EDU',
     wrongAnswer: 'answer-type%3Awrong-answer%40ODL.MIT.EDU',
   },
+  assets: {
+    image: {
+      png: 'asset-content-genus-type%3Apng%40iana.org',
+      jpg: 'asset-content-genus-type%3Ajpg%40iana.org',
+      svg: 'asset-content-genus-type%3Asvg%40iana.org',
+    },
+    audio: {
+      mp3:'asset-content-genus-type%3Amp3%40iana.org'
+    },
+    video: {
+      m4a: 'asset-content-genus-type%3Am4a%40ODL.MIT.EDU',
+      wav: 'asset-content-genus-type%3Awav%40ODL.MIT.EDU',
+      mp4: 'asset-content-genus-type%3Amp4%40ODL.MIT.EDU'
+    },
+    altText: {
+      altText: 'asset-content-genus-type%3Aalt-text%40ODL.MIT.EDU',
+    },
+    description: {
+      description: 'asset-content-genus-type%3Amedia-description%40ODL.MIT.EDU',
+      oldDesc: 'asset-content-genus-type%3AmediaDescription%40ODL.MIT.EDU',
+    },
+    license: {
+      license: 'someJunkyId',
+    },
+    copyright: {
+      copyright: 'anotherJunkyId'
+    },
+    vtt: {
+      vtt: 'asset-content-genus-type%3Avtt%40ODL.MIT.EDU',
+    },
+    transcript: {
+      transcript: 'asset-content-genus-type%3Atranscript%40ODL.MIT.EDU',
+    }
+  },
   target: {
     drop: 'drop.behavior%3Adrop%40ODL.MIT.EDU',
     reject: 'drop.behavior%3Areject%40ODL.MIT.EDU',
@@ -57,6 +91,10 @@ export function getQbankType(type) {
     || _.findKey(types.target, genusType => type === genusType)
     || _.findKey(types.zone, genusType => type === genusType)
     || null;
+}
+
+export function getQbankMediaType(uglyType) {
+  return _.findKey(types.assets, mediaType => _.findKey(mediaType, mType => uglyType === mType) || null) || null;
 }
 
 export default types;

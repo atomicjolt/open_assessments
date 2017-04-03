@@ -1,25 +1,32 @@
 import React            from 'react';
 import _                from 'lodash';
-import { Link }         from 'react-router';
 import Icon             from '../bank_navigation/bank_icon';
+import BackButton       from '../common/back_button';
+import localize         from '../../locales/localize';
+import appHistory       from '../../history';
 
-export default class NavigationBarContent extends React.Component {
+class NavigationBarContent extends React.Component {
   static propTypes = {
-    editOrPublishAssessment: React.PropTypes.func,
+    togglePublishAssessment: React.PropTypes.func,
     isPublished: React.PropTypes.bool.isRequired,
     items: React.PropTypes.array.isRequired,
     assessment: React.PropTypes.object.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
   };
 
   publishButton() {
+    const strings = this.props.localizeStrings();
     if (!_.isEmpty(this.props.items)) {
       return (
         <button
           className="au-c-btn au-c-btn--sm au-c-btn--green"
-          onClick={() => this.props.editOrPublishAssessment(this.props.isPublished)}
+          onClick={() => {
+            this.props.togglePublishAssessment();
+            appHistory.push('/');
+          }}
         >
           <Icon type={this.props.isPublished ? 'Published' : 'Publish'} />
-          {this.props.isPublished ? 'Unpublish' : 'Publish'}
+          {this.props.isPublished ? strings.unpublish : strings.publish}
         </button>
       );
     }
@@ -32,33 +39,30 @@ export default class NavigationBarContent extends React.Component {
 
   render() {
     const { bankId, id } = this.props.assessment;
+    const strings = this.props.localizeStrings();
     return (
       <div className="au-c-header-bottom">
         <div className="au-c-header-bottom__left">
-          <button
-            onClick={() => this.backButton(bankId)}
-            className="au-c-btn au-c-btn--sm au-c-btn--outline au-c-btn--back"
-          >
-            <i className="material-icons">keyboard_arrow_left</i>
-            Back
-          </button>
+          <BackButton handleClick={() => this.backButton(bankId)} />
         </div>
 
         <div className="au-c-header-bottom__right">
           { this.publishButton() }
           {
             this.props.isPublished ?
-              <Link
+              <button
                 className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"
-                to={`banks/${bankId}/assessments/${id}/preview`}
-                target="_blank"
+                onClick={() => appHistory.push(`banks/${bankId}/assessments/${id}/preview`)}
               >
                 <i className="material-icons">remove_red_eye</i>
-                Preview Assessment
-              </Link> : null
+
+                {strings.preview}
+              </button> : null
          }
         </div>
       </div>
     );
   }
 }
+
+export default localize(NavigationBarContent);

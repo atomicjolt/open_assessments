@@ -1,4 +1,5 @@
 import _                  from 'lodash';
+import $                  from 'jquery';
 import baseDeserializer   from './base';
 import genusTypes         from '../../../../constants/genus_types';
 
@@ -8,17 +9,22 @@ function deserializeChoices(choices, correctAnswer, incorrectId) {
   _.forEach(choices, (choice, index) => {
     const answerIndex = correctAnswer.choiceIds.indexOf(choice.id);
     const isCorrect = answerIndex >= 0;
+    const nodes = $('<div>').html(choice.text);
+    const image = $('img', nodes);
+    const label = $('p', nodes);
+
     newChoices[choice.id] = {
       id: choice.id,
       answerId: isCorrect ? correctAnswer.id : incorrectId,
-      text: choice.text,
-      order: index,
-      answerOrder: isCorrect ? answerIndex : null,
+      text: image ? image.attr('src') : '',
+      altText: image ? image.attr('alt') : '',
+      order: index + 1,
+      labelText: label ? label.text() : '',
     };
   });
+
   return newChoices;
 }
-
 
 export default function imageSequence(item) {
   const newItem = baseDeserializer(item);

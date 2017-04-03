@@ -2,8 +2,12 @@ import React                    from 'react';
 import _                        from 'lodash';
 import appHistory               from '../../history';
 import Breadcrumb               from './breadcrumb';
+import localize                 from '../../locales/localize';
 
-export default function navigationBarContent(props) {
+function navigationBarContent(props) {
+
+  const strings = props.localizeStrings();
+
   return (
     <div className="au-c-header-bottom">
       <div className="au-c-header-bottom__left">
@@ -12,7 +16,7 @@ export default function navigationBarContent(props) {
           className={props.currentBankId ? 'au-c-btn au-c-btn--breadcrumb' : 'au-c-btn au-c-btn--breadcrumb is-active'}
         >
           <i className="material-icons">home</i>
-          Assessments
+          {strings.assessment}
         </button>
         {
           _.map(props.path, folder => (
@@ -33,7 +37,7 @@ export default function navigationBarContent(props) {
           className="au-c-btn au-c-btn--sm au-c-btn--maroon au-c-btn--new u-ml-md"
           onClick={() => appHistory.push(`banks/${props.currentBankId}/new_assessment`)}
         >
-          New
+          {strings.new}
         </button>
       </div>
     </div>
@@ -44,4 +48,8 @@ navigationBarContent.propTypes = {
   path              : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
   currentBankId     : React.PropTypes.string,
   updatePath        : React.PropTypes.func.isRequired,
+  localizeStrings   : React.PropTypes.func.isRequired,
+  getBankChildren   : React.PropTypes.func.isRequired
 };
+
+export default localize(navigationBarContent);

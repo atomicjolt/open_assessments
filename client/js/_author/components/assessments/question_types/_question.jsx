@@ -18,6 +18,14 @@ import DragAndDrop        from './drag_and_drop/_drag_and_drop';
 import types              from '../../../../constants/question_types';
 import languages          from '../../../../constants/language_types';
 import Preview            from './preview_question';
+import { bankMedia }      from '../../../selectors/media';
+import localize           from '../../../locales/localize';
+
+function select(state, props) {
+  return {
+    media: bankMedia(state, props),
+  };
+}
 
 export class Question extends React.Component {
   static propTypes = {
@@ -42,6 +50,7 @@ export class Question extends React.Component {
     createChoice: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
     moveItem: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
   };
 
   static questionComponents = {
@@ -63,7 +72,10 @@ export class Question extends React.Component {
     [types.imageSequence]: ImageSequence,
   };
 
-  static stateDrivenTypes = [types.movableWordSentence];
+  static stateDrivenTypes = [
+    types.movableWordSentence,
+    types.imageSequence,
+  ];
 
   constructor(props) {
     super(props);
@@ -198,7 +210,8 @@ export class Question extends React.Component {
   }
 
   deleteChoice(choice) {
-    if (confirm('Are you sure you want to delete this option?')) {
+    const strings = this.props.localizeStrings();
+    if (confirm(strings.confirm)) {
       this.updateItem({
         question: {
           choices: this.markedForDeletion(choice)
@@ -220,14 +233,14 @@ export class Question extends React.Component {
       return (
         <Component
           item={_.merge(item, this.state.item)}
-          updateItem={newProps => this.updateItem(newProps)}
+          updateItem={(newProps, forceSkipState) => this.updateItem(newProps, forceSkipState)}
           updateChoice={(itemId, choiceId, choice, fileIds, type) =>
             this.updateChoice(itemId, choiceId, choice, fileIds, type)}
           isActive={this.props.isActive}
           activeChoice={this.state.activeChoice}
           selectChoice={choiceId => this.selectChoice(choiceId)}
           blurOptions={e => this.blurOptions(e)}
-          createChoice={type => this.props.createChoice(bankId, item.id, type)}
+          createChoice={(text, fileIds, type) => this.props.createChoice(bankId, item.id, text, fileIds, type)}
           deleteChoice={choice => this.deleteChoice(choice)}
           save={() => this.saveStateItem()}
         />
@@ -316,4 +329,4 @@ export class Question extends React.Component {
   }
 }
 
-export default connect(null, ItemActions)(Question);
+export default connect(select, ItemActions)(localize(Question));
