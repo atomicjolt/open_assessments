@@ -18,6 +18,7 @@ import types              from '../../../../constants/question_types';
 import languages          from '../../../../constants/language_types';
 import Preview            from './preview_question';
 import { bankMedia }      from '../../../selectors/media';
+import localize           from '../../../locales/localize';
 
 function select(state, props) {
   return {
@@ -48,6 +49,7 @@ export class Question extends React.Component {
     createChoice: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
     moveItem: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
   };
 
   static questionComponents = {
@@ -202,7 +204,8 @@ export class Question extends React.Component {
   }
 
   deleteChoice(choice) {
-    if (confirm('Are you sure you want to delete this option?')) {
+    const strings = this.props.localizeStrings();
+    if (confirm(strings.confirm)) {
       this.updateItem({
         question: {
           choices: this.markedForDeletion(choice)
@@ -320,4 +323,4 @@ export class Question extends React.Component {
   }
 }
 
-export default connect(select, ItemActions)(Question);
+export default connect(select, ItemActions)(localize(Question));

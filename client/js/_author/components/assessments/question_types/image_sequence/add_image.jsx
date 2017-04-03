@@ -4,6 +4,7 @@ import _                 from 'lodash';
 import guid              from '../../../../../utils/guid';
 import * as AssetActions from '../../../../../actions/qbank/assets';
 import UploadModal       from '../../../common/upload_modal/editor_upload_modal';
+import localize     from '../../../../locales/localize';
 
 function select(state) {
   return {
@@ -22,7 +23,8 @@ export class AddImage extends React.Component {
     uploadScopeId: React.PropTypes.string.isRequired,
     uploadMedia: React.PropTypes.func.isRequired,
     createChoice: React.PropTypes.func.isRequired,
-    uploadedAssets: React.PropTypes.shape({})
+    uploadedAssets: React.PropTypes.shape({}),
+    localizeStrings:  React.PropTypes.func.isRequired
   };
 
   constructor() {
@@ -86,6 +88,7 @@ export class AddImage extends React.Component {
   }
 
   render() {
+    const strings = this.props.localizeStrings();
     return (
       <div className="au-c-image-sequence-answer-add">
         <button
@@ -105,11 +108,11 @@ export class AddImage extends React.Component {
             inProgress={false}
             error={null}
           />
-          Add Image
+          {strings.addImage}
         </button>
       </div>
     );
   }
 }
 
-export default connect(select, AssetActions)(AddImage);
+export default connect(select, AssetActions)(localize(AddImage));
