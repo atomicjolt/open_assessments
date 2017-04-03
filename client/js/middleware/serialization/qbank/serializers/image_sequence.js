@@ -23,7 +23,7 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
   if (newChoiceAttributes.new) {
     choices.push({
       id: guid(),
-      text: newChoiceAttributes.new.text,
+      text: `<p></p><img src='${newChoiceAttributes.new.text}' alt='${newChoiceAttributes.new.altText}'>`,
       order: choices.length,
     });
   }
