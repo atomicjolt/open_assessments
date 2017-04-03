@@ -47,7 +47,7 @@ export default function bankList(props) {
           sortPublished={props.sortPublished}
         />
         <div className="au-c-scrollable">
-          { _.isEmpty(props.banks) ? <Spinner /> : items }
+          { props.banksLoaded ? items : <Spinner /> }
         </div>
       </div>
     </div>
@@ -60,6 +60,7 @@ bankList.propTypes = {
     React.PropTypes.arrayOf(React.PropTypes.shape({})),
     React.PropTypes.shape({})
   ]).isRequired,
+  banksLoaded: React.PropTypes.bool.isRequired,
   getBankChildren: React.PropTypes.func.isRequired,
   sortBy: React.PropTypes.func.isRequired,
   sortName: React.PropTypes.string,
