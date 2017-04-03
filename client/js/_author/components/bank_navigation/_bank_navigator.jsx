@@ -16,6 +16,7 @@ function select(state) {
     banks: navigationSelectors.banks(state),
     settings: commonSelectors.settings(state),
     assessments: navigationSelectors.bankAssessments(state),
+    banksLoaded: navigationSelectors.banksLoaded(state),
   };
 }
 
@@ -26,6 +27,7 @@ export class BankNavigator extends React.Component {
       React.PropTypes.arrayOf(React.PropTypes.shape({})),
       React.PropTypes.shape({})
     ]).isRequired,
+    banksLoaded: React.PropTypes.bool.isRequired,
     settings: React.PropTypes.shape({
       editableBankId: React.PropTypes.string,
       publishedBankId: React.PropTypes.string,
@@ -109,6 +111,7 @@ export class BankNavigator extends React.Component {
           assessments={this.props.assessments}
           baseEmbedUrl={settings.baseEmbedUrl}
           banks={this.sortBanks()}
+          banksLoaded={this.props.banksLoaded}
           getEmbedCode={(assessId, bankId) => { this.getEmbedCode(assessId, bankId); }}
           publishedBankId={settings.publishedBankId}
           getBankChildren={bankId => this.getBankChildren(bankId)}

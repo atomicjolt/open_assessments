@@ -83,6 +83,18 @@ export default class PreviewQuestion extends React.Component {
             expectedLines: 1,
           }
         };
+      case types.movableWordSandbox:
+      case types.movableWordSentence:
+        return {
+          id: item.id,
+          question_type: this.convertType(item.type),
+          material: item.question.text,
+          isHtml: true,
+          answers: _.map(item.question.choices, answer => ({
+            id: answer.id,
+            material: `<p class="${answer.wordType}">${answer.text}</p>`
+          })),
+        };
 
       default:
         return {

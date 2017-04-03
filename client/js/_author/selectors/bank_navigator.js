@@ -48,3 +48,8 @@ export const banks = createSelector(
     });
     return _.merge(currentBanks);
   });
+
+export const banksLoaded = createSelector(
+  state => state.banks,
+  _banks => !_.isEmpty(_banks)
+);
