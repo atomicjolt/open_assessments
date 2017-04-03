@@ -2,6 +2,7 @@
 
 import React                          from "react";
 
+import _                              from "lodash";
 import AudioUpload                    from "../common/audio_upload";
 import CheckBox                       from "../common/checkbox";
 import DragAndDrop                    from "../common/drag_and_drop";

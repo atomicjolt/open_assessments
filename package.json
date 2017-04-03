@@ -10,7 +10,7 @@
   "homepage": "https://github.com/atomicjolt/open_assessments",
   "scripts": {
     "postinstall": "cd ./client && yarn",
-    "test": "cd ./client && ./node_modules/karma/bin/karma start",
+    "test": "cd client && ./node_modules/jest/bin/jest.js --no-cache --config=config/jest_config.json",
     "hot": "cd ./client && node webpack.hot.js",
     "live": "cd ./client && node server.js",
     "build_dev": "cd ./client && node ./build.js",
@@ -29,5 +29,16 @@
   "dependencies": {
     "del": "^2.2.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-jest": "^19.0.0",
+    "babel-plugin-transform-class-properties": "^6.23.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jasmine-fixture": "^2.0.0",
+    "jest": "^19.0.2",
+    "react-test-renderer": "^15.4.2",
+    "regenerator-runtime": "^0.10.3"
+  }
 }

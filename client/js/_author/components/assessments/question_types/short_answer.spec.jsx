@@ -16,7 +16,9 @@ describe('Sets size for short answer', () => {
         }
       }
     };
-    result = shallow(<ShortAnswer {...props} />);
+    result = shallow(
+      <ShortAnswer {...props} />
+    );
   });
 
   it('verifies initial size', () => {
