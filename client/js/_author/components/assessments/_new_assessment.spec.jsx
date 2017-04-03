@@ -2,6 +2,8 @@ import React              from 'react';
 import TestUtils          from 'react-addons-test-utils';
 import { NewAssessment }  from './_new_assessment';
 
+jest.mock('../../../libs/assets');
+
 describe('_new_assessment component', () => {
   let props;
   let result;

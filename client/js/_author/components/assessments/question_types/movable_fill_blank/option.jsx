@@ -62,6 +62,7 @@ multipleChoiceOptions.propTypes = {
   id: React.PropTypes.string,
   updateChoice: React.PropTypes.func.isRequired,
   deleteChoice: React.PropTypes.func.isRequired,
+  setActiveChoice: React.PropTypes.func.isRequired,
   isCorrect: React.PropTypes.bool,
   isActive: React.PropTypes.bool,
   itemId: React.PropTypes.string,

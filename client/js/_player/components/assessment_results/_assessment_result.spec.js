@@ -2,17 +2,17 @@ import React                  from 'react';
 import ReactDOM               from 'react-dom';
 import TestUtils              from 'react-addons-test-utils';
 import { AssessmentResult }   from './_assessment_result';
+import { readFixture }        from '../../../../specs_support/utils';
 
 describe('assessment result', function() {
 
   var result;
 
   beforeAll(function(){
-    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
     const settings = {
       assessment_kind: "SUMMATIVE"
     };
-    const assessment =  readFixtures("qti1/text.xml");
+    const assessment =  readFixture("qti1/text.xml");
     const assessmentMetaData = {
       type:"QTI1"
     };

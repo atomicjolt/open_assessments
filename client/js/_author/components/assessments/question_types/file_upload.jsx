@@ -1,4 +1,5 @@
 import React    from 'react';
+import _        from 'lodash';
 import Feedback from './question_common/single_feedback';
 
 export default function FileUpload(props) {
