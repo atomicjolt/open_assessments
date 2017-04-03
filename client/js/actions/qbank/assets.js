@@ -29,7 +29,7 @@ export function uploadMedia(file, guid, uploadScopeId, bankId) {
   };
 }
 
-export function addMediaToQuestion(file, guid, uploadScopeId, bankId, itemId, where, metaData) {
+export function addMediaToQuestion(file, guid, uploadScopeId, bankId, itemId, where, metaData, newMedia) {
   return {
     bankId,
     uploadScopeId,
@@ -38,6 +38,7 @@ export function addMediaToQuestion(file, guid, uploadScopeId, bankId, itemId, wh
     itemId,
     where,
     metaData,
+    newMedia,
     apiCall: true,
     type: Constants.ADD_MEDIA_TO_QUESTION,
     body: file,

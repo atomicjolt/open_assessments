@@ -24,7 +24,19 @@ export default class Metadata extends React.Component {
     this.textArea.rows = rows + minRows;
   }
 
-
+  labelName(type) {
+    // TODO: modify this for regional language stuff
+    switch (type) {
+      case 'altText':
+        return 'Alt Text';
+      case 'license':
+        return 'License';
+      case 'copyright':
+        return 'Copyright';
+      default:
+        return '';
+    }
+  }
 
   render() {
     const metadataTypes = ['altText', 'license', 'copyright'];
@@ -35,6 +47,7 @@ export default class Metadata extends React.Component {
           <label htmlFor={`upload_desc_${this.props.id}`}>Description</label>
           <div className="au-c-input__contain">
             <textarea
+              defaultValue={_.get(this, 'props.mediaItem.description.text')}
               ref={(area) => { this.textArea = area; }}
               className="au-c-textarea au-c-text-input--smaller"
               id={`upload_desc_${this.props.id}`}
@@ -49,15 +62,16 @@ export default class Metadata extends React.Component {
         </div>
         {
           _.map(metadataTypes, type => (
-            <div className="au-c-input au-c-input-label--left">
-              <label htmlFor={`upload_${type}_${this.props.id}`}>{_.capitalize(type)}</label>
+            <div className="au-c-input au-c-input-label--left" key={`metadata_input_${this.props.id}_${type}`}>
+              <label htmlFor={`upload_${type}_${this.props.id}`}>{this.labelName(type)}</label>
               <div className="au-c-input__contain">
                 <input
+                  defaultValue={_.get(this, `props.mediaItem[${type}].text`)}
                   className="au-c-text-input au-c-text-input--smaller"
                   id={`upload_${type}_${this.props.id}`}
                   type="text"
                   tabIndex="0"
-                  onBlur={e => this.updateMetadata(type, e.target.value)}
+                  onBlur={e => this.props.updateMetadata(type, e.target.value)}
                 />
                 <div className="au-c-input__bottom" />
               </div>

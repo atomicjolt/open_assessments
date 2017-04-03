@@ -13,9 +13,9 @@ export default function media(mediaData) {
       type: '',
       url: '',
       altText: {},
-      description: {},
-      license: '',
-      copyright: '',
+      description: data.description,
+      license: data.license,
+      copyright: data.copyright,
       original: data,
     };
     _.each(data.assetContents, (content) => {
@@ -31,7 +31,7 @@ export default function media(mediaData) {
           newMedia.altText = content.altText;
           break;
         case 'description':
-          newMedia.description = content.description;
+          newMedia.description = content.mediaDescription;
           break;
         case 'vtt':
           newMedia.vtt = content.vtt;

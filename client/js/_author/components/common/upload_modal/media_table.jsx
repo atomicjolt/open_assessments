@@ -20,7 +20,7 @@ export default function mediaTable(props) {
                   </div>
                 </td>
                 <td>{item.description.text}</td>
-                <td>{item.license}</td>
+                <td>{item.license.text}</td>
               </tr>
             ))
           }
@@ -29,3 +29,8 @@ export default function mediaTable(props) {
     </div>
   );
 }
+
+mediaTable.propTypes = {
+  media: React.PropTypes.shape({}),
+  selectedMediaId: React.PropTypes.string,
+};

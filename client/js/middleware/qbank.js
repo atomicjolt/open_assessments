@@ -91,6 +91,44 @@ function updateQBankItem(store, action) {
   });
 }
 
+function addMediaToItem(store, action, result) {
+  let id;
+  let assetId;
+  let genusTypeId;
+  if (result) {
+    id = _.get(result, 'body.assetContents[0].id');
+    assetId = _.get(result, 'body.assetContents[0].assetId');
+    genusTypeId = _.get(result, 'body.assetContents[0].genusTypeId');
+  } else {
+    id = _.get(action, 'body.original.assetContents[0].id');
+    assetId = _.get(action, 'body.original.assetContents[0].assetId');
+    genusTypeId = _.get(action, 'body.original.assetContents[0].genusTypeId');
+  }
+  let item = {
+    id: action.itemId,
+    question: {
+      fileIds: {
+        [action.guid] : {
+          assetContentId: id,
+          assetId,
+          assetContentTypeId: genusTypeId,
+        }
+      }
+    }
+  };
+
+  // this needs to work for item.question.choices[choiceId].field, and item.question.dropObjects[objectId].field
+  // TODO: fix alt text
+  item = _.set(item, action.where, {
+    text: `AssetContent:${action.guid}`,
+    altText: action.file.altText,
+    id: _.last(action.where.split('.')),
+  });
+
+  const newAction = updateItem(action.bankId, item);
+  updateQBankItem(store, newAction);
+}
+
 // takingAgentId is used to delete all assessmentsTaken for a specific user. It
 // should be in the format `osid.agent.Agent%3A${user_id}%40MIT-ODL`.
 // In the player it is set in qbank using the x-api-proxy header, which is set
@@ -448,32 +486,11 @@ const qbank = {
 
   [AssetConstants.ADD_MEDIA_TO_QUESTION]: (store, action) => {
     const state = store.getState();
-    uploadMedia(state, action).then((res) => {
-      const { id, assetId, genusTypeId } = _.get(res, 'body.assetContents[0]', {});
-      let item = {
-        id: action.itemId,
-        question: {
-          fileIds: {
-            [action.guid] : {
-              assetContentId: id,
-              assetId,
-              assetContentTypeId: genusTypeId,
-            }
-          }
-        }
-      };
-
-      // this needs to work for item.question.choices[choiceId].field, and item.question.dropObjects[objectId].field
-      // TODO: fix alt text
-      item = _.set(item, action.where, {
-        text: `AssetContent:${action.guid}`,
-        altText: action.file.altText,
-        id: _.last(action.where.split('.')),
-      });
-
-      const newAction = updateItem(action.bankId, item);
-      updateQBankItem(store, newAction);
-    });
+    if (action.newMedia) {
+      uploadMedia(state, action).then(res => addMediaToItem(store, action, res));
+    } else {
+      addMediaToItem(store, action);
+    }
   },
 };
 

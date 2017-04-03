@@ -8,7 +8,10 @@ const perPage = 8;
 
 export default class SearchMedia extends React.Component {
   static propTypes = {
-
+    media: React.PropTypes.string,
+    loading: React.PropTypes.string,
+    selectedMediaId: React.PropTypes.string,
+    selectMedia: React.PropTypes.func,
   };
 
   constructor() {
@@ -28,9 +31,9 @@ export default class SearchMedia extends React.Component {
     const { searchText } = this.state;
     if (searchText) {
       return _.filter(this.props.media, (item) => {
-        return _.includes(item.description, searchText)
-        || _.includes(item.altText, searchText)
-        || _.includes(item.license, searchText);
+        return _.includes(item.description.text, searchText)
+        || _.includes(item.altText.text, searchText)
+        || _.includes(item.license.text, searchText);
       });
     }
     return this.props.media;

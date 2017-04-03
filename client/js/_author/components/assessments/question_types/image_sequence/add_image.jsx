@@ -67,7 +67,7 @@ export class AddImage extends React.Component {
     );
   }
 
-  uploadMedia(file, metaData) {
+  uploadMedia(file, metadata, newMedia) {
     this.setState({ modal: false });
     const mediaGuid = guid();
     this.setState({
@@ -80,7 +80,8 @@ export class AddImage extends React.Component {
       this.props.item.bankId,
       this.props.item.id,
       'question.choices.new',
-      metaData
+      metadata,
+      newMedia
     );
   }
 
@@ -93,13 +94,14 @@ export class AddImage extends React.Component {
         >
           <UploadModal
             isOpen={this.state.modal}
+            id={this.props.item.id}
             closeModal={() => this.setState({ modal: false })}
             mediaType="img"
             mediaName=""
             loadingMedia={this.props.loadingMedia}
             media={this.props.images}
             loading={this.props.loadingMedia}
-            insertMedia={(media, metaData) => this.uploadMedia(media, metaData)}
+            insertMedia={(media, metaData, newMedia) => this.uploadMedia(media, metaData, newMedia)}
             inProgress={false}
             error={null}
           />

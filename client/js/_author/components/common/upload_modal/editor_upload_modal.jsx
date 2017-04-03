@@ -17,6 +17,8 @@ export default class EditorUploadModal extends React.Component {
     isOpen: React.PropTypes.bool,
     closeModal: React.PropTypes.func.isRequired,
     id: React.PropTypes.string,
+    loading: React.PropTypes.string,
+    media: React.PropTypes.string,
     mediaType: React.PropTypes.string,
     mediaName: React.PropTypes.string,
     insertMedia: React.PropTypes.func.isRequired,
@@ -45,7 +47,11 @@ export default class EditorUploadModal extends React.Component {
       license: this.state.license,
       copyright: this.state.copyright,
     };
-    this.props.insertMedia(this.state.uploadedImage, metaData);
+    if (this.state.uploadedImage) {
+      this.props.insertMedia(this.state.uploadedImage, metaData, true);
+    } else if (this.state.selectedMedia) {
+      this.props.insertMedia(this.state.selectedMedia);
+    }
   }
 
   selectMedia(item) {
@@ -120,10 +126,11 @@ export default class EditorUploadModal extends React.Component {
             </div>
           </div>
           {
-            this.state.uploadedImage || this.state.selectedMedia ? <Metadata
+            this.state.uploadedImage ? <Metadata
               selectedImage={this.state.uploadedImage || this.state.selectedMedia}
               id={this.props.id}
-              updateMetadata={(key, val) => this.setState({ key: val })}
+              updateMetadata={(key, val) => this.setState({ [key]: val })}
+              mediaItem={this.state.selectedMedia}
               description={this.state.description}
               altText={this.state.altText}
               license={this.state.license}
