@@ -45,6 +45,7 @@ describe('image sequence component', () => {
       updateItem: () => {calledFunc = true},
       updateChoice: () => {},
       activateChoice: () => {},
+      localizeStrings: () => {},
       save: () => {},
     };
     result = shallow(<ImageSequence {...props} />);
