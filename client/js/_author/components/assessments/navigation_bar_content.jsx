@@ -2,17 +2,20 @@ import React            from 'react';
 import _                from 'lodash';
 import Icon             from '../bank_navigation/bank_icon';
 import BackButton       from '../common/back_button';
+import localize         from '../../locales/localize';
 import appHistory       from '../../history';
 
-export default class NavigationBarContent extends React.Component {
+class NavigationBarContent extends React.Component {
   static propTypes = {
     togglePublishAssessment: React.PropTypes.func,
     isPublished: React.PropTypes.bool.isRequired,
     items: React.PropTypes.array.isRequired,
     assessment: React.PropTypes.object.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
   };
 
   publishButton() {
+    const strings = this.props.localizeStrings();
     if (!_.isEmpty(this.props.items)) {
       return (
         <button
@@ -23,7 +26,7 @@ export default class NavigationBarContent extends React.Component {
           }}
         >
           <Icon type={this.props.isPublished ? 'Published' : 'Publish'} />
-          {this.props.isPublished ? 'Unpublish' : 'Publish'}
+          {this.props.isPublished ? strings.unpublish : strings.publish}
         </button>
       );
     }
@@ -36,6 +39,7 @@ export default class NavigationBarContent extends React.Component {
 
   render() {
     const { bankId, id } = this.props.assessment;
+    const strings = this.props.localizeStrings();
     return (
       <div className="au-c-header-bottom">
         <div className="au-c-header-bottom__left">
@@ -51,7 +55,8 @@ export default class NavigationBarContent extends React.Component {
                 onClick={() => appHistory.push(`banks/${bankId}/assessments/${id}/preview`)}
               >
                 <i className="material-icons">remove_red_eye</i>
-                Preview Assessment
+
+                {strings.preview}
               </button> : null
          }
         </div>
@@ -59,3 +64,5 @@ export default class NavigationBarContent extends React.Component {
     );
   }
 }
+
+export default localize(NavigationBarContent);

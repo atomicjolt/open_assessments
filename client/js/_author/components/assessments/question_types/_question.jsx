@@ -17,6 +17,7 @@ import MovableWordSandbox from './movable_words_sandbox/movable_words_sandbox';
 import types            from '../../../../constants/question_types';
 import languages        from '../../../../constants/language_types';
 import Preview          from './preview_question';
+import localize         from '../../../locales/localize';
 
 export class Question extends React.Component {
   static propTypes = {
@@ -41,6 +42,7 @@ export class Question extends React.Component {
     createChoice: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
     moveItem: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
   };
 
   static questionComponents = {
@@ -195,7 +197,8 @@ export class Question extends React.Component {
   }
 
   deleteChoice(choice) {
-    if (confirm('Are you sure you want to delete this option?')) {
+    const strings = this.props.localizeStrings();
+    if (confirm(strings.confirm)) {
       this.updateItem({
         question: {
           choices: this.markedForDeletion(choice)
@@ -313,4 +316,4 @@ export class Question extends React.Component {
   }
 }
 
-export default connect(null, ItemActions)(Question);
+export default connect(null, ItemActions)(localize(Question));
