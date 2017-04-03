@@ -4,8 +4,9 @@ import Option         from './multiple_choice_option';
 import Add            from './add_option';
 import Feedback       from '../question_common/single_feedback';
 import types          from '../../../../../constants/question_types';
+import localize       from '../../../../locales/localize';
 
-export default class MultipleChoice extends React.Component {
+class MultipleChoice extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
       bankId: React.PropTypes.string,
@@ -24,12 +25,13 @@ export default class MultipleChoice extends React.Component {
     blurOptions: React.PropTypes.func.isRequired,
     createChoice: React.PropTypes.func.isRequired,
     deleteChoice: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
     activeChoice: React.PropTypes.string,
   };
 
   getFeedback() {
     const { question, type } = this.props.item;
-
+    const strings = this.props.localizeStrings()
     if (type !== types.multipleChoice) {
       return (
         <div className="au-c-question__feedback">
@@ -37,7 +39,7 @@ export default class MultipleChoice extends React.Component {
             updateItem={this.props.updateItem}
             feedbackType="correctFeedback"
             feedback={question.correctFeedback}
-            labelText="Correct Feedback"
+            labelText={strings.correctFeedback}
             bankId={this.props.item.bankId}
           />
           {type === types.reflection || type === types.multipleReflection ?
@@ -46,7 +48,7 @@ export default class MultipleChoice extends React.Component {
               updateItem={this.props.updateItem}
               feedbackType="incorrectFeedback"
               feedback={question.incorrectFeedback}
-              labelText="Incorrect Feedback"
+              labelText={strings.incorrectFeedback}
               bankId={this.props.item.bankId}
             />
           }
@@ -116,3 +118,5 @@ export default class MultipleChoice extends React.Component {
     );
   }
 }
+
+export default localize(MultipleChoice);

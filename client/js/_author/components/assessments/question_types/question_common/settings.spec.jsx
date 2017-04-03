@@ -26,13 +26,7 @@ describe('Correct answer selector', () => {
 
   it('call onBlur and sets value', () => {
     const input = result.find('input');
-    input.at(0).nodes[0].props.onBlur({ target: { value: 'lasers are neat' } });
+    input.at(0).props().onBlur({ target: { value: 'lasers are neat' } });
     expect(updateItemValue.name).toBe('lasers are neat');
-  });
-
-  it('call onBlur and sets value', () => {
-    const select = result.find('select');
-    select.at(0).nodes[0].props.onChange({ target: { value: 'American' } });
-    expect(updateItemValue.language).toBe('American');
   });
 });

@@ -2,13 +2,14 @@ import React                  from 'react';
 import { connect }            from 'react-redux';
 import _                      from 'lodash';
 
-import hashHistory            from '../../history';
-import  * as assessmentSelectors from '../../selectors/assessment';
-import Heading                from  '../common/heading';
-import AssessmentForm         from './assessment_form';
-import * as BankActions       from '../../../actions/qbank/banks';
-import * as AssessmentActions from '../../../actions/qbank/assessments';
-import * as ItemActions       from '../../../actions/qbank/items';
+import hashHistory                from '../../history';
+import  * as assessmentSelectors  from '../../selectors/assessment';
+import Heading                    from  '../common/heading';
+import AssessmentForm             from './assessment_form';
+import * as BankActions           from '../../../actions/qbank/banks';
+import * as AssessmentActions     from '../../../actions/qbank/assessments';
+import * as ItemActions           from '../../../actions/qbank/items';
+import localize               from '../../locales/localize';
 
 function select(state, props) {
   return {
@@ -73,7 +74,8 @@ export class EditAssessment extends React.Component {
   }
 
   deleteAssessmentItem(itemId) {
-    if (confirm('Are you sure you want to delete this item?')) {
+    const strings = this.props.localizeStrings();
+    if (confirm(strings.confirm)) {
       this.props.deleteAssessmentItem(
         this.props.params.bankId,
         this.props.params.id,
@@ -161,4 +163,4 @@ export default connect(select, {
   ...BankActions,
   ...AssessmentActions,
   ...ItemActions
-})(EditAssessment);
+})(localize(EditAssessment));

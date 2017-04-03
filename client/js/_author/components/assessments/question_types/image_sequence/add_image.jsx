@@ -3,10 +3,13 @@ import { connect }       from 'react-redux';
 import _                 from 'lodash';
 import guid              from '../../../../../utils/guid';
 import * as AssetActions from '../../../../../actions/qbank/assets';
+import UploadModal       from '../../../common/upload_modal/editor_upload_modal';
+import localize     from '../../../../locales/localize';
 
 function select(state) {
   return {
-    uploadedAssets: state.uploadedAssets,
+    loadingMedia: state.media.loading,
+    images: state.media.image,
   };
 }
 
@@ -20,13 +23,15 @@ export class AddImage extends React.Component {
     uploadScopeId: React.PropTypes.string.isRequired,
     uploadMedia: React.PropTypes.func.isRequired,
     createChoice: React.PropTypes.func.isRequired,
-    uploadedAssets: React.PropTypes.shape({})
+    uploadedAssets: React.PropTypes.shape({}),
+    localizeStrings:  React.PropTypes.func.isRequired
   };
 
   constructor() {
     super();
     this.state = {
       mediaGuid: null,
+      modal: false,
     };
   }
 
@@ -64,29 +69,50 @@ export class AddImage extends React.Component {
     );
   }
 
-  uploadMedia(file) {
+  uploadMedia(file, metadata, newMedia) {
+    this.setState({ modal: false });
     const mediaGuid = guid();
     this.setState({
       mediaGuid,
     });
-    this.props.uploadMedia(
+    this.props.addMediaToQuestion(
       file,
       mediaGuid,
       this.props.uploadScopeId,
       this.props.item.bankId,
+      this.props.item.id,
+      'question.choices.new',
+      metadata,
+      newMedia
     );
   }
 
   render() {
+    const strings = this.props.localizeStrings();
     return (
       <div className="au-c-image-sequence-answer-add">
-        <button className="au-c-image-sequence-answer-add__button">
-          {this.getImageFile()}
-          Add Image
+        <button
+          className="au-c-image-sequence-answer-add__button"
+          onClick={() => this.setState({ modal: true })}
+        >
+          <UploadModal
+            isOpen={this.state.modal}
+            id={this.props.item.id}
+            closeModal={() => this.setState({ modal: false })}
+            mediaType="img"
+            mediaName=""
+            loadingMedia={this.props.loadingMedia}
+            media={this.props.images}
+            loading={this.props.loadingMedia}
+            insertMedia={(media, metaData, newMedia) => this.uploadMedia(media, metaData, newMedia)}
+            inProgress={false}
+            error={null}
+          />
+          {strings.addImage}
         </button>
       </div>
     );
   }
 }
 
-export default connect(select, AssetActions)(AddImage);
+export default connect(select, AssetActions)(localize(AddImage));

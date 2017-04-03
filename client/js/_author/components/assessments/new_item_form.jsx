@@ -1,13 +1,14 @@
 import React      from 'react';
 import _          from 'lodash';
 import types      from '../../../constants/question_types';
-import typeNames  from '../../../constants/question_names';
 import languages  from '../../../constants/language_types';
+import localize   from '../../locales/localize';
 
-export default class newItemForm extends React.Component {
+class NewItemForm extends React.Component {
   static propTypes = {
     cancel: React.PropTypes.func.isRequired,
     create: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired
   };
 
   constructor() {
@@ -31,11 +32,12 @@ export default class newItemForm extends React.Component {
   }
 
   render() {
+    const strings = this.props.localizeStrings();
     return (
       <div className="au-o-item au-c-question is-active">
         <div className="au-o-item__top">
           <div className="au-o-left">
-            <h3 className="au-c-question__number">Add Question</h3>
+            <h3 className="au-c-question__number">{strings.addQuestion}</h3>
           </div>
         </div>
 
@@ -44,7 +46,7 @@ export default class newItemForm extends React.Component {
           <div className="au-o-row">
             <div className="au-o-half">
               <div className="au-c-input au-c-input-label--left au-c-input-label--large">
-                <label htmlFor="name2">Name</label>
+                <label htmlFor="name2">{strings.name}</label>
                 <div className="au-c-input__contain">
                   <input
                     onChange={e => this.updateName(e.target.value)}
@@ -70,7 +72,7 @@ export default class newItemForm extends React.Component {
                     {
                       _.map(types, type => (
                         <option key={`new_item_${type}`} value={type}>
-                          {typeNames[type]}
+                          {strings[type]}
                         </option>
                       ))
                     }
@@ -86,13 +88,13 @@ export default class newItemForm extends React.Component {
                 onClick={this.props.cancel}
                 className="au-c-btn au-c-btn--md au-c-btn--gray"
               >
-                Cancel
+                {strings.cancel}
               </button>
               <button
                 onClick={() => this.props.create(this.state)}
                 className="au-c-btn au-c-btn--md au-c-btn--maroon au-u-ml-md"
               >
-                Save New Question
+                {strings.saveNewQuestion}
               </button>
             </div>
           </div>
@@ -101,3 +103,4 @@ export default class newItemForm extends React.Component {
     );
   }
 }
+export default localize(NewItemForm);
