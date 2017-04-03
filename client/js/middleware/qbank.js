@@ -117,8 +117,6 @@ function addMediaToItem(store, action, result) {
     }
   };
 
-  // this needs to work for item.question.choices[choiceId].field, and item.question.dropObjects[objectId].field
-  // TODO: fix alt text
   item = _.set(item, action.where, {
     text: `AssetContent:${action.guid}`,
     altText: action.file.altText,
