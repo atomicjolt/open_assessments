@@ -48,7 +48,7 @@ class MovableWordSentence extends React.Component {
             ))
           }
           <Add
-            createChoice={() => this.props.createChoice(id)}
+            createChoice={() => this.props.createChoice()}
           />
         <SaveOptions save={this.props.save} />
         </div>
