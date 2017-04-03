@@ -35,4 +35,4 @@ addOption.propTypes = {
   localizeStrings: React.PropTypes.func.isRequired,
 };
 
-export default localize(addOptions);
+export default localize(addOption);

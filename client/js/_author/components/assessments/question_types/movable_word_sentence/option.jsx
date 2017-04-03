@@ -4,7 +4,7 @@ import WordType from '../question_common/word_type_dropdown';
 import localize from '../../../../locales/localize';
 
 function option(props) {
-  const strings = props.localizeStrings('moveableWordSentanceOption');
+  const strings = props.localizeStrings('movableWordSentanceOption');
 
   return (
     <div
