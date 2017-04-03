@@ -16,7 +16,7 @@ describe('editor upload modal', () => {
       insertMedia: () => { functionCalled = true; },
       uploadMedia: (file) => { fileUploaded = file },
       inProgress: false,
-    }
+    };
     result = shallow(<Modal {...props} />);
   });
 
@@ -52,13 +52,9 @@ describe('editor upload modal', () => {
   });
 
   it('calls insertMedia when the OK button is clicked', () => {
+    result.setState({ uploadedImage: {} });
     result.find('.au-c-btn--maroon').simulate('click');
     expect(functionCalled).toBeTruthy();
-  });
-
-  it('calls uploadMedia when a file is uploaded', () => {
-    result.find('input').simulate('change', { target: { files: ["file"] } });
-    expect(fileUploaded).toBe('file');
   });
 
   it('displays the loader when inProgress is true', () => {

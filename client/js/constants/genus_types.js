@@ -49,6 +49,25 @@ export const types = {
       m4a: 'asset-content-genus-type%3Am4a%40ODL.MIT.EDU',
       wav: 'asset-content-genus-type%3Awav%40ODL.MIT.EDU',
       mp4: 'asset-content-genus-type%3Amp4%40ODL.MIT.EDU'
+    },
+    altText: {
+      altText: 'asset-content-genus-type%3Aalt-text%40ODL.MIT.EDU',
+    },
+    description: {
+      description: 'asset-content-genus-type%3Amedia-description%40ODL.MIT.EDU',
+      oldDesc: 'asset-content-genus-type%3AmediaDescription%40ODL.MIT.EDU',
+    },
+    license: {
+      license: 'someJunkyId',
+    },
+    copyright: {
+      copyright: 'anotherJunkyId'
+    },
+    vtt: {
+      vtt: 'asset-content-genus-type%3Avtt%40ODL.MIT.EDU',
+    },
+    transcript: {
+      transcript: 'asset-content-genus-type%3Atranscript%40ODL.MIT.EDU',
     }
   },
 

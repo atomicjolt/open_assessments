@@ -2,7 +2,7 @@ import _                 from 'lodash';
 import $                 from 'jquery';
 import React             from 'react';
 import { connect }       from 'react-redux';
-import Modal             from './editor_upload_modal';
+import Modal             from './upload_modal/editor_upload_modal';
 import TinyWrapper       from './tiny_wrapper';
 import guid              from '../../../utils/guid';
 import * as AssetActions from '../../../actions/qbank/assets';
