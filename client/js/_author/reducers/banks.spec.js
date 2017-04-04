@@ -1,7 +1,5 @@
 import _                              from 'lodash';
 import banks                          from './banks';
-// TODO:  this got deleted, remake it
-// import { banksData, assessmentData }  from '../../../specs_support/dummy_data';
 
 describe('banks reducer', () => {
   let state;
@@ -22,11 +20,21 @@ describe('banks reducer', () => {
 
   it('stores banks', () => {
     action.type = 'GET_BANKS_HIERARCHY_DONE';
-    // action.payload = banksData;
-
+    action.payload = {
+      childNodes: [{
+        id: "asdf2",
+        childNodes: [{
+          id: "asdf3",
+          childNodes: []
+        }],
+      },
+      {
+        id: "asdf2.1",
+        childNodes: [],
+      }],
+    };
     state = banks(state, action);
 
     expect(_.isEmpty(state)).toBeFalsy();
-    expect(state['assessment.Bank%3A57e2b62fc89cd916208d0155%40ODL.MIT.EDU']).toBeDefined();
   });
 });
