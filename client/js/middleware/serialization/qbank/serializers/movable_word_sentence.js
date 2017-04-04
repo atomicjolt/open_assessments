@@ -4,6 +4,8 @@ import { scrub, buildChoiceText } from '../../serializer_utils';
 import genusTypes                 from '../../../../constants/genus_types';
 import guid                       from '../../../../utils/guid';
 
+const defaultWordChoice = 'other';
+
 function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
@@ -13,7 +15,7 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
       id: choice.id,
       text: buildChoiceText(
         _.get(updateValues, 'text') || choice.text,
-        _.isNil(newWordType) ? choice.wordType : newWordType,
+        newWordType || choice.wordType || defaultWordChoice,
       ),
       order: _.isNil(newOrder) ? choice.order : newOrder,
       delete: _.get(updateValues, 'delete'),

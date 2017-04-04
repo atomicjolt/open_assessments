@@ -44,6 +44,7 @@ describe('the movable words sandbox component', () => {
       blurOptions: () => {calledFunc = true},
       isActive: false,
       activeChoice: '',
+      save: () => {},
     };
 
     result = shallow(<MovableWords {...props} />);

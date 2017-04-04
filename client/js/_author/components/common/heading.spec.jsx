@@ -3,6 +3,8 @@ import TestUtils  from 'react-addons-test-utils';
 import Stub       from '../../../../specs_support/stub';
 import Heading    from './heading';
 
+jest.mock('../../../libs/assets');
+
 describe('Heading', () => {
   let result;
   let props;

@@ -1,7 +1,7 @@
 import React            from 'react';
 import _                from 'lodash';
 import types            from '../../../../../constants/question_types';
-import languages        from '../../../../../constants/language_types';
+import LanguageSelect   from '../../../common/language_dropdown';
 import SettingsCheckbox from './settings_checkbox';
 import localize         from '../../../../locales/localize';
 
@@ -32,19 +32,10 @@ function questionSettings(props) {
           </div>
         </div>
 
-        <div className="au-c-dropdown au-c-dropdown--small au-u-ml-md">
-          <select
-            name=""
-            id=""
-            tabIndex="0"
-            value={languages.languageTypeId[props.language]}
-            onChange={e => props.updateItem({ language: e.target.value })}
-          >
-            <option value={languages.languageTypeId.english}>{strings.english}</option>
-            <option value={languages.languageTypeId.hindi}>{strings.hindi}</option>
-            <option value={languages.languageTypeId.telugu}>{strings.telugu}</option>
-          </select>
-        </div>
+        <LanguageSelect
+          language={props.language}
+          updateItem={props.updateItem}
+        />
       </div>
       {_.includes(extraOptionTypes, props.type) ? <SettingsCheckbox {...props} /> : null}
     </div>
@@ -59,8 +50,6 @@ questionSettings.propTypes = {
   updateItem: React.PropTypes.func.isRequired,
   makeReflection: React.PropTypes.func.isRequired,
   localizeStrings: React.PropTypes.func.isRequired,
-  multipleAnswer: React.PropTypes.bool,
-  reflection: React.PropTypes.bool,
 };
 
 export default localize(questionSettings);

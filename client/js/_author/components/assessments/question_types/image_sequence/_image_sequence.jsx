@@ -4,7 +4,7 @@ import ImageOrder   from './image_order';
 import SaveOptions  from '../question_common/save_option_button';
 import localize     from '../../../../locales/localize';
 
-export default class ImageSequence extends React.Component {
+class ImageSequence extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
       bankId: React.PropTypes.string,
@@ -72,3 +72,5 @@ export default class ImageSequence extends React.Component {
     );
   }
 }
+
+export default localize(ImageSequence);

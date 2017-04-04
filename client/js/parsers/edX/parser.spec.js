@@ -1,6 +1,7 @@
 import Assessment         from './parser';
 // import * as AssessmentActions  from "../../actions/assessment";
 import $                  from 'jquery';
+import { readFixture }    from '../../../specs_support/utils';
 
 xdescribe('edX assessment parser', () => {
 
@@ -16,19 +17,17 @@ xdescribe('edX assessment parser', () => {
   var problem7;
 
   beforeAll(() => {
-    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
     settings = {};
 
-    // 'jasmine.Ajax.install();'' prevents readFixtures from executing successfully so we have to read them here.
-    sequential = readFixtures("edXCourse/sequential/97cc2d1812204294b5fcbb91a1157368.xml");
-    vertical = readFixtures("edXCourse/vertical/04735103fe064c9da3a1a758bcda2692.xml");
-    problem1 = readFixtures('edXCourse/problem/1bdd2690346d437eacc85567ed79702f.xml');
-    problem2 = readFixtures('edXCourse/problem/d0ef2adedeba45038d69b24517892d1d.xml');
-    problem3 = readFixtures('edXCourse/problem/78934fbb26f44b2b85d252a4f3c52d54.xml');
-    problem4 = readFixtures('edXCourse/problem/d649f04c5979438fbe82334f07b7d6fe.xml');
-    problem5 = readFixtures('edXCourse/problem/8d6900d170f34deeb718866c2954c75f.xml');
-    problem6 = readFixtures('edXCourse/problem/da63a43c68024407aab8ca0f7c790b12.xml');
-    problem7 = readFixtures('edXCourse/problem/c34a20e2f1e24890baffcfc9ac68dcfc.xml');
+    sequential = readFixture("edXCourse/sequential/97cc2d1812204294b5fcbb91a1157368.xml");
+    vertical = readFixture("edXCourse/vertical/04735103fe064c9da3a1a758bcda2692.xml");
+    problem1 = readFixture('edXCourse/problem/1bdd2690346d437eacc85567ed79702f.xml');
+    problem2 = readFixture('edXCourse/problem/d0ef2adedeba45038d69b24517892d1d.xml');
+    problem3 = readFixture('edXCourse/problem/78934fbb26f44b2b85d252a4f3c52d54.xml');
+    problem4 = readFixture('edXCourse/problem/d649f04c5979438fbe82334f07b7d6fe.xml');
+    problem5 = readFixture('edXCourse/problem/8d6900d170f34deeb718866c2954c75f.xml');
+    problem6 = readFixture('edXCourse/problem/da63a43c68024407aab8ca0f7c790b12.xml');
+    problem7 = readFixture('edXCourse/problem/c34a20e2f1e24890baffcfc9ac68dcfc.xml');
   });
 
   describe('parseEdX', () => {
@@ -121,7 +120,7 @@ xdescribe('edX assessment parser', () => {
     });
   });
 
-  //TODO add edx specs 
+  //TODO add edx specs
   describe('CheckAnswer edx_drag_and_drop', () => {});
 
   describe('CheckAnswer edx_numerical_input', () => {});

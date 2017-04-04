@@ -1,5 +1,7 @@
-import _      from 'lodash';
-import assets from './assets';
+import _            from 'lodash';
+import assets       from './assets';
+
+jest.mock('../libs/assets');
 
 describe('assets', () => {
   describe('default functionality', () => {

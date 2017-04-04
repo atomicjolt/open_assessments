@@ -62,7 +62,8 @@ export default {
       NA: 'N/A'
     },
     imageSequence: {
-      ...feedback
+      ...feedback,
+      addImage: 'Add Image'
     },
     mcAddOption: {
       addOption: 'Add Option'

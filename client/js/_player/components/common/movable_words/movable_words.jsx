@@ -1,5 +1,6 @@
 import React                from "react";
 import ReactDOM             from "react-dom";
+import _                    from "lodash";
 
 import withDragDropContext  from "../with_drag_drop_context";
 import DraggableWord        from "../draggable_word";
