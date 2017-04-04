@@ -6,7 +6,7 @@ import * as CommunicationActions  from '../../actions/communications';
 import * as MediaAnalyticsActions from '../../actions/media_analytics';
 import appHistory                 from '../../history';
 import * as selectors             from '../../selectors/assessment';
-import localizeStrings           from '../../selectors/localize';
+import localizeStrings            from '../../selectors/localize';
 import Item                       from '../assessments/item';
 import Loading                    from '../assessments/loading';
 import ThreeButtonNav             from '../assessments/three_button_nav';

@@ -30,7 +30,7 @@ class MovableFillBlank extends React.Component {
 
   render() {
     const { question, id } = this.props.item;
-    const strings = this.localizeStrings();
+    const strings = this.props.localizeStrings();
     return (
       <div>
         <div className="au-c-question__answers au-c-fill-in-the-blank__answers">

@@ -50,6 +50,7 @@ describe('movable word sentece component', () => {
       updateItem:   () => {calledFunc = true},
       isActive: false,
       activeChoice: '',
+      save: () => {},
     };
     result = shallow(<MovableWordSentence {...props} />);
   });

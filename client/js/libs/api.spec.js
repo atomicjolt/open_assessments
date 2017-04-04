@@ -1,6 +1,7 @@
 import api     from './api';
 import Network from '../constants/network';
 import Helper  from '../../specs_support/helper';
+import nock    from 'nock';
 
 describe('api', () => {
   const jwt = 'jwt_token';
@@ -9,117 +10,135 @@ describe('api', () => {
   const params = {};
   const body = {};
   const headers = {};
+  let expectedHeaders;
 
-  Helper.stubAjax();
+  beforeEach(() => {
+    expectedHeaders = {
+      Accept: 'application/json',
+    };
+  });
+
+  afterEach(() => {
+    nock.cleanAll();
+  });
 
   it('calls Get', () => {
     const url = '/api/test/1';
+    expectedHeaders.Authorization = `Bearer ${jwt}`;
+    expectedHeaders['X-CSRF-Token'] = csrf;
+    const nockRequest = Helper.mockRequest('get', apiUrl, url, expectedHeaders);
+
     api.get(url, apiUrl, jwt, csrf, params, headers).then((result) => {
       expect(result.statusCode).toBe(200);
       expect(result.text).toEqual(Helper.testPayload());
     });
-    const request = jasmine.Ajax.requests.mostRecent();
-    expect(request.url).toEqual(`${apiUrl}${url}`);
-    expect(request.method.toLowerCase()).toEqual(Network.GET);
-    expect(request.requestHeaders.Accept).toEqual('application/json');
-    expect(request.requestHeaders.Authorization).toEqual(`Bearer ${jwt}`);
-    expect(request.requestHeaders['X-CSRF-Token']).toEqual(csrf);
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Get without a jwt', () => {
     const url = '/api/test/2';
+    expectedHeaders['X-CSRF-Token'] = csrf;
+    const nockRequest = Helper.mockRequest('get', apiUrl, url, expectedHeaders);
+
     api.get(url, apiUrl, null, csrf, params, headers).then((result) => {
       expect(result.statusCode).toBe(200);
     });
-    const request = jasmine.Ajax.requests.mostRecent();
-    expect(request.url).toEqual(`${apiUrl}${url}`);
-    expect(request.requestHeaders.Authorization).toBeUndefined();
-    expect(request.requestHeaders['X-CSRF-Token']).toEqual(csrf);
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Get without a csrf', () => {
     const url = '/api/test/3';
+    expectedHeaders.Authorization = `Bearer ${jwt}`;
+    const nockRequest = Helper.mockRequest('get', apiUrl, url, expectedHeaders);
+
     api.get(url, apiUrl, jwt, null, params, headers).then((result) => {
       expect(result.statusCode).toBe(200);
     });
-    const request = jasmine.Ajax.requests.mostRecent();
-    expect(request.url).toEqual(`${apiUrl}${url}`);
-    expect(request.requestHeaders.Authorization).toEqual(`Bearer ${jwt}`);
-    expect(request.requestHeaders['X-CSRF-Token']).toBeUndefined();
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Get with a full url', () => {
-    const url = 'http://www.example.com/api/test/full';
-    api.get(url, apiUrl, jwt, null, params, headers).then((result) => {
+    const url = '/api/test/full';
+    const nockRequest = Helper.mockRequest('get', apiUrl, url, expectedHeaders);
+
+    api.get(`${apiUrl}${url}`, apiUrl, jwt, null, params, headers).then((result) => {
       expect(result.statusCode).toBe(200);
     });
-    const request = jasmine.Ajax.requests.mostRecent();
-    expect(request.url).toEqual(url);
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Post', () => {
     const url = '/api/test';
+    const nockRequest = Helper.mockRequest('post', apiUrl, url, expectedHeaders);
+
     api.post(url, apiUrl, jwt, csrf, params, body, headers).then((result) => {
       expect(result.statusCode).toBe(200);
     });
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Post with a full url', () => {
-    const url = 'http://www.example.com/api/test/full';
-    api.post(url, apiUrl, jwt, csrf, params, body, headers).then((result) => {
+    const url = '/api/test/full';
+    const nockRequest = Helper.mockRequest('post', apiUrl, url, expectedHeaders);
+
+    api.post(`${apiUrl}${url}`, apiUrl, jwt, csrf, params, body, headers).then((result) => {
       expect(result.statusCode).toBe(200);
     });
-    const request = jasmine.Ajax.requests.mostRecent();
-    expect(request.url).toEqual(url);
-    expect(request.method.toLowerCase()).toEqual(Network.POST);
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Put', () => {
     const url = '/api/test/4';
+    const nockRequest = Helper.mockRequest('put', apiUrl, url, expectedHeaders);
+
     api.put(url, apiUrl, jwt, csrf, params, body, headers).then((result) => {
       expect(result.statusCode).toBe(200);
       const request = result.req;
       expect(request.method.toLowerCase()).toEqual(Network.PUT);
     });
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls Delete', () => {
     const url = '/api/test/5';
+    const nockRequest = Helper.mockRequest('delete', apiUrl, url, expectedHeaders);
+
     api.del(url, apiUrl, jwt, csrf, params, headers).then((result) => {
       expect(result.statusCode).toBe(200);
     });
-    const request = jasmine.Ajax.requests.mostRecent();
-    expect(request.url).toEqual(`${apiUrl}${url}`);
-    expect(request.method.toLowerCase()).toEqual(Network.DEL);
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls execRequest directly', () => {
     const url = '/api/test/6';
+    const nockRequest = Helper.mockRequest('get', apiUrl, url, expectedHeaders);
+
     api.execRequest(Network.GET, url, apiUrl, null, null).then((result) => {
       expect(result.statusCode).toBe(200);
       expect(result.text).toEqual(Helper.testPayload());
     });
-    const request = jasmine.Ajax.requests.mostRecent();
-    expect(request.url).toEqual(`${apiUrl}${url}`);
-    expect(request.method.toLowerCase()).toEqual(Network.GET);
-    expect(request.requestHeaders.Accept).toEqual('application/json');
-    expect(request.requestHeaders.Authorization).toBeUndefined();
-    expect(request.requestHeaders['X-CSRF-Token']).toBeUndefined();
+
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   it('calls execRequest with optional timeout', () => {
     const url = '/api/test/7';
     const timeout = 1000;
+    const nockRequest = Helper.mockRequest('get', apiUrl, url, expectedHeaders);
+
     api.execRequest(Network.GET, url, apiUrl, null, null, {}, {}, {}, timeout).then((result) => {
       expect(result.statusCode).toBe(200);
       expect(result.text).toEqual(Helper.testPayload());
     });
-    const request = jasmine.Ajax.requests.mostRecent();
-    expect(request.url).toEqual(`${apiUrl}${url}`);
-    expect(request.method.toLowerCase()).toEqual(Network.GET);
-    expect(request.requestHeaders.Accept).toEqual('application/json');
-    expect(request.requestHeaders.Authorization).toBeUndefined();
-    expect(request.requestHeaders['X-CSRF-Token']).toBeUndefined();
+    expect(nockRequest.isDone()).toBeTruthy();
   });
 
   describe('Pending Requests', () => {
