@@ -10,12 +10,13 @@ const questionTypes = {
   reflection: 'Multiple Choice -- Reflection',
   multipleAnswer: 'Multiple Choice -- Multiple Select',
   multipleReflection: 'Multiple Choice -- Multiple Select & Reflection',
+  dragAndDrop: 'Drag and Drop',
 };
 
 const feedback = {
   correctFeedback: 'Correct Feedback',
   incorrectFeedback: 'Incorrect Feedback'
-}
+};
 
 export default {
   en: {
