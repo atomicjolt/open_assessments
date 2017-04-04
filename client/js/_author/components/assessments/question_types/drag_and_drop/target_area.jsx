@@ -6,7 +6,10 @@ export default function targetArea(props) {
 
   return (
     <div className="au-c-drag-and-drop__target-area">
-      <Menu />
+      <Menu
+        loadingMedia={props.loadingMedia}
+        images={props.images}
+      />
       <Zone
         target={props.question.target}
         zones={props.question.zones}

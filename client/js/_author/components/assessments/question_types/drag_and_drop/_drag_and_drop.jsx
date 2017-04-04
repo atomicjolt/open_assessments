@@ -1,9 +1,21 @@
-import React        from 'react';
-import TargetArea   from './target_area';
-import DragArea     from './drag_area';
-import Feedback     from '../question_common/single_feedback';
+import React              from 'react';
+import { connect }        from 'react-redux';
+import * as AssetActions  from '../../../../../actions/qbank/assets';
+import TargetArea         from './target_area';
+import DragArea           from './drag_area';
+import Feedback           from '../question_common/single_feedback';
+import localize           from '../../../../locales/localize';
+// TODO: not sure that I like guids on the front end...
+import guid               from '../../../../../utils/guid';
 
-export default class DragAndDrop extends React.Component {
+function select(state) {
+  return {
+    loadingMedia: state.media.loading,
+    images: state.media.image,
+  };
+}
+
+export class DragAndDrop extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
       id: React.PropTypes.string,
@@ -17,14 +29,31 @@ export default class DragAndDrop extends React.Component {
     super();
   }
 
+  uploadMedia(file, metadata, newMedia) {
+    const mediaGuid = guid();
+    this.props.addMediaToQuestion(
+      file,
+      mediaGuid,
+      this.props.item.bankId,
+      this.props.item.id,
+      'question.choices.new',
+      metadata,
+      newMedia
+    );
+  }
+
   render() {
     const { question, id } = this.props.item;
 
+    // TODO: localization
+    const strings = this.props.localizeStrings();
     return (
       <div>
         <TargetArea
           id={id}
           question={question}
+          loadingMedia={this.props.loadingMedia}
+          images={this.props.images}
         />
         <div className="au-c-drop-zone__answers__label">Draggable answers</div>
         <DragArea
@@ -32,7 +61,6 @@ export default class DragAndDrop extends React.Component {
           createChoice={this.props.createChoice}
           updateChoice={(choiceId, choice, fileIds) => this.props.updateChoice(id, choiceId, choice, fileIds, 'dropObjects')}
         />
-
         <div className="au-c-question__feedback">
           <Feedback
             updateItem={this.props.updateItem}
@@ -49,8 +77,9 @@ export default class DragAndDrop extends React.Component {
             bankId={this.props.item.bankId}
           />
         </div>
-
       </div>
     );
   }
 }
+
+export default connect(select, AssetActions)(localize(DragAndDrop));

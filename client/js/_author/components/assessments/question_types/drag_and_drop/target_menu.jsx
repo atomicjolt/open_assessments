@@ -1,5 +1,6 @@
-import React    from 'react';
-import AddZone  from './add_zone_dropdown';
+import React      from 'react';
+import AddZone    from './add_zone_dropdown';
+import MediaModal from '../../../common/upload_modal/editor_upload_modal';
 
 export default class TargetMenu extends React.Component {
   static propTypes = {};
@@ -8,6 +9,7 @@ export default class TargetMenu extends React.Component {
     super();
     this.state = {
       add: null,
+      showModal: false,
     };
   }
 
@@ -18,7 +20,12 @@ export default class TargetMenu extends React.Component {
           <div className="au-c-question__type">Target Image</div>
         </div>
         <div className="au-o-right">
-          <button className="au-c-btn au-c-btn--sm au-c-btn--gray">Replace Image</button>
+          <button
+            className="au-c-btn au-c-btn--sm au-c-btn--gray"
+            onClick={() => this.setState({ showModal: true })}
+          >
+            Replace Image
+          </button>
           <AddZone
             active={this.state.add === 'snap'}
             text="Add Snap Zone"
@@ -30,6 +37,16 @@ export default class TargetMenu extends React.Component {
             toggle={() => this.setState({ add: this.state.add !== 'drop' ? 'drop' : null })}
           />
         </div>
+        <MediaModal
+          isOpen={this.state.showModal}
+          closeModal={() => this.setState({ showModal: false })}
+          id={null}
+          loading={this.props.loadingMedia}
+          media={this.props.images}
+          mediaType={'img'}
+          mediaName={'Farts'}
+          insertMedia={() => {}}
+        />
       </div>
     );
   }

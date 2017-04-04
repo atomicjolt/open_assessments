@@ -22,7 +22,6 @@ export default class EditorUploadModal extends React.Component {
     mediaType: React.PropTypes.string,
     mediaName: React.PropTypes.string,
     insertMedia: React.PropTypes.func.isRequired,
-    uploadMedia: React.PropTypes.func,
     inProgress: React.PropTypes.bool,
     error: React.PropTypes.string,
   };

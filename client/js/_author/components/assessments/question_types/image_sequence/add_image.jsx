@@ -4,7 +4,7 @@ import _                 from 'lodash';
 import guid              from '../../../../../utils/guid';
 import * as AssetActions from '../../../../../actions/qbank/assets';
 import UploadModal       from '../../../common/upload_modal/editor_upload_modal';
-import localize     from '../../../../locales/localize';
+import localize           from '../../../../locales/localize';
 
 function select(state) {
   return {

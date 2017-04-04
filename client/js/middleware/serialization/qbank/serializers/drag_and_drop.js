@@ -14,7 +14,7 @@ function serializeTargets(originalTarget, newTarget) {
   // const label = _.get(newTarget, 'label', originalTarget.label);
   return [scrub({
     id: _.get(originalTarget, 'id'),
-    text: `<p><img src="http://i1.kym-cdn.com/photos/images/facebook/000/741/494/bcf.jpg" alt="target_area" /></p>`,
+    text: `<img src="http://i1.kym-cdn.com/photos/images/facebook/000/741/494/bcf.jpg" alt="target_area" />`,
     name: 'spiderman',
     dropBehaviorType: genusTypes.target.reject,
   })];
