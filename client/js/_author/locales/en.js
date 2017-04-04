@@ -47,7 +47,6 @@ export default {
     },
     imageSequence: {
       ...feedback,
-      addImage: 'Add Image'
     },
     mcAddOption: {
       addOption: 'Add Option'
