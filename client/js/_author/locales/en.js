@@ -38,6 +38,9 @@ export default {
     audioLimit: {
       rangeWarning: 'Please enter a positive number under'
     },
+    backButton: {
+      back: 'Back'
+    },
     bankListHeader: {
       name: 'Name',
       published: 'Published'
@@ -47,6 +50,13 @@ export default {
     },
     editAssessment: {
       confirm: 'Are you sure you want to delete this item?'
+    },
+    editorUploadModal: {
+      cancel: 'Cancel',
+      ok: 'OK',
+      error: 'Error',
+      insert: 'Insert',
+      modal: 'Modal'
     },
     imageOption: {
       NA: 'N/A'
