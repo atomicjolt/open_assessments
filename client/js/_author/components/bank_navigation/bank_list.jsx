@@ -6,7 +6,7 @@ import BankAssessment from './bank_assessment';
 import BankFolder from './bank_folder';
 
 export default function bankList(props) {
-  const items = (
+  let items = (
     <table className="au-c-table">
       <tbody>
         {
@@ -36,6 +36,15 @@ export default function bankList(props) {
       </tbody>
     </table>
   );
+
+  if (_.isEmpty(props.banks) && _.isEmpty(props.assessments)) {
+
+    items = <table className="au-c-table">
+      <tbody>
+        <tr><td>This bank is empty</td></tr>
+      </tbody>
+    </table>
+}
 
   return (
     <div className="au-o-contain">
