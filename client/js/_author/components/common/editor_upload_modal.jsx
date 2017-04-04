@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import Loader from './dot_loader';
+import localize from '../../locales/localize';
 
 const tagNameMap = {
   audio: 'Audio',
@@ -8,15 +9,15 @@ const tagNameMap = {
   video: 'Video',
 };
 
-export default function EditorUploadModal(props) {
+function editorUploadModal(props) {
   let name = props.mediaName;
-
+  const strings = props.localizeStrings();
   if (props.inProgress) {
     name = <Loader />;
   }
 
   if (props.error) {
-    name = <div className="au-c-error-text">Error: {props.error}</div>;
+    name = <div className="au-c-error-text">{strings.error}: {props.error}</div>;
   }
 
   return (
@@ -25,7 +26,7 @@ export default function EditorUploadModal(props) {
       className="au-c-wysiwyg-modal"
       isOpen={props.isOpen}
       onRequestClose={props.closeModal}
-      contentLabel={`Insert ${tagNameMap[props.mediaType]} Modal`}
+      contentLabel={`${strings.insert} ${tagNameMap[props.mediaType]} ${strings.modal}`}
     >
       <div className="au-c-wysiwyg-modal__header">
         <h3 className="au-c-wysiwyg-modal__title">
@@ -60,20 +61,20 @@ export default function EditorUploadModal(props) {
           onClick={props.closeModal}
           className="au-u-right  au-c-btn au-c-btn--sm au-c-btn--gray"
         >
-          Cancel
+          {strings.cancel}
         </button>
         <button
           onClick={() => { props.insertMedia(); }}
           className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-sm"
         >
-          OK
+          {strings.ok}
         </button>
       </div>
     </Modal>
   );
 }
 
-EditorUploadModal.propTypes = {
+editorUploadModal.propTypes = {
   isOpen: React.PropTypes.bool,
   closeModal: React.PropTypes.func.isRequired,
   mediaType: React.PropTypes.string,
@@ -82,4 +83,7 @@ EditorUploadModal.propTypes = {
   uploadMedia: React.PropTypes.func,
   inProgress: React.PropTypes.bool,
   error: React.PropTypes.string,
+  localizeStrings: React.PropTypes.func,
 };
+
+export default localize(editorUploadModal);

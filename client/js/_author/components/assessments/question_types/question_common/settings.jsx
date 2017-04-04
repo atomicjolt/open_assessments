@@ -3,8 +3,10 @@ import _                from 'lodash';
 import types            from '../../../../../constants/question_types';
 import languages        from '../../../../../constants/language_types';
 import SettingsCheckbox from './settings_checkbox';
+import localize         from '../../../../locales/localize';
 
-export default function questionSettings(props) {
+function questionSettings(props) {
+  const strings = props.localizeStrings();
   const extraOptionTypes = [
     types.multipleChoice,
     types.reflection,
@@ -16,7 +18,7 @@ export default function questionSettings(props) {
     <div className="au-c-question-settings">
       <div className="au-o-left">
         <div className="au-c-input au-c-input-label--left">
-          <label htmlFor={`question_name_${props.id}`}>Name</label>
+          <label htmlFor={`question_name_${props.id}`}>{strings.name}</label>
           <div className="au-c-input__contain">
             <input
               className="au-c-text-input au-c-text-input--smaller"
@@ -38,9 +40,9 @@ export default function questionSettings(props) {
             value={languages.languageTypeId[props.language]}
             onChange={e => props.updateItem({ language: e.target.value })}
           >
-            <option value={languages.languageTypeId.english}>English</option>
-            <option value={languages.languageTypeId.hindi}>Hindi</option>
-            <option value={languages.languageTypeId.telugu}>Telugu</option>
+            <option value={languages.languageTypeId.english}>{strings.english}</option>
+            <option value={languages.languageTypeId.hindi}>{strings.hindi}</option>
+            <option value={languages.languageTypeId.telugu}>{strings.telugu}</option>
           </select>
         </div>
       </div>
@@ -56,6 +58,9 @@ questionSettings.propTypes = {
   language: React.PropTypes.string,
   updateItem: React.PropTypes.func.isRequired,
   makeReflection: React.PropTypes.func.isRequired,
+  localizeStrings: React.PropTypes.func.isRequired,
   multipleAnswer: React.PropTypes.bool,
   reflection: React.PropTypes.bool,
 };
+
+export default localize(questionSettings);
