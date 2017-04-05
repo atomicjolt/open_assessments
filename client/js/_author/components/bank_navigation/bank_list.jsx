@@ -31,41 +31,37 @@ export default class BankList extends React.Component {
 
   content() {
     const isEmpty = _.isEmpty(this.props.banks) && _.isEmpty(this.props.assessments);
-
-    if (isEmpty) {
-      return <EmptyBankList />;
-    } else if (this.props.banksLoaded) {
-      return (
-        <table className="au-c-table">
-          <tbody>
-            {
-            _.map(this.props.banks, bank => (
-              <BankFolder
-                key={`bank_${bank.id}`}
-                bank={bank}
+    if (!this.props.banksLoaded) { return <Spinner />; }
+    if (isEmpty) { return <EmptyBankList />; }
+    return (
+      <table className="au-c-table">
+        <tbody>
+          {
+          _.map(this.props.banks, bank => (
+            <BankFolder
+              key={`bank_${bank.id}`}
+              bank={bank}
+              getBankChildren={this.props.getBankChildren}
+            />
+          ))
+          } {
+            _.map(this.props.assessments, assessment => (
+              <BankAssessment
+                baseEmbedUrl={this.props.baseEmbedUrl}
+                getEmbedCode={this.props.getEmbedCode}
+                key={`bank_${assessment.id}`}
+                bank={assessment}
+                assessment={assessment}
+                publishedBankId={this.props.publishedBankId}
                 getBankChildren={this.props.getBankChildren}
+                deleteAssessment={this.props.deleteAssessment}
+                togglePublishAssessment={this.props.togglePublishAssessment}
               />
             ))
-            } {
-              _.map(this.props.assessments, assessment => (
-                <BankAssessment
-                  baseEmbedUrl={this.props.baseEmbedUrl}
-                  getEmbedCode={this.props.getEmbedCode}
-                  key={`bank_${assessment.id}`}
-                  bank={assessment}
-                  assessment={assessment}
-                  publishedBankId={this.props.publishedBankId}
-                  getBankChildren={this.props.getBankChildren}
-                  deleteAssessment={this.props.deleteAssessment}
-                  togglePublishAssessment={this.props.togglePublishAssessment}
-                />
-              ))
-            }
-          </tbody>
-        </table>
-      );
-    }
-    return <Spinner />;
+          }
+        </tbody>
+      </table>
+    );
   }
 
 
