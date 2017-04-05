@@ -1,4 +1,3 @@
-
 const initialState = {
   loading: true,
   image: {},
@@ -8,7 +7,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-
     case 'GET_MEDIA_DONE': {
       return { ...action.payload, ...{ loading: false } };
     }

@@ -48,13 +48,19 @@ class MultipleChoice extends React.Component {
     const { question, type } = this.props.item;
     const strings = this.props.localizeStrings();
     if (type !== types.multipleChoice) {
+      const text = _.includes([
+        types.reflection,
+        types.multipleReflection,
+      ],
+        type
+      ) ? strings.feedback : strings.correctFeedback;
       return (
         <div className="au-c-question__feedback">
           <Feedback
             updateItem={this.props.updateItem}
             feedbackType="correctFeedback"
             feedback={question.correctFeedback}
-            labelText={strings.correctFeedback}
+            labelText={text}
             bankId={this.props.item.bankId}
           />
           {type === types.reflection || type === types.multipleReflection ?

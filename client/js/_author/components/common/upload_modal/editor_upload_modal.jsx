@@ -24,7 +24,6 @@ export default class EditorUploadModal extends React.Component {
   static propTypes = {
     isOpen: React.PropTypes.bool,
     closeModal: React.PropTypes.func.isRequired,
-    id: React.PropTypes.string,
     loading: React.PropTypes.bool,
     media: React.PropTypes.shape({}),
     mediaType: React.PropTypes.string,
@@ -173,8 +172,6 @@ export default class EditorUploadModal extends React.Component {
             this.state.uploadedMedia ? <Metadata
               metadataTypes={this.metadataTypes(this.props.mediaType)}
               selectedLanguage={this.state.language}
-
-              id={this.props.id}
               updateMetadata={(key, val) => this.setters(key, val)}
               mediaItem={this.state.selectedMedia}
               metaData={this.state.languageMediaData[this.state.language]}

@@ -22,7 +22,7 @@ export default function BankAssessment(props) {
   };
 
   return (
-    <ListItem {...props} bank={props.assessment} selectItem={selectItem}>
+    <ListItem {...props} bank={props.assessment} selectItem={selectItem} onFocus={props.onFocus}>
       <td>
         <i className="material-icons">description</i>
       </td>
@@ -31,6 +31,7 @@ export default function BankAssessment(props) {
         <PublishButton
           assessment={assessment}
           togglePublishAssessment={togglePublishAssessment}
+          onFocus={props.onFocus}
         />
       </td>
       <td>
@@ -52,4 +53,5 @@ BankAssessment.propTypes = {
     id: React.PropTypes.string.isRequired,
   }).isRequired,
   togglePublishAssessment: React.PropTypes.func.isRequired,
+  onFocus: React.PropTypes.func.isRequired,
 };

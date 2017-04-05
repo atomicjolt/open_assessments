@@ -3,12 +3,16 @@ import _          from 'lodash';
 
 export default class Metadata extends React.Component {
   static propTypes = {
+<<<<<<< HEAD
     id: React.PropTypes.string,
     updateMetadata: React.PropTypes.func.isRequired,
     metadataTypes: React.PropTypes.arrayOf(React.PropTypes.string),
     metaData: React.PropTypes.shape({
       description: React.PropTypes.string,
     }),
+=======
+    updateMetadata: React.PropTypes.func.isRequired
+>>>>>>> 529e91f0d04ad6d39ed8c1652a6ac8d2e457ced7
   };
 
   constructor() {
@@ -51,13 +55,13 @@ export default class Metadata extends React.Component {
     return (
       <div>
         <div className="au-c-input au-c-input-label--left">
-          <label htmlFor={`upload_desc_${this.props.id}`}>Description</label>
+          <label htmlFor="meta_upload_desc">Description</label>
           <div className="au-c-input__contain">
             <textarea
               value={this.props.metaData.description ? this.props.metaData.description : ''}
               ref={(area) => { this.textArea = area; }}
               className="au-c-textarea au-c-text-input--smaller"
-              id={`upload_desc_${this.props.id}`}
+              id="meta_upload_desc"
               type="text"
               tabIndex="0"
               onChange={
@@ -73,13 +77,13 @@ export default class Metadata extends React.Component {
         </div>
         {
           _.map(this.props.metadataTypes, type => (
-            <div className="au-c-input au-c-input-label--left" key={`metadata_input_${this.props.id}_${type}`}>
-              <label htmlFor={`upload_${type}_${this.props.id}`}>{this.labelName(type)}</label>
+            <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
+              <label htmlFor={`meta_upload_${type}`}>{this.labelName(type)}</label>
               <div className="au-c-input__contain">
                 <input
                   value={this.props.metaData[type] ? this.props.metaData[type] : ''}
                   className="au-c-text-input au-c-text-input--smaller"
-                  id={`upload_${type}_${this.props.id}`}
+                  id={`meta_upload_${type}`}
                   type="text"
                   tabIndex="0"
                   onChange={e => this.props.updateMetadata(type, e.target.value)}
