@@ -19,7 +19,6 @@ import guid    from '../../../utils/guid';
 export default class TinyWrapper extends React.Component {
   static propTypes = {
     text: React.PropTypes.string,
-    uploadMedia: React.PropTypes.func.isRequired,
     editorKey: React.PropTypes.string,
     onBlur: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func.isRequired,
