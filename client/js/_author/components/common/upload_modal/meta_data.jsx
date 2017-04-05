@@ -44,21 +44,25 @@ export default class Metadata extends React.Component {
   }
 
   render() {
-
+    console.log(_.get(this, 'props.mediaItem.description.text'))
     return (
       <div>
         <div className="au-c-input au-c-input-label--left">
           <label htmlFor={`upload_desc_${this.props.id}`}>Description</label>
           <div className="au-c-input__contain">
             <textarea
-              defaultValue={_.get(this, 'props.mediaItem.description.text')}
+              value={_.get(this, 'props.mediaItem.description.text') || this.props['description']}
               ref={(area) => { this.textArea = area; }}
               className="au-c-textarea au-c-text-input--smaller"
               id={`upload_desc_${this.props.id}`}
               type="text"
               tabIndex="0"
-              onBlur={e => this.props.updateMetadata('description', e.target.value)}
-              onChange={() => this.areaResize()}
+              onChange={
+                (e) => {
+                  this.areaResize();
+                  this.props.updateMetadata('description', e.target.value);
+                }
+              }
               rows="1"
             />
             <div className="au-c-input__bottom" />
@@ -70,12 +74,12 @@ export default class Metadata extends React.Component {
               <label htmlFor={`upload_${type}_${this.props.id}`}>{this.labelName(type)}</label>
               <div className="au-c-input__contain">
                 <input
-                  defaultValue={_.get(this, `props.mediaItem[${type}].text`)}
+                  value={this.props[type]}
                   className="au-c-text-input au-c-text-input--smaller"
                   id={`upload_${type}_${this.props.id}`}
                   type="text"
                   tabIndex="0"
-                  onBlur={e => this.props.updateMetadata(type, e.target.value)}
+                  onChange={e => this.props.updateMetadata(type, e.target.value)}
                 />
                 <div className="au-c-input__bottom" />
               </div>

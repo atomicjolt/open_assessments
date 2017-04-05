@@ -36,9 +36,13 @@ export default class EditorUploadModal extends React.Component {
 
   constructor() {
     super();
+
     this.state = {
-      uploadedMedia: null,
-      selectedMedia: null,
+      languageMediaData: _.reduce(languages.languageTypeId, (result, language) => {
+        result[language] = {};
+        return result;
+      }, {}),
+
       description: '',
       altText: '',
       license: '',
@@ -47,7 +51,9 @@ export default class EditorUploadModal extends React.Component {
       vttFile: null,
       transcript: null,
       mediaAutoPlay: false,
-      language: languages.languageTypeId.english,
+      uploadedMedia: null,
+      selectedMedia: null,
+      language: languages.languageTypeId.english, //default to english
     };
   }
 
@@ -72,8 +78,6 @@ export default class EditorUploadModal extends React.Component {
 
   addMedia() {
     const metaData = this.getMetadata(this.props.mediaType);
-
-    debugger
     if (this.state.uploadedMedia) {
       this.props.insertMedia(this.state.uploadedMedia, metaData, true);
     } else if (this.state.selectedMedia) {
@@ -99,8 +103,15 @@ export default class EditorUploadModal extends React.Component {
     return ['altText', 'license', 'copyright'];
   }
 
+  setters(key, val) {
+    let languageMediaData = this.state.languageMediaData;
+    languageMediaData[this.state.language][key] = val;
+    this.setState({ languageMediaData });
+  }
+
   render() {
     let name = this.props.mediaName;
+    const { description, altText, license, copyright, vttFile, transcript } = this.state.languageMediaData[this.state.language];
 
     if (this.props.inProgress) {
       name = <Loader />;
@@ -162,14 +173,17 @@ export default class EditorUploadModal extends React.Component {
           {
             this.state.uploadedMedia ? <Metadata
               metadataTypes={this.metadataTypes(this.props.mediaType)}
+              selectedLanguage={this.state.language}
               selectedImage={this.state.uploadedMedia || this.state.selectedMedia}
               id={this.props.id}
-              updateMetadata={(key, val) => this.setState({ [key]: val })}
+              updateMetadata={(key, val) => this.setters(key, val)}
               mediaItem={this.state.selectedMedia}
-              description={this.state.description}
-              altText={this.state.altText}
-              license={this.state.license}
-              copyright={this.state.copyright}
+              description={description}
+              altText={altText}
+              license={license}
+              copyright={copyright}
+              vttFile={vttFile}
+              transcript={transcript}
             /> : null
           }
 
