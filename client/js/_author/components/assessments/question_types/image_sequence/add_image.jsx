@@ -20,7 +20,7 @@ export class AddImage extends React.Component {
       id: React.PropTypes.string,
       bankId: React.PropTypes.string,
     }),
-    loadingMedia: React.PropTypes.boolean,
+    loadingMedia: React.PropTypes.bool,
     uploadMedia: React.PropTypes.func.isRequired,
     addMediaToQuestion: React.PropTypes.func,
     images: React.PropTypes.shape({}),
