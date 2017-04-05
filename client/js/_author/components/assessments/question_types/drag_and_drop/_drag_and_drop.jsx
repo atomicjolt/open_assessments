@@ -29,14 +29,13 @@ export class DragAndDrop extends React.Component {
     super();
   }
 
-  uploadMedia(file, metadata, newMedia) {
-    const mediaGuid = guid();
+  uploadMedia(file, where, metadata, newMedia) {
     this.props.addMediaToQuestion(
       file,
-      mediaGuid,
       this.props.item.bankId,
       this.props.item.id,
-      'question.choices.new',
+      // 'question.choices.new',
+      `question.${where}.new`,
       metadata,
       newMedia
     );
@@ -60,6 +59,9 @@ export class DragAndDrop extends React.Component {
           dropObjects={question.dropObjects}
           createChoice={this.props.createChoice}
           updateChoice={(choiceId, choice, fileIds) => this.props.updateChoice(id, choiceId, choice, fileIds, 'dropObjects')}
+          loadingMedia={this.props.loadingMedia}
+          images={this.props.images}
+          uploadMedia={(file, where, metadata, newMedia) => this.uploadMedia(file, where, metadata, newMedia)}
         />
         <div className="au-c-question__feedback">
           <Feedback

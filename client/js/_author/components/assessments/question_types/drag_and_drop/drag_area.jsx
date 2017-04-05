@@ -1,5 +1,7 @@
 import React      from 'react';
 import assets     from '../../../../../libs/assets';
+import MediaModal from '../../../common/upload_modal/editor_upload_modal';
+
 
 export default class DragArea extends React.Component {
   static propTypes = {
@@ -10,6 +12,7 @@ export default class DragArea extends React.Component {
     super();
     this.state = {
       activeObject: '',
+      showModal: false,
     };
   }
 
@@ -65,14 +68,23 @@ export default class DragArea extends React.Component {
 
             <button
               className="au-c-drop-zone-answer-add__button"
-              onClick={() => this.props.createChoice('dropObjects')}
+              onClick={() => this.setState({ showModal: true })}
             >
               Add Image
             </button>
 
           </div>
         </div>
-
+        <MediaModal
+          isOpen={this.state.showModal}
+          closeModal={() => this.setState({ showModal: false })}
+          id={null}
+          loading={this.props.loadingMedia}
+          media={this.props.images}
+          mediaType={'img'}
+          mediaName={'Farts'}
+          insertMedia={(img, metadata, isNew) => this.props.uploadMedia(img, 'dropObjects', metadata, isNew)}
+        />
       </div>
     );
   }
