@@ -47,7 +47,6 @@ function multipleChoiceOptions(props) {
           placeholder={strings.optionText}
           text={props.text}
           bankId={props.bankId}
-          uploadScopeId={props.itemId}
           onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
         />
 

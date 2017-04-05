@@ -23,7 +23,6 @@ export class OeaEditor extends React.Component {
   static propTypes = {
     onBlur: React.PropTypes.func.isRequired,
     bankId: React.PropTypes.string.isRequired,
-    uploadScopeId: React.PropTypes.string.isRequired,
     placeholder: React.PropTypes.string,
     text: React.PropTypes.string,
     uploadMedia: React.PropTypes.func.isRequired,
@@ -31,6 +30,7 @@ export class OeaEditor extends React.Component {
     fileIds: React.PropTypes.shape({}),
     textSize: React.PropTypes.string,
     error: React.PropTypes.string,
+    loadingMedia: React.PropTypes.bool,
   };
 
   constructor(props) {
@@ -199,7 +199,6 @@ export class OeaEditor extends React.Component {
         </div>
         <div className={`au-c-input__bottom ${activeClass}`} />
         <Modal
-          id={this.props.uploadScopeId}
           isOpen={this.state.modalOpen}
           insertMedia={(media, metaData, newMedia) => this.insertMedia(media, metaData, newMedia)}
           inProgress={this.state.mediaGuid && !_.get(uploadedAsset, 'displayName.text')}

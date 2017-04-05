@@ -18,7 +18,6 @@ describe('qbank editor', () => {
         uploadedFileIds = fileIds;
       },
       bankId: 'bank_id',
-      uploadScopeId: 'scope_id',
       uploadMedia: () => { functionCalled = true; },
       uploadedAssets: {
         new_uploaded_guid: {
