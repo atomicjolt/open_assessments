@@ -5,7 +5,8 @@ import MediaModal from '../../../common/upload_modal/editor_upload_modal';
 export default class TargetMenu extends React.Component {
   static propTypes = {
     uploadMedia: React.PropTypes.func.isRequired,
-    images: React.PropTypes.shape.isRequired,
+    newZone: React.PropTypes.func.isRequired,
+    images: React.PropTypes.shape({}).isRequired,
     loadingMedia: React.PropTypes.bool,
   };
 
@@ -32,6 +33,15 @@ export default class TargetMenu extends React.Component {
     }
   }
 
+  addByRegion() {
+    this.props.newZone({
+      type: this.state.add,
+    });
+  }
+
+  addByImage() {
+
+  }
 
   render() {
     return (
@@ -50,11 +60,15 @@ export default class TargetMenu extends React.Component {
             active={this.state.add === 'snap'}
             text="Add Snap Zone"
             toggle={() => this.setState({ add: this.state.add !== 'snap' ? 'snap' : null })}
+            addByRegion={() => this.addByRegion()}
+            addByImage={() => this.addByImage()}
           />
           <AddZone
             active={this.state.add === 'drop'}
             text="Add Drop Zone"
             toggle={() => this.setState({ add: this.state.add !== 'drop' ? 'drop' : null })}
+            addByRegion={() => this.addByRegion()}
+            addByImage={() => this.addByImage()}
           />
         </div>
         <MediaModal

@@ -5,8 +5,6 @@ import TargetArea         from './target_area';
 import DragArea           from './drag_area';
 import Feedback           from '../question_common/single_feedback';
 import localize           from '../../../../locales/localize';
-// TODO: not sure that I like guids on the front end...
-import guid               from '../../../../../utils/guid';
 
 function select(state) {
   return {
@@ -22,7 +20,7 @@ export class DragAndDrop extends React.Component {
       bankId: React.PropTypes.string,
       question: React.PropTypes.shape({}),
     }).isRequired,
-    images: React.PropTypes.shape.isRequired,
+    images: React.PropTypes.shape({}).isRequired,
     updateItem: React.PropTypes.func.isRequired,
     addMediaToQuestion: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
@@ -39,7 +37,6 @@ export class DragAndDrop extends React.Component {
       file,
       this.props.item.bankId,
       this.props.item.id,
-      // 'question.choices.new',
       `question.${where}`,
       metadata,
       newMedia
@@ -60,6 +57,8 @@ export class DragAndDrop extends React.Component {
           images={this.props.images}
           uploadMedia={(file, where, metadata, newMedia) =>
             this.uploadMedia(file, where, metadata, newMedia)}
+          editZone={(zoneId, attributes) =>
+            this.props.updateChoice(id, zoneId, attributes, null, 'zones')}
         />
         <div className="au-c-drop-zone__answers__label">Draggable answers</div>
         <DragArea

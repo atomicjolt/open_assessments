@@ -10,10 +10,12 @@ export default function targetArea(props) {
         loadingMedia={props.loadingMedia}
         images={props.images}
         uploadMedia={props.uploadMedia}
+        newZone={attributes => props.editZone('new', attributes)}
       />
       <Zone
         target={props.question.target}
         zones={props.question.zones}
+        editZone={props.editZone}
       />
     </div>
   );
@@ -27,4 +29,5 @@ targetArea.propTypes = {
     zones: React.PropTypes.shape({}),
   }).isRequired,
   uploadMedia: React.PropTypes.func.isRequired,
+  editZone: React.PropTypes.func.isRequired,
 };

@@ -9,6 +9,7 @@ function buildImageTag(url, alt) {
 }
 
 function serializeTargets(originalTarget, newTarget) {
+  if (!newTarget) { return null; }
   return [scrub({
     id: _.get(originalTarget, 'id'),
     text: buildImageTag(_.get(newTarget, 'text', originalTarget.image), _.get(newTarget, 'altText')),
@@ -18,15 +19,15 @@ function serializeTargets(originalTarget, newTarget) {
 }
 
 function serializeZones(originalZones, newZones, targetId) {
-  if (newZones && newZones.new) debugger;
-  return _.map(originalZones, (zone) => {
+  if (!newZones) { return null; }
+  const zones = _.map(originalZones, (zone) => {
     const newZone = newZones[zone.id];
     return scrub({
       id: _.get(zone, 'id'),
       spatialUnit: {
         height: _.get(newZone, 'height', zone.height),
         width: _.get(newZone, 'width', zone.width),
-        // TODO: fis this for zeros
+        // TODO: fix this for zeros
         coordinateValues: [_.get(newZone, 'xPos', zone.xPos), _.get(newZone, 'yPos', zone.xPos)],
         recordType: genusTypes.zone.rectangle,
       },
@@ -38,6 +39,25 @@ function serializeZones(originalZones, newZones, targetId) {
       // description: 'left of ball'   // Dunno what this is for
     });
   });
+
+  if (newZones && newZones.new) {
+    zones.push({
+      spatialUnit: {
+        height: 20,
+        width: 20,
+        coordinateValues: [10, 5],
+        recordType: genusTypes.zone.rectangle,
+      },
+      reuse: 0,
+      dropBehaviorType: genusTypes.zone[newZones.new.type],
+      visible: true,
+      containerId: targetId,
+      name: 'newZone',
+      description: 'A new zone',
+    });
+  }
+
+  return zones;
 }
 
 function serializeDroppables(originalDroppables, newDroppables) {
@@ -68,8 +88,15 @@ function serializeDroppables(originalDroppables, newDroppables) {
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
     targets: serializeTargets(originalQuestion.target, newQuestionAttributes.target),
-    droppables: serializeDroppables(originalQuestion.dropObjects, newQuestionAttributes.dropObjects),
-    zones: serializeZones(originalQuestion.zones, newQuestionAttributes.zones),
+    droppables: serializeDroppables(
+      originalQuestion.dropObjects,
+      newQuestionAttributes.dropObjects
+    ),
+    zones: serializeZones(
+      originalQuestion.zones,
+      newQuestionAttributes.zones,
+      _.get(originalQuestion, 'target.id')
+    ),
   };
   return scrub(newQuestion);
 }

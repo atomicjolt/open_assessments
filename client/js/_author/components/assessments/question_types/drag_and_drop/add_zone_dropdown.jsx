@@ -13,13 +13,19 @@ export default function addZoneDropdown(props) {
         </button>
         <ul className={`au-c-button-dropdown__dropdown ${props.active ? 'is-active' : ''}`}>
           <li>
-            <button className="au-c-btn au-c-btn--sm au-c-btn--dropdown-item">
+            <button
+              className="au-c-btn au-c-btn--sm au-c-btn--dropdown-item"
+              onClick={props.addByRegion}
+            >
               <i className="material-icons">open_in_new</i>
               by region
             </button>
           </li>
           <li>
-            <button className="au-c-btn au-c-btn--sm au-c-btn--dropdown-item">
+            <button
+              className="au-c-btn au-c-btn--sm au-c-btn--dropdown-item"
+              onClick={props.addByImage}
+            >
               <i className="material-icons">image</i>
               by image
             </button>
@@ -34,4 +40,6 @@ addZoneDropdown.propTypes = {
   active: React.PropTypes.bool,
   text: React.PropTypes.string.isRequired,
   toggle: React.PropTypes.func.isRequired,
+  addByRegion: React.PropTypes.func.isRequired,
+  addByImage: React.PropTypes.func.isRequired,
 };
