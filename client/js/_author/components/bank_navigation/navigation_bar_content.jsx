@@ -7,6 +7,14 @@ import localize                 from '../../locales/localize';
 function navigationBarContent(props) {
 
   const strings = props.localizeStrings();
+  const button = props.currentBankId ? (
+    <button
+      className="au-c-btn au-c-btn--sm au-c-btn--maroon au-c-btn--new u-ml-md"
+      onClick={() => appHistory.push(`banks/${props.currentBankId}/new_assessment`)}
+    >
+      {strings.new}
+    </button>
+  ) : null;
 
   return (
     <div className="au-c-header-bottom">
@@ -33,12 +41,7 @@ function navigationBarContent(props) {
       </div>
 
       <div className="au-c-header-bottom__right">
-        <button
-          className="au-c-btn au-c-btn--sm au-c-btn--maroon au-c-btn--new u-ml-md"
-          onClick={() => appHistory.push(`banks/${props.currentBankId}/new_assessment`)}
-        >
-          {strings.new}
-        </button>
+        {button}
       </div>
     </div>
   );
