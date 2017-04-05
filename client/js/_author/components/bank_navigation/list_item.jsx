@@ -1,13 +1,17 @@
 import React from 'react';
 
 export default function ListItem(props) {
-  const { selectItem, bank } = props;
+  const { selectItem, bank, onFocus } = props;
   return (
     <tr
       onClick={() => selectItem()}
       tabIndex="0"
       role="button"
       aria-label={bank.displayName ? bank.displayName.text : 'bank item'}
+      onFocus={onFocus}
+      onMouseEnter={() => onFocus(true)}
+      onMouseLeave={() => onFocus(false)}
+      className={props.focused ? 'focused' : ''}
     >
       {
        props.children
@@ -18,10 +22,12 @@ export default function ListItem(props) {
 
 ListItem.propTypes = {
   selectItem: React.PropTypes.func.isRequired,
+  onFocus: React.PropTypes.func.isRequired,
   bank: React.PropTypes.shape({
     displayName: React.PropTypes.shape({
       text: React.PropTypes.string
     }).isRequired,
   }).isRequired,
+  focused: React.PropTypes.bool.isRequired,
   children: React.PropTypes.arrayOf(React.PropTypes.element),
 };
