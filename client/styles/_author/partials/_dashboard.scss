@@ -2,6 +2,24 @@
   width: 100%;
   border-collapse: collapse;
 
+  &.is-empty{
+    position: relative;
+    tr{
+      td{
+        border-bottom: none;
+        background: none !important;
+        div{
+          @include center(horizontal);
+          position: absolute;
+          top: 200px;
+          font-size: 2rem;
+          color: #aaa;
+          text-align: center;
+        }
+      }
+    }
+  }
+
   th{
     height: 5rem;
     border-bottom: $border;
@@ -61,8 +79,8 @@
     }
   }
 
-  tr{
 
+  tr{
     &:hover{
 
       td{
