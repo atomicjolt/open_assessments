@@ -4,47 +4,47 @@ import Header     from './bank_list_header';
 import Spinner    from '../common/spinner';
 import BankAssessment from './bank_assessment';
 import BankFolder from './bank_folder';
+import EmptyBankList from './empty_bank_list';
 
 export default function bankList(props) {
-  let items = (
-    <table className="au-c-table">
-      <tbody>
-        {
-        _.map(props.banks, bank => (
-          <BankFolder
-            key={`bank_${bank.id}`}
-            bank={bank}
-            getBankChildren={props.getBankChildren}
-          />
-        ))
-        }
-        {
-          _.map(props.assessments, assessment => (
-            <BankAssessment
-              baseEmbedUrl={props.baseEmbedUrl}
-              getEmbedCode={props.getEmbedCode}
-              key={`bank_${assessment.id}`}
-              bank={assessment}
-              assessment={assessment}
-              publishedBankId={props.publishedBankId}
-              getBankChildren={props.getBankChildren}
-              deleteAssessment={props.deleteAssessment}
-              togglePublishAssessment={props.togglePublishAssessment}
-            />
-          ))
-        }
-      </tbody>
-    </table>
-  );
+  const content = () => {
+    const isEmpty = _.isEmpty(props.banks) && _.isEmpty(props.assessments);
 
-  if (_.isEmpty(props.banks) && _.isEmpty(props.assessments)) {
-
-    items = <table className="au-c-table">
-      <tbody>
-        <tr><td>This bank is empty</td></tr>
-      </tbody>
-    </table>
-}
+    if (isEmpty) {
+      return <EmptyBankList />;
+    } else if (props.banksLoaded) {
+      return (
+        <table className="au-c-table">
+          <tbody>
+            {
+            _.map(props.banks, bank => (
+              <BankFolder
+                key={`bank_${bank.id}`}
+                bank={bank}
+                getBankChildren={props.getBankChildren}
+              />
+            ))
+            } {
+              _.map(props.assessments, assessment => (
+                <BankAssessment
+                  baseEmbedUrl={props.baseEmbedUrl}
+                  getEmbedCode={props.getEmbedCode}
+                  key={`bank_${assessment.id}`}
+                  bank={assessment}
+                  assessment={assessment}
+                  publishedBankId={props.publishedBankId}
+                  getBankChildren={props.getBankChildren}
+                  deleteAssessment={props.deleteAssessment}
+                  togglePublishAssessment={props.togglePublishAssessment}
+                />
+              ))
+            }
+          </tbody>
+        </table>
+      );
+    }
+    return <Spinner />;
+  };
 
   return (
     <div className="au-o-contain">
@@ -56,7 +56,7 @@ export default function bankList(props) {
           sortPublished={props.sortPublished}
         />
         <div className="au-c-scrollable">
-          { props.banksLoaded ? items : <Spinner /> }
+          { content() }
         </div>
       </div>
     </div>
