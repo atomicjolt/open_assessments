@@ -32,7 +32,7 @@ describe('assessment loader middleware', function() {
     actionHandler(action);
   });
 
-  xit('loads the assessment using data in the page', () => {
+  it('loads the assessment using data in the page', () => {
     const action = {
       type: AssessmentConstants.LOAD_ASSESSMENT
     };

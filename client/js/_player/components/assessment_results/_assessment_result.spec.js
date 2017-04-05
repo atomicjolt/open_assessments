@@ -1,12 +1,14 @@
 import React                  from 'react';
 import ReactDOM               from 'react-dom';
 import TestUtils              from 'react-addons-test-utils';
+import { shallow }            from 'enzyme';
 import { AssessmentResult }   from './_assessment_result';
 import { readFixture }        from '../../../../specs_support/utils';
 
 describe('assessment result', function() {
 
-  var result;
+  let result;
+  let props;
 
   beforeAll(function(){
     const settings = {
@@ -21,7 +23,7 @@ describe('assessment result', function() {
       correct_list:[],
       errors:[]
     };
-    var props = {
+    props = {
       settings,
       assessment,
       assessmentMetaData,
@@ -35,13 +37,11 @@ describe('assessment result', function() {
       showLMSNavigation: () => {},
       navigateHome: () => {}
     };
-    result = TestUtils.renderIntoDocument(<AssessmentResult {...props} />);
+    result = shallow(<AssessmentResult {...props} />);
 
   });
 
-  xit('renders the assessment result', () => {
-    expect(ReactDOM.findDOMNode(result)).toBeDefined();
-    var content = ReactDOM.findDOMNode(result).innerText;
-    expect(content.length > 0).toBe(true);
+  it('renders the assessment result', () => {
+    expect(result).toBeDefined();
   });
 });

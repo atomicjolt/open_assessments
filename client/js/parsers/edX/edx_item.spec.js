@@ -3,7 +3,7 @@
 import EdxItem         from './edx_item.js';
 import { readFixture } from '../../../specs_support/utils';
 
-xdescribe('Parses edX Problem', function(){
+describe('Parses edX Problem', function(){
   var url;
   var xml;
   var res;

@@ -9,6 +9,7 @@ describe('editor upload modal', () => {
     functionCalled = false;
     fileUploaded = null;
     props = {
+      id: '7',
       isOpen: true,
       closeModal: () => { functionCalled = true; },
       mediaType: 'img',
