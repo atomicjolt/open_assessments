@@ -66,6 +66,8 @@ class QuestionText extends React.Component {
 QuestionText.propTypes = {
   itemId: React.PropTypes.string.isRequired,
   text: React.PropTypes.string,
+  fileIds: React.PropTypes.shape({}),
+  itemType: React.PropTypes.string,
   editorKey: React.PropTypes.string,
   updateItem: React.PropTypes.func.isRequired,
   localizeStrings: React.PropTypes.func.isRequired,

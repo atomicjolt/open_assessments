@@ -5,6 +5,7 @@ export default class Metadata extends React.Component {
   static propTypes = {
     id: React.PropTypes.string.isRequired,
     updateMetadata: React.PropTypes.func.isRequired,
+    metadataTypes: React.PropTypes.arrayOf(React.PropTypes.string),
   };
 
   constructor() {
@@ -33,13 +34,16 @@ export default class Metadata extends React.Component {
         return 'License';
       case 'copyright':
         return 'Copyright';
+      case 'vttFile':
+        return 'vtt File';
+      case 'transcript':
+        return 'Transcript';
       default:
         return '';
     }
   }
 
   render() {
-    const metadataTypes = ['altText', 'license', 'copyright'];
 
     return (
       <div>
@@ -61,7 +65,7 @@ export default class Metadata extends React.Component {
           </div>
         </div>
         {
-          _.map(metadataTypes, type => (
+          _.map(this.props.metadataTypes, type => (
             <div className="au-c-input au-c-input-label--left" key={`metadata_input_${this.props.id}_${type}`}>
               <label htmlFor={`upload_${type}_${this.props.id}`}>{this.labelName(type)}</label>
               <div className="au-c-input__contain">

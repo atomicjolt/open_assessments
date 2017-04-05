@@ -10,7 +10,8 @@ import * as AssetActions from '../../../actions/qbank/assets';
 function select(state, props) {
   return {
     uploadedAssets: state.uploadedAssets[props.uploadScopeId],
-    error: _.get(state, `uploadedAssets["${props.uploadScopeId}"].error.message`)
+    error: _.get(state, `uploadedAssets["${props.uploadScopeId}"].error.message`),
+    mediaTypes: state.media,
   };
 }
 
@@ -24,6 +25,7 @@ export class OeaEditor extends React.Component {
     text: React.PropTypes.string,
     uploadMedia: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}),
+    mediaTypes: React.PropTypes.shape({}),
     fileIds: React.PropTypes.shape({}),
     textSize: React.PropTypes.string,
     error: React.PropTypes.string,
@@ -163,6 +165,7 @@ export class OeaEditor extends React.Component {
         </div>
         <div className={`au-c-input__bottom ${activeClass}`} />
         <Modal
+          media={this.props.mediaTypes[this.state.mediaType]}
           isOpen={this.state.modalOpen}
           closeModal={() => this.closeModal()}
           insertMedia={() => this.insertMedia(_.get(uploadedAsset, 'url'), mediaName)}

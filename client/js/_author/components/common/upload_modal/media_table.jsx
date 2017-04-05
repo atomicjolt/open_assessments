@@ -31,6 +31,6 @@ export default function mediaTable(props) {
 }
 
 mediaTable.propTypes = {
-  media: React.PropTypes.shape({}),
+  media: React.PropTypes.shape([]),
   selectedMediaId: React.PropTypes.string,
 };
