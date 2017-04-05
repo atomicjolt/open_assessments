@@ -8,8 +8,8 @@ const perPage = 8;
 
 export default class SearchMedia extends React.Component {
   static propTypes = {
-    media: React.PropTypes.string,
-    loading: React.PropTypes.string,
+    media: React.PropTypes.shape({}),
+    loading: React.PropTypes.bool,
     selectedMediaId: React.PropTypes.string,
     selectMedia: React.PropTypes.func,
   };
