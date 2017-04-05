@@ -4,7 +4,7 @@ import Header     from './bank_list_header';
 import Spinner    from '../common/spinner';
 import BankAssessment from './bank_assessment';
 import BankFolder from './bank_folder';
-
+import EmptyBankList from './empty_bank_list';
 
 export default class BankList extends React.Component {
   static propTypes = {
@@ -29,6 +29,42 @@ export default class BankList extends React.Component {
     };
   }
 
+  content() {
+    const isEmpty = _.isEmpty(this.props.banks) && _.isEmpty(this.props.assessments);
+    if (!this.props.banksLoaded) { return <Spinner />; }
+    if (isEmpty) { return <EmptyBankList />; }
+    return (
+      <table className="au-c-table">
+        <tbody>
+          {
+          _.map(this.props.banks, bank => (
+            <BankFolder
+              key={`bank_${bank.id}`}
+              bank={bank}
+              getBankChildren={this.props.getBankChildren}
+            />
+          ))
+          } {
+            _.map(this.props.assessments, assessment => (
+              <BankAssessment
+                baseEmbedUrl={this.props.baseEmbedUrl}
+                getEmbedCode={this.props.getEmbedCode}
+                key={`bank_${assessment.id}`}
+                bank={assessment}
+                assessment={assessment}
+                publishedBankId={this.props.publishedBankId}
+                getBankChildren={this.props.getBankChildren}
+                deleteAssessment={this.props.deleteAssessment}
+                togglePublishAssessment={this.props.togglePublishAssessment}
+              />
+            ))
+          }
+        </tbody>
+      </table>
+    );
+  }
+
+
   focusItem(shouldFocus, item) {
     if (shouldFocus) {
       this.setState({ focusedItem: item });
@@ -38,44 +74,8 @@ export default class BankList extends React.Component {
   }
 
   render() {
-    const items = (
-      <table className="au-c-table">
-        <tbody>
-        {
-          _.map(this.props.banks, bank => (
-            <BankFolder
-              key={`bank_${bank.id}`}
-              onFocus={shouldFocus => this.focusItem(shouldFocus, bank.id)}
-              bank={bank}
-              getBankChildren={this.props.getBankChildren}
-              focused={this.state.focusedItem === bank.id}
-            />
-          ))
-        }
-        {
-          _.map(this.props.assessments, assessment => (
-            <BankAssessment
-              onFocus={shouldFocus => this.focusItem(shouldFocus, assessment.id)}
-              baseEmbedUrl={this.props.baseEmbedUrl}
-              getEmbedCode={this.props.getEmbedCode}
-              key={`bank_${assessment.id}`}
-              bank={assessment}
-              assessment={assessment}
-              publishedBankId={this.props.publishedBankId}
-              getBankChildren={this.props.getBankChildren}
-              deleteAssessment={this.props.deleteAssessment}
-              togglePublishAssessment={this.props.togglePublishAssessment}
-              focused={this.state.focusedItem === assessment.id}
-            />
-          ))
-        }
-        </tbody>
-      </table>
-    );
-
     return (
       <div className="au-o-contain">
-
         <div className="au-o-item">
           <Header
             sortBy={this.props.sortBy}
@@ -83,7 +83,7 @@ export default class BankList extends React.Component {
             sortPublished={this.props.sortPublished}
           />
           <div className="au-c-scrollable">
-            { this.props.banksLoaded ? items : <Spinner /> }
+            { this.content() }
           </div>
         </div>
       </div>
