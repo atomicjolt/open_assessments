@@ -147,7 +147,6 @@ export class OeaEditor extends React.Component {
       modalOpen: false,
       mediaType: null,
       mediaGuid: null,
-      metaData: null,
     });
   }
 
