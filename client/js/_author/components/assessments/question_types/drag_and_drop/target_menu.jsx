@@ -3,7 +3,11 @@ import AddZone    from './add_zone_dropdown';
 import MediaModal from '../../../common/upload_modal/editor_upload_modal';
 
 export default class TargetMenu extends React.Component {
-  static propTypes = {};
+  static propTypes = {
+    uploadMedia: React.PropTypes.func.isRequired,
+    images: React.PropTypes.shape.isRequired,
+    loadingMedia: React.PropTypes.bool,
+  };
 
   constructor() {
     super();

@@ -1,7 +1,11 @@
 import React    from 'react';
+import _        from 'lodash';
 
 export default class TargetZone extends React.Component {
-  static propTypes = {};
+  static propTypes = {
+    target: React.PropTypes.shape({}),
+    zones: React.PropTypes.shape({}),
+  };
 
   constructor() {
     super();

@@ -22,7 +22,12 @@ export class DragAndDrop extends React.Component {
       bankId: React.PropTypes.string,
       question: React.PropTypes.shape({}),
     }).isRequired,
+    images: React.PropTypes.shape.isRequired,
     updateItem: React.PropTypes.func.isRequired,
+    addMediaToQuestion: React.PropTypes.func.isRequired,
+    updateChoice: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
+    loadingMedia: React.PropTypes.bool,
   };
 
   constructor() {
@@ -53,16 +58,18 @@ export class DragAndDrop extends React.Component {
           question={question}
           loadingMedia={this.props.loadingMedia}
           images={this.props.images}
-          uploadMedia={(file, where, metadata, newMedia) => this.uploadMedia(file, where, metadata, newMedia)}
+          uploadMedia={(file, where, metadata, newMedia) =>
+            this.uploadMedia(file, where, metadata, newMedia)}
         />
         <div className="au-c-drop-zone__answers__label">Draggable answers</div>
         <DragArea
           dropObjects={question.dropObjects}
-          createChoice={this.props.createChoice}
-          updateChoice={(choiceId, choice, fileIds) => this.props.updateChoice(id, choiceId, choice, fileIds, 'dropObjects')}
+          updateChoice={(choiceId, choice, fileIds) =>
+            this.props.updateChoice(id, choiceId, choice, fileIds, 'dropObjects')}
           loadingMedia={this.props.loadingMedia}
           images={this.props.images}
-          uploadMedia={(file, where, metadata, newMedia) => this.uploadMedia(file, where, metadata, newMedia)}
+          uploadMedia={(file, where, metadata, newMedia) =>
+            this.uploadMedia(file, where, metadata, newMedia)}
         />
         <div className="au-c-question__feedback">
           <Feedback

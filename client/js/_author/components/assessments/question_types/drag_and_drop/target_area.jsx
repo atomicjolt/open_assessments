@@ -19,4 +19,12 @@ export default function targetArea(props) {
   );
 }
 
-targetArea.propTypes = {};
+targetArea.propTypes = {
+  loadingMedia: React.PropTypes.bool,
+  images: React.PropTypes.shape({}).isRequired,
+  question: React.PropTypes.shape({
+    target: React.PropTypes.shape({}),
+    zones: React.PropTypes.shape({}),
+  }).isRequired,
+  uploadMedia: React.PropTypes.func.isRequired,
+};

@@ -1,4 +1,5 @@
 import React      from 'react';
+import _          from 'lodash';
 import assets     from '../../../../../libs/assets';
 import MediaModal from '../../../common/upload_modal/editor_upload_modal';
 
@@ -6,6 +7,10 @@ import MediaModal from '../../../common/upload_modal/editor_upload_modal';
 export default class DragArea extends React.Component {
   static propTypes = {
     dropObjects: React.PropTypes.shape({}).isRequired,
+    images: React.PropTypes.shape({}).isRequired,
+    uploadMedia: React.PropTypes.func.isRequired,
+    updateChoice: React.PropTypes.func.isRequired,
+    loadingMedia: React.PropTypes.bool,
   };
 
   constructor() {
