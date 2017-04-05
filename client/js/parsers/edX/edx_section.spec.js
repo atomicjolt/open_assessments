@@ -3,7 +3,7 @@
 import EdxSection				from './edx_section.js';
 import { readFixture }  from '../../../specs_support/utils';
 
-xdescribe('Parses edX Sequential', function(){
+describe('Parses edX Sequential', function(){
 	var url;
 	var xml;
 	var res;

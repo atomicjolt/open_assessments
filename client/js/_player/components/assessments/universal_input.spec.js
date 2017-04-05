@@ -4,6 +4,7 @@ import React              from 'react';
 import ReactDOM           from 'react-dom';
 import TestUtils          from 'react-addons-test-utils';
 import UniversalInput     from './universal_input';
+import { shallow }        from 'enzyme';
 
 describe('Assessment Questions', ()=> {
 
@@ -17,28 +18,32 @@ describe('Assessment Questions', ()=> {
   });
 
 
-  xdescribe('Drag and Drop', ()=>{
+  describe('Drag and Drop', ()=>{
+    let props;
     beforeEach(()=>{
-      item.answers = [{
-        id: 0,
-        type: 'key',
-        draggables: [{id:'0', label:'drag1'},{id:'1', label:'drag2'},{id:'2', label:'drag3'}],
-        targets: [{id:'0', height:'100', width:'180', xPos:'10', yPos:'10'}],
-        img: 'http://www.bealecorner.com/trv900/respat/eia1956-small.jpg'
-      },{
-        id: 0,
-        type: 'value',
-        draggables: [{id:'0', label:'drag1'},{id:'1', label:'drag2'},{id:'2', label:'drag3'}],
-        img: 'http://www.bealecorner.com/trv900/respat/eia1956-small.jpg'
-      }];
-      item.question_type = 'edx_drag_and_drop';
-
-      Content = (<UniversalInput settings={ {} } item={item} />);
-      result = TestUtils.renderIntoDocument(Content);
+      props = {
+        item: {
+          question_type: 'edx_drag_and_drop',
+          answers: [{
+            id: 0,
+            type: 'key',
+            draggables: [{id:'0', label:'drag1'},{id:'1', label:'drag2'},{id:'2', label:'drag3'}],
+            targets: [{id:'0', height:'100', width:'180', xPos:'10', yPos:'10'}],
+            img: 'http://www.bealecorner.com/trv900/respat/eia1956-small.jpg',
+          },
+          {
+            id: 0,
+            type: 'value',
+            draggables: [{id:'0', label:'drag1'},{id:'1', label:'drag2'},{id:'2', label:'drag3'}],
+            img: 'http://www.bealecorner.com/trv900/respat/eia1956-small.jpg',
+          }],
+        }
+      };
+      result = shallow(<UniversalInput {...props} />);
     });
 
     it('Renders the components', ()=>{
-      expect(TestUtils.scryRenderedDOMComponentsWithTag(result, 'DragAndDrop')).toBeDefined();
+      expect(result).toBeDefined();
     });
   });
 
@@ -155,7 +160,7 @@ describe('Assessment Questions', ()=> {
 
   });
 
-  xdescribe('Problem with Adaptive Hint', ()=>{});
+  // xdescribe('Problem with Adaptive Hint', ()=>{});
 
   describe('Multiple Answer', ()=>{
 
@@ -194,8 +199,12 @@ describe('Assessment Questions', ()=> {
   });
 
 
-  xit('Does not render the solution if the question is not answered', ()=>{
-    expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers);
+  it('Does not render the solution if the question is not answered', ()=>{
+    expect(ReactDOM.findDOMNode(result).textContent).toContain(
+      item.answers[0].material
+      +
+      item.answers[1].material
+    );
   });
 
 

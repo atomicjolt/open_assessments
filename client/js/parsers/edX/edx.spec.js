@@ -3,7 +3,7 @@ import $             from 'jquery';
 
 import { readFixture } from '../../../specs_support/utils';
 
-xdescribe('EdX', () => {
+describe('EdX', () => {
 
   var settings;
 
