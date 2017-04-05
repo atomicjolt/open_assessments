@@ -10,6 +10,7 @@ export default function PreviewButton(props) {
         e.stopPropagation();
         appHistory.push(`banks/${props.assessment.bankId}/assessments/${props.assessment.id}/preview`);
       }}
+      onFocus={props.onFocus}
     >
       <i className="material-icons">remove_red_eye</i>
     </button>
@@ -22,4 +23,5 @@ PreviewButton.propTypes = {
     bankId: React.PropTypes.string.isRequired,
     id: React.PropTypes.string.isRequired,
   }).isRequired,
+  onFocus: React.PropTypes.func.isRequired
 };
