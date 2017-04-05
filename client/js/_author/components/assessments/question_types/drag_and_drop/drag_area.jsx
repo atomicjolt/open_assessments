@@ -83,7 +83,7 @@ export default class DragArea extends React.Component {
           media={this.props.images}
           mediaType={'img'}
           mediaName={'Farts'}
-          insertMedia={(img, metadata, isNew) => this.props.uploadMedia(img, 'dropObjects', metadata, isNew)}
+          insertMedia={(img, metadata, isNew) => this.props.uploadMedia(img, 'dropObjects.new', metadata, isNew)}
         />
       </div>
     );

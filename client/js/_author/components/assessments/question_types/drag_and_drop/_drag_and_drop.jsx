@@ -35,7 +35,7 @@ export class DragAndDrop extends React.Component {
       this.props.item.bankId,
       this.props.item.id,
       // 'question.choices.new',
-      `question.${where}.new`,
+      `question.${where}`,
       metadata,
       newMedia
     );
@@ -53,6 +53,7 @@ export class DragAndDrop extends React.Component {
           question={question}
           loadingMedia={this.props.loadingMedia}
           images={this.props.images}
+          uploadMedia={(file, where, metadata, newMedia) => this.uploadMedia(file, where, metadata, newMedia)}
         />
         <div className="au-c-drop-zone__answers__label">Draggable answers</div>
         <DragArea

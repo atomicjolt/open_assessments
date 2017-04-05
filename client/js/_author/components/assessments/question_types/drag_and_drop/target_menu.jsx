@@ -13,6 +13,22 @@ export default class TargetMenu extends React.Component {
     };
   }
 
+  replaceImage(media, metadata, newMedia) {
+    this.props.uploadMedia(media, 'target', metadata, newMedia);
+  }
+
+  selectImage(media, metadata, newMedia) {
+    this.setState({ showModal: false });
+    if (this.state.add === 'snap') {
+
+    } else if (this.state.add === 'drop') {
+
+    } else {
+      this.replaceImage(media, metadata, newMedia);
+    }
+  }
+
+
   render() {
     return (
       <div className="au-o-item__top">
@@ -44,8 +60,7 @@ export default class TargetMenu extends React.Component {
           loading={this.props.loadingMedia}
           media={this.props.images}
           mediaType={'img'}
-          mediaName={'Farts'}
-          insertMedia={() => {}}
+          insertMedia={(media, metadata, newMedia) => this.selectImage(media, metadata, newMedia)}
         />
       </div>
     );

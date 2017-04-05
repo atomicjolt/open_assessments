@@ -9,6 +9,7 @@ export default function targetArea(props) {
       <Menu
         loadingMedia={props.loadingMedia}
         images={props.images}
+        uploadMedia={props.uploadMedia}
       />
       <Zone
         target={props.question.target}

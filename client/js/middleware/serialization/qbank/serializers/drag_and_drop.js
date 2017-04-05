@@ -8,14 +8,11 @@ function buildImageTag(url, alt) {
   return `<img src="${url}" alt="${alt}"/>`;
 }
 
-// _.get is my new cocaine
 function serializeTargets(originalTarget, newTarget) {
-  // TODO: not spider-man
-  // const label = _.get(newTarget, 'label', originalTarget.label);
   return [scrub({
     id: _.get(originalTarget, 'id'),
-    text: `<img src="http://i1.kym-cdn.com/photos/images/facebook/000/741/494/bcf.jpg" alt="target_area" />`,
-    name: 'spiderman',
+    text: buildImageTag(_.get(newTarget, 'text', originalTarget.image), _.get(newTarget, 'altText')),
+    name: _.get(newTarget, 'altText'),
     dropBehaviorType: genusTypes.target.reject,
   })];
 }
@@ -44,12 +41,13 @@ function serializeZones(originalZones, newZones, targetId) {
 }
 
 function serializeDroppables(originalDroppables, newDroppables) {
+  if (!newDroppables) { return null; }
   const droppables =  _.map(originalDroppables, (droppable) => {
     const newDroppable = newDroppables[droppable.id];
     // TODO: not spider-man
     return scrub({
       id: droppable.id,
-      text: buildImageTag('http://i0.kym-cdn.com/photos/images/facebook/000/110/268/tumblr_lisp6ohmdy1qb3l9fo1_500.jpg', _.get(newDroppable, 'label', droppable.label)),
+      text: buildImageTag(_.get(newDroppable, 'image', droppable.image), _.get(newDroppable, 'label', droppable.label)),
       dropBehaviorType: genusTypes.zone[_.get(newDroppable, 'type', droppable.type)],
       name: _.get(newDroppable, 'label', droppable.label),
       reuse: 1,  // an integer field to indicate how many times something can be re-used (zone or droppable) 0 is infinite
@@ -69,11 +67,10 @@ function serializeDroppables(originalDroppables, newDroppables) {
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
   const newQuestion = {
-    targets: serializeTargets(originalQuestion.targets, newQuestionAttributes.targets),
+    targets: serializeTargets(originalQuestion.target, newQuestionAttributes.target),
     droppables: serializeDroppables(originalQuestion.dropObjects, newQuestionAttributes.dropObjects),
     zones: serializeZones(originalQuestion.zones, newQuestionAttributes.zones),
   };
-
   return scrub(newQuestion);
 }
 

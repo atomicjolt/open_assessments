@@ -9,10 +9,15 @@ export default class TargetZone extends React.Component {
   }
 
   render() {
+    const { target, zones } = this.props;
+
     return (
-      <div className="au-c-drag-and-drop__target-image">
+      <div
+        className="au-c-drag-and-drop__target-image"
+        style={{ backgroundImage: `url(${target.image})` }}
+      >
         {
-          _.map(this.props.zones, (zone, index) => (
+          _.map(zones, (zone, index) => (
             <div className="au-c-drop-zone au-c-zone1 is-active">
 
               <div className="au-c-drop-zone__tag">{_.capitalize(zone.type)} {String.fromCharCode(index + 65)}</div>
