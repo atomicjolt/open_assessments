@@ -5,7 +5,7 @@ import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
 function buildImageTag(url, alt) {
-  return `<p><img src="${url}" alt="${alt}"/></p>`;
+  return `<img src="${url}" alt="${alt}"/>`;
 }
 
 // _.get is my new cocaine
@@ -58,7 +58,7 @@ function serializeDroppables(originalDroppables, newDroppables) {
 
   if (newDroppables && newDroppables.new) {
     droppables.push({
-      text: buildImageTag('http://i0.kym-cdn.com/photos/images/facebook/000/110/268/tumblr_lisp6ohmdy1qb3l9fo1_500.jpg', 'Spider-Man'),
+      text: buildImageTag(newDroppables.new.text, newDroppables.new.altText),
       dropBehaviorType: genusTypes.zone.snap,
       reuse: 1,
     });
