@@ -111,7 +111,7 @@ export class OeaEditor extends React.Component {
       case 'audio':
       case 'video':
         editorContent = `<${this.state.mediaType} autoplay name="media" controls>` +
-          `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}"/>` +
+          `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
           `</${this.state.mediaType}>`;
         break;
 
