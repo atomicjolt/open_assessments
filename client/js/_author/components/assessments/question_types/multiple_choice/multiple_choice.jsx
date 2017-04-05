@@ -29,9 +29,24 @@ class MultipleChoice extends React.Component {
     activeChoice: React.PropTypes.string,
   };
 
+  constructor() {
+    super();
+    this.state = {
+      newChoice: false,
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.state.newChoice && _.has(nextProps, 'item.question.choices.new')) {
+      this.setState({ newChoice: true });
+    } else if (this.state.newChoice) {
+      this.setState({ newChoice: false });
+    }
+  }
+
   getFeedback() {
     const { question, type } = this.props.item;
-    const strings = this.props.localizeStrings()
+    const strings = this.props.localizeStrings();
     if (type !== types.multipleChoice) {
       return (
         <div className="au-c-question__feedback">
@@ -105,7 +120,7 @@ class MultipleChoice extends React.Component {
               ))
             }
             {
-              this.props.isActive ? <Add
+              !this.state.newChoice && this.props.isActive ? <Add
                 createChoice={() => this.props.createChoice(id)}
               /> : null
             }
