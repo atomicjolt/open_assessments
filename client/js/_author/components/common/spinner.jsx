@@ -1,11 +1,11 @@
 import React      from 'react';
 
-export default function dotLoader(props) {
+export default function spinner(props) {
   return (
     <div className="spinner">{props.children}</div>
   );
 }
 
-dotLoader.propTypes = {
+spinner.propTypes = {
   children: React.PropTypes.node,
 };

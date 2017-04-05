@@ -18,6 +18,7 @@ function select(state) {
   };
 }
 
+// TODO: figure out how to localize this
 export class OeaEditor extends React.Component {
   static propTypes = {
     onBlur: React.PropTypes.func.isRequired,

@@ -15,6 +15,7 @@ import 'tinymce/plugins/lists/plugin';
 
 import guid    from '../../../utils/guid';
 
+//TODO: figure out how to localize this.
 export default class TinyWrapper extends React.Component {
   static propTypes = {
     text: React.PropTypes.string,

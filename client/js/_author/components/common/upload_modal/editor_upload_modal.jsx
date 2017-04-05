@@ -1,6 +1,7 @@
 import React            from 'react';
 import Modal            from 'react-modal';
 import _                from 'lodash';
+
 import Loader           from '../dot_loader';
 import SearchMedia      from './search_media';
 import LanguageSelect   from '../language_dropdown';
@@ -17,8 +18,8 @@ export default class EditorUploadModal extends React.Component {
     isOpen: React.PropTypes.bool,
     closeModal: React.PropTypes.func.isRequired,
     id: React.PropTypes.string,
-    loading: React.PropTypes.string,
-    media: React.PropTypes.string,
+    loading: React.PropTypes.bool,
+    media: React.PropTypes.shape({}),
     mediaType: React.PropTypes.string,
     mediaName: React.PropTypes.string,
     insertMedia: React.PropTypes.func.isRequired,
