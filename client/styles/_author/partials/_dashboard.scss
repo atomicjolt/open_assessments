@@ -63,7 +63,7 @@
 
   tr{
 
-    &:hover{
+    &:hover, &.focused{
 
       td{
         background: $purple;
