@@ -65,7 +65,7 @@ export default class EditorUploadModal extends React.Component {
   }
 
   render() {
-    let name = this.props.mediaName;
+    let name = _.get(this, 'state.uploadedImage.name');
 
     if (this.props.inProgress) {
       name = <Loader />;
