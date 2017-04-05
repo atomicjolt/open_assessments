@@ -1,20 +1,20 @@
-import _                                    from 'lodash';
-import Network                              from '../constants/network';
-import server                               from './server';
-import api                                  from '../libs/api';
-import authorAppHistory                     from '../_author/history';
-import { DONE }                             from '../constants/wrapper';
-import { Constants as BankConstants }       from '../actions/qbank/banks';
-import { Constants as AssessmentConstants } from '../actions/qbank/assessments';
-import { Constants as ItemConstants }       from '../actions/qbank/items';
-import { Constants as AssetConstants }      from '../actions/qbank/assets';
-import serialize                            from './serialization/qbank/serializers/factory';
-import deserialize                          from './serialization/qbank/deserializers/factory';
-import { scrub }                            from './serialization/serializer_utils';
-import * as assessmentActions               from '../actions/qbank/assessments';
-import { updateItem }                       from '../actions/qbank/items';
-import deserializeMedia                     from './serialization/qbank/deserializers/media';
-import { dispatchMany }                     from './utils';
+import _                                            from 'lodash';
+import Network                                      from '../constants/network';
+import server                                       from './server';
+import api                                          from '../libs/api';
+import authorAppHistory                             from '../_author/history';
+import { DONE }                                     from '../constants/wrapper';
+import { Constants as BankConstants }               from '../actions/qbank/banks';
+import { Constants as AssessmentConstants }         from '../actions/qbank/assessments';
+import { Constants as ItemConstants }               from '../actions/qbank/items';
+import { Constants as AssetConstants }              from '../actions/qbank/assets';
+import serialize                                    from './serialization/qbank/serializers/factory';
+import deserialize                                  from './serialization/qbank/deserializers/factory';
+import { scrub }                                    from './serialization/serializer_utils';
+import * as assessmentActions                       from '../actions/qbank/assessments';
+import { updateItem }                               from '../actions/qbank/items';
+import { deserializeMedia, deserializeSingleMedia } from './serialization/qbank/deserializers/media';
+import { dispatchMany }                             from './utils';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -53,18 +53,18 @@ function uploadMedia(state, action) {
   formData.append('createNew', true);
   formData.append('mediaDescription', action.metaData.description || '');
   formData.append('altText', action.metaData.altText || '');
-
-  // qbank has not implemented licencse and copyright yet
-  // formData.append('license', action.metaData.license || '');
-  // formData.append('copyright', action.metaData.copyright || '');
+  formData.append('license', action.metaData.license || '');
+  formData.append('copyright', action.metaData.copyright || '');
 
   return api.post(
-    `/repository/repositories/${action.bankId}/assets`,
+    `repository/repositories/${action.bankId}/assets`,
     state.settings.api_url,
     state.jwt,
     state.settings.csrf_token,
     null,
-    formData
+    formData,
+    null,
+    action.timeout
   );
 }
 
@@ -477,9 +477,22 @@ const qbank = {
     }
   },
 
-  [AssetConstants.UPLOAD_MEDIA]: {
-    method : Network.POST,
-    url    : (url, action) => `${url}/repository/repositories/${action.bankId}/assets`,
+  [AssetConstants.UPLOAD_MEDIA]: (store, action) => {
+    const state = store.getState();
+    uploadMedia(state, action).then((res) => {
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: deserializeSingleMedia(res.body),
+      });
+    }, (error) => {
+      store.dispatch({
+        type: action.type + DONE,
+        payload: {},
+        original: action,
+        error,
+      }); // Dispatch the new error
+    });
   },
 
   [AssetConstants.ADD_MEDIA_TO_QUESTION]: (store, action) => {
