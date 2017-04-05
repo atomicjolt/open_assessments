@@ -105,7 +105,7 @@ export class OeaEditor extends React.Component {
 
     switch (this.state.mediaType) {
       case 'img':
-        editorContent = `<img src="${media.url}" alt="${alt}"/>`;
+        editorContent = `<img src="${media.url}" alt="${alt}">`;
         break;
 
       case 'audio':
