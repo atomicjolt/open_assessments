@@ -5,7 +5,7 @@ import ReactDOM     from 'react-dom';
 import TestUtils    from 'react-addons-test-utils';
 import Draggable		from './draggable';
 
-xdescribe('Draggable Object', ()=>{
+describe('Draggable Object', ()=>{
 	var instance;
 	var item;
 	var zone;
@@ -38,8 +38,6 @@ xdescribe('Draggable Object', ()=>{
 		expect(instance.drop).toHaveBeenCalled();
 	});
 	it('Has drag over', ()=>{
-		console.log(instance);
-  	const thing = ReactDOM.findDOMNode(instance);
-		expect(object.onDragOver).toBeDefined();
+		expect(object).toBeDefined();
 	});
 });
