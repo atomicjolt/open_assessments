@@ -4,7 +4,7 @@ import MultipleChoice   from './multiple_choice';
 import AddOption        from './add_option';
 import Option           from './multiple_choice_option';
 
-fdescribe('multiple choice component', () => {
+describe('multiple choice component', () => {
   let props;
   let result;
   let choiceUpdated;
