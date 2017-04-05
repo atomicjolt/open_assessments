@@ -4,7 +4,7 @@ import _                 from 'lodash';
 import guid              from '../../../../../utils/guid';
 import * as AssetActions from '../../../../../actions/qbank/assets';
 import UploadModal       from '../../../common/upload_modal/editor_upload_modal';
-import localize           from '../../../../locales/localize';
+import localize          from '../../../../locales/localize';
 
 function select(state) {
   return {
@@ -20,10 +20,10 @@ export class AddImage extends React.Component {
       id: React.PropTypes.string,
       bankId: React.PropTypes.string,
     }),
-    uploadScopeId: React.PropTypes.string.isRequired,
+    loadingMedia: React.PropTypes.boolean,
     uploadMedia: React.PropTypes.func.isRequired,
-    createChoice: React.PropTypes.func.isRequired,
-    uploadedAssets: React.PropTypes.shape({}),
+    addMediaToQuestion: React.PropTypes.func.isRequired,
+    images: React.PropTypes.shape({}),
     localizeStrings:  React.PropTypes.func.isRequired
   };
 
@@ -34,25 +34,6 @@ export class AddImage extends React.Component {
       modal: false,
     };
   }
-
-  componentWillUpdate(nextProps) {
-    const { uploadedAssets, uploadScopeId } = this.props;
-    if (uploadedAssets
-      && nextProps.uploadedAssets[uploadScopeId]
-      && _.size(nextProps.uploadedAssets[uploadScopeId]) !== _.size(uploadedAssets[uploadScopeId])) {
-      const fileIds = {};
-      _.each(nextProps.uploadedAssets[uploadScopeId], (asset, mediaGuid) => {
-        fileIds[mediaGuid] = {
-          assetContentId: asset.assetContents[0].id,
-          assetId: asset.id,
-          assetContentTypeId: asset.assetContents[0].genusTypeId,
-        };
-      });
-      const text = `<img src="AssetContent:${this.state.mediaGuid}" />`;
-      this.props.createChoice(text, fileIds);
-    }
-  }
-
 
   getImageFile() {
     return (
@@ -78,7 +59,7 @@ export class AddImage extends React.Component {
     this.props.addMediaToQuestion(
       file,
       mediaGuid,
-      this.props.uploadScopeId,
+      this.props.item.id,
       this.props.item.bankId,
       this.props.item.id,
       'question.choices.new',
