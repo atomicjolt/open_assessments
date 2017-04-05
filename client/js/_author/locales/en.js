@@ -14,7 +14,8 @@ const questionTypes = {
 
 const feedback = {
   correctFeedback: 'Correct Feedback',
-  incorrectFeedback: 'Incorrect Feedback'
+  incorrectFeedback: 'Incorrect Feedback',
+  feedback: 'Feedback'
 }
 
 export default {

@@ -27,6 +27,7 @@ export default function EmbedButton(props) {
             <button
               className="au-c-btn au-c-btn--square au-c-btn--embed "
               onClick={e => e.stopPropagation()}
+              onFocus={props.onFocus}
             >
               <i className="material-icons">content_paste</i>
             </button>
@@ -41,6 +42,7 @@ export default function EmbedButton(props) {
           e.stopPropagation();
           getEmbedCode(assessment);
         }}
+        onFocus={props.onFocus}
       >
         embed code
       </button>
@@ -53,5 +55,6 @@ export default function EmbedButton(props) {
 EmbedButton.propTypes = {
   assessment: React.PropTypes.shape({}).isRequired,
   getEmbedCode: React.PropTypes.func.isRequired,
+  onFocus: React.PropTypes.func.isRequired,
   baseEmbedUrl: React.PropTypes.string.isRequired,
 };

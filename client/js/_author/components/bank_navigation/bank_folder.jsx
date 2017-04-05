@@ -6,7 +6,7 @@ export default function BankFolder(props) {
   const { bank } = props;
   const displayName = _.get(bank, 'displayName.text');
   return (
-    <ListItem {...props} selectItem={() => props.getBankChildren(bank.id)}>
+    <ListItem {...props} selectItem={() => props.getBankChildren(bank.id)} onFocus={props.onFocus}>
       <td><i className="material-icons">folder</i></td>
       <td>{displayName}</td>
       <td />
@@ -22,4 +22,5 @@ BankFolder.propTypes = {
     }).isRequired,
   }).isRequired,
   getBankChildren: React.PropTypes.func.isRequired,
+  onFocus: React.PropTypes.func.isRequired,
 };
