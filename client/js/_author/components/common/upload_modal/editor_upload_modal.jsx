@@ -104,14 +104,13 @@ export default class EditorUploadModal extends React.Component {
   }
 
   setters(key, val) {
-    let languageMediaData = this.state.languageMediaData;
+    const languageMediaData = this.state.languageMediaData;
     languageMediaData[this.state.language][key] = val;
     this.setState({ languageMediaData });
   }
 
   render() {
     let name = this.props.mediaName;
-    const { description, altText, license, copyright, vttFile, transcript } = this.state.languageMediaData[this.state.language];
 
     if (this.props.inProgress) {
       name = <Loader />;
@@ -174,16 +173,11 @@ export default class EditorUploadModal extends React.Component {
             this.state.uploadedMedia ? <Metadata
               metadataTypes={this.metadataTypes(this.props.mediaType)}
               selectedLanguage={this.state.language}
-              selectedImage={this.state.uploadedMedia || this.state.selectedMedia}
+
               id={this.props.id}
               updateMetadata={(key, val) => this.setters(key, val)}
               mediaItem={this.state.selectedMedia}
-              description={description}
-              altText={altText}
-              license={license}
-              copyright={copyright}
-              vttFile={vttFile}
-              transcript={transcript}
+              metaData={this.state.languageMediaData[this.state.language]}
             /> : null
           }
 

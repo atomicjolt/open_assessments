@@ -3,9 +3,12 @@ import _          from 'lodash';
 
 export default class Metadata extends React.Component {
   static propTypes = {
-    id: React.PropTypes.string.isRequired,
+    id: React.PropTypes.string,
     updateMetadata: React.PropTypes.func.isRequired,
     metadataTypes: React.PropTypes.arrayOf(React.PropTypes.string),
+    metaData: React.PropTypes.shape({
+      description: React.PropTypes.string,
+    }),
   };
 
   constructor() {
@@ -44,14 +47,14 @@ export default class Metadata extends React.Component {
   }
 
   render() {
-    console.log(_.get(this, 'props.mediaItem.description.text'))
+    // _.get(this, 'props.mediaItem.description.text')
     return (
       <div>
         <div className="au-c-input au-c-input-label--left">
           <label htmlFor={`upload_desc_${this.props.id}`}>Description</label>
           <div className="au-c-input__contain">
             <textarea
-              value={_.get(this, 'props.mediaItem.description.text') || this.props['description']}
+              value={this.props.metaData.description ? this.props.metaData.description : ''}
               ref={(area) => { this.textArea = area; }}
               className="au-c-textarea au-c-text-input--smaller"
               id={`upload_desc_${this.props.id}`}
@@ -74,7 +77,7 @@ export default class Metadata extends React.Component {
               <label htmlFor={`upload_${type}_${this.props.id}`}>{this.labelName(type)}</label>
               <div className="au-c-input__contain">
                 <input
-                  value={this.props[type]}
+                  value={this.props.metaData[type] ? this.props.metaData[type] : ''}
                   className="au-c-text-input au-c-text-input--smaller"
                   id={`upload_${type}_${this.props.id}`}
                   type="text"
