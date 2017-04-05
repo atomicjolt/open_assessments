@@ -49,7 +49,6 @@ export class BankNavigator extends React.Component {
     this.state = {
       sortName      : null,
       sortPublished : null,
-      focusedItem :  null
     };
   }
 
