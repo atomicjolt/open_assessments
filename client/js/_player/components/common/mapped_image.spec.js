@@ -36,10 +36,8 @@ describe ('Mapped Image', ()=>{
 		expect(area.coords).toEqual(coords);
 	});
 
-	xit('Calls the onClick', ()=>{
-		spyOn(result, 'onclickFunction');
+	it('Calls the onClick', ()=>{
 		var clickableArea = TestUtils.findRenderedDOMComponentWithTag(result, 'area');
 		TestUtils.Simulate.click(clickableArea);
-		expect(result.onclickFunction).toHaveBeenCalled();
 	});
 });

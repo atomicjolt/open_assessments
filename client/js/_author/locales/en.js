@@ -14,7 +14,8 @@ const questionTypes = {
 
 const feedback = {
   correctFeedback: 'Correct Feedback',
-  incorrectFeedback: 'Incorrect Feedback'
+  incorrectFeedback: 'Incorrect Feedback',
+  feedback: 'Feedback'
 }
 
 export default {
@@ -35,19 +36,34 @@ export default {
       nameRequired: 'Name is required in order to edit',
       placeholder: 'Untitled Assessment'
     },
+    audioLimit: {
+      rangeWarning: 'Please enter a positive number under'
+    },
+    backButton: {
+      back: 'Back'
+    },
     bankListHeader: {
       name: 'Name',
       published: 'Published'
     },
+    commonAddOption: {
+      addOption: 'Add Option',
+    },
     editAssessment: {
       confirm: 'Are you sure you want to delete this item?'
+    },
+    editorUploadModal: {
+      cancel: 'Cancel',
+      ok: 'OK',
+      error: 'Error',
+      insert: 'Insert',
+      modal: 'Modal'
     },
     imageOption: {
       NA: 'N/A'
     },
     imageSequence: {
       ...feedback,
-      addImage: 'Add Image'
     },
     mcAddOption: {
       addOption: 'Add Option'
@@ -88,6 +104,9 @@ export default {
     optionFeedback: {
       feedback: 'Feedback',
     },
+    previewHeader: {
+      closePreview: 'Close Preview'
+    },
     previewQuestion: {
       fileUpload: {
         chooseFile: 'Choose File'
@@ -96,6 +115,17 @@ export default {
         stop: 'Stop',
         record: 'Record',
       }
+    },
+    reorderHeader: {
+      done: 'Done'
+    },
+    saveOption: {
+      saveOptions: 'Save Options'
+    },
+    settingsCheckbox: {
+      maintainChoiceOrder: 'Maintain choice order',
+      multipleAnswer: 'Multiple answer',
+      reflection: 'Reflection'
     },
     shortAnswer: {
       answerBox: 'Answer Box',
@@ -107,6 +137,20 @@ export default {
     },
     question: {
       confirm: 'Are you sure you want to delete this option?'
+    },
+    questionHeader: {
+      question: 'Question'
+    },
+    questionSettings: {
+      name: 'Name',
+      english: 'English',
+      hindi: 'Hindi',
+      telugu: 'Telugu'
+    },
+    questionText: {
+      instructions: 'To insert blank, add [ _ ] where you want the blank to show up.',
+      fitbPlaceholder: 'Fill in the [ _ ] Text',
+      otherPlaceholder: 'Question Text'
     }
   }
 };

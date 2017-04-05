@@ -29,17 +29,38 @@ class MultipleChoice extends React.Component {
     activeChoice: React.PropTypes.string,
   };
 
+  constructor() {
+    super();
+    this.state = {
+      newChoice: false,
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.state.newChoice && _.has(nextProps, 'item.question.choices.new')) {
+      this.setState({ newChoice: true });
+    } else if (this.state.newChoice) {
+      this.setState({ newChoice: false });
+    }
+  }
+
   getFeedback() {
     const { question, type } = this.props.item;
-    const strings = this.props.localizeStrings()
+    const strings = this.props.localizeStrings();
     if (type !== types.multipleChoice) {
+      const text = _.includes([
+        types.reflection,
+        types.multipleReflection,
+      ],
+        type
+      ) ? strings.feedback : strings.correctFeedback;
       return (
         <div className="au-c-question__feedback">
           <Feedback
             updateItem={this.props.updateItem}
             feedbackType="correctFeedback"
             feedback={question.correctFeedback}
-            labelText={strings.correctFeedback}
+            labelText={text}
             bankId={this.props.item.bankId}
           />
           {type === types.reflection || type === types.multipleReflection ?
@@ -105,7 +126,7 @@ class MultipleChoice extends React.Component {
               ))
             }
             {
-              this.props.isActive ? <Add
+              !this.state.newChoice && this.props.isActive ? <Add
                 createChoice={() => this.props.createChoice(id)}
               /> : null
             }

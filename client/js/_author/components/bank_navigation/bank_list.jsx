@@ -6,36 +6,58 @@ import BankAssessment from './bank_assessment';
 import BankFolder from './bank_folder';
 import EmptyBankList from './empty_bank_list';
 
-export default function bankList(props) {
-  const content = () => {
-    const isEmpty = _.isEmpty(props.banks) && _.isEmpty(props.assessments);
+export default class BankList extends React.Component {
+  static propTypes = {
+    assessments: React.PropTypes.shape({}),
+    banks: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.shape({})),
+      React.PropTypes.shape({})
+    ]).isRequired,
+    banksLoaded: React.PropTypes.bool.isRequired,
+    getBankChildren: React.PropTypes.func.isRequired,
+    sortBy: React.PropTypes.func.isRequired,
+    sortName: React.PropTypes.string,
+    sortPublished: React.PropTypes.string,
+    deleteAssessment: React.PropTypes.func,
+    togglePublishAssessment: React.PropTypes.func,
+  }
+
+  constructor() {
+    super();
+    this.state = {
+      focusedItem: null
+    };
+  }
+
+  content() {
+    const isEmpty = _.isEmpty(this.props.banks) && _.isEmpty(this.props.assessments);
 
     if (isEmpty) {
       return <EmptyBankList />;
-    } else if (props.banksLoaded) {
+    } else if (this.props.banksLoaded) {
       return (
         <table className="au-c-table">
           <tbody>
             {
-            _.map(props.banks, bank => (
+            _.map(this.props.banks, bank => (
               <BankFolder
                 key={`bank_${bank.id}`}
                 bank={bank}
-                getBankChildren={props.getBankChildren}
+                getBankChildren={this.props.getBankChildren}
               />
             ))
             } {
-              _.map(props.assessments, assessment => (
+              _.map(this.props.assessments, assessment => (
                 <BankAssessment
-                  baseEmbedUrl={props.baseEmbedUrl}
-                  getEmbedCode={props.getEmbedCode}
+                  baseEmbedUrl={this.props.baseEmbedUrl}
+                  getEmbedCode={this.props.getEmbedCode}
                   key={`bank_${assessment.id}`}
                   bank={assessment}
                   assessment={assessment}
-                  publishedBankId={props.publishedBankId}
-                  getBankChildren={props.getBankChildren}
-                  deleteAssessment={props.deleteAssessment}
-                  togglePublishAssessment={props.togglePublishAssessment}
+                  publishedBankId={this.props.publishedBankId}
+                  getBankChildren={this.props.getBankChildren}
+                  deleteAssessment={this.props.deleteAssessment}
+                  togglePublishAssessment={this.props.togglePublishAssessment}
                 />
               ))
             }
@@ -44,36 +66,31 @@ export default function bankList(props) {
       );
     }
     return <Spinner />;
-  };
+  }
 
-  return (
-    <div className="au-o-contain">
 
-      <div className="au-o-item">
-        <Header
-          sortBy={props.sortBy}
-          sortName={props.sortName}
-          sortPublished={props.sortPublished}
-        />
-        <div className="au-c-scrollable">
-          { content() }
+  focusItem(shouldFocus, item) {
+    if (shouldFocus) {
+      this.setState({ focusedItem: item });
+    } else {
+      this.setState({ focusedItem: null });
+    }
+  }
+
+  render() {
+    return (
+      <div className="au-o-contain">
+        <div className="au-o-item">
+          <Header
+            sortBy={this.props.sortBy}
+            sortName={this.props.sortName}
+            sortPublished={this.props.sortPublished}
+          />
+          <div className="au-c-scrollable">
+            { this.content() }
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
-
-bankList.propTypes = {
-  assessments: React.PropTypes.shape({}),
-  banks: React.PropTypes.oneOfType([
-    React.PropTypes.arrayOf(React.PropTypes.shape({})),
-    React.PropTypes.shape({})
-  ]).isRequired,
-  banksLoaded: React.PropTypes.bool.isRequired,
-  getBankChildren: React.PropTypes.func.isRequired,
-  sortBy: React.PropTypes.func.isRequired,
-  sortName: React.PropTypes.string,
-  sortPublished: React.PropTypes.string,
-  deleteAssessment: React.PropTypes.func,
-  togglePublishAssessment: React.PropTypes.func,
-};
