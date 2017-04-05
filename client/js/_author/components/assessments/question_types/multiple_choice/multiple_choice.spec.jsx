@@ -1,8 +1,10 @@
 import React            from 'react';
 import { shallow }      from 'enzyme';
 import MultipleChoice   from './multiple_choice';
+import AddOption        from './add_option';
+import Option           from './multiple_choice_option';
 
-describe('multiple choice component', () => {
+fdescribe('multiple choice component', () => {
   let props;
   let result;
   let choiceUpdated;
@@ -64,5 +66,11 @@ describe('multiple choice component', () => {
     expect(choiceUpdated).toBeFalsy();
     result.instance().moveChoice(props.item.question.choices['bob']);
     expect(choiceUpdated).toBeTruthy();
+  });
+
+  it('doesnt show add option if newChioce == true', () => {
+    result.setState({ newChoice: true });
+    const add = result.find(AddOption);
+    expect(add.node).not.toBeDefined();
   });
 });
