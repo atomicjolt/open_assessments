@@ -8,7 +8,7 @@ export default function PreviewButton(props) {
       className={`au-c-btn au-c-btn--square au-c-btn--table ${isPublished ? '' : 'is-inactive'}`}
       onClick={(e) => {
         e.stopPropagation();
-        appHistory.push(`banks/${props.assessment.bankId}/assessments/${props.assessment.id}/preview`);
+        window.open(`${window.location.href}banks/${props.assessment.bankId}/assessments/${props.assessment.id}/preview`);
       }}
       onFocus={props.onFocus}
     >
