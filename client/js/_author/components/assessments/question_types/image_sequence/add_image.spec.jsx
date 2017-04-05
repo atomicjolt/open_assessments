@@ -41,13 +41,9 @@ describe('add image component', () => {
         },
         answers: [],
       },
-      uploadScopeId: '7',
-      uploadMedia: () => {calledFunc = true},
+      uploadMedia: () => { calledFunc = true; },
       updateChoice: () => {},
       createChoice: () => {},
-      uploadedAssets: {
-        uploadScopeId: '7',
-      },
     };
     result = shallow(<AddImage {...props} />);
   });
