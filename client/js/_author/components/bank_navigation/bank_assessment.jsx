@@ -70,7 +70,7 @@ export default class BankAssessment extends React.Component {
           <i className="material-icons">description</i>
         </td>
         <td>{displayName}</td>
-        <td>
+        <td {...this.props}>
           <PublishButton
             assessment={assessment}
             togglePublishAssessment={togglePublishAssessment}
