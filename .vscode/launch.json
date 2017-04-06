@@ -7,8 +7,8 @@
       "request": "launch",
       "program": "${workspaceRoot}/client/node_modules/jest-cli/bin/jest.js",
       "stopOnEntry": false,
-      "args": ["--runInBand", "--config=client/config/jest_config.json", "${file}"],
-      "cwd": "${workspaceRoot}",
+      "args": ["--runInBand", "--config=${workspaceRoot}/client/config/jest_config.json", "${file}"],
+      "cwd": "${workspaceRoot}/client",
       "preLaunchTask": null,
       "runtimeExecutable": null,
       "runtimeArgs": [

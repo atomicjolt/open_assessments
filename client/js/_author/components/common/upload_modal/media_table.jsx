@@ -31,6 +31,18 @@ export default function mediaTable(props) {
 }
 
 mediaTable.propTypes = {
-  media: React.PropTypes.shape([]),
+  media: React.PropTypes.shape({
+    url: React.PropTypes.string,
+    id: React.PropTypes.string,
+    description: React.PropTypes.shape({
+      text: React.PropTypes.string,
+    }),
+    license: React.PropTypes.shape({
+      text: React.PropTypes.string,
+    }),
+    altText: React.PropTypes.shape({
+      text: React.PropTypes.string,
+    })
+  }),
   selectedMediaId: React.PropTypes.string,
 };
