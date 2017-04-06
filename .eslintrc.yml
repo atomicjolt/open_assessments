@@ -57,5 +57,4 @@ rules:
     - forbid:
       - any
   import/extensions: 0
-  import/no-named-as-default: off
-  # no-underscore-dangle: off
+  no-underscore-dangle: off
