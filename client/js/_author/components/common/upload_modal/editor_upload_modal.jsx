@@ -100,9 +100,6 @@ export default class EditorUploadModal extends React.Component {
     const languageMediaData = this.state.languageMediaData;
     languageMediaData[this.state.language][key] = val;
     this.setState({ languageMediaData });
-
-    // languageMediaData = [{ locale: 'en', description: 'this is silly', altText: 'alty salty' },
-    // {locale: 'tel'},{}]
   }
 
   render() {
