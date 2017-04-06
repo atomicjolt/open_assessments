@@ -104,6 +104,7 @@ export class ClixDragAndDrop extends React.Component {
       <div className="c-clix-drag-and-drop">
         {_.map(this.props.targets, (target, targetIndex) => (
           <div
+            key={targetIndex}
             className="c-drag-target"
             style={{
               position: 'relative',
@@ -128,6 +129,7 @@ export class ClixDragAndDrop extends React.Component {
 
                 return (
                   <ClixDropZone
+                    key={zoneIndex}
                     className={className}
                     canDrop={canDrop}
                     dropItem={(item, offset) => (
@@ -150,6 +152,7 @@ export class ClixDragAndDrop extends React.Component {
             {
               _.map(this.props.selectedAnswers, answer => (
                 <Droppable
+                  key={answer.droppable.id}
                   style={{
                     position: 'absolute',
                     left: answer.coordinateValues[0] - (answer.width / 2),
@@ -179,6 +182,7 @@ export class ClixDragAndDrop extends React.Component {
 
               return (
                 <Droppable
+                  key={answer.id}
                   className="c-droppable-item"
                   hide={useCount >= parseInt(answer.reuse, 10)}
                   showWhileDragging={useCount < (answer.reuse - 1)}

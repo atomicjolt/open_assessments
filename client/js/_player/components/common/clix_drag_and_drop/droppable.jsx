@@ -25,7 +25,7 @@ function collect(connect, monitor) {
   };
 }
 
-export class DraggableWord extends React.Component {
+export class Droppable extends React.Component {
   static propTypes = {
     connectDragSource: React.PropTypes.func.isRequired,
     connectDragPreview: React.PropTypes.func.isRequired,
@@ -58,4 +58,4 @@ export class DraggableWord extends React.Component {
   }
 }
 
-export default DragSource(ItemTypes.CLIX_DROPPABLE, droppableSource, collect)(DraggableWord);
+export default DragSource(ItemTypes.CLIX_DROPPABLE, droppableSource, collect)(Droppable);

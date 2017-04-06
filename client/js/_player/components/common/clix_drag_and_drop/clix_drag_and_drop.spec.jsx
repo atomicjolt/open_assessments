@@ -16,6 +16,7 @@ describe('clix drag and drop', () => {
       answers: [{
         id: 'answer_id',
         text: 'answer_text',
+        reuse: 1,
       }],
       zones: [{
         spatialUnit: {
@@ -77,34 +78,6 @@ describe('clix drag and drop', () => {
       expect(answers.length).toBe(2); // one selected, one hidden
       expect(answers.at(1).props().hide).toBe(true);
     });
-
-    // it('sets stop recording timeout on start', () => {
-    //   spyOn(window, 'setTimeout');
-    //   result.setState({recorder:'stop'});
-    //   result.toggle();
-    //
-    //   expect(result.state.timeoutId).not.toEqual(null);
-    //   expect(window.setTimeout).toHaveBeenCalled();
-    // });
-    //
-    // it('removes stop recording timeout on stop', () => {
-    //   spyOn(window, 'clearTimeout');
-    //   result.setState({recorder:'start'});
-    //   var timeoutId = result.state.timeoutId;
-    //   result.toggle();
-    //
-    //   expect(result.state.timeoutId).toEqual(null);
-    //   expect(window.clearTimeout).toHaveBeenCalledWith(timeoutId);
-    // });
-    //
-    // it('removes timeout on componentWillUnmount', () => {
-    //   spyOn(window, 'clearTimeout');
-    //   result.toggle();
-    //   var timeoutId = result.state.timeoutId;
-    //   result.componentWillUnmount();
-    //
-    //   expect(window.clearTimeout).toHaveBeenCalledWith(timeoutId);
-    // });
   });
 
 });
