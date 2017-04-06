@@ -135,22 +135,22 @@ export default class DropZone extends React.Component {
         backgroundColor: 'white',
         ...manipulators,
       },
-      topLeftSelector: {
+      topLeft: {
         top: '-5px',
         left: '-5px',
         cursor: 'nwse-resize',
       },
-      topRightSelector: {
+      topRight: {
         top: '-5px',
         right: '-5px',
         cursor: 'nesw-resize',
       },
-      bottomLeftSelector: {
+      bottomLeft: {
         bottom: '-5px',
         left: '-5px',
         cursor: 'nesw-resize',
       },
-      bottomRightSelector: {
+      bottomRight: {
         bottom: '-5px',
         right: '-5px',
         cursor: 'nwse-resize',
@@ -171,6 +171,7 @@ export default class DropZone extends React.Component {
   render() {
     const { zone } = this.props;
     const styles = this.styles();
+    const corners = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
 
     return (
       <div
@@ -178,30 +179,17 @@ export default class DropZone extends React.Component {
         style={this.zonePosition(zone)}
         onClick={this.props.setActive}
       >
-        <div
-          style={{ ...styles.positioning, ...styles.topLeftSelector }}
-          draggable
-          onDrag={e => this.moveCorner('topLeft', e.pageX, e.pageY)}
-          onDragEnd={() => this.updateZone()}
-        />
-        <div
-          style={{ ...styles.positioning, ...styles.topRightSelector }}
-          draggable
-          onDrag={e => this.moveCorner('topRight', e.pageX, e.pageY)}
-          onDragEnd={() => this.updateZone()}
-        />
-        <div
-          style={{ ...styles.positioning, ...styles.bottomLeftSelector }}
-          draggable
-          onDrag={e => this.moveCorner('bottomLeft', e.pageX, e.pageY)}
-          onDragEnd={() => this.updateZone()}
-        />
-        <div
-          style={{ ...styles.positioning, ...styles.bottomRightSelector }}
-          draggable
-          onDrag={e => this.moveCorner('bottomRight', e.pageX, e.pageY)}
-          onDragEnd={() => this.updateZone()}
-        />
+        {
+          _.map(corners, corner => (
+            <div
+              key={`zone_corner_${zone.id}_${corner}`}
+              style={{ ...styles.positioning, ...styles[corner] }}
+              draggable
+              onDrag={e => this.moveCorner(corner, e.pageX, e.pageY)}
+              onDragEnd={() => this.updateZone()}
+            />
+          ))
+        }
         <div
           style={styles.middleSelector}
           draggable

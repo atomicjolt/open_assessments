@@ -12,6 +12,7 @@ plugins:
   - jsx-a11y
   - import
 globals:
+  jest: false
   describe: false
   beforeEach: false
   afterEach: false

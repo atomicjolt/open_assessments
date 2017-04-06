@@ -18,7 +18,7 @@ export default class TargetZone extends React.Component {
   }
 
   render() {
-    const { target, zones } = this.props;
+    const { target, zones, editZone } = this.props;
     return (
       <div
         className="au-c-drag-and-drop__target-image"
@@ -31,7 +31,7 @@ export default class TargetZone extends React.Component {
               key={`drop_zone_${zone.id}`}
               zone={zone}
               target={this.target}
-              editZone={this.props.editZone}
+              editZone={editZone}
               setActive={() => this.setState({ activeZone: zone.id })}
               isActive={this.state.activeZone === zone.id}
             />

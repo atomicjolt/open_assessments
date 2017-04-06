@@ -126,8 +126,6 @@ function serializeAnswers(
     genusTypeId: genusTypes.answer.wrongAnswer,
     feedback: _.get(incorrectFeedback, 'text'),
     fileIds: _.get(incorrectFeedback, 'fileIds'),
-    // So this needs to be every combination of incorrect answers I think...
-    // that is n! - 1, so I am going to leave this blank
     zoneConditions: [],
   };
 

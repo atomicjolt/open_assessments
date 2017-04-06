@@ -45,7 +45,7 @@ export class DragAndDrop extends React.Component {
   }
 
   render() {
-    const { question, id } = this.props.item;
+    const { question, id, bankId } = this.props.item;
 
     // TODO: localization
     // const strings = this.props.localizeStrings();
@@ -78,14 +78,14 @@ export class DragAndDrop extends React.Component {
             feedbackType="correctFeedback"
             feedback={question.correctFeedback}
             labelText="Correct Feedback"
-            bankId={this.props.item.bankId}
+            bankId={bankId}
           />
           <Feedback
             updateItem={this.props.updateItem}
             feedbackType="incorrectFeedback"
             feedback={question.incorrectFeedback}
             labelText="Incorrect Feedback"
-            bankId={this.props.item.bankId}
+            bankId={bankId}
           />
         </div>
       </div>

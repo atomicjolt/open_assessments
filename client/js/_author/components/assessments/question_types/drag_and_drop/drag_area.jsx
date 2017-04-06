@@ -53,11 +53,9 @@ export default class DragArea extends React.Component {
         <MediaModal
           isOpen={this.state.showModal}
           closeModal={() => this.setState({ showModal: false })}
-          id={null}
           loading={this.props.loadingMedia}
           media={this.props.images}
           mediaType={'img'}
-          mediaName={'Farts'}
           insertMedia={(img, metadata, isNew) => this.props.uploadMedia(img, 'dropObjects.new', metadata, isNew)}
         />
       </div>
