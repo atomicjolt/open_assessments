@@ -11,11 +11,10 @@
 }
 
   .au-o-item__top{
-    height: 5rem;
-    padding: 0 2.5rem;
+    height: 5.1rem;
+    padding: 0 2.5rem 0 0;
     background-color: $gray1;
     border-bottom: 0.1rem solid $gray3;
-    border-left: 0.4rem solid $purple;
     @include display-flex;
     @include align-items(center);
     @include justify-content(space-between);

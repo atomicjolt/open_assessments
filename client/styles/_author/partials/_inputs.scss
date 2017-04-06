@@ -16,7 +16,7 @@
   width: 100%;
   color: $text-color;
   border: none;
-  border-top: 0.1rem solid $white;
+  border-top: 0.2rem solid $white;
   background: none;
 
   &:focus{
@@ -40,8 +40,8 @@
 
 .au-c-input__bottom{
   height: 0.2rem;
-  background: none;
-  border-top: 0.1rem solid $gray4;
+  background: $gray4;
+  // border-top: 0.1rem solid $gray4;
 
   &.no-border {
     border-top: none;
@@ -52,6 +52,7 @@
   }
   &.has-error{
     border-color: $red;
+    background: $red;
   }
 }
 
@@ -276,15 +277,15 @@
   .au-c-text-input{
     color: $white;
     border-top: transparent;
-    height: 2.5rem;
+    min-height: 2.5rem;
 
     &:focus{
-      border-top: 0.1rem solid $white;
+      border-top: 0.2rem solid $white;
     }
 
     &:focus + .au-c-input__bottom{
       border-color: $white;
-      background: transparent;
+      background: $white;
     }
   }
   .au-c-input__bottom{

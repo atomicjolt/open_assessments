@@ -1,5 +1,6 @@
 .au-c-assessment-top{
   background-color: $white;
+  padding-left: 2.5rem;
 }
 
 .au-c-assessment-title{
@@ -20,14 +21,21 @@
 }
 
   .au-c-question__number{
-    color: $text-color;
-    margin: none;
+    color: $white;
+    background: $purple;
+    margin: 0;
+    width: 5rem;
+    height: 5rem;
+    @include display-flex;
+    @include align-items(center);
+    @include justify-content(center);
     @include semi-bold;
-    font-size: 1.2rem;
+    font-size: 2rem;
   }
 
   .au-c-question__type{
-    color: $text-alt;
+    color: $text-color;
+    margin-left: 2rem;
   }
 
 .au-c-question-icons button {
@@ -93,10 +101,10 @@
       display: block;
     }
     .au-c-question__text .au-c-input__bottom.no-border{
-      border-top: $border;
+      background: $gray4;
     }
     .au-c-question__feedback .au-c-input__bottom.no-border{
-      border-top: $border;
+      background: $gray4;
     }
   }
 
@@ -109,7 +117,9 @@
   &.reorder-active{
     .au-o-item__top{
       background-color: $blue;
-      border-left-color: $blue2;
+      .au-c-question__number{
+        background: $blue2;
+      }
     }
     .au-c-question__number, .au-c-question__type{
       color: $white;
