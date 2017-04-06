@@ -43,8 +43,8 @@ function serializeZones(originalZones, newZones, targetId) {
   if (newZones && newZones.new) {
     zones.push({
       spatialUnit: {
-        height: 100,
-        width: 100,
+        height: newZones.new.height || 100,
+        width: newZones.new.width || 100,
         coordinateValues: [50, 50],
         recordType: genusTypes.zone.rectangle,
       },

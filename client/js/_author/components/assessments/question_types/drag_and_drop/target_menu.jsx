@@ -25,10 +25,17 @@ export default class TargetMenu extends React.Component {
 
   selectImage(media, metadata, newMedia) {
     this.setState({ showModal: false });
-    if (this.state.add === 'snap') {
-
-    } else if (this.state.add === 'drop') {
-
+    if (this.state.add === 'snap' || this.state.add === 'drop') {
+      const img = new Image();
+      img.src = URL.createObjectURL(media);
+      img.onload = () => {
+        // TODO: make sure image isn't bigger than the area
+        this.props.newZone({
+          type: this.state.add,
+          height: img.height,
+          width: img.width,
+        });
+      };
     } else {
       this.replaceImage(media, metadata, newMedia);
     }
@@ -41,7 +48,7 @@ export default class TargetMenu extends React.Component {
   }
 
   addByImage() {
-
+    this.setState({ showModal: true });
   }
 
   render() {
@@ -80,6 +87,7 @@ export default class TargetMenu extends React.Component {
           media={this.props.images}
           mediaType={'img'}
           insertMedia={(media, metadata, newMedia) => this.selectImage(media, metadata, newMedia)}
+          uploadOnly={!!this.state.add}
         />
       </div>
     );
