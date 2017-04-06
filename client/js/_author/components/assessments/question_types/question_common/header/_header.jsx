@@ -6,7 +6,7 @@ import PreviewHeader    from './preview';
 import localize         from '../../../../../locales/localize';
 
 function questionHeader(props) {
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('questionHeader');
   // i think typeName is already localized by the time it gets here.
   const typeName = _.words(_.upperFirst(props.type)).join(' ');
 

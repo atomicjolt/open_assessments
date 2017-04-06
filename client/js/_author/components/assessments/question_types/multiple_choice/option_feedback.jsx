@@ -14,7 +14,7 @@ class optionFeedback extends React.Component {
 
   render() {
     const hidden = this.props.hidden ? 'is-hidden' : '';
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('optionFeedback');
     return (
       <div className={`au-c-input au-c-input-label--left au-c-feedback ${hidden}`}>
         <label htmlFor="feedback1">{strings.feedback}</label>

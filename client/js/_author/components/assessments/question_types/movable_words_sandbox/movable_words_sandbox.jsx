@@ -56,7 +56,7 @@ class MWSandbox extends React.Component {
 
   render() {
     const { question, id } = this.props.item;
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('mwSandbox');
     return (
       <div onBlur={e => this.props.blurOptions(e)}>
         <div className="au-c-movable__audio-settings is-active">

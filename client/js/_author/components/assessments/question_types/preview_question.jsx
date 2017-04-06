@@ -142,7 +142,7 @@ class PreviewQuestion extends React.Component {
           questionCount={1}
           questionResult={{}}
           selectAnswer={id => this.selectAnswer(id)}
-          localizedStrings={this.props.localizeStrings()}
+          localizedStrings={this.props.localizeStrings('previewQuestion')}
           sendSize={() => {}}
           videoPlay={() => {}}
           videoPause={() => {}}

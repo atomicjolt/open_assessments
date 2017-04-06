@@ -31,7 +31,7 @@ class ImageSequence extends React.Component {
 
   getFeedback() {
     const { question } = this.props.item;
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('imageSequence');
     return (
       <div className="au-c-question__feedback">
         <Feedback
