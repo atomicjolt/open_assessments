@@ -74,7 +74,7 @@ export class EditAssessment extends React.Component {
   }
 
   deleteAssessmentItem(itemId) {
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('editAssessment');
     if (confirm(strings.confirm)) {
       this.props.deleteAssessmentItem(
         this.props.params.bankId,
