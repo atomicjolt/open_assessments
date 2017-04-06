@@ -42,6 +42,7 @@ export default class BankList extends React.Component {
               key={`bank_${bank.id}`}
               bank={bank}
               getBankChildren={this.props.getBankChildren}
+              onFocus={(shouldFocus, item) => this.focusItem(shouldFocus, item)}
             />
           ))
           } {
@@ -56,6 +57,7 @@ export default class BankList extends React.Component {
                 getBankChildren={this.props.getBankChildren}
                 deleteAssessment={this.props.deleteAssessment}
                 togglePublishAssessment={this.props.togglePublishAssessment}
+                onFocus={(shouldFocus, item) => this.focusItem(shouldFocus, item)}
               />
             ))
           }
