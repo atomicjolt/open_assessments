@@ -22,17 +22,17 @@ globals:
   jasmine: false
   module: false
   __DEV__: false
-# rules:
-#   linebreak-style:
-#     - error
-#     - unix
-#   import/no-unresolved: 0
-#   no-multi-spaces:
-#     - 1
-#     - exceptions:
-#         VariableDeclarator: true
-#         ImportDeclaration: true
-#         AssignmentExpression: true
+rules:
+  linebreak-style:
+    - error
+    - unix
+  import/no-unresolved: 0
+  no-multi-spaces:
+    - 1
+    - exceptions:
+        VariableDeclarator: true
+        ImportDeclaration: true
+        AssignmentExpression: true
 #   comma-dangle:
 #     - error
 #     - only-multiline
