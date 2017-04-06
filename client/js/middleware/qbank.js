@@ -51,14 +51,13 @@ function uploadMedia(state, action) {
   formData.append('inputFile', action.body);
   formData.append('returnUrl', true);
   formData.append('createNew', true);
-  formData.append('mediaDescription', action.metaData['639-2%3AENG%40ISO'].description || '');
-  formData.append('altText', action.metaData['639-2%3AENG%40ISO'].altText || '');
-  formData.append('license', action.metaData['639-2%3AENG%40ISO'].license || '');
-  formData.append('copyright', action.metaData['639-2%3AENG%40ISO'].copyright || '');
+  // formData.append('mediaDescription', action.metaData['639-2%3AENG%40ISO'].description || '');
+  // formData.append('altText', action.metaData['639-2%3AENG%40ISO'].altText || '');
+  // formData.append('license', action.metaData['639-2%3AENG%40ISO'].license || '');
+  // formData.append('copyright', action.metaData['639-2%3AENG%40ISO'].copyright || '');
   // formData.append('locale', action.metaData['639-2%3AENG%40ISO'].locale);
   // formData.append('vttFile', action.metaData['639-2%3AENG%40ISO'].vttFile || '');
   // formData.append('transcript', action.metaData['639-2%3AENG%40ISO'].transcript || '');
-
   return api.post(
     `repository/repositories/${action.bankId}/assets`,
     state.settings.api_url,
@@ -512,7 +511,7 @@ const qbank = {
       //     uploadMediaMeta(state, data, res.body.assetId);
       //   }
       // });
-
+      debugger;
       store.dispatch({
         type: action.type + DONE,
         original: action,
