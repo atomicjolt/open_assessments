@@ -14,6 +14,7 @@ const tagNameMap = {
   video: 'Video',
 };
 
+// TODO localize strings?
 const mediaPrompt = {
   audio: 'Select an Audio file',
   img: 'Select an Image',

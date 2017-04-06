@@ -15,7 +15,7 @@ describe('editor upload modal', () => {
       mediaType: 'img',
       mediaName: 'filename.jpg',
       insertMedia: () => { functionCalled = true; },
-      uploadMedia: (file) => { fileUploaded = file },
+      uploadMedia: (file) => { fileUploaded = file; },
       inProgress: false,
     };
     result = shallow(<Modal {...props} />);
