@@ -20,6 +20,12 @@ const mediaPrompt = {
   video: 'Select a Video file',
 };
 
+const languageToLocale = {
+  '639-2%3AENG%40ISO': 'en',
+  '639-2%3AHIN%40ISO': 'hi',
+  '639-2%3ATEL%40ISO': 'te',
+};
+
 export default class EditorUploadModal extends React.Component {
   static propTypes = {
     isOpen: React.PropTypes.bool,
@@ -38,7 +44,7 @@ export default class EditorUploadModal extends React.Component {
 
     this.state = {
       languageMediaData: _.reduce(languages.languageTypeId, (result, language) => {
-        result[language] = {};
+        result[language] = { locale: languageToLocale[language] };
         return result;
       }, {}),
       activeItem: null,
@@ -49,27 +55,7 @@ export default class EditorUploadModal extends React.Component {
     };
   }
 
-  // getMetadata(mediaType) {
-  //   if (mediaType === 'audio' || mediaType === 'video') {
-  //     return {
-  //       description: this.state.description,
-  //       mediaAutoPlay: this.state.mediaAutoPlay,
-  //       vttFile: this.state.vttFile,
-  //       transcript: this.state.transcript,
-  //       license: this.state.license,
-  //       copyright: this.state.copyright,
-  //     };
-  //   }
-  //   return {
-  //     description: this.state.description,
-  //     altText: this.state.altText,
-  //     license: this.state.license,
-  //     copyright: this.state.copyright,
-  //   };
-  // }
-
   addMedia() {
-    // const metaData = this.getMetadata(this.props.mediaType);
     const metaData = this.state.languageMediaData;
     if (this.state.uploadedMedia) {
       this.props.insertMedia(this.state.uploadedMedia, metaData, true);
