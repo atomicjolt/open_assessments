@@ -6,6 +6,7 @@ export default class TargetZone extends React.Component {
   static propTypes = {
     target: React.PropTypes.shape({}),
     zones: React.PropTypes.shape({}),
+    editZone: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -27,6 +28,7 @@ export default class TargetZone extends React.Component {
               key={`drop_zone_${zone.id}`}
               zone={zone}
               target={this.target}
+              editZone={this.props.editZone}
             />
           ))
         }

@@ -100,6 +100,17 @@ export default class DropZone extends React.Component {
     });
   }
 
+  updateZone() {
+    const { leftPos, topPos, rightPos, bottomPos } = this.state;
+
+    this.props.editZone(this.props.zone.id, {
+      xPos: leftPos,
+      yPos: topPos,
+      height: bottomPos - topPos,
+      width: rightPos - leftPos,
+    });
+  }
+
   styles() {
     const border = '2px solid lime';
 
@@ -161,28 +172,35 @@ export default class DropZone extends React.Component {
           style={{ ...styles.positioning, ...styles.topLeftSelector }}
           draggable
           onDrag={e => this.moveCorner('topLeft', e.pageX, e.pageY)}
+          onDragEnd={() => this.updateZone()}
         />
         <div
           style={{ ...styles.positioning, ...styles.topRightSelector }}
           draggable
           onDrag={e => this.moveCorner('topRight', e.pageX, e.pageY)}
+          onDragEnd={() => this.updateZone()}
         />
         <div
           style={{ ...styles.positioning, ...styles.bottomLeftSelector }}
           draggable
           onDrag={e => this.moveCorner('bottomLeft', e.pageX, e.pageY)}
+          onDragEnd={() => this.updateZone()}
         />
         <div
           style={{ ...styles.positioning, ...styles.bottomRightSelector }}
           draggable
           onDrag={e => this.moveCorner('bottomRight', e.pageX, e.pageY)}
+          onDragEnd={() => this.updateZone()}
         />
         <div
           style={styles.middleSelector}
           draggable
           onMouseDown={e => this.setState({ initialX: e.pageX, initialY: e.pageY })}
           onDrag={e => this.moveZone(e.pageX, e.pageY)}
-          onMouseUp={() => this.setState({ initialX: null, initialY: null })}
+          onDragEnd={() => {
+            this.setState({ initialX: null, initialY: null });
+            this.updateZone();
+          }}
         />
 
         <div className="au-c-drop-zone__tag">{_.capitalize(zone.type)} {String.fromCharCode(0 + 65)}</div>
