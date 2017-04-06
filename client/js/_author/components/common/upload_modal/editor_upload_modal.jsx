@@ -41,14 +41,7 @@ export default class EditorUploadModal extends React.Component {
         result[language] = {};
         return result;
       }, {}),
-
-      description: '',
-      altText: '',
-      license: '',
-      copyright: '',
       activeItem: null,
-      vttFile: null,
-      transcript: null,
       mediaAutoPlay: false,
       uploadedMedia: null,
       selectedMedia: null,
@@ -56,27 +49,28 @@ export default class EditorUploadModal extends React.Component {
     };
   }
 
-  getMetadata(mediaType) {
-    if (mediaType === 'audio' || mediaType === 'video') {
-      return {
-        description: this.state.description,
-        mediaAutoPlay: this.state.mediaAutoPlay,
-        vttFile: this.state.vttFile,
-        transcript: this.state.transcript,
-        license: this.state.license,
-        copyright: this.state.copyright,
-      };
-    }
-    return {
-      description: this.state.description,
-      altText: this.state.altText,
-      license: this.state.license,
-      copyright: this.state.copyright,
-    };
-  }
+  // getMetadata(mediaType) {
+  //   if (mediaType === 'audio' || mediaType === 'video') {
+  //     return {
+  //       description: this.state.description,
+  //       mediaAutoPlay: this.state.mediaAutoPlay,
+  //       vttFile: this.state.vttFile,
+  //       transcript: this.state.transcript,
+  //       license: this.state.license,
+  //       copyright: this.state.copyright,
+  //     };
+  //   }
+  //   return {
+  //     description: this.state.description,
+  //     altText: this.state.altText,
+  //     license: this.state.license,
+  //     copyright: this.state.copyright,
+  //   };
+  // }
 
   addMedia() {
-    const metaData = this.getMetadata(this.props.mediaType);
+    // const metaData = this.getMetadata(this.props.mediaType);
+    const metaData = this.state.languageMediaData;
     if (this.state.uploadedMedia) {
       this.props.insertMedia(this.state.uploadedMedia, metaData, true);
     } else if (this.state.selectedMedia) {
@@ -106,6 +100,9 @@ export default class EditorUploadModal extends React.Component {
     const languageMediaData = this.state.languageMediaData;
     languageMediaData[this.state.language][key] = val;
     this.setState({ languageMediaData });
+
+    // languageMediaData = [{ locale: 'en', description: 'this is silly', altText: 'alty salty' },
+    // {locale: 'tel'},{}]
   }
 
   render() {

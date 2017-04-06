@@ -17,7 +17,7 @@ export function uploadMedia(file, guid, bankId, metaData = {}) {
     bankId,
     file,
     guid,
-    metaData: metaData,
+    metaData,
     apiCall: true,
     type: Constants.UPLOAD_MEDIA,
     body: file,
