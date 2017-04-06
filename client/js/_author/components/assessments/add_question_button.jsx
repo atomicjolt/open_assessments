@@ -2,7 +2,7 @@ import React     from 'react';
 import localize  from '../../locales/localize';
 
 function addQuestionButton(props) {
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('addQuestionButton');
   return (
     <div className="au-c-question-add">
       <button

@@ -2,7 +2,7 @@ import React      from 'react';
 import localize   from '../../../../locales/localize';
 
 function settingsCheckbox(props) {
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('settingsCheckbox');
   return (
     <div className="au-o-right">
       <div className="au-c-checkbox au-u-ml-md">

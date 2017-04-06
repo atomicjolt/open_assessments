@@ -2,7 +2,7 @@ import React     from 'react';
 import localize  from '../../../../locales/localize';
 
 function saveOption(props) {
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('saveOption');
   return (
     <button
       className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"

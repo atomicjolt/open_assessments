@@ -46,7 +46,7 @@ class MultipleChoice extends React.Component {
 
   getFeedback() {
     const { question, type } = this.props.item;
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('multipleChoice');
     if (type !== types.multipleChoice) {
       const text = _.includes([
         types.reflection,
