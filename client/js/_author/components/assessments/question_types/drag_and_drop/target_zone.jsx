@@ -12,6 +12,9 @@ export default class TargetZone extends React.Component {
   constructor() {
     super();
     this.target = null;
+    this.state = {
+      activeZone: null,
+    };
   }
 
   render() {
@@ -29,6 +32,8 @@ export default class TargetZone extends React.Component {
               zone={zone}
               target={this.target}
               editZone={this.props.editZone}
+              setActive={() => this.setState({ activeZone: zone.id })}
+              isActive={this.state.activeZone === zone.id}
             />
           ))
         }

@@ -37,6 +37,7 @@ function serializeZones(originalZones, newZones, targetId) {
       visible: true,    // Right?
       containerId: targetId,
       // description: 'left of ball'   // Dunno what this is for
+      delete: _.get(newZone, 'delete'),
     });
   });
 
@@ -52,7 +53,7 @@ function serializeZones(originalZones, newZones, targetId) {
       dropBehaviorType: genusTypes.zone[newZones.new.type],
       visible: true,
       containerId: targetId,
-      name: 'newZone',
+      name: '',
       description: 'A new zone',
     });
   }
@@ -71,6 +72,7 @@ function serializeDroppables(originalDroppables, newDroppables) {
       dropBehaviorType: genusTypes.zone[_.get(newDroppable, 'type', droppable.type)],
       name: _.get(newDroppable, 'label', droppable.label),
       reuse: 1,  // an integer field to indicate how many times something can be re-used (zone or droppable) 0 is infinite
+      delete: _.get(newDroppable, 'delete'),
     });
   });
 

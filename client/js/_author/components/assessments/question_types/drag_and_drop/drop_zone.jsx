@@ -4,7 +4,10 @@ import _          from 'lodash';
 export default class DropZone extends React.Component {
   static propTypes = {
     zone: React.PropTypes.shape({}).isRequired,
-    target: React.PropTypes.node,
+    target: React.PropTypes.shape({}),
+    editZone: React.PropTypes.func.isRequired,
+    setActive: React.PropTypes.func.isRequired,
+    isActive: React.PropTypes.bool,
   };
 
   constructor(props) {
@@ -114,11 +117,16 @@ export default class DropZone extends React.Component {
   styles() {
     const border = '2px solid lime';
 
+    const manipulators = {
+      display: this.props.isActive ? '' : 'none',
+    };
+
     return {
       positioning: {
         position: 'absolute',
         height: '10px',
         width: '10px',
+        ...manipulators,
       },
       topLeftSelector: {
         borderTop: border,
@@ -155,7 +163,9 @@ export default class DropZone extends React.Component {
         left: '5px',
         width: 'calc(100% - 10px)',
         height: 'calc(100% - 10px)',
+        ...manipulators,
       },
+      manipulators,
     };
   }
 
@@ -167,6 +177,7 @@ export default class DropZone extends React.Component {
       <div
         className="au-c-drop-zone au-c-zone1 is-active"
         style={this.zonePosition(zone)}
+        onClick={this.props.setActive}
       >
         <div
           style={{ ...styles.positioning, ...styles.topLeftSelector }}
@@ -205,15 +216,26 @@ export default class DropZone extends React.Component {
 
         <div className="au-c-drop-zone__tag">{_.capitalize(zone.type)} {String.fromCharCode(0 + 65)}</div>
 
-        <div className="au-c-drop-zone__tool-tip is-right" style={{ display: 'none' }}>
+        <div className="au-c-drop-zone__tool-tip is-right" style={styles.manipulators}>
           <div className="au-c-input au-c-input-label--left au-c-input--white">
-            <label htmlFor="">Label</label>
+            <label htmlFor={`dropZone_${zone.id}`}>Label</label>
             <div className="au-c-input__contain">
-              <input className="au-c-text-input au-c-text-input--smaller" type="text" />
+              <input
+                id={`dropZone_${zone.id}`}
+                className="au-c-text-input au-c-text-input--smaller"
+                defaultValue={zone.label}
+                onBlur={e => this.props.editZone(zone.id, { label: e.target.value })}
+                type="text"
+              />
               <div className="au-c-input__bottom" />
             </div>
           </div>
-          <button className="au-c-btn au-c-btn--square"><i className="material-icons">delete</i></button>
+          <button
+            className="au-c-btn au-c-btn--square"
+            onClick={e => this.props.editZone(zone.id, { delete: true })}
+          >
+            <i className="material-icons">delete</i>
+          </button>
         </div>
 
       </div>
