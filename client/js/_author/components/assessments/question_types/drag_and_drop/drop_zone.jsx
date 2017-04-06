@@ -47,8 +47,8 @@ export default class DropZone extends React.Component {
     const { leftPos, topPos, rightPos, bottomPos } = this.state;
     const target = this.props.target.getBoundingClientRect();
 
-    const newY = this.boundaryCheck(y - target.top, target.bottom);
-    const newX = this.boundaryCheck(x - target.left, target.right);
+    const newY = this.boundaryCheck(y - target.top, target.bottom - target.top);
+    const newX = this.boundaryCheck(x - target.left, target.right - target.left);
     const newTop = topPos < bottomPos ? newY : bottomPos;
     const newBottom = bottomPos < topPos ? topPos : newY;
     const newLeft = leftPos < rightPos ? newX : rightPos;
