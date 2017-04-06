@@ -2,7 +2,7 @@ import React          from 'react';
 import { shallow }    from 'enzyme';
 import AssessmentForm from './assessment_form';
 
-jest.mock('../../../../libs/assets.js'); //
+jest.mock('../../../libs/assets');
 
 describe('AssessmentForm component', () => {
   let props;
