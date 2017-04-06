@@ -11,7 +11,7 @@ plugins:
   - react
   - jsx-a11y
   - import
-  - atomic-jolt
+  # - atomic-jolt
 # globals:
 #   describe: false
 #   beforeEach: false
