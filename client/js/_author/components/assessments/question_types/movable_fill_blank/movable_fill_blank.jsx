@@ -3,8 +3,9 @@ import _              from 'lodash';
 import Option         from './option';
 import Add            from '../question_common/add_option';
 import Feedback       from '../question_common/single_feedback';
+import localize     from '../../../../locales/localize';
 
-export default class MovableFillBlank extends React.Component {
+class MovableFillBlank extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
       bankId: React.PropTypes.string,
@@ -22,12 +23,14 @@ export default class MovableFillBlank extends React.Component {
     deleteChoice: React.PropTypes.func.isRequired,
     blurOptions: React.PropTypes.func.isRequired,
     createChoice: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
     isActive: React.PropTypes.bool,
     activeChoice: React.PropTypes.string,
   };
 
   render() {
     const { question, id } = this.props.item;
+    const strings = this.props.localizeStrings('movableFillBlank');
     return (
       <div>
         <div className="au-c-question__answers au-c-fill-in-the-blank__answers">
@@ -56,14 +59,14 @@ export default class MovableFillBlank extends React.Component {
             updateItem={this.props.updateItem}
             feedbackType="correctFeedback"
             feedback={question.correctFeedback}
-            labelText="Correct Feedback"
+            labelText={strings.correctFeedback}
             bankId={this.props.item.bankId}
           />
           <Feedback
             updateItem={this.props.updateItem}
             feedbackType="incorrectFeedback"
             feedback={question.incorrectFeedback}
-            labelText="Incorrect Feedback"
+            labelText={strings.incorrectFeedback}
             bankId={this.props.item.bankId}
           />
         </div>
@@ -71,3 +74,5 @@ export default class MovableFillBlank extends React.Component {
     );
   }
 }
+
+export default localize(MovableFillBlank);

@@ -2,17 +2,17 @@ import React            from 'react';
 import TestUtils        from 'react-addons-test-utils';
 import { EditAssessment }  from './_edit_assessment';
 
+jest.mock('../../../libs/assets');
+
 describe('_edit_assessment component', () => {
   let props;
   let result;
   let handleFunction;
-  let handleDeleteFunction;
   let didMount;
   let didGetAssessmentItems;
 
   beforeEach(() => {
     handleFunction = false;
-    handleDeleteFunction = false;
     didMount = false;
     didGetAssessmentItems = false;
 
@@ -39,11 +39,7 @@ describe('_edit_assessment component', () => {
         editableBankId: '77',
         publishedBankId: '77',
       },
-      editOrPublishAssessment: () => {
-        handleFunction = true;
-      },
-      createAssessmentOffered: () => {},
-      deleteAssignedAssessment: () => { handleDeleteFunction = true; },
+      togglePublishAssessment: () => {},
       getAssessments: () => { didMount = true; },
       updateAssessment: () => { handleFunction = true; },
       updateAssessmentItems: () => { handleFunction = true; },
@@ -68,6 +64,7 @@ describe('_edit_assessment component', () => {
       getItems: () => {},
       banks: [],
       updateSingleItemOrPage: () => {},
+      isPublished: false,
     };
     result = TestUtils.renderIntoDocument(<EditAssessment {...props} />);
   });
@@ -82,23 +79,6 @@ describe('_edit_assessment component', () => {
     expect(heading.length).toBe(1);
   });
 
-  xit('performs the editOrPublishAssessment & deleteAssignedAssessment functions', () => {
-    // removed until a better delete confirm is in place
-    expect(handleFunction).toBeFalsy();
-    expect(handleDeleteFunction).toBeFalsy();
-    result.editOrPublishAssessment(true);
-    expect(handleFunction).toBeTruthy();
-    expect(handleDeleteFunction).toBeTruthy();
-  });
-
-  it('performs only the editOrPublishAssessment function', () => {
-    expect(handleFunction).toBeFalsy();
-    expect(handleDeleteFunction).toBeFalsy();
-    result.editOrPublishAssessment(false);
-    expect(handleFunction).toBeTruthy();
-    expect(handleDeleteFunction).toBeFalsy();
-  });
-
   it('runs updateItemOrder function', () => {
     expect(handleFunction).toBeFalsy();
     result.updateItemOrder();
@@ -108,13 +88,6 @@ describe('_edit_assessment component', () => {
   it('runs createItem', () => {
     expect(handleFunction).toBeFalsy();
     result.createItem();
-    expect(handleFunction).toBeTruthy();
-  });
-
-  xit('runs deleteAssessmentItem', () => {
-    // removed until a better delete confirm is in place
-    expect(handleFunction).toBeFalsy();
-    result.deleteAssessmentItem();
     expect(handleFunction).toBeTruthy();
   });
 

@@ -1,8 +1,11 @@
 import React    from 'react';
 import _        from 'lodash';
 import WordType from '../question_common/word_type_dropdown';
+import localize from '../../../../locales/localize';
 
-export default function option(props) {
+function option(props) {
+  const strings = props.localizeStrings('movableWordSentanceOption');
+
   return (
     <div
       onFocus={props.selectChoice}
@@ -17,7 +20,7 @@ export default function option(props) {
           value={props.answerOrder}
           onChange={e => props.updateChoice({ answerOrder: e.target.value })}
         >
-          <option value="">N/A</option>
+          <option value="">{strings.NA}</option>
           {
             _.map(_.range(0, props.itemCount), index => (
               <option
@@ -40,7 +43,7 @@ export default function option(props) {
             className="au-c-text-input au-c-text-input--small au-c-wysiwyg"
             id={`option_text_${props.id}`}
             type="text"
-            placeholder="New Option"
+            placeholder={strings.newOption}
           />
           <div className="au-c-input__bottom" />
         </div>
@@ -69,4 +72,7 @@ option.propTypes = {
   selectChoice: React.PropTypes.func.isRequired,
   updateChoice: React.PropTypes.func.isRequired,
   deleteChoice: React.PropTypes.func.isRequired,
+  localizeStrings: React.PropTypes.func.isRequired,
 };
+
+export default localize(option);

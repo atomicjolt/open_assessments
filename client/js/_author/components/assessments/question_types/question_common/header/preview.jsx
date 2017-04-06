@@ -1,14 +1,15 @@
 import React    from 'react';
+import localize from '../../../../../locales/localize';
 
-export default function previewHeader(props) {
-
+function previewHeader(props) {
+  const strings = props.localizeStrings('previewHeader');
   return (
     <div className="au-o-right au-c-question-icons au-c-question-icons--reorder">
       <button
         onClick={props.togglePreview}
         className="au-c-btn au-c-btn--sm au-c-btn--white"
       >
-        Close Preview
+        {strings.closePreview}
       </button>
     </div>
   );
@@ -16,4 +17,7 @@ export default function previewHeader(props) {
 
 previewHeader.propTypes = {
   togglePreview: React.PropTypes.func,
+  localizeStrings: React.PropTypes.func.isRequired
 };
+
+export default localize(previewHeader);

@@ -12,7 +12,7 @@
     @include flex(1);
   }
 
-.au-c-text-input{
+.au-c-text-input, .au-c-textarea{
   width: 100%;
   color: $text-color;
   border: none;
@@ -31,6 +31,11 @@
       background: $red;
     }
   }
+}
+
+.au-c-textarea{
+  resize: none;
+  padding-top: 0.6rem;
 }
 
 .au-c-input__bottom{

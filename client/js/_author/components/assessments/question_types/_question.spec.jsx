@@ -1,7 +1,7 @@
 import React            from 'react';
 import { shallow }      from 'enzyme';
 import { Question }     from './_question';
-
+import shortAnswer      from './short_answer';
 describe('question component', () => {
   let props;
   let result;
@@ -95,8 +95,8 @@ describe('question component', () => {
     props.item.type = 'shortAnswer';
     result = shallow(<Question {...props} />);
 
-    const shortAnswer = result.find('ShortAnswer');
-    expect(shortAnswer.length).toBe(1);
+    const shortAns = result.find(shortAnswer);
+    expect(shortAns.length).toBe(1);
   });
 
   it('returns correct value from getClassName', () => {

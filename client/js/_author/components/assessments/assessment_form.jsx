@@ -3,8 +3,9 @@ import _               from 'lodash';
 import NewItem         from './new_item_form';
 import AddQuestion     from './add_question_button';
 import Question        from './question_types/_question';
+import localize        from '../../locales/localize';
 
-export default class AssessmentForm extends React.Component {
+class AssessmentForm extends React.Component {
   static propTypes = {
     items: React.PropTypes.oneOfType(
       [React.PropTypes.shape({}), React.PropTypes.arrayOf(React.PropTypes.shape({}))]
@@ -17,6 +18,7 @@ export default class AssessmentForm extends React.Component {
     createItem: React.PropTypes.func,
     updateSingleItemOrPage: React.PropTypes.func,
     deleteAssessmentItem: React.PropTypes.func,
+    localizeStrings: React.PropTypes.func,
   };
 
   constructor() {
@@ -59,11 +61,12 @@ export default class AssessmentForm extends React.Component {
 
   showSinglePageOption() {
     if (this.props.publishedAndOffered) {
+      const strings = this.props.localizeStrings('assessmentForm');
       return (
         <div className="au-o-item__top">
           <div className="au-c-checkbox au-u-right">
             <input type="checkbox" id="assessmentFormCheck01" name="check" onChange={e => this.props.updateSingleItemOrPage(e.target.checked)} />
-            <label htmlFor="assessmentFormCheck01">Single page assessment</label>
+            <label htmlFor="assessmentFormCheck01">{strings.singlePageAssessment}</label>
           </div>
         </div>
       );
@@ -89,7 +92,7 @@ export default class AssessmentForm extends React.Component {
   render() {
     const reorderActive = this.state.reorderActive;
     const canAddItem = !this.state.addingItem && this.props.name;
-
+    const strings = this.props.localizeStrings('assessmentForm');
     return (
       <div className="au-o-contain">
         <div className="au-o-item">
@@ -103,14 +106,14 @@ export default class AssessmentForm extends React.Component {
                   className="au-c-text-input au-c-text-input--large"
                   type="text"
                   id="title_field"
-                  placeholder="Untitled Assessment"
+                  placeholder={strings.placeholder}
                   onChange={e => this.setState({ title: e.target.value })}
                   onBlur={e => this.updateAssessment(e)}
                 />
                 { _.isEmpty(this.state.title) ?
                   <div>
                     <div className="au-c-input__bottom has-error" />
-                    <div className="au-c-error-text">Name is required in order to edit</div>
+                    <div className="au-c-error-text">{strings.nameRequired}</div>
                   </div> :
                   <div className="au-c-input__bottom" />
                 }
@@ -142,3 +145,4 @@ export default class AssessmentForm extends React.Component {
     );
   }
 }
+export default localize(AssessmentForm);

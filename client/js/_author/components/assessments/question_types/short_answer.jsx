@@ -1,6 +1,7 @@
 import React          from 'react';
 import _              from 'lodash';
 import Feedback       from './question_common/single_feedback';
+import localize       from '../../../locales/localize';
 
 const BOX_SIZES = {
   small: {
@@ -32,30 +33,30 @@ function updateItem(e, update) {
   });
 }
 
-export default function ShortAnswer(props) {
+function shortAnswer(props) {
   const { question } = props.item;
   const lines = question && question.expectedLines;
   const length = question && question.expectedLength;
   const boxSize = getBoxSize(lines, length);
-
+  const strings = props.localizeStrings('shortAnswer');
   return (
     <div>
       <div className="au-c-question__answers au-c-short-answer__answers">
         <div className="au-c-dropdown au-c-dropdown--medium au-c-input-label--top">
-          <label htmlFor="short-answer-size">Answer Box</label>
+          <label htmlFor="short-answer-size">{strings.answerBox}</label>
           <select
             value={boxSize}
             onChange={e => updateItem(e, props.updateItem)}
             id="short-answer-size"
           >
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
+            <option value="small">{strings.small}</option>
+            <option value="medium">{strings.medium}</option>
+            <option value="large">{strings.large}</option>
           </select>
         </div>
 
         <div className={`au-c-short-answer__example is-${boxSize}`}>
-          <span>{_.capitalize(boxSize)} Box</span>
+          <span>{strings[boxSize]} {strings.box}</span>
         </div>
       </div>
       <div className="au-c-question__feedback">
@@ -63,7 +64,7 @@ export default function ShortAnswer(props) {
           feedbackType="correctFeedback"
           feedback={question.correctFeedback}
           updateItem={props.updateItem}
-          labelText="Feedback"
+          labelText={strings.feedback}
           bankId={props.item.bankId}
         />
       </div>
@@ -71,12 +72,15 @@ export default function ShortAnswer(props) {
   );
 }
 
-ShortAnswer.propTypes = {
+shortAnswer.propTypes = {
   item: React.PropTypes.shape({
     question: React.PropTypes.shape({
       lines: React.PropTypes.number
     }),
     bankId: React.PropTypes.string,
   }),
-  updateItem: React.PropTypes.func.isRequired
+  updateItem: React.PropTypes.func.isRequired,
+  localizeStrings: React.PropTypes.func.isRequired,
 };
+
+export default localize(shortAnswer);

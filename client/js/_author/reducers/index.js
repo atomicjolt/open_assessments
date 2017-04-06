@@ -9,6 +9,7 @@ import items               from './items';
 import assessmentItems     from './assessment_items';
 import uploadedAssets      from './uploaded_assets';
 import preview             from './preview';
+import media               from './media';
 
 const rootReducer = combineReducers({
   settings,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   assessmentItems,
   uploadedAssets,
   preview,
+  media,
 });
 
 export default rootReducer;

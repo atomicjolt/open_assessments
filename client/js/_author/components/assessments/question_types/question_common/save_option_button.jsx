@@ -1,16 +1,21 @@
-import React from 'react';
+import React     from 'react';
+import localize  from '../../../../locales/localize';
 
-export default function SaveOption(props) {
+function saveOption(props) {
+  const strings = props.localizeStrings('saveOption');
   return (
     <button
       className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-md"
       onClick={props.save}
     >
-      Save Options
+      {strings.saveOptions}
     </button>
   );
 }
 
-SaveOption.propTypes = {
+saveOption.propTypes = {
   save: React.PropTypes.func.isRequired,
+  localizeStrings: React.PropTypes.func.isRequired,
 };
+
+export default localize(saveOption);

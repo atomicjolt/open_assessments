@@ -1,6 +1,5 @@
 import React          from 'react';
 import { shallow }    from 'enzyme';
-import TestUtils      from 'react-addons-test-utils';
 import AssessmentForm from './assessment_form';
 
 describe('AssessmentForm component', () => {
@@ -56,13 +55,13 @@ describe('AssessmentForm component', () => {
   it('employs show a new modal when items is empty', () => {
     props.items = [];
     result = shallow(<AssessmentForm {...props} />);
-    expect(result.find('newItemForm').length).toBe(1);
+    expect(result.find('NewItemForm').length).toBe(1);
     expect(result.find('.is-active').length).toEqual(0);
     expect(result.instance().state).not.toBeNull();
   });
 
   it('does not show the new modal when items is not empty', () => {
-    expect(result.find('newItemForm').length).toBe(0);
+    expect(result.find('NewItemForm').length).toBe(0);
     expect(result.find('.is-active').length).toEqual(0);
     expect(result.instance().state).not.toBeNull();
   });

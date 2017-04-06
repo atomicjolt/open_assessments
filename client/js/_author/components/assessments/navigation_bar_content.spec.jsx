@@ -7,13 +7,12 @@ describe('New Assessments View', () => {
   let result;
   let props;
   const isPublished = true;
-  let isEditOrPublishAssessment = false;
   let bankerId;
 
   beforeEach(() => {
     props = {
       view: 'assessments',
-      editOrPublishAssessment: () => isEditOrPublishAssessment = !isEditOrPublishAssessment,
+      togglePublishAssessment: () => {},
       isPublished,
       items: [{'something': 'stuff'}, {'something': 'boom'}],
       assessment: {
@@ -27,6 +26,9 @@ describe('New Assessments View', () => {
   });
 
   it('determines amount of buttons from number of items', () => {
+    props.isPublished = false;
+    result = TestUtils.renderIntoDocument(<Stub><AssessmentView {...props} /></Stub>);
+
     let buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
     expect(buttons.length).toBe(2);
     props.items = [];
@@ -36,10 +38,11 @@ describe('New Assessments View', () => {
   });
 
   it('click editPublish button', () => {
+    spyOn(props, 'togglePublishAssessment');
     result = TestUtils.renderIntoDocument(<Stub><AssessmentView {...props} /></Stub>);
     const buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
     TestUtils.Simulate.click(buttons[1]);
-    expect(isEditOrPublishAssessment).toBeTruthy();
+    expect(props.togglePublishAssessment).toHaveBeenCalled();
   });
 
   it('Determines Icon status', () => {

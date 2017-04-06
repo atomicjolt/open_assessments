@@ -2,6 +2,34 @@
   width: 100%;
   border-collapse: collapse;
 
+  &.is-empty{
+    position: relative;
+    tr{
+      td{
+        border-bottom: none;
+        background: none !important;
+        div{
+          @include center(horizontal);
+          position: absolute;
+          top: 200px;
+          font-size: 2rem;
+          color: #aaa;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  .au-deleting-assessment {
+    height: 5rem;
+    position: relative;
+    .loader {
+      position: absolute;
+      top: 10px;
+      left: 50px;
+    }
+  }
+
   th{
     height: 5rem;
     border-bottom: $border;
@@ -62,9 +90,7 @@
   }
 
   tr{
-
-    &:hover{
-
+    &:hover, &.focused{
       td{
         background: $purple;
 

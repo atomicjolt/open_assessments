@@ -4,7 +4,7 @@ import { Constants as AssessmentConstants } from '../actions/assessment';
 
 describe('assessment loader middleware', function() {
 
-  Helper.stubAjax();
+  Helper.mockAllAjax();
 
   it('implements Redux middleware interface', () => {
     const store = { getState: () => {} };
@@ -32,7 +32,7 @@ describe('assessment loader middleware', function() {
     actionHandler(action);
   });
 
-  xit('loads the assessment using data in the page', () => {
+  it('loads the assessment using data in the page', () => {
     const action = {
       type: AssessmentConstants.LOAD_ASSESSMENT
     };
