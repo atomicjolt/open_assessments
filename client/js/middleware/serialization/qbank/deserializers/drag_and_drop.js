@@ -2,6 +2,7 @@ import _                  from 'lodash';
 import baseDeserializer   from './base';
 import { getQbankType }   from '../../../../constants/genus_types';
 import { getImageUrl }    from '../../serializer_utils';
+import genusTypes         from '../../../../constants/genus_types';
 
 function deserializeTarget(targets) {
   const target = targets[0];
@@ -31,14 +32,15 @@ function deserializeZones(zones) {
   return newZones;
 }
 
-function deserializeDropObjects(droppables) {
+function deserializeDropObjects(droppables, zoneConditions) {
   const newDropObjects = {};
   _.forEach(droppables, (droppable) => {
     newDropObjects[droppable.id] = {
       id: droppable.id,
       label: droppable.name,
       image: getImageUrl(droppable.text),
-      type: getQbankType(droppable.dropBehaviorType)
+      type: getQbankType(droppable.dropBehaviorType),
+      correctZone: _.get(_.find(zoneConditions, { droppableId: droppable.id }), 'zoneId'),
     };
   });
   return newDropObjects;
@@ -46,12 +48,26 @@ function deserializeDropObjects(droppables) {
 
 export default function dragAndDrop(item) {
   const newItem = baseDeserializer(item);
+  const correctAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.rightAnswer });
+  const incorrectAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.wrongAnswer });
 
   newItem.question = {
     ...newItem.question,
     target: deserializeTarget(_.get(item, 'question.targets')),
     zones: deserializeZones(_.get(item, 'question.zones')),
-    dropObjects: deserializeDropObjects(_.get(item, 'question.droppables')),
+    dropObjects: deserializeDropObjects(
+      _.get(item, 'question.droppables'),
+      _.get(correctAnswer, 'zoneConditions')),
+    correctFeedback: {
+      text: _.get(correctAnswer, 'feedback.text'),
+      answerId: _.get(correctAnswer, 'id'),
+      fileIds: _.get(correctAnswer, 'fileIds')
+    },
+    incorrectFeedback: {
+      text: _.get(incorrectAnswer, 'feedback.text'),
+      answerId: _.get(incorrectAnswer, 'id'),
+      fileIds: _.get(incorrectAnswer, 'fileIds')
+    },
   };
 
   return newItem;

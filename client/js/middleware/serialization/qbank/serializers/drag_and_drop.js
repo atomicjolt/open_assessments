@@ -2,7 +2,6 @@ import _                         from 'lodash';
 import baseSerializer            from './base';
 import { scrub }                 from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
-import guid                      from '../../../../utils/guid';
 
 function buildImageTag(url, alt) {
   return `<img src="${url}" alt="${alt}"/>`;
@@ -31,7 +30,7 @@ function serializeZones(originalZones, newZones, targetId) {
         coordinateValues: [_.get(newZone, 'xPos', zone.xPos), _.get(newZone, 'yPos', zone.yPos)],
         recordType: genusTypes.zone.rectangle,
       },
-      reuse: 0, // an integer field to indicate how many times something can be re-used (zone or droppable) 0 is infinite
+      reuse: 0, // an integer to indicate how many times something can be re-used 0 is infinite
       dropBehaviorType: genusTypes.zone[_.get(newZone, 'type', zone.type)],
       name: _.get(newZone, 'label', zone.label),
       visible: true,    // Right?
@@ -70,7 +69,7 @@ function serializeDroppables(originalDroppables, newDroppables) {
       text: buildImageTag(_.get(newDroppable, 'image', droppable.image), _.get(newDroppable, 'label', droppable.label)),
       dropBehaviorType: genusTypes.zone[_.get(newDroppable, 'type', droppable.type)],
       name: _.get(newDroppable, 'label', droppable.label),
-      reuse: 1,  // an integer field to indicate how many times something can be re-used (zone or droppable) 0 is infinite
+      reuse: 1,
       delete: _.get(newDroppable, 'delete'),
     });
   });
@@ -102,7 +101,43 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   return scrub(newQuestion);
 }
 
-// TODO: make this when I have data
+function serializeAnswers(oldDropObjects, dropObjects, oldAnswers, correctFeedback, incorrectFeedback) {
+  const answers = [];
+
+  let correctAnswer = {
+    id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.rightAnswer }), 'id'),
+    genusTypeId: genusTypes.answer.rightAnswer,
+    feedback: _.get(correctFeedback, 'text'),
+    fileIds: _.get(correctFeedback, 'fileIds'),
+    zoneConditions: scrub(_.map(oldDropObjects, (object) => {
+      const zoneId = _.get(dropObjects, `[${object.id}].correctZone`, object.correctZone);
+      if (zoneId) {
+        return {
+          droppableId: object.id,
+          zoneId
+        };
+      }
+      return null;
+    })),
+  };
+  let incorrectAnswer = {
+    id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.wrongAnswer }), 'id'),
+    genusTypeId: genusTypes.answer.wrongAnswer,
+    feedback: _.get(incorrectFeedback, 'text'),
+    fileIds: _.get(incorrectFeedback, 'fileIds'),
+    // So this needs to be every combination of incorrect answers I think...
+    // that is n! - 1, so I am going to leave this blank
+    zoneConditions: [],
+  };
+
+  correctAnswer = scrub(correctAnswer);
+  incorrectAnswer = scrub(incorrectAnswer);
+  answers.push(correctAnswer);
+  answers.push(incorrectAnswer);
+
+  return answers;
+}
+
 export default function dragAndDrop(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
 
@@ -113,5 +148,19 @@ export default function dragAndDrop(originalItem, newItemAttributes) {
       ...serializeQuestion(originalItem.question, question)
     };
   }
+
+  if (question.zones
+    || question.dropObjects
+    || question.correctFeedback
+    || question.incorrectFeedback) {
+    newItem.answers = serializeAnswers(
+      originalItem.question.dropObjects,
+      question.dropObjects,
+      _.get(originalItem, 'originalItem.answers'),
+      _.get(question, 'correctFeedback'),
+      _.get(question, 'incorrectFeedback')
+    );
+  }
+
   return scrub(newItem);
 }

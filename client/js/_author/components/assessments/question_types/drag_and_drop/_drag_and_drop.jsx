@@ -63,7 +63,8 @@ export class DragAndDrop extends React.Component {
         <div className="au-c-drop-zone__answers__label">Draggable answers</div>
         <DragArea
           dropObjects={question.dropObjects}
-          updateChoice={(choiceId, choice, fileIds) =>
+          zones={question.zones}
+          updateDropObject={(choiceId, choice, fileIds) =>
             this.props.updateChoice(id, choiceId, choice, fileIds, 'dropObjects')}
           loadingMedia={this.props.loadingMedia}
           images={this.props.images}
