@@ -15,13 +15,13 @@ class NavigationBarContent extends React.Component {
   };
 
   publishButton() {
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('navigationBarContent');
     if (!_.isEmpty(this.props.items)) {
       return (
         <button
           className="au-c-btn au-c-btn--sm au-c-btn--green"
           onClick={() => {
-            this.props.togglePublishAssessment();
+            this.props.togglePublishAssessment('navigationBarContent');
             appHistory.push('/');
           }}
         >
@@ -39,7 +39,7 @@ class NavigationBarContent extends React.Component {
 
   render() {
     const { bankId, id } = this.props.assessment;
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('navigationBarContent');
     return (
       <div className="au-c-header-bottom">
         <div className="au-c-header-bottom__left">

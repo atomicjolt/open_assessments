@@ -35,7 +35,7 @@ class AudioLimit extends React.Component {
   }
 
   rangeWarning() {
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('audioLimit');
     return (
       <span className="au-c-inline-error">{strings.rangeWarning} {`${MAX_TIME}`}</span>
     );

@@ -32,7 +32,7 @@ class NewItemForm extends React.Component {
   }
 
   render() {
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('newItemForm');
     return (
       <div className="au-o-item au-c-question is-active">
         <div className="au-o-item__top">

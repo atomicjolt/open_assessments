@@ -1,4 +1,3 @@
-import _       from 'lodash';
 import React   from 'react';
 import TinyMCE from 'react-tinymce';
 
@@ -19,7 +18,6 @@ import guid    from '../../../utils/guid';
 export default class TinyWrapper extends React.Component {
   static propTypes = {
     text: React.PropTypes.string,
-    uploadMedia: React.PropTypes.func.isRequired,
     editorKey: React.PropTypes.string,
     onBlur: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func.isRequired,
@@ -89,7 +87,7 @@ export default class TinyWrapper extends React.Component {
           id={`${this.id}-tinymce`}
           content={this.props.text}
           config={this.tinyMCEConfig()}
-          onBlur={e => { this.props.onBlur(e.target.getContent(), e.target.isDirty()); }}
+          onBlur={(e) => { this.props.onBlur(e.target.getContent(), e.target.isDirty()); }}
           onFocus={this.props.onFocus}
         />
       </div>

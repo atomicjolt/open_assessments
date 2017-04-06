@@ -13,6 +13,7 @@ export default function PublishButton(props) {
         e.stopPropagation();
         togglePublishAssessment(assessment);
       }}
+      onFocus={props.onFocus}
     >
       { icon }
     </button>
@@ -21,5 +22,6 @@ export default function PublishButton(props) {
 
 PublishButton.propTypes = {
   togglePublishAssessment: React.PropTypes.func.isRequired,
+  onFocus: React.PropTypes.func.isRequired,
   assessment: React.PropTypes.shape({}).isRequired,
 };

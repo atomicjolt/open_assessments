@@ -6,7 +6,7 @@ import localize                 from '../../locales/localize';
 
 function navigationBarContent(props) {
 
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('navigationBarContent');
   const button = props.currentBankId ? (
     <button
       className="au-c-btn au-c-btn--sm au-c-btn--maroon au-c-btn--new u-ml-md"
@@ -15,7 +15,7 @@ function navigationBarContent(props) {
       {strings.new}
     </button>
   ) : null;
-
+ 
   return (
     <div className="au-c-header-bottom">
       <div className="au-c-header-bottom__left">

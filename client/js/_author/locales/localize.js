@@ -3,7 +3,7 @@ import localizedStrings from './locales';
 
 export default function localize(component, narrow = true) {
   function strings(key) {
-    return narrow ? localizedStrings[key || _.camelCase(component.name)] : localizedStrings;
+    return narrow ? localizedStrings[key || _.camelCase(component.name)] || {} : localizedStrings;
   }
 
   if (component.prototype.render) {
