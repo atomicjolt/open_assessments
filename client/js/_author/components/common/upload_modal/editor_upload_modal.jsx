@@ -31,7 +31,6 @@ export default class EditorUploadModal extends React.Component {
   static propTypes = {
     isOpen: React.PropTypes.bool,
     closeModal: React.PropTypes.func.isRequired,
-    id: React.PropTypes.string,
     loading: React.PropTypes.bool,
     media: React.PropTypes.shape({}),
     mediaType: React.PropTypes.string,

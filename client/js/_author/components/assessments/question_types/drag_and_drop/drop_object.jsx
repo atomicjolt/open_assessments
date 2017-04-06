@@ -66,14 +66,8 @@ export default function dropObject(props) {
 }
 
 dropObject.propTypes = {
-  object: React.PropTypes.shape({
-    id: React.PropTypes.string,
-    label: React.PropTypes.string,
-  }).isRequired,
-  zones: React.PropTypes.shape({
-    id: React.PropTypes.string,
-    index: React.PropTypes.number,
-  }).isRequired,
+  object: React.PropTypes.shape({}).isRequired,
+  zones: React.PropTypes.shape({}).isRequired,
   updateObject: React.PropTypes.func.isRequired,
   setActive: React.PropTypes.func.isRequired,
   isActive: React.PropTypes.bool,
