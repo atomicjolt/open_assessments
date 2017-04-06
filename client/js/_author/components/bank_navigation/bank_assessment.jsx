@@ -46,16 +46,18 @@ export default class BankAssessment extends React.Component {
   render() {
     const { assessment, togglePublishAssessment } = this.props;
     const displayName = _.get(assessment, 'displayName.text');
+    // we pass empty functions to list item so that you cant open an assessment while its
+    // being deleted.
     if (this.state.deleting) {
       return  (
         <ListItem
           {...this.props}
-          selectItem={() => this.selectItem()}
-          onFocus={this.props.onFocus}
+          selectItem={() => {}}
+          onFocus={() => {}}
         >
-          <div className="au-deleting-assessment">
+          <td className="au-deleting-assessment">
             <DotLoader />
-          </div>
+          </td>
         </ListItem>
       );
     }
