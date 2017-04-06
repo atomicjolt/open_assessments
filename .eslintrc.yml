@@ -46,9 +46,9 @@ rules:
   space-before-function-paren:
     - 2
     - never
-#   func-names:
-#     - 2
-#     - as-needed
+  func-names:
+    - 2
+    - as-needed
 #   react/prefer-stateless-function:
 #     - 2
 #     - ignorePureComponents: true
