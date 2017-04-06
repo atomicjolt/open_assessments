@@ -24,7 +24,7 @@ globals:
   module: false
   __DEV__: false
 rules:
-  atomic-jolt/no-splat-props: 2
+  # atomic-jolt/no-splat-props: 2
   linebreak-style:
     - error
     - unix
