@@ -5,7 +5,7 @@ export default function addZoneDropdown(props) {
     <ul className="au-c-button-dropdown u-ml-sm">
       <li>
         <button
-          className="au-c-btn au-c-btn--sm au-c-btn--dropdown"
+          className="au-c-btn au-c-btn--sm au-c-btn--dropdown au-u-ml-sm"
           onClick={props.toggle}
         >
           {props.text}
