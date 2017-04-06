@@ -114,6 +114,7 @@ export default class DropZone extends React.Component {
     });
   }
 
+  // TODO: Some of this could be extracted to css, other parts not so much
   styles() {
     const border = '2px solid lime';
 
@@ -214,7 +215,9 @@ export default class DropZone extends React.Component {
           }}
         />
 
-        <div className="au-c-drop-zone__tag">{_.capitalize(zone.type)} {String.fromCharCode(0 + 65)}</div>
+        <div className="au-c-drop-zone__tag">
+          {_.capitalize(zone.type)} {String.fromCharCode(zone.index + 65)}
+        </div>
 
         <div className="au-c-drop-zone__tool-tip is-right" style={styles.manipulators}>
           <div className="au-c-input au-c-input-label--left au-c-input--white">

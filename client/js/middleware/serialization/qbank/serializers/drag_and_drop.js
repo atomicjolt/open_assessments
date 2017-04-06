@@ -28,7 +28,7 @@ function serializeZones(originalZones, newZones, targetId) {
         height: _.get(newZone, 'height', zone.height),
         width: _.get(newZone, 'width', zone.width),
         // TODO: fix this for zeros
-        coordinateValues: [_.get(newZone, 'xPos', zone.xPos), _.get(newZone, 'yPos', zone.xPos)],
+        coordinateValues: [_.get(newZone, 'xPos', zone.xPos), _.get(newZone, 'yPos', zone.yPos)],
         recordType: genusTypes.zone.rectangle,
       },
       reuse: 0, // an integer field to indicate how many times something can be re-used (zone or droppable) 0 is infinite
@@ -65,7 +65,6 @@ function serializeDroppables(originalDroppables, newDroppables) {
   if (!newDroppables) { return null; }
   const droppables =  _.map(originalDroppables, (droppable) => {
     const newDroppable = newDroppables[droppable.id];
-    // TODO: not spider-man
     return scrub({
       id: droppable.id,
       text: buildImageTag(_.get(newDroppable, 'image', droppable.image), _.get(newDroppable, 'label', droppable.label)),

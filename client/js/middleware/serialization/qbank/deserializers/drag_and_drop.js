@@ -16,7 +16,7 @@ function deserializeTarget(targets) {
 
 function deserializeZones(zones) {
   const newZones = {};
-  _.forEach(zones, (zone) => {
+  _.forEach(zones, (zone, index) => {
     newZones[zone.id] = {
       id: zone.id,
       label: zone.name,
@@ -25,6 +25,7 @@ function deserializeZones(zones) {
       xPos: zone.spatialUnit.coordinateValues[0],
       yPos: zone.spatialUnit.coordinateValues[1],
       type: getQbankType(zone.dropBehaviorType),
+      index
     };
   });
   return newZones;
