@@ -20,6 +20,7 @@ export default class TargetMenu extends React.Component {
 
   replaceImage(media, metadata, newMedia) {
     this.props.uploadMedia(media, 'target', metadata, newMedia);
+    this.setState({ showModal: false });
   }
 
   selectImage(media, metadata, newMedia) {
