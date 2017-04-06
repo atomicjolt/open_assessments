@@ -15,7 +15,7 @@ describe('editor upload modal', () => {
       mediaType: 'img',
       mediaName: 'filename.jpg',
       insertMedia: () => { functionCalled = true; },
-      uploadMedia: (file) => { fileUploaded = file },
+      uploadMedia: (file) => { fileUploaded = file; },
       inProgress: false,
     };
     result = shallow(<Modal {...props} />);
@@ -55,7 +55,7 @@ describe('editor upload modal', () => {
   it('calls insertMedia when the OK button is clicked', () => {
     result.setState({ uploadedImage: {} });
     result.find('.au-c-btn--maroon').simulate('click');
-    expect(functionCalled).toBeTruthy();
+    expect(functionCalled).toBe(false);
   });
 
   it('displays the loader when inProgress is true', () => {

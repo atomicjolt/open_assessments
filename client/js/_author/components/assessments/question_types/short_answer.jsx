@@ -38,7 +38,7 @@ function shortAnswer(props) {
   const lines = question && question.expectedLines;
   const length = question && question.expectedLength;
   const boxSize = getBoxSize(lines, length);
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('shortAnswer');
   return (
     <div>
       <div className="au-c-question__answers au-c-short-answer__answers">

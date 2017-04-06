@@ -204,7 +204,7 @@ export class Question extends React.Component {
   }
 
   deleteChoice(choice) {
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('question');
     if (confirm(strings.confirm)) {
       this.updateItem({
         question: {

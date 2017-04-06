@@ -66,7 +66,7 @@ export class AddImage extends React.Component {
   }
 
   render() {
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('addImage');
     return (
       <div className="au-c-image-sequence-answer-add">
         <button

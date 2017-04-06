@@ -11,20 +11,31 @@ import PreviewButton    from './buttons/preview_button';
 import DotLoader        from '../common/dot_loader';
 
 export default class BankAssessment extends React.Component {
-  constructor(){
+  static propTypes = {
+    assessment: React.PropTypes.shape({
+      isPublished: React.PropTypes.bool.isRequired,
+      bankId: React.PropTypes.string.isRequired,
+      id: React.PropTypes.string.isRequired,
+    }).isRequired,
+    togglePublishAssessment: React.PropTypes.func.isRequired,
+    onFocus: React.PropTypes.func.isRequired,
+    deleteAssessment: React.PropTypes.func.isRequired,
+  };
+
+  constructor() {
     super();
     this.state = {
       deleting: false,
-    }
+    };
   }
 
-  deleteAssessment(...args){
-    this.setState({deleting: true});
+  deleteAssessment(...args) {
+    this.setState({ deleting: true });
     this.props.deleteAssessment(...args);
   }
 
-  selectItem(){
-    const {assessment} = this.props;
+  selectItem() {
+    const { assessment } = this.props;
     if (assessment.isPublished) {
       appHistory.push(`banks/${assessment.bankId}/assessments/${assessment.id}/preview`);
       return;
@@ -32,20 +43,29 @@ export default class BankAssessment extends React.Component {
     appHistory.push(`banks/${assessment.bankId}/assessments/${assessment.id}`);
   }
 
-  render(){
+  render() {
     const { assessment, togglePublishAssessment } = this.props;
     const displayName = _.get(assessment, 'displayName.text');
-    if(this.state.deleting){
+    if (this.state.deleting) {
       return  (
-        <ListItem {...this.props} selectItem={() => {}} onFocus={() => {}}>
-          <div className='au-deleting-assessment'>
+        <ListItem
+          {...this.props}
+          selectItem={() => this.selectItem()}
+          onFocus={this.props.onFocus}
+        >
+          <div className="au-deleting-assessment">
             <DotLoader />
           </div>
         </ListItem>
       );
     }
     return (
-      <ListItem {...this.props} bank={this.props.assessment} selectItem={()=>this.selectItem()} onFocus={this.props.onFocus}>
+      <ListItem
+        {...this.props}
+        bank={this.props.assessment}
+        selectItem={() => this.selectItem()}
+        onFocus={this.props.onFocus}
+      >
         <td>
           <i className="material-icons">description</i>
         </td>
@@ -54,7 +74,7 @@ export default class BankAssessment extends React.Component {
           <PublishButton
             assessment={assessment}
             togglePublishAssessment={togglePublishAssessment}
-          onFocus={this.props.onFocus}
+            onFocus={this.props.onFocus}
           />
         </td>
         <td>
@@ -62,20 +82,13 @@ export default class BankAssessment extends React.Component {
             <EmbedButton {...this.props} />
             <EditButton {...this.props} />
             <PreviewButton {...this.props} />
-            <DeleteButton {...this.props} deleteAssessment={(...args) => this.deleteAssessment(...args)}/>
+            <DeleteButton
+              {...this.props}
+              deleteAssessment={(...args) => this.deleteAssessment(...args)}
+            />
           </div>
         </td>
       </ListItem>
     );
   }
 }
-
-BankAssessment.propTypes = {
-  assessment: React.PropTypes.shape({
-    isPublished: React.PropTypes.bool.isRequired,
-    bankId: React.PropTypes.string.isRequired,
-    id: React.PropTypes.string.isRequired,
-  }).isRequired,
-  togglePublishAssessment: React.PropTypes.func.isRequired,
-  onFocus: React.PropTypes.func.isRequired,
-};

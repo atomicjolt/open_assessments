@@ -27,7 +27,7 @@ class MovableWordSentence extends React.Component {
 
   render() {
     const { question, id } = this.props.item;
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('movableWordSentence');
     return (
       <div>
         <div

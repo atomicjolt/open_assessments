@@ -82,6 +82,7 @@ export default class Api {
           request = Request.get(fullUrl);
           break;
         case NetworkConstants.POST:
+          debugger;
           request = Request.post(fullUrl).send(body);
           break;
         case NetworkConstants.PUT:

@@ -8,7 +8,7 @@ import Feedback     from './option_feedback';
 import localize     from '../../../../locales/localize';
 
 function multipleChoiceOptions(props) {
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('multipleChoiceOptions');
   const hideFeedback = (props.itemType !== types.multipleChoice) ||
     !(props.isActive || props.feedback);
 

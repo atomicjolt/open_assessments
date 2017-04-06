@@ -61,7 +61,7 @@ class AssessmentForm extends React.Component {
 
   showSinglePageOption() {
     if (this.props.publishedAndOffered) {
-      const strings = this.props.localizeStrings();
+      const strings = this.props.localizeStrings('assessmentForm');
       return (
         <div className="au-o-item__top">
           <div className="au-c-checkbox au-u-right">
@@ -92,7 +92,7 @@ class AssessmentForm extends React.Component {
   render() {
     const reorderActive = this.state.reorderActive;
     const canAddItem = !this.state.addingItem && this.props.name;
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('assessmentForm');
     return (
       <div className="au-o-contain">
         <div className="au-o-item">

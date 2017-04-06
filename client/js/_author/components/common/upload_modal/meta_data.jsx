@@ -55,7 +55,7 @@ export default class Metadata extends React.Component {
           <label htmlFor="meta_upload_desc">Description</label>
           <div className="au-c-input__contain">
             <textarea
-              value={this.props.metaData.description ? this.props.metaData.description : ''}
+              value={this.props.metaData.description || ''}
               ref={(area) => { this.textArea = area; }}
               className="au-c-textarea au-c-text-input--smaller"
               id="meta_upload_desc"
@@ -78,7 +78,7 @@ export default class Metadata extends React.Component {
               <label htmlFor={`meta_upload_${type}`}>{this.labelName(type)}</label>
               <div className="au-c-input__contain">
                 <input
-                  value={this.props.metaData[type] ? this.props.metaData[type] : ''}
+                  value={this.props.metaData[type] || ''}
                   className="au-c-text-input au-c-text-input--smaller"
                   id={`meta_upload_${type}`}
                   type="text"

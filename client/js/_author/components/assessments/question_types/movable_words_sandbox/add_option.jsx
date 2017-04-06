@@ -2,7 +2,7 @@ import React      from 'react';
 import localize   from '../../../../locales/localize';
 
 function addOption(props) {
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('addOption');
   return (
     <div
       className="au-c-answer au-o-flex-center au-c-answer--add"

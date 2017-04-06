@@ -6,7 +6,7 @@ import localize                 from '../../locales/localize';
 
 function navigationBarContent(props) {
 
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('navigationBarContent');
 
   return (
     <div className="au-c-header-bottom">

@@ -2,7 +2,7 @@ import React    from 'react';
 import localize from '../../../../../locales/localize';
 
 function previewHeader(props) {
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('previewHeader');
   return (
     <div className="au-o-right au-c-question-icons au-c-question-icons--reorder">
       <button
