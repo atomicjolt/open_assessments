@@ -49,7 +49,6 @@ export default class Metadata extends React.Component {
   }
 
   render() {
-    // _.get(this, 'props.mediaItem.description.text')
     return (
       <div>
         <div className="au-c-input au-c-input-label--left">
@@ -98,11 +97,11 @@ export default class Metadata extends React.Component {
               <div className="au-c-input__contain">
                 <input
                   value={this.props.metaData[type] ? this.props.metaData[type] : ''}
-                  className="au-c-text-input au-c-text-input--smaller"
+                  className=""
                   id={`meta_upload_${type}`}
-                  type="input"
+                  type="file"
                   tabIndex="0"
-                  onChange={e => this.props.updateMetadata(type, e.target.value)}
+                  onChange={e => this.props.updateMetadata(type, e.target.files[0])}
                 />
                 <div className="au-c-input__bottom" />
               </div>
