@@ -10,6 +10,7 @@ import { types as GenusTypes }  from '../../../constants/genus_types';
 
 function select(state) {
   return {
+    mediaTypes: state.media,
     img: state.media.image,
     video: state.media.video,
     audio: state.media.audio,
@@ -27,6 +28,7 @@ export class OeaEditor extends React.Component {
     text: React.PropTypes.string,
     uploadMedia: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}),
+    mediaTypes: React.PropTypes.shape({}),
     fileIds: React.PropTypes.shape({}),
     textSize: React.PropTypes.string,
     error: React.PropTypes.string,
