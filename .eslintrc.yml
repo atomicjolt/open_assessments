@@ -44,8 +44,8 @@ rules:
   react/require-default-props: 0
   jsx-a11y/no-static-element-interactions: 0
   space-before-function-paren:
-#     - 2
-#     - never
+    - 2
+    - never
 #   func-names:
 #     - 2
 #     - as-needed
