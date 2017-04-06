@@ -49,9 +49,9 @@ rules:
   func-names:
     - 2
     - as-needed
-#   react/prefer-stateless-function:
-#     - 2
-#     - ignorePureComponents: true
+  react/prefer-stateless-function:
+    - 2
+    - ignorePureComponents: true
 #   react/forbid-prop-types:
 #     - 2
 #     - forbid:
