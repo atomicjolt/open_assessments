@@ -1,6 +1,6 @@
-import React            from 'react';
-import { connect }            from 'react-redux';
-import _                from 'lodash';
+import React        from 'react';
+import { connect }  from 'react-redux';
+import _            from 'lodash';
 
 import * as ItemActions   from '../../../../actions/qbank/items';
 import MovableFillBlank   from './movable_fill_blank/movable_fill_blank';
@@ -14,6 +14,7 @@ import ImageSequence      from './image_sequence/_image_sequence';
 import ShortAnswer        from './short_answer';
 import WordSentence       from './movable_word_sentence/movable_word_sentence';
 import MovableWordSandbox from './movable_words_sandbox/movable_words_sandbox';
+import DragAndDrop        from './drag_and_drop/_drag_and_drop';
 import types              from '../../../../constants/question_types';
 import languages          from '../../../../constants/language_types';
 import Preview            from './preview_question';
@@ -63,6 +64,11 @@ export class Question extends React.Component {
     [types.multipleReflection]: MultipleChoice,
     [types.reflection]: MultipleChoice,
     [types.shortAnswer]: ShortAnswer,
+    [types.fileUpload]: FileUpload,
+    [types.audioUpload]: AudioUpload,
+    [types.movableWordSandbox]: MovableWordSandbox,
+    [types.movableWordSentence]: WordSentence,
+    [types.dragAndDrop]: DragAndDrop,
     [types.imageSequence]: ImageSequence,
   };
 
@@ -120,12 +126,12 @@ export class Question extends React.Component {
     }
   }
 
-  updateChoice(itemId, choiceId, choice, fileIds) {
+  updateChoice(itemId, choiceId, choice, fileIds, type) {
     const { item } = this.props;
     const updateAttributes = {
       id: itemId,
       question: {
-        choices: {
+        [type || 'choices']: {
           [choiceId]: choice,
         },
         fileIds,
@@ -228,13 +234,14 @@ export class Question extends React.Component {
         <Component
           item={_.merge(item, this.state.item)}
           updateItem={(newProps, forceSkipState) => this.updateItem(newProps, forceSkipState)}
-          updateChoice={(itemId, choiceId, choice, fileIds) =>
-            this.updateChoice(itemId, choiceId, choice, fileIds)}
+          updateChoice={(itemId, choiceId, choice, fileIds, type) =>
+            this.updateChoice(itemId, choiceId, choice, fileIds, type)}
           isActive={this.props.isActive}
           activeChoice={this.state.activeChoice}
           selectChoice={choiceId => this.selectChoice(choiceId)}
           blurOptions={e => this.blurOptions(e)}
-          createChoice={(text, fileIds) => this.props.createChoice(bankId, item.id, text, fileIds)}
+          createChoice={(text, fileIds, type) =>
+            this.props.createChoice(bankId, item.id, text, fileIds, type)}
           deleteChoice={choice => this.deleteChoice(choice)}
           save={() => this.saveStateItem()}
         />
