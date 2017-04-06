@@ -95,9 +95,16 @@ export default class EditorUploadModal extends React.Component {
     });
   }
 
+  metadataFileTypes(mediaType) {
+    if (mediaType === 'audio' || mediaType === 'video') {
+      return ['vttFile', 'transcript'];
+    }
+    return [];
+  }
+
   metadataTypes(mediaType) {
     if (mediaType === 'audio' || mediaType === 'video') {
-      return ['license', 'copyright', 'vttFile', 'transcript'];
+      return ['license', 'copyright'];
     }
     return ['altText', 'license', 'copyright'];
   }
@@ -169,8 +176,10 @@ export default class EditorUploadModal extends React.Component {
             </div>
           </div>
           {
+            // TODO Pass metadata file types
             this.state.uploadedMedia ? <Metadata
               metadataTypes={this.metadataTypes(this.props.mediaType)}
+              mediadataFileTypes={this.metadataFileTypes(this.props.mediaType)}
               selectedLanguage={this.state.language}
               updateMetadata={(key, val) => this.setters(key, val)}
               mediaItem={this.state.selectedMedia}

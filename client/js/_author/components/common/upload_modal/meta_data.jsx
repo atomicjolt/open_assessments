@@ -6,6 +6,7 @@ export default class Metadata extends React.Component {
     id: React.PropTypes.string,
     updateMetadata: React.PropTypes.func.isRequired,
     metadataTypes: React.PropTypes.arrayOf(React.PropTypes.string),
+    metadataFileTypes: React.PropTypes.arrayOf(React.PropTypes.string),
     metaData: React.PropTypes.shape({
       description: React.PropTypes.string,
     }),
@@ -82,6 +83,24 @@ export default class Metadata extends React.Component {
                   className="au-c-text-input au-c-text-input--smaller"
                   id={`meta_upload_${type}`}
                   type="text"
+                  tabIndex="0"
+                  onChange={e => this.props.updateMetadata(type, e.target.value)}
+                />
+                <div className="au-c-input__bottom" />
+              </div>
+            </div>
+          ))
+        }
+        {
+          _.map(this.props.metadataFileTypes, type => (
+            <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
+              <label htmlFor={`meta_upload_${type}`}>{this.labelName(type)}</label>
+              <div className="au-c-input__contain">
+                <input
+                  value={this.props.metaData[type] ? this.props.metaData[type] : ''}
+                  className="au-c-text-input au-c-text-input--smaller"
+                  id={`meta_upload_${type}`}
+                  type="input"
                   tabIndex="0"
                   onChange={e => this.props.updateMetadata(type, e.target.value)}
                 />
