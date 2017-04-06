@@ -57,4 +57,3 @@ rules:
     - forbid:
       - any
   import/extensions: 0
-  no-underscore-dangle: off
