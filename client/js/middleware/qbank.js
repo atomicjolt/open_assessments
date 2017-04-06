@@ -51,8 +51,8 @@ function uploadMedia(state, action) {
   formData.append('inputFile', action.body);
   formData.append('returnUrl', true);
   formData.append('createNew', true);
-  // formData.append('mediaDescription', action.metaData['639-2%3AENG%40ISO'].description || '');
-  // formData.append('altText', action.metaData['639-2%3AENG%40ISO'].altText || '');
+  formData.append('mediaDescription', action.metaData['639-2%3AENG%40ISO'].description || '');
+  formData.append('altText', action.metaData['639-2%3AENG%40ISO'].altText || '');
   formData.append('license', action.metaData['639-2%3AENG%40ISO'].license || '');
   formData.append('copyright', action.metaData['639-2%3AENG%40ISO'].copyright || '');
   // formData.append('locale', action.metaData['639-2%3AENG%40ISO'].locale);
@@ -507,11 +507,11 @@ const qbank = {
   [AssetConstants.UPLOAD_MEDIA]: (store, action) => {
     const state = store.getState();
     uploadMedia(state, action).then((res) => {
-      _.forEach(action.metaData, (data) => {
-        if (!data.locale === 'en') {
-          uploadMediaMeta(state, data, res.body.assetId);
-        }
-      });
+      // _.forEach(action.metaData, (data) => {
+      //   if (!data.locale === 'en') {
+      //     uploadMediaMeta(state, data, res.body.assetId);
+      //   }
+      // });
 
       store.dispatch({
         type: action.type + DONE,
