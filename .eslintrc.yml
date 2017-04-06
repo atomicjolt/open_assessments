@@ -52,10 +52,10 @@ rules:
   react/prefer-stateless-function:
     - 2
     - ignorePureComponents: true
-#   react/forbid-prop-types:
-#     - 2
-#     - forbid:
-#       - any
+  react/forbid-prop-types:
+    - 2
+    - forbid:
+      - any
 #   import/extensions: 0
 #   import/no-named-as-default: off
 #   no-underscore-dangle: off
