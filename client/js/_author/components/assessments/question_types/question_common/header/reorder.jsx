@@ -18,7 +18,7 @@ class ReorderHeader extends React.Component {
   render() {
     const hideUp = this.props.topItem ? 'is-hidden' : '';
     const hideDown = this.props.bottomItem ? 'is-hidden' : '';
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('reorderHeader');
     return (
       <div ref={ref => (this.header = ref)} className="au-o-right au-c-question-icons au-c-question-icons--reorder">
         <button

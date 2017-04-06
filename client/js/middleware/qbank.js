@@ -1,21 +1,21 @@
-import _                                    from 'lodash';
-import Network                              from '../constants/network';
-import server                               from './server';
-import api                                  from '../libs/api';
-import authorAppHistory                     from '../_author/history';
-import { DONE }                             from '../constants/wrapper';
-import { Constants as BankConstants }       from '../actions/qbank/banks';
-import { Constants as AssessmentConstants } from '../actions/qbank/assessments';
-import { Constants as ItemConstants }       from '../actions/qbank/items';
-import { Constants as AssetConstants }      from '../actions/qbank/assets';
-import serialize                            from './serialization/qbank/serializers/factory';
-import deserialize                          from './serialization/qbank/deserializers/factory';
-import { scrub }                            from './serialization/serializer_utils';
-import * as assessmentActions               from '../actions/qbank/assessments';
-import { updateItem }                       from '../actions/qbank/items';
-import deserializeMedia                     from './serialization/qbank/deserializers/media';
-import { dispatchMany }                     from './utils';
-import guid                                 from '../utils/guid';
+import _                                            from 'lodash';
+import Network                                      from '../constants/network';
+import server                                       from './server';
+import api                                          from '../libs/api';
+import authorAppHistory                             from '../_author/history';
+import { DONE }                                     from '../constants/wrapper';
+import { Constants as BankConstants }               from '../actions/qbank/banks';
+import { Constants as AssessmentConstants }         from '../actions/qbank/assessments';
+import { Constants as ItemConstants }               from '../actions/qbank/items';
+import { Constants as AssetConstants }              from '../actions/qbank/assets';
+import serialize                                    from './serialization/qbank/serializers/factory';
+import deserialize                                  from './serialization/qbank/deserializers/factory';
+import { scrub }                                    from './serialization/serializer_utils';
+import * as assessmentActions                       from '../actions/qbank/assessments';
+import { updateItem }                               from '../actions/qbank/items';
+import { deserializeMedia, deserializeSingleMedia } from './serialization/qbank/deserializers/media';
+import { dispatchMany }                             from './utils';
+import guid                                         from '../utils/guid';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -52,20 +52,47 @@ function uploadMedia(state, action) {
   formData.append('inputFile', action.body);
   formData.append('returnUrl', true);
   formData.append('createNew', true);
-  formData.append('mediaDescription', action.metaData.description || '');
-  formData.append('altText', action.metaData.altText || '');
-
-  // qbank has not implemented licencse and copyright yet
-  // formData.append('license', action.metaData.license || '');
-  // formData.append('copyright', action.metaData.copyright || '');
+  formData.append('mediaDescription', action.metaData['639-2%3AENG%40ISO'].description || '');
+  formData.append('altText', action.metaData['639-2%3AENG%40ISO'].altText || '');
+  formData.append('license', action.metaData['639-2%3AENG%40ISO'].license || '');
+  formData.append('copyright', action.metaData['639-2%3AENG%40ISO'].copyright || '');
+  // formData.append('locale', action.metaData['639-2%3AENG%40ISO'].locale);
+  // formData.append('vttFile', action.metaData['639-2%3AENG%40ISO'].vttFile || '');
+  // formData.append('transcript', action.metaData['639-2%3AENG%40ISO'].transcript || '');
 
   return api.post(
-    `/repository/repositories/${action.bankId}/assets`,
+    `repository/repositories/${action.bankId}/assets`,
     state.settings.api_url,
     state.jwt,
     state.settings.csrf_token,
     null,
-    formData
+    formData,
+    null,
+    action.timeout
+  );
+}
+
+
+function uploadMediaMeta(state, metaData, assetId) {
+
+  const formData = new FormData();
+  formData.append('mediaDescription', metaData.description || '');
+  formData.append('altText', metaData.altText || '');
+  formData.append('license', metaData.license || '');
+  formData.append('copyright', metaData.copyright || '');
+  formData.append('locale', metaData.locale);
+  formData.append('vttFile', metaData.vttFile || '');
+  formData.append('transcript', metaData.transcript || '');
+
+  return api.post(
+    `repository/assets/${assetId}/contents`,
+    state.settings.api_url,
+    state.jwt,
+    state.settings.csrf_token,
+    null,
+    formData,
+    null,
+    20000
   );
 }
 
@@ -480,9 +507,28 @@ const qbank = {
     }
   },
 
-  [AssetConstants.UPLOAD_MEDIA]: {
-    method : Network.POST,
-    url    : (url, action) => `${url}/repository/repositories/${action.bankId}/assets`,
+  [AssetConstants.UPLOAD_MEDIA]: (store, action) => {
+    const state = store.getState();
+    uploadMedia(state, action).then((res) => {
+      // _.forEach(action.metaData, (data) => {
+      //   if (!data.locale === 'en') {
+      //     uploadMediaMeta(state, data, res.body.assetId);
+      //   }
+      // });
+
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: deserializeSingleMedia(res.body),
+      });
+    }, (error) => {
+      store.dispatch({
+        type: action.type + DONE,
+        payload: {},
+        original: action,
+        error,
+      }); // Dispatch the new error
+    });
   },
 
   [AssetConstants.ADD_MEDIA_TO_QUESTION]: (store, action) => {

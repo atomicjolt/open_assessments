@@ -8,7 +8,7 @@ import Feedback     from './option_feedback';
 import localize     from '../../../../locales/localize';
 
 function multipleChoiceOptions(props) {
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('multipleChoiceOptions');
   const hideFeedback = (props.itemType !== types.multipleChoice) ||
     !(props.isActive || props.feedback);
 
@@ -47,7 +47,6 @@ function multipleChoiceOptions(props) {
           placeholder={strings.optionText}
           text={props.text}
           bankId={props.bankId}
-          uploadScopeId={props.itemId}
           onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
         />
 

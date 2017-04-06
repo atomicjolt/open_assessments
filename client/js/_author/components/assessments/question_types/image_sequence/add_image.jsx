@@ -1,6 +1,6 @@
 import React             from 'react';
 import { connect }       from 'react-redux';
-import _                 from 'lodash';
+
 import guid              from '../../../../../utils/guid';
 import * as AssetActions from '../../../../../actions/qbank/assets';
 import UploadModal       from '../../../common/upload_modal/editor_upload_modal';
@@ -20,9 +20,9 @@ export class AddImage extends React.Component {
       id: React.PropTypes.string,
       bankId: React.PropTypes.string,
     }),
-    loadingMedia: React.PropTypes.boolean,
+    loadingMedia: React.PropTypes.bool,
     uploadMedia: React.PropTypes.func.isRequired,
-    addMediaToQuestion: React.PropTypes.func.isRequired,
+    addMediaToQuestion: React.PropTypes.func,
     images: React.PropTypes.shape({}),
     localizeStrings:  React.PropTypes.func.isRequired
   };
@@ -53,13 +53,10 @@ export class AddImage extends React.Component {
   uploadMedia(file, metadata, newMedia) {
     this.setState({ modal: false });
     const mediaGuid = guid();
-    this.setState({
-      mediaGuid,
-    });
+
     this.props.addMediaToQuestion(
       file,
       mediaGuid,
-      this.props.item.id,
       this.props.item.bankId,
       this.props.item.id,
       'question.choices.new',
@@ -69,7 +66,7 @@ export class AddImage extends React.Component {
   }
 
   render() {
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('addImage');
     return (
       <div className="au-c-image-sequence-answer-add">
         <button
@@ -82,7 +79,6 @@ export class AddImage extends React.Component {
             closeModal={() => this.setState({ modal: false })}
             mediaType="img"
             mediaName=""
-            loadingMedia={this.props.loadingMedia}
             media={this.props.images}
             loading={this.props.loadingMedia}
             insertMedia={(media, metaData, newMedia) => this.uploadMedia(media, metaData, newMedia)}

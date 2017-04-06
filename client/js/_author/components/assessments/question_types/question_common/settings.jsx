@@ -6,7 +6,7 @@ import SettingsCheckbox from './settings_checkbox';
 import localize         from '../../../../locales/localize';
 
 function questionSettings(props) {
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('questionSettings');
   const extraOptionTypes = [
     types.multipleChoice,
     types.reflection,

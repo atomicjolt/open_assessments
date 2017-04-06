@@ -4,6 +4,17 @@ import types      from '../../../../../constants/question_types';
 import localize   from '../../../../locales/localize';
 
 class QuestionText extends React.Component {
+  static propTypes = {
+    itemId: React.PropTypes.string.isRequired,
+    text: React.PropTypes.string,
+    editorKey: React.PropTypes.string,
+    updateItem: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
+    bankId: React.PropTypes.string.isRequired,
+    itemType: React.PropTypes.string,
+    fileIds: React.PropTypes.shape({})
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +29,7 @@ class QuestionText extends React.Component {
   }
 
   render() {
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('questionText');
     switch (this.props.itemType) {
       case types.movableFillBlank:
         return (
@@ -55,21 +66,11 @@ class QuestionText extends React.Component {
               editorKey={this.props.editorKey}
               onBlur={(val, fileIds) => this.props.updateItem({ question: { text: val, fileIds } })}
               bankId={this.props.bankId}
-              uploadScopeId={this.props.itemId}
             />
           </div>
         );
     }
   }
 }
-
-QuestionText.propTypes = {
-  itemId: React.PropTypes.string.isRequired,
-  text: React.PropTypes.string,
-  editorKey: React.PropTypes.string,
-  updateItem: React.PropTypes.func.isRequired,
-  localizeStrings: React.PropTypes.func.isRequired,
-  bankId: React.PropTypes.string.isRequired,
-};
 
 export default localize(QuestionText);

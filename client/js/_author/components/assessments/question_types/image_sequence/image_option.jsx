@@ -4,7 +4,7 @@ import localize     from '../../../../locales/localize';
 
 function imageOption(props) {
   const { activateChoice, updateChoice, deleteChoice, id, order, numChoices } = props;
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('imageOption');
   return (
     <div
       className="au-c-image-sequence-answer is-active"

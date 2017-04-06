@@ -42,6 +42,7 @@ export const types = {
     image: {
       png: 'asset-content-genus-type%3Apng%40iana.org',
       jpg: 'asset-content-genus-type%3Ajpg%40iana.org',
+      JPG: 'asset-content-genus-type%3AJPG%40ODL.MIT.EDU',
       svg: 'asset-content-genus-type%3Asvg%40iana.org',
     },
     audio: {

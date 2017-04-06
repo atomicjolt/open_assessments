@@ -11,20 +11,16 @@ const requests = [
 
 export const Constants = wrapper(actions, requests);
 
-export function uploadMedia(file, guid, uploadScopeId, bankId) {
+export function uploadMedia(file, guid, bankId, metaData = {}) {
   // TODO: the formData implementation should probably move to the reducer
-  const formData = new FormData();
-  formData.append('inputFile', file);
-  formData.append('returnUrl', true);
-  formData.append('createNew', true);
   return {
     bankId,
-    uploadScopeId,
     file,
     guid,
+    metaData,
     apiCall: true,
     type: Constants.UPLOAD_MEDIA,
-    body: formData,
+    body: file,
     timeout: 1000000,
   };
 }
