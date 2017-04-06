@@ -1,8 +1,8 @@
-import _                  from 'lodash';
-import baseDeserializer   from './base';
-import { getQbankType }   from '../../../../constants/genus_types';
-import { getImageUrl }    from '../../serializer_utils';
-import genusTypes         from '../../../../constants/genus_types';
+import _                        from 'lodash';
+import baseDeserializer         from './base';
+import { getQbankType, types }  from '../../../../constants/genus_types';
+import { getImageUrl }          from '../../serializer_utils';
+
 
 function deserializeTarget(targets) {
   const target = targets[0];
@@ -48,8 +48,8 @@ function deserializeDropObjects(droppables, zoneConditions) {
 
 export default function dragAndDrop(item) {
   const newItem = baseDeserializer(item);
-  const correctAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.rightAnswer });
-  const incorrectAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.wrongAnswer });
+  const correctAnswer = _.find(item.answers, { genusTypeId: types.answer.rightAnswer });
+  const incorrectAnswer = _.find(item.answers, { genusTypeId: types.answer.wrongAnswer });
 
   newItem.question = {
     ...newItem.question,

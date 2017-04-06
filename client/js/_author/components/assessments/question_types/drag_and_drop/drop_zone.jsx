@@ -3,19 +3,18 @@ import _          from 'lodash';
 
 export default class DropZone extends React.Component {
   static propTypes = {
-    zone: React.PropTypes.shape({}).isRequired,
-    target: React.PropTypes.shape({}),
+    zone: React.PropTypes.shape({
+      id: React.PropTypes.string,
+    }).isRequired,
+    target: React.PropTypes.shape({
+      getBoundingClientRect: React.PropTypes.func,
+    }),
     editZone: React.PropTypes.func.isRequired,
     setActive: React.PropTypes.func.isRequired,
     isActive: React.PropTypes.bool,
   };
 
-  constructor(props) {
-    super(props);
-    this.state = this.saveZoneToState(props.zone);
-  }
-
-  saveZoneToState(zone) {
+  static saveZoneToState(zone) {
     return {
       leftPos: zone.xPos,
       topPos: zone.yPos,
@@ -24,6 +23,17 @@ export default class DropZone extends React.Component {
       initialX: null,
       initialY: null,
     };
+  }
+
+  static boundaryCheck(pos, boundary) {
+    if (pos < 0) { return 0; }
+    if (pos > boundary) { return boundary; }
+    return pos;
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = DropZone.saveZoneToState(props.zone);
   }
 
   zonePosition() {
@@ -37,18 +47,12 @@ export default class DropZone extends React.Component {
     };
   }
 
-  boundaryCheck(pos, boundary) {
-    if (pos < 0) { return 0; }
-    if (pos > boundary) { return boundary; }
-    return pos;
-  }
-
   moveCorner(corner, x, y) {
     const { leftPos, topPos, rightPos, bottomPos } = this.state;
     const target = this.props.target.getBoundingClientRect();
 
-    const newY = this.boundaryCheck(y - target.top, target.bottom - target.top);
-    const newX = this.boundaryCheck(x - target.left, target.right - target.left);
+    const newY = DropZone.boundaryCheck(y - target.top, target.bottom - target.top);
+    const newX = DropZone.boundaryCheck(x - target.left, target.right - target.left);
     const newTop = topPos < bottomPos ? newY : bottomPos;
     const newBottom = bottomPos < topPos ? topPos : newY;
     const newLeft = leftPos < rightPos ? newX : rightPos;
@@ -96,10 +100,10 @@ export default class DropZone extends React.Component {
 
     // TODO: this will warp the zone if you hit an edge, should fix that
     this.setState({
-      leftPos: this.boundaryCheck(leftPos + deltaX, target.right - target.left),
-      topPos: this.boundaryCheck(topPos + deltaY, target.bottom - target.top),
-      rightPos: this.boundaryCheck(rightPos + deltaX, target.right - target.left),
-      bottomPos: this.boundaryCheck(bottomPos + deltaY, target.bottom - target.top),
+      leftPos: DropZone.boundaryCheck(leftPos + deltaX, target.right - target.left),
+      topPos: DropZone.boundaryCheck(topPos + deltaY, target.bottom - target.top),
+      rightPos: DropZone.boundaryCheck(rightPos + deltaX, target.right - target.left),
+      bottomPos: DropZone.boundaryCheck(bottomPos + deltaY, target.bottom - target.top),
       initialX: x,
       initialY: y,
     });
@@ -118,8 +122,6 @@ export default class DropZone extends React.Component {
 
   // TODO: Some of this could be extracted to css, other parts not so much
   styles() {
-    const border = '2px solid lime';
-
     const manipulators = {
       display: this.props.isActive ? '' : 'none',
     };
@@ -231,7 +233,7 @@ export default class DropZone extends React.Component {
           </div>
           <button
             className="au-c-btn au-c-btn--square"
-            onClick={e => this.props.editZone(zone.id, { delete: true })}
+            onClick={() => this.props.editZone(zone.id, { delete: true })}
           >
             <i className="material-icons">delete</i>
           </button>

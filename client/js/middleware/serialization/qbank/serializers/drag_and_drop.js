@@ -101,7 +101,8 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   return scrub(newQuestion);
 }
 
-function serializeAnswers(oldDropObjects, dropObjects, oldAnswers, correctFeedback, incorrectFeedback) {
+function serializeAnswers(
+  oldDropObjects, dropObjects, oldAnswers, correctFeedback, incorrectFeedback) {
   const answers = [];
 
   let correctAnswer = {

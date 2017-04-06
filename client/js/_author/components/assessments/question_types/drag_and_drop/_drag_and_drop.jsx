@@ -24,12 +24,13 @@ export class DragAndDrop extends React.Component {
     updateItem: React.PropTypes.func.isRequired,
     addMediaToQuestion: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
-    localizeStrings: React.PropTypes.func.isRequired,
+    // localizeStrings: React.PropTypes.func.isRequired,
     loadingMedia: React.PropTypes.bool,
   };
 
   constructor() {
     super();
+    this.state = {};
   }
 
   uploadMedia(file, where, metadata, newMedia) {
@@ -47,7 +48,7 @@ export class DragAndDrop extends React.Component {
     const { question, id } = this.props.item;
 
     // TODO: localization
-    const strings = this.props.localizeStrings();
+    // const strings = this.props.localizeStrings();
     return (
       <div>
         <TargetArea
