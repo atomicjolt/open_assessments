@@ -36,9 +36,9 @@ rules:
   comma-dangle:
     - error
     - only-multiline
-#   import/no-extraneous-dependencies:
-#     - error
-#     - devDependencies: true
+  import/no-extraneous-dependencies:
+    - error
+    - devDependencies: true
 #   padded-blocks: 0
 #   key-spacing: 0
 #   react/require-default-props: 0
