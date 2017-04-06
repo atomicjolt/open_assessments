@@ -56,7 +56,6 @@ export class AddImage extends React.Component {
 
     this.props.addMediaToQuestion(
       file,
-      mediaGuid,
       this.props.item.bankId,
       this.props.item.id,
       'question.choices.new',
