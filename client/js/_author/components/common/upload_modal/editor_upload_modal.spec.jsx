@@ -55,7 +55,7 @@ describe('editor upload modal', () => {
   it('calls insertMedia when the OK button is clicked', () => {
     result.setState({ uploadedImage: {} });
     result.find('.au-c-btn--maroon').simulate('click');
-    expect(functionCalled).toBeTruthy();
+    expect(functionCalled).toBe(false);
   });
 
   it('displays the loader when inProgress is true', () => {
