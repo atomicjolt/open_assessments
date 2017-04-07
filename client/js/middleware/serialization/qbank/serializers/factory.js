@@ -7,6 +7,7 @@ import multipleChoice   from './multiple_choice';
 import shortAnswer      from './short_answer';
 import survey           from './reflection';
 import wordSentence     from './movable_word_sentence';
+import dragAndDrop      from './drag_and_drop';
 import types            from '../../../../constants/question_types.js';
 import imageSequence    from './image_sequence';
 
@@ -43,6 +44,9 @@ export default function factory(type) {
 
     case types.imageSequence:
       return imageSequence;
+
+    case types.dragAndDrop:
+      return dragAndDrop;
 
     default:
       throw 'We could not find a type for serializing';

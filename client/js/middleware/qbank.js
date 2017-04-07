@@ -15,6 +15,7 @@ import * as assessmentActions                       from '../actions/qbank/asses
 import { updateItem }                               from '../actions/qbank/items';
 import { deserializeMedia, deserializeSingleMedia } from './serialization/qbank/deserializers/media';
 import { dispatchMany }                             from './utils';
+import guid                                         from '../utils/guid';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -55,10 +56,9 @@ function uploadMedia(state, action) {
   formData.append('altText', action.metaData['639-2%3AENG%40ISO'].altText || '');
   formData.append('license', action.metaData['639-2%3AENG%40ISO'].license || '');
   formData.append('copyright', action.metaData['639-2%3AENG%40ISO'].copyright || '');
-  // formData.append('locale', action.metaData['639-2%3AENG%40ISO'].locale);
+  formData.append('locale', action.metaData['639-2%3AENG%40ISO'].locale);
   // formData.append('vttFile', action.metaData['639-2%3AENG%40ISO'].vttFile || '');
   // formData.append('transcript', action.metaData['639-2%3AENG%40ISO'].transcript || '');
-
   return api.post(
     `repository/repositories/${action.bankId}/assets`,
     state.settings.api_url,
@@ -131,11 +131,13 @@ function addMediaToItem(store, action, result) {
     assetId = _.get(action, 'body.original.assetContents[0].assetId');
     genusTypeId = _.get(action, 'body.original.assetContents[0].genusTypeId');
   }
+
+  const mediaGuid = guid();
   let item = {
     id: action.itemId,
     question: {
       fileIds: {
-        [action.guid] : {
+        [mediaGuid] : {
           assetContentId: id,
           assetId,
           assetContentTypeId: genusTypeId,
@@ -145,7 +147,7 @@ function addMediaToItem(store, action, result) {
   };
 
   item = _.set(item, action.where, {
-    text: `AssetContent:${action.guid}`,
+    text: `AssetContent:${mediaGuid}`,
     altText: action.file.altText,
     id: _.last(action.where.split('.')),
   });
@@ -512,7 +514,6 @@ const qbank = {
       //     uploadMediaMeta(state, data, res.body.assetId);
       //   }
       // });
-
       store.dispatch({
         type: action.type + DONE,
         original: action,

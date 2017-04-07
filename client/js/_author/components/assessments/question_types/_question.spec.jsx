@@ -2,6 +2,9 @@ import React            from 'react';
 import { shallow }      from 'enzyme';
 import { Question }     from './_question';
 import shortAnswer      from './short_answer';
+
+jest.mock('../../../../libs/assets.js');
+
 describe('question component', () => {
   let props;
   let result;
