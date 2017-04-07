@@ -56,10 +56,9 @@ function uploadMedia(state, action) {
   formData.append('altText', action.metaData['639-2%3AENG%40ISO'].altText || '');
   formData.append('license', action.metaData['639-2%3AENG%40ISO'].license || '');
   formData.append('copyright', action.metaData['639-2%3AENG%40ISO'].copyright || '');
-  // formData.append('locale', action.metaData['639-2%3AENG%40ISO'].locale);
+  formData.append('locale', action.metaData['639-2%3AENG%40ISO'].locale);
   // formData.append('vttFile', action.metaData['639-2%3AENG%40ISO'].vttFile || '');
   // formData.append('transcript', action.metaData['639-2%3AENG%40ISO'].transcript || '');
-
   return api.post(
     `repository/repositories/${action.bankId}/assets`,
     state.settings.api_url,
@@ -250,7 +249,7 @@ const qbank = {
       null,
       state.jwt,
       state.settings.csrf_token,
-      null,
+      { qBankHost: state.settings.qBankHost },
       null
     ).then((res) => {
       store.dispatch({
@@ -515,7 +514,6 @@ const qbank = {
       //     uploadMediaMeta(state, data, res.body.assetId);
       //   }
       // });
-
       store.dispatch({
         type: action.type + DONE,
         original: action,
