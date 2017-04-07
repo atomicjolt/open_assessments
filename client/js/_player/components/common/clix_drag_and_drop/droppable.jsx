@@ -11,7 +11,8 @@ const droppableSource = {
     return {
       height: bounds.height,
       width: bounds.width,
-      droppable: props.droppable,
+      droppableId: props.droppableId,
+      droppableText: props.text,
       previousZoneIndex: props.zoneIndex,
     };
   }
@@ -34,9 +35,7 @@ export class Droppable extends React.Component {
     hide: React.PropTypes.bool,
     showWhileDragging: React.PropTypes.bool,
     style: React.PropTypes.shape({}),
-    droppable: React.PropTypes.shape({
-      text: React.PropTypes.string, // eslint-disable-line react/no-unused-prop-types
-    })
+    text: React.PropTypes.string,
   };
 
   componentDidMount() {
@@ -44,7 +43,7 @@ export class Droppable extends React.Component {
   }
 
   render() {
-    const { connectDragSource, isDragging, droppable, showWhileDragging } = this.props;
+    const { connectDragSource, isDragging, showWhileDragging, text } = this.props;
     const hide = this.props.hide || (isDragging && !showWhileDragging) ? 'is-hidden' : '';
 
     return connectDragSource(
@@ -52,7 +51,7 @@ export class Droppable extends React.Component {
         ref={ref => (this.node = ref)}
         className={`${this.props.className || ''} ${hide}`}
         style={this.props.style}
-        dangerouslySetInnerHTML={{ __html: droppable.text }}
+        dangerouslySetInnerHTML={{ __html: text }}
       />
     );
   }

@@ -18,18 +18,7 @@ export class ClixDragAndDrop extends React.Component {
     }))
   };
 
-  deselectAnswer(item) { // eslint-disable-line react/sort-comp
-    if (item.previousZoneIndex > -1) {
-      this.props.selectAnswer({
-        id: {
-          id: item.droppable.id,
-          zoneIndex: item.previousZoneIndex,
-        }
-      });
-    }
-  }
-
-  selectAnswer(zoneIndex, item, targetIndex, offset) { // eslint-disable-line react/sort-comp
+  selectAnswer(zoneIndex, item, targetIndex, offset) {
     const target = this.props.targets[targetIndex];
     const zone = this.props.zones[zoneIndex];
     const coordinateValues = [];
@@ -46,7 +35,7 @@ export class ClixDragAndDrop extends React.Component {
 
     const answer = {
       id: {
-        id: item.droppable.id,
+        id: item.droppableId,
         zoneIndex,
       },
       ...item,
@@ -61,7 +50,7 @@ export class ClixDragAndDrop extends React.Component {
     if (zoneIndex !== item.previousZoneIndex && item.previousZoneIndex > -1) {
       this.props.selectAnswer({
         id: {
-          id: item.droppable.id,
+          id: item.droppableId,
           zoneIndex: item.previousZoneIndex,
         }
       });
@@ -79,7 +68,18 @@ export class ClixDragAndDrop extends React.Component {
     }
   }
 
-  getZones(targetIndex) {
+  deselectAnswer(item) {
+    if (item.previousZoneIndex > -1) {
+      this.props.selectAnswer({
+        id: {
+          id: item.droppableId,
+          zoneIndex: item.previousZoneIndex,
+        }
+      });
+    }
+  }
+
+  renderZones(targetIndex) {
     return _.map(this.props.zones, (zone, zoneIndex) => {
       const canDrop = (
         !_.find(this.props.selectedAnswers, { zoneIndex }) ||
@@ -116,23 +116,24 @@ export class ClixDragAndDrop extends React.Component {
     });
   }
 
-  getSelectedAnswers() {
+  renderSelectedAnswers() {
     return _.map(this.props.selectedAnswers, answer => (
       <Droppable
-        key={answer.droppable.id}
+        key={answer.droppableId}
         style={{
           position: 'absolute',
           left: answer.coordinateValues[0] - (answer.width / 2),
           top: answer.coordinateValues[1] - (answer.height / 2),
         }}
         className="c-droppable-item"
-        droppable={answer.droppable}
+        text={answer.droppableText}
         zoneIndex={answer.zoneIndex}
+        droppableId={answer.droppableId}
       />
     ));
   }
 
-  getAvailableAnswers() {
+  renderAvailableAnswers() {
     return _.map(this.props.answers, (answer) => {
       const useCount = _.filter(
         this.props.selectedAnswers,
@@ -145,15 +146,15 @@ export class ClixDragAndDrop extends React.Component {
           className="c-droppable-item"
           hide={useCount >= parseInt(answer.reuse, 10)}
           showWhileDragging={useCount < (answer.reuse - 1)}
+          droppableId={answer.id}
           text={answer.text}
-          droppable={answer}
           zoneIndex={-1}
         />
       );
     });
   }
 
-  getTargets() {
+  renderTargets() {
     return _.map(this.props.targets, (target, targetIndex) => (
       <div
         key={targetIndex}
@@ -167,8 +168,8 @@ export class ClixDragAndDrop extends React.Component {
           ref={ref => (this[`target_${targetIndex}`] = ref)}
           dangerouslySetInnerHTML={{ __html: target.text }}
         />
-        {this.getZones(targetIndex)}
-        {this.getSelectedAnswers()}
+        {this.renderZones(targetIndex)}
+        {this.renderSelectedAnswers()}
       </div>
     ));
   }
@@ -176,7 +177,7 @@ export class ClixDragAndDrop extends React.Component {
   render() {
     return (
       <div className="c-clix-drag-and-drop">
-        {this.getTargets()}
+        {this.renderTargets()}
         <ClixDropZone
           canDrop
           className="c-droppable-container"
@@ -184,7 +185,7 @@ export class ClixDragAndDrop extends React.Component {
             this.deselectAnswer(item)
           )}
         >
-          {this.getAvailableAnswers()}
+          {this.renderAvailableAnswers()}
         </ClixDropZone>
         <CustomDragLayer />
       </div>

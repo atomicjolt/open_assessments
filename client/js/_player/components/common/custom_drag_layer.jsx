@@ -79,10 +79,10 @@ export class CustomDragLayer extends React.Component {
       case ItemTypes.CLIX_DROPPABLE:
         return (
           <Droppable
-            key={item.droppable.id}
+            key={item.droppableId}
             className="c-droppable-item"
-            text={item.droppable.text}
-            droppable={item.droppable}
+            text={item.droppableText}
+            droppableId={item.droppableId}
           />
         );
       default:
