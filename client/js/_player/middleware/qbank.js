@@ -221,7 +221,7 @@ function checkAnswers(store, action) {
 
 function loadQuestions(store, action) {
   const state = store.getState();
-  const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions`;
+  const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions?qti`;
   const assessmentPromise = api.get(
     assessmentUrl,
     state.settings.api_url,
