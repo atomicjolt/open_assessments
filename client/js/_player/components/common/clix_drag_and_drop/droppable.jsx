@@ -35,7 +35,7 @@ export class Droppable extends React.Component {
     showWhileDragging: React.PropTypes.bool,
     style: React.PropTypes.shape({}),
     droppable: React.PropTypes.shape({
-      text: React.PropTypes.string,
+      text: React.PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     })
   };
 
@@ -52,10 +52,14 @@ export class Droppable extends React.Component {
         ref={ref => (this.node = ref)}
         className={`${this.props.className || ''} ${hide}`}
         style={this.props.style}
-        dangerouslySetInnerHTML={{ __html: droppable.text }}
+        dangerouslySetInnerHTML={{ __html: droppable.text }} // eslint-disable-line react/no-danger
       />
     );
   }
 }
 
-export default DragSource(ItemTypes.CLIX_DROPPABLE, droppableSource, collect)(Droppable);
+export default DragSource( // eslint-disable-line new-cap
+  ItemTypes.CLIX_DROPPABLE,
+  droppableSource,
+  collect
+)(Droppable);

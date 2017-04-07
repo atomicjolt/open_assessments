@@ -3,13 +3,12 @@ import { shallow }  from 'enzyme';
 
 import { ClixDragAndDrop } from './clix_drag_and_drop';
 import DropZone            from './clix_drop_zone';
-import Droppable           from './droppable';
+import Droppable           from './droppable'; // eslint-disable-line import/no-named-as-default
 
 describe('clix drag and drop', () => {
 
   let result;
   let props;
-  let answerSelected;
 
   beforeEach(() => {
     props = {
@@ -29,7 +28,7 @@ describe('clix drag and drop', () => {
       targets: [{
         text: 'target_text',
       }],
-      selectAnswer: selectedAnswer => (answerSelected = selectedAnswer),
+      selectAnswer: () => {},
       selectedAnswers: [{
         id: {
           id: 'answer_id',
