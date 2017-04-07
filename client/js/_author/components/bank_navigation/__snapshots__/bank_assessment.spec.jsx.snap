@@ -30,6 +30,7 @@ ShallowWrapper {
           }
     }
     baseEmbedUrl=""
+    deleteAssessment={[Function]}
     focused={false}
     getEmbedCode={[Function]}
     onFocus={[Function]}
@@ -78,6 +79,7 @@ ShallowWrapper {
                       }
                 }
                 baseEmbedUrl=""
+                deleteAssessment={[Function]}
                 focused={false}
                 getEmbedCode={[Function]}
                 onFocus={[Function]}
@@ -95,6 +97,7 @@ ShallowWrapper {
                       }
                 }
                 baseEmbedUrl=""
+                deleteAssessment={[Function]}
                 focused={false}
                 getEmbedCode={[Function]}
                 onFocus={[Function]}
@@ -112,6 +115,7 @@ ShallowWrapper {
                       }
                 }
                 baseEmbedUrl=""
+                deleteAssessment={[Function]}
                 focused={false}
                 getEmbedCode={[Function]}
                 onFocus={[Function]}
@@ -161,6 +165,7 @@ ShallowWrapper {
                 }
       }
       baseEmbedUrl=""
+      deleteAssessment={[Function]}
       focused={false}
       getEmbedCode={[Function]}
       onFocus={[Function]}
@@ -209,6 +214,7 @@ ShallowWrapper {
                                   }
                         }
                         baseEmbedUrl=""
+                        deleteAssessment={[Function]}
                         focused={false}
                         getEmbedCode={[Function]}
                         onFocus={[Function]}
@@ -226,6 +232,7 @@ ShallowWrapper {
                                   }
                         }
                         baseEmbedUrl=""
+                        deleteAssessment={[Function]}
                         focused={false}
                         getEmbedCode={[Function]}
                         onFocus={[Function]}
@@ -243,6 +250,7 @@ ShallowWrapper {
                                   }
                         }
                         baseEmbedUrl=""
+                        deleteAssessment={[Function]}
                         focused={false}
                         getEmbedCode={[Function]}
                         onFocus={[Function]}
@@ -288,6 +296,7 @@ ShallowWrapper {
                       }
         }
         baseEmbedUrl=""
+        deleteAssessment={[Function]}
         focused={false}
         getEmbedCode={[Function]}
         onFocus={[Function]}
@@ -309,6 +318,7 @@ ShallowWrapper {
             "isPublished": false,
           },
           "baseEmbedUrl": "",
+          "deleteAssessment": [Function],
           "focused": false,
           "getEmbedCode": [Function],
           "onFocus": [Function],
@@ -358,6 +368,7 @@ ShallowWrapper {
                             }
           }
           baseEmbedUrl=""
+          deleteAssessment={[Function]}
           focused={false}
           getEmbedCode={[Function]}
           onFocus={[Function]}
@@ -406,6 +417,7 @@ ShallowWrapper {
                                                           }
                                         }
                                         baseEmbedUrl=""
+                                        deleteAssessment={[Function]}
                                         focused={false}
                                         getEmbedCode={[Function]}
                                         onFocus={[Function]}
@@ -423,6 +435,7 @@ ShallowWrapper {
                                                           }
                                         }
                                         baseEmbedUrl=""
+                                        deleteAssessment={[Function]}
                                         focused={false}
                                         getEmbedCode={[Function]}
                                         onFocus={[Function]}
@@ -440,6 +453,7 @@ ShallowWrapper {
                                                           }
                                         }
                                         baseEmbedUrl=""
+                                        deleteAssessment={[Function]}
                                         focused={false}
                                         getEmbedCode={[Function]}
                                         onFocus={[Function]}
@@ -489,6 +503,7 @@ ShallowWrapper {
                             }
           }
           baseEmbedUrl=""
+          deleteAssessment={[Function]}
           focused={false}
           getEmbedCode={[Function]}
           onFocus={[Function]}
@@ -537,6 +552,7 @@ ShallowWrapper {
                                                           }
                                         }
                                         baseEmbedUrl=""
+                                        deleteAssessment={[Function]}
                                         focused={false}
                                         getEmbedCode={[Function]}
                                         onFocus={[Function]}
@@ -554,6 +570,7 @@ ShallowWrapper {
                                                           }
                                         }
                                         baseEmbedUrl=""
+                                        deleteAssessment={[Function]}
                                         focused={false}
                                         getEmbedCode={[Function]}
                                         onFocus={[Function]}
@@ -571,6 +588,7 @@ ShallowWrapper {
                                                           }
                                         }
                                         baseEmbedUrl=""
+                                        deleteAssessment={[Function]}
                                         focused={false}
                                         getEmbedCode={[Function]}
                                         onFocus={[Function]}
@@ -620,6 +638,7 @@ ShallowWrapper {
           }
     }
     baseEmbedUrl=""
+    deleteAssessment={[Function]}
     focused={false}
     getEmbedCode={[Function]}
     onFocus={[Function]}

@@ -23,6 +23,7 @@ describe('bank_assessment component', () => {
       getEmbedCode: () => {},
       baseEmbedUrl: '',
       focused: false,
+      deleteAssessment: () => {},
     };
     result = shallow(<BankAssessment {...props} />);
   });
