@@ -82,7 +82,7 @@ export class ClixDragAndDrop extends React.Component {
 
     this.props.selectAnswer(answer);
 
-    // if they dropped it into the start zone, deselect it.
+    // if they dropped it in a new zone, deselect it from the old zone
     if (zoneIndex !== item.previousZoneIndex && item.previousZoneIndex > -1) {
       this.props.selectAnswer({
         id: {
