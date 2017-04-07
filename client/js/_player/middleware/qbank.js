@@ -112,7 +112,7 @@ function getBody(userInput, question) {
         type,
         coordinateConditions: _.map(userInput, input => ({
           containerId: input.containerId,
-          droppableId: input.droppable.id,
+          droppableId: input.droppableId,
           coordinateValues: input.coordinateValues,
         }))
       };

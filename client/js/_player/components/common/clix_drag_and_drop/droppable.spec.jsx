@@ -17,9 +17,7 @@ describe('clix drag and drop', () => {
       hide: false,
       showWhileDragging: true,
       style: {},
-      droppable: {
-        text: 'droppable text',
-      }
+      text: 'droppable text',
     };
 
     result = shallow(<Droppable {...props} />);

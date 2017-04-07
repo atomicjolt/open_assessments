@@ -137,7 +137,7 @@ export class ClixDragAndDrop extends React.Component {
     return _.map(this.props.answers, (answer) => {
       const useCount = _.filter(
         this.props.selectedAnswers,
-        { droppable: { id: answer.id } }
+        { droppableId: answer.id }
       ).length;
 
       return (
