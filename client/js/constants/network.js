@@ -3,5 +3,5 @@ export default {
   POST:    'post',
   PUT:     'put',
   DEL:     'delete',
-  TIMEOUT: 1000000,
+  TIMEOUT: 20000,
 };
