@@ -10,7 +10,7 @@ describe('scrub', () => {
     it('removes falsey and empty values', () => {
       expect(scrub([null, undefined, {}, []])).toEqual([]);
     });
-  })
+  });
 
   describe('objects', () => {
     it('returns an object when it is passed an array', () => {
