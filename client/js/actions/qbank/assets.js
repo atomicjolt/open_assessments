@@ -25,11 +25,10 @@ export function uploadMedia(file, guid, bankId, metaData = {}) {
   };
 }
 
-export function addMediaToQuestion(file, guid, bankId, itemId, where, metaData, newMedia) {
+export function addMediaToQuestion(file, bankId, itemId, where, metaData, newMedia) {
   return {
-    file,
-    guid,
     bankId,
+    file,
     itemId,
     where,
     metaData,

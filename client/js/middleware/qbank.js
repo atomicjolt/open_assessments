@@ -15,6 +15,7 @@ import * as assessmentActions                       from '../actions/qbank/asses
 import { updateItem }                               from '../actions/qbank/items';
 import { deserializeMedia, deserializeSingleMedia } from './serialization/qbank/deserializers/media';
 import { dispatchMany }                             from './utils';
+import guid                                         from '../utils/guid';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -131,11 +132,13 @@ function addMediaToItem(store, action, result) {
     assetId = _.get(action, 'body.original.assetContents[0].assetId');
     genusTypeId = _.get(action, 'body.original.assetContents[0].genusTypeId');
   }
+
+  const mediaGuid = guid();
   let item = {
     id: action.itemId,
     question: {
       fileIds: {
-        [action.guid] : {
+        [mediaGuid] : {
           assetContentId: id,
           assetId,
           assetContentTypeId: genusTypeId,
@@ -145,7 +148,7 @@ function addMediaToItem(store, action, result) {
   };
 
   item = _.set(item, action.where, {
-    text: `AssetContent:${action.guid}`,
+    text: `AssetContent:${mediaGuid}`,
     altText: action.file.altText,
     id: _.last(action.where.split('.')),
   });
