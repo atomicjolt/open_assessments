@@ -516,7 +516,6 @@ const qbank = {
       //     uploadMediaMeta(state, data, res.body.assetId);
       //   }
       // });
-
       store.dispatch({
         type: action.type + DONE,
         original: action,
