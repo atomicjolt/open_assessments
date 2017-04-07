@@ -32,7 +32,7 @@ export class ClixDragAndDrop extends React.Component {
         zoneIndex: React.PropTypes.number,
       }),
       droppable: React.PropTypes.shape({}),
-      zoneIndex: React.PropTypes.number,
+      containerId: React.PropTypes.number,
       coordinateValues: React.PropTypes.arrayOf(
         React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number])
       )
@@ -61,8 +61,8 @@ export class ClixDragAndDrop extends React.Component {
       coordinateValues.push(offset.x - targetBounds.left);
       coordinateValues.push(offset.y - targetBounds.top);
     } else {
-      coordinateValues.push(zone.spatialUnit.coordinateValues[0]);
-      coordinateValues.push(zone.spatialUnit.coordinateValues[1]);
+      coordinateValues.push(zone.spatialUnit.coordinateValues[0] + (zone.spatialUnit.width / 2));
+      coordinateValues.push(zone.spatialUnit.coordinateValues[1] + (zone.spatialUnit.height / 2));
     }
 
     const answer = {
@@ -136,15 +136,17 @@ export class ClixDragAndDrop extends React.Component {
                       this.selectAnswer(zoneIndex, item, targetIndex, offset)
                     )}
                     style={{
-                      left: zone.spatialUnit.coordinateValues[0] - (zone.spatialUnit.width / 2),
-                      top: zone.spatialUnit.coordinateValues[1] - (zone.spatialUnit.height / 2),
+                      left: zone.spatialUnit.coordinateValues[0],
+                      top: zone.spatialUnit.coordinateValues[1],
                       height: zone.spatialUnit.height,
                       width: zone.spatialUnit.width,
                     }}
                   >
-                    <div className="c-drag-zone__name">
-                      {zone.name}
-                    </div>
+                    {
+                      zone.name
+                      ? <div className="c-drag-zone__name">{zone.name}</div>
+                      : null
+                    }
                   </ClixDropZone>
                 );
               })
