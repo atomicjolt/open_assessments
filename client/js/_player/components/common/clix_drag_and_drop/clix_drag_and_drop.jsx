@@ -9,7 +9,7 @@ import CustomDragLayer      from '../custom_drag_layer'; // eslint-disable-line 
 export class ClixDragAndDrop extends React.Component {
   static propTypes = {
     answers: React.PropTypes.arrayOf(React.PropTypes.shape({
-      id: React.PropTypes.string,
+      id: React.PropTypes.string, // eslint-disable-line react/no-unused-prop-types
       text: React.PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     })),
     zones: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -190,8 +190,7 @@ export class ClixDragAndDrop extends React.Component {
         <div
           className="c-drag-target__background"
           ref={ref => (this[`target_${targetIndex}`] = ref)}
-          dangerouslySetInnerHTML={
-            { __html: target.text }}
+          dangerouslySetInnerHTML={{ __html: target.text }}
         />
         {this.getZones(targetIndex)}
         {this.getSelectedAnswers()}
