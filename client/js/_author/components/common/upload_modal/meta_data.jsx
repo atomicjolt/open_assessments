@@ -96,7 +96,6 @@ export default class Metadata extends React.Component {
               <label htmlFor={`meta_upload_${type}`}>{this.labelName(type)}</label>
               <div className="au-c-input__contain">
                 <input
-                  value={this.props.metaData[type] ? this.props.metaData[type] : ''}
                   className=""
                   id={`meta_upload_${type}`}
                   type="file"

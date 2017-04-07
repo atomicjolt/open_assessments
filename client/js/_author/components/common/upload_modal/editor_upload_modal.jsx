@@ -90,7 +90,6 @@ export default class EditorUploadModal extends React.Component {
   }
 
   setters(key, val) {
-    debugger
     const languageMediaData = this.state.languageMediaData;
     languageMediaData[this.state.language][key] = val;
     this.setState({ languageMediaData });

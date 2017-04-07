@@ -47,6 +47,7 @@ function getAssessmentsTaken(state, bankId, assessmentsOffered) {
 }
 
 function uploadMedia(state, action) {
+  // TODO form should condition on what kind of file
   const formData = new FormData();
   formData.append('inputFile', action.body);
   formData.append('returnUrl', true);
@@ -55,9 +56,10 @@ function uploadMedia(state, action) {
   formData.append('altText', action.metaData['639-2%3AENG%40ISO'].altText || '');
   formData.append('license', action.metaData['639-2%3AENG%40ISO'].license || '');
   formData.append('copyright', action.metaData['639-2%3AENG%40ISO'].copyright || '');
-  // formData.append('locale', action.metaData['639-2%3AENG%40ISO'].locale);
-  // formData.append('vttFile', action.metaData['639-2%3AENG%40ISO'].vttFile || '');
-  // formData.append('transcript', action.metaData['639-2%3AENG%40ISO'].transcript || '');
+
+  formData.append('locale', action.metaData['639-2%3AENG%40ISO'].locale);
+  formData.append('vttFile', action.metaData['639-2%3AENG%40ISO'].vttFile || '');
+  formData.append('transcript', action.metaData['639-2%3AENG%40ISO'].transcript || '');
 
   return api.post(
     `repository/repositories/${action.bankId}/assets`,
@@ -73,7 +75,6 @@ function uploadMedia(state, action) {
 
 
 function uploadMediaMeta(state, metaData, assetId) {
-
   const formData = new FormData();
   formData.append('mediaDescription', metaData.description || '');
   formData.append('altText', metaData.altText || '');
