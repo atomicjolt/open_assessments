@@ -24,10 +24,12 @@ export const start = (assessmentId) => ({
   assessmentId
 });
 
-export const answerSelected = (questionIndex, answerId, exclusive) => ({
+// normally answerData will just be the id. However, for drag and drop we need
+// more than that.
+export const answerSelected = (questionIndex, answerData, exclusive) => ({
   type: Constants.ANSWER_SELECTED,
   questionIndex,
-  answerId,
+  answerData,
   exclusive
 });
 
