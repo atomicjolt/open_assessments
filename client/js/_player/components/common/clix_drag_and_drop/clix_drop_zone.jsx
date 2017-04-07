@@ -21,4 +21,8 @@ const target = {
   }
 };
 
-export default DropTarget(ItemTypes.CLIX_DROPPABLE, target, collect)(Dropzone);
+export default DropTarget( // eslint-disable-line no-cap
+  ItemTypes.CLIX_DROPPABLE,
+  target,
+  collect
+)(Dropzone);
