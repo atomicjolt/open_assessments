@@ -8,38 +8,13 @@ import CustomDragLayer      from '../custom_drag_layer'; // eslint-disable-line 
 
 export class ClixDragAndDrop extends React.Component {
   static propTypes = {
-    answers: React.PropTypes.arrayOf(React.PropTypes.shape({
-      id: React.PropTypes.string, // eslint-disable-line react/no-unused-prop-types
-      text: React.PropTypes.string, // eslint-disable-line react/no-unused-prop-types
-    })),
-    zones: React.PropTypes.arrayOf(React.PropTypes.shape({
-      spatialUnit: React.PropTypes.shape({ // eslint-disable-line react/no-unused-prop-types
-        coordinateValues: React.PropTypes.arrayOf( // eslint-disable-line react/no-unused-prop-types
-          React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number])
-        ),
-        width: React.PropTypes.oneOfType( // eslint-disable-line react/no-unused-prop-types
-          [React.PropTypes.string, React.PropTypes.number]
-        ),
-        height: React.PropTypes.oneOfType( // eslint-disable-line react/no-unused-prop-types
-          [React.PropTypes.string, React.PropTypes.number]
-        )
-      }),
-      dropBehaviorType: React.PropTypes.string, // eslint-disable-line react/no-unused-prop-types
-    })),
-    targets: React.PropTypes.arrayOf(React.PropTypes.shape({
-      text: React.PropTypes.string, // eslint-disable-line react/no-unused-prop-types
-    })),
+    answers: React.PropTypes.arrayOf(React.PropTypes.shape({})),
+    zones: React.PropTypes.arrayOf(React.PropTypes.shape({})),
+    targets: React.PropTypes.arrayOf(React.PropTypes.shape({})),
     selectAnswer: React.PropTypes.func,
     selectedAnswers: React.PropTypes.arrayOf(React.PropTypes.shape({
-      id: React.PropTypes.shape({
-        id: React.PropTypes.string, // eslint-disable-line react/no-unused-prop-types
-        zoneIndex: React.PropTypes.number, // eslint-disable-line react/no-unused-prop-types
-      }),
+      id: React.PropTypes.shape({}),
       droppable: React.PropTypes.shape({}),
-      containerId: React.PropTypes.number, // eslint-disable-line react/no-unused-prop-types
-      coordinateValues: React.PropTypes.arrayOf( // eslint-disable-line react/no-unused-prop-types
-        React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number])
-      )
     }))
   };
 
