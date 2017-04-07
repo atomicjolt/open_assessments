@@ -98,15 +98,30 @@ export default class DropZone extends React.Component {
     const deltaX = x - initialX;
     const deltaY = y - initialY;
 
-    // TODO: this will warp the zone if you hit an edge, should fix that
-    this.setState({
-      leftPos: DropZone.boundaryCheck(leftPos + deltaX, target.right - target.left),
-      topPos: DropZone.boundaryCheck(topPos + deltaY, target.bottom - target.top),
-      rightPos: DropZone.boundaryCheck(rightPos + deltaX, target.right - target.left),
-      bottomPos: DropZone.boundaryCheck(bottomPos + deltaY, target.bottom - target.top),
+    const newLeft = DropZone.boundaryCheck(leftPos + deltaX, target.right - target.left);
+    const newTop = DropZone.boundaryCheck(topPos + deltaY, target.bottom - target.top);
+    const newRight = DropZone.boundaryCheck(rightPos + deltaX, target.right - target.left);
+    const newBottom = DropZone.boundaryCheck(bottomPos + deltaY, target.bottom - target.top);
+
+    const updatedPositions = {
       initialX: x,
       initialY: y,
-    });
+    };
+
+    if (newLeft) {
+      updatedPositions.rightPos = newRight;
+    }
+    if (newTop) {
+      updatedPositions.bottomPos = newBottom;
+    }
+    if (newRight !== target.right - target.left) {
+      updatedPositions.leftPos = newLeft;
+    }
+    if (newBottom !== target.bottom - target.top) {
+      updatedPositions.topPos = newTop;
+    }
+
+    this.setState(updatedPositions);
   }
 
   updateZone() {
