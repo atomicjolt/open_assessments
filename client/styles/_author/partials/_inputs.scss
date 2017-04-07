@@ -276,7 +276,7 @@
   }
   .au-c-text-input{
     color: $white;
-    border-top: transparent;
+    border-top: 0.2rem solid transparent;
     min-height: 2.5rem;
 
     &:focus{

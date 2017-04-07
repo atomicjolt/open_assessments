@@ -18,7 +18,8 @@
     width: 20rem;
     height: 20rem;
     background: none;
-    border: 0.2rem solid $gray8;
+    border: 0.2rem solid $black;
+    box-shadow: 0 0 0.2rem 0.2rem $white;
     position: absolute;
     border-radius: $radius;
     cursor: pointer;
@@ -33,7 +34,7 @@
     }
 
     &.is-active{
-      border-color: $blue;
+
       .au-c-drop-zone__tool-tip{
         @include display-flex;
       }
@@ -46,8 +47,9 @@
       left: 0;
       @include semi-bold;
       font-size: 1.2rem;
-      color: $text-color;
       padding: 0.1rem 0.5rem;
+      color: black;
+      background: $white;
     }
 
 
