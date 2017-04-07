@@ -8,7 +8,7 @@ import appHistory                 from '../../history';
 import * as selectors             from '../../selectors/assessment';
 import localizeStrings            from '../../selectors/localize';
 import Item                       from '../assessments/item';
-import Loading                    from '../assessments/loading';
+import Loading                    from '../assessments/loading'; // eslint-disable-line import/no-named-as-default
 import ThreeButtonNav             from '../assessments/three_button_nav';
 import TwoButtonNav               from '../assessments/two_button_nav';
 
@@ -115,6 +115,25 @@ export class Assessment extends React.Component {
     secondaryActionState: React.PropTypes.shape({}),
     primaryActionState: React.PropTypes.string,
   };
+
+  /**
+   * Returns true if all questions have been answered, false otherwise.
+   */
+  static checkCompletion() {
+    return true;
+    // TODO calculate number of unanswered questions
+    // var questionsNotAnswered = [];
+    // var responses = this.props.responses;
+    // for (var i = 0; i < answers.length; i++) {
+    //   if(answers[i] == null || answers[i].length == 0){
+    //     questionsNotAnswered.push(i+1);
+    //   }
+    // };
+    // if(questionsNotAnswered.length > 0){
+    //   return questionsNotAnswered;
+    // }
+    // return true;
+  }
 
   componentWillMount() {
     if (this.props.assessmentProgress.assessmentResult != null) {
@@ -235,7 +254,7 @@ export class Assessment extends React.Component {
    * question.
    */
   getWarning() {
-    const unanswered = this.checkCompletion();
+    const unanswered = Assessment.checkCompletion();
     let warning;
     if (unanswered === true && this.props.isLastPage) {
       warning = <div>{this.props.localizedStrings.assessment.unansweredQuestionWarning}</div>;
@@ -285,7 +304,7 @@ export class Assessment extends React.Component {
    * action
    */
   submitAssessment() {
-    const complete = this.checkCompletion();
+    const complete = Assessment.checkCompletion();
     if (complete) {
       window.onbeforeunload = null;
       this.props.submitAssessment(
@@ -303,29 +322,6 @@ export class Assessment extends React.Component {
 
   popup() {
     return this.props.localizedStrings.assessment.leavingQuizPopup;
-  }
-
-  checkProgress(current, total) {
-    return Math.floor((current / total) * 100);
-  }
-
-  /**
-   * Returns true if all questions have been answered, false otherwise.
-   */
-  checkCompletion() {
-    return true;
-    // TODO calculate number of unanswered questions
-    // var questionsNotAnswered = [];
-    // var responses = this.props.responses;
-    // for (var i = 0; i < answers.length; i++) {
-    //   if(answers[i] == null || answers[i].length == 0){
-    //     questionsNotAnswered.push(i+1);
-    //   }
-    // };
-    // if(questionsNotAnswered.length > 0){
-    //   return questionsNotAnswered;
-    // }
-    // return true;
   }
 
   renderRemainingStatus() {

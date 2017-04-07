@@ -61,13 +61,19 @@ export class Dropzone extends React.Component {
   }
 }
 
-export const WordDropZone = DropTarget(ItemTypes.WORD, defaultTarget, collect)(Dropzone);
-export const GroupDropZone = DropTarget(
+export const WordDropZone = DropTarget( // eslint-disable-line new-cap
+  ItemTypes.WORD,
+  defaultTarget,
+  collect
+)(Dropzone);
+
+export const GroupDropZone = DropTarget( // eslint-disable-line new-cap
   [ItemTypes.WORD_GROUP, ItemTypes.WORD],
   groupWordTarget,
   collect
 )(Dropzone);
-export const FillTheBlankWordDropZone = DropTarget(
+
+export const FillTheBlankWordDropZone = DropTarget( // eslint-disable-line new-cap
   ItemTypes.FILL_BLANK_WORD,
   defaultTarget,
   collect

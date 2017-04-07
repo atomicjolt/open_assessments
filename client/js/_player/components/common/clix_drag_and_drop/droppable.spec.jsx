@@ -26,9 +26,10 @@ describe('clix drag and drop', () => {
   });
 
   it('renders', () => {
-    expect(result.find('.classname').length).toBe(1);
+    const droppable = result.find('.classname');
+    expect(droppable.length).toBe(1);
     expect(result.length).toBe(1);
-    expect(result.find('.classname').props().dangerouslySetInnerHTML.__html).toBe('droppable text');
+    expect(droppable.props().dangerouslySetInnerHTML.__html).toBe('droppable text'); // eslint-disable-line no-underscore-dangle
   });
 
   it('hides when it should be hidden', () => {

@@ -38,7 +38,7 @@ export default (state = initialState, action) => {
       let responses = state.getIn(['responses', `${action.questionIndex}`]);
       if (responses === undefined || action.exclusive === true) {
         // Create new list if no list exists or multi answer is not allowed
-        responses = Immutable.List();
+        responses = Immutable.List(); // eslint-disable-line new-cap
       }
 
       // answerData will usually be a string, but if it's not this will let
@@ -77,13 +77,13 @@ export default (state = initialState, action) => {
     case AssessmentConstants.ASSESSMENT_CHECK_ANSWER_DONE: {
       let newState = state;
       if (!action.error) {
-        let checkedResponses = Immutable.Map();
+        let checkedResponses = Immutable.Map(); // eslint-disable-line new-cap
 
         // TODO: Currently we are setting the same response for all userInput.
         // When we have an example of multi answer feedback we should figure out
         // how to assign feedback to each answer.
         action.userInput.forEach((id) => {
-          const feedback = Immutable.Map(action.payload);
+          const feedback = Immutable.Map(action.payload); // eslint-disable-line new-cap
           checkedResponses = checkedResponses.set(id, feedback);
         });
 

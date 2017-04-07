@@ -23,7 +23,7 @@ export function transformItem(item) {
 
     default: {
       const qti = transformQti2(item.xml);
-      let question_type = item.question_type;
+      let questionType = item.question_type;
       const mapGenusType = {
         'question-type%3Aqti-order-interaction-mw-sentence%40ODL.MIT.EDU': 'movable_words_sentence',
         'question-type%3Aqti-order-interaction-mw-sandbox%40ODL.MIT.EDU': 'movable_words_sandbox',
@@ -35,10 +35,10 @@ export function transformItem(item) {
       };
 
       if (mapGenusType[item.json.genusTypeId]) {
-        question_type = mapGenusType[item.json.genusTypeId];
+        questionType = mapGenusType[item.json.genusTypeId];
       }
 
-      return _.merge({}, qti, { title: item.title, question_type });
+      return _.merge({}, qti, { title: item.title, question_type: questionType });
     }
   }
 }

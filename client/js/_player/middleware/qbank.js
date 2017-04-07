@@ -59,7 +59,7 @@ function getBody(userInput, question) {
   if (type && type.startsWith('question')) {
     type = type.replace('question', 'answer');
   } else {
-    console.error("Couldn't get the question type");
+    console.error("Couldn't get the question type"); // eslint-disable-line no-console
   }
 
   const item = transformItem(question);
@@ -96,7 +96,7 @@ function getBody(userInput, question) {
 
       const formData = new FormData();
       formData.append('submission', userInput[0]);
-      if (userInput.length > 1) { console.error('Only one form submission is supported!'); }
+      if (userInput.length > 1) { console.error('Only one form submission is supported!'); } // eslint-disable-line no-console
       return formData;
     }
 
@@ -210,7 +210,7 @@ function checkAnswers(store, action) {
           type: AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
           error
         });
-        console.error(error);
+        console.error(error); // eslint-disable-line no-console
       });
       return promise;
     }

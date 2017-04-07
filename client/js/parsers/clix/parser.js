@@ -2,7 +2,6 @@ import $  from 'jquery';
 
 import { AssessmentFormats }  from '../assessment.js';
 import Qti2Parser             from '../qti2/parser.js';
-import { transformDragAndDrop }   from './clix';
 
 export default class Parser {
 
@@ -37,8 +36,10 @@ export function parseFeedback(feedbackXml) {
     const feedback = $xml.find('modalFeedback');
     return feedback.html();
   } else if (feedbackXml === 'No feedback available.') {
+    return '';
     // Don't return any feedback when no feedback is available
-  } else {
-    console.error('We cannot recognize feedback from server');
   }
+
+  console.error('We cannot recognize feedback from server'); // eslint-disable-line no-console
+  return '';
 }

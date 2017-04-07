@@ -74,7 +74,7 @@ describe('assessment reducer', () => {
       exclusive:false
     };
 
-    it("adds answerData to responses[][]", () => {
+    it('adds answerData to responses[][]', () => {
       const state = assessmentProgress(undefined, action);
       expect(state.getIn(['responses', '0']).toJS()).toEqual([1]);
     });
