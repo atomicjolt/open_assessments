@@ -108,6 +108,10 @@
   &.au-o-row{
     margin-left: -2rem;
     @include align-items(stretch);
+
+    .au-o-quarter{
+      margin-bottom: 2rem;
+    }
   }
 }
 

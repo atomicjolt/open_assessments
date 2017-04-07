@@ -2,10 +2,10 @@ import React      from 'react';
 
 export default function addZoneDropdown(props) {
   return (
-    <ul className="au-c-button-dropdown u-ml-sm">
+    <ul className="au-c-button-dropdown au-u-ml-sm">
       <li>
         <button
-          className="au-c-btn au-c-btn--sm au-c-btn--dropdown au-u-ml-sm"
+          className="au-c-btn au-c-btn--sm au-c-btn--dropdown"
           onClick={props.toggle}
         >
           {props.text}
