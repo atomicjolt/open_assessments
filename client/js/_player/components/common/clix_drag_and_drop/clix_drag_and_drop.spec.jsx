@@ -34,9 +34,7 @@ describe('clix drag and drop', () => {
           id: 'answer_id',
           zoneIndex: 0,
         },
-        droppable: {
-          id: 'answer_id',
-        },
+        droppableId: 'answer_id',
         zoneIndex: 0,
         coordinateValues: [0, 0],
         width: 50,
