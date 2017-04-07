@@ -41,7 +41,6 @@ export default class EditorUploadModal extends React.Component {
 
   constructor() {
     super();
-
     this.state = {
       languageMediaData: _.reduce(languages.languageTypeId, (result, language) => {
         result[language] = { locale: languageToLocale[language] };
@@ -56,8 +55,11 @@ export default class EditorUploadModal extends React.Component {
   }
 
   addMedia() {
-    const metaData = this.state.languageMediaData;
-    // TODO add question type to action
+    const metaData = {
+      ...this.state.languageMediaData,
+      mediaType: this.props.mediaType,
+    };
+
     if (this.state.uploadedMedia) {
       this.props.insertMedia(this.state.uploadedMedia, metaData, true);
     } else if (this.state.selectedMedia) {
