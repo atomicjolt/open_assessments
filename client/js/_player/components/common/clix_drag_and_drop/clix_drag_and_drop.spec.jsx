@@ -55,8 +55,8 @@ describe('clix drag and drop', () => {
     it('renders zones', () => {
       const zones = result.find(DropZone);
       expect(zones.length).toBe(2);
-      expect(zones.at(0).props().style.left).toBe(-50);
-      expect(zones.at(0).props().style.top).toBe(-50);
+      expect(zones.at(0).props().style.left).toBe(0);
+      expect(zones.at(0).props().style.top).toBe(0);
     });
 
     it('renders selected answers', () => {
