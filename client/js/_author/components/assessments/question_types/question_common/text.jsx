@@ -29,7 +29,7 @@ class QuestionText extends React.Component {
   }
 
   render() {
-    const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('questionText');
     switch (this.props.itemType) {
       case types.movableFillBlank:
         return (

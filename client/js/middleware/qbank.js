@@ -15,6 +15,7 @@ import * as assessmentActions                       from '../actions/qbank/asses
 import { updateItem }                               from '../actions/qbank/items';
 import { deserializeMedia, deserializeSingleMedia } from './serialization/qbank/deserializers/media';
 import { dispatchMany }                             from './utils';
+import guid                                         from '../utils/guid';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -51,10 +52,13 @@ function uploadMedia(state, action) {
   formData.append('inputFile', action.body);
   formData.append('returnUrl', true);
   formData.append('createNew', true);
-  formData.append('mediaDescription', action.metaData.description || '');
-  formData.append('altText', action.metaData.altText || '');
-  formData.append('license', action.metaData.license || '');
-  formData.append('copyright', action.metaData.copyright || '');
+  formData.append('mediaDescription', action.metaData['639-2%3AENG%40ISO'].description || '');
+  formData.append('altText', action.metaData['639-2%3AENG%40ISO'].altText || '');
+  formData.append('license', action.metaData['639-2%3AENG%40ISO'].license || '');
+  formData.append('copyright', action.metaData['639-2%3AENG%40ISO'].copyright || '');
+  // formData.append('locale', action.metaData['639-2%3AENG%40ISO'].locale);
+  // formData.append('vttFile', action.metaData['639-2%3AENG%40ISO'].vttFile || '');
+  // formData.append('transcript', action.metaData['639-2%3AENG%40ISO'].transcript || '');
 
   return api.post(
     `repository/repositories/${action.bankId}/assets`,
@@ -65,6 +69,30 @@ function uploadMedia(state, action) {
     formData,
     null,
     action.timeout
+  );
+}
+
+
+function uploadMediaMeta(state, metaData, assetId) {
+
+  const formData = new FormData();
+  formData.append('mediaDescription', metaData.description || '');
+  formData.append('altText', metaData.altText || '');
+  formData.append('license', metaData.license || '');
+  formData.append('copyright', metaData.copyright || '');
+  formData.append('locale', metaData.locale);
+  formData.append('vttFile', metaData.vttFile || '');
+  formData.append('transcript', metaData.transcript || '');
+
+  return api.post(
+    `repository/assets/${assetId}/contents`,
+    state.settings.api_url,
+    state.jwt,
+    state.settings.csrf_token,
+    null,
+    formData,
+    null,
+    20000
   );
 }
 
@@ -104,11 +132,13 @@ function addMediaToItem(store, action, result) {
     assetId = _.get(action, 'body.original.assetContents[0].assetId');
     genusTypeId = _.get(action, 'body.original.assetContents[0].genusTypeId');
   }
+
+  const mediaGuid = guid();
   let item = {
     id: action.itemId,
     question: {
       fileIds: {
-        [action.guid] : {
+        [mediaGuid] : {
           assetContentId: id,
           assetId,
           assetContentTypeId: genusTypeId,
@@ -118,7 +148,7 @@ function addMediaToItem(store, action, result) {
   };
 
   item = _.set(item, action.where, {
-    text: `AssetContent:${action.guid}`,
+    text: `AssetContent:${mediaGuid}`,
     altText: action.file.altText,
     id: _.last(action.where.split('.')),
   });
@@ -480,6 +510,12 @@ const qbank = {
   [AssetConstants.UPLOAD_MEDIA]: (store, action) => {
     const state = store.getState();
     uploadMedia(state, action).then((res) => {
+      // _.forEach(action.metaData, (data) => {
+      //   if (!data.locale === 'en') {
+      //     uploadMediaMeta(state, data, res.body.assetId);
+      //   }
+      // });
+
       store.dispatch({
         type: action.type + DONE,
         original: action,

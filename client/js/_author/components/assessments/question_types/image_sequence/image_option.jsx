@@ -4,10 +4,10 @@ import localize     from '../../../../locales/localize';
 
 function imageOption(props) {
   const { activateChoice, updateChoice, deleteChoice, id, order, numChoices } = props;
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('imageOption');
   return (
     <div
-      className='au-c-image-sequence-answer is-active'
+      className="au-c-image-sequence-answer is-active"
       tabIndex="0"
       onClick={() => activateChoice(id)}
     >
@@ -23,7 +23,7 @@ function imageOption(props) {
             })}
             defaultValue={order}
           >
-            <option key='option_key_null' value={null}>{strings.NA}</option>
+            <option key="option_key_null" value={null}>{strings.NA}</option>
             {
               _.map(_.range(1, numChoices + 1), (val, index) =>
                 <option key={`option_key_${index}`} value={val}>{ val }</option>

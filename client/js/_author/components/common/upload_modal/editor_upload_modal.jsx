@@ -3,6 +3,7 @@ import Modal            from 'react-modal';
 import _                from 'lodash';
 
 import Loader           from '../dot_loader';
+import languages        from '../../../../constants/language_types';
 import SearchMedia      from './search_media';
 import LanguageSelect   from '../language_dropdown';
 import Metadata         from './meta_data';
@@ -13,6 +14,19 @@ const tagNameMap = {
   video: 'Video',
 };
 
+// TODO localize strings?
+const mediaPrompt = {
+  audio: 'Select an Audio file',
+  img: 'Select an Image',
+  video: 'Select a Video file',
+};
+
+const languageToLocale = {
+  '639-2%3AENG%40ISO': 'en',
+  '639-2%3AHIN%40ISO': 'hi',
+  '639-2%3ATEL%40ISO': 'te',
+};
+
 export default class EditorUploadModal extends React.Component {
   static propTypes = {
     isOpen: React.PropTypes.bool,
@@ -20,34 +34,32 @@ export default class EditorUploadModal extends React.Component {
     loading: React.PropTypes.bool,
     media: React.PropTypes.shape({}),
     mediaType: React.PropTypes.string,
-    mediaName: React.PropTypes.string,
     insertMedia: React.PropTypes.func.isRequired,
     inProgress: React.PropTypes.bool,
     error: React.PropTypes.string,
+    uploadOnly: React.PropTypes.bool,
   };
 
   constructor() {
     super();
+
     this.state = {
-      uploadedImage: null,
-      selectedMedia: null,
-      description: '',
-      altText: '',
-      license: '',
-      copyright: '',
+      languageMediaData: _.reduce(languages.languageTypeId, (result, language) => {
+        result[language] = { locale: languageToLocale[language] };
+        return result;
+      }, {}),
       activeItem: null,
+      mediaAutoPlay: false,
+      uploadedMedia: null,
+      selectedMedia: null,
+      language: languages.languageTypeId.english, //default to english
     };
   }
 
   addMedia() {
-    const metaData = {
-      description: this.state.description,
-      altText: this.state.altText,
-      license: this.state.license,
-      copyright: this.state.copyright,
-    };
-    if (this.state.uploadedImage) {
-      this.props.insertMedia(this.state.uploadedImage, metaData, true);
+    const metaData = this.state.languageMediaData;
+    if (this.state.uploadedMedia) {
+      this.props.insertMedia(this.state.uploadedMedia, metaData, true);
     } else if (this.state.selectedMedia) {
       this.props.insertMedia(this.state.selectedMedia);
     }
@@ -64,8 +76,21 @@ export default class EditorUploadModal extends React.Component {
     });
   }
 
+  metadataTypes(mediaType) {
+    if (mediaType === 'audio' || mediaType === 'video') {
+      return ['license', 'copyright', 'vttFile', 'transcript'];
+    }
+    return ['altText', 'license', 'copyright'];
+  }
+
+  setters(key, val) {
+    const languageMediaData = this.state.languageMediaData;
+    languageMediaData[this.state.language][key] = val;
+    this.setState({ languageMediaData });
+  }
+
   render() {
-    let name = this.props.mediaName;
+    let name = _.get(this, 'state.uploadedImage.name');
 
     if (this.props.inProgress) {
       name = <Loader />;
@@ -96,8 +121,8 @@ export default class EditorUploadModal extends React.Component {
         </div>
 
         <div className="au-c-wysiwyg-modal__main">
-          <div style={{ display: this.state.uploadedImage ? 'none' : 'block' }}>
-            <div className="au-c-drop-zone__answers__label">Select an Image</div>
+          <div style={{ display: this.state.uploadedMedia || this.props.uploadOnly ? 'none' : 'block' }}>
+            <div className="au-c-drop-zone__answers__label">{mediaPrompt[this.props.mediaType]}</div>
 
             <SearchMedia
               media={this.props.media}
@@ -115,7 +140,7 @@ export default class EditorUploadModal extends React.Component {
             </div>
             <div className="au-c-input--file  au-u-ml-sm">
               <input
-                onChange={e => this.setState({ uploadedImage: e.target.files[0] })}
+                onChange={e => this.setState({ uploadedMedia: e.target.files[0] })}
                 id="fileid"
                 type="file"
               />
@@ -125,14 +150,12 @@ export default class EditorUploadModal extends React.Component {
             </div>
           </div>
           {
-            this.state.uploadedImage ? <Metadata
-              selectedImage={this.state.uploadedImage || this.state.selectedMedia}
-              updateMetadata={(key, val) => this.setState({ [key]: val })}
+            this.state.uploadedMedia && !this.props.uploadOnly ? <Metadata
+              metadataTypes={this.metadataTypes(this.props.mediaType)}
+              selectedLanguage={this.state.language}
+              updateMetadata={(key, val) => this.setters(key, val)}
               mediaItem={this.state.selectedMedia}
-              description={this.state.description}
-              altText={this.state.altText}
-              license={this.state.license}
-              copyright={this.state.copyright}
+              metaData={this.state.languageMediaData[this.state.language]}
             /> : null
           }
 

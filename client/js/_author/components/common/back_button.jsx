@@ -2,7 +2,7 @@ import React    from 'react';
 import localize from '../../locales/localize';
 
 function backButton(props) {
-  const strings = props.localizeStrings();
+  const strings = props.localizeStrings('backButton');
   return (
     <button
       onClick={() => props.handleClick()}

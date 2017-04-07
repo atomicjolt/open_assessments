@@ -20,6 +20,10 @@ export default class BankList extends React.Component {
     sortPublished: React.PropTypes.string,
     deleteAssessment: React.PropTypes.func,
     togglePublishAssessment: React.PropTypes.func,
+    baseEmbedUrl: React.PropTypes.string,
+    getEmbedCode: React.PropTypes.func,
+    publishedBankId: React.PropTypes.string,
+
   }
 
   constructor() {
@@ -42,9 +46,11 @@ export default class BankList extends React.Component {
               key={`bank_${bank.id}`}
               bank={bank}
               getBankChildren={this.props.getBankChildren}
+              focused={this.state.focusedItem === bank.id}
+              onFocus={shouldFocus => this.focusItem(shouldFocus, bank.id)}
             />
           ))
-          } {
+          }{
             _.map(this.props.assessments, assessment => (
               <BankAssessment
                 baseEmbedUrl={this.props.baseEmbedUrl}
@@ -56,6 +62,8 @@ export default class BankList extends React.Component {
                 getBankChildren={this.props.getBankChildren}
                 deleteAssessment={this.props.deleteAssessment}
                 togglePublishAssessment={this.props.togglePublishAssessment}
+                focused={this.state.focusedItem === assessment.id}
+                onFocus={shouldFocus => this.focusItem(shouldFocus, assessment.id)}
               />
             ))
           }
