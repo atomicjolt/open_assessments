@@ -33,10 +33,10 @@ export default class EditorUploadModal extends React.Component {
     loading: React.PropTypes.bool,
     media: React.PropTypes.shape({}),
     mediaType: React.PropTypes.string,
-    mediaName: React.PropTypes.string,
     insertMedia: React.PropTypes.func.isRequired,
     inProgress: React.PropTypes.bool,
     error: React.PropTypes.string,
+    uploadOnly: React.PropTypes.bool,
   };
 
   constructor() {
@@ -96,7 +96,7 @@ export default class EditorUploadModal extends React.Component {
   }
 
   render() {
-    let name = this.props.mediaName;
+    let name = _.get(this, 'state.uploadedImage.name');
 
     if (this.props.inProgress) {
       name = <Loader />;
@@ -127,7 +127,7 @@ export default class EditorUploadModal extends React.Component {
         </div>
 
         <div className="au-c-wysiwyg-modal__main">
-          <div style={{ display: this.state.uploadedMedia ? 'none' : 'block' }}>
+          <div style={{ display: this.state.uploadedMedia || this.props.uploadOnly ? 'none' : 'block' }}>
             <div className="au-c-drop-zone__answers__label">{mediaPrompt[this.props.mediaType]}</div>
 
             <SearchMedia
@@ -156,8 +156,7 @@ export default class EditorUploadModal extends React.Component {
             </div>
           </div>
           {
-            // TODO Pass metadata file types
-            this.state.uploadedMedia ? <Metadata
+            this.state.uploadedMedia && !this.props.uploadOnly ? <Metadata
               metadataTypes={this.metadataTypes(this.props.mediaType)}
               metadataFileTypes={this.metadataFileTypes(this.props.mediaType)}
               selectedLanguage={this.state.language}

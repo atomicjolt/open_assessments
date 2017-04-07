@@ -48,3 +48,13 @@ export function parseChoiceWordType(text) {
   const parsedInput = $.parseHTML(text);
   return $(parsedInput).attr('class');
 }
+
+export function getImageUrl(text) {
+  const parsedInput = $.parseHTML(text);
+  const img = $(parsedInput).find('img');
+  const src = $(parsedInput).attr('src');
+  if (img && !src) {
+    return $(img).attr('src');
+  }
+  return src;
+}
