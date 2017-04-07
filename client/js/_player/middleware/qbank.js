@@ -111,7 +111,7 @@ function getBody(userInput, question) {
       return {
         type,
         coordinateConditions: _.map(userInput, input => ({
-          containerId: input.zoneIndex,
+          containerId: input.containerId,
           droppableId: input.droppable.id,
           coordinateValues: input.coordinateValues,
         }))
@@ -221,7 +221,7 @@ function checkAnswers(store, action) {
 
 function loadQuestions(store, action) {
   const state = store.getState();
-  const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions?qti`;
+  const assessmentUrl = `assessment/banks/${state.settings.bank}/assessmentstaken/${state.assessmentMeta.id}/questions`;
   const assessmentPromise = api.get(
     assessmentUrl,
     state.settings.api_url,

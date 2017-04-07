@@ -54,6 +54,7 @@
   display: inline-block;
   cursor: grab;
   img{
+    max-height: 25rem;
     display: block;
   }
   &:active{

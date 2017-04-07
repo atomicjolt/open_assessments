@@ -78,15 +78,7 @@ export class ClixDragAndDrop extends React.Component {
 
     this.props.selectAnswer(answer);
 
-    /*
-      This is an ugly way of updating position, but select answer toggles
-      instead of updates, so if we dropped a droppable in the same zone it
-      started in we send it again - the first time unselected the answer, the
-      second selects it again with the new position. It might be better to
-      make select answer less generic instead, but its behaviour fits most of
-      the other use cases well. This also is only needed for non snap zones.
-    */
-
+    // if they dropped it into the start zone, deselect it.
     if (zoneIndex !== item.previousZoneIndex && item.previousZoneIndex > -1) {
       this.props.selectAnswer({
         id: {
@@ -95,6 +87,15 @@ export class ClixDragAndDrop extends React.Component {
         }
       });
     } else if (isDrop && zoneIndex === item.previousZoneIndex) {
+      /*
+        This is an ugly way of updating position, but select answer toggles
+        instead of updates, so if we dropped a droppable in the same zone it
+        started in we send it again - the first time unselected the answer, the
+        second selects it again with the new position. It might be better to
+        make select answer less generic instead, but its behaviour fits most of
+        the other use cases well. This also is only needed for non snap zones.
+      */
+
       this.props.selectAnswer(answer);
     }
   }
