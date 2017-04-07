@@ -21,7 +21,7 @@ const target = {
   }
 };
 
-export default DropTarget( // eslint-disable-line no-cap
+export default DropTarget( // eslint-disable-line new-cap
   ItemTypes.CLIX_DROPPABLE,
   target,
   collect
