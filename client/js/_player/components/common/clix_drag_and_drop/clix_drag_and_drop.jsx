@@ -43,102 +43,7 @@ export class ClixDragAndDrop extends React.Component {
     }))
   };
 
-  getZones(targetIndex) {
-    return _.map(this.props.zones, (zone, zoneIndex) => {
-      const canDrop = (
-        !_.find(this.props.selectedAnswers, { zoneIndex }) ||
-        (zone.dropBehaviorType.indexOf('snap') === -1)
-      );
-
-      const className = zone.dropBehaviorType.indexOf('%3Adrop%40') > -1
-        ? 'c-drag-zone c-drag-zone--drop'
-        : 'c-drag-zone c-drag-zone--snap';
-
-
-      return (
-        <ClixDropZone
-          key={zoneIndex}
-          className={className}
-          canDrop={canDrop}
-          dropItem={(item, offset) => (
-            this.selectAnswer(zoneIndex, item, targetIndex, offset)
-          )}
-          style={{
-            left: zone.spatialUnit.coordinateValues[0],
-            top: zone.spatialUnit.coordinateValues[1],
-            height: zone.spatialUnit.height,
-            width: zone.spatialUnit.width,
-          }}
-        >
-          {
-            zone.name
-            ? <div className="c-drag-zone__name">{zone.name}</div>
-            : null
-          }
-        </ClixDropZone>
-      );
-    });
-  }
-
-  getSelectedAnswers() {
-    _.map(this.props.selectedAnswers, answer => (
-      <Droppable
-        key={answer.droppable.id}
-        style={{
-          position: 'absolute',
-          left: answer.coordinateValues[0] - (answer.width / 2),
-          top: answer.coordinateValues[1] - (answer.height / 2),
-        }}
-        className="c-droppable-item"
-        droppable={answer.droppable}
-        zoneIndex={answer.zoneIndex}
-      />
-    ));
-  }
-
-  getAvailableAnswers() {
-    return _.map(this.props.answers, (answer) => {
-      const useCount = _.filter(
-        this.props.selectedAnswers,
-        { droppable: { id: answer.id } }
-      ).length;
-
-      return (
-        <Droppable
-          key={answer.id}
-          className="c-droppable-item"
-          hide={useCount >= parseInt(answer.reuse, 10)}
-          showWhileDragging={useCount < (answer.reuse - 1)}
-          text={answer.text}
-          droppable={answer}
-          zoneIndex={-1}
-        />
-      );
-    });
-  }
-
-  getTargets() {
-    return _.map(this.props.targets, (target, targetIndex) => (
-      <div
-        key={targetIndex}
-        className="c-drag-target"
-        style={{
-          position: 'relative',
-        }}
-      >
-        <div
-          className="c-drag-target__background"
-          ref={ref => (this[`target_${targetIndex}`] = ref)}
-          dangerouslySetInnerHTML={// eslint-disable-line react/no-danger
-            { __html: target.text }}
-        />
-        {this.getZones(targetIndex)}
-        {this.getSelectedAnswers()}
-      </div>
-    ));
-  }
-
-  deselectAnswer(item) {
+  deselectAnswer(item) { // eslint-disable-line react/sort-comp
     if (item.previousZoneIndex > -1) {
       this.props.selectAnswer({
         id: {
@@ -149,7 +54,7 @@ export class ClixDragAndDrop extends React.Component {
     }
   }
 
-  selectAnswer(zoneIndex, item, targetIndex, offset) {
+  selectAnswer(zoneIndex, item, targetIndex, offset) { // eslint-disable-line react/sort-comp
     const target = this.props.targets[targetIndex];
     const zone = this.props.zones[zoneIndex];
     const coordinateValues = [];
@@ -197,6 +102,101 @@ export class ClixDragAndDrop extends React.Component {
 
       this.props.selectAnswer(answer);
     }
+  }
+
+  getZones(targetIndex) {
+    return _.map(this.props.zones, (zone, zoneIndex) => {
+      const canDrop = (
+        !_.find(this.props.selectedAnswers, { zoneIndex }) ||
+        (zone.dropBehaviorType.indexOf('snap') === -1)
+      );
+
+      const className = zone.dropBehaviorType.indexOf('%3Adrop%40') > -1
+        ? 'c-drag-zone c-drag-zone--drop'
+        : 'c-drag-zone c-drag-zone--snap';
+
+
+      return (
+        <ClixDropZone
+          key={zoneIndex}
+          className={className}
+          canDrop={canDrop}
+          dropItem={(item, offset) => (
+            this.selectAnswer(zoneIndex, item, targetIndex, offset)
+          )}
+          style={{
+            left: zone.spatialUnit.coordinateValues[0],
+            top: zone.spatialUnit.coordinateValues[1],
+            height: zone.spatialUnit.height,
+            width: zone.spatialUnit.width,
+          }}
+        >
+          {
+            zone.name
+            ? <div className="c-drag-zone__name">{zone.name}</div>
+            : null
+          }
+        </ClixDropZone>
+      );
+    });
+  }
+
+  getSelectedAnswers() {
+    return _.map(this.props.selectedAnswers, answer => (
+      <Droppable
+        key={answer.droppable.id}
+        style={{
+          position: 'absolute',
+          left: answer.coordinateValues[0] - (answer.width / 2),
+          top: answer.coordinateValues[1] - (answer.height / 2),
+        }}
+        className="c-droppable-item"
+        droppable={answer.droppable}
+        zoneIndex={answer.zoneIndex}
+      />
+    ));
+  }
+
+  getAvailableAnswers() {
+    return _.map(this.props.answers, (answer) => {
+      const useCount = _.filter(
+        this.props.selectedAnswers,
+        { droppable: { id: answer.id } }
+      ).length;
+
+      return (
+        <Droppable
+          key={answer.id}
+          className="c-droppable-item"
+          hide={useCount >= parseInt(answer.reuse, 10)}
+          showWhileDragging={useCount < (answer.reuse - 1)}
+          text={answer.text}
+          droppable={answer}
+          zoneIndex={-1}
+        />
+      );
+    });
+  }
+
+  getTargets() {
+    return _.map(this.props.targets, (target, targetIndex) => (
+      <div
+        key={targetIndex}
+        className="c-drag-target"
+        style={{
+          position: 'relative',
+        }}
+      >
+        <div
+          className="c-drag-target__background"
+          ref={ref => (this[`target_${targetIndex}`] = ref)}
+          dangerouslySetInnerHTML={
+            { __html: target.text }}
+        />
+        {this.getZones(targetIndex)}
+        {this.getSelectedAnswers()}
+      </div>
+    ));
   }
 
   render() {
