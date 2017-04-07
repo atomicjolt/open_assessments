@@ -52,7 +52,7 @@ export class Droppable extends React.Component {
         ref={ref => (this.node = ref)}
         className={`${this.props.className || ''} ${hide}`}
         style={this.props.style}
-        dangerouslySetInnerHTML={{ __html: droppable.text }}
+        dangerouslySetInnerHTML={{ __html: droppable.text }} // eslint-disable-line react/no-danger
       />
     );
   }
