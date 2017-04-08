@@ -60,6 +60,18 @@ export class OeaEditor extends React.Component {
     }
   }
 
+  insertTranscript(text, split) {
+    return text.split(split).map((snippet) => {
+      const assetContentMatch = snippet.match(/src="AssetContent:(\S*)"/);
+      if (assetContentMatch) {
+        const assetContentId = assetContentMatch[1];
+        const transcript = `<transcript src="AssetContent:${assetContentId} />`;
+        return `${snippet}${split}${transcript}`;
+      }
+      return `${snippet}${split}`;
+    }).join('');
+  }
+
   onBlur(editorText, isChanged) {
     this.setState({ focused: false, newText: editorText });
     if (!isChanged) return;
@@ -83,7 +95,10 @@ export class OeaEditor extends React.Component {
       }
     });
 
-    _.each(this.state.fileGuids, (file, mediaGuid) => {
+    text = this.insertTranscript(text, '</audio>');
+    text = this.insertTranscript(text, '</video>');
+
+      _.each(this.state.fileGuids, (file, mediaGuid) => {
       // we either uploaded it, or selected it in the modal. Check both places.
       const media = this.props.uploadedAssets[mediaGuid] || this.state.fileGuids[mediaGuid];
       if (media && !media.error) {
@@ -102,6 +117,7 @@ export class OeaEditor extends React.Component {
   }
 
   getEditorContent(media) {
+    // NOTE this is where we need to handle grabbing the url to look pretty
     let editorContent = `<video><source src="${media.url}" /></video>`;
     const alt = _.isEmpty(media.altText) ? '' : media.altText.text;
 
@@ -111,8 +127,13 @@ export class OeaEditor extends React.Component {
         break;
 
       case 'audio':
+        editorContent = '<audio autoplay name="media" controls>' +
+        `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
+        `</${this.state.mediaType}>`;
+        break;
       case 'video':
-        editorContent = `<${this.state.mediaType} autoplay name="media" controls>` +
+      // TODO insert vtt tags
+        editorContent = '<video autoplay name="media" controls>' +
           `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
           `</${this.state.mediaType}>`;
         break;
