@@ -79,8 +79,10 @@ export default class EditorUploadModal extends React.Component {
   }
 
   metadataFileTypes(mediaType) {
-    if (mediaType === 'audio' || mediaType === 'video') {
+    if (mediaType === 'video') {
       return ['vttFile', 'transcript'];
+    } else if (mediaType === 'audio') {
+      return ['transcript'];
     }
     return [];
   }
