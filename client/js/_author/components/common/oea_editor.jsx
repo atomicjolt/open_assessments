@@ -83,7 +83,7 @@ export class OeaEditor extends React.Component {
     const fileIds = {};
 
     // we don't want jquery to auto play anything
-    text = text.replace('autoplay', 'autoplay-placeholder');
+    text = text.replace(/autoplay/g, 'autoplay-placeholder');
 
     const doc = $(`<div>${text}</div>`);
     $('img, source', doc).each((i, el) => {
@@ -113,7 +113,7 @@ export class OeaEditor extends React.Component {
       }
     });
 
-    text = text.replace('autoplay-placeholder', 'autoplay');
+    text = text.replace(/autoplay-placeholder/g, 'autoplay');
 
     this.props.onBlur(text, fileIds);
     this.setState({ fileGuids: {} });
