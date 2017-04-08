@@ -98,8 +98,8 @@ export class OeaEditor extends React.Component {
       }
     });
 
-    text = this.insertTranscript(text, '<audio', '</audio>');
-    text = this.insertTranscript(text, '<video', '</video>');
+    // text = this.insertTranscript(text, '<audio', '</audio>');
+    // text = this.insertTranscript(text, '<video', '</video>');
 
     _.each(this.state.fileGuids, (file, mediaGuid) => {
       // we either uploaded it, or selected it in the modal. Check both places.
@@ -130,15 +130,16 @@ export class OeaEditor extends React.Component {
         break;
 
       case 'audio':
+      // TODO
         editorContent = '<audio autoplay name="media" controls>' +
         `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
-        `</${this.state.mediaType}>`;
+        '</audio>';
         break;
       case 'video':
-      // TODO insert vtt tags
         editorContent = '<video autoplay name="media" controls>' +
           `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
-          `</${this.state.mediaType}>`;
+          `<track src="${media.vtt}" srclang="en">` +
+          '</video>';
         break;
 
       default:

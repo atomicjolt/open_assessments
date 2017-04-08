@@ -38,10 +38,10 @@ export function deserializeSingleMedia(asset) {
         newMedia.description = content.mediaDescription;
         break;
       case 'vtt':
-        newMedia.vtt = content.vtt;
+        newMedia.vtt = content.url;
         break;
       case 'transcript':
-        newMedia.transcript = content.transcript;
+        newMedia.transcript = content.url;
         break;
       default:
         console.log(content.genusTypeId);
