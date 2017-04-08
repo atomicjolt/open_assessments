@@ -60,8 +60,11 @@ export class OeaEditor extends React.Component {
     }
   }
 
-  insertTranscript(text, split) {
-    return text.split(split).map((snippet) => {
+  insertTranscript(text, match, split) {
+    if (!text.includes(match)) { return text; }
+    const snippets = text.split(split);
+    return snippets.map((snippet, i) => {
+      if (snippets.length - 1 === i) { return snippet; }
       const assetContentMatch = snippet.match(/src="AssetContent:(\S*)"/);
       if (assetContentMatch) {
         const assetContentId = assetContentMatch[1];
@@ -95,10 +98,10 @@ export class OeaEditor extends React.Component {
       }
     });
 
-    text = this.insertTranscript(text, '</audio>');
-    text = this.insertTranscript(text, '</video>');
+    text = this.insertTranscript(text, '<audio', '</audio>');
+    text = this.insertTranscript(text, '<video', '</video>');
 
-      _.each(this.state.fileGuids, (file, mediaGuid) => {
+    _.each(this.state.fileGuids, (file, mediaGuid) => {
       // we either uploaded it, or selected it in the modal. Check both places.
       const media = this.props.uploadedAssets[mediaGuid] || this.state.fileGuids[mediaGuid];
       if (media && !media.error) {
