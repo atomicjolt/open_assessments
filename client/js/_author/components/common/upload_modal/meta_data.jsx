@@ -49,19 +49,17 @@ export default class Metadata extends React.Component {
     }
   }
 
-  autoPlayOption() {
-    const { mediaType, metaData } = this.props;
-    return mediaType === 'audio' || mediaType === 'video' ?
-      <Checkbox
-        id={'uniqueId'}
-        itemId={'uniqueItemId'}
-        isCorrect={metaData.autoPlay}
-        updateChoice={e => this.props.updateMetadata('autoPlay', e.isCorrect)}
-      />
-      : null;
+  autoPlayOption(metaData) {
+    return (<Checkbox
+      id={'uniqueId'}
+      itemId={'uniqueItemId'}
+      isCorrect={metaData.autoPlay}
+      updateChoice={e => this.props.updateMetadata('autoPlay', e.isCorrect)}
+    />);
   }
 
   render() {
+    const { mediaType, metaData } = this.props;
     return (
       <div>
         <div className="au-c-input au-c-input-label--left">
@@ -103,8 +101,7 @@ export default class Metadata extends React.Component {
             </div>
           ))
         }
-        { this.props.mediaType === 'audio' || this.props.mediaType === 'video' ? <div>Auto-play</div> : null }
-        { this.autoPlayOption() }
+        { mediaType === 'audio' || mediaType === 'video' ? <div>Auto-play { this.autoPlayOption(metaData) }</div> : null }
       </div>
     );
   }

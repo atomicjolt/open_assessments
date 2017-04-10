@@ -72,28 +72,28 @@ function uploadMedia(state, action) {
 }
 
 
-function uploadMediaMeta(state, metaData, assetId) {
+// function uploadMediaMeta(state, metaData, assetId) {
 
-  const formData = new FormData();
-  formData.append('mediaDescription', metaData.description || '');
-  formData.append('altText', metaData.altText || '');
-  formData.append('license', metaData.license || '');
-  formData.append('copyright', metaData.copyright || '');
-  formData.append('locale', metaData.locale);
-  formData.append('vttFile', metaData.vttFile || '');
-  formData.append('transcript', metaData.transcript || '');
+//   const formData = new FormData();
+//   formData.append('mediaDescription', metaData.description || '');
+//   formData.append('altText', metaData.altText || '');
+//   formData.append('license', metaData.license || '');
+//   formData.append('copyright', metaData.copyright || '');
+//   formData.append('locale', metaData.locale);
+//   formData.append('vttFile', metaData.vttFile || '');
+//   formData.append('transcript', metaData.transcript || '');
 
-  return api.post(
-    `repository/assets/${assetId}/contents`,
-    state.settings.api_url,
-    state.jwt,
-    state.settings.csrf_token,
-    null,
-    formData,
-    null,
-    20000
-  );
-}
+//   return api.post(
+//     `repository/assets/${assetId}/contents`,
+//     state.settings.api_url,
+//     state.jwt,
+//     state.settings.csrf_token,
+//     null,
+//     formData,
+//     null,
+//     20000
+//   );
+// }
 
 function updateQBankItem(store, action) {
   const state = store.getState();

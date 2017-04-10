@@ -12,7 +12,6 @@ const requests = [
 export const Constants = wrapper(actions, requests);
 
 export function uploadMedia(file, guid, bankId, metaData = {}) {
-  // TODO: the formData implementation should probably move to the reducer
   return {
     bankId,
     file,
