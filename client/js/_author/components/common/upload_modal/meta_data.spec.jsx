@@ -37,9 +37,10 @@ describe('Metadata', () => {
   it('it should not be active tr style', () => {
     let labels = TestUtils.scryRenderedDOMComponentsWithTag(result, 'label');
     //should be 4 total in spec
-    // debugger
+
     expect(labels[1].textContent).toBe('Copyright');
+    expect(labels[2].textContent).toBe('Alt Text');
+    expect(labels[3].textContent).toBe('License');
   });
-  
 
 });
