@@ -19,7 +19,7 @@ describe('header component', () => {
   });
 
   it('displays the index number + 1', () => {
-    expect(result.find('.au-c-question__number').text()).toEqual('Question 8');
+    expect(result.find('.au-c-question__number').text()).toEqual('8');
   });
 
   it('displays Multiple Choice when specific value is present', () => {

@@ -1,5 +1,21 @@
 import React    from 'react';
 import _        from 'lodash';
+import assets   from '../../../../libs/assets';
+
+const placeholders = {
+  video: (
+    <img
+      alt="placeholder"
+      src={assets('./_author/images/video-thumbnail.png')}
+    />
+  ),
+  audio: (
+    <img
+      alt="placeholder"
+      src={assets('./_author/images/audio-thumbnail.png')}
+    />
+  )
+};
 
 export default function mediaTable(props) {
 
@@ -16,7 +32,7 @@ export default function mediaTable(props) {
               >
                 <td>
                   <div className="au-c-modal-media__thumbnail">
-                    <img src={item.url} alt={item.altText.text} height="15" width="20" />
+                    { placeholders[item.type] || <img src={item.url} alt={item.altText.text} /> }
                   </div>
                 </td>
                 <td>{item.description.text}</td>

@@ -37,7 +37,7 @@ describe("CLIx assessment parser", () => {
     it('handles no feedback available', () => {
       var result = parseFeedback("No feedback available.");
 
-      expect(result).toEqual(undefined);
+      expect(result).toEqual('');
     });
 
     it('handles bad xml', () => {
