@@ -11,6 +11,10 @@
 .au-c-drag-and-drop__target-image{
   background: $gray1;
   position: relative;
+
+  img {
+    max-width: 100%;
+  }
 }
 
 
