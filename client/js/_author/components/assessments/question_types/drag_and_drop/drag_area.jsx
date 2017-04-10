@@ -2,15 +2,17 @@ import React      from 'react';
 import _          from 'lodash';
 import DropObject from './drop_object';
 import MediaModal from '../../../common/upload_modal/editor_upload_modal';
+import localize           from '../../../../locales/localize';
 
 
-export default class DragArea extends React.Component {
+class DragArea extends React.Component {
   static propTypes = {
     dropObjects: React.PropTypes.shape({}).isRequired,
     zones: React.PropTypes.shape({}).isRequired,
     images: React.PropTypes.shape({}).isRequired,
     uploadMedia: React.PropTypes.func.isRequired,
     updateDropObject: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
     loadingMedia: React.PropTypes.bool,
   };
 
@@ -23,6 +25,8 @@ export default class DragArea extends React.Component {
   }
 
   render() {
+    const strings = this.props.localizeStrings('dragArea');
+
     return (
       <div className="au-c-drop-zone__answers au-o-row">
         {
@@ -45,7 +49,7 @@ export default class DragArea extends React.Component {
               className="au-c-drop-zone-answer-add__button"
               onClick={() => this.setState({ showModal: true })}
             >
-              Add Image
+              {strings.addImage}
             </button>
 
           </div>
@@ -62,3 +66,5 @@ export default class DragArea extends React.Component {
     );
   }
 }
+
+export default localize(DragArea);
