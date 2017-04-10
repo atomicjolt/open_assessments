@@ -22,9 +22,9 @@ export default class TargetZone extends React.Component {
     return (
       <div
         className="au-c-drag-and-drop__target-image"
-        style={{ backgroundImage: `url(${target.image})` }}
         ref={(area) => { this.target = area; }}
       >
+        <img src={target.image} alt="target" />
         {
           _.map(zones, zone => (
             <DropZone
