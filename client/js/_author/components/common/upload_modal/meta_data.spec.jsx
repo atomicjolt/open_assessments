@@ -6,10 +6,8 @@ import Metadata         from './meta_data';
 describe('Metadata', () => {
   let result;
   let props;
-  let updater;
 
   beforeEach(() => {
-    updater = false;
 
     props = {
       metadataTypes: ['copyright', 'altText', 'license'],
@@ -17,18 +15,18 @@ describe('Metadata', () => {
         id: 'mediaId',
         altText: {
           text: 'salty alty text',
+        },
+        description: {
+          text: 'description text',
+        },
+        copyright: {
+          text: 'copyright stuff',
+        },
+        license: {
+          text: 'silly license text',
+        },
       },
-      description: {
-        text: 'description text',
-      },
-      copyright: {
-        text: 'copyright stuff',
-      },
-      license: {
-        text: 'silly license text',
-      },
-    },
-  };
+    };
 
     result = TestUtils.renderIntoDocument(<Stub><Metadata {...props} /></Stub>);
   });

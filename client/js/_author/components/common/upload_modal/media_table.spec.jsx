@@ -37,7 +37,7 @@ describe('mediaTable', () => {
           text: 'silly license text2',
         },
       }],
-      selectMedia: (item) => { updater = true; },
+      selectMedia: () => { updater = true; },
       selectedMediaId: 'mediaId2'
     };
 
