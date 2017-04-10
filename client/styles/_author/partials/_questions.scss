@@ -49,7 +49,7 @@
   text-align: center;
   font-size: 2rem;
   line-height: 3rem;
-  color: $gray9;
+  color: $gray10;
   cursor: pointer;
 
   &:hover{
@@ -101,10 +101,10 @@
       display: block;
     }
     .au-c-question__text .au-c-input__bottom.no-border{
-      background: $gray4;
+      background: $gray5;
     }
     .au-c-question__feedback .au-c-input__bottom.no-border{
-      background: $gray4;
+      background: $gray5;
     }
   }
 
@@ -168,8 +168,7 @@
     text-align: center;
     @include transition(background 0.1s ease, transform 0.1s ease);
     cursor: pointer;
-    border: 0.2rem dashed $gray4;
-    border-image: url('../../assets/_author/images/border.png') 2 round;
+    border: 0.2rem dashed $gray5;
     @include semi-bold;
     text-transform: uppercase;
     font-size: 1.2rem;

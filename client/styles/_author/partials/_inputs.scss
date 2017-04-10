@@ -40,7 +40,7 @@
 
 .au-c-input__bottom{
   height: 0.2rem;
-  background: $gray4;
+  background: $gray5;
   // border-top: 0.1rem solid $gray4;
 
   &.no-border {
@@ -81,7 +81,7 @@
 .au-c-text-input--small{
   min-height: 3.5rem;
   font-size: 1.6rem;
-  @include semi-bold;
+  @include regular;
 
   .au-c-placeholder{
     line-height: 3.5rem;
@@ -298,7 +298,7 @@
   position: relative;
 
   select{
-    border: 0.1rem solid $gray4;
+    border: 0.1rem solid $gray5;
     background-color: $gray2;
     @include semi-bold;
     color: $text-color;

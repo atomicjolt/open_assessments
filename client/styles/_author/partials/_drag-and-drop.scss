@@ -120,11 +120,11 @@
     height: 100%;
     border-radius: $radius;
     background: $white;
-    box-shadow: 0 0 0.5rem rgba(0,0,0,0.15);
+    box-shadow: 0 0 0.5rem rgba(0,0,0,0.3);
     cursor: pointer;
 
     &:hover{
-      box-shadow: 0 0 0.7rem rgba(0,0,0,0.3);
+      box-shadow: 0 0 0.7rem rgba(0,0,0,0.5);
 
       .au-c-answer--delete i{
         display: inline-block;
