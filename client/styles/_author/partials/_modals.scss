@@ -213,6 +213,10 @@
   @include align-items(center);
   @include justify-content(center);
   margin: 0 1rem;
+
+  img{
+    max-width: 100%;
+  }
 }
 
 .au-c-modal-media__pagination{
@@ -274,4 +278,3 @@
     font-size: 2rem;
   }
 }
-
