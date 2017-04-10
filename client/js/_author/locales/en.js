@@ -152,6 +152,27 @@ export default {
       instructions: 'To insert blank, add [ _ ] where you want the blank to show up.',
       fitbPlaceholder: 'Fill in the [ _ ] Text',
       otherPlaceholder: 'Question Text'
-    }
+    },
+    dragAndDrop: {
+      draggableAnswers: 'Draggable answers'
+    },
+    addZoneDropDown: {
+      byRegion: 'by region',
+      byImage: 'by image',
+    },
+    dragArea: {
+      addImage: 'Add Image',
+    },
+    dropObject: {
+      label: 'Label',
+    },
+    dropZone: {
+      label: 'Label',
+    },
+    targetMenu: {
+      replace: 'Replace Image',
+      addSnap: 'Add Snap Zone',
+      addDrop: 'Add Drop Zone',
+    },
   }
 };

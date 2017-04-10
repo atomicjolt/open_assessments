@@ -1,10 +1,12 @@
 import React    from 'react';
 import _        from 'lodash';
 import assets   from '../../../../../libs/assets';
+import localize from '../../../../locales/localize';
 
-export default function dropObject(props) {
+function dropObject(props) {
   const { object, zones, updateObject, setActive, isActive } = props;
   const logo = assets('./_author/images/CLIx-logo.png');
+  const strings = props.localizeStrings('dropObject');
 
   return (
     <div
@@ -44,7 +46,9 @@ export default function dropObject(props) {
         </div>
 
         <div className="au-c-input au-c-input-label--left">
-          <label htmlFor={`drag_object_label_${object.id}`}>Label</label>
+          <label htmlFor={`drag_object_label_${object.id}`}>
+            {strings.label}
+          </label>
           <div className="au-c-input__contain">
             <input
               id={`drag_object_label_${object.id}`}
@@ -70,5 +74,8 @@ dropObject.propTypes = {
   zones: React.PropTypes.shape({}).isRequired,
   updateObject: React.PropTypes.func.isRequired,
   setActive: React.PropTypes.func.isRequired,
+  localizeStrings: React.PropTypes.func.isRequired,
   isActive: React.PropTypes.bool,
 };
+
+export default localize(dropObject);
