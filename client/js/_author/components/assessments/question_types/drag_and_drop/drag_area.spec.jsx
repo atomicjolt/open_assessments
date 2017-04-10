@@ -34,7 +34,7 @@ describe('drag area component', () => {
   it('sets state via setActive attr in DropObject', () => {
     expect(result.instance().state.activeObject).toBe(null);
     const button = result.find(DropObject);
-    const clickableDiv = button.find('can_you_find_this');
+    const clickableDiv = button.find('.can_you_find_this');
     // button.find('.can_you_find_this').simulate('click');
     expect(result.instance().state.activeObject).toBe('7');
   });
