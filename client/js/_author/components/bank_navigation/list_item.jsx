@@ -5,7 +5,7 @@ export default function ListItem(props) {
   return (
     <tr
       onClick={() => selectItem()}
-      onKeyDown={e => e.keyCode === 13 && selectItem()}
+      onKeyDown={(e) => { if (e.keyCode === 13) { selectItem(); } }}
       tabIndex="0"
       role="button"
       aria-label={bank.displayName ? bank.displayName.text : 'bank item'}
