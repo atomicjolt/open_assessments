@@ -7,6 +7,8 @@ function addOption(props) {
     <div
       className="au-c-answer au-o-flex-center au-c-answer--add"
       onClick={props.createChoice}
+      tabIndex="0"
+      onKeyDown={e => e.keyCode === 13 && props.createChoice(e)}
     >
       <div className="au-c-input">
         <label htmlFor="option2" />
