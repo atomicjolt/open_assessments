@@ -89,8 +89,15 @@ export default class EditorUploadModal extends React.Component {
     this.setState({ languageMediaData });
   }
 
+  closeModal() {
+    this.props.closeModal();
+    if (this.state.uploadedMedia) {
+      this.setState({ uploadedMedia: null });
+    }
+  }
+
   render() {
-    let name = _.get(this, 'state.uploadedImage.name');
+    let name = _.get(this, 'state.uploadedMedia.name');
 
     if (this.props.inProgress) {
       name = <Loader />;
@@ -105,7 +112,7 @@ export default class EditorUploadModal extends React.Component {
         overlayClassName="au-c-wysiwyg-modal-background"
         className="au-c-wysiwyg-modal"
         isOpen={this.props.isOpen}
-        onRequestClose={this.props.closeModal}
+        onRequestClose={() => this.closeModal()}
         contentLabel={`Insert ${tagNameMap[this.props.mediaType]} Modal`}
       >
         <div className="au-c-wysiwyg-modal__header">
@@ -115,7 +122,7 @@ export default class EditorUploadModal extends React.Component {
           <LanguageSelect
             updateItem={language => this.setState(language)}
           />
-          <button onClick={this.props.closeModal} className="au-c-wysiwyg-modal__close">
+          <button onClick={() => this.closeModal()} className="au-c-wysiwyg-modal__close">
             <i className="material-icons">close</i>
           </button>
         </div>
@@ -164,7 +171,7 @@ export default class EditorUploadModal extends React.Component {
 
         <div className="au-c-wysiwyg-modal__footer">
           <button
-            onClick={this.props.closeModal}
+            onClick={() => this.closeModal()}
             className="au-u-right  au-c-btn au-c-btn--sm au-c-btn--gray"
           >
             Cancel
