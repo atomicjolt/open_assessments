@@ -1,15 +1,17 @@
 import React      from 'react';
 import _          from 'lodash';
+import Checkbox   from '../../assessments/question_types/question_common/option_checkbox';
 
 export default class Metadata extends React.Component {
   static propTypes = {
     id: React.PropTypes.string,
+    mediaType: React.PropTypes.string,
     updateMetadata: React.PropTypes.func.isRequired,
     metadataTypes: React.PropTypes.arrayOf(React.PropTypes.string),
     metaData: React.PropTypes.shape({
       description: React.PropTypes.string,
+      autoPlay: React.PropTypes.boolean,
     }),
-    updateMetadata: React.PropTypes.func.isRequired
   };
 
   constructor() {
@@ -45,6 +47,18 @@ export default class Metadata extends React.Component {
       default:
         return '';
     }
+  }
+
+  autoPlayOption() {
+    const { mediaType, metaData } = this.props;
+    return mediaType === 'audio' || mediaType === 'video' ?
+      <Checkbox
+        id={'uniqueId'}
+        itemId={'uniqueItemId'}
+        isCorrect={metaData.autoPlay}
+        updateChoice={e => this.props.updateMetadata('autoPlay', e.isCorrect)}
+      />
+      : null;
   }
 
   render() {
@@ -89,6 +103,8 @@ export default class Metadata extends React.Component {
             </div>
           ))
         }
+        { this.props.mediaType === 'audio' || this.props.mediaType === 'video' ? <div>Auto-play</div> : null }
+        { this.autoPlayOption() }
       </div>
     );
   }
