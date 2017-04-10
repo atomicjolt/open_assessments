@@ -1,7 +1,8 @@
 import React      from 'react';
 import _          from 'lodash';
+import localize from '../../../../locales/localize';
 
-export default class DropZone extends React.Component {
+export class DropZone extends React.Component {
   static propTypes = {
     zone: React.PropTypes.shape({
       id: React.PropTypes.string,
@@ -11,6 +12,7 @@ export default class DropZone extends React.Component {
     }),
     editZone: React.PropTypes.func.isRequired,
     setActive: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
     isActive: React.PropTypes.bool,
   };
 
@@ -138,6 +140,7 @@ export default class DropZone extends React.Component {
   render() {
     const { zone, isActive } = this.props;
     const corners = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
+    const strings = this.props.localizeStrings('dropZone');
 
     return (
       <div
@@ -175,7 +178,7 @@ export default class DropZone extends React.Component {
 
         <div className="au-c-drop-zone__tool-tip is-right">
           <div className="au-c-input au-c-input-label--left au-c-input--white">
-            <label htmlFor={`dropZone_${zone.id}`}>Label</label>
+            <label htmlFor={`dropZone_${zone.id}`}>{strings.label}</label>
             <div className="au-c-input__contain">
               <input
                 id={`dropZone_${zone.id}`}
@@ -199,3 +202,5 @@ export default class DropZone extends React.Component {
     );
   }
 }
+
+export default localize(DropZone);

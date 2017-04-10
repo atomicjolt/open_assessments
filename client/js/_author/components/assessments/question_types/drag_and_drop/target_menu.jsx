@@ -1,11 +1,13 @@
 import React      from 'react';
 import AddZone    from './add_zone_dropdown';
 import MediaModal from '../../../common/upload_modal/editor_upload_modal';
+import localize           from '../../../../locales/localize';
 
-export default class TargetMenu extends React.Component {
+export class TargetMenu extends React.Component {
   static propTypes = {
     uploadMedia: React.PropTypes.func.isRequired,
     newZone: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
     images: React.PropTypes.shape({}).isRequired,
     loadingMedia: React.PropTypes.bool,
   };
@@ -52,6 +54,8 @@ export default class TargetMenu extends React.Component {
   }
 
   render() {
+    const strings = this.props.localizeStrings('targetMenu');
+
     return (
       <div className="au-o-item__top">
         <div className="au-o-left">
@@ -62,18 +66,18 @@ export default class TargetMenu extends React.Component {
             className="au-c-btn au-c-btn--sm au-c-btn--gray"
             onClick={() => this.setState({ showModal: true })}
           >
-            Replace Image
+            {strings.replace}
           </button>
           <AddZone
             active={this.state.add === 'snap'}
-            text="Add Snap Zone"
+            text={strings.addSnap}
             toggle={() => this.setState({ add: this.state.add !== 'snap' ? 'snap' : null })}
             addByRegion={() => this.addByRegion()}
             addByImage={() => this.addByImage()}
           />
           <AddZone
             active={this.state.add === 'drop'}
-            text="Add Drop Zone"
+            text={strings.addDrop}
             toggle={() => this.setState({ add: this.state.add !== 'drop' ? 'drop' : null })}
             addByRegion={() => this.addByRegion()}
             addByImage={() => this.addByImage()}
@@ -92,3 +96,5 @@ export default class TargetMenu extends React.Component {
     );
   }
 }
+
+export default localize(TargetMenu);
