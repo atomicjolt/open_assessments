@@ -3,15 +3,27 @@ import baseSerializer            from './base';
 import { scrub }                 from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 
-function buildImageTag(url, alt) {
-  return `<img src="${url}" alt="${alt}"/>`;
+function buildImageTag(url, alt, fileIds) {
+  const match = /.*\/(.*)\/stream$/.exec(url);
+  let resolvedUrl = url;
+
+  if (match) {
+    const guid = _.findKey(fileIds, { assetContentId: match[1] });
+    resolvedUrl = `AssetContent:${guid}`;
+  }
+
+  return `<img src="${resolvedUrl}" alt="${alt}"/>`;
 }
 
-function serializeTargets(originalTarget, newTarget) {
+function serializeTargets(originalTarget, newTarget, fileIds) {
   if (!newTarget) { return null; }
   return [scrub({
     id: _.get(originalTarget, 'id'),
-    text: buildImageTag(_.get(newTarget, 'text', originalTarget.image), _.get(newTarget, 'altText')),
+    text: buildImageTag(
+      _.get(newTarget, 'text', originalTarget.image),
+      _.get(newTarget, 'altText'),
+      fileIds
+    ),
     name: _.get(newTarget, 'altText'),
     dropBehaviorType: genusTypes.target.reject,
   })];
@@ -60,13 +72,17 @@ function serializeZones(originalZones, newZones, targetId) {
   return zones;
 }
 
-function serializeDroppables(originalDroppables, newDroppables) {
+function serializeDroppables(originalDroppables, newDroppables, fileIds) {
   if (!newDroppables) { return null; }
   const droppables =  _.map(originalDroppables, (droppable) => {
     const newDroppable = newDroppables[droppable.id];
     return scrub({
       id: droppable.id,
-      text: buildImageTag(_.get(newDroppable, 'image', droppable.image), _.get(newDroppable, 'label', droppable.label)),
+      text: buildImageTag(
+        _.get(newDroppable, 'image', droppable.image),
+        _.get(newDroppable, 'label', droppable.label),
+        fileIds
+      ),
       dropBehaviorType: genusTypes.zone[_.get(newDroppable, 'type', droppable.type)],
       name: _.get(newDroppable, 'label', droppable.label),
       reuse: 1,
@@ -76,7 +92,7 @@ function serializeDroppables(originalDroppables, newDroppables) {
 
   if (newDroppables && newDroppables.new) {
     droppables.push({
-      text: buildImageTag(newDroppables.new.text, newDroppables.new.altText),
+      text: buildImageTag(newDroppables.new.text, newDroppables.new.altText, fileIds),
       dropBehaviorType: genusTypes.zone.snap,
       reuse: 1,
     });
@@ -86,11 +102,13 @@ function serializeDroppables(originalDroppables, newDroppables) {
 }
 
 function serializeQuestion(originalQuestion, newQuestionAttributes) {
+  const fileIds = { ...originalQuestion.fileIds, ...newQuestionAttributes.fileIds };
   const newQuestion = {
-    targets: serializeTargets(originalQuestion.target, newQuestionAttributes.target),
+    targets: serializeTargets(originalQuestion.target, newQuestionAttributes.target, fileIds),
     droppables: serializeDroppables(
       originalQuestion.dropObjects,
-      newQuestionAttributes.dropObjects
+      newQuestionAttributes.dropObjects,
+      fileIds
     ),
     zones: serializeZones(
       originalQuestion.zones,

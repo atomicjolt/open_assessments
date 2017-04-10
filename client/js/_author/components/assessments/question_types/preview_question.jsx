@@ -4,6 +4,16 @@ import Item         from '../../../../_player/components/assessments/item';
 import types        from '../../../../constants/question_types';
 import localize     from '../../../locales/localize';
 
+const exclusiveTypes = {
+  multiple_choice_question: true,
+  multiple_answers_question: false,
+  movable_words_sentence: false,
+  fill_the_blank_question: true,
+  movable_words_sandbox: false,
+  movable_object_chain: false,
+  clix_drag_and_drop: false,
+};
+
 class PreviewQuestion extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
@@ -13,15 +23,7 @@ class PreviewQuestion extends React.Component {
     localizeStrings: React.PropTypes.func.isRequired
   };
 
-  constructor() {
-    super();
-
-    this.state = {
-      response: [],
-    };
-  }
-
-  convertType(type) {
+  static convertType(type) {
     switch (type) {
       case types.multipleChoice:
       case types.reflection:
@@ -43,17 +45,29 @@ class PreviewQuestion extends React.Component {
         return 'movable_words_sandbox';
       case types.imageSequence:
         return 'movable_object_chain';
+      case types.dragAndDrop:
+        return 'clix_drag_and_drop';
       default:
         return null;
     }
   }
 
+  constructor() {
+    super();
+
+    this.state = {
+      response: [],
+    };
+  }
+
   serializeForPlayer(item) {
+    const questionType = PreviewQuestion.convertType(item.type);
+
     switch (item.type) {
       case types.movableFillBlank:
         return {
           id: item.id,
-          question_type: this.convertType(item.type),
+          question_type: questionType,
           material: item.question.text,
           isHtml: true,
           answers: _.map(item.question.choices, answer => ({
@@ -74,7 +88,7 @@ class PreviewQuestion extends React.Component {
       case types.imageSequence:
         return {
           id: item.id,
-          question_type: this.convertType(item.type),
+          question_type: questionType,
           material: item.question.text,
           isHtml: true,
           answers: _.map(item.question.choices, answer => ({
@@ -89,7 +103,7 @@ class PreviewQuestion extends React.Component {
       case types.movableWordSentence:
         return {
           id: item.id,
-          question_type: this.convertType(item.type),
+          question_type: questionType,
           material: item.question.text,
           isHtml: true,
           answers: _.map(item.question.choices, answer => ({
@@ -98,10 +112,40 @@ class PreviewQuestion extends React.Component {
           })),
         };
 
+      case types.dragAndDrop:
+        return {
+          id: item.id,
+          response: this.state.response,
+          question_type: questionType,
+          material: item.question.text,
+          isHtml: true,
+          answers: _.map(item.question.dropObjects, droppable => ({
+            id: droppable.id,
+            text: `<img src="${droppable.image}">`,
+            reuse: 1
+          })),
+          question_meta: {
+            targets: [{
+              id: item.question.target.id,
+              text: `<img src="${item.question.target.image}">`,
+            }],
+            zones: _.map(item.question.zones, zone => ({
+              id: zone.id,
+              spatialUnit: {
+                height: zone.height,
+                width: zone.width,
+                coordinateValues: [zone.xPos, zone.yPos]
+              },
+              name: zone.label,
+              dropBehaviorType: `%3A${zone.type}%40`
+            })),
+          }
+        };
+
       default:
         return {
           id: item.id,
-          question_type: this.convertType(item.type),
+          question_type: questionType,
           material: item.question.text,
           isHtml: true,
           answers: _.map(item.question.choices, answer => ({
@@ -115,17 +159,33 @@ class PreviewQuestion extends React.Component {
     }
   }
 
-  selectAnswer(id) {
-    const { type } = this.props.item;
-    if (type === types.multipleAnswer || type === types.multipleReflection) {
-      if (_.includes(this.state.response, id)) {
-        this.setState({ response: _.without(this.state.response, id) });
-      } else {
-        this.setState({ response: [...this.state.response, id] });
-      }
-    } else if (type === types.multipleChoice || type === types.reflection) {
-      this.setState({ response: [id] });
+  selectAnswer(answerData) {
+    // Almost all of this logic is copied from the player assessment_progress reducer
+    const isExclusive = exclusiveTypes[PreviewQuestion.convertType(this.props.item.type)];
+    let response;
+
+    if (isExclusive) {
+      response = [];
+    } else {
+      response = _.cloneDeep(this.state.response);
     }
+
+    const answerIndex = _.findIndex(this.state.response, (answer) => {
+      if (typeof answerData === 'string' || typeof answerData === 'number') {
+        return answerData === answer;
+      }
+
+      return _.isEqual(answer.id, answerData.id);
+    });
+    if (answerIndex > -1) {
+      if (!isExclusive) {
+        _.pullAt(response, answerIndex);
+      }
+    } else {
+      response.push(answerData);
+    }
+
+    return this.setState({ response });
   }
 
 
