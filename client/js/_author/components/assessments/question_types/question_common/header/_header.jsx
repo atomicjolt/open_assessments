@@ -21,8 +21,8 @@ function questionHeader(props) {
   return (
     <div className="au-o-item__top">
       <div className="au-o-left">
-        <h3 className="au-c-question__number">{strings.question} {props.index + 1}</h3>
-        <div className="au-c-question__type">&nbsp;&nbsp; - &nbsp;&nbsp; {typeName}</div>
+        <h3 className="au-c-question__number">{props.index + 1}</h3>
+        <div className="au-c-question__type">{typeName}</div>
       </div>
       { currentHeader }
     </div>
