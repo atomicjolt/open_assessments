@@ -12,7 +12,9 @@
   min-height: 30rem; //remove me !!!
   background: $gray1;
   position: relative;
-  background-size: 100% 100%; // This will make images a little squashy, but...
+  img {
+    max-width: 100%;
+  }
 }
 
   .au-c-drop-zone{
