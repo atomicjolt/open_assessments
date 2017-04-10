@@ -46,29 +46,29 @@ describe('mediaTable', () => {
   });
 
   it('it should not be active tr style', () => {
-    let tr = TestUtils.scryRenderedDOMComponentsWithTag(result, 'tr');
+    const tr = TestUtils.scryRenderedDOMComponentsWithTag(result, 'tr');
     expect(tr[0].className).toBe('');
   });
 
   it('it should have is-active tr style', () => {
-    let tr = TestUtils.scryRenderedDOMComponentsWithTag(result, 'tr');
+    const tr = TestUtils.scryRenderedDOMComponentsWithTag(result, 'tr');
     expect(tr[1].className).toBe('is-active');
   });
 
   it('it should call the selectMedia', () => {
-    let tr = TestUtils.scryRenderedDOMComponentsWithTag(result, 'tr');
+    const tr = TestUtils.scryRenderedDOMComponentsWithTag(result, 'tr');
     expect(updater).toBeFalsy;
     TestUtils.Simulate.click(tr[0]);
     expect(updater).toBeTruthy;
   });
 
   it('img tag has correct src = "url"', () => {
-    let imgs = TestUtils.scryRenderedDOMComponentsWithTag(result, 'img');
+    const imgs = TestUtils.scryRenderedDOMComponentsWithTag(result, 'img');
     expect(imgs[0].src).toBe('coolestUrlEver');
   });
 
   it('texts should be good', () => {
-    let tds = TestUtils.scryRenderedDOMComponentsWithTag(result, 'td');
+    const tds = TestUtils.scryRenderedDOMComponentsWithTag(result, 'td');
     expect(tds[1].textContent).toBe('description text');
     expect(tds[2].textContent).toBe('silly license text');
   });

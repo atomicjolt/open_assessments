@@ -12,12 +12,11 @@ describe('Metadata', () => {
     updater = false;
 
     props = {
-     updateMetadata: () => { updater = true; },
-     metadataTypes: ['copyright', 'altText', 'license'],
-     metaData: {
-      id: 'mediaId',
-      altText: {
-        text: 'salty alty text',
+      metadataTypes: ['copyright', 'altText', 'license'],
+      metaData: {
+        id: 'mediaId',
+        altText: {
+          text: 'salty alty text',
       },
       description: {
         text: 'description text',
@@ -35,9 +34,7 @@ describe('Metadata', () => {
   });
 
   it('it should not be active tr style', () => {
-    let labels = TestUtils.scryRenderedDOMComponentsWithTag(result, 'label');
-    //should be 4 total in spec
-
+    const labels = TestUtils.scryRenderedDOMComponentsWithTag(result, 'label');
     expect(labels[1].textContent).toBe('Copyright');
     expect(labels[2].textContent).toBe('Alt Text');
     expect(labels[3].textContent).toBe('License');
