@@ -13,7 +13,11 @@ export default (state = initialState, action) => {
         return newState;
       }
 
+      // debugger;
       newState[action.original.guid] = action.payload;
+      newState["Howdy"] = "Hello";
+      // TODO should add asset meta as their own files
+      //  May have to generate guids?
 
       return newState;
     }

@@ -526,6 +526,7 @@ const qbank = {
       store.dispatch({
         type: action.type + DONE,
         original: action,
+        // TODO potentially give back array containing metadata files as well?
         payload: deserializeSingleMedia(res.body),
       });
     }, (error) => {

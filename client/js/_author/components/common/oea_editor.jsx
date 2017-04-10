@@ -85,8 +85,9 @@ export class OeaEditor extends React.Component {
     // we don't want jquery to auto play anything
     text = text.replace(/autoplay/g, 'autoplay-placeholder');
 
+    // TODO this doesn't work right with trakc until a rerender
     const doc = $(`<div>${text}</div>`);
-    $('img, source', doc).each((i, el) => {
+    $('img, source, track', doc).each((i, el) => {
       const media = $(el);
       const match = /.*\/(.*)\/stream$/.exec(media.attr('src'));
       if (match) {
@@ -104,12 +105,30 @@ export class OeaEditor extends React.Component {
     _.each(this.state.fileGuids, (file, mediaGuid) => {
       // we either uploaded it, or selected it in the modal. Check both places.
       const media = this.props.uploadedAssets[mediaGuid] || this.state.fileGuids[mediaGuid];
+      // TODO this is where we need to add in transcript and vtt fileIds
       if (media && !media.error) {
         fileIds[mediaGuid] = {
           assetId: media.id,
           assetContentId: media.assetContentId,
           assetContentTypeId: GenusTypes.assets[media.type][media.extension]
         };
+
+        // Set file ids of metadata files
+        if (!_.isEmpty(media._transcript)) {
+          fileIds[guid()] = {
+            assetId: media._transcript.assetId,
+            assetContentId: media._transcript.id,
+            assetContentTypeId: media._transcript.genusTypeId,
+          }
+        }
+
+        if (!_.isEmpty(media._vtt)) {
+          fileIds[guid()] = {
+            assetId: media._vtt.assetId,
+            assetContentId: media._vtt.id,
+            assetContentTypeId: media._vtt.genusTypeId,
+          }
+        }
       }
     });
 
@@ -136,6 +155,7 @@ export class OeaEditor extends React.Component {
         '</audio>';
         break;
       case 'video':
+      debugger;
         editorContent = '<video autoplay name="media" controls>' +
           `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
           `<track src="${media.vtt}" srclang="en">` +

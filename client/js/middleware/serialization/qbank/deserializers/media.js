@@ -1,6 +1,10 @@
 import _                        from 'lodash';
 import { getQbankMediaType }    from '../../../../constants/genus_types';
 
+export function deserializeMediaWithMeta(asset){
+
+}
+
 export function deserializeSingleMedia(asset) {
   const newMedia = {
     id: asset.id,
@@ -39,9 +43,11 @@ export function deserializeSingleMedia(asset) {
         break;
       case 'vtt':
         newMedia.vtt = content.url;
+        newMedia._vtt = content;
         break;
       case 'transcript':
         newMedia.transcript = content.url;
+        newMedia._transcript = content;
         break;
       default:
         console.log(content.genusTypeId);
