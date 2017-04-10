@@ -3,13 +3,11 @@ import _          from 'lodash';
 
 export default class Metadata extends React.Component {
   static propTypes = {
-    id: React.PropTypes.string,
     updateMetadata: React.PropTypes.func.isRequired,
     metadataTypes: React.PropTypes.arrayOf(React.PropTypes.string),
     metaData: React.PropTypes.shape({
       description: React.PropTypes.string,
     }),
-    updateMetadata: React.PropTypes.func.isRequired
   };
 
   constructor() {
