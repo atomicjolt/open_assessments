@@ -57,9 +57,9 @@ describe('mediaTable', () => {
 
   it('it should call the selectMedia', () => {
     const tr = TestUtils.scryRenderedDOMComponentsWithTag(result, 'tr');
-    expect(updater).toBeFalsy;
+    expect(updater).toBeFalsy();
     TestUtils.Simulate.click(tr[0]);
-    expect(updater).toBeTruthy;
+    expect(updater).toBeTruthy();
   });
 
   it('img tag has correct src = "url"', () => {
