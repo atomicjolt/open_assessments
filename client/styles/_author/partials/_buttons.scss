@@ -88,9 +88,9 @@
 }
 
 .au-c-btn--gray{
-  border: 0.1rem solid $gray4;
+  border: 0.1rem solid $gray5;
   background-color: $gray2;
-  color: $gray9;
+  color: $text-alt;
   @include transition(all 0.1s ease);
 
   &:hover{

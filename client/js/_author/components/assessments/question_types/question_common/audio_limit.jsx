@@ -60,7 +60,7 @@ class AudioLimit extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="au-c-file-upload__audio-settings is-active">
         <span>Audio record limit</span>
         <div className="au-c-input au-c-input--inline">
           <label htmlFor="audio-limit" />

@@ -37,7 +37,8 @@ class NewItemForm extends React.Component {
       <div className="au-o-item au-c-question is-active">
         <div className="au-o-item__top">
           <div className="au-o-left">
-            <h3 className="au-c-question__number">{strings.addQuestion}</h3>
+            <div className="au-c-question__number" />
+            <div className="au-c-question__type">{strings.addQuestion}</div>
           </div>
         </div>
 

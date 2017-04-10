@@ -11,8 +11,8 @@ plugins:
   - react
   - jsx-a11y
   - import
-  - atomic-jolt
 globals:
+  jest: false
   describe: false
   beforeEach: false
   afterEach: false
@@ -24,7 +24,6 @@ globals:
   module: false
   __DEV__: false
 rules:
-  atomic-jolt/no-splat-props: 2
   linebreak-style:
     - error
     - unix
@@ -44,6 +43,7 @@ rules:
   padded-blocks: 0
   key-spacing: 0
   react/require-default-props: 0
+  react/no-danger: 0
   jsx-a11y/no-static-element-interactions: 0
   space-before-function-paren:
     - 2

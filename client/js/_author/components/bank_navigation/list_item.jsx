@@ -5,10 +5,11 @@ export default function ListItem(props) {
   return (
     <tr
       onClick={() => selectItem()}
+      onKeyDown={(e) => { if (e.keyCode === 13) { selectItem(); } }}
       tabIndex="0"
       role="button"
       aria-label={bank.displayName ? bank.displayName.text : 'bank item'}
-      onFocus={onFocus}
+      onFocus={() => onFocus(true)}
       onMouseEnter={() => onFocus(true)}
       onMouseLeave={() => onFocus(false)}
       className={props.focused ? 'focused' : ''}
@@ -29,5 +30,5 @@ ListItem.propTypes = {
     }).isRequired,
   }).isRequired,
   focused: React.PropTypes.bool.isRequired,
-  children: React.PropTypes.arrayOf(React.PropTypes.element),
+  children: React.PropTypes.node,
 };
