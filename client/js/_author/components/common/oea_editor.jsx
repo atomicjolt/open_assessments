@@ -151,7 +151,7 @@ export class OeaEditor extends React.Component {
           const track = _.isEmpty(media.vtt) ? '' : `<track src="${_.get(media, 'vtt.url')}" srclang="en">`;
           editorContent = `<video ${autoPlay} name="media" controls>` +
             `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
-            `${track}'</video>`;
+            `${track}</video>`;
         }
         break;
 
