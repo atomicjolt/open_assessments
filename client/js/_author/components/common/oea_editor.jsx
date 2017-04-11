@@ -60,21 +60,6 @@ export class OeaEditor extends React.Component {
     }
   }
 
-  insertTranscript(text, match, split) {
-    if (!text.includes(match)) { return text; }
-    const snippets = text.split(split);
-    return snippets.map((snippet, i) => {
-      if (snippets.length - 1 === i) { return snippet; } // Dont append anything to last snippet
-      const assetContentMatch = snippet.match(/src="AssetContent:(\S*)"/);
-      if (assetContentMatch) {
-        const assetContentId = assetContentMatch[1];
-        const transcript = `<transcript src="AssetContent:${assetContentId} />`;
-        return `${snippet}${split}${transcript}`;
-      }
-      return `${snippet}${split}`;
-    }).join('');
-  }
-
   onBlur(editorText, isChanged) {
     this.setState({ focused: false, newText: editorText });
     if (!isChanged) return;
@@ -84,24 +69,34 @@ export class OeaEditor extends React.Component {
 
     // we don't want jquery to auto play anything
     text = text.replace(/autoplay/g, 'autoplay-placeholder');
+    text = text.replace(/src="/g, 'src-placeholder="');
 
-    // TODO this doesn't work right with trakc until a rerender
-    // This can be fixed by adding search for metadata in uploadedAssets
     const doc = $(`<div>${text}</div>`);
     $('img, source, track', doc).each((i, el) => {
       const media = $(el);
-      const match = /.*\/(.*)\/stream$/.exec(media.attr('src'));
+      const match = /.*\/(.*)\/stream$/.exec(media.attr('src-placeholder'));
       if (match) {
         const assetContentId = match[1];
         const mediaGuid = this.findMediaGuid(assetContentId);
         if (mediaGuid) {
-          text = text.replace(media.attr('src'), `AssetContent:${mediaGuid}`);
+          media.attr('src-placeholder', `AssetContent:${mediaGuid}`);
         }
       }
     });
 
-    // text = this.insertTranscript(text, '<audio', '</audio>');
-    // text = this.insertTranscript(text, '<video', '</video>');
+    $('.transcript-placeholder', doc).each((i, el) => {
+      const media = $(el);
+      const match = /.*\/(.*)\/stream$/.exec(media.text());
+      if (match) {
+        const assetContentId = match[1];
+        const mediaGuid = this.findMediaGuid(assetContentId);
+        if (mediaGuid) {
+          media.after(`<transcript src="AssetContent:${mediaGuid}" />`);
+          media.remove();
+        }
+      }
+    });
+
 
     _.each(this.state.fileGuids, (file, mediaGuid) => {
       // we either uploaded it, or selected it in the modal. Check both places.
@@ -120,6 +115,8 @@ export class OeaEditor extends React.Component {
       }
     });
 
+    text = doc.html();
+    text = text.replace(/src-placeholder/g, 'src');
     text = text.replace(/autoplay-placeholder/g, 'autoplay');
 
     this.props.onBlur(text, fileIds);
@@ -131,24 +128,25 @@ export class OeaEditor extends React.Component {
     let editorContent = `<video><source src="${media.url}" /></video>`;
     const alt = _.isEmpty(media.altText) ? '' : media.altText.text;
 
+    const transcriptPlaceHolder =
+      media.transcript ?
+        `<div class="transcript-placeholder" style="display:none;">${media.transcript.url}</div>`
+        : '';
     switch (this.state.mediaType) {
       case 'img':
         editorContent = `<img src="${media.url}" alt="${alt}">`;
         break;
 
       case 'audio':
-      // TODO
         editorContent = '<audio autoplay name="media" controls>' +
         `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
-        '</audio>';
+        `</audio>${transcriptPlaceHolder}`;
         break;
       case 'video':
-      debugger;
-      // NOTE the vtt url appears to be changed when we rerender? Why?????
         editorContent = '<video autoplay name="media" controls>' +
           `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
           `<track src="${_.get(media, 'vtt.url')}" srclang="en">` +
-          '</video>';
+          `</video>${transcriptPlaceHolder}`;
         break;
 
       default:
