@@ -521,11 +521,11 @@ const qbank = {
       //     uploadMediaMeta(state, data, res.body.assetId);
       //   }
       // });
-    debugger
+
       store.dispatch({
         type: action.type + DONE,
         original: action,
-        payload: deserializeSingleMedia(res.body),
+        payload: deserializeSingleMedia(res.body, action.metaData['639-2%3AENG%40ISO'].autoPlay),
       });
     }, (error) => {
       store.dispatch({

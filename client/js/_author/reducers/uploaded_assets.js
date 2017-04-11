@@ -19,7 +19,6 @@ export default (state = initialState, action) => {
       }
 
       newState[mediaGuid] = action.payload;
-
       if (!_.isEmpty(action.payload.transcript)) {
         _.each(transcriptGuids, (guid) => {
           newState[guid] = action.payload.transcript; // later we need to look up by language :(
