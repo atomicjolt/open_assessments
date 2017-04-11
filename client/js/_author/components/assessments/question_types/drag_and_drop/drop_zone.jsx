@@ -17,11 +17,13 @@ export class DropZone extends React.Component {
   };
 
   static saveZoneToState(zone) {
+    const xPos = zone.xPos || 20;
+    const yPos = zone.yPos || 20;
     return {
-      leftPos: zone.xPos,
-      topPos: zone.yPos,
-      rightPos: zone.xPos + zone.width,
-      bottomPos: zone.yPos + zone.height,
+      leftPos: xPos,
+      topPos: yPos,
+      rightPos: xPos + zone.width,
+      bottomPos: yPos + zone.height,
       initialX: null,
       initialY: null,
     };
@@ -52,9 +54,15 @@ export class DropZone extends React.Component {
   moveCorner(corner, x, y) {
     const { leftPos, topPos, rightPos, bottomPos } = this.state;
     const target = this.props.target.getBoundingClientRect();
+    // We use window to account for scroll
+    const targetTop = target.top + window.scrollY;
+    const targetLeft = target.left + window.scrollX;
+    const targetBottom = targetTop + target.height;
+    const targetRight = targetLeft + target.width;
 
-    const newY = DropZone.boundaryCheck(y - target.top, target.bottom - target.top);
-    const newX = DropZone.boundaryCheck(x - target.left, target.right - target.left);
+    const newY = DropZone.boundaryCheck(y - targetTop, targetBottom - targetTop);
+    const newX = DropZone.boundaryCheck(x - targetLeft, targetRight - targetLeft);
+
     const newTop = topPos < bottomPos ? newY : bottomPos;
     const newBottom = bottomPos < topPos ? topPos : newY;
     const newLeft = leftPos < rightPos ? newX : rightPos;
@@ -145,7 +153,7 @@ export class DropZone extends React.Component {
     return (
       <div
         className={`au-c-drop-zone ${isActive ? 'is-active' : ''}`}
-        style={this.zonePosition(zone)}
+        style={this.zonePosition()}
         onClick={this.props.setActive}
       >
         <div className={`au-c-zone ${isActive ? 'is-active' : ''}`}>

@@ -4,33 +4,55 @@
 
   .au-o-item__top{
     background: $white;
-    padding: 0 2rem;
+    padding: 0 2rem 0 0;
   }
 }
 
 .au-c-drag-and-drop__target-image{
-  min-height: 30rem; //remove me !!!
   background: $gray1;
   position: relative;
-  background-size: 100% 100%; // This will make images a little squashy, but...
+
+  img {
+    max-width: 100%;
+  }
 }
+
 
 .au-c-drop-zone{
   width: 20rem;
   height: 20rem;
   background: none;
-  border: 0.2rem solid $gray8;
+  border: 0.2rem solid $black;
+  box-shadow: 0 0 0.2rem 0.2rem $white;
   position: absolute;
   border-radius: $radius;
   cursor: pointer;
 
+  // &.au-c-zone1{
+  //   top: 5rem;
+  //   left: 5rem;
+  // }
+  // &.au-c-zone2{
+  //   top: 5rem;
+  //   left: 30rem;
+
   &.is-active{
-    border-color: $blue;
     .au-c-drop-zone__tool-tip{
       @include display-flex;
     }
   }
 }
+
+    .au-c-drop-zone__tag{
+      position: absolute;
+      top: 0;
+      left: 0;
+      @include semi-bold;
+      font-size: 1.2rem;
+      padding: 0.1rem 0.5rem;
+      color: black;
+      background: $white;
+    }
 
 .au-c-zone {
   display: none;
@@ -77,6 +99,32 @@
   }
 }
 
+
+    .au-c-drop-zone__tool-tip{
+      display: none;
+      border-radius: 0.3rem;
+      position: absolute;
+      top: -4.5rem;
+      height: 3.5rem;
+      background: $text-color;
+      padding: 0 1rem;
+      @include align-items(center);
+      z-index: 999;
+
+      &.is-right{
+        left: 0;
+        &:before {
+          left: 2rem;
+        }
+      }
+      &.is-left{
+        right: 0;
+        &:before {
+          right: 2rem;
+        }
+      }
+    }
+
 .au-c-drop-zone__tag{
   position: absolute;
   top: 0;
@@ -86,6 +134,7 @@
   color: $text-color;
   padding: 0.1rem 0.5rem;
 }
+
 
 
 .au-c-drop-zone__tool-tip{
@@ -141,24 +190,28 @@
   &.au-o-row{
     margin-left: -2rem;
     @include align-items(stretch);
+
+    .au-o-quarter{
+      margin-bottom: 2rem;
+    }
   }
 }
 
-.au-c-drop-zone-answer{
-  padding: 1rem;
-  height: 100%;
-  border-radius: $radius;
-  background: $white;
-  box-shadow: 0 0 0.5rem rgba(0,0,0,0.15);
-  cursor: pointer;
+  .au-c-drop-zone-answer{
+    padding: 1rem;
+    height: 100%;
+    border-radius: $radius;
+    background: $white;
+    box-shadow: 0 0 0.5rem rgba(0,0,0,0.3);
+    cursor: pointer;
 
-  &:hover{
-    box-shadow: 0 0 0.7rem rgba(0,0,0,0.3);
+    &:hover{
+      box-shadow: 0 0 0.7rem rgba(0,0,0,0.5);
 
-    .au-c-answer--delete i{
-      display: inline-block;
+      .au-c-answer--delete i{
+        display: inline-block;
+      }
     }
-  }
 
   .au-c-answer--delete i{
     display: none;

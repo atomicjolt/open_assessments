@@ -1,11 +1,12 @@
 import _                        from 'lodash';
 import { getQbankMediaType }    from '../../../../constants/genus_types';
 
-export function deserializeSingleMedia(asset) {
+export function deserializeSingleMedia(asset, autoPlay = null) {
   const newMedia = {
     id: asset.id,
     type: '',
     url: '',
+    autoPlay,
     altText: {},
     description: asset.description,
     license: asset.license,
@@ -38,10 +39,18 @@ export function deserializeSingleMedia(asset) {
         newMedia.description = content.mediaDescription;
         break;
       case 'vtt':
-        newMedia.vtt = content.vtt;
+        newMedia.vtt = {
+          ...content,
+          assetContentId: content.id,
+          id: content.assetId,
+        };
         break;
       case 'transcript':
-        newMedia.transcript = content.transcript;
+        newMedia.transcript = {
+          ...content,
+          assetContentId: content.id,
+          id: content.assetId,
+        };
         break;
       default:
         console.log(content.genusTypeId);

@@ -14,7 +14,6 @@ const tagNameMap = {
   video: 'Video',
 };
 
-// TODO localize strings?
 const mediaPrompt = {
   audio: 'Select an Audio file',
   img: 'Select an Image',
@@ -42,7 +41,6 @@ export default class EditorUploadModal extends React.Component {
 
   constructor() {
     super();
-
     this.state = {
       languageMediaData: _.reduce(languages.languageTypeId, (result, language) => {
         result[language] = { locale: languageToLocale[language] };
@@ -57,7 +55,11 @@ export default class EditorUploadModal extends React.Component {
   }
 
   addMedia() {
-    const metaData = this.state.languageMediaData;
+    const metaData = {
+      ...this.state.languageMediaData,
+      mediaType: this.props.mediaType,
+    };
+
     if (this.state.uploadedMedia) {
       this.props.insertMedia(this.state.uploadedMedia, metaData, true);
     } else if (this.state.selectedMedia) {
@@ -76,9 +78,20 @@ export default class EditorUploadModal extends React.Component {
     });
   }
 
-  metadataTypes(mediaType) {
+  metadataFileTypes() {
+    const { mediaType } = this.props;
+    if (mediaType === 'video') {
+      return ['vttFile', 'transcript'];
+    } else if (mediaType === 'audio') {
+      return ['transcript'];
+    }
+    return [];
+  }
+
+  metadataTypes() {
+    const { mediaType } = this.props;
     if (mediaType === 'audio' || mediaType === 'video') {
-      return ['license', 'copyright', 'vttFile', 'transcript'];
+      return ['license', 'copyright'];
     }
     return ['altText', 'license', 'copyright'];
   }
@@ -89,8 +102,15 @@ export default class EditorUploadModal extends React.Component {
     this.setState({ languageMediaData });
   }
 
+  closeModal() {
+    this.props.closeModal();
+    if (this.state.uploadedMedia) {
+      this.setState({ uploadedMedia: null });
+    }
+  }
+
   render() {
-    let name = _.get(this, 'state.uploadedImage.name');
+    let name = _.get(this, 'state.uploadedMedia.name');
 
     if (this.props.inProgress) {
       name = <Loader />;
@@ -105,7 +125,7 @@ export default class EditorUploadModal extends React.Component {
         overlayClassName="au-c-wysiwyg-modal-background"
         className="au-c-wysiwyg-modal"
         isOpen={this.props.isOpen}
-        onRequestClose={this.props.closeModal}
+        onRequestClose={() => this.closeModal()}
         contentLabel={`Insert ${tagNameMap[this.props.mediaType]} Modal`}
       >
         <div className="au-c-wysiwyg-modal__header">
@@ -115,7 +135,7 @@ export default class EditorUploadModal extends React.Component {
           <LanguageSelect
             updateItem={language => this.setState(language)}
           />
-          <button onClick={this.props.closeModal} className="au-c-wysiwyg-modal__close">
+          <button onClick={() => this.closeModal()} className="au-c-wysiwyg-modal__close">
             <i className="material-icons">close</i>
           </button>
         </div>
@@ -150,8 +170,10 @@ export default class EditorUploadModal extends React.Component {
             </div>
           </div>
           {
-            this.state.uploadedMedia && !this.props.uploadOnly ? <Metadata
-              metadataTypes={this.metadataTypes(this.props.mediaType)}
+            this.state.uploadedMedia ? <Metadata
+              mediaType={this.props.mediaType}
+              metadataTypes={this.metadataTypes()}
+              metadataFileTypes={this.metadataFileTypes()}
               selectedLanguage={this.state.language}
               updateMetadata={(key, val) => this.setters(key, val)}
               mediaItem={this.state.selectedMedia}
@@ -163,7 +185,7 @@ export default class EditorUploadModal extends React.Component {
 
         <div className="au-c-wysiwyg-modal__footer">
           <button
-            onClick={this.props.closeModal}
+            onClick={() => this.closeModal()}
             className="au-u-right  au-c-btn au-c-btn--sm au-c-btn--gray"
           >
             Cancel

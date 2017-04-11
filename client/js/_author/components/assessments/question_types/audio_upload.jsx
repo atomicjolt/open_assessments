@@ -27,12 +27,10 @@ export default class AudioUpload extends React.Component {
     return (
       <div>
         <div className="au-c-question__answers au-o-row" role="radiogroup">
-          <div className="au-c-file-upload__audio-settings is-active">
-            <AudioLimit
-              handleBlur={e => this.handleBlur(e)}
-              item={this.props.item}
-            />
-          </div>
+          <AudioLimit
+            handleBlur={e => this.handleBlur(e)}
+            item={this.props.item}
+          />
         </div>
         <div className="au-c-question__feedback">
           <Feedback

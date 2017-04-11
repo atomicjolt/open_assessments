@@ -110,11 +110,8 @@ export class Question extends React.Component {
 
   updateItem(newItemProperties, forceSkipState) {
     const { item } = this.props;
-
-    if (newItemProperties.language) {
-      if (newItemProperties.language && this.state.language !== newItemProperties.language) {
-        this.setState({ language: newItemProperties.language });
-      }
+    if (newItemProperties.language && this.state.language !== newItemProperties.language) {
+      this.setState({ language: newItemProperties.language });
     } else if (_.includes(Question.stateDrivenTypes, item.type) && !forceSkipState) {
       this.setState({ ...item, ...newItemProperties });
     } else {
@@ -304,7 +301,6 @@ export class Question extends React.Component {
     return (
       <div
         className={`au-o-item au-c-question ${className}`}
-        tabIndex="0"
         onClick={() => this.props.activateItem(id)}
         onFocus={() => this.props.activateItem(id)}
       >

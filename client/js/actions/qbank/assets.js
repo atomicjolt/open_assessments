@@ -11,17 +11,17 @@ const requests = [
 
 export const Constants = wrapper(actions, requests);
 
-export function uploadMedia(file, guid, bankId, metaData = {}) {
-  // TODO: the formData implementation should probably move to the reducer
+export function uploadMedia(file, fileGuids, bankId, metaData = {}) {
+
   return {
     bankId,
     file,
-    guid,
+    fileGuids,
     metaData,
     apiCall: true,
     type: Constants.UPLOAD_MEDIA,
     body: file,
-    timeout: 1000000,
+    timeout: 20000,
   };
 }
 
@@ -36,6 +36,6 @@ export function addMediaToQuestion(file, bankId, itemId, where, metaData, newMed
     apiCall: true,
     type: Constants.ADD_MEDIA_TO_QUESTION,
     body: file,
-    timeout: 1000000,
+    timeout: 20000,
   };
 }

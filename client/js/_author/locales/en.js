@@ -165,14 +165,17 @@ export default {
     },
     dropObject: {
       label: 'Label',
+      selectAnswer: 'Select Answer'
     },
     dropZone: {
       label: 'Label',
     },
     targetMenu: {
       replace: 'Replace Image',
+      targetImage: 'Target Image',
       addSnap: 'Add Snap Zone',
       addDrop: 'Add Drop Zone',
+      addImage: 'Add Image',
     },
   }
 };

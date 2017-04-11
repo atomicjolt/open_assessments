@@ -36,10 +36,8 @@ class MWSandbox extends React.Component {
 
   getChoices(choices) {
     const { id } = this.props.item;
-    let index = 0;
-    return _.map(choices, (choice) => {
-      index += 1;
-      return (<Option
+    return _.map(choices, (choice, index) => (
+      <Option
         key={choice.id}
         choice={choice}
         index={index}
@@ -50,8 +48,8 @@ class MWSandbox extends React.Component {
         }
         deleteChoice={() => this.props.deleteChoice(choice)}
         isActive={this.props.isActive && choice.id === this.props.activeChoice}
-      />);
-    });
+      />
+    ));
   }
 
   render() {
@@ -70,15 +68,15 @@ class MWSandbox extends React.Component {
             this.getChoices(_.get(this.props.item, 'question.choices', {}))
           }
           <AddOption updateChoice={() => this.props.createChoice(id)} />
-          <div className="au-c-question__feedback">
-            <Feedback
-              updateItem={this.props.updateItem}
-              feedbackType="correctFeedback"
-              feedback={question.correctFeedback}
-              labelText={strings.feedback}
-              bankId={this.props.item.bankId}
-            />
-          </div>
+        </div>
+        <div className="au-c-question__feedback">
+          <Feedback
+            updateItem={this.props.updateItem}
+            feedbackType="correctFeedback"
+            feedback={question.correctFeedback}
+            labelText={strings.feedback}
+            bankId={this.props.item.bankId}
+          />
         </div>
       </div>
     );
