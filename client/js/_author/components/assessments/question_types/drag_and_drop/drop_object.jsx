@@ -27,6 +27,7 @@ function dropObject(props) {
               onChange={e => updateObject({ correctZone: e.target.value })}
               value={object.correctZone}
             >
+              <option value={null}>{strings.selectAnswer}</option>
               {
                 _.map(zones, zone => (
                   <option value={zone.id} key={`drop_zone_selector_${zone.id}`}>

@@ -165,6 +165,7 @@ export default {
     },
     dropObject: {
       label: 'Label',
+      selectAnswer: 'Select Answer'
     },
     dropZone: {
       label: 'Label',
