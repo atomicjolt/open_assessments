@@ -135,20 +135,21 @@ export class OeaEditor extends React.Component {
   getEditorContent(media) {
     let editorContent = `<video><source src="${media.url}" /></video>`;
     const alt = _.isEmpty(media.altText) ? '' : media.altText.text;
+    const autoPlay = media.autoPlay ? 'autoplay' : '';
     switch (this.state.mediaType) {
       case 'img':
         editorContent = `<img src="${media.url}" alt="${alt}">`;
         break;
 
       case 'audio':
-        editorContent = '<audio autoplay name="media" controls>' +
+        editorContent = `<audio ${autoPlay} name="media" controls>` +
         `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
         '</audio>';
         break;
       case 'video':
         {
           const track = _.isEmpty(media.vtt) ? '' : `<track src="${_.get(media, 'vtt.url')}" srclang="en">`;
-          editorContent = '<video autoplay name="media" controls>' +
+          editorContent = `<video ${autoPlay} name="media" controls>` +
             `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
             `${track}'</video>`;
         }

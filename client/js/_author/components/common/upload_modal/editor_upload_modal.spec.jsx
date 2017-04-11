@@ -26,10 +26,6 @@ describe('editor upload modal', () => {
     result = shallow(<Modal {...props} />);
     expect(result.find(ReactModal).length).toBe(1);
     expect(result.find(ReactModal).props().isOpen).toBeFalsy();
-    props.isOpen = true;
-    result = shallow(<Modal {...props} />);
-    expect(result.find(ReactModal).props().isOpen).toBeTruthy();
-    expect(result.find(ReactModal).props().onRequestClose).toBe(props.closeModal);
   });
 
   it('displays modal title correctly', () => {
