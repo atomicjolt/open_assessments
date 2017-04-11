@@ -28,7 +28,6 @@ export class OeaEditor extends React.Component {
     text: React.PropTypes.string,
     uploadMedia: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}),
-    mediaTypes: React.PropTypes.shape({}),
     fileIds: React.PropTypes.shape({}),
     textSize: React.PropTypes.string,
     error: React.PropTypes.string,
@@ -147,11 +146,12 @@ export class OeaEditor extends React.Component {
         '</audio>';
         break;
       case 'video':
-        const track = _.isEmpty(media.vtt) ? '' : `<track src="${_.get(media, 'vtt.url')}" srclang="en">`;
-        editorContent = '<video autoplay name="media" controls>' +
-          `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
-          track
-          '</video>';
+        {
+          const track = _.isEmpty(media.vtt) ? '' : `<track src="${_.get(media, 'vtt.url')}" srclang="en">`;
+          editorContent = '<video autoplay name="media" controls>' +
+            `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
+            `${track}'</video>`;
+        }
         break;
 
       default:
