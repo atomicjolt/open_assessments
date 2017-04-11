@@ -11,6 +11,7 @@ export default function targetArea(props) {
         images={props.images}
         uploadMedia={props.uploadMedia}
         newZone={attributes => props.editZone('new', attributes)}
+        hasTarget={!!props.question.target}
       />
       <Zone
         target={props.question.target}

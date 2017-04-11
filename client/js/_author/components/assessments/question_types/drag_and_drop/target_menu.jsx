@@ -59,14 +59,14 @@ export class TargetMenu extends React.Component {
     return (
       <div className="au-o-item__top">
         <div className="au-o-left">
-          <div className="au-c-question__type">Target Image</div>
+          <div className="au-c-question__type">{strings.targetImage}</div>
         </div>
         <div className="au-o-right">
           <button
             className="au-c-btn au-c-btn--sm au-c-btn--gray"
             onClick={() => this.setState({ showModal: true })}
           >
-            {strings.replace}
+            {this.props.hasTarget ? strings.replace : strings.addImage}
           </button>
           <AddZone
             active={this.state.add === 'snap'}
