@@ -106,20 +106,6 @@ export class OeaEditor extends React.Component {
     });
 
 
-    // $('.transcript-placeholder', doc).each((i, el) => {
-    //   const media = $(el);
-    //   const match = /.*\/(.*)\/stream$/.exec(media.text());
-    //   if (match) {
-    //     const assetContentId = match[1];
-    //     const mediaGuid = this.findMediaGuid(assetContentId);
-    //     if (mediaGuid) {
-    //       media.after(`<transcript src="AssetContent:${mediaGuid}" />`);
-    //       media.remove();
-    //     }
-    //   }
-    // });
-
-
     _.each(this.state.fileGuids, (file, mediaGuid) => {
       // we either uploaded it, or selected it in the modal. Check both places.
       const media = this.props.uploadedAssets[mediaGuid] || this.state.fileGuids[mediaGuid];
@@ -148,11 +134,6 @@ export class OeaEditor extends React.Component {
     // NOTE this is where we need to handle grabbing the url to look pretty
     let editorContent = `<video><source src="${media.url}" /></video>`;
     const alt = _.isEmpty(media.altText) ? '' : media.altText.text;
-
-    const transcriptPlaceHolder = '';
-      // media.transcript ?
-      //   `<span class="transcript-placeholder" style="visibility:hidden;">${media.transcript.url}</span>`
-      //   : '';
     switch (this.state.mediaType) {
       case 'img':
         editorContent = `<img src="${media.url}" alt="${alt}">`;
@@ -161,13 +142,13 @@ export class OeaEditor extends React.Component {
       case 'audio':
         editorContent = '<audio autoplay name="media" controls>' +
         `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
-        `</audio>${transcriptPlaceHolder}`;
+        '</audio>';
         break;
       case 'video':
         editorContent = '<video autoplay name="media" controls>' +
           `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
           `<track src="${_.get(media, 'vtt.url')}" srclang="en">` +
-          `</video>${transcriptPlaceHolder}`;
+          '</video>';
         break;
 
       default:
