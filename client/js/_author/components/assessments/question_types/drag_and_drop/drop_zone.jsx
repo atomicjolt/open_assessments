@@ -145,7 +145,7 @@ export class DropZone extends React.Component {
     return (
       <div
         className={`au-c-drop-zone ${isActive ? 'is-active' : ''}`}
-        style={this.zonePosition(zone)}
+        style={this.zonePosition()}
         onClick={this.props.setActive}
       >
         <div className={`au-c-zone ${isActive ? 'is-active' : ''}`}>
