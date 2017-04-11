@@ -17,11 +17,13 @@ export class DropZone extends React.Component {
   };
 
   static saveZoneToState(zone) {
+    const xPos = zone.xPos || 20;
+    const yPos = zone.yPos || 20;
     return {
-      leftPos: zone.xPos,
-      topPos: zone.yPos,
-      rightPos: zone.xPos + zone.width,
-      bottomPos: zone.yPos + zone.height,
+      leftPos: xPos,
+      topPos: yPos,
+      rightPos: xPos + zone.width,
+      bottomPos: yPos + zone.height,
       initialX: null,
       initialY: null,
     };
@@ -145,7 +147,7 @@ export class DropZone extends React.Component {
     return (
       <div
         className={`au-c-drop-zone ${isActive ? 'is-active' : ''}`}
-        style={this.zonePosition(zone)}
+        style={this.zonePosition()}
         onClick={this.props.setActive}
       >
         <div className={`au-c-zone ${isActive ? 'is-active' : ''}`}>
