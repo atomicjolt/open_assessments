@@ -1,11 +1,12 @@
 import _                        from 'lodash';
 import { getQbankMediaType }    from '../../../../constants/genus_types';
 
-export function deserializeSingleMedia(asset) {
+export function deserializeSingleMedia(asset, autoPlay = null) {
   const newMedia = {
     id: asset.id,
     type: '',
     url: '',
+    autoPlay,
     altText: {},
     description: asset.description,
     license: asset.license,
