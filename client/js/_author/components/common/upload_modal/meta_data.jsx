@@ -8,6 +8,7 @@ export default class Metadata extends React.Component {
     mediaType: React.PropTypes.string,
     updateMetadata: React.PropTypes.func.isRequired,
     metadataTypes: React.PropTypes.arrayOf(React.PropTypes.string),
+    metadataFileTypes: React.PropTypes.arrayOf(React.PropTypes.string),
     metaData: React.PropTypes.shape({
       description: React.PropTypes.string,
       autoPlay: React.PropTypes.boolean,
@@ -101,7 +102,25 @@ export default class Metadata extends React.Component {
             </div>
           ))
         }
+
         { mediaType === 'audio' || mediaType === 'video' ? <div>Auto-play { this.autoPlayOption(metaData) }</div> : null }
+        {
+          _.map(this.props.metadataFileTypes, type => (
+            <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
+              <label htmlFor={`meta_upload_${type}`}>{this.labelName(type)}</label>
+              <div className="au-c-input__contain">
+                <input
+                  className=""
+                  id={`meta_upload_${type}`}
+                  type="file"
+                  tabIndex="0"
+                  onChange={e => this.props.updateMetadata(type, e.target.files[0])}
+                />
+                <div className="au-c-input__bottom" />
+              </div>
+            </div>
+          ))
+        }
       </div>
     );
   }

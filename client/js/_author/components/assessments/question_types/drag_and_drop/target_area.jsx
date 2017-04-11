@@ -1,4 +1,5 @@
 import React    from 'react';
+import _        from 'lodash';
 import Menu     from './target_menu';
 import Zone     from './target_zone';
 
@@ -11,6 +12,7 @@ export default function targetArea(props) {
         images={props.images}
         uploadMedia={props.uploadMedia}
         newZone={attributes => props.editZone('new', attributes)}
+        hasTarget={!_.isEmpty(props.question.target)}
       />
       <Zone
         target={props.question.target}

@@ -11,11 +11,12 @@ const requests = [
 
 export const Constants = wrapper(actions, requests);
 
-export function uploadMedia(file, guid, bankId, metaData = {}) {
+export function uploadMedia(file, fileGuids, bankId, metaData = {}) {
+
   return {
     bankId,
     file,
-    guid,
+    fileGuids,
     metaData,
     apiCall: true,
     type: Constants.UPLOAD_MEDIA,

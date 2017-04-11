@@ -8,12 +8,17 @@ export default (state = initialState, action) => {
 
     case AssetConstants.UPLOAD_MEDIA_DONE: {
       const newState = _.cloneDeep(state);
+      const { vttGuids, transcriptGuids, mediaGuid } = action.original.fileGuids;
       if (action.error) {
-        newState[action.original.guid] = { error: action.error };
+        newState[mediaGuid] = { error: action.error };
+        _.each(vttGuids.concat(transcriptGuids), (guid) => {
+          newState[guid] = { error: action.error };
+        });
+
         return newState;
       }
 
-      newState[mediaGuid] = {...action.payload, autoplay: true};
+      newState[mediaGuid] = action.payload;
 
       if (!_.isEmpty(action.payload.transcript)) {
         _.each(transcriptGuids, (guid) => {

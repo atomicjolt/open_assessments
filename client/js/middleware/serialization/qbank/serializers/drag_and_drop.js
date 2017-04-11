@@ -57,7 +57,7 @@ function serializeZones(originalZones, newZones, targetId) {
       spatialUnit: {
         height: newZones.new.height || 100,
         width: newZones.new.width || 100,
-        coordinateValues: [50, 50],
+        coordinateValues: [20, 20],
         recordType: genusTypes.zone.rectangle,
       },
       reuse: 0,

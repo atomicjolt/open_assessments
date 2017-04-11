@@ -39,10 +39,18 @@ export function deserializeSingleMedia(asset, autoPlay = null) {
         newMedia.description = content.mediaDescription;
         break;
       case 'vtt':
-        newMedia.vtt = content.vtt;
+        newMedia.vtt = {
+          ...content,
+          assetContentId: content.id,
+          id: content.assetId,
+        };
         break;
       case 'transcript':
-        newMedia.transcript = content.transcript;
+        newMedia.transcript = {
+          ...content,
+          assetContentId: content.id,
+          id: content.assetId,
+        };
         break;
       default:
         console.log(content.genusTypeId);
