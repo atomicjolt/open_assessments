@@ -171,8 +171,10 @@ export default {
     },
     targetMenu: {
       replace: 'Replace Image',
+      targetImage: 'Target Image',
       addSnap: 'Add Snap Zone',
       addDrop: 'Add Drop Zone',
+      addImage: 'Add Image',
     },
   }
 };

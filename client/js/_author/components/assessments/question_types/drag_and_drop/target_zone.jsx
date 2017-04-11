@@ -17,14 +17,21 @@ export default class TargetZone extends React.Component {
     };
   }
 
+  setActiveZone(e, zoneId) {
+    e.stopPropagation();
+    this.setState({ activeZone: zoneId });
+  }
+
   render() {
     const { target, zones, editZone } = this.props;
+    // TODO: a placeholder for no target image?
     return (
       <div
         className="au-c-drag-and-drop__target-image"
         ref={(area) => { this.target = area; }}
+        onClick={() => this.setState({ activeZone: null })}
       >
-        <img src={target.image} alt="target" />
+        {_.isEmpty(target) ? null : <img src={target.image} alt="target" />}
         {
           _.map(zones, zone => (
             <DropZone
@@ -32,7 +39,7 @@ export default class TargetZone extends React.Component {
               zone={zone}
               target={this.target}
               editZone={editZone}
-              setActive={() => this.setState({ activeZone: zone.id })}
+              setActive={e => this.setActiveZone(e, zone.id)}
               isActive={this.state.activeZone === zone.id}
             />
           ))
