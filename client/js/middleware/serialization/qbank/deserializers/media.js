@@ -45,12 +45,14 @@ export function deserializeSingleMedia(asset) {
         newMedia.vtt = {
           ...content,
           assetContentId: content.id,
+          id: content.assetId,
         };
         break;
       case 'transcript':
         newMedia.transcript = {
           ...content,
           assetContentId: content.id,
+          id: content.assetId,
         };
         break;
       default:
