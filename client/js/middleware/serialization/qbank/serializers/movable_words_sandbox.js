@@ -95,6 +95,5 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
     );
     newItem.answers = answers;
   }
-
   return newItem;
 }

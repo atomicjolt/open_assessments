@@ -110,11 +110,8 @@ export class Question extends React.Component {
 
   updateItem(newItemProperties, forceSkipState) {
     const { item } = this.props;
-
-    if (newItemProperties.language) {
-      if (newItemProperties.language && this.state.language !== newItemProperties.language) {
-        this.setState({ language: newItemProperties.language });
-      }
+    if (newItemProperties.language && this.state.language !== newItemProperties.language) {
+      this.setState({ language: newItemProperties.language });
     } else if (_.includes(Question.stateDrivenTypes, item.type) && !forceSkipState) {
       this.setState({ ...item, ...newItemProperties });
     } else {
