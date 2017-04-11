@@ -28,7 +28,6 @@ export class OeaEditor extends React.Component {
     text: React.PropTypes.string,
     uploadMedia: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}),
-    mediaTypes: React.PropTypes.shape({}),
     fileIds: React.PropTypes.shape({}),
     textSize: React.PropTypes.string,
     error: React.PropTypes.string,
@@ -67,35 +66,67 @@ export class OeaEditor extends React.Component {
     let text = editorText;
     const fileIds = {};
 
-    // we don't want jquery to auto play anything
-    text = text.replace('autoplay', 'autoplay-placeholder');
+    // we don't want jquery to auto play or make any requests
+    text = text.replace(/autoplay/g, 'autoplay-placeholder');
+    text = text.replace(/src="/g, 'src-placeholder="');
 
     const doc = $(`<div>${text}</div>`);
-    $('img, source', doc).each((i, el) => {
+    $('img, source, track', doc).each((i, el) => {
       const media = $(el);
-      const match = /.*\/(.*)\/stream$/.exec(media.attr('src'));
+      const match = /.*\/(.*)\/stream$/.exec(media.attr('src-placeholder'));
       if (match) {
         const assetContentId = match[1];
         const mediaGuid = this.findMediaGuid(assetContentId);
         if (mediaGuid) {
-          text = text.replace(media.attr('src'), `AssetContent:${mediaGuid}`);
+          media.attr('src-placeholder', `AssetContent:${mediaGuid}`);
         }
       }
     });
+
+    // Insert transcript tags before sending question text to qbank
+    $('source', doc).each((i, el) => {
+      const media = $(el);
+      const assetContentGuid = media.attr('src-placeholder');
+      if (assetContentGuid) {
+        const match = assetContentGuid.match('AssetContent:(.+)');
+        if (match) {
+          const assetContentId = match[1];
+          const transcriptGenus = GenusTypes.assets.transcript.transcript;
+          const transcriptGuids =
+            this.findMetaGuids(assetContentId)
+            .filter(file =>
+              file.assetContentTypeId === transcriptGenus ||
+              file.genusTypeId === transcriptGenus
+            );
+            // Transcript tags need to be inserted after <audio> and <video> elements
+            //  if we have any transcript files that match the video/audio asset
+          if (!_.isEmpty(transcriptGuids)) {
+            media.parent().after(`<transcript src="AssetContent:${transcriptGuids[0].guid}" />`);
+          }
+        }
+      }
+    });
+
 
     _.each(this.state.fileGuids, (file, mediaGuid) => {
       // we either uploaded it, or selected it in the modal. Check both places.
       const media = this.props.uploadedAssets[mediaGuid] || this.state.fileGuids[mediaGuid];
       if (media && !media.error) {
+        const type = media.type && media.extension
+          ? GenusTypes.assets[media.type][media.extension]
+          : media.genusTypeId;
+
         fileIds[mediaGuid] = {
           assetId: media.id,
           assetContentId: media.assetContentId,
-          assetContentTypeId: GenusTypes.assets[media.type][media.extension]
+          assetContentTypeId: type,
         };
       }
     });
 
-    text = text.replace('autoplay-placeholder', 'autoplay');
+    text = doc.html();
+    text = text.replace(/src-placeholder/g, 'src');
+    text = text.replace(/autoplay-placeholder/g, 'autoplay');
 
     this.props.onBlur(text, fileIds);
     this.setState({ fileGuids: {} });
@@ -104,17 +135,23 @@ export class OeaEditor extends React.Component {
   getEditorContent(media) {
     let editorContent = `<video><source src="${media.url}" /></video>`;
     const alt = _.isEmpty(media.altText) ? '' : media.altText.text;
-
     switch (this.state.mediaType) {
       case 'img':
         editorContent = `<img src="${media.url}" alt="${alt}">`;
         break;
 
       case 'audio':
+        editorContent = '<audio autoplay name="media" controls>' +
+        `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
+        '</audio>';
+        break;
       case 'video':
-        editorContent = `<${this.state.mediaType} autoplay name="media" controls>` +
-          `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
-          `</${this.state.mediaType}>`;
+        {
+          const track = _.isEmpty(media.vtt) ? '' : `<track src="${_.get(media, 'vtt.url')}" srclang="en">`;
+          editorContent = '<video autoplay name="media" controls>' +
+            `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
+            `${track}'</video>`;
+        }
         break;
 
       default:
@@ -122,6 +159,26 @@ export class OeaEditor extends React.Component {
     }
 
     return editorContent;
+  }
+
+  // Find all assets whose assetId match the asset with assetGuid
+  findMetaGuids(assetGuid) {
+    const { fileIds, uploadedAssets } = this.props;
+    const { fileGuids } = this.state;
+    const allAssets = {
+      ...fileIds,
+      ...uploadedAssets,
+      ...fileGuids
+    };
+    const asset = allAssets[assetGuid];
+    const id = asset.id || asset.assetId;
+    if (!asset) return [];
+
+    return _.toPairs(allAssets)
+      .map(file => ({
+        guid: file[0], // We need to add the guid to the asset object
+        ...file[1]
+      })).filter(file => file.assetId === id);
   }
 
   findMediaGuid(assetContentId) {
@@ -162,10 +219,29 @@ export class OeaEditor extends React.Component {
     const fileGuids = _.cloneDeep(this.state.fileGuids);
 
     if (newMedia) {
+      const assetGuids = {
+        mediaGuid,
+        vttGuids: [],
+        transcriptGuids: [],
+      };
+      _.each(metaData, (meta) => {
+        if (meta.vttFile) {
+          const newGuid = guid();
+          assetGuids.vttGuids.push(newGuid);
+          fileGuids[newGuid] = {};
+        }
+
+        if (meta.transcript) {
+          const newGuid = guid();
+          assetGuids.transcriptGuids.push(newGuid);
+          fileGuids[newGuid] = {};
+        }
+      });
+
       fileGuids[mediaGuid] = {};
       this.props.uploadMedia(
         file,
-        mediaGuid,
+        assetGuids,
         this.props.bankId,
         metaData,
       );
@@ -174,6 +250,8 @@ export class OeaEditor extends React.Component {
       const editorContent = this.getEditorContent(file);
       this.state.editor.insertContent(editorContent);
       fileGuids[mediaGuid] = file;
+      fileGuids[guid()] = file.vtt;
+      fileGuids[guid()] = file.transcript;
       this.closeModal();
     }
 

@@ -150,7 +150,7 @@ describe('qbank editor', () => {
         expect(insertContentCalled).toBeFalsy();
         result.instance().insertMedia(file);
         expect(insertContentCalled).toBeTruthy();
-        expect(insertText).toContain('<video autoplay name="media" controls><source src="http://example.com/image" type="video/jpg"></video>');
+        expect(insertText).toContain('<video autoplay name="media" controls><source src="http://example.com/image" type="video/jpg">');
       });
 
       it('inserts an audio tag if state.mediaType is audio', () => {
