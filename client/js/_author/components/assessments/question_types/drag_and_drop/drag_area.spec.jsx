@@ -1,9 +1,9 @@
-import React            from 'react';
-import ReactDOM         from 'react-dom';
-import { shallow }      from 'enzyme';
-import renderer         from 'react-test-renderer';
-import DragArea         from './drag_area';
-import DropObject       from './drop_object';
+import React                    from 'react';
+import ReactDOM                 from 'react-dom';
+import { shallow, mount }       from 'enzyme';
+import renderer                 from 'react-test-renderer';
+import DragArea                 from './drag_area';
+import DropObject               from './drop_object';
 
 jest.mock('../../../../../libs/assets.js');
 
@@ -32,10 +32,17 @@ describe('drag area component', () => {
   });
 
   it('sets state via setActive attr in DropObject', () => {
-    expect(result.instance().state.activeObject).toBe(null);
-    const button = result.find(DropObject);
-    const clickableDiv = button.find('.can_you_find_this');
-    // button.find('.can_you_find_this').simulate('click');
-    expect(result.instance().state.activeObject).toBe('7');
+    const nonShallow = mount(<DragArea {...props} />);
+    expect(nonShallow.instance().state.activeObject).toBe(null);
+    const button = nonShallow.find('.au-set-active');
+    button.simulate('click');
+    expect(nonShallow.instance().state.activeObject).toBe('7');
+  });
+
+  it('sets state via show modal button', () => {
+    expect(result.instance().state.showModal).toBeFalsy();
+    const button = result.find('button');
+    button.simulate('click');
+    expect(result.instance().state.showModal).toBeTruthy();
   });
 });
