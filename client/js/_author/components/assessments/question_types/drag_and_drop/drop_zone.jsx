@@ -1,7 +1,8 @@
 import React      from 'react';
 import _          from 'lodash';
+import localize from '../../../../locales/localize';
 
-export default class DropZone extends React.Component {
+export class DropZone extends React.Component {
   static propTypes = {
     zone: React.PropTypes.shape({
       id: React.PropTypes.string,
@@ -11,6 +12,7 @@ export default class DropZone extends React.Component {
     }),
     editZone: React.PropTypes.func.isRequired,
     setActive: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
     isActive: React.PropTypes.bool,
   };
 
@@ -98,15 +100,30 @@ export default class DropZone extends React.Component {
     const deltaX = x - initialX;
     const deltaY = y - initialY;
 
-    // TODO: this will warp the zone if you hit an edge, should fix that
-    this.setState({
-      leftPos: DropZone.boundaryCheck(leftPos + deltaX, target.right - target.left),
-      topPos: DropZone.boundaryCheck(topPos + deltaY, target.bottom - target.top),
-      rightPos: DropZone.boundaryCheck(rightPos + deltaX, target.right - target.left),
-      bottomPos: DropZone.boundaryCheck(bottomPos + deltaY, target.bottom - target.top),
+    const newLeft = DropZone.boundaryCheck(leftPos + deltaX, target.right - target.left);
+    const newTop = DropZone.boundaryCheck(topPos + deltaY, target.bottom - target.top);
+    const newRight = DropZone.boundaryCheck(rightPos + deltaX, target.right - target.left);
+    const newBottom = DropZone.boundaryCheck(bottomPos + deltaY, target.bottom - target.top);
+
+    const updatedPositions = {
       initialX: x,
       initialY: y,
-    });
+    };
+
+    if (newLeft) {
+      updatedPositions.rightPos = newRight;
+    }
+    if (newTop) {
+      updatedPositions.bottomPos = newBottom;
+    }
+    if (newRight !== target.right - target.left) {
+      updatedPositions.leftPos = newLeft;
+    }
+    if (newBottom !== target.bottom - target.top) {
+      updatedPositions.topPos = newTop;
+    }
+
+    this.setState(updatedPositions);
   }
 
   updateZone() {
@@ -120,94 +137,48 @@ export default class DropZone extends React.Component {
     });
   }
 
-  // TODO: Some of this could be extracted to css, other parts not so much
-  styles() {
-    const manipulators = {
-      display: this.props.isActive ? '' : 'none',
-    };
-
-    return {
-      positioning: {
-        position: 'absolute',
-        height: '10px',
-        width: '10px',
-        border: '1px solid black',
-        backgroundColor: 'white',
-        ...manipulators,
-      },
-      topLeft: {
-        top: '-5px',
-        left: '-5px',
-        cursor: 'nwse-resize',
-      },
-      topRight: {
-        top: '-5px',
-        right: '-5px',
-        cursor: 'nesw-resize',
-      },
-      bottomLeft: {
-        bottom: '-5px',
-        left: '-5px',
-        cursor: 'nesw-resize',
-      },
-      bottomRight: {
-        bottom: '-5px',
-        right: '-5px',
-        cursor: 'nwse-resize',
-      },
-      middleSelector: {
-        position: 'absolute',
-        cursor: 'move',
-        top: '5px',
-        left: '5px',
-        width: 'calc(100% - 10px)',
-        height: 'calc(100% - 10px)',
-        ...manipulators,
-      },
-      manipulators,
-    };
-  }
-
   render() {
-    const { zone } = this.props;
-    const styles = this.styles();
+    const { zone, isActive } = this.props;
     const corners = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
+    const strings = this.props.localizeStrings('dropZone');
 
     return (
       <div
-        className="au-c-drop-zone au-c-zone1 is-active"
+        className={`au-c-drop-zone ${isActive ? 'is-active' : ''}`}
         style={this.zonePosition(zone)}
         onClick={this.props.setActive}
       >
-        {
-          _.map(corners, corner => (
-            <div
-              key={`zone_corner_${zone.id}_${corner}`}
-              style={{ ...styles.positioning, ...styles[corner] }}
-              draggable
-              onDrag={e => this.moveCorner(corner, e.pageX, e.pageY)}
-              onDragEnd={() => this.updateZone()}
-            />
-          ))
-        }
-        <div
-          style={styles.middleSelector}
-          draggable
-          onMouseDown={e => this.setState({ initialX: e.pageX, initialY: e.pageY })}
-          onDrag={e => this.moveZone(e.pageX, e.pageY)}
-          onDragEnd={() => {
-            this.setState({ initialX: null, initialY: null });
-            this.updateZone();
-          }}
-        />
+        <div className={`au-c-zone ${isActive ? 'is-active' : ''}`}>
+          {
+            _.map(corners, corner => (
+              <div
+                className={`au-c-zone-corner-${corner} au-c-zone-position`}
+                key={`zone_corner_${zone.id}_${corner}`}
+                draggable
+                onDrag={e => this.moveCorner(corner, e.pageX, e.pageY)}
+                onDragEnd={() => this.updateZone()}
+              />
+            ))
+          }
+          <div
+            className="au-c-zone-middle"
+            draggable
+            onMouseDown={e => this.setState({ initialX: e.pageX, initialY: e.pageY })}
+            onDrag={e => this.moveZone(e.pageX, e.pageY)}
+            onDragEnd={() => {
+              this.setState({ initialX: null, initialY: null });
+              this.updateZone();
+            }}
+          />
+        </div>
 
         <div className="au-c-drop-zone__tag">
           {_.capitalize(zone.type)} {String.fromCharCode(zone.index + 65)}
         </div>
 
-        <div className="au-c-drop-zone__tool-tip is-right" style={styles.manipulators}>
+        <div className="au-c-drop-zone__tool-tip is-right">
           <div className="au-c-input au-c-input-label--left au-c-input--white">
-            <label htmlFor={`dropZone_${zone.id}`}>Label</label>
+            <label htmlFor={`dropZone_${zone.id}`}>{strings.label}</label>
             <div className="au-c-input__contain">
               <input
                 id={`dropZone_${zone.id}`}
@@ -231,3 +202,5 @@ export default class DropZone extends React.Component {
     );
   }
 }
+
+export default localize(DropZone);

@@ -1,7 +1,7 @@
 .au-c-answer{
   padding: 0.75rem 5.5rem;
   background: $white;
-  box-shadow: 0 0 0.6rem rgba(0,0,0,0.15);
+  box-shadow: 0 0 0.6rem rgba(0,0,0,0.3);
   min-height: 5rem;
   margin-bottom: 1rem;
   cursor: pointer;
@@ -12,7 +12,7 @@
     }
 
     .au-c-input__bottom.no-border{
-      border-top: $border;
+      background: $gray5;
     }
   }
 
@@ -103,12 +103,12 @@
   box-shadow: none;
   min-height: 5rem;
   margin-bottom: 0;
-  border: 0.2rem dashed $gray3;
+  border: 0.2rem dashed $gray4;
 
   &:hover{
 
     .au-c-input .au-c-text-input{
-      color: lighten($gray8, 10%);
+      color: $text-color;
     }
 
     .au-c-radio{
@@ -130,15 +130,18 @@
     pointer-events: none;
 
     .au-c-text-input{
-      color: $gray4;
+      color: $text-alt;
       @include transition(color 0.1s ease);
+    }
+    .au-c-input__bottom{
+      background: none;
     }
   }
 
   .au-c-radio{
 
     input[type="radio"] + label:before{
-      color: $gray3;
+      color: $gray4;
       @include transition(color 0.1s ease);
     }
   }

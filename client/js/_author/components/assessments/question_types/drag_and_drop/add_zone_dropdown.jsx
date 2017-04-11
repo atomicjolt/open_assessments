@@ -1,11 +1,14 @@
 import React      from 'react';
+import localize   from '../../../../locales/localize';
 
-export default function addZoneDropdown(props) {
+function addZoneDropdown(props) {
+  const strings = props.localizeStrings('addZoneDropDown');
+
   return (
-    <ul className="au-c-button-dropdown u-ml-sm">
+    <ul className="au-c-button-dropdown au-u-ml-sm">
       <li>
         <button
-          className="au-c-btn au-c-btn--sm au-c-btn--dropdown au-u-ml-sm"
+          className="au-c-btn au-c-btn--sm au-c-btn--dropdown"
           onClick={props.toggle}
         >
           {props.text}
@@ -18,7 +21,7 @@ export default function addZoneDropdown(props) {
               onClick={props.addByRegion}
             >
               <i className="material-icons">open_in_new</i>
-              by region
+              {strings.byRegion}
             </button>
           </li>
           <li>
@@ -27,7 +30,7 @@ export default function addZoneDropdown(props) {
               onClick={props.addByImage}
             >
               <i className="material-icons">image</i>
-              by image
+              {strings.byImage}
             </button>
           </li>
         </ul>
@@ -42,4 +45,7 @@ addZoneDropdown.propTypes = {
   toggle: React.PropTypes.func.isRequired,
   addByRegion: React.PropTypes.func.isRequired,
   addByImage: React.PropTypes.func.isRequired,
+  localizeStrings: React.PropTypes.func.isRequired,
 };
+
+export default localize(addZoneDropdown);
