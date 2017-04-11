@@ -13,7 +13,19 @@ export default (state = initialState, action) => {
         return newState;
       }
 
-      newState[action.original.guid] = action.payload;
+      newState[mediaGuid] = {...action.payload, autoplay: true};
+
+      if (!_.isEmpty(action.payload.transcript)) {
+        _.each(transcriptGuids, (guid) => {
+          newState[guid] = action.payload.transcript; // later we need to look up by language :(
+        });
+      }
+
+      if (!_.isEmpty(action.payload.vtt)) {
+        _.each(vttGuids, (guid) => {
+          newState[guid] = action.payload.vtt; // later we need to look up by language :(
+        });
+      }
 
       return newState;
     }
