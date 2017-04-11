@@ -101,7 +101,7 @@ export default class Metadata extends React.Component {
           ))
         }
 
-        { mediaType === 'audio' || mediaType === 'video' ? <div>Auto-play { this.autoPlayOption(metaData) }</div> : null }
+        { mediaType !== 'img' ? <div>Auto-play { this.autoPlayOption(metaData) }</div> : null }
         {
           _.map(this.props.metadataFileTypes, type => (
             <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
