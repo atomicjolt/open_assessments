@@ -4,14 +4,12 @@ import Checkbox   from '../../assessments/question_types/question_common/option_
 
 export default class Metadata extends React.Component {
   static propTypes = {
-    id: React.PropTypes.string,
     mediaType: React.PropTypes.string,
     updateMetadata: React.PropTypes.func.isRequired,
     metadataTypes: React.PropTypes.arrayOf(React.PropTypes.string),
     metadataFileTypes: React.PropTypes.arrayOf(React.PropTypes.string),
     metaData: React.PropTypes.shape({
       description: React.PropTypes.string,
-      autoPlay: React.PropTypes.boolean,
     }),
   };
 
