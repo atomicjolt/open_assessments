@@ -23,7 +23,6 @@ export class TargetMenu extends React.Component {
 
   replaceImage(media, metadata, newMedia) {
     this.props.uploadMedia(media, 'target', metadata, newMedia);
-    this.setState({ showModal: false });
   }
 
   selectImage(media, metadata, newMedia) {
@@ -39,6 +38,7 @@ export class TargetMenu extends React.Component {
           width: img.width,
         });
       };
+      this.props.uploadMedia(media, 'dropObjects.new', metadata, newMedia);
     } else {
       this.replaceImage(media, metadata, newMedia);
     }
