@@ -150,7 +150,7 @@ export default class EditorUploadModal extends React.Component {
             </div>
           </div>
           {
-            this.state.uploadedMedia && !this.props.uploadOnly ? <Metadata
+            this.state.uploadedMedia ? <Metadata
               metadataTypes={this.metadataTypes(this.props.mediaType)}
               selectedLanguage={this.state.language}
               updateMetadata={(key, val) => this.setters(key, val)}

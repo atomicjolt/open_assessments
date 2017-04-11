@@ -59,6 +59,7 @@ export class DragAndDrop extends React.Component {
             this.uploadMedia(file, where, metadata, newMedia)}
           editZone={(zoneId, attributes) =>
             this.props.updateChoice(id, zoneId, attributes, null, 'zones')}
+
         />
         <div className="au-c-drop-zone__answers__label">{strings.draggableAnswers}</div>
         <DragArea
