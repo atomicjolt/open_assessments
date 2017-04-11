@@ -48,7 +48,6 @@ function getAssessmentsTaken(state, bankId, assessmentsOffered) {
 }
 
 function uploadMedia(state, action) {
-  // TODO form should condition on what kind of file
   const formData = new FormData();
   formData.append('inputFile', action.body);
   formData.append('returnUrl', true);
@@ -68,7 +67,6 @@ function uploadMedia(state, action) {
     formData.append('transcriptFile', action.metaData['639-2%3AENG%40ISO'].transcript || '');
   }
 
-  debugger;
   return api.post(
     `repository/repositories/${action.bankId}/assets`,
     state.settings.api_url,
@@ -526,7 +524,6 @@ const qbank = {
       store.dispatch({
         type: action.type + DONE,
         original: action,
-        // TODO potentially give back array containing metadata files as well?
         payload: deserializeSingleMedia(res.body),
       });
     }, (error) => {

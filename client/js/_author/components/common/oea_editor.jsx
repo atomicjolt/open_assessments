@@ -67,7 +67,7 @@ export class OeaEditor extends React.Component {
     let text = editorText;
     const fileIds = {};
 
-    // we don't want jquery to auto play anything
+    // we don't want jquery to auto play or make any requests
     text = text.replace(/autoplay/g, 'autoplay-placeholder');
     text = text.replace(/src="/g, 'src-placeholder="');
 
@@ -84,7 +84,7 @@ export class OeaEditor extends React.Component {
       }
     });
 
-    // Insert transcript tag
+    // Insert transcript tags before sending question text to qbank
     $('source', doc).each((i, el) => {
       const media = $(el);
       const assetContentGuid = media.attr('src-placeholder');
@@ -92,12 +92,15 @@ export class OeaEditor extends React.Component {
         const match = assetContentGuid.match('AssetContent:(.+)');
         if (match) {
           const assetContentId = match[1];
+          const transcriptGenus = GenusTypes.assets.transcript.transcript;
           const transcriptGuids =
             this.findMetaGuids(assetContentId)
             .filter(file =>
-              file.assetContentTypeId === GenusTypes.assets.transcript.transcript ||
-              file.genusTypeId === GenusTypes.assets.transcript.transcript
+              file.assetContentTypeId === transcriptGenus ||
+              file.genusTypeId === transcriptGenus
             );
+            // Transcript tags need to be inserted after <audio> and <video> elements
+            //  if we have any transcript files that match the video/audio asset
           if (!_.isEmpty(transcriptGuids)) {
             media.parent().after(`<transcript src="AssetContent:${transcriptGuids[0].guid}" />`);
           }
@@ -157,6 +160,7 @@ export class OeaEditor extends React.Component {
     return editorContent;
   }
 
+  // Find all assets whose assetId match the asset with assetGuid
   findMetaGuids(assetGuid) {
     const { fileIds, uploadedAssets } = this.props;
     const { fileGuids } = this.state;
