@@ -14,7 +14,6 @@ const tagNameMap = {
   video: 'Video',
 };
 
-// TODO localize strings?
 const mediaPrompt = {
   audio: 'Select an Audio file',
   img: 'Select an Image',
@@ -42,7 +41,6 @@ export default class EditorUploadModal extends React.Component {
 
   constructor() {
     super();
-
     this.state = {
       languageMediaData: _.reduce(languages.languageTypeId, (result, language) => {
         result[language] = { locale: languageToLocale[language] };
@@ -57,7 +55,11 @@ export default class EditorUploadModal extends React.Component {
   }
 
   addMedia() {
-    const metaData = this.state.languageMediaData;
+    const metaData = {
+      ...this.state.languageMediaData,
+      mediaType: this.props.mediaType,
+    };
+
     if (this.state.uploadedMedia) {
       this.props.insertMedia(this.state.uploadedMedia, metaData, true);
     } else if (this.state.selectedMedia) {
@@ -76,9 +78,20 @@ export default class EditorUploadModal extends React.Component {
     });
   }
 
-  metadataTypes(mediaType) {
+  metadataFileTypes() {
+    const { mediaType } = this.props;
+    if (mediaType === 'video') {
+      return ['vttFile', 'transcript'];
+    } else if (mediaType === 'audio') {
+      return ['transcript'];
+    }
+    return [];
+  }
+
+  metadataTypes() {
+    const { mediaType } = this.props;
     if (mediaType === 'audio' || mediaType === 'video') {
-      return ['license', 'copyright', 'vttFile', 'transcript'];
+      return ['license', 'copyright'];
     }
     return ['altText', 'license', 'copyright'];
   }
@@ -150,8 +163,9 @@ export default class EditorUploadModal extends React.Component {
             </div>
           </div>
           {
-            this.state.uploadedMedia ? <Metadata
-              metadataTypes={this.metadataTypes(this.props.mediaType)}
+            this.state.uploadedMedia <Metadata
+              metadataTypes={this.metadataTypes()}
+              metadataFileTypes={this.metadataFileTypes()}
               selectedLanguage={this.state.language}
               updateMetadata={(key, val) => this.setters(key, val)}
               mediaItem={this.state.selectedMedia}
