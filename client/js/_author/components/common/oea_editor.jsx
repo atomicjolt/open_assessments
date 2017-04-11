@@ -84,24 +84,45 @@ export class OeaEditor extends React.Component {
       }
     });
 
-    $('.transcript-placeholder', doc).each((i, el) => {
+    // Insert transcript tag
+    $('source', doc).each((i, el) => {
       const media = $(el);
-      const match = /.*\/(.*)\/stream$/.exec(media.text());
-      if (match) {
-        const assetContentId = match[1];
-        const mediaGuid = this.findMediaGuid(assetContentId);
-        if (mediaGuid) {
-          media.after(`<transcript src="AssetContent:${mediaGuid}" />`);
-          media.remove();
+      const assetContentGuid = media.attr('src-placeholder');
+      if (assetContentGuid) {
+        const match = assetContentGuid.match('AssetContent:(.+)');
+        if (match) {
+          const assetContentId = match[1];
+          const transcriptGuids =
+            this.findMetaGuids(assetContentId)
+            .filter(file =>
+              file.assetContentTypeId === GenusTypes.assets.transcript.transcript ||
+              file.genusTypeId === GenusTypes.assets.transcript.transcript
+            );
+          if (!_.isEmpty(transcriptGuids)) {
+            media.parent().after(`<transcript src="AssetContent:${transcriptGuids[0].guid}" />`);
+          }
         }
       }
     });
 
 
+    // $('.transcript-placeholder', doc).each((i, el) => {
+    //   const media = $(el);
+    //   const match = /.*\/(.*)\/stream$/.exec(media.text());
+    //   if (match) {
+    //     const assetContentId = match[1];
+    //     const mediaGuid = this.findMediaGuid(assetContentId);
+    //     if (mediaGuid) {
+    //       media.after(`<transcript src="AssetContent:${mediaGuid}" />`);
+    //       media.remove();
+    //     }
+    //   }
+    // });
+
+
     _.each(this.state.fileGuids, (file, mediaGuid) => {
       // we either uploaded it, or selected it in the modal. Check both places.
       const media = this.props.uploadedAssets[mediaGuid] || this.state.fileGuids[mediaGuid];
-      // TODO this is where we need to add in transcript and vtt fileIds
       if (media && !media.error) {
         const type = media.type && media.extension
           ? GenusTypes.assets[media.type][media.extension]
@@ -128,10 +149,10 @@ export class OeaEditor extends React.Component {
     let editorContent = `<video><source src="${media.url}" /></video>`;
     const alt = _.isEmpty(media.altText) ? '' : media.altText.text;
 
-    const transcriptPlaceHolder =
-      media.transcript ?
-        `<div class="transcript-placeholder" style="display:none;">${media.transcript.url}</div>`
-        : '';
+    const transcriptPlaceHolder = '';
+      // media.transcript ?
+      //   `<span class="transcript-placeholder" style="visibility:hidden;">${media.transcript.url}</span>`
+      //   : '';
     switch (this.state.mediaType) {
       case 'img':
         editorContent = `<img src="${media.url}" alt="${alt}">`;
@@ -154,6 +175,25 @@ export class OeaEditor extends React.Component {
     }
 
     return editorContent;
+  }
+
+  findMetaGuids(assetGuid) {
+    const { fileIds, uploadedAssets } = this.props;
+    const { fileGuids } = this.state;
+    const allAssets = {
+      ...fileIds,
+      ...uploadedAssets,
+      ...fileGuids
+    };
+    const asset = allAssets[assetGuid];
+    const id = asset.id || asset.assetId;
+    if (!asset) return [];
+
+    return _.toPairs(allAssets)
+      .map(file => ({
+        guid: file[0], // We need to add the guid to the asset object
+        ...file[1]
+      })).filter(file => file.assetId === id);
   }
 
   findMediaGuid(assetContentId) {
