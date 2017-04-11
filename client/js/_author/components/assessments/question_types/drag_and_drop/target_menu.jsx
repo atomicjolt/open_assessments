@@ -10,6 +10,7 @@ export class TargetMenu extends React.Component {
     localizeStrings: React.PropTypes.func.isRequired,
     images: React.PropTypes.shape({}).isRequired,
     loadingMedia: React.PropTypes.bool,
+    hasTarget: React.PropTypes.bool,
   };
 
   constructor() {
@@ -26,14 +27,14 @@ export class TargetMenu extends React.Component {
   }
 
   selectImage(media, metadata, newMedia) {
-    this.setState({ showModal: false });
-    if (this.state.add === 'snap' || this.state.add === 'drop') {
+    const type = this.state.add;
+    if (type === 'snap' || type === 'drop') {
       const img = new Image();
       img.src = URL.createObjectURL(media);
       img.onload = () => {
         // TODO: make sure image isn't bigger than the area
         this.props.newZone({
-          type: this.state.add,
+          type,
           height: img.height,
           width: img.width,
         });
@@ -41,12 +42,17 @@ export class TargetMenu extends React.Component {
     } else {
       this.replaceImage(media, metadata, newMedia);
     }
+    this.setState({
+      showModal: false,
+      add: null
+    });
   }
 
   addByRegion() {
     this.props.newZone({
       type: this.state.add,
     });
+    this.setState({ add: null });
   }
 
   addByImage() {
@@ -59,14 +65,14 @@ export class TargetMenu extends React.Component {
     return (
       <div className="au-o-item__top">
         <div className="au-o-left">
-          <div className="au-c-question__type">Target Image</div>
+          <div className="au-c-question__type">{strings.targetImage}</div>
         </div>
         <div className="au-o-right">
           <button
             className="au-c-btn au-c-btn--sm au-c-btn--gray"
             onClick={() => this.setState({ showModal: true })}
           >
-            {strings.replace}
+            {this.props.hasTarget ? strings.replace : strings.addImage}
           </button>
           <AddZone
             active={this.state.add === 'snap'}
