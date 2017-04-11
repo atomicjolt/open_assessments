@@ -42,12 +42,16 @@ export function deserializeSingleMedia(asset) {
         newMedia.description = content.mediaDescription;
         break;
       case 'vtt':
-        newMedia.vtt = content.url;
-        newMedia._vtt = content;
+        newMedia.vtt = {
+          ...content,
+          assetContentId: content.id,
+        };
         break;
       case 'transcript':
-        newMedia.transcript = content.url;
-        newMedia._transcript = content;
+        newMedia.transcript = {
+          ...content,
+          assetContentId: content.id,
+        };
         break;
       default:
         console.log(content.genusTypeId);

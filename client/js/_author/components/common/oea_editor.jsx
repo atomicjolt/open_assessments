@@ -64,7 +64,7 @@ export class OeaEditor extends React.Component {
     if (!text.includes(match)) { return text; }
     const snippets = text.split(split);
     return snippets.map((snippet, i) => {
-      if (snippets.length - 1 === i) { return snippet; }
+      if (snippets.length - 1 === i) { return snippet; } // Dont append anything to last snippet
       const assetContentMatch = snippet.match(/src="AssetContent:(\S*)"/);
       if (assetContentMatch) {
         const assetContentId = assetContentMatch[1];
@@ -86,6 +86,7 @@ export class OeaEditor extends React.Component {
     text = text.replace(/autoplay/g, 'autoplay-placeholder');
 
     // TODO this doesn't work right with trakc until a rerender
+    // This can be fixed by adding search for metadata in uploadedAssets
     const doc = $(`<div>${text}</div>`);
     $('img, source, track', doc).each((i, el) => {
       const media = $(el);
@@ -107,28 +108,15 @@ export class OeaEditor extends React.Component {
       const media = this.props.uploadedAssets[mediaGuid] || this.state.fileGuids[mediaGuid];
       // TODO this is where we need to add in transcript and vtt fileIds
       if (media && !media.error) {
+        const type = media.type && media.extension
+          ? GenusTypes.assets[media.type][media.extension]
+          : media.genusTypeId;
+
         fileIds[mediaGuid] = {
           assetId: media.id,
           assetContentId: media.assetContentId,
-          assetContentTypeId: GenusTypes.assets[media.type][media.extension]
+          assetContentTypeId: type,
         };
-
-        // Set file ids of metadata files
-        if (!_.isEmpty(media._transcript)) {
-          fileIds[guid()] = {
-            assetId: media._transcript.assetId,
-            assetContentId: media._transcript.id,
-            assetContentTypeId: media._transcript.genusTypeId,
-          }
-        }
-
-        if (!_.isEmpty(media._vtt)) {
-          fileIds[guid()] = {
-            assetId: media._vtt.assetId,
-            assetContentId: media._vtt.id,
-            assetContentTypeId: media._vtt.genusTypeId,
-          }
-        }
       }
     });
 
@@ -156,9 +144,10 @@ export class OeaEditor extends React.Component {
         break;
       case 'video':
       debugger;
+      // NOTE the vtt url appears to be changed when we rerender? Why?????
         editorContent = '<video autoplay name="media" controls>' +
           `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
-          `<track src="${media.vtt}" srclang="en">` +
+          `<track src="${_.get(media, 'vtt.url')}" srclang="en">` +
           '</video>';
         break;
 
@@ -207,10 +196,29 @@ export class OeaEditor extends React.Component {
     const fileGuids = _.cloneDeep(this.state.fileGuids);
 
     if (newMedia) {
+      const assetGuids = {
+        mediaGuid,
+        vttGuids: [],
+        transcriptGuids: [],
+      };
+      _.each(metaData, (meta) => {
+        if (meta.vttFile) {
+          const newGuid = guid();
+          assetGuids.vttGuids.push(newGuid);
+          fileGuids[newGuid] = {};
+        }
+
+        if (meta.transcript) {
+          const newGuid = guid();
+          assetGuids.transcriptGuids.push(newGuid);
+          fileGuids[newGuid] = {};
+        }
+      });
+
       fileGuids[mediaGuid] = {};
       this.props.uploadMedia(
         file,
-        mediaGuid,
+        assetGuids,
         this.props.bankId,
         metaData,
       );
@@ -219,6 +227,8 @@ export class OeaEditor extends React.Component {
       const editorContent = this.getEditorContent(file);
       this.state.editor.insertContent(editorContent);
       fileGuids[mediaGuid] = file;
+      fileGuids[guid()] = file.vtt;
+      fileGuids[guid()] = file.transcript;
       this.closeModal();
     }
 
