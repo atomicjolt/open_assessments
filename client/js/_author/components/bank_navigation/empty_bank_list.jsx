@@ -7,7 +7,6 @@ export default function EmptyBankList() {
         <tr>
           <td>
             <div>
-              There&#39;s nothing here.<br />
               Add a new assessment to get started.
             </div>
           </td>

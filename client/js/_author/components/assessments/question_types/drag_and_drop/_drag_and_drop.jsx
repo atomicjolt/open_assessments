@@ -24,7 +24,7 @@ export class DragAndDrop extends React.Component {
     updateItem: React.PropTypes.func.isRequired,
     addMediaToQuestion: React.PropTypes.func.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
-    // localizeStrings: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
     loadingMedia: React.PropTypes.bool,
   };
 
@@ -47,8 +47,7 @@ export class DragAndDrop extends React.Component {
   render() {
     const { question, id, bankId } = this.props.item;
 
-    // TODO: localization
-    // const strings = this.props.localizeStrings();
+    const strings = this.props.localizeStrings('dragAndDrop');
     return (
       <div>
         <TargetArea
@@ -61,7 +60,7 @@ export class DragAndDrop extends React.Component {
           editZone={(zoneId, attributes) =>
             this.props.updateChoice(id, zoneId, attributes, null, 'zones')}
         />
-        <div className="au-c-drop-zone__answers__label">Draggable answers</div>
+        <div className="au-c-drop-zone__answers__label">{strings.draggableAnswers}</div>
         <DragArea
           dropObjects={question.dropObjects}
           zones={question.zones}

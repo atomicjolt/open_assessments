@@ -63,6 +63,7 @@ function serializeAnswers(originalChoices, newChoiceAttributes) {
       type: genusTypes.answer.multipleChoice,
       choiceIds: [choice.id],
       fileIds: _.get(updateValues, 'fileIds'),
+      delete: _.get(updateValues, 'delete'),
     });
   });
 }

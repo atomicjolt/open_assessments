@@ -66,7 +66,7 @@ export class OeaEditor extends React.Component {
 
     let text = editorText;
     const fileIds = {};
-
+    debugger
     // we don't want jquery to auto play anything
     text = text.replace('autoplay', 'autoplay-placeholder');
 
@@ -102,6 +102,7 @@ export class OeaEditor extends React.Component {
   }
 
   getEditorContent(media) {
+    debugger
     let editorContent = `<video><source src="${media.url}" /></video>`;
     const alt = _.isEmpty(media.altText) ? '' : media.altText.text;
 

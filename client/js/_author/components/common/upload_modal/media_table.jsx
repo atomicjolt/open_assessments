@@ -2,14 +2,20 @@ import React    from 'react';
 import _        from 'lodash';
 import assets   from '../../../../libs/assets';
 
-const placeholder = (
-  <img
-    height="15"
-    width="20"
-    alt="placeholder"
-    src={assets('./_author/images/video-thumbnail.png')}
-  />
-);
+const placeholders = {
+  video: (
+    <img
+      alt="placeholder"
+      src={assets('./_author/images/video-thumbnail.png')}
+    />
+  ),
+  audio: (
+    <img
+      alt="placeholder"
+      src={assets('./_author/images/audio-thumbnail.png')}
+    />
+  )
+};
 
 export default function mediaTable(props) {
 
@@ -26,11 +32,7 @@ export default function mediaTable(props) {
               >
                 <td>
                   <div className="au-c-modal-media__thumbnail">
-                    {
-                      item.type === 'video' || item.type === 'audio'
-                      ? placeholder
-                      : <img src={item.url} alt={item.altText.text} height="15" width="20" />
-                    }
+                    { placeholders[item.type] || <img src={item.url} alt={item.altText.text} /> }
                   </div>
                 </td>
                 <td>{item.description.text}</td>
@@ -45,6 +47,13 @@ export default function mediaTable(props) {
 }
 
 mediaTable.propTypes = {
-  media: React.PropTypes.shape([]),
+  media: React.PropTypes.shape({
+    description: React.PropTypes.shape({
+    }),
+    license: React.PropTypes.shape({
+    }),
+    altText: React.PropTypes.shape({
+    })
+  }),
   selectedMediaId: React.PropTypes.string,
 };

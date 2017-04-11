@@ -1,5 +1,6 @@
 .au-c-assessment-top{
   background-color: $white;
+  padding-left: 2.5rem;
 }
 
 .au-c-assessment-title{
@@ -20,14 +21,21 @@
 }
 
   .au-c-question__number{
-    color: $text-color;
-    margin: none;
+    color: $white;
+    background: $purple;
+    margin: 0;
+    width: 5rem;
+    height: 5rem;
+    @include display-flex;
+    @include align-items(center);
+    @include justify-content(center);
     @include semi-bold;
-    font-size: 1.2rem;
+    font-size: 2rem;
   }
 
   .au-c-question__type{
-    color: $text-alt;
+    color: $text-color;
+    margin-left: 2rem;
   }
 
 .au-c-question-icons button {
@@ -41,7 +49,7 @@
   text-align: center;
   font-size: 2rem;
   line-height: 3rem;
-  color: $gray9;
+  color: $gray10;
   cursor: pointer;
 
   &:hover{
@@ -93,10 +101,10 @@
       display: block;
     }
     .au-c-question__text .au-c-input__bottom.no-border{
-      border-top: $border;
+      background: $gray5;
     }
     .au-c-question__feedback .au-c-input__bottom.no-border{
-      border-top: $border;
+      background: $gray5;
     }
   }
 
@@ -109,7 +117,9 @@
   &.reorder-active{
     .au-o-item__top{
       background-color: $blue;
-      border-left-color: $blue2;
+      .au-c-question__number{
+        background: $blue2;
+      }
     }
     .au-c-question__number, .au-c-question__type{
       color: $white;
@@ -158,8 +168,7 @@
     text-align: center;
     @include transition(background 0.1s ease, transform 0.1s ease);
     cursor: pointer;
-    border: 0.2rem dashed $gray4;
-    border-image: url('../../assets/_author/images/border.png') 2 round;
+    border: 0.2rem dashed $gray5;
     @include semi-bold;
     text-transform: uppercase;
     font-size: 1.2rem;
