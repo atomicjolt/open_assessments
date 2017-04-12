@@ -26,6 +26,15 @@ const languageToLocale = {
   '639-2%3ATEL%40ISO': 'te',
 };
 
+const initLanguageMediaData = () => (
+  _.reduce(languages.languageTypeId, (result, language) => {
+    result[language] = { locale: languageToLocale[language] };
+    return result;
+  }, {}
+  )
+);
+
+
 export default class EditorUploadModal extends React.Component {
   static propTypes = {
     isOpen: React.PropTypes.bool,
@@ -42,10 +51,7 @@ export default class EditorUploadModal extends React.Component {
   constructor() {
     super();
     this.state = {
-      languageMediaData: _.reduce(languages.languageTypeId, (result, language) => {
-        result[language] = { locale: languageToLocale[language] };
-        return result;
-      }, {}),
+      languageMediaData: initLanguageMediaData(),
       activeItem: null,
       mediaAutoPlay: false,
       uploadedMedia: null,
@@ -102,11 +108,15 @@ export default class EditorUploadModal extends React.Component {
     this.setState({ languageMediaData });
   }
 
+  resetModal() {
+    this.setState({ uploadedMedia: null });
+    this.setState({ languageMediaData: initLanguageMediaData() });
+    this.setState({ language: languages.languageTypeId.english });
+  }
+
   closeModal() {
     this.props.closeModal();
-    if (this.state.uploadedMedia) {
-      this.setState({ uploadedMedia: null });
-    }
+    this.resetModal();
   }
 
   render() {
@@ -119,6 +129,7 @@ export default class EditorUploadModal extends React.Component {
     if (this.props.error) {
       name = <div className="au-c-error-text">Error: {this.props.error}</div>;
     }
+
 
     return (
       <Modal
