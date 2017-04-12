@@ -12,14 +12,18 @@ ShallowWrapper {
     className="au-c-drag-and-drop__target-image"
     onClick={[Function]}
 >
-    
+    <targetPlaceholder
+        onClick={[Function]}
+    />
 </div>,
   "nodes": Array [
     <div
       className="au-c-drag-and-drop__target-image"
       onClick={[Function]}
 >
-      
+      <targetPlaceholder
+            onClick={[Function]}
+      />
 </div>,
   ],
   "options": Object {},
@@ -30,6 +34,7 @@ ShallowWrapper {
       "_context": Object {},
       "_currentElement": <TargetZone
         editZone={[Function]}
+        openModal={[Function]}
         target={Object {}}
         zones={Object {}}
 />,
@@ -41,6 +46,7 @@ ShallowWrapper {
         "context": Object {},
         "props": Object {
           "editZone": [Function],
+          "openModal": [Function],
           "target": Object {},
           "zones": Object {},
         },
@@ -71,14 +77,18 @@ ShallowWrapper {
           className="au-c-drag-and-drop__target-image"
           onClick={[Function]}
 >
-          
+          <targetPlaceholder
+                    onClick={[Function]}
+          />
 </div>,
         "_debugID": 2,
         "_renderedOutput": <div
           className="au-c-drag-and-drop__target-image"
           onClick={[Function]}
 >
-          
+          <targetPlaceholder
+                    onClick={[Function]}
+          />
 </div>,
       },
       "_renderedNodeType": 0,
@@ -93,6 +103,7 @@ ShallowWrapper {
   "root": [Circular],
   "unrendered": <TargetZone
     editZone={[Function]}
+    openModal={[Function]}
     target={Object {}}
     zones={Object {}}
 />,

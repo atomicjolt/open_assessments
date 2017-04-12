@@ -5,18 +5,16 @@ import TargetMenu     from './target_menu';
 describe('target_menu component', () => {
   let props;
   let result;
-  let uploadedMedia;
-  let zoneNew;
+  let openedModal;
 
   beforeEach(() => {
-    uploadedMedia = false;
-    zoneNew = false;
+    openedModal = false;
     props = {
-      uploadMedia: () => { uploadedMedia = true; },
-      newZone: () => { zoneNew = true; },
-      images: {},
-      loadingMedia: false,
+      openModal: () => { openedModal = true; },
+      toggleAdd: () => {},
+      addedByRegion: () => {},
       hasTarget: false,
+      addType: '',
     };
     result = shallow(<TargetMenu {...props} />);
   });
@@ -25,22 +23,9 @@ describe('target_menu component', () => {
     expect(result).toMatchSnapshot();
   });
 
-  it('handles the uploadMedia prop call', () => {
-    expect(uploadedMedia).toBeFalsy();
-    result.instance().replaceImage();
-    expect(uploadedMedia).toBeTruthy();
-  });
-
-  it('handles the newZone prop call', () => {
-    expect(zoneNew).toBeFalsy();
-    result.instance().addByRegion();
-    expect(zoneNew).toBeTruthy();
-  });
-
-  it('handles setting state', () => {
-    expect(result.instance().state.add).toBe(null);
-    expect(result.instance().state.showModal).toBeFalsy();
+  it('button opens modal', () => {
+    expect(openedModal).toBeFalsy();
     result.find('button').simulate('click');
-    expect(result.instance().state.showModal).toBeTruthy();
+    expect(openedModal).toBeTruthy();
   });
 });

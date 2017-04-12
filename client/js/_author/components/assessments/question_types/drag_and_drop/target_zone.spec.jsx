@@ -11,6 +11,7 @@ describe('target_zone component', () => {
       target: {},
       zones: {},
       editZone: () => {},
+      openModal: () => {},
     };
     result = shallow(<TargetZone {...props} />);
   });

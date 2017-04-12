@@ -32,27 +32,18 @@ ShallowWrapper {
         <addZoneDropdown
             active={false}
             addByImage={[Function]}
-            addByRegion={[Function]}
+            addByRegion={undefined}
             text="Add Snap Zone"
             toggle={[Function]}
         />
         <addZoneDropdown
             active={false}
             addByImage={[Function]}
-            addByRegion={[Function]}
+            addByRegion={undefined}
             text="Add Drop Zone"
             toggle={[Function]}
         />
     </div>
-    <EditorUploadModal
-        closeModal={[Function]}
-        insertMedia={[Function]}
-        isOpen={false}
-        loading={false}
-        media={Object {}}
-        mediaType="img"
-        uploadOnly={false}
-    />
 </div>,
   "nodes": Array [
     <div
@@ -79,62 +70,48 @@ ShallowWrapper {
             <addZoneDropdown
                   active={false}
                   addByImage={[Function]}
-                  addByRegion={[Function]}
+                  addByRegion={undefined}
                   text="Add Snap Zone"
                   toggle={[Function]}
             />
             <addZoneDropdown
                   active={false}
                   addByImage={[Function]}
-                  addByRegion={[Function]}
+                  addByRegion={undefined}
                   text="Add Drop Zone"
                   toggle={[Function]}
             />
       </div>
-      <EditorUploadModal
-            closeModal={[Function]}
-            insertMedia={[Function]}
-            isOpen={false}
-            loading={false}
-            media={Object {}}
-            mediaType="img"
-            uploadOnly={false}
-      />
 </div>,
   ],
   "options": Object {},
   "renderer": ReactShallowRenderer {
     "_instance": ShallowComponentWrapper {
       "_calledComponentWillUnmount": false,
-      "_compositeType": 0,
+      "_compositeType": 2,
       "_context": Object {},
-      "_currentElement": <TargetMenu
+      "_currentElement": <targetMenu
+        addType=""
+        addedByRegion={[Function]}
         hasTarget={false}
-        images={Object {}}
-        loadingMedia={false}
-        localizeStrings={[Function]}
-        newZone={[Function]}
-        uploadMedia={[Function]}
+        openModal={[Function]}
+        toggleAdd={[Function]}
 />,
       "_debugID": 1,
       "_hostContainerInfo": null,
       "_hostParent": null,
-      "_instance": TargetMenu {
+      "_instance": StatelessComponent {
         "_reactInternalInstance": [Circular],
         "context": Object {},
         "props": Object {
+          "addType": "",
+          "addedByRegion": [Function],
           "hasTarget": false,
-          "images": Object {},
-          "loadingMedia": false,
-          "localizeStrings": [Function],
-          "newZone": [Function],
-          "uploadMedia": [Function],
+          "openModal": [Function],
+          "toggleAdd": [Function],
         },
         "refs": Object {},
-        "state": Object {
-          "add": null,
-          "showModal": false,
-        },
+        "state": null,
         "updater": Object {
           "enqueueCallback": [Function],
           "enqueueCallbackInternal": [Function],
@@ -177,27 +154,18 @@ ShallowWrapper {
                     <addZoneDropdown
                               active={false}
                               addByImage={[Function]}
-                              addByRegion={[Function]}
+                              addByRegion={undefined}
                               text="Add Snap Zone"
                               toggle={[Function]}
                     />
                     <addZoneDropdown
                               active={false}
                               addByImage={[Function]}
-                              addByRegion={[Function]}
+                              addByRegion={undefined}
                               text="Add Drop Zone"
                               toggle={[Function]}
                     />
           </div>
-          <EditorUploadModal
-                    closeModal={[Function]}
-                    insertMedia={[Function]}
-                    isOpen={false}
-                    loading={false}
-                    media={Object {}}
-                    mediaType="img"
-                    uploadOnly={false}
-          />
 </div>,
         "_debugID": 2,
         "_renderedOutput": <div
@@ -224,27 +192,18 @@ ShallowWrapper {
                     <addZoneDropdown
                               active={false}
                               addByImage={[Function]}
-                              addByRegion={[Function]}
+                              addByRegion={undefined}
                               text="Add Snap Zone"
                               toggle={[Function]}
                     />
                     <addZoneDropdown
                               active={false}
                               addByImage={[Function]}
-                              addByRegion={[Function]}
+                              addByRegion={undefined}
                               text="Add Drop Zone"
                               toggle={[Function]}
                     />
           </div>
-          <EditorUploadModal
-                    closeModal={[Function]}
-                    insertMedia={[Function]}
-                    isOpen={false}
-                    loading={false}
-                    media={Object {}}
-                    mediaType="img"
-                    uploadOnly={false}
-          />
 </div>,
       },
       "_renderedNodeType": 0,
@@ -257,13 +216,12 @@ ShallowWrapper {
     "render": [Function],
   },
   "root": [Circular],
-  "unrendered": <TargetMenu
+  "unrendered": <targetMenu
+    addType=""
+    addedByRegion={[Function]}
     hasTarget={false}
-    images={Object {}}
-    loadingMedia={false}
-    localizeStrings={[Function]}
-    newZone={[Function]}
-    uploadMedia={[Function]}
+    openModal={[Function]}
+    toggleAdd={[Function]}
 />,
 }
 `;

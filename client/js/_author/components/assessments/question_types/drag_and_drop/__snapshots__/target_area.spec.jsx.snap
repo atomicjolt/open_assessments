@@ -11,36 +11,62 @@ ShallowWrapper {
   "node": <div
     className="au-c-drag-and-drop__target-area"
 >
-    <TargetMenu
+    <targetMenu
+        addByRegion={[Function]}
+        addType={null}
         hasTarget={false}
         images={Object {}}
         loadingMedia={false}
-        localizeStrings={[Function]}
         newZone={[Function]}
+        openModal={[Function]}
+        toggleAdd={[Function]}
         uploadMedia={[Function]}
     />
     <TargetZone
         editZone={[Function]}
+        openModal={[Function]}
         target={Object {}}
         zones={Object {}}
+    />
+    <EditorUploadModal
+        closeModal={[Function]}
+        insertMedia={[Function]}
+        isOpen={false}
+        loading={false}
+        media={Object {}}
+        mediaType="img"
+        uploadOnly={false}
     />
 </div>,
   "nodes": Array [
     <div
       className="au-c-drag-and-drop__target-area"
 >
-      <TargetMenu
+      <targetMenu
+            addByRegion={[Function]}
+            addType={null}
             hasTarget={false}
             images={Object {}}
             loadingMedia={false}
-            localizeStrings={[Function]}
             newZone={[Function]}
+            openModal={[Function]}
+            toggleAdd={[Function]}
             uploadMedia={[Function]}
       />
       <TargetZone
             editZone={[Function]}
+            openModal={[Function]}
             target={Object {}}
             zones={Object {}}
+      />
+      <EditorUploadModal
+            closeModal={[Function]}
+            insertMedia={[Function]}
+            isOpen={false}
+            loading={false}
+            media={Object {}}
+            mediaType="img"
+            uploadOnly={false}
       />
 </div>,
   ],
@@ -48,9 +74,9 @@ ShallowWrapper {
   "renderer": ReactShallowRenderer {
     "_instance": ShallowComponentWrapper {
       "_calledComponentWillUnmount": false,
-      "_compositeType": 2,
+      "_compositeType": 0,
       "_context": Object {},
-      "_currentElement": <targetArea
+      "_currentElement": <TargetArea
         editZone={[Function]}
         images={Object {}}
         loadingMedia={false}
@@ -65,7 +91,7 @@ ShallowWrapper {
       "_debugID": 1,
       "_hostContainerInfo": null,
       "_hostParent": null,
-      "_instance": StatelessComponent {
+      "_instance": TargetArea {
         "_reactInternalInstance": [Circular],
         "context": Object {},
         "props": Object {
@@ -79,7 +105,10 @@ ShallowWrapper {
           "uploadMedia": [Function],
         },
         "refs": Object {},
-        "state": null,
+        "state": Object {
+          "add": null,
+          "showModal": false,
+        },
         "updater": Object {
           "enqueueCallback": [Function],
           "enqueueCallbackInternal": [Function],
@@ -101,36 +130,62 @@ ShallowWrapper {
         "_currentElement": <div
           className="au-c-drag-and-drop__target-area"
 >
-          <TargetMenu
+          <targetMenu
+                    addByRegion={[Function]}
+                    addType={null}
                     hasTarget={false}
                     images={Object {}}
                     loadingMedia={false}
-                    localizeStrings={[Function]}
                     newZone={[Function]}
+                    openModal={[Function]}
+                    toggleAdd={[Function]}
                     uploadMedia={[Function]}
           />
           <TargetZone
                     editZone={[Function]}
+                    openModal={[Function]}
                     target={Object {}}
                     zones={Object {}}
+          />
+          <EditorUploadModal
+                    closeModal={[Function]}
+                    insertMedia={[Function]}
+                    isOpen={false}
+                    loading={false}
+                    media={Object {}}
+                    mediaType="img"
+                    uploadOnly={false}
           />
 </div>,
         "_debugID": 2,
         "_renderedOutput": <div
           className="au-c-drag-and-drop__target-area"
 >
-          <TargetMenu
+          <targetMenu
+                    addByRegion={[Function]}
+                    addType={null}
                     hasTarget={false}
                     images={Object {}}
                     loadingMedia={false}
-                    localizeStrings={[Function]}
                     newZone={[Function]}
+                    openModal={[Function]}
+                    toggleAdd={[Function]}
                     uploadMedia={[Function]}
           />
           <TargetZone
                     editZone={[Function]}
+                    openModal={[Function]}
                     target={Object {}}
                     zones={Object {}}
+          />
+          <EditorUploadModal
+                    closeModal={[Function]}
+                    insertMedia={[Function]}
+                    isOpen={false}
+                    loading={false}
+                    media={Object {}}
+                    mediaType="img"
+                    uploadOnly={false}
           />
 </div>,
       },
@@ -144,7 +199,7 @@ ShallowWrapper {
     "render": [Function],
   },
   "root": [Circular],
-  "unrendered": <targetArea
+  "unrendered": <TargetArea
     editZone={[Function]}
     images={Object {}}
     loadingMedia={false}

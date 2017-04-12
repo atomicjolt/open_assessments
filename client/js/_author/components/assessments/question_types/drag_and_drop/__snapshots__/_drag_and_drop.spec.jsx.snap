@@ -9,7 +9,7 @@ ShallowWrapper {
   },
   "length": 1,
   "node": <div>
-    <targetArea
+    <TargetArea
         editZone={[Function]}
         id=""
         images={Object {}}
@@ -58,7 +58,7 @@ ShallowWrapper {
 </div>,
   "nodes": Array [
     <div>
-      <targetArea
+      <TargetArea
             editZone={[Function]}
             id=""
             images={Object {}}
@@ -175,7 +175,7 @@ ShallowWrapper {
       "_pendingStateQueue": null,
       "_renderedComponent": NoopInternalComponent {
         "_currentElement": <div>
-          <targetArea
+          <TargetArea
                     editZone={[Function]}
                     id=""
                     images={Object {}}
@@ -224,7 +224,7 @@ ShallowWrapper {
 </div>,
         "_debugID": 2,
         "_renderedOutput": <div>
-          <targetArea
+          <TargetArea
                     editZone={[Function]}
                     id=""
                     images={Object {}}
