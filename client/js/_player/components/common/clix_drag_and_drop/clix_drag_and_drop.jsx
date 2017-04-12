@@ -6,6 +6,20 @@ import ClixDropZone         from './clix_drop_zone';
 import Droppable            from './droppable'; // eslint-disable-line import/no-named-as-default
 import CustomDragLayer      from '../custom_drag_layer'; // eslint-disable-line import/no-named-as-default
 
+// These don't really need to be class methods, but maybe they should be static?
+function isDrop(zone) {
+  return zone.dropBehaviorType.indexOf('%3Adrop%40') > -1;
+}
+
+function getZoneClass(zone) {
+  const classes = ['c-drag-zone'];
+
+  if (!isDrop(zone)) classes.push('c-drag-zone--snap');
+  if (zone.visible) classes.push('show-border');
+
+  return classes.join(' ');
+}
+
 export class ClixDragAndDrop extends React.Component {
   static propTypes = {
     answers: React.PropTypes.arrayOf(React.PropTypes.shape({})),
@@ -22,9 +36,8 @@ export class ClixDragAndDrop extends React.Component {
     const target = this.props.targets[targetIndex];
     const zone = this.props.zones[zoneIndex];
     const coordinateValues = [];
-    const isDrop = zone.dropBehaviorType.indexOf('%3Adrop%40') > -1;
 
-    if (isDrop) {
+    if (isDrop(zone)) {
       const targetBounds = this[`target_${targetIndex}`].getBoundingClientRect();
       coordinateValues.push(offset.x - targetBounds.left);
       coordinateValues.push(offset.y - targetBounds.top);
@@ -54,7 +67,7 @@ export class ClixDragAndDrop extends React.Component {
           zoneIndex: item.previousZoneIndex,
         }
       });
-    } else if (isDrop && zoneIndex === item.previousZoneIndex) {
+    } else if (isDrop(zone) && zoneIndex === item.previousZoneIndex) {
       /*
         This is an ugly way of updating position, but select answer toggles
         instead of updates, so if we dropped a droppable in the same zone it
@@ -82,19 +95,13 @@ export class ClixDragAndDrop extends React.Component {
   renderZones(targetIndex) {
     return _.map(this.props.zones, (zone, zoneIndex) => {
       const canDrop = (
-        !_.find(this.props.selectedAnswers, { zoneIndex }) ||
-        (zone.dropBehaviorType.indexOf('snap') === -1)
+        !_.find(this.props.selectedAnswers, { zoneIndex }) || isDrop(zone)
       );
-
-      const className = zone.dropBehaviorType.indexOf('%3Adrop%40') > -1
-        ? 'c-drag-zone c-drag-zone--drop'
-        : 'c-drag-zone c-drag-zone--snap';
-
 
       return (
         <ClixDropZone
           key={zoneIndex}
-          className={className}
+          className={getZoneClass(zone)}
           canDrop={canDrop}
           dropItem={(item, offset) => (
             this.selectAnswer(zoneIndex, item, targetIndex, offset)
