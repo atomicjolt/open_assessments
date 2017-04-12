@@ -1,7 +1,6 @@
 import React            from 'react';
 import ReactDOM         from 'react-dom';
 import { shallow }      from 'enzyme';
-import renderer         from 'react-test-renderer';
 import { DragAndDrop }  from './_drag_and_drop';
 
 jest.mock('../../../../../libs/assets.js');

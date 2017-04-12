@@ -1,7 +1,6 @@
 import React                    from 'react';
 import ReactDOM                 from 'react-dom';
 import { shallow, mount }       from 'enzyme';
-import renderer                 from 'react-test-renderer';
 import DragArea                 from './drag_area';
 import DropObject               from './drop_object';
 

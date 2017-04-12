@@ -1,7 +1,6 @@
 import React          from 'react';
 import ReactDOM       from 'react-dom';
 import { shallow }    from 'enzyme';
-import renderer       from 'react-test-renderer';
 import TargetMenu     from './target_menu';
 
 describe('target_menu component', () => {
@@ -14,8 +13,8 @@ describe('target_menu component', () => {
     uploadedMedia = false;
     zoneNew = false;
     props = {
-      uploadMedia: () => {uploadedMedia = true},
-      newZone: () => {zoneNew = true},
+      uploadMedia: () => { uploadedMedia = true },
+      newZone: () => { zoneNew = true },
       images: {},
       loadingMedia: false,
       hasTarget: false,
