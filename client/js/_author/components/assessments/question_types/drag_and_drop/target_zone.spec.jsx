@@ -1,5 +1,4 @@
 import React          from 'react';
-import ReactDOM       from 'react-dom';
 import { shallow }    from 'enzyme';
 import TargetZone     from './target_zone';
 

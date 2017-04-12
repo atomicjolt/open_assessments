@@ -1,5 +1,4 @@
 import React          from 'react';
-import ReactDOM       from 'react-dom';
 import { shallow }    from 'enzyme';
 import TargetMenu     from './target_menu';
 
@@ -13,7 +12,7 @@ describe('target_menu component', () => {
     uploadedMedia = false;
     zoneNew = false;
     props = {
-      uploadMedia: () => { uploadedMedia = true },
+      uploadMedia: () => { uploadedMedia = true; },
       newZone: () => { zoneNew = true },
       images: {},
       loadingMedia: false,

@@ -1,7 +1,5 @@
 import React            from 'react';
-import ReactDOM         from 'react-dom';
 import { shallow }      from 'enzyme';
-import renderer         from 'react-test-renderer';
 import ListItem         from './list_item';
 
 describe('bank_assessment component', () => {

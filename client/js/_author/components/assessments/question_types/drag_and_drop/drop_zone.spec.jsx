@@ -40,7 +40,7 @@ describe('drop zone component', () => {
       bottomPos: props.zone.yPos + props.zone.height,
       initialX: null,
       initialY: null,
-    }
+    };
     result = shallow(<DropZone {...props} />);
   });
 
@@ -62,18 +62,18 @@ describe('drop zone component', () => {
   });
 
   it('runs zonePosition', () => {
-    expect(result.instance().zonePosition()).toEqual(jasmine.objectContaining({position: "absolute"}));
+    expect(result.instance().zonePosition()).toEqual(jasmine.objectContaining({ position: "absolute" }));
   });
 
   it('handles logic in moveCorner', () => {
     let corner = 'topLeft';
     const x = 95;
     const y = 100;
-    result.instance().moveCorner(corner, x, y,);
+    result.instance().moveCorner(corner, x, y);
     expect(result.instance().state.leftPos).toBe(props.zone.xPos);
     expect(result.instance().state.topPos).toBe(props.zone.yPos);
     corner = 'topRight';
-    result.instance().moveCorner(corner, x, y,);
+    result.instance().moveCorner(corner, x, y);
     expect(result.instance().state.rightPos).toBe(props.zone.xPos + props.zone.width);
     expect(result.instance().state.topPos).toBe(props.zone.yPos);
     corner = 'bottomRight';

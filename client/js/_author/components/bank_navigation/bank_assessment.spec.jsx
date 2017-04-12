@@ -1,7 +1,5 @@
 import React            from 'react';
-import ReactDOM         from 'react-dom';
 import { shallow }      from 'enzyme';
-import renderer         from 'react-test-renderer';
 import BankAssessment   from './bank_assessment';
 
 describe('bank_assessment component', () => {
