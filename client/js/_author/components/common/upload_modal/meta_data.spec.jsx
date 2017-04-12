@@ -16,9 +16,7 @@ describe('Metadata', () => {
         altText: {
           text: 'salty alty text',
         },
-        description: {
-          text: 'description text',
-        },
+        description: 'description text',
         copyright: {
           text: 'copyright stuff',
         },
@@ -26,6 +24,7 @@ describe('Metadata', () => {
           text: 'silly license text',
         },
       },
+      updateMetadata: () => {},
     };
 
     result = TestUtils.renderIntoDocument(<Stub><Metadata {...props} /></Stub>);
