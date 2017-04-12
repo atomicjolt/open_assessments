@@ -1,6 +1,5 @@
 import React            from 'react';
 import TestUtils        from 'react-addons-test-utils';
-import _                from 'lodash';
 import PreviewContainer from './preview_container';
 
 describe('preview container component', () => {

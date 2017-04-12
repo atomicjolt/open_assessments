@@ -1,5 +1,6 @@
 import * as Assessment from '../../actions/qbank/assessments';
 import { DONE } from '../../constants/wrapper';
+
 const initialState = [];
 
 export default function preview(state = initialState, action) {

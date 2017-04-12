@@ -17,7 +17,6 @@ class ImageSequence extends React.Component {
       }),
     }).isRequired,
     updateItem: React.PropTypes.func,
-    activateChoice: React.PropTypes.func,
     localizeStrings: React.PropTypes.func.isRequired,
     save: React.PropTypes.func,
   };

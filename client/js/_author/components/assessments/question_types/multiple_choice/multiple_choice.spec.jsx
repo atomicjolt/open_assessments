@@ -2,7 +2,6 @@ import React            from 'react';
 import { shallow }      from 'enzyme';
 import MultipleChoice   from './multiple_choice';
 import AddOption        from './add_option';
-import Option           from './multiple_choice_option';
 
 describe('multiple choice component', () => {
   let props;
@@ -27,17 +26,17 @@ describe('multiple choice component', () => {
         question: {
           shuffle: true,
           choices: {
-            '15': {
+            15: {
               id: '15',
               order: 0,
               isCorrect: false,
             },
-            'bob': {
+            bob: {
               id: 'bob',
               order: 1,
               isCorrect: false,
             },
-            'taco': {
+            taco: {
               id: 'taco',
               order: 2,
               isCorrect: false,
@@ -64,7 +63,7 @@ describe('multiple choice component', () => {
 
   it('the props.updateChoice function', () => {
     expect(choiceUpdated).toBeFalsy();
-    result.instance().moveChoice(props.item.question.choices['bob']);
+    result.instance().moveChoice(props.item.question.choices.bob);
     expect(choiceUpdated).toBeTruthy();
   });
 

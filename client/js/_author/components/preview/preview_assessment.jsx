@@ -24,7 +24,6 @@ function select(state, props) {
 
 export class PreviewAssessment extends React.Component {
   static propTypes = {
-    params: React.PropTypes.object.isRequired,
     assessment: React.PropTypes.object.isRequired,
     settings: React.PropTypes.shape({
       assessmentPlayerUrl: React.PropTypes.string.isRequired,

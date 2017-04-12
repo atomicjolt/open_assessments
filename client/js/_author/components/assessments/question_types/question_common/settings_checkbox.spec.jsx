@@ -1,5 +1,4 @@
 import React              from 'react';
-import TestUtils          from 'react-addons-test-utils';
 import { shallow }        from 'enzyme';
 import SettingsCheckbox   from './settings_checkbox';
 

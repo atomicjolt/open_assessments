@@ -10,11 +10,6 @@ export default class Index extends React.Component {
     children: '',
   }
 
-  constructor() {
-    super();
-    this.state = {};
-  }
-
   render() {
     return (
       <div>

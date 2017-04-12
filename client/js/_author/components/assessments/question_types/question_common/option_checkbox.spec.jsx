@@ -14,7 +14,7 @@ describe('checkbox', () => {
       itemId: '',
       id: '7',
       isCorrect: false,
-      updateChoice: () => {choiceUpdated = true},
+      updateChoice: () => { choiceUpdated = true; },
     };
     result = TestUtils.renderIntoDocument(<Stub><OptionRadio {...props} /></Stub>);
   });

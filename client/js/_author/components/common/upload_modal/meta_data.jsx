@@ -12,6 +12,23 @@ export default class Metadata extends React.Component {
       description: React.PropTypes.string,
     }),
   };
+  static labelName(type) {
+    // TODO: modify this for regional language stuff
+    switch (type) {
+      case 'altText':
+        return 'Alt Text';
+      case 'license':
+        return 'License';
+      case 'copyright':
+        return 'Copyright';
+      case 'vttFile':
+        return 'vtt File';
+      case 'transcript':
+        return 'Transcript';
+      default:
+        return '';
+    }
+  }
 
   constructor() {
     super();
@@ -28,24 +45,6 @@ export default class Metadata extends React.Component {
     if (!this.state.baseScrollHeight) { this.setState({ baseScrollHeight: scrollHeight }); }
     const rows = Math.ceil((scrollHeight - (this.state.baseScrollHeight || scrollHeight)) / 17);
     this.textArea.rows = rows + minRows;
-  }
-
-  labelName(type) {
-    // TODO: modify this for regional language stuff
-    switch (type) {
-      case 'altText':
-        return 'Alt Text';
-      case 'license':
-        return 'License';
-      case 'copyright':
-        return 'Copyright';
-      case 'vttFile':
-        return 'vtt File';
-      case 'transcript':
-        return 'Transcript';
-      default:
-        return '';
-    }
   }
 
   autoPlayOption(metaData) {
@@ -85,7 +84,7 @@ export default class Metadata extends React.Component {
         {
           _.map(this.props.metadataTypes, type => (
             <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
-              <label htmlFor={`meta_upload_${type}`}>{this.labelName(type)}</label>
+              <label htmlFor={`meta_upload_${type}`}>{Metadata.labelName(type)}</label>
               <div className="au-c-input__contain">
                 <input
                   value={this.props.metaData[type] || ''}
@@ -105,7 +104,7 @@ export default class Metadata extends React.Component {
         {
           _.map(this.props.metadataFileTypes, type => (
             <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
-              <label htmlFor={`meta_upload_${type}`}>{this.labelName(type)}</label>
+              <label htmlFor={`meta_upload_${type}`}>{Metadata.labelName(type)}</label>
               <div className="au-c-input__contain">
                 <input
                   className=""
