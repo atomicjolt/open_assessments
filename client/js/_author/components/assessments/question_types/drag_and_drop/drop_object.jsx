@@ -10,7 +10,7 @@ function dropObject(props) {
 
   return (
     <div
-      className="au-o-quarter"
+      className="au-o-quarter au-set-active"
       onClick={() => setActive()}
     >
       <div
