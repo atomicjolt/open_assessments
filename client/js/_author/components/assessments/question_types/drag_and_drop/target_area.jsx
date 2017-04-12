@@ -70,7 +70,7 @@ export default class TargetArea extends React.Component {
           openModal={() => this.setState({ showModal: true })}
           addType={this.state.add}
           toggleAdd={type => this.setState({ add: this.state.add !== type ? type : null })}
-          addByReigion={() => this.addByRegion()}
+          addByRegion={() => this.addByRegion()}
         />
         <Zone
           target={this.props.question.target}
