@@ -5,11 +5,8 @@ import { AddImage }         from './add_image';
 describe('add image component', () => {
   let props;
   let result;
-  let calledFunc;
-  let calledFunction;
 
   beforeEach(() => {
-    calledFunc = false;
     props = {
       item: {
         bankId: '12',
@@ -26,9 +23,6 @@ describe('add image component', () => {
         question: {
           choices: {
             choice: {
-              id: '3',
-            },
-            choice: {
               id: '4',
             },
           },
@@ -41,7 +35,7 @@ describe('add image component', () => {
         },
         answers: [],
       },
-      uploadMedia: () => { calledFunc = true; },
+      uploadMedia: () => {},
       updateChoice: () => {},
       createChoice: () => {},
     };

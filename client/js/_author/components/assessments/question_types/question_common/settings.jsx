@@ -48,7 +48,6 @@ questionSettings.propTypes = {
   type: React.PropTypes.string,
   language: React.PropTypes.string,
   updateItem: React.PropTypes.func.isRequired,
-  makeReflection: React.PropTypes.func.isRequired,
   localizeStrings: React.PropTypes.func.isRequired,
 };
 

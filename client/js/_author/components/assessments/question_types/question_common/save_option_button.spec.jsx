@@ -1,6 +1,6 @@
 import React                from 'react';
-import SaveOptionButton     from './save_option_button';
 import { shallow }          from 'enzyme';
+import SaveOptionButton     from './save_option_button';
 
 describe('save option button component', () => {
   let props;
@@ -10,7 +10,7 @@ describe('save option button component', () => {
   beforeEach(() => {
     calledFunction = false;
     props = {
-      save: () => {calledFunction = true},
+      save: () => { calledFunction = true; },
     };
     result = shallow(<SaveOptionButton {...props} />);
   });

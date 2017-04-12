@@ -1,5 +1,4 @@
 import React from 'react';
-import appHistory from '../../../history';
 
 export default function PreviewButton(props) {
   const isPublished = props.assessment.isPublished;

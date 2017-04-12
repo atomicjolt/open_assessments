@@ -22,17 +22,6 @@ class MWSandbox extends React.Component {
     activeChoice: React.PropTypes.string,
   };
 
-  handleBlur(e) {
-    this.props.updateItem({
-      question:{
-        timeValue: {
-          hours: 0,
-          minutes: 0,
-          seconds: parseInt(e.target.value, 10)
-        }
-      }
-    });
-  }
 
   getChoices(choices) {
     const { id } = this.props.item;
@@ -50,6 +39,18 @@ class MWSandbox extends React.Component {
         isActive={this.props.isActive && choice.id === this.props.activeChoice}
       />
     ));
+  }
+
+  handleBlur(e) {
+    this.props.updateItem({
+      question:{
+        timeValue: {
+          hours: 0,
+          minutes: 0,
+          seconds: parseInt(e.target.value, 10)
+        }
+      }
+    });
   }
 
   render() {

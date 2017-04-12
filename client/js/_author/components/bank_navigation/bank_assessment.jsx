@@ -49,7 +49,7 @@ export default class BankAssessment extends React.Component {
     // we pass empty functions to list item so that you cant open an assessment while its
     // being deleted.
     if (this.state.deleting) {
-      return  (
+      return (
         <ListItem
           {...this.props}
           selectItem={() => {}}

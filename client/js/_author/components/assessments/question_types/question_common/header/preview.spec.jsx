@@ -1,6 +1,5 @@
 import React          from 'react';
 import { shallow }    from 'enzyme';
-import TestUtils      from 'react-addons-test-utils';
 import Preview        from './preview';
 
 describe('preview header component', () => {
@@ -11,7 +10,7 @@ describe('preview header component', () => {
   beforeEach(() => {
     calledFunc = false;
     props = {
-      togglePreview: () => {calledFunc = true},
+      togglePreview: () => { calledFunc = true; },
     };
     result = shallow(<Preview {...props} />);
   });

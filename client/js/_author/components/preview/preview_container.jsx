@@ -7,6 +7,7 @@ export default class PreviewContainer extends React.Component {
     getAssessmentOffered: React.PropTypes.func.isRequired,
     assessmentPlayerUrl: React.PropTypes.string.isRequired,
     apiUrl: React.PropTypes.string.isRequired,
+    unlockNext: React.PropTypes.string.isRequired,
   };
 
   static hasOffered(assessment) {

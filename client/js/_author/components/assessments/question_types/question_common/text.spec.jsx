@@ -1,6 +1,6 @@
 import React              from 'react';
-import QuestionText       from './text';
 import { shallow }        from 'enzyme';
+import QuestionText       from './text';
 import Editor             from '../../../common/oea_editor';
 
 describe('text component', () => {
@@ -13,7 +13,7 @@ describe('text component', () => {
       updateItem: () => {},
       bankId: '',
     };
-    result = shallow(<QuestionText {...props}/>);
+    result = shallow(<QuestionText {...props} />);
   });
 
   it('renders question text label', () => {

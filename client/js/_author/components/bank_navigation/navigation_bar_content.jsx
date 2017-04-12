@@ -15,7 +15,7 @@ function navigationBarContent(props) {
       {strings.new}
     </button>
   ) : null;
- 
+
   return (
     <div className="au-c-header-bottom">
       <div className="au-c-header-bottom__left">

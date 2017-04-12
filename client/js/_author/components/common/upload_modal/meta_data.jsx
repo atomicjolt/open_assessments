@@ -13,6 +13,23 @@ export default class Metadata extends React.Component {
       description: React.PropTypes.string,
     }),
   };
+  static labelName(type) {
+    // TODO: modify this for regional language stuff
+    switch (type) {
+      case 'altText':
+        return 'Alt Text';
+      case 'license':
+        return 'License';
+      case 'copyright':
+        return 'Copyright';
+      case 'vttFile':
+        return 'vtt File';
+      case 'transcript':
+        return 'Transcript';
+      default:
+        return '';
+    }
+  }
 
   constructor() {
     super();
@@ -29,24 +46,6 @@ export default class Metadata extends React.Component {
     if (!this.state.baseScrollHeight) { this.setState({ baseScrollHeight: scrollHeight }); }
     const rows = Math.ceil((scrollHeight - (this.state.baseScrollHeight || scrollHeight)) / 17);
     this.textArea.rows = rows + minRows;
-  }
-
-  labelName(type) {
-    // TODO: modify this for regional language stuff
-    switch (type) {
-      case 'altText':
-        return 'Alt Text';
-      case 'license':
-        return 'License';
-      case 'copyright':
-        return 'Copyright';
-      case 'vttFile':
-        return 'vtt File';
-      case 'transcript':
-        return 'Transcript';
-      default:
-        return '';
-    }
   }
 
   autoPlayOption(metaData) {

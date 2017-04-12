@@ -60,6 +60,12 @@ export default class EditorUploadModal extends React.Component {
     };
   }
 
+  setters(key, val) {
+    const languageMediaData = this.state.languageMediaData;
+    languageMediaData[this.state.language][key] = val;
+    this.setState({ languageMediaData });
+  }
+
   addMedia() {
     const metaData = {
       ...this.state.languageMediaData,
