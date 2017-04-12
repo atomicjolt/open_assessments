@@ -17,6 +17,15 @@
   }
 }
 
+.au-c-drag-and-drop__target-image-placeholder {
+  width: 100%;
+  text-align: center;
+  height: 200px;
+  line-height: 200px;
+  cursor: pointer;
+  color: $text-alt;
+  @include semi-bold;
+}
 
 .au-c-drop-zone{
   width: 20rem;
