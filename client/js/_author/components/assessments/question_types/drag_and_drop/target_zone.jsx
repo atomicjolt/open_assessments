@@ -26,7 +26,6 @@ export default class TargetZone extends React.Component {
 
   render() {
     const { target, zones, editZone } = this.props;
-    // TODO: a placeholder for no target image?
     return (
       <div
         className="au-c-drag-and-drop__target-image"
