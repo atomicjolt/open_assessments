@@ -15,12 +15,11 @@ ShallowWrapper {
         addByRegion={[Function]}
         addType={null}
         hasTarget={false}
-        images={Object {}}
-        loadingMedia={false}
-        newZone={[Function]}
+        id={undefined}
         openModal={[Function]}
         toggleAdd={[Function]}
-        uploadMedia={[Function]}
+        toggleVisible={undefined}
+        visibleZones={undefined}
     />
     <TargetZone
         editZone={[Function]}
@@ -46,12 +45,11 @@ ShallowWrapper {
             addByRegion={[Function]}
             addType={null}
             hasTarget={false}
-            images={Object {}}
-            loadingMedia={false}
-            newZone={[Function]}
+            id={undefined}
             openModal={[Function]}
             toggleAdd={[Function]}
-            uploadMedia={[Function]}
+            toggleVisible={undefined}
+            visibleZones={undefined}
       />
       <TargetZone
             editZone={[Function]}
@@ -134,12 +132,11 @@ ShallowWrapper {
                     addByRegion={[Function]}
                     addType={null}
                     hasTarget={false}
-                    images={Object {}}
-                    loadingMedia={false}
-                    newZone={[Function]}
+                    id={undefined}
                     openModal={[Function]}
                     toggleAdd={[Function]}
-                    uploadMedia={[Function]}
+                    toggleVisible={undefined}
+                    visibleZones={undefined}
           />
           <TargetZone
                     editZone={[Function]}
@@ -165,12 +162,11 @@ ShallowWrapper {
                     addByRegion={[Function]}
                     addType={null}
                     hasTarget={false}
-                    images={Object {}}
-                    loadingMedia={false}
-                    newZone={[Function]}
+                    id={undefined}
                     openModal={[Function]}
                     toggleAdd={[Function]}
-                    uploadMedia={[Function]}
+                    toggleVisible={undefined}
+                    visibleZones={undefined}
           />
           <TargetZone
                     editZone={[Function]}
