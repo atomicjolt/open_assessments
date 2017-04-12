@@ -17,6 +17,7 @@ function addZoneDropdown(props) {
         <ul className={`au-c-button-dropdown__dropdown ${props.active ? 'is-active' : ''}`}>
           <li>
             <button
+              id={`reg_${props.text}`}
               className="au-c-btn au-c-btn--sm au-c-btn--dropdown-item"
               onClick={props.addByRegion}
             >
@@ -26,6 +27,7 @@ function addZoneDropdown(props) {
           </li>
           <li>
             <button
+              id={`image_${props.text}`}
               className="au-c-btn au-c-btn--sm au-c-btn--dropdown-item"
               onClick={props.addByImage}
             >
