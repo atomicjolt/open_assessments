@@ -108,12 +108,6 @@ export default class EditorUploadModal extends React.Component {
     return ['altText', 'license', 'copyright'];
   }
 
-  setters(key, val) {
-    const languageMediaData = this.state.languageMediaData;
-    languageMediaData[this.state.language][key] = val;
-    this.setState({ languageMediaData });
-  }
-
   resetModal() {
     this.setState({ uploadedMedia: null });
     this.setState({ languageMediaData: initLanguageMediaData() });
