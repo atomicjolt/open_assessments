@@ -1,6 +1,6 @@
 import React      from 'react';
 import AddZone    from './add_zone_dropdown';
-import localize           from '../../../../locales/localize';
+import localize   from '../../../../locales/localize';
 
 export function targetMenu(props) {
   const strings = props.localizeStrings('targetMenu');

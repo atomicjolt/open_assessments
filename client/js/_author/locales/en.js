@@ -177,5 +177,8 @@ export default {
       addDrop: 'Add Drop Zone',
       addImage: 'Add Image',
     },
+    targetPlaceholder: {
+      addImg: 'Add Target Image',
+    },
   }
 };

@@ -1,15 +1,20 @@
 import React    from 'react';
+import localize from '../../../../locales/localize';
 
-export default function targetPlaceholder(props) {
+function targetPlaceholder(props) {
+  const strings = props.localizeStrings('targetPlaceholder');
 
   // TODO: localization
   return (
     <div className="au-c-drag-and-drop__target-image-placeholder" onClick={props.onClick}>
-      Add Target Image
+      {strings.addImg}
     </div>
   );
 }
 
 targetPlaceholder.propTypes = {
   onClick: React.PropTypes.func.isRequired,
+  localizeStrings: React.PropTypes.func.isRequired,
 };
+
+export default localize(targetPlaceholder);
