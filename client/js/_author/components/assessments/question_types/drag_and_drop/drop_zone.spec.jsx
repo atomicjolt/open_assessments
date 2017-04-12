@@ -61,7 +61,7 @@ describe('drop zone component', () => {
   });
 
   it('runs zonePosition', () => {
-    expect(result.instance().zonePosition()).toEqual(jasmine.objectContaining({ position: "absolute" }));
+    expect(result.instance().zonePosition()).toEqual(jasmine.objectContaining({ position: 'absolute' }));
   });
 
   it('handles logic in moveCorner', () => {
