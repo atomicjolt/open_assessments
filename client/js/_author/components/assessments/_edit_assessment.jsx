@@ -51,6 +51,8 @@ export class EditAssessment extends React.Component {
     getAssessmentItems: React.PropTypes.func.isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
+    togglePublishAssessment: React.PropTypes.func.isRequired,
     items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
     deleteAssessmentItem: React.PropTypes.func,
     isPublished: React.PropTypes.bool.isRequired,
@@ -64,13 +66,14 @@ export class EditAssessment extends React.Component {
     );
   }
 
-  updateAssessment(newFields) {
-    const updated = { id: this.props.params.id, ...newFields };
-    this.props.updateAssessment(this.props.params.bankId, updated);
-  }
 
-  updateItem(item) {
-    this.props.updateItem(this.props.params.bankId, item);
+  getBankChildren(bankId) {
+    const flatBanks = {};
+    const banks = this.flattenBanks(this.props.banks, flatBanks);
+    this.props.updatePath(bankId, banks[bankId], true);
+    this.props.getAssessments(bankId);
+    this.props.getItems(bankId);
+    hashHistory.push('/');
   }
 
   deleteAssessmentItem(itemId) {
@@ -110,22 +113,21 @@ export class EditAssessment extends React.Component {
 
   flattenBanks(banks, flatBanks) {
     _.forEach(banks, (bank) => {
-      flatBanks[bank.id] = bank;
+      flatBanks[bank.id] = bank; // eslint-disable-line no-param-reassign
       if (!_.isEmpty(bank.childNodes)) {
-        return this.flattenBanks(bank.childNodes, flatBanks);
+        this.flattenBanks(bank.childNodes, flatBanks);
       }
     });
     return flatBanks;
   }
 
-  getBankChildren(bankId) {
-    let flatBanks = {};
-    const banks = this.flattenBanks(this.props.banks, flatBanks);
+  updateItem(item) {
+    this.props.updateItem(this.props.params.bankId, item);
+  }
 
-    this.props.updatePath(bankId, banks[bankId], true);
-    this.props.getAssessments(bankId);
-    this.props.getItems(bankId);
-    hashHistory.push('/');
+  updateAssessment(newFields) {
+    const updated = { id: this.props.params.id, ...newFields };
+    this.props.updateAssessment(this.props.params.bankId, updated);
   }
 
   render() {

@@ -30,11 +30,11 @@ export default class SearchMedia extends React.Component {
   searchMedia() {
     const { searchText } = this.state;
     if (searchText) {
-      return _.filter(this.props.media, (item) => {
-        return _.includes(item.description.text, searchText)
+      return _.filter(this.props.media, item => (
+        _.includes(item.description.text, searchText)
         || _.includes(item.altText.text, searchText)
-        || _.includes(item.license.text, searchText);
-      });
+        || _.includes(item.license.text, searchText)
+      ));
     }
     return this.props.media;
   }

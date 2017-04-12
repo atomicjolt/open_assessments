@@ -7,7 +7,6 @@ describe('Multiple Choice Option', () => {
   let result;
   let props;
   let updatedChoice = {};
-  let moveChoice = '';
 
   beforeEach(() => {
     props = {
@@ -15,10 +14,10 @@ describe('Multiple Choice Option', () => {
       key: 'assessmentChoice_1',
       updateChoice: (attr) => { updatedChoice = attr; },
       text: 'This is dummy text',
-      deleteChoice: (e) => { moveChoice = e.target.innerText; },
+      deleteChoice: () => {},
       shuffle: false,
-      moveUp: (e) => { moveChoice = e.target.innerText; },
-      moveDown: (e) => { moveChoice = e.target.innerText; },
+      moveUp: () => {},
+      moveDown: () => {},
       isActive: true,
       itemType: '',
       bankId: '',

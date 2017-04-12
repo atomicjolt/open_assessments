@@ -59,6 +59,13 @@ export class BankNavigator extends React.Component {
     this.props.getItems(bankId);
   }
 
+  getEmbedCode(assessment) {
+    const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
+    if (_.isEmpty(assessOffered)) {
+      this.props.getAssessmentOffered(assessment.bankId, assessment.id);
+    }
+  }
+
   sortBy(type) {
     const sortVal = this.state[type];
     if (!sortVal) {
@@ -79,7 +86,11 @@ export class BankNavigator extends React.Component {
       sortedBanks = _.orderBy(sortedBanks, bank => _.lowerCase(bank.displayName.text), sortName);
     }
     if (sortPublished) {
-      sortedBanks = _.orderBy(sortedBanks, bank => _.includes(bank.assignedBankIds, this.props.settings.publishedBankId), sortPublished);
+      sortedBanks = _.orderBy(
+        sortedBanks,
+        bank => _.includes(bank.assignedBankIds, this.props.settings.publishedBankId),
+        sortPublished
+      );
     }
     return sortedBanks;
   }
@@ -88,12 +99,6 @@ export class BankNavigator extends React.Component {
     this.props.deleteAssessment(bankId, assessmentId);
   }
 
-  getEmbedCode(assessment) {
-    const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
-    if (_.isEmpty(assessOffered)) {
-      this.props.getAssessmentOffered(assessment.bankId, assessment.id);
-    }
-  }
 
   render() {
     const { createAssessment, currentBankId, updatePath, settings } = this.props;
