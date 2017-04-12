@@ -149,13 +149,13 @@ export class Question extends React.Component {
   }
 
   changeType(type) {
-    // The choices: true is to make sure the deserializer updates the choice and answer data
+    // The choices: {} is to make sure the deserializer updates the choice and answer data
     this.props.updateItem(this.props.bankId, {
       id: this.props.item.id,
       type,
       question: {
         type,
-        choices: true,
+        choices: {},
       }
     });
   }

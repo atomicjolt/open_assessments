@@ -9,7 +9,7 @@ describe('reorder question header', () => {
   let props;
   let called;
 
-  ReorderHeader.prototype.componentDidMount = function(){};
+  ReorderHeader.prototype.componentDidMount = function componentDidMount() {};
 
   beforeEach(() => {
     called = false;

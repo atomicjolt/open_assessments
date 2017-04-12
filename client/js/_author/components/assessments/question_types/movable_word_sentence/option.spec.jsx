@@ -1,7 +1,6 @@
 import React          from 'react';
 import { shallow }    from 'enzyme';
 import Option         from './option';
-import _              from 'lodash';
 
 describe('option component', () => {
   let props;
@@ -17,9 +16,9 @@ describe('option component', () => {
       answerOrder: 1,
       itemCount: 3,
       isActive: false,
-      selectChoice: () => {calledFunc = true},
-      updateChoice: () => {calledFunc = true},
-      deleteChoice: () => {calledFunc = true},
+      selectChoice: () => { calledFunc = true; },
+      updateChoice: () => { calledFunc = true; },
+      deleteChoice: () => { calledFunc = true; },
     };
     result = shallow(<Option {...props} />);
   });

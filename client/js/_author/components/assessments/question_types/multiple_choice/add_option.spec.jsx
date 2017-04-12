@@ -11,7 +11,7 @@ describe('addOption component', () => {
   beforeEach(() => {
     choiceUpdated = false;
     props = {
-      createChoice: () => {choiceUpdated = true},
+      createChoice: () => { choiceUpdated = true; },
     };
     result = TestUtils.renderIntoDocument(<Stub><AddOption {...props} /></Stub>);
   });

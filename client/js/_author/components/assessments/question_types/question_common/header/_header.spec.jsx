@@ -1,6 +1,5 @@
 import React         from 'react';
 import { shallow }   from 'enzyme';
-import _             from 'lodash';
 import Header        from './_header';
 import Reorder       from './reorder';
 import DefaultHeader from './default';
@@ -31,7 +30,7 @@ describe('header component', () => {
 
   it('renders DefaultHeader when props.reorderActive is false', () => {
     const defaultHeader = result.find(DefaultHeader);
-    const reorderHeader = result.find(Reorder)
+    const reorderHeader = result.find(Reorder);
     expect(defaultHeader.length).toBe(1);
     expect(reorderHeader).toBeDefined();
   });

@@ -4,10 +4,11 @@ import ReactModal  from 'react-modal';
 import Modal       from './editor_upload_modal';
 
 describe('editor upload modal', () => {
-  let result, props, functionCalled, fileUploaded;
+  let result;
+  let props;
+  let functionCalled;
   beforeEach(() => {
     functionCalled = false;
-    fileUploaded = null;
     props = {
       id: '7',
       isOpen: true,
@@ -15,7 +16,7 @@ describe('editor upload modal', () => {
       mediaType: 'img',
       mediaName: 'filename.jpg',
       insertMedia: () => { functionCalled = true; },
-      uploadMedia: (file) => { fileUploaded = file; },
+      uploadMedia: () => {},
       inProgress: false,
     };
     result = shallow(<Modal {...props} />);

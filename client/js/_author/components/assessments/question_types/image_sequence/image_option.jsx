@@ -60,7 +60,6 @@ imageOption.propTypes = {
   updateChoice: React.PropTypes.func,
   activateChoice: React.PropTypes.func,
   id: React.PropTypes.string,
-  activeChoice: React.PropTypes.string,
   text: React.PropTypes.string,
   labelText: React.PropTypes.string,
   order: React.PropTypes.number,

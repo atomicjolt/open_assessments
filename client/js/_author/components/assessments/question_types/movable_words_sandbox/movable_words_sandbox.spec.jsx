@@ -1,6 +1,5 @@
 import React            from 'react';
 import { shallow }      from 'enzyme';
-import TestUtils        from 'react-addons-test-utils';
 import MovableWords    from './movable_words_sandbox';
 import AudioLimit       from '../question_common/audio_limit';
 import Feedback         from '../question_common/single_feedback';
@@ -36,12 +35,12 @@ describe('the movable words sandbox component', () => {
           },
         },
       },
-      updateItem: () => {calledFunc = true},
+      updateItem: () => { calledFunc = true; },
       createChoice: () => {},
       updateChoice: () => {},
       deleteChoice: () => {},
       selectChoice: () => {},
-      blurOptions: () => {calledFunc = true},
+      blurOptions: () => { calledFunc = true; },
       isActive: false,
       activeChoice: '',
       save: () => {},
@@ -68,7 +67,7 @@ describe('the movable words sandbox component', () => {
 
   it('renders AddOption', () => {
     expect(result.find(AddOption)).toBeDefined();
-  })
+  });
 
   it('executes blurOptions', () => {
     expect(calledFunc).toBeFalsy();

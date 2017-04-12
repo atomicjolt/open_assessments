@@ -37,12 +37,12 @@ describe('question component', () => {
       topItem: false,
       bottomItem: false,
       reorderActive: false,
-      updateItem: () => {itemUpdated = true},
+      updateItem: () => { itemUpdated = true; },
       updateChoice: () => {},
       activateItem: () => {},
       toggleReorder: () => {},
       deleteAssessmentItem: () => {},
-      moveItem: () => {movedUp = true},
+      moveItem: () => { movedUp = true; },
       uploadedAssets: () => {},
       makeReflection: () => {},
       createChoice: () => {},
@@ -65,7 +65,7 @@ describe('question component', () => {
 
   it('handles updateItem', () => {
     expect(itemUpdated).toBeFalsy();
-    result.instance().updateItem({ text: "asdf" });
+    result.instance().updateItem({ text: 'asdf' });
     expect(itemUpdated).toBeTruthy();
   });
 

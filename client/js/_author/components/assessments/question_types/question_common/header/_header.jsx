@@ -6,7 +6,6 @@ import PreviewHeader    from './preview';
 import localize         from '../../../../../locales/localize';
 
 function questionHeader(props) {
-  const strings = props.localizeStrings('questionHeader');
   // i think typeName is already localized by the time it gets here.
   const typeName = _.words(_.upperFirst(props.type)).join(' ');
 
@@ -34,7 +33,6 @@ questionHeader.propTypes = {
   type: React.PropTypes.string,
   index: React.PropTypes.number,
   preview: React.PropTypes.bool,
-  localizeStrings: React.PropTypes.func.isRequired
 };
 
 export default localize(questionHeader);

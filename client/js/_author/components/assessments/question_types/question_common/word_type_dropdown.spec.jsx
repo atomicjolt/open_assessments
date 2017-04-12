@@ -12,7 +12,7 @@ describe('word_type_dropdown component', () => {
     props = {
       id: '',
       wordType: 'is-ordered',
-      updateChoice: () => {calledFunc = true},
+      updateChoice: () => { calledFunc = true; },
     };
     result = shallow(<WordTypeDropdown {...props} />);
   });

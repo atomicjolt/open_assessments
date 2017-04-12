@@ -61,7 +61,11 @@ export default function banks(state = initialState, action) {
     case 'CREATE_ASSESSMENT_OFFERED_DONE':
     case 'GET_ASSESSMENT_OFFERED_DONE': {
       const newState = _.cloneDeep(state);
-      newState[action.original.bankId][action.original.assessmentId]['assessmentOffered'] = action.payload;
+      newState[
+        action.original.bankId
+      ][
+        action.original.assessmentId
+      ].assessmentOffered = action.payload;
       return newState;
     }
 
