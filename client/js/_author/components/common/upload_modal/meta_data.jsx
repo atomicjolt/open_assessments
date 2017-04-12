@@ -1,8 +1,10 @@
 import React      from 'react';
 import _          from 'lodash';
+import Checkbox   from '../../assessments/question_types/question_common/option_checkbox';
 
 export default class Metadata extends React.Component {
   static propTypes = {
+    mediaType: React.PropTypes.string,
     updateMetadata: React.PropTypes.func.isRequired,
     metadataTypes: React.PropTypes.arrayOf(React.PropTypes.string),
     metadataFileTypes: React.PropTypes.arrayOf(React.PropTypes.string),
@@ -46,7 +48,17 @@ export default class Metadata extends React.Component {
     }
   }
 
+  autoPlayOption(metaData) {
+    return (<Checkbox
+      id={'uniqueId'}
+      itemId={'uniqueItemId'}
+      isCorrect={metaData.autoPlay}
+      updateChoice={e => this.props.updateMetadata('autoPlay', e.isCorrect)}
+    />);
+  }
+
   render() {
+    const { mediaType, metaData } = this.props;
     return (
       <div>
         <div className="au-c-input au-c-input-label--left">
@@ -88,6 +100,8 @@ export default class Metadata extends React.Component {
             </div>
           ))
         }
+
+        { mediaType !== 'img' ? <div>Auto-play { this.autoPlayOption(metaData) }</div> : null }
         {
           _.map(this.props.metadataFileTypes, type => (
             <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
