@@ -153,21 +153,21 @@ export default class EditorUploadModal extends React.Component {
 
           </div>
 
-          <div className="au-o-flex-center  au-u-mb-md au-u-mt-md">
-            <span className="au-c-wysiwyg-media__label">Upload {tagNameMap[this.props.mediaType]}</span>
-            <div className="au-c-wysiwyg-media__source-text" tabIndex="0">
-              {name}
-            </div>
-            <div className="au-c-input--file  au-u-ml-sm">
+          <div className="au-u-mb-md au-u-mt-md">
+            <label htmlFor="fileid" className="au-c-input--file au-o-flex-center">
+              <span className="au-c-wysiwyg-media__label">Upload {tagNameMap[this.props.mediaType]}</span>
+              <div className="au-c-wysiwyg-media__source-text" tabIndex="0">
+                {name}
+              </div>
               <input
                 onChange={e => this.setState({ uploadedMedia: e.target.files[0] })}
                 id="fileid"
                 type="file"
               />
-              <label htmlFor="fileid">
+              <div className="au-c-wysiwyg-media__upload">
                 <i className="material-icons">find_in_page</i>
-              </label>
-            </div>
+              </div>
+            </label>
           </div>
           {
             this.state.uploadedMedia ? <Metadata
