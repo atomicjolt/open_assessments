@@ -1,8 +1,8 @@
-import _              from 'lodash';
-import baseSerializer from './base';
-import { scrub }      from '../../serializer_utils';
-import genusTypes     from '../../../../constants/genus_types';
-import guid           from '../../../../utils/guid';
+import _                        from 'lodash';
+import baseSerializer           from './base';
+import { scrub, languageText }  from '../../serializer_utils';
+import genusTypes               from '../../../../constants/genus_types';
+import guid                     from '../../../../utils/guid';
 
 function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
@@ -44,13 +44,13 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
 }
 
 function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
-  correctFeedback, incorrectFeedback
+  correctFeedback, incorrectFeedback, language
 ) {
   const answers = [];
   let correctAnswer = {
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.rightAnswer }), 'id'),
     genusTypeId: genusTypes.answer.rightAnswer,
-    feedback: _.get(correctFeedback, 'text'),
+    feedback: languageText(_.get(correctFeedback, 'text'), language),
     type: genusTypes.answer.multipleAnswer,
     choiceIds: [],
     fileIds: _.get(correctFeedback, 'fileIds'),
@@ -58,7 +58,7 @@ function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
   let incorrectAnswer = {
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.wrongAnswer }), 'id'),
     genusTypeId: genusTypes.answer.wrongAnswer,
-    feedback: _.get(incorrectFeedback, 'text'),
+    feedback: languageText(_.get(incorrectFeedback, 'text'), language),
     type: genusTypes.answer.multipleAnswer,
     choiceIds: [],
     fileIds: _.get(incorrectFeedback, 'fileIds'),
@@ -107,7 +107,8 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
           question.choices,
           _.get(originalItem, 'originalItem.answers'),
           _.get(question, 'correctFeedback'),
-          _.get(question, 'incorrectFeedback')
+          _.get(question, 'incorrectFeedback'),
+          newItemAttributes.language
         );
       }
     }

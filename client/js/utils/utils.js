@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const currentTime = () => new Date().getTime();
 
 export const makeId = () => {
@@ -31,4 +33,9 @@ export const getLocation = (href) => {
   var l = document.createElement("a");
   l.href = href;
   return l;
+};
+
+export const languageText = (texts, language) => {
+  const chosenLanguage = _.find(texts, { languageTypeId: language });
+  return _.get(chosenLanguage, 'text', '');
 };

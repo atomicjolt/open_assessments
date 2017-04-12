@@ -20,6 +20,7 @@ function deserializeChoices(choices, answers) {
         newChoices[choice.id] = {
           ...newChoices[choice.id],
           feedback: _.get(answer, 'feedback.text'),
+          feedbacks: _.get(answer, 'feedbacks'),
           isCorrect: answer.genusTypeId === genusTypes.answer.rightAnswer,
           answerId: answer.id,
           fileIds: {

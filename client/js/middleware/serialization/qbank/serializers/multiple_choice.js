@@ -1,6 +1,6 @@
 import _                         from 'lodash';
 import baseSerializer            from './base';
-import { scrub }                 from '../../serializer_utils';
+import { scrub, languageText }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
@@ -48,7 +48,7 @@ function correctAnswer(correctId, choiceId, wasCorrect) {
   return correctId === choiceId ? genusTypes.answer.rightAnswer : genusTypes.answer.wrongAnswer;
 }
 
-function serializeAnswers(originalChoices, newChoiceAttributes) {
+function serializeAnswers(originalChoices, newChoiceAttributes, language) {
   let correctId = null;
   _.forEach(newChoiceAttributes, (choice, key) => {
     if (_.get(choice, 'isCorrect')) { correctId = key; }
@@ -56,10 +56,12 @@ function serializeAnswers(originalChoices, newChoiceAttributes) {
 
   return _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
+    const feedbackText = _.get(updateValues, 'feedback') || choice.feedback;
+
     return scrub({
       id: choice.answerId,
       genusTypeId: correctAnswer(correctId, choice.id, choice.isCorrect),
-      feedback: _.get(updateValues, 'feedback') || choice.feedback,
+      feedback: languageText(feedbackText, language),
       type: genusTypes.answer.multipleChoice,
       choiceIds: [choice.id],
       fileIds: _.get(updateValues, 'fileIds'),
@@ -86,7 +88,11 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
       if (newItemAttributes.type && originalItem.type !== newItemAttributes.type) {
         newItem.answers = killAnswers(_.get(originalItem, 'originalItem.answers'));
       } else {
-        newItem.answers = serializeAnswers(originalItem.question.choices, question.choices);
+        newItem.answers = serializeAnswers(
+          originalItem.question.choices,
+          question.choices,
+          newItemAttributes.language
+        );
       }
     }
   }

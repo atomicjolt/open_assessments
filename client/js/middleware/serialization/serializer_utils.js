@@ -1,6 +1,8 @@
 import _    from 'lodash';
 import $    from 'jquery';
-import genusTypes from '../../constants/genus_types';
+
+import genusTypes                 from '../../constants/genus_types';
+import { languages, getLanguage } from '../../constants/language_types';
 
 export function scrub(item, protectedKeys) {
   if (_.isPlainObject(item)) {
@@ -59,4 +61,14 @@ export function getImageUrl(text) {
     return $(img).attr('src');
   }
   return src;
+}
+
+export function languageText(text, language) {
+  if (!text) return null;
+  return {
+    text,
+    languageTypeId: language,
+    formatTypeId: languages.formatTypeId,
+    scriptTypeId: languages.scriptTypeId[getLanguage(language)]
+  };
 }
