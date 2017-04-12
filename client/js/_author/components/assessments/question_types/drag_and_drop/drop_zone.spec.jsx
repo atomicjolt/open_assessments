@@ -15,8 +15,8 @@ describe('drop zone component', () => {
         id: '7',
         xPos: 7,
         yPos: 90,
-        width: '940px',
-        height: '200px',
+        width: 949,
+        height: 200,
         initialX: null,
         initialY: null,
       },
@@ -65,10 +65,19 @@ describe('drop zone component', () => {
   });
 
   it('handles logic in moveCorner', () => {
-    const corner = 'topLeft';
+    let corner = 'topLeft';
     const x = 95;
     const y = 100;
     result.instance().moveCorner(corner, x, y,);
-    expect(result.instance().state.topPos).toBe(90);
+    expect(result.instance().state.leftPos).toBe(props.zone.xPos);
+    corner = 'topRight';
+    result.instance().moveCorner(corner, x, y,);
+    expect(result.instance().state.rightPos).toBe(props.zone.xPos + props.zone.width);
+    corner = 'bottomRight';
+    result.instance().moveCorner(corner, x, y);
+    expect(result.instance().state.bottomPos).toBe(props.zone.yPos + props.zone.height);
+    corner = 'bottomRight';
+    result.instance().moveCorner(corner, x, y);
+    expect(result.instance().state.topPos).toBe(props.zone.yPos);
   });
 });
