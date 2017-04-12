@@ -15,8 +15,6 @@ ShallowWrapper {
         <tr>
             <td>
                 <div>
-                    There's nothing here.
-                    <br />
                     Add a new assessment to get started.
                 </div>
             </td>
@@ -31,8 +29,6 @@ ShallowWrapper {
             <tr>
                   <td>
                         <div>
-                              There's nothing here.
-                              <br />
                               Add a new assessment to get started.
                         </div>
                   </td>
@@ -81,8 +77,6 @@ ShallowWrapper {
                     <tr>
                               <td>
                                         <div>
-                                                  There's nothing here.
-                                                  <br />
                                                   Add a new assessment to get started.
                                         </div>
                               </td>
@@ -97,8 +91,6 @@ ShallowWrapper {
                     <tr>
                               <td>
                                         <div>
-                                                  There's nothing here.
-                                                  <br />
                                                   Add a new assessment to get started.
                                         </div>
                               </td>

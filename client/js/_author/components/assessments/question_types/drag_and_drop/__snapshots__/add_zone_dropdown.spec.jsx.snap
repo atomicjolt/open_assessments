@@ -9,11 +9,11 @@ ShallowWrapper {
   },
   "length": 1,
   "node": <ul
-    className="au-c-button-dropdown u-ml-sm"
+    className="au-c-button-dropdown au-u-ml-sm"
 >
     <li>
         <button
-            className="au-c-btn au-c-btn--sm au-c-btn--dropdown au-u-ml-sm"
+            className="au-c-btn au-c-btn--sm au-c-btn--dropdown"
             onClick={[Function]}
         >
             Spec
@@ -59,11 +59,11 @@ ShallowWrapper {
 </ul>,
   "nodes": Array [
     <ul
-      className="au-c-button-dropdown u-ml-sm"
+      className="au-c-button-dropdown au-u-ml-sm"
 >
       <li>
             <button
-                  className="au-c-btn au-c-btn--sm au-c-btn--dropdown au-u-ml-sm"
+                  className="au-c-btn au-c-btn--sm au-c-btn--dropdown"
                   onClick={[Function]}
             >
                   Spec
@@ -155,11 +155,11 @@ ShallowWrapper {
       "_pendingStateQueue": null,
       "_renderedComponent": NoopInternalComponent {
         "_currentElement": <ul
-          className="au-c-button-dropdown u-ml-sm"
+          className="au-c-button-dropdown au-u-ml-sm"
 >
           <li>
                     <button
-                              className="au-c-btn au-c-btn--sm au-c-btn--dropdown au-u-ml-sm"
+                              className="au-c-btn au-c-btn--sm au-c-btn--dropdown"
                               onClick={[Function]}
                     >
                               Spec
@@ -205,11 +205,11 @@ ShallowWrapper {
 </ul>,
         "_debugID": 2,
         "_renderedOutput": <ul
-          className="au-c-button-dropdown u-ml-sm"
+          className="au-c-button-dropdown au-u-ml-sm"
 >
           <li>
                     <button
-                              className="au-c-btn au-c-btn--sm au-c-btn--dropdown au-u-ml-sm"
+                              className="au-c-btn au-c-btn--sm au-c-btn--dropdown"
                               onClick={[Function]}
                     >
                               Spec

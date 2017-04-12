@@ -31,7 +31,11 @@ ShallowWrapper {
                     onChange={[Function]}
                     value={undefined}
                 >
-                    
+                    <option
+                        value={null}
+                    >
+                        Select Answer
+                    </option>
                 </select>
             </div>
             <button
@@ -102,7 +106,11 @@ ShallowWrapper {
                               onChange={[Function]}
                               value={undefined}
                         >
-                              
+                              <option
+                                    value={null}
+                              >
+                                    Select Answer
+                              </option>
                         </select>
                   </div>
                   <button
@@ -227,7 +235,11 @@ ShallowWrapper {
                                                   onChange={[Function]}
                                                   value={undefined}
                                         >
-                                                  
+                                                  <option
+                                                            value={null}
+                                                  >
+                                                            Select Answer
+                                                  </option>
                                         </select>
                               </div>
                               <button
@@ -298,7 +310,11 @@ ShallowWrapper {
                                                   onChange={[Function]}
                                                   value={undefined}
                                         >
-                                                  
+                                                  <option
+                                                            value={null}
+                                                  >
+                                                            Select Answer
+                                                  </option>
                                         </select>
                               </div>
                               <button

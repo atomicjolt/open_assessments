@@ -8,8 +8,10 @@ describe('drop zone component', () => {
   let props;
   let result;
   let zone;
+  let calledEditZone;
 
   beforeEach(() => {
+    calledEditZone = false;
     props = {
       zone: {
         id: '7',
@@ -28,7 +30,7 @@ describe('drop zone component', () => {
           right: 555,
         }),
       },
-      editZone: () => {},
+      editZone: () => {calledEditZone = true},
       setActive: () => {},
       isActive: false,
     };
@@ -70,14 +72,53 @@ describe('drop zone component', () => {
     const y = 100;
     result.instance().moveCorner(corner, x, y,);
     expect(result.instance().state.leftPos).toBe(props.zone.xPos);
+    expect(result.instance().state.topPos).toBe(props.zone.yPos);
     corner = 'topRight';
     result.instance().moveCorner(corner, x, y,);
     expect(result.instance().state.rightPos).toBe(props.zone.xPos + props.zone.width);
+    expect(result.instance().state.topPos).toBe(props.zone.yPos);
     corner = 'bottomRight';
     result.instance().moveCorner(corner, x, y);
     expect(result.instance().state.bottomPos).toBe(props.zone.yPos + props.zone.height);
+    expect(result.instance().state.leftPos).toBe(props.zone.xPos);
     corner = 'bottomRight';
     result.instance().moveCorner(corner, x, y);
-    expect(result.instance().state.topPos).toBe(props.zone.yPos);
+    expect(result.instance().state.bottomPos).toBe(props.zone.yPos + props.zone.height);
+    expect(result.instance().state.rightPos).toBe(props.zone.xPos + props.zone.width);
+  });
+
+  it('handles logic in moveZone', () => {
+    props.zone.xPos = 135;
+    result = shallow(<DropZone {...props} />);
+    const x = 95;
+    const y = 45;
+    const updatedPositions = {
+      initailX: 55,
+      initialY: 35,
+    };
+    result.instance().setState(updatedPositions);
+    result.instance().moveZone(x, y);
+    expect(result.instance().state.topPos).toBe(
+      zone.topPos
+      +
+      (y - updatedPositions.initialY)
+    );
+    expect(result.instance().state.leftPos).toBe(props.zone.xPos);
+    expect(result.instance().state.rightPos).toBe(
+      props.target.getBoundingClientRect().right
+      -
+      props.target.getBoundingClientRect().left
+    );
+    expect(result.instance().state.bottomPos).toBe(
+      zone.bottomPos
+      +
+      (y - updatedPositions.initialY)
+    );
+  });
+
+  it('handles updateZone function call', () => {
+    expect(calledEditZone).toBeFalsy();
+    result.find('input').simulate('blur', { target: { label: 'Some random value' } });
+    expect(calledEditZone).toBeTruthy();
   });
 });
