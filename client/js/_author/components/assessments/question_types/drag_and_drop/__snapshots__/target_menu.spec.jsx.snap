@@ -23,6 +23,22 @@ ShallowWrapper {
     <div
         className="au-o-right"
     >
+        <div
+            className="au-c-checkbox au-u-ml-md au-u-mr-sm"
+        >
+            <input
+                checked={undefined}
+                id="toggle_show_zone_undefined"
+                onChange={[Function]}
+                tabIndex="0"
+                type="checkbox"
+            />
+            <label
+                htmlFor="toggle_show_zone_undefined"
+            >
+                Show Zones
+            </label>
+        </div>
         <button
             className="au-c-btn au-c-btn--sm au-c-btn--gray"
             onClick={[Function]}
@@ -61,6 +77,22 @@ ShallowWrapper {
       <div
             className="au-o-right"
       >
+            <div
+                  className="au-c-checkbox au-u-ml-md au-u-mr-sm"
+            >
+                  <input
+                        checked={undefined}
+                        id="toggle_show_zone_undefined"
+                        onChange={[Function]}
+                        tabIndex="0"
+                        type="checkbox"
+                  />
+                  <label
+                        htmlFor="toggle_show_zone_undefined"
+                  >
+                        Show Zones
+                  </label>
+            </div>
             <button
                   className="au-c-btn au-c-btn--sm au-c-btn--gray"
                   onClick={[Function]}
@@ -145,6 +177,22 @@ ShallowWrapper {
           <div
                     className="au-o-right"
           >
+                    <div
+                              className="au-c-checkbox au-u-ml-md au-u-mr-sm"
+                    >
+                              <input
+                                        checked={undefined}
+                                        id="toggle_show_zone_undefined"
+                                        onChange={[Function]}
+                                        tabIndex="0"
+                                        type="checkbox"
+                              />
+                              <label
+                                        htmlFor="toggle_show_zone_undefined"
+                              >
+                                        Show Zones
+                              </label>
+                    </div>
                     <button
                               className="au-c-btn au-c-btn--sm au-c-btn--gray"
                               onClick={[Function]}
@@ -183,6 +231,22 @@ ShallowWrapper {
           <div
                     className="au-o-right"
           >
+                    <div
+                              className="au-c-checkbox au-u-ml-md au-u-mr-sm"
+                    >
+                              <input
+                                        checked={undefined}
+                                        id="toggle_show_zone_undefined"
+                                        onChange={[Function]}
+                                        tabIndex="0"
+                                        type="checkbox"
+                              />
+                              <label
+                                        htmlFor="toggle_show_zone_undefined"
+                              >
+                                        Show Zones
+                              </label>
+                    </div>
                     <button
                               className="au-c-btn au-c-btn--sm au-c-btn--gray"
                               onClick={[Function]}

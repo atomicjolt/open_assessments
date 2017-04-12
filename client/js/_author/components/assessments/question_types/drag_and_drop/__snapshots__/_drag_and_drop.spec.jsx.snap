@@ -21,7 +21,9 @@ ShallowWrapper {
                 "zones": Object {},
               }
         }
+        setVisible={[Function]}
         uploadMedia={[Function]}
+        visibleZones={undefined}
     />
     <div
         className="au-c-drop-zone__answers__label"
@@ -70,7 +72,9 @@ ShallowWrapper {
                         "zones": Object {},
                       }
             }
+            setVisible={[Function]}
             uploadMedia={[Function]}
+            visibleZones={undefined}
       />
       <div
             className="au-c-drop-zone__answers__label"
@@ -187,7 +191,9 @@ ShallowWrapper {
                                         "zones": Object {},
                                       }
                     }
+                    setVisible={[Function]}
                     uploadMedia={[Function]}
+                    visibleZones={undefined}
           />
           <div
                     className="au-c-drop-zone__answers__label"
@@ -236,7 +242,9 @@ ShallowWrapper {
                                         "zones": Object {},
                                       }
                     }
+                    setVisible={[Function]}
                     uploadMedia={[Function]}
+                    visibleZones={undefined}
           />
           <div
                     className="au-c-drop-zone__answers__label"

@@ -11,6 +11,18 @@ export function targetMenu(props) {
         <div className="au-c-question__type">{strings.targetImage}</div>
       </div>
       <div className="au-o-right">
+        <div className="au-c-checkbox au-u-ml-md au-u-mr-sm">
+          <input
+            id={`toggle_show_zone_${props.id}`}
+            type="checkbox"
+            tabIndex="0"
+            checked={props.visibleZones}
+            onChange={e => props.toggleVisible(e.target.checked)}
+          />
+          <label htmlFor={`toggle_show_zone_${props.id}`}>
+            {strings.showZones}
+          </label>
+        </div>
         <button
           className="au-c-btn au-c-btn--sm au-c-btn--gray"
           onClick={props.openModal}
@@ -41,8 +53,11 @@ targetMenu.propTypes = {
   openModal: React.PropTypes.func.isRequired,
   toggleAdd: React.PropTypes.func.isRequired,
   addByRegion: React.PropTypes.func.isRequired,
+  toggleVisible: React.PropTypes.func.isRequired,
   hasTarget: React.PropTypes.bool,
+  visibleZones: React.PropTypes.bool,
   addType: React.PropTypes.string,
+  id: React.PropTypes.string,
 };
 
 export default localize(targetMenu);

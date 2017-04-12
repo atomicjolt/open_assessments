@@ -57,6 +57,8 @@ export class DragAndDrop extends React.Component {
           images={this.props.images}
           uploadMedia={(file, where, metadata, newMedia) =>
             this.uploadMedia(file, where, metadata, newMedia)}
+          visibleZones={question.visibleZones}
+          setVisible={visibleZones => this.props.updateItem({ question: { visibleZones } }, true)}
           editZone={(zoneId, attributes) =>
             this.props.updateChoice(id, zoneId, attributes, null, 'zones')}
 
