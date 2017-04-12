@@ -176,6 +176,7 @@ export default {
       addSnap: 'Add Snap Zone',
       addDrop: 'Add Drop Zone',
       addImage: 'Add Image',
+      showZones: 'Show Zones',
     },
     targetPlaceholder: {
       addImg: 'Add Target Image',

@@ -11,8 +11,10 @@ export default class TargetArea extends React.Component {
     question: React.PropTypes.shape({
       target: React.PropTypes.shape({}),
       zones: React.PropTypes.shape({}),
+      id: React.PropTypes.string,
     }).isRequired,
     uploadMedia: React.PropTypes.func.isRequired,
+    setVisible: React.PropTypes.func.isRequired,
     editZone: React.PropTypes.func.isRequired,
   };
 
@@ -62,15 +64,14 @@ export default class TargetArea extends React.Component {
     return (
       <div className="au-c-drag-and-drop__target-area">
         <Menu
-          loadingMedia={this.props.loadingMedia}
-          images={this.props.images}
-          uploadMedia={this.props.uploadMedia}
-          newZone={attributes => this.props.editZone('new', attributes)}
+          id={this.props.question.id}
           hasTarget={!_.isEmpty(this.props.question.target)}
           openModal={() => this.setState({ showModal: true })}
           addType={this.state.add}
           toggleAdd={type => this.setState({ add: this.state.add !== type ? type : null })}
           addByRegion={() => this.addByRegion()}
+          toggleVisible={this.props.setVisible}
+          visibleZones={this.props.visibleZones}
         />
         <Zone
           target={this.props.question.target}

@@ -29,10 +29,10 @@ function serializeTargets(originalTarget, newTarget, fileIds) {
   })];
 }
 
-function serializeZones(originalZones, newZones, targetId) {
-  if (!newZones) { return null; }
+function serializeZones(originalZones, newZones, targetId, visible) {
+  if (!newZones && _.isNil(visible)) { return null; }
   const zones = _.map(originalZones, (zone) => {
-    const newZone = newZones[zone.id];
+    const newZone = _.get(newZones, `[${zone.id}]`);
     return scrub({
       id: _.get(zone, 'id'),
       spatialUnit: {
@@ -45,7 +45,7 @@ function serializeZones(originalZones, newZones, targetId) {
       reuse: 0, // an integer to indicate how many times something can be re-used 0 is infinite
       dropBehaviorType: genusTypes.zone[_.get(newZone, 'type', zone.type)],
       name: _.get(newZone, 'label', zone.label),
-      visible: true,    // Right?
+      visible,
       containerId: targetId,
       // description: 'left of ball'   // Dunno what this is for
       delete: _.get(newZone, 'delete'),
@@ -62,7 +62,7 @@ function serializeZones(originalZones, newZones, targetId) {
       },
       reuse: 0,
       dropBehaviorType: genusTypes.zone[newZones.new.type],
-      visible: true,
+      visible,
       containerId: targetId,
       name: '',
       description: 'A new zone',
@@ -113,7 +113,8 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
     zones: serializeZones(
       originalQuestion.zones,
       newQuestionAttributes.zones,
-      _.get(originalQuestion, 'target.id')
+      _.get(originalQuestion, 'target.id'),
+      _.get(newQuestionAttributes, 'visibleZones')
     ),
   };
   return scrub(newQuestion);
