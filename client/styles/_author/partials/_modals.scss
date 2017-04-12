@@ -88,26 +88,31 @@
   }
 }
 
-.au-c-input--file{
-  input + label{
-    width: 5rem;
-    height: 3rem;
-    text-align: center;
-    color: $gray9;
-    background: $gray2;
-    border: $border;
-    display: inline-block;
-    border-radius: $radius;
-    @include display-flex;
-    @include align-items(center);
-    @include justify-content(center);
-    cursor: pointer;
+.au-c-wysiwyg-media__upload {
+  width: 5rem;
+  height: 3rem;
+  padding: 0 1rem;
+  margin-left: 1rem;
+  text-align: center;
+  color: $gray9;
+  background: $gray2;
+  border: $border;
+  display: inline-block;
+  border-radius: $radius;
+  @include display-flex;
+  @include align-items(center);
+  @include justify-content(center);
+  cursor: pointer;
 
-    &:hover{
-      color: $text-color;
-      border-color: $gray8;
-    }
+  &:hover {
+    color: $text-color;
+    border-color: $gray8;
   }
+}
+
+.au-c-input--file{
+  cursor: pointer;
+
   input{
     width: 0.01rem;
     height: 0.01rem;
