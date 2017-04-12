@@ -521,7 +521,6 @@ const qbank = {
     uploadMedia(state, action).then((res) => {
       _.forEach(action.metaData, (data, key) => {
         if (_.get(data, 'locale') !== 'en' && key !== 'mediaType') {
-          debugger
           uploadMediaMeta(state, data, res.body.repositoryId, res.body.id, action.metaData.mediaType);
         }
       });
