@@ -18,7 +18,6 @@ const placeholders = {
 };
 
 export default function mediaTable(props) {
-
   return (
     <div className="au-c-modal-media__results">
       <table>
