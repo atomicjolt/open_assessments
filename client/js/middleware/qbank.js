@@ -518,12 +518,16 @@ const qbank = {
 
   [AssetConstants.UPLOAD_MEDIA]: (store, action) => {
     const state = store.getState();
+
     uploadMedia(state, action).then((res) => {
-      _.forEach(action.metaData, (data, key) => {
-        if (_.get(data, 'locale') !== 'en' && key !== 'mediaType') {
-          uploadMediaMeta(state, data, res.body.repositoryId, res.body.id, action.metaData.mediaType);
-        }
-      });
+      const additionalLanguageMeta = _.filter(action.metaData, metaData => (
+         !_.isUndefined(metaData.locale) && metaData.locale !== 'en'
+        )
+      );
+      const { repositoryId, id } = res.body;
+      _.forEach(additionalLanguageMeta, data => (
+        uploadMediaMeta(state, data, repositoryId, id, action.metaData.mediaType)
+      ));
 
       store.dispatch({
         type: action.type + DONE,
