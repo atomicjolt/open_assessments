@@ -1,5 +1,4 @@
 import React            from 'react';
-import ReactDOM         from 'react-dom';
 import { shallow }      from 'enzyme';
 import DropObject       from './drop_object';
 
@@ -18,8 +17,8 @@ describe('drop_object component', () => {
         label: 'Spec',
       },
       zones: {},
-      updateObject: () => {updatedObject = true},
-      setActive: () => {calledSetActive = true},
+      updateObject: () => { updatedObject = true; },
+      setActive: () => { calledSetActive = true; },
       isActive: false,
     };
     result = shallow(<DropObject {...props} />);

@@ -1,5 +1,4 @@
 import React            from 'react';
-import ReactDOM         from 'react-dom';
 import { shallow }      from 'enzyme';
 import DropZone         from './drop_zone';
 
@@ -29,7 +28,7 @@ describe('drop zone component', () => {
           right: 555,
         }),
       },
-      editZone: () => {calledEditZone = true},
+      editZone: () => { calledEditZone = true; },
       setActive: () => {},
       isActive: false,
     };

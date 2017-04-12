@@ -1,5 +1,4 @@
 import React            from 'react';
-import ReactDOM         from 'react-dom';
 import { shallow }      from 'enzyme';
 import { DragAndDrop }  from './_drag_and_drop';
 
@@ -24,7 +23,7 @@ describe('drag_and_drop component', () => {
       },
       images: {},
       updateItem: () => {},
-      addMediaToQuestion: () => {uploadedMedia = true},
+      addMediaToQuestion: () => { uploadedMedia = true; },
       updateChoice: () => {},
       loadingMedia: false,
     };

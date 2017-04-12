@@ -1,8 +1,6 @@
 import React                    from 'react';
-import ReactDOM                 from 'react-dom';
 import { shallow, mount }       from 'enzyme';
 import DragArea                 from './drag_area';
-import DropObject               from './drop_object';
 
 jest.mock('../../../../../libs/assets.js');
 

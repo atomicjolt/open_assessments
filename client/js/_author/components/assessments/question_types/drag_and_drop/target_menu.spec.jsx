@@ -13,7 +13,7 @@ describe('target_menu component', () => {
     zoneNew = false;
     props = {
       uploadMedia: () => { uploadedMedia = true; },
-      newZone: () => { zoneNew = true },
+      newZone: () => { zoneNew = true; },
       images: {},
       loadingMedia: false,
       hasTarget: false,

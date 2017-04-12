@@ -1,5 +1,4 @@
 import React            from 'react';
-import ReactDOM         from 'react-dom';
 import { shallow }      from 'enzyme';
 import AddZoneDropdown  from './add_zone_dropdown';
 
@@ -17,9 +16,9 @@ describe('drag_and_drop component', () => {
     props = {
       active: false,
       text: 'Spec',
-      toggle: () => {toggled = true},
-      addByRegion: () => {addedRegion = true},
-      addByImage: () => {addedImage = true},
+      toggle: () => { toggled = true; },
+      addByRegion: () => { addedRegion = true; },
+      addByImage: () => { addedImage = true; },
     };
     result = shallow(<AddZoneDropdown {...props} />);
   });
