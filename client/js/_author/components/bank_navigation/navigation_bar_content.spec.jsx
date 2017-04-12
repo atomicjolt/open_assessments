@@ -18,7 +18,8 @@ describe('navigationBarContent', () => {
         { id: '567', name: 'YETANOTHER' },
       ],
       currentBankId: '123456',
-      updatePath: () => { updater = true; }
+      updatePath: () => { updater = true; },
+      getBankChildren: () => {},
     };
 
     result = TestUtils.renderIntoDocument(<Stub><NavigationBarContent {...props} /></Stub>);
