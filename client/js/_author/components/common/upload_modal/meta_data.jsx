@@ -58,8 +58,8 @@ export default class Metadata extends React.Component {
   }
 
   metaDataInputs() {
-    return _.map(this.props.metadataTypes, (type) => {
-      return this.props.selectedLanguage === '639-2%3AENG%40ISO' ?
+    return _.map(this.props.metadataTypes, type => (
+      this.props.selectedLanguage === '639-2%3AENG%40ISO' ?
         <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
           <label htmlFor={`meta_upload_${type}`}>{Metadata.labelName(type)}</label>
           <div className="au-c-input__contain">
@@ -74,8 +74,8 @@ export default class Metadata extends React.Component {
             <div className="au-c-input__bottom" />
           </div>
         </div>
-    : null;
-    });
+    : null
+    ));
   }
 
   metaDataFileInputs() {
