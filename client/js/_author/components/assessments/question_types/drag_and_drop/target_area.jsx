@@ -7,6 +7,7 @@ import MediaModal from '../../../common/upload_modal/editor_upload_modal';
 export default class TargetArea extends React.Component {
   static propTypes = {
     loadingMedia: React.PropTypes.bool,
+    visibleZones: React.PropTypes.bool,
     images: React.PropTypes.shape({}).isRequired,
     question: React.PropTypes.shape({
       target: React.PropTypes.shape({}),

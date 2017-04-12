@@ -53,8 +53,8 @@ targetMenu.propTypes = {
   openModal: React.PropTypes.func.isRequired,
   toggleAdd: React.PropTypes.func.isRequired,
   addByRegion: React.PropTypes.func.isRequired,
-  toggleVisible: React.PropTypes.func.isRequired,
   hasTarget: React.PropTypes.bool,
+  visibleZones: React.PropTypes.bool,
   addType: React.PropTypes.string,
   id: React.PropTypes.string,
 };
