@@ -24,6 +24,11 @@ class DragArea extends React.Component {
     };
   }
 
+  insertMedia(img, metadata, isNew) {
+    this.props.uploadMedia(img, 'dropObjects.new', metadata, isNew);
+    this.setState({ showModal: false });
+  }
+
   render() {
     const strings = this.props.localizeStrings('dragArea');
 
@@ -60,7 +65,7 @@ class DragArea extends React.Component {
           loading={this.props.loadingMedia}
           media={this.props.images}
           mediaType={'img'}
-          insertMedia={(img, metadata, isNew) => this.props.uploadMedia(img, 'dropObjects.new', metadata, isNew)}
+          insertMedia={(img, metadata, isNew) => this.insertMedia(img, metadata, isNew)}
         />
       </div>
     );
