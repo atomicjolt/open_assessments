@@ -137,7 +137,8 @@ class PreviewQuestion extends React.Component {
                 coordinateValues: [zone.xPos, zone.yPos]
               },
               name: zone.label,
-              dropBehaviorType: `%3A${zone.type}%40`
+              dropBehaviorType: `%3A${zone.type}%40`,
+              visible: zone.visible,
             })),
           }
         };
