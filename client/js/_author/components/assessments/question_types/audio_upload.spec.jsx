@@ -10,7 +10,7 @@ describe('audio_upload component', () => {
   beforeEach(() => {
     itemUpdated = false;
     props = {
-      updateItem: () => {itemUpdated = true},
+      updateItem: () => { itemUpdated = true; },
       item: {
         bankId: '',
         id: '76',

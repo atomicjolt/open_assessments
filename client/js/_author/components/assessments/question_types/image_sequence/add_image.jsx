@@ -1,7 +1,5 @@
 import React             from 'react';
 import { connect }       from 'react-redux';
-
-import guid              from '../../../../../utils/guid';
 import * as AssetActions from '../../../../../actions/qbank/assets';
 import UploadModal       from '../../../common/upload_modal/editor_upload_modal';
 import localize          from '../../../../locales/localize';
@@ -21,7 +19,6 @@ export class AddImage extends React.Component {
       bankId: React.PropTypes.string,
     }),
     loadingMedia: React.PropTypes.bool,
-    uploadMedia: React.PropTypes.func.isRequired,
     addMediaToQuestion: React.PropTypes.func,
     images: React.PropTypes.shape({}),
     localizeStrings:  React.PropTypes.func.isRequired
@@ -52,7 +49,6 @@ export class AddImage extends React.Component {
 
   uploadMedia(file, metadata, newMedia) {
     this.setState({ modal: false });
-    const mediaGuid = guid();
 
     this.props.addMediaToQuestion(
       file,

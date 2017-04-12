@@ -43,7 +43,9 @@ export default class EditorUploadModal extends React.Component {
     super();
     this.state = {
       languageMediaData: _.reduce(languages.languageTypeId, (result, language) => {
-        result[language] = { locale: languageToLocale[language] };
+        result[language] = { // eslint-disable-line no-param-reassign
+          locale: languageToLocale[language]
+        };
         return result;
       }, {}),
       activeItem: null,
@@ -52,6 +54,12 @@ export default class EditorUploadModal extends React.Component {
       selectedMedia: null,
       language: languages.languageTypeId.english, //default to english
     };
+  }
+
+  setters(key, val) {
+    const languageMediaData = this.state.languageMediaData;
+    languageMediaData[this.state.language][key] = val;
+    this.setState({ languageMediaData });
   }
 
   addMedia() {
@@ -94,12 +102,6 @@ export default class EditorUploadModal extends React.Component {
       return ['license', 'copyright'];
     }
     return ['altText', 'license', 'copyright'];
-  }
-
-  setters(key, val) {
-    const languageMediaData = this.state.languageMediaData;
-    languageMediaData[this.state.language][key] = val;
-    this.setState({ languageMediaData });
   }
 
   closeModal() {

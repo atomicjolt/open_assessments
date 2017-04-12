@@ -47,6 +47,7 @@ settingsCheckbox.propTypes = {
   updateItem: React.PropTypes.func.isRequired,
   makeReflection: React.PropTypes.func.isRequired,
   localizeStrings: React.PropTypes.func.isRequired,
+  makeMultipleAnswer: React.PropTypes.func.isRequired,
   multipleAnswer: React.PropTypes.bool,
   shuffle: React.PropTypes.bool,
   reflection: React.PropTypes.bool,

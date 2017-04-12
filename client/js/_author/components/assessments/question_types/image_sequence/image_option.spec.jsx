@@ -17,12 +17,11 @@ describe('image_option component', () => {
     props = {
       deleteChoice: () => {},
       updateChoice: () => {
-        updatedChoice = true
-        inputUpdate = true
+        updatedChoice = true;
+        inputUpdate = true;
       },
-      activateChoice: () => {activatedChoice = true},
+      activateChoice: () => { activatedChoice = true; },
       id: '7',
-      activeChoice: '',
       text: '',
       labelText: '',
       order: 2,

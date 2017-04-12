@@ -46,5 +46,4 @@ ImageOrder.propTypes = {
     })
   }),
   deleteChoice: React.PropTypes.func,
-  updateChoice: React.PropTypes.func.isRequired,
 };

@@ -20,6 +20,7 @@ class MovableWordSentence extends React.Component {
     createChoice: React.PropTypes.func.isRequired,
     selectChoice: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
+    save: React.PropTypes.func.isRequired,
     localizeStrings: React.PropTypes.func.isRequired,
     isActive: React.PropTypes.bool,
     activeChoice: React.PropTypes.string,
@@ -39,7 +40,9 @@ class MovableWordSentence extends React.Component {
               <Option
                 key={`assessmentChoice_${choice.id}`}
                 {...choice}
-                updateChoice={(newChoice, fileIds) => this.props.updateChoice(id, choice.id, newChoice, fileIds)}
+                updateChoice={
+                  (newChoice, fileIds) => this.props.updateChoice(id, choice.id, newChoice, fileIds)
+                }
                 isActive={this.props.isActive && choice.id === this.props.activeChoice}
                 deleteChoice={() => this.props.deleteChoice(choice)}
                 selectChoice={() => this.props.selectChoice(choice.id)}
@@ -50,7 +53,7 @@ class MovableWordSentence extends React.Component {
           <Add
             createChoice={() => this.props.createChoice()}
           />
-        <SaveOptions save={this.props.save} />
+          <SaveOptions save={this.props.save} />
         </div>
         <div className="au-c-question__feedback">
           <Feedback

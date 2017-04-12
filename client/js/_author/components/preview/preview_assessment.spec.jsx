@@ -1,5 +1,4 @@
 import React                   from 'react';
-import _                       from 'lodash';
 import TestUtils               from 'react-addons-test-utils';
 import { PreviewAssessment }   from './preview_assessment';
 

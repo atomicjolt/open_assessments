@@ -22,14 +22,14 @@ describe('banks reducer', () => {
     action.type = 'GET_BANKS_HIERARCHY_DONE';
     action.payload = {
       childNodes: [{
-        id: "asdf2",
+        id: 'asdf2',
         childNodes: [{
-          id: "asdf3",
+          id: 'asdf3',
           childNodes: []
         }],
       },
       {
-        id: "asdf2.1",
+        id: 'asdf2.1',
         childNodes: [],
       }],
     };
