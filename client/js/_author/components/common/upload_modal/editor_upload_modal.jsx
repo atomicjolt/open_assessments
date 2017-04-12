@@ -28,7 +28,9 @@ const languageToLocale = {
 
 const initLanguageMediaData = () => (
   _.reduce(languages.languageTypeId, (result, language) => {
-    result[language] = { locale: languageToLocale[language] }; // eslint-disable-line no-param-reassign
+    result[language] = {  // eslint-disable-line no-param-reassign
+      locale: languageToLocale[language]
+    };
     return result;
   }, {}
   )
