@@ -258,6 +258,17 @@ export class OeaEditor extends React.Component {
     this.setState({ fileGuids });
   }
 
+  cleanText() {
+    let { text } = this.props;
+    if (!text) return text;
+
+    text = text.replace(/autoplay/g, 'autoplay-placeholder');
+    const doc = $(`<div>${text}</div>`);
+    $('.transcriptWrapper', doc).remove();
+    const cleanedHtml = doc.html();
+    return cleanedHtml.replace(/autoplay-placeholder/g, 'autoplay');
+  }
+
   render() {
     const isActive = this.state.focused || this.state.modalOpen;
     const activeClass = isActive ? 'is-focused' : 'no-border';
@@ -271,6 +282,7 @@ export class OeaEditor extends React.Component {
           <div className={`au-c-placeholder ${hidePlaceholder}`}>{this.props.placeholder}</div>
           <TinyWrapper
             {...this.props}
+            text={this.cleanText()}
             onBlur={(editorText, isChanged) => this.onBlur(editorText, isChanged)}
             onFocus={() => this.setState({ focused: true })}
             openModal={(editor, type) => this.openModal(editor, type)}
