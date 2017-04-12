@@ -1,12 +1,14 @@
-import React    from 'react';
-import _        from 'lodash';
-import DropZone from './drop_zone';
+import React        from 'react';
+import _            from 'lodash';
+import DropZone     from './drop_zone';
+import Placeholder  from './target_placeholder';
 
 export default class TargetZone extends React.Component {
   static propTypes = {
     target: React.PropTypes.shape({}),
     zones: React.PropTypes.shape({}),
     editZone: React.PropTypes.func.isRequired,
+    openModal: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -31,7 +33,11 @@ export default class TargetZone extends React.Component {
         ref={(area) => { this.target = area; }}
         onClick={() => this.setState({ activeZone: null })}
       >
-        {_.isEmpty(target) ? null : <img src={target.image} alt="target" />}
+        {
+          _.isEmpty(target) ?
+            <Placeholder onClick={this.props.openModal} />
+            : <img src={target.image} alt="target" />
+        }
         {
           _.map(zones, zone => (
             <DropZone
