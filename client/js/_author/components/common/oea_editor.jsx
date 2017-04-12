@@ -166,13 +166,13 @@ export class OeaEditor extends React.Component {
     const { fileIds, uploadedAssets } = this.props;
     const { fileGuids } = this.state;
     const allAssets = {
+      ...fileGuids,
       ...fileIds,
       ...uploadedAssets,
-      ...fileGuids
     };
     const asset = allAssets[assetGuid];
     const id = asset.id || asset.assetId;
-    if (!asset) return [];
+    if (_.isEmpty(asset)) return [];
 
     return _.toPairs(allAssets)
       .map(file => ({
