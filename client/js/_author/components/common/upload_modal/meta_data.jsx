@@ -1,6 +1,8 @@
 import React      from 'react';
-import _          from 'lodash';
+
 import Checkbox   from '../../assessments/question_types/question_common/option_checkbox';
+import MetaDataFileInputs from './meta_file_inputs';
+import MetaDataInputs     from './meta_data_inputs';
 
 export default class Metadata extends React.Component {
   static propTypes = {
@@ -57,45 +59,6 @@ export default class Metadata extends React.Component {
     />);
   }
 
-  metaDataInputs() {
-    return _.map(this.props.metadataTypes, type => (
-      this.props.selectedLanguage === '639-2%3AENG%40ISO' ?
-        <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
-          <label htmlFor={`meta_upload_${type}`}>{Metadata.labelName(type)}</label>
-          <div className="au-c-input__contain">
-            <input
-              value={this.props.metaData[type] || ''}
-              className="au-c-text-input au-c-text-input--smaller"
-              id={`meta_upload_${type}`}
-              type="text"
-              tabIndex="0"
-              onChange={e => this.props.updateMetadata(type, e.target.value)}
-            />
-            <div className="au-c-input__bottom" />
-          </div>
-        </div>
-    : null
-    ));
-  }
-
-  metaDataFileInputs() {
-    return _.map(this.props.metadataFileTypes, type => (
-      <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
-        <label htmlFor={`meta_upload_${type}`}>{Metadata.labelName(type)}</label>
-        <div className="au-c-input__contain">
-          <input
-            className=""
-            id={`meta_upload_${type}`}
-            type="file"
-            tabIndex="0"
-            onChange={e => this.props.updateMetadata(type, e.target.files[0])}
-          />
-          <div className="au-c-input__bottom" />
-        </div>
-      </div>
-    ));
-  }
-
   render() {
     return (
       <div>
@@ -120,14 +83,25 @@ export default class Metadata extends React.Component {
             <div className="au-c-input__bottom" />
           </div>
         </div>
-        { this.metaDataInputs() }
+        <MetaDataInputs
+          selectedLanguage={this.props.selectedLanguage}
+          updateMetadata={this.props.updateMetadata}
+          metadataTypes={this.props.metadataTypes}
+          labelName={Metadata.labelName}
+          metaData={this.props.metaData}
+        />
         { this.props.mediaType !== 'img' && this.props.selectedLanguage === '639-2%3AENG%40ISO' ?
           <div>
             Auto-play { this.autoPlayOption(this.props.metaData) }
           </div>
           : null
         }
-        { this.metaDataFileInputs() }
+        <MetaDataFileInputs
+          metadataFileTypes={this.props.metadataFileTypes}
+          updateMetadata={this.props.updateMetadata}
+          labelName={Metadata.labelName}
+          metaData={this.props.metaData}
+        />
       </div>
     );
   }

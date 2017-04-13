@@ -58,7 +58,10 @@ export default {
       ok: 'OK',
       error: 'Error',
       insert: 'Insert',
-      modal: 'Modal'
+      audioFile: 'Select an Audio file',
+      imgFile: 'Select an Image',
+      videoFile: 'Select a Video file',
+
     },
     imageOption: {
       NA: 'N/A'

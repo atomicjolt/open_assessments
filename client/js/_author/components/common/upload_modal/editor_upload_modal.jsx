@@ -7,17 +7,12 @@ import languages        from '../../../../constants/language_types';
 import SearchMedia      from './search_media';
 import LanguageSelect   from '../language_dropdown';
 import Metadata         from './meta_data';
+import localize         from '../../../locales/localize';
 
 const tagNameMap = {
   audio: 'Audio',
   img: 'Image',
   video: 'Video',
-};
-
-const mediaPrompt = {
-  audio: 'Select an Audio file',
-  img: 'Select an Image',
-  video: 'Select a Video file',
 };
 
 const languageToLocale = {
@@ -26,18 +21,7 @@ const languageToLocale = {
   '639-2%3ATEL%40ISO': 'te',
 };
 
-const initLanguageMediaData = () => (
-  _.reduce(languages.languageTypeId, (result, language) => {
-    result[language] = {  // eslint-disable-line no-param-reassign
-      locale: languageToLocale[language]
-    };
-    return result;
-  }, {}
-  )
-);
-
-
-export default class EditorUploadModal extends React.Component {
+export class EditorUploadModal extends React.Component {
   static propTypes = {
     isOpen: React.PropTypes.bool,
     closeModal: React.PropTypes.func.isRequired,
@@ -50,10 +34,20 @@ export default class EditorUploadModal extends React.Component {
     uploadOnly: React.PropTypes.bool,
   };
 
+  static initLanguageMediaData() {
+    return _.reduce(languages.languageTypeId, (result, language) => {
+      result[language] = {  // eslint-disable-line no-param-reassign
+        locale: languageToLocale[language]
+      };
+      return result;
+    }, {}
+   );
+  }
+
   constructor() {
     super();
     this.state = {
-      languageMediaData: initLanguageMediaData(),
+      languageMediaData: EditorUploadModal.initLanguageMediaData(),
       activeItem: null,
       mediaAutoPlay: false,
       uploadedMedia: null,
@@ -66,6 +60,15 @@ export default class EditorUploadModal extends React.Component {
     const languageMediaData = this.state.languageMediaData;
     languageMediaData[this.state.language][key] = val;
     this.setState({ languageMediaData });
+  }
+
+  mediaPrompt() {
+    const strings = this.props.localizeStrings('editorUploadModal');
+    return {
+      audio: strings.audioFile,
+      img: strings.imgFile,
+      video: strings.videoFile,
+    };
   }
 
   addMedia() {
@@ -112,7 +115,7 @@ export default class EditorUploadModal extends React.Component {
 
   resetModal() {
     this.setState({ uploadedMedia: null });
-    this.setState({ languageMediaData: initLanguageMediaData() });
+    this.setState({ languageMediaData: EditorUploadModal.initLanguageMediaData() });
     this.setState({ language: languages.languageTypeId.english });
   }
 
@@ -122,6 +125,7 @@ export default class EditorUploadModal extends React.Component {
   }
 
   render() {
+    const strings = this.props.localizeStrings('editorUploadModal');
     let name = _.get(this, 'state.uploadedMedia.name');
 
     if (this.props.inProgress) {
@@ -129,7 +133,7 @@ export default class EditorUploadModal extends React.Component {
     }
 
     if (this.props.error) {
-      name = <div className="au-c-error-text">Error: {this.props.error}</div>;
+      name = <div className="au-c-error-text">{strings.error}: {this.props.error}</div>;
     }
 
 
@@ -143,7 +147,7 @@ export default class EditorUploadModal extends React.Component {
       >
         <div className="au-c-wysiwyg-modal__header">
           <h3 className="au-c-wysiwyg-modal__title">
-            Insert {tagNameMap[this.props.mediaType]}
+            {strings.insert} {tagNameMap[this.props.mediaType]}
           </h3>
           <LanguageSelect
             updateItem={language => this.setState(language)}
@@ -155,7 +159,7 @@ export default class EditorUploadModal extends React.Component {
 
         <div className="au-c-wysiwyg-modal__main">
           <div style={{ display: this.state.uploadedMedia || this.props.uploadOnly ? 'none' : 'block' }}>
-            <div className="au-c-drop-zone__answers__label">{mediaPrompt[this.props.mediaType]}</div>
+            <div className="au-c-drop-zone__answers__label">{EditorUploadModal[this.props.mediaType]}</div>
 
             <SearchMedia
               media={this.props.media}
@@ -201,16 +205,18 @@ export default class EditorUploadModal extends React.Component {
             onClick={() => this.closeModal()}
             className="au-u-right  au-c-btn au-c-btn--sm au-c-btn--gray"
           >
-            Cancel
+            {strings.cancel}
           </button>
           <button
             onClick={() => this.addMedia()}
             className="au-c-btn au-c-btn--sm au-c-btn--maroon au-u-ml-sm"
           >
-            OK
+            {strings.ok}
           </button>
         </div>
       </Modal>
     );
   }
 }
+
+export default localize(EditorUploadModal);
