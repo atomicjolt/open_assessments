@@ -18,7 +18,7 @@ ShallowWrapper {
         id={undefined}
         openModal={[Function]}
         toggleAdd={[Function]}
-        toggleVisible={undefined}
+        toggleVisible={[Function]}
         visibleZones={undefined}
     />
     <TargetZone
@@ -49,7 +49,7 @@ ShallowWrapper {
             id={undefined}
             openModal={[Function]}
             toggleAdd={[Function]}
-            toggleVisible={undefined}
+            toggleVisible={[Function]}
             visibleZones={undefined}
       />
       <TargetZone
@@ -86,6 +86,7 @@ ShallowWrapper {
                         "zones": Object {},
                       }
         }
+        setVisible={[Function]}
         uploadMedia={[Function]}
 />,
       "_debugID": 1,
@@ -102,6 +103,7 @@ ShallowWrapper {
             "target": Object {},
             "zones": Object {},
           },
+          "setVisible": [Function],
           "uploadMedia": [Function],
         },
         "refs": Object {},
@@ -137,7 +139,7 @@ ShallowWrapper {
                     id={undefined}
                     openModal={[Function]}
                     toggleAdd={[Function]}
-                    toggleVisible={undefined}
+                    toggleVisible={[Function]}
                     visibleZones={undefined}
           />
           <TargetZone
@@ -168,7 +170,7 @@ ShallowWrapper {
                     id={undefined}
                     openModal={[Function]}
                     toggleAdd={[Function]}
-                    toggleVisible={undefined}
+                    toggleVisible={[Function]}
                     visibleZones={undefined}
           />
           <TargetZone
@@ -209,6 +211,7 @@ ShallowWrapper {
             "zones": Object {},
           }
     }
+    setVisible={[Function]}
     uploadMedia={[Function]}
 />,
 }
