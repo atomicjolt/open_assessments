@@ -90,6 +90,7 @@ export default class TinyWrapper extends React.Component {
           config={this.tinyMCEConfig()}
           onBlur={(e) => { this.props.onBlur(e.target.getContent(), e.target.isDirty()); }}
           onFocus={this.props.onFocus}
+          onChange={e => this.props.onBlur(e.target.getContent(), false)}
         />
       </div>
     );
