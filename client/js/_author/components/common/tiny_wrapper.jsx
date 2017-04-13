@@ -13,7 +13,6 @@ import 'tinymce/plugins/charmap/plugin';
 import 'tinymce/plugins/lists/plugin';
 import 'tinymce/plugins/table/plugin';
 
-import { getLanguage }  from '../../../constants/language_types';
 import guid             from '../../../utils/guid';
 
 // TODO: figure out how to localize this.
