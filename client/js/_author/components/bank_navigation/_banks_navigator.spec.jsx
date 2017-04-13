@@ -44,7 +44,6 @@ describe('Bank Navigator', () => {
       updatePath         : () => { calledFuncts.push('updatePath'); },
       getBanks           : () => { calledFuncts.push('getBanks'); },
       getAssessments     : () => { calledFuncts.push('getAssessments'); },
-      getItems           : () => { calledFuncts.push('getItems'); },
       createAssessment   : () => { calledFuncts.push('createAssessment'); },
       deleteAssessment   : () => { calledFuncts.push('deleteAssessment'); },
       togglePublishAssessment: () => {},
@@ -63,7 +62,6 @@ describe('Bank Navigator', () => {
   it('updates the path, gets assessments, and gets items, when a bank is selected', () => {
     result.getBankChildren({ id: 1, displayName: { text: 'tacos' } });
     expect(_.indexOf(calledFuncts, 'getAssessments')).toBeGreaterThan(-1);
-    expect(_.indexOf(calledFuncts, 'getItems')).toBe(-1);
   });
 
   it('correctly sorts by type', () => {

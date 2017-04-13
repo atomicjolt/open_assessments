@@ -37,7 +37,6 @@ export class BankNavigator extends React.Component {
     updatePath: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
     getAssessmentOffered: React.PropTypes.func.isRequired,
-    getItems: React.PropTypes.func.isRequired,
     createAssessment: React.PropTypes.func.isRequired,
     deleteAssessment: React.PropTypes.func.isRequired,
     currentBankId: React.PropTypes.string,
@@ -56,8 +55,6 @@ export class BankNavigator extends React.Component {
     const bank = _.find(this.props.banks, b => b.id === bankId);
     if (bank) { this.props.updatePath(bankId, bank); }
     this.props.getAssessments(bankId);
-    // Commented out fixes a bad item call when clicking on bank. Why does it need to be here?
-    // this.props.getItems(bankId);
   }
 
   getEmbedCode(assessment) {

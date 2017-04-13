@@ -25,7 +25,6 @@ describe('_new_assessment component', () => {
       createChoice: () => {},
       updatePath: () => {},
       getAssessments: () => {},
-      getItems: () => {},
     };
     result = TestUtils.renderIntoDocument(<NewAssessment {...props} />);
   });
