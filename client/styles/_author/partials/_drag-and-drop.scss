@@ -118,7 +118,7 @@
       background: $text-color;
       padding: 0 1rem;
       @include align-items(center);
-      //z-index: 999;
+      z-index: 9;
 
       &.is-right{
         left: 0;
