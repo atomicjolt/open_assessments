@@ -63,7 +63,7 @@ describe('Bank Navigator', () => {
   it('updates the path, gets assessments, and gets items, when a bank is selected', () => {
     result.getBankChildren({ id: 1, displayName: { text: 'tacos' } });
     expect(_.indexOf(calledFuncts, 'getAssessments')).toBeGreaterThan(-1);
-    expect(_.indexOf(calledFuncts, 'getItems')).toBeGreaterThan(-1);
+    expect(_.indexOf(calledFuncts, 'getItems')).toBe(-1);
   });
 
   it('correctly sorts by type', () => {
