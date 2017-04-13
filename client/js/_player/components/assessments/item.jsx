@@ -2,8 +2,6 @@
 
 import React  from "react";
 import _                       from 'lodash';
-import * as AssessmentActions  from "../../actions/assessment";
-import UniversalInput          from "./universal_input";
 import videojs from 'video.js';
 import * as AssessmentActions  from '../../actions/assessment';
 import UniversalInput          from './universal_input';
