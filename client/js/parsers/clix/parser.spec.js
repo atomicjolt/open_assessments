@@ -4,17 +4,13 @@ import $          from "jquery";
 import { AssessmentFormats, parse }  from "../assessment";
 import Parser                        from "./parser";
 import { parseFeedback }             from "./parser";
+import { readFixture }               from '../../../specs_support/utils';
 
 describe("CLIx assessment parser", () => {
-
-  beforeAll(() => {
-    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
-  });
-
   describe("parse", () => {
 
     it("parses example assessment JSON from CLIx into an object", () => {
-      const data        = readFixtures("clix/assessment.json");
+      const data        = readFixture("clix/assessment.json");
       const settings    = {assessment_id: 1};
       const assessment  = parse(settings, data);
 
@@ -41,7 +37,7 @@ describe("CLIx assessment parser", () => {
     it('handles no feedback available', () => {
       var result = parseFeedback("No feedback available.");
 
-      expect(result).toEqual(undefined);
+      expect(result).toEqual('');
     });
 
     it('handles bad xml', () => {

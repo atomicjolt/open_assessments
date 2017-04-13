@@ -1,5 +1,6 @@
 import React                  from 'react';
 import { connect }            from 'react-redux';
+import _                      from 'lodash';
 import AssessmentForm         from './assessment_form';
 import hashHistory            from '../../history';
 import Heading                from  '../common/heading';
@@ -19,6 +20,10 @@ export class NewAssessment extends React.Component {
     editableBankId: React.PropTypes.string.isRequired,
     createAssessment: React.PropTypes.func.isRequired,
     createAssessmentWithItem: React.PropTypes.func.isRequired,
+    updatePath: React.PropTypes.func.isRequired,
+    getAssessments: React.PropTypes.func.isRequired,
+    getItems: React.PropTypes.func.isRequired,
+    banks: React.PropTypes.arrayOf(React.PropTypes.shape({}))
   };
 
   constructor(props) {
@@ -28,6 +33,16 @@ export class NewAssessment extends React.Component {
         assignedBankIds: [this.props.editableBankId]
       },
     };
+  }
+
+  getBankChildren(bankId) {
+    const id = encodeURIComponent(bankId);
+    const flatBanks = {};
+    const banks = this.flattenBanks(this.props.banks, flatBanks);
+    this.props.updatePath(id, banks[id], true);
+    this.props.getAssessments(id);
+    this.props.getItems(id);
+    hashHistory.push('/');
   }
 
   createAssessment(assessment) {
@@ -49,23 +64,14 @@ export class NewAssessment extends React.Component {
 
   flattenBanks(banks, flatBanks) {
     _.forEach(banks, (bank) => {
-      flatBanks[bank.id] = bank;
+      flatBanks[bank.id] = bank; // eslint-disable-line no-param-reassign
       if (!_.isEmpty(bank.childNodes)) {
-        return this.flattenBanks(bank.childNodes, flatBanks);
+        this.flattenBanks(bank.childNodes, flatBanks);
       }
     });
     return flatBanks;
   }
 
-  getBankChildren(bankId) {
-    const id = encodeURIComponent(bankId);
-    let flatBanks = {};
-    const banks = this.flattenBanks(this.props.banks, flatBanks);
-    this.props.updatePath(id, banks[id], true);
-    this.props.getAssessments(id);
-    this.props.getItems(id);
-    hashHistory.push('/');
-  }
 
   render() {
     return (
@@ -81,7 +87,7 @@ export class NewAssessment extends React.Component {
           updateAssessment={assessment => this.createAssessment(assessment)}
           createItem={newItem => this.createItem(newItem)}
           createChoice={() => {}}
-          bankId=''
+          bankId=""
         />
       </div>
     );

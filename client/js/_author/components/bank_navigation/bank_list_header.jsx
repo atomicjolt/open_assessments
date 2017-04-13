@@ -1,6 +1,8 @@
 import React        from 'react';
+import localize     from '../../locales/localize';
 
-export default function bankListHeader(props) {
+function bankListHeader(props) {
+  const strings = props.localizeStrings('bankListHeader');
   return (
     <table className="au-c-table">
       <thead>
@@ -11,7 +13,7 @@ export default function bankListHeader(props) {
               className={props.sortName ? 'au-c-table__filter is-active' : 'au-c-table__filter'}
               onClick={() => props.sortBy('sortName')}
             >
-              Name
+              {strings.name}
               <i className={props.sortName === 'desc' ? 'material-icons top is-active' : 'material-icons top'}>
                 keyboard_arrow_up
               </i>
@@ -25,7 +27,7 @@ export default function bankListHeader(props) {
               className={props.sortPublished ? 'au-c-table__filter is-active' : 'au-c-table__filter'}
               onClick={() => props.sortBy('sortPublished')}
             >
-              Published
+              {strings.published}
               <i className={props.sortPublished === 'desc' ? 'material-icons top is-active' : 'material-icons top'}>
                 keyboard_arrow_up
               </i>
@@ -43,6 +45,9 @@ export default function bankListHeader(props) {
 
 bankListHeader.propTypes = {
   sortBy          : React.PropTypes.func.isRequired,
+  localizeStrings : React.PropTypes.func.isRequired,
   sortName        : React.PropTypes.string,
   sortPublished   : React.PropTypes.string,
 };
+
+export default localize(bankListHeader);

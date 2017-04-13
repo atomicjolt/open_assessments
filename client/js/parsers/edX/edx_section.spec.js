@@ -1,8 +1,9 @@
 "use strict";
 
 import EdxSection				from './edx_section.js';
+import { readFixture }  from '../../../specs_support/utils';
 
-xdescribe('Parses edX Sequential', function(){
+describe('Parses edX Sequential', function(){
 	var url;
 	var xml;
 	var res;
@@ -10,9 +11,8 @@ xdescribe('Parses edX Sequential', function(){
 	var id = "97cc2d1812204294b5fcbb91a1157368";
 
 	beforeAll(function(){
-    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
 		url = `https://dl.dropboxusercontent.com/u/7594429/edXCourse/sequential/${id}.xml`;
-		xml = readFixtures(`edXCourse/sequential/${id}.xml`);
+		xml = readFixture(`edXCourse/sequential/${id}.xml`);
 
 		// A response without a responseType will set the xml on the text. ie a request from Dropbox
 		res = {

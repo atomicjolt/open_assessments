@@ -5,14 +5,9 @@ import { languages, getLanguage } from '../../../../constants/language_types';
 
 function serializeQuestionString(originalItem, item) {
   const simpleLanguage = getLanguage(item.language);
-  if (!simpleLanguage) {
+  const text = _.get(item, 'question.text');
+  if (!simpleLanguage || _.isEmpty(text)) {
     return null;
-  }
-  let text = _.get(item, 'question.text');
-  if (!_.isEmpty(originalItem.question) && _.isEmpty(text) && text !== '') {
-    text = originalItem.question.text;
-  } else if (_.isEmpty(originalItem.question) && _.isEmpty(text) && text !== '') {
-    text = '';
   }
 
   return {

@@ -7,4 +7,5 @@ eslint:
   config_file: .eslintrc.yml
 
 scss:
+  enabled: false
   config_file: .scss-lint.yml

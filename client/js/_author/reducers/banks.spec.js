@@ -1,9 +1,7 @@
 import _                              from 'lodash';
 import banks                          from './banks';
-// TODO:  this got deleted, remake it
-// import { banksData, assessmentData }  from '../../../specs_support/dummy_data';
 
-xdescribe('banks reducer', () => {
+describe('banks reducer', () => {
   let state;
   let action;
 
@@ -21,23 +19,22 @@ xdescribe('banks reducer', () => {
   });
 
   it('stores banks', () => {
-    action.type = 'GET_BANKS_DONE';
-    // action.payload = banksData;
-
+    action.type = 'GET_BANKS_HIERARCHY_DONE';
+    action.payload = {
+      childNodes: [{
+        id: 'asdf2',
+        childNodes: [{
+          id: 'asdf3',
+          childNodes: []
+        }],
+      },
+      {
+        id: 'asdf2.1',
+        childNodes: [],
+      }],
+    };
     state = banks(state, action);
 
     expect(_.isEmpty(state)).toBeFalsy();
-    expect(state['assessment.Bank%3A57e2b62fc89cd916208d0155%40ODL.MIT.EDU']).toBeDefined();
-  });
-
-  it('stores assessments under the bank', () => {
-    action.type = 'GET_BANKS_DONE';
-    // action.payload = banksData;
-    state = banks(state, action);
-
-    action.type = 'GET_ASSESSMENTS_DONE';
-    // action.payload = assessmentData;
-    // state = banks(state, action);
-    expect(state['assessment.Bank%3A57867b0dc89cd93f9e22cc2f%40ODL.MIT.EDU'].assessments).toBeDefined();
   });
 });

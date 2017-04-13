@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceRoot}/client/node_modules/jest-cli/bin/jest.js",
+      "stopOnEntry": false,
+      "args": ["--runInBand", "--config=${workspaceRoot}/client/config/jest_config.json", "${file}"],
+      "cwd": "${workspaceRoot}/client",
+      "preLaunchTask": null,
+      "runtimeExecutable": null,
+      "runtimeArgs": [
+          "--nolazy"
+      ],
+      "env": {
+          "NODE_ENV": "development"
+      },
+      "externalConsole": false,
+      "sourceMaps": false,
+      "outDir": null
+    }
+  ]
+}

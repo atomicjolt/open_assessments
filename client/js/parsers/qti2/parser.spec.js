@@ -1,19 +1,14 @@
-import Immutable  from "immutable";
-import $          from "jquery";
+import $                             from "jquery";
+import { readFixture }               from '../../../specs_support/utils';
 
 import { AssessmentFormats, parse }  from "../assessment";
 import Parser                        from "./parser";
 
 describe("QTI2 assessment parser", () => {
-
-  beforeAll(() => {
-    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
-  });
-
   describe("parse", () => {
 
     it("parses \"choice\" assessment xml from QTI into an object", () => {
-      const data        = readFixtures("qti2/choice.xml");
+      const data        = readFixture("qti2/choice.xml");
       const xml         = $($.parseXML(data));
       const settings    = {assessment_id: 1};
       const assessment  = parse(settings, data);

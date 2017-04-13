@@ -1,12 +1,13 @@
-import React      from 'react';
-import _          from 'lodash';
-
+import React                        from 'react';
+import _                            from 'lodash';
 import { audioLimit as MAX_TIME }   from '../../../../../constants/question_types';
+import localize                     from '../../../../locales/localize';
 
-export default class AudioLimit extends React.Component {
+class AudioLimit extends React.Component {
   static propTypes = {
     item: React.PropTypes.object.isRequired,
     handleBlur: React.PropTypes.func,
+    localizeStrings: React.PropTypes.func,
   };
 
   static getAudioLimit(item) {
@@ -20,13 +21,6 @@ export default class AudioLimit extends React.Component {
     return seconds;
   }
 
-  static rangeWarning() {
-    return (
-      <span className="au-c-inline-error">Please enter a positive number under {`${MAX_TIME}`}</span>
-    );
-  }
-
-
   constructor(props) {
     super(props);
     const timeLimit = AudioLimit.getAudioLimit(props.item)
@@ -38,6 +32,13 @@ export default class AudioLimit extends React.Component {
       timeLimit: _.toString(timeLimit),
       displayWarning,
     };
+  }
+
+  rangeWarning() {
+    const strings = this.props.localizeStrings('audioLimit');
+    return (
+      <span className="au-c-inline-error">{strings.rangeWarning} {`${MAX_TIME}`}</span>
+    );
   }
 
   handleTimeLimitUpdate(e) {
@@ -59,7 +60,7 @@ export default class AudioLimit extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="au-c-file-upload__audio-settings is-active">
         <span>Audio record limit</span>
         <div className="au-c-input au-c-input--inline">
           <label htmlFor="audio-limit" />
@@ -79,8 +80,10 @@ export default class AudioLimit extends React.Component {
           </div>
         </div>
         <span>seconds. ({`${MAX_TIME}`} maximum)</span>
-        { this.state.displayWarning ? AudioLimit.rangeWarning() : null }
+        { this.state.displayWarning ? this.rangeWarning() : null }
       </div>
     );
   }
 }
+
+export default localize(AudioLimit);

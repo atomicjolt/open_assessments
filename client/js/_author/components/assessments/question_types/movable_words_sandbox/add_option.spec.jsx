@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow }  from 'enzyme';
-import TestUtils from 'react-addons-test-utils';
 import AddOption from './add_option';
 
 describe('add option component', () => {
@@ -11,7 +10,7 @@ describe('add option component', () => {
   beforeEach(() => {
     calledFunc = false;
     props = {
-      updateChoice: () => {calledFunc = true},
+      updateChoice: () => { calledFunc = true; },
     };
     result = shallow(<AddOption {...props} />);
   });
