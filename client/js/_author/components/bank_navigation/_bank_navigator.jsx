@@ -37,7 +37,6 @@ export class BankNavigator extends React.Component {
     updatePath: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
     getAssessmentOffered: React.PropTypes.func.isRequired,
-    getItems: React.PropTypes.func.isRequired,
     createAssessment: React.PropTypes.func.isRequired,
     deleteAssessment: React.PropTypes.func.isRequired,
     currentBankId: React.PropTypes.string,
@@ -56,7 +55,6 @@ export class BankNavigator extends React.Component {
     const bank = _.find(this.props.banks, b => b.id === bankId);
     if (bank) { this.props.updatePath(bankId, bank); }
     this.props.getAssessments(bankId);
-    this.props.getItems(bankId);
   }
 
   getEmbedCode(assessment) {
@@ -77,22 +75,23 @@ export class BankNavigator extends React.Component {
     }
   }
 
-  sortBanks() {
+  sortContents(contents) {
     const { sortName, sortPublished } = this.state;
-    if (!sortName && !sortPublished) { return this.props.banks; }
+    if (!sortName && !sortPublished) { return contents; }
 
-    let sortedBanks = this.props.banks;
+    let sortedContents = contents;
     if (sortName) {
-      sortedBanks = _.orderBy(sortedBanks, bank => _.lowerCase(bank.displayName.text), sortName);
+      sortedContents = _.orderBy(sortedContents, content =>
+        _.lowerCase(content.displayName.text), sortName);
     }
     if (sortPublished) {
-      sortedBanks = _.orderBy(
-        sortedBanks,
-        bank => _.includes(bank.assignedBankIds, this.props.settings.publishedBankId),
+      sortedContents = _.orderBy(
+        sortedContents,
+        content => _.includes(content.assignedBankIds, this.props.settings.publishedBankId),
         sortPublished
       );
     }
-    return sortedBanks;
+    return sortedContents;
   }
 
   deleteAssessment(bankId, assessmentId) {
@@ -113,9 +112,9 @@ export class BankNavigator extends React.Component {
           getBankChildren={bankId => this.getBankChildren(bankId)}
         />
         <BankList
-          assessments={this.props.assessments}
+          assessments={this.sortContents(this.props.assessments)}
           baseEmbedUrl={settings.baseEmbedUrl}
-          banks={this.sortBanks()}
+          banks={this.sortContents(this.props.banks)}
           banksLoaded={this.props.banksLoaded}
           getEmbedCode={(assessId, bankId) => { this.getEmbedCode(assessId, bankId); }}
           publishedBankId={settings.publishedBankId}

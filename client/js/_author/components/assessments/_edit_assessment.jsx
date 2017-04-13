@@ -42,7 +42,6 @@ export class EditAssessment extends React.Component {
       publishedBankId: React.PropTypes.string
     }),
     updatePath: React.PropTypes.func.isRequired,
-    getItems: React.PropTypes.func.isRequired,
     banks: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
     getAssessments: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
@@ -72,7 +71,6 @@ export class EditAssessment extends React.Component {
     const banks = this.flattenBanks(this.props.banks, flatBanks);
     this.props.updatePath(bankId, banks[bankId], true);
     this.props.getAssessments(bankId);
-    this.props.getItems(bankId);
     hashHistory.push('/');
   }
 

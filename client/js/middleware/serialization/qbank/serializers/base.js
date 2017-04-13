@@ -6,7 +6,9 @@ import { languages, getLanguage } from '../../../../constants/language_types';
 function serializeQuestionString(originalItem, item) {
   const simpleLanguage = getLanguage(item.language);
   const text = _.get(item, 'question.text');
-  if (!simpleLanguage || _.isEmpty(text)) {
+
+  // get always returns undefined if text isn't present
+  if (!simpleLanguage || _.isUndefined(text)) {
     return null;
   }
 
