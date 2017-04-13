@@ -27,9 +27,6 @@ describe('image sequence component', () => {
         question: {
           choices: {
             choice: {
-              id: '3',
-            },
-            choice: {
               id: '4',
             },
           },
@@ -42,7 +39,7 @@ describe('image sequence component', () => {
         },
         answers: [],
       },
-      updateItem: () => {calledFunc = true},
+      updateItem: () => { calledFunc = true; },
       updateChoice: () => {},
       activateChoice: () => {},
       save: () => {},
@@ -67,5 +64,5 @@ describe('image sequence component', () => {
     const feedback = result.find(Feedback);
     feedback.at(0).nodes[0].props.updateItem();
     expect(calledFunc).toBeTruthy();
-  })
+  });
 });

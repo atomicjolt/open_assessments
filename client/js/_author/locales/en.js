@@ -58,7 +58,10 @@ export default {
       ok: 'OK',
       error: 'Error',
       insert: 'Insert',
-      modal: 'Modal'
+      audioFile: 'Select an Audio file',
+      imgFile: 'Select an Image',
+      videoFile: 'Select a Video file',
+
     },
     imageOption: {
       NA: 'N/A'
@@ -176,6 +179,10 @@ export default {
       addSnap: 'Add Snap Zone',
       addDrop: 'Add Drop Zone',
       addImage: 'Add Image',
+      showZones: 'Show Zones',
+    },
+    targetPlaceholder: {
+      addImg: 'Add Target Image',
     },
   }
 };

@@ -14,9 +14,9 @@ describe('option component', () => {
     props = {
       text: '',
       id: '',
-      updateChoice: () => {calledFunc = true},
-      deleteChoice: () => {calledFunc = true},
-      setActiveChoice: () => {calledFunc = true},
+      updateChoice: () => { calledFunc = true; },
+      deleteChoice: () => { calledFunc = true; },
+      setActiveChoice: () => { calledFunc = true; },
       isCorrect: false,
       isActive: false,
       itemId: '',

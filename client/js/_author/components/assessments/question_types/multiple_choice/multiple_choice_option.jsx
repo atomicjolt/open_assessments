@@ -85,6 +85,7 @@ multipleChoiceOptions.propTypes = {
   localizeStrings: React.PropTypes.func.isRequired,
   moveUp: React.PropTypes.func.isRequired,
   moveDown: React.PropTypes.func.isRequired,
+  setActiveChoice: React.PropTypes.func.isRequired,
   first: React.PropTypes.bool,
   last: React.PropTypes.bool,
   isCorrect: React.PropTypes.bool,

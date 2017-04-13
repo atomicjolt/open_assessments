@@ -1,10 +1,13 @@
 import React      from 'react';
-import _          from 'lodash';
+
 import Checkbox   from '../../assessments/question_types/question_common/option_checkbox';
+import MetaDataFileInputs from './meta_file_inputs';
+import MetaDataInputs     from './meta_data_inputs';
 
 export default class Metadata extends React.Component {
   static propTypes = {
     mediaType: React.PropTypes.string,
+    selectedLanguage: React.PropTypes.string,
     updateMetadata: React.PropTypes.func.isRequired,
     metadataTypes: React.PropTypes.arrayOf(React.PropTypes.string),
     metadataFileTypes: React.PropTypes.arrayOf(React.PropTypes.string),
@@ -12,6 +15,23 @@ export default class Metadata extends React.Component {
       description: React.PropTypes.string,
     }),
   };
+  static labelName(type) {
+    // TODO: modify this for regional language stuff
+    switch (type) {
+      case 'altText':
+        return 'Alt Text';
+      case 'license':
+        return 'License';
+      case 'copyright':
+        return 'Copyright';
+      case 'vttFile':
+        return 'vtt File';
+      case 'transcript':
+        return 'Transcript';
+      default:
+        return '';
+    }
+  }
 
   constructor() {
     super();
@@ -30,24 +50,6 @@ export default class Metadata extends React.Component {
     this.textArea.rows = rows + minRows;
   }
 
-  labelName(type) {
-    // TODO: modify this for regional language stuff
-    switch (type) {
-      case 'altText':
-        return 'Alt Text';
-      case 'license':
-        return 'License';
-      case 'copyright':
-        return 'Copyright';
-      case 'vttFile':
-        return 'vtt File';
-      case 'transcript':
-        return 'Transcript';
-      default:
-        return '';
-    }
-  }
-
   autoPlayOption(metaData) {
     return (<Checkbox
       id={'uniqueId'}
@@ -58,7 +60,6 @@ export default class Metadata extends React.Component {
   }
 
   render() {
-    const { mediaType, metaData } = this.props;
     return (
       <div>
         <div className="au-c-input au-c-input-label--left">
@@ -82,43 +83,25 @@ export default class Metadata extends React.Component {
             <div className="au-c-input__bottom" />
           </div>
         </div>
-        {
-          _.map(this.props.metadataTypes, type => (
-            <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
-              <label htmlFor={`meta_upload_${type}`}>{this.labelName(type)}</label>
-              <div className="au-c-input__contain">
-                <input
-                  value={this.props.metaData[type] || ''}
-                  className="au-c-text-input au-c-text-input--smaller"
-                  id={`meta_upload_${type}`}
-                  type="text"
-                  tabIndex="0"
-                  onChange={e => this.props.updateMetadata(type, e.target.value)}
-                />
-                <div className="au-c-input__bottom" />
-              </div>
-            </div>
-          ))
+        <MetaDataInputs
+          selectedLanguage={this.props.selectedLanguage}
+          updateMetadata={this.props.updateMetadata}
+          metadataTypes={this.props.metadataTypes}
+          labelName={Metadata.labelName}
+          metaData={this.props.metaData}
+        />
+        { this.props.mediaType !== 'img' && this.props.selectedLanguage === '639-2%3AENG%40ISO' ?
+          <div>
+            Auto-play { this.autoPlayOption(this.props.metaData) }
+          </div>
+          : null
         }
-
-        { mediaType !== 'img' ? <div>Auto-play { this.autoPlayOption(metaData) }</div> : null }
-        {
-          _.map(this.props.metadataFileTypes, type => (
-            <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
-              <label htmlFor={`meta_upload_${type}`}>{this.labelName(type)}</label>
-              <div className="au-c-input__contain">
-                <input
-                  className=""
-                  id={`meta_upload_${type}`}
-                  type="file"
-                  tabIndex="0"
-                  onChange={e => this.props.updateMetadata(type, e.target.files[0])}
-                />
-                <div className="au-c-input__bottom" />
-              </div>
-            </div>
-          ))
-        }
+        <MetaDataFileInputs
+          metadataFileTypes={this.props.metadataFileTypes}
+          updateMetadata={this.props.updateMetadata}
+          labelName={Metadata.labelName}
+          metaData={this.props.metaData}
+        />
       </div>
     );
   }

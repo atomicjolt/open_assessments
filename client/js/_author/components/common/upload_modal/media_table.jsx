@@ -18,7 +18,6 @@ const placeholders = {
 };
 
 export default function mediaTable(props) {
-
   return (
     <div className="au-c-modal-media__results">
       <table>
@@ -47,13 +46,12 @@ export default function mediaTable(props) {
 }
 
 mediaTable.propTypes = {
-  media: React.PropTypes.shape({
-    description: React.PropTypes.shape({
-    }),
-    license: React.PropTypes.shape({
-    }),
-    altText: React.PropTypes.shape({
+  media: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      description: React.PropTypes.shape({}),
+      license: React.PropTypes.shape({}),
+      altText: React.PropTypes.shape({}),
     })
-  }),
+  ),
   selectedMediaId: React.PropTypes.string,
 };

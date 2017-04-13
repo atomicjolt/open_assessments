@@ -16,9 +16,7 @@ describe('Metadata', () => {
         altText: {
           text: 'salty alty text',
         },
-        description: {
-          text: 'description text',
-        },
+        description: 'description text',
         copyright: {
           text: 'copyright stuff',
         },
@@ -26,6 +24,7 @@ describe('Metadata', () => {
           text: 'silly license text',
         },
       },
+      updateMetadata: () => {},
     };
 
     result = TestUtils.renderIntoDocument(<Stub><Metadata {...props} /></Stub>);
@@ -33,9 +32,7 @@ describe('Metadata', () => {
 
   it('it should not be active tr style', () => {
     const labels = TestUtils.scryRenderedDOMComponentsWithTag(result, 'label');
-    expect(labels[1].textContent).toBe('Copyright');
-    expect(labels[2].textContent).toBe('Alt Text');
-    expect(labels[3].textContent).toBe('License');
+    expect(labels[0].textContent).toBe('Description');
   });
 
 });

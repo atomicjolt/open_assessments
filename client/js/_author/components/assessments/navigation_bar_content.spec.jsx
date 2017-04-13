@@ -7,20 +7,19 @@ describe('New Assessments View', () => {
   let result;
   let props;
   const isPublished = true;
-  let bankerId;
 
   beforeEach(() => {
     props = {
       view: 'assessments',
       togglePublishAssessment: () => {},
       isPublished,
-      items: [{'something': 'stuff'}, {'something': 'boom'}],
+      items: [{ something: 'stuff' }, { something: 'boom' }],
       assessment: {
         bankId: 'id12345',
         assessmentId: 'assessmentId46587'
       },
       bankId: '1222',
-      getBankChildren: (id) => { bankerId = id; }
+      getBankChildren: () => {}
     };
     result = TestUtils.renderIntoDocument(<Stub><AssessmentView {...props} /></Stub>);
   });

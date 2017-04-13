@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`target_zone component renders the component as a snapshot 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <div
+    className="au-c-drag-and-drop__target-image"
+    onClick={[Function]}
+>
+    <targetPlaceholder
+        onClick={[Function]}
+    />
+</div>,
+  "nodes": Array [
+    <div
+      className="au-c-drag-and-drop__target-image"
+      onClick={[Function]}
+>
+      <targetPlaceholder
+            onClick={[Function]}
+      />
+</div>,
+  ],
+  "options": Object {},
+  "renderer": ReactShallowRenderer {
+    "_instance": ShallowComponentWrapper {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 0,
+      "_context": Object {},
+      "_currentElement": <TargetZone
+        editZone={[Function]}
+        openModal={[Function]}
+        target={Object {}}
+        zones={Object {}}
+/>,
+      "_debugID": 1,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": TargetZone {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "props": Object {
+          "editZone": [Function],
+          "openModal": [Function],
+          "target": Object {},
+          "zones": Object {},
+        },
+        "refs": Object {},
+        "state": Object {
+          "activeZone": null,
+        },
+        "target": null,
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 1,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <div
+          className="au-c-drag-and-drop__target-image"
+          onClick={[Function]}
+>
+          <targetPlaceholder
+                    onClick={[Function]}
+          />
+</div>,
+        "_debugID": 2,
+        "_renderedOutput": <div
+          className="au-c-drag-and-drop__target-image"
+          onClick={[Function]}
+>
+          <targetPlaceholder
+                    onClick={[Function]}
+          />
+</div>,
+      },
+      "_renderedNodeType": 0,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <TargetZone
+    editZone={[Function]}
+    openModal={[Function]}
+    target={Object {}}
+    zones={Object {}}
+/>,
+}
+`;

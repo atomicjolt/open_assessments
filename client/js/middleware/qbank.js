@@ -79,28 +79,31 @@ function uploadMedia(state, action) {
   );
 }
 
-// function uploadMediaMeta(state, metaData, assetId) {
+function uploadMediaMeta(state, metaData, repositoryId, assetId, mediaType) {
+  const formData = new FormData();
+  formData.append('mediaDescription', metaData.description || '');
+  formData.append('locale', metaData.locale);
 
-//   const formData = new FormData();
-//   formData.append('mediaDescription', metaData.description || '');
-//   formData.append('altText', metaData.altText || '');
-//   formData.append('license', metaData.license || '');
-//   formData.append('copyright', metaData.copyright || '');
-//   formData.append('locale', metaData.locale);
-//   formData.append('vttFile', metaData.vttFile || '');
-//   formData.append('transcript', metaData.transcript || '');
+  if (mediaType === 'audio') {
+    formData.append('transcriptFile', metaData.transcript || '');
+  } else if (mediaType === 'img') {
+    formData.append('altText', metaData.altText || '');
+  } else if (mediaType === 'video') {
+    formData.append('vttFile', metaData.vttFile || '');
+    formData.append('transcriptFile', metaData.transcript || '');
+  }
 
-//   return api.post(
-//     `repository/assets/${assetId}/contents`,
-//     state.settings.api_url,
-//     state.jwt,
-//     state.settings.csrf_token,
-//     null,
-//     formData,
-//     null,
-//     20000
-//   );
-// }
+  return api.put(
+    `repository/repositories/${repositoryId}/assets/${assetId}`,
+    state.settings.api_url,
+    state.jwt,
+    state.settings.csrf_token,
+    null,
+    formData,
+    null,
+    20000
+  );
+}
 
 function updateQBankItem(store, action) {
   const state = store.getState();
@@ -256,7 +259,8 @@ const qbank = {
       null,
       state.jwt,
       state.settings.csrf_token,
-      { qBankHost: state.settings.qBankHost },
+      // { qBankHost: state.settings.qBankHost },
+      null,
       null
     ).then((res) => {
       store.dispatch({
@@ -515,12 +519,16 @@ const qbank = {
 
   [AssetConstants.UPLOAD_MEDIA]: (store, action) => {
     const state = store.getState();
+
     uploadMedia(state, action).then((res) => {
-      // _.forEach(action.metaData, (data) => {
-      //   if (!data.locale === 'en') {
-      //     uploadMediaMeta(state, data, res.body.assetId);
-      //   }
-      // });
+      const additionalLanguageMeta = _.filter(action.metaData, metaData => (
+         !_.isUndefined(metaData.locale) && metaData.locale !== 'en'
+        )
+      );
+      const { repositoryId, id } = res.body;
+      _.forEach(additionalLanguageMeta, data => (
+        uploadMediaMeta(state, data, repositoryId, id, action.metaData.mediaType)
+      ));
 
       store.dispatch({
         type: action.type + DONE,

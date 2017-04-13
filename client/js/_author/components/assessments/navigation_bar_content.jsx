@@ -12,6 +12,7 @@ class NavigationBarContent extends React.Component {
     items: React.PropTypes.array.isRequired,
     assessment: React.PropTypes.object.isRequired,
     localizeStrings: React.PropTypes.func.isRequired,
+    getBankChildren: React.PropTypes.func.isRequired,
   };
 
   publishButton() {

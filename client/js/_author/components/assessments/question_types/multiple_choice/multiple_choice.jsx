@@ -112,7 +112,14 @@ class MultipleChoice extends React.Component {
                   {...choice}
                   itemType={type}
                   multipleAnswer={_.get(question, 'multipleAnswer', false)}
-                  updateChoice={(newChoice, fileIds) => this.props.updateChoice(id, choice.id, newChoice, fileIds)}
+                  updateChoice={
+                    (newChoice, fileIds) => this.props.updateChoice(
+                      id,
+                      choice.id,
+                      newChoice,
+                      fileIds
+                    )
+                  }
                   updateItem={() => this.props.updateItem({ question })}
                   deleteChoice={() => this.props.deleteChoice(choice)}
                   shuffle={question.shuffle}

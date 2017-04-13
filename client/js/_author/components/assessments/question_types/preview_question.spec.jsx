@@ -1,7 +1,6 @@
 import React            from 'react';
-import _                from 'lodash';
-import PreviewQuestion  from './preview_question';
 import TestUtils        from 'react-addons-test-utils';
+import PreviewQuestion  from './preview_question';
 
 describe('preview question component', () => {
   let props;
