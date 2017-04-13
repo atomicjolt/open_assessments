@@ -1,0 +1,313 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`drag_and_drop component renders the component as a snapshot 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <div>
+    <TargetArea
+        editZone={[Function]}
+        id=""
+        images={Object {}}
+        loadingMedia={false}
+        question={
+            Object {
+                "dropObjects": Object {},
+                "id": "7",
+                "zones": Object {},
+              }
+        }
+        setVisible={[Function]}
+        uploadMedia={[Function]}
+        visibleZones={undefined}
+    />
+    <div
+        className="au-c-drop-zone__answers__label"
+    >
+        Draggable answers
+    </div>
+    <DragArea
+        dropObjects={Object {}}
+        images={Object {}}
+        loadingMedia={false}
+        localizeStrings={[Function]}
+        updateDropObject={[Function]}
+        uploadMedia={[Function]}
+        zones={Object {}}
+    />
+    <div
+        className="au-c-question__feedback"
+    >
+        <SingleFeedback
+            bankId=""
+            feedback={undefined}
+            feedbackType="correctFeedback"
+            labelText="Correct Feedback"
+            updateItem={[Function]}
+        />
+        <SingleFeedback
+            bankId=""
+            feedback={undefined}
+            feedbackType="incorrectFeedback"
+            labelText="Incorrect Feedback"
+            updateItem={[Function]}
+        />
+    </div>
+</div>,
+  "nodes": Array [
+    <div>
+      <TargetArea
+            editZone={[Function]}
+            id=""
+            images={Object {}}
+            loadingMedia={false}
+            question={
+                  Object {
+                        "dropObjects": Object {},
+                        "id": "7",
+                        "zones": Object {},
+                      }
+            }
+            setVisible={[Function]}
+            uploadMedia={[Function]}
+            visibleZones={undefined}
+      />
+      <div
+            className="au-c-drop-zone__answers__label"
+      >
+            Draggable answers
+      </div>
+      <DragArea
+            dropObjects={Object {}}
+            images={Object {}}
+            loadingMedia={false}
+            localizeStrings={[Function]}
+            updateDropObject={[Function]}
+            uploadMedia={[Function]}
+            zones={Object {}}
+      />
+      <div
+            className="au-c-question__feedback"
+      >
+            <SingleFeedback
+                  bankId=""
+                  feedback={undefined}
+                  feedbackType="correctFeedback"
+                  labelText="Correct Feedback"
+                  updateItem={[Function]}
+            />
+            <SingleFeedback
+                  bankId=""
+                  feedback={undefined}
+                  feedbackType="incorrectFeedback"
+                  labelText="Incorrect Feedback"
+                  updateItem={[Function]}
+            />
+      </div>
+</div>,
+  ],
+  "options": Object {},
+  "renderer": ReactShallowRenderer {
+    "_instance": ShallowComponentWrapper {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 0,
+      "_context": Object {},
+      "_currentElement": <DragAndDrop
+        addMediaToQuestion={[Function]}
+        images={Object {}}
+        item={
+                Object {
+                        "bankId": "",
+                        "id": "",
+                        "question": Object {
+                          "dropObjects": Object {},
+                          "id": "7",
+                          "zones": Object {},
+                        },
+                      }
+        }
+        loadingMedia={false}
+        localizeStrings={[Function]}
+        updateChoice={[Function]}
+        updateItem={[Function]}
+/>,
+      "_debugID": 1,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": DragAndDrop {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "props": Object {
+          "addMediaToQuestion": [Function],
+          "images": Object {},
+          "item": Object {
+            "bankId": "",
+            "id": "",
+            "question": Object {
+              "dropObjects": Object {},
+              "id": "7",
+              "zones": Object {},
+            },
+          },
+          "loadingMedia": false,
+          "localizeStrings": [Function],
+          "updateChoice": [Function],
+          "updateItem": [Function],
+        },
+        "refs": Object {},
+        "state": Object {},
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 1,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <div>
+          <TargetArea
+                    editZone={[Function]}
+                    id=""
+                    images={Object {}}
+                    loadingMedia={false}
+                    question={
+                              Object {
+                                        "dropObjects": Object {},
+                                        "id": "7",
+                                        "zones": Object {},
+                                      }
+                    }
+                    setVisible={[Function]}
+                    uploadMedia={[Function]}
+                    visibleZones={undefined}
+          />
+          <div
+                    className="au-c-drop-zone__answers__label"
+          >
+                    Draggable answers
+          </div>
+          <DragArea
+                    dropObjects={Object {}}
+                    images={Object {}}
+                    loadingMedia={false}
+                    localizeStrings={[Function]}
+                    updateDropObject={[Function]}
+                    uploadMedia={[Function]}
+                    zones={Object {}}
+          />
+          <div
+                    className="au-c-question__feedback"
+          >
+                    <SingleFeedback
+                              bankId=""
+                              feedback={undefined}
+                              feedbackType="correctFeedback"
+                              labelText="Correct Feedback"
+                              updateItem={[Function]}
+                    />
+                    <SingleFeedback
+                              bankId=""
+                              feedback={undefined}
+                              feedbackType="incorrectFeedback"
+                              labelText="Incorrect Feedback"
+                              updateItem={[Function]}
+                    />
+          </div>
+</div>,
+        "_debugID": 2,
+        "_renderedOutput": <div>
+          <TargetArea
+                    editZone={[Function]}
+                    id=""
+                    images={Object {}}
+                    loadingMedia={false}
+                    question={
+                              Object {
+                                        "dropObjects": Object {},
+                                        "id": "7",
+                                        "zones": Object {},
+                                      }
+                    }
+                    setVisible={[Function]}
+                    uploadMedia={[Function]}
+                    visibleZones={undefined}
+          />
+          <div
+                    className="au-c-drop-zone__answers__label"
+          >
+                    Draggable answers
+          </div>
+          <DragArea
+                    dropObjects={Object {}}
+                    images={Object {}}
+                    loadingMedia={false}
+                    localizeStrings={[Function]}
+                    updateDropObject={[Function]}
+                    uploadMedia={[Function]}
+                    zones={Object {}}
+          />
+          <div
+                    className="au-c-question__feedback"
+          >
+                    <SingleFeedback
+                              bankId=""
+                              feedback={undefined}
+                              feedbackType="correctFeedback"
+                              labelText="Correct Feedback"
+                              updateItem={[Function]}
+                    />
+                    <SingleFeedback
+                              bankId=""
+                              feedback={undefined}
+                              feedbackType="incorrectFeedback"
+                              labelText="Incorrect Feedback"
+                              updateItem={[Function]}
+                    />
+          </div>
+</div>,
+      },
+      "_renderedNodeType": 0,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <DragAndDrop
+    addMediaToQuestion={[Function]}
+    images={Object {}}
+    item={
+        Object {
+            "bankId": "",
+            "id": "",
+            "question": Object {
+              "dropObjects": Object {},
+              "id": "7",
+              "zones": Object {},
+            },
+          }
+    }
+    loadingMedia={false}
+    localizeStrings={[Function]}
+    updateChoice={[Function]}
+    updateItem={[Function]}
+/>,
+}
+`;
