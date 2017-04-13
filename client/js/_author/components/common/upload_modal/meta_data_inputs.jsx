@@ -29,7 +29,5 @@ export default function metaDataInputs(props) {
 
 metaDataInputs.propTypes = {
   metadataTypes: React.PropTypes.array,
-  labelName: React.PropTypes.func,
-  selectedLanguage: React.PropTypes.string,
   metaData: React.PropTypes.shape({}),
 };
