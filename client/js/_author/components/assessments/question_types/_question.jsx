@@ -1,22 +1,31 @@
-import React            from 'react';
-import { connect }            from 'react-redux';
-import _                from 'lodash';
+import React        from 'react';
+import { connect }  from 'react-redux';
+import _            from 'lodash';
 
-import * as ItemActions from '../../../../actions/qbank/items';
-import MovableFillBlank from './movable_fill_blank/movable_fill_blank';
-import MultipleChoice   from './multiple_choice/multiple_choice';
-import QuestionHeader   from './question_common/header/_header';
-import Settings         from './question_common/settings';
-import QuestionText     from './question_common/text';
-import AudioUpload      from './audio_upload';
-import FileUpload       from './file_upload';
-import ImageSequence    from './image_sequence/_image_sequence';
-import ShortAnswer      from './short_answer';
-import WordSentence     from './movable_word_sentence/movable_word_sentence';
+import * as ItemActions   from '../../../../actions/qbank/items';
+import MovableFillBlank   from './movable_fill_blank/movable_fill_blank';
+import MultipleChoice     from './multiple_choice/multiple_choice';
+import QuestionHeader     from './question_common/header/_header';
+import Settings           from './question_common/settings';
+import QuestionText       from './question_common/text';
+import AudioUpload        from './audio_upload';
+import FileUpload         from './file_upload';
+import ImageSequence      from './image_sequence/_image_sequence';
+import ShortAnswer        from './short_answer';
+import WordSentence       from './movable_word_sentence/movable_word_sentence';
 import MovableWordSandbox from './movable_words_sandbox/movable_words_sandbox';
-import types            from '../../../../constants/question_types';
-import languages        from '../../../../constants/language_types';
-import Preview          from './preview_question';
+import DragAndDrop        from './drag_and_drop/_drag_and_drop';
+import types              from '../../../../constants/question_types';
+import languages          from '../../../../constants/language_types';
+import Preview            from './preview_question';
+import { bankMedia }      from '../../../selectors/media';
+import localize           from '../../../locales/localize';
+
+function select(state, props) {
+  return {
+    media: bankMedia(state, props),
+  };
+}
 
 export class Question extends React.Component {
   static propTypes = {
@@ -41,6 +50,7 @@ export class Question extends React.Component {
     createChoice: React.PropTypes.func.isRequired,
     deleteAssessmentItem: React.PropTypes.func.isRequired,
     moveItem: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
   };
 
   static questionComponents = {
@@ -54,6 +64,11 @@ export class Question extends React.Component {
     [types.multipleReflection]: MultipleChoice,
     [types.reflection]: MultipleChoice,
     [types.shortAnswer]: ShortAnswer,
+    [types.fileUpload]: FileUpload,
+    [types.audioUpload]: AudioUpload,
+    [types.movableWordSandbox]: MovableWordSandbox,
+    [types.movableWordSentence]: WordSentence,
+    [types.dragAndDrop]: DragAndDrop,
     [types.imageSequence]: ImageSequence,
   };
 
@@ -95,11 +110,8 @@ export class Question extends React.Component {
 
   updateItem(newItemProperties, forceSkipState) {
     const { item } = this.props;
-
-    if (newItemProperties.language) {
-      if (newItemProperties.language && this.state.language !== newItemProperties.language) {
-        this.setState({ language: newItemProperties.language });
-      }
+    if (newItemProperties.language && this.state.language !== newItemProperties.language) {
+      this.setState({ language: newItemProperties.language });
     } else if (_.includes(Question.stateDrivenTypes, item.type) && !forceSkipState) {
       this.setState({ ...item, ...newItemProperties });
     } else {
@@ -111,12 +123,12 @@ export class Question extends React.Component {
     }
   }
 
-  updateChoice(itemId, choiceId, choice, fileIds) {
+  updateChoice(itemId, choiceId, choice, fileIds, type) {
     const { item } = this.props;
     const updateAttributes = {
       id: itemId,
       question: {
-        choices: {
+        [type || 'choices']: {
           [choiceId]: choice,
         },
         fileIds,
@@ -137,13 +149,13 @@ export class Question extends React.Component {
   }
 
   changeType(type) {
-    // The choices: true is to make sure the deserializer updates the choice and answer data
+    // The choices: {} is to make sure the deserializer updates the choice and answer data
     this.props.updateItem(this.props.bankId, {
       id: this.props.item.id,
       type,
       question: {
         type,
-        choices: true,
+        choices: {},
       }
     });
   }
@@ -195,7 +207,8 @@ export class Question extends React.Component {
   }
 
   deleteChoice(choice) {
-    if (confirm('Are you sure you want to delete this option?')) {
+    const strings = this.props.localizeStrings('question');
+    if (confirm(strings.confirm)) {
       this.updateItem({
         question: {
           choices: this.markedForDeletion(choice)
@@ -218,13 +231,14 @@ export class Question extends React.Component {
         <Component
           item={_.merge(item, this.state.item)}
           updateItem={(newProps, forceSkipState) => this.updateItem(newProps, forceSkipState)}
-          updateChoice={(itemId, choiceId, choice, fileIds) =>
-            this.updateChoice(itemId, choiceId, choice, fileIds)}
+          updateChoice={(itemId, choiceId, choice, fileIds, type) =>
+            this.updateChoice(itemId, choiceId, choice, fileIds, type)}
           isActive={this.props.isActive}
           activeChoice={this.state.activeChoice}
           selectChoice={choiceId => this.selectChoice(choiceId)}
           blurOptions={e => this.blurOptions(e)}
-          createChoice={(text, fileIds) => this.props.createChoice(bankId, item.id, text, fileIds)}
+          createChoice={(text, fileIds, type) =>
+            this.props.createChoice(bankId, item.id, text, fileIds, type)}
           deleteChoice={choice => this.deleteChoice(choice)}
           save={() => this.saveStateItem()}
         />
@@ -241,7 +255,7 @@ export class Question extends React.Component {
     const chosenLanguage = _.find(item.question.texts,
       textObj => textObj.languageTypeId === defaultLanguage);
     const questionText = _.get(chosenLanguage, 'text', '');
-    const languageTypeId = _.get(chosenLanguage, 'languageTypeId');
+    const languageTypeId = _.get(chosenLanguage, 'languageTypeId') || defaultLanguage;
 
     return (
       <div>
@@ -287,7 +301,6 @@ export class Question extends React.Component {
     return (
       <div
         className={`au-o-item au-c-question ${className}`}
-        tabIndex="0"
         onClick={() => this.props.activateItem(id)}
         onFocus={() => this.props.activateItem(id)}
       >
@@ -313,4 +326,4 @@ export class Question extends React.Component {
   }
 }
 
-export default connect(null, ItemActions)(Question);
+export default connect(select, ItemActions)(localize(Question));

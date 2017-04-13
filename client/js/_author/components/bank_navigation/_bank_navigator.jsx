@@ -6,46 +6,42 @@ import * as AssessmentActions from '../../../actions/qbank/assessments';
 import * as ItemActions       from '../../../actions/qbank/items';
 import Heading                from '../common/heading';
 import BankList               from './bank_list';
-import  * as assessmentSelectors from '../../selectors/assessment';
+import  * as navigationSelectors from '../../selectors/bank_navigator';
+import * as commonSelectors   from '../../selectors/common';
 
-function select(state, props) {
-  const path = state.bankNavigation.location;
-  const currentBankId = !_.isEmpty(path) ? _.last(path).id : null;
-  let banks = state.banks;
-  _.forEach(path, (folder) => {
-    const currentBank = _.find(banks, { id: folder.id });
-    banks = currentBank.childNodes;
-  });
-
+function select(state) {
   return {
-    path,
-    currentBankId,
-    banks: _.merge(state.assessments[currentBankId], banks),
-    settings: state.settings,
-    currentBank: state.assessments[currentBankId],
+    path: navigationSelectors.path(state),
+    currentBankId: navigationSelectors.currentBankId(state),
+    banks: navigationSelectors.banks(state),
+    settings: commonSelectors.settings(state),
+    assessments: navigationSelectors.bankAssessments(state),
+    banksLoaded: navigationSelectors.banksLoaded(state),
   };
 }
 
 export class BankNavigator extends React.Component {
   static propTypes = {
+    assessments: React.PropTypes.shape({}).isRequired,
     banks: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.shape({})),
       React.PropTypes.shape({})
     ]).isRequired,
+    banksLoaded: React.PropTypes.bool.isRequired,
     settings: React.PropTypes.shape({
       editableBankId: React.PropTypes.string,
       publishedBankId: React.PropTypes.string,
-      baseEmbedUrl       : React.PropTypes.string,
+      baseEmbedUrl: React.PropTypes.string,
     }),
-    path               : React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
-    updatePath         : React.PropTypes.func.isRequired,
-    getAssessments     : React.PropTypes.func.isRequired,
-    getAssessmentOffered     : React.PropTypes.func.isRequired,
-    getItems           : React.PropTypes.func.isRequired,
-    createAssessment   : React.PropTypes.func.isRequired,
-    deleteAssessment   : React.PropTypes.func.isRequired,
-    currentBankId      : React.PropTypes.string,
-    currentBank        : React.PropTypes.shape({}),
+    path: React.PropTypes.arrayOf(React.PropTypes.shape({})).isRequired,
+    updatePath: React.PropTypes.func.isRequired,
+    getAssessments: React.PropTypes.func.isRequired,
+    getAssessmentOffered: React.PropTypes.func.isRequired,
+    getItems: React.PropTypes.func.isRequired,
+    createAssessment: React.PropTypes.func.isRequired,
+    deleteAssessment: React.PropTypes.func.isRequired,
+    currentBankId: React.PropTypes.string,
+    togglePublishAssessment: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -61,6 +57,13 @@ export class BankNavigator extends React.Component {
     if (bank) { this.props.updatePath(bankId, bank); }
     this.props.getAssessments(bankId);
     this.props.getItems(bankId);
+  }
+
+  getEmbedCode(assessment) {
+    const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
+    if (_.isEmpty(assessOffered)) {
+      this.props.getAssessmentOffered(assessment.bankId, assessment.id);
+    }
   }
 
   sortBy(type) {
@@ -83,7 +86,11 @@ export class BankNavigator extends React.Component {
       sortedBanks = _.orderBy(sortedBanks, bank => _.lowerCase(bank.displayName.text), sortName);
     }
     if (sortPublished) {
-      sortedBanks = _.orderBy(sortedBanks, bank => _.includes(bank.assignedBankIds, this.props.settings.publishedBankId), sortPublished);
+      sortedBanks = _.orderBy(
+        sortedBanks,
+        bank => _.includes(bank.assignedBankIds, this.props.settings.publishedBankId),
+        sortPublished
+      );
     }
     return sortedBanks;
   }
@@ -92,13 +99,6 @@ export class BankNavigator extends React.Component {
     this.props.deleteAssessment(bankId, assessmentId);
   }
 
-  getEmbedCode(assessId, bankId) {
-    const assessment = this.props.currentBank[assessId];
-    const assessOffered = assessment.assessmentOffered ? assessment.assessmentOffered[0] : '';
-    if (_.isEmpty(assessOffered)) {
-      this.props.getAssessmentOffered(bankId, assessId);
-    }
-  }
 
   render() {
     const { createAssessment, currentBankId, updatePath, settings } = this.props;
@@ -113,8 +113,10 @@ export class BankNavigator extends React.Component {
           getBankChildren={bankId => this.getBankChildren(bankId)}
         />
         <BankList
+          assessments={this.props.assessments}
           baseEmbedUrl={settings.baseEmbedUrl}
           banks={this.sortBanks()}
+          banksLoaded={this.props.banksLoaded}
           getEmbedCode={(assessId, bankId) => { this.getEmbedCode(assessId, bankId); }}
           publishedBankId={settings.publishedBankId}
           getBankChildren={bankId => this.getBankChildren(bankId)}

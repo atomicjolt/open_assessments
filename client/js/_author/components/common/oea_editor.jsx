@@ -1,24 +1,29 @@
-import _                 from 'lodash';
-import $                 from 'jquery';
-import React             from 'react';
-import { connect }       from 'react-redux';
-import Modal             from './editor_upload_modal';
-import TinyWrapper       from './tiny_wrapper';
-import guid              from '../../../utils/guid';
-import * as AssetActions from '../../../actions/qbank/assets';
+import _                        from 'lodash';
+import $                        from 'jquery';
+import React                    from 'react';
+import { connect }              from 'react-redux';
+import Modal                    from './upload_modal/editor_upload_modal';
+import TinyWrapper              from './tiny_wrapper';
+import guid                     from '../../../utils/guid';
+import * as AssetActions        from '../../../actions/qbank/assets';
+import { types as GenusTypes }  from '../../../constants/genus_types';
 
-function select(state, props) {
+function select(state) {
   return {
-    uploadedAssets: state.uploadedAssets[props.uploadScopeId],
-    error: _.get(state, `uploadedAssets["${props.uploadScopeId}"].error.message`)
+    mediaTypes: state.media,
+    img: state.media.image,
+    video: state.media.video,
+    audio: state.media.audio,
+    loadingMedia: state.media.loading,
+    uploadedAssets: state.uploadedAssets
   };
 }
 
+// TODO: figure out how to localize this
 export class OeaEditor extends React.Component {
   static propTypes = {
     onBlur: React.PropTypes.func.isRequired,
     bankId: React.PropTypes.string.isRequired,
-    uploadScopeId: React.PropTypes.string.isRequired,
     placeholder: React.PropTypes.string,
     text: React.PropTypes.string,
     uploadMedia: React.PropTypes.func.isRequired,
@@ -26,11 +31,13 @@ export class OeaEditor extends React.Component {
     fileIds: React.PropTypes.shape({}),
     textSize: React.PropTypes.string,
     error: React.PropTypes.string,
+    loadingMedia: React.PropTypes.bool,
   };
 
   constructor(props) {
     super(props);
     this.state = {
+      fileGuids: {},
       focused: false,
       editor: null,
       modalOpen: false,
@@ -40,45 +47,149 @@ export class OeaEditor extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (!_.get(this.props.uploadedAssets, this.state.mediaGuid) &&
+      _.get(nextProps.uploadedAssets, this.state.mediaGuid)
+    ) {
+      const media = nextProps.uploadedAssets[this.state.mediaGuid];
+      const editorContent = this.getEditorContent(media);
+
+      this.state.editor.insertContent(editorContent);
+      this.closeModal();
+    }
+  }
+
   onBlur(editorText, isChanged) {
     this.setState({ focused: false, newText: editorText });
     if (!isChanged) return;
 
     let text = editorText;
     const fileIds = {};
-    text = text.replace('autoplay', 'autoplay-placeholder');
+
+    // we don't want jquery to auto play or make any requests
+    text = text.replace(/autoplay/g, 'autoplay-placeholder');
+    text = text.replace(/src="/g, 'src-placeholder="');
+
     const doc = $(`<div>${text}</div>`);
-    $('img, source', doc).each((i, el) => {
+    $('img, source, track', doc).each((i, el) => {
       const media = $(el);
-      const match = /.*\/(.*)\/stream$/.exec(media.attr('src'));
+      const match = /.*\/(.*)\/stream$/.exec(media.attr('src-placeholder'));
       if (match) {
         const assetContentId = match[1];
         const mediaGuid = this.findMediaGuid(assetContentId);
-        text = text.replace(media.attr('src'), `AssetContent:${mediaGuid}`);
+        if (mediaGuid) {
+          media.attr('src-placeholder', `AssetContent:${mediaGuid}`);
+        }
       }
     });
 
-    _.each(this.props.uploadedAssets, (asset, mediaGuid) => {
-      if (!asset.error) {
+    // Insert transcript tags before sending question text to qbank
+    $('source', doc).each((i, el) => {
+      const media = $(el);
+      const assetContentGuid = media.attr('src-placeholder');
+      if (assetContentGuid) {
+        const match = assetContentGuid.match('AssetContent:(.+)');
+        if (match) {
+          const assetContentId = match[1];
+          const transcriptGenus = GenusTypes.assets.transcript.transcript;
+          const transcriptGuids =
+            this.findMetaGuids(assetContentId)
+            .filter(file =>
+              file.assetContentTypeId === transcriptGenus ||
+              file.genusTypeId === transcriptGenus
+            );
+            // Transcript tags need to be inserted after <audio> and <video> elements
+            //  if we have any transcript files that match the video/audio asset
+          if (!_.isEmpty(transcriptGuids)) {
+            media.parent().after(`<transcript src="AssetContent:${transcriptGuids[0].guid}" />`);
+          }
+        }
+      }
+    });
+
+
+    _.each(this.state.fileGuids, (file, mediaGuid) => {
+      // we either uploaded it, or selected it in the modal. Check both places.
+      const media = this.props.uploadedAssets[mediaGuid] || this.state.fileGuids[mediaGuid];
+      if (media && !media.error) {
+        const type = media.type && media.extension
+          ? GenusTypes.assets[media.type][media.extension]
+          : media.genusTypeId;
+
         fileIds[mediaGuid] = {
-          assetId: asset.id,
-          assetContentId: asset.assetContents[0].id,
-          assetContentTypeId: asset.assetContents[0].genusTypeId
+          assetId: media.id,
+          assetContentId: media.assetContentId,
+          assetContentTypeId: type,
         };
       }
     });
 
-    text = text.replace('autoplay-placeholder', 'autoplay');
+    text = doc.html();
+    text = text.replace(/src-placeholder/g, 'src');
+    text = text.replace(/autoplay-placeholder/g, 'autoplay');
 
     this.props.onBlur(text, fileIds);
+    this.setState({ fileGuids: {} });
+  }
+
+  getEditorContent(media) {
+    let editorContent = `<video><source src="${media.url}" /></video>`;
+    const alt = _.isEmpty(media.altText) ? '' : media.altText.text;
+    const autoPlay = media.autoPlay ? 'autoplay' : '';
+    switch (this.state.mediaType) {
+      case 'img':
+        editorContent = `<img src="${media.url}" alt="${alt}">`;
+        break;
+
+      case 'audio':
+        editorContent = `<audio ${autoPlay} name="media" controls>` +
+        `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
+        '</audio>';
+        break;
+      case 'video':
+        {
+          const track = _.isEmpty(media.vtt) ? '' : `<track src="${_.get(media, 'vtt.url')}" srclang="en">`;
+          editorContent = `<video ${autoPlay} name="media" controls>` +
+            `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
+            `${track}</video>`;
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    return editorContent;
+  }
+
+  // Find all assets whose assetId match the asset with assetGuid
+  findMetaGuids(assetGuid) {
+    const { fileIds, uploadedAssets } = this.props;
+    const { fileGuids } = this.state;
+    const allAssets = {
+      ...fileGuids,
+      ...fileIds,
+      ...uploadedAssets,
+    };
+    const asset = allAssets[assetGuid];
+    const id = asset.id || asset.assetId;
+    if (_.isEmpty(asset)) return [];
+
+    return _.toPairs(allAssets)
+      .map(file => ({
+        guid: file[0], // We need to add the guid to the asset object
+        ...file[1]
+      })).filter(file => file.assetId === id);
   }
 
   findMediaGuid(assetContentId) {
     // try to find in existing fileIds, otherwise try to find in newly uploaded fileIds.
-    return _.findKey(this.props.fileIds, fileData => (
-      fileData.assetContentId === assetContentId
-    )) || _.findKey(this.props.uploadedAssets, fileData => (
-      fileData.assetContents[0].id === assetContentId
+    return _.findKey(this.props.fileIds, file => (
+      file.assetContentId === assetContentId
+    )) || _.findKey(this.props.uploadedAssets, file => (
+      file.assetContentId === assetContentId
+    )) || _.findKey(this.state.fileGuids, file => (
+      file.assetContentId === assetContentId
     ));
   }
 
@@ -99,45 +210,64 @@ export class OeaEditor extends React.Component {
     });
   }
 
-  uploadMedia(file) {
-    const mediaGuid = guid();
-    this.props.uploadMedia(
-      file,
-      mediaGuid,
-      this.props.uploadScopeId,
-      this.props.bankId
-    );
-    this.setState({
-      mediaGuid
-    });
-  }
-
-  insertMedia(mediaUrl, mediaName) {
-    if (!mediaUrl) {
+  insertMedia(file, metaData, newMedia) {
+    if (!file) {
       this.closeModal();
       return;
     }
 
-    let editorContent = `<video><source src="${mediaUrl}" /></video>`;
+    const mediaGuid = guid();
+    const fileGuids = _.cloneDeep(this.state.fileGuids);
 
-    switch (this.state.mediaType) {
-      case 'img':
-        editorContent = `<img src="${mediaUrl}" />`;
-        break;
+    if (newMedia) {
+      const assetGuids = {
+        mediaGuid,
+        vttGuids: [],
+        transcriptGuids: [],
+      };
+      _.each(metaData, (meta) => {
+        if (meta.vttFile) {
+          const newGuid = guid();
+          assetGuids.vttGuids.push(newGuid);
+          fileGuids[newGuid] = {};
+        }
 
-      case 'audio':
-      case 'video':
-        editorContent = `<${this.state.mediaType} autoplay name="media" controls>` +
-          `<source src="${mediaUrl}" type="${this.state.mediaType}/${_.last(mediaName.split('.'))}"/>` +
-          `</${this.state.mediaType}>`;
-        break;
+        if (meta.transcript) {
+          const newGuid = guid();
+          assetGuids.transcriptGuids.push(newGuid);
+          fileGuids[newGuid] = {};
+        }
+      });
 
-      default:
-        break;
+      fileGuids[mediaGuid] = {};
+      this.props.uploadMedia(
+        file,
+        assetGuids,
+        this.props.bankId,
+        metaData,
+      );
+      this.setState({ mediaGuid });
+    } else {
+      const editorContent = this.getEditorContent(file);
+      this.state.editor.insertContent(editorContent);
+      fileGuids[mediaGuid] = file;
+      fileGuids[guid()] = file.vtt;
+      fileGuids[guid()] = file.transcript;
+      this.closeModal();
     }
 
-    this.state.editor.insertContent(editorContent);
-    this.closeModal();
+    this.setState({ fileGuids });
+  }
+
+  cleanText() {
+    let { text } = this.props;
+    if (!text) return text;
+
+    text = text.replace(/autoplay/g, 'autoplay-placeholder');
+    const doc = $(`<div>${text}</div>`);
+    $('.transcriptWrapper', doc).remove();
+    const cleanedHtml = doc.html();
+    return cleanedHtml.replace(/autoplay-placeholder/g, 'autoplay');
   }
 
   render() {
@@ -147,14 +277,13 @@ export class OeaEditor extends React.Component {
 
     const { textSize } = this.props;
     const uploadedAsset = _.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0]`);
-    const mediaName = _.get(uploadedAsset, 'displayName.text');
     return (
       <div className="au-c-input__contain">
         <div className={`au-c-text-input au-c-text-input--${textSize} au-c-wysiwyg ${activeClass}`}>
           <div className={`au-c-placeholder ${hidePlaceholder}`}>{this.props.placeholder}</div>
           <TinyWrapper
             {...this.props}
-            uploadMedia={(file, mediaCallback) => this.uploadMedia(file, mediaCallback)}
+            text={this.cleanText()}
             onBlur={(editorText, isChanged) => this.onBlur(editorText, isChanged)}
             onFocus={() => this.setState({ focused: true })}
             openModal={(editor, type) => this.openModal(editor, type)}
@@ -163,13 +292,13 @@ export class OeaEditor extends React.Component {
         <div className={`au-c-input__bottom ${activeClass}`} />
         <Modal
           isOpen={this.state.modalOpen}
-          closeModal={() => this.closeModal()}
-          insertMedia={() => this.insertMedia(_.get(uploadedAsset, 'url'), mediaName)}
-          mediaName={mediaName}
-          mediaType={this.state.mediaType}
-          uploadMedia={file => this.uploadMedia(file)}
+          insertMedia={(media, metaData, newMedia) => this.insertMedia(media, metaData, newMedia)}
           inProgress={this.state.mediaGuid && !_.get(uploadedAsset, 'displayName.text')}
           error={this.props.error}
+          closeModal={() => this.closeModal()}
+          mediaType={this.state.mediaType}
+          media={this.props[this.state.mediaType]}
+          loading={this.props.loadingMedia}
         />
       </div>
     );

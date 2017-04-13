@@ -6,7 +6,7 @@ const initialState = {
 };
 
 function setParents(bank, locations) {
-  let payload = { id: bank.id, name: bank.displayName.text };
+  const payload = { id: bank.id, name: bank.displayName.text };
   if (bank.parent) {
     locations.unshift(payload);
     setParents(bank.parent, locations);
@@ -28,7 +28,7 @@ export default function bankNavigation(state = initialState, action) {
       if (!action.id) {
         return { ...state, location: [] };
       }
-      let locations = [];
+      const locations = [];
 
       const pathIndex = _.findIndex(state.location, { id: action.id });
       const newLocation = _.cloneDeep(state).location;

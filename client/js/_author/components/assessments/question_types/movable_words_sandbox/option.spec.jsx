@@ -1,6 +1,5 @@
 import React          from 'react';
 import { shallow }    from 'enzyme';
-import TestUtils      from 'react-addons-test-utils';
 import Option         from './option';
 
 describe('the option component', () => {
@@ -11,9 +10,9 @@ describe('the option component', () => {
   beforeEach(() => {
     calledFunc = false;
     props = {
-      selectChoice: () => {calledFunc = true},
-      deleteChoice: () => {calledFunc = true},
-      updateChoice: () => {calledFunc = true},
+      selectChoice: () => { calledFunc = true; },
+      deleteChoice: () => { calledFunc = true; },
+      updateChoice: () => { calledFunc = true; },
       choice: {
         wordType: 'verb',
         id: '',

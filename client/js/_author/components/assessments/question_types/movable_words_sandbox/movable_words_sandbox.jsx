@@ -1,12 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
-
 import AudioLimit from '../question_common/audio_limit';
 import Option from './option';
 import AddOption from './add_option';
 import Feedback   from '../question_common/single_feedback';
+import localize   from '../../../../locales/localize';
 
-export default class MWSandbox extends React.Component {
+class MWSandbox extends React.Component {
   static propTypes = {
     item: React.PropTypes.object.isRequired,
     updateItem: React.PropTypes.func.isRequired,
@@ -16,10 +16,30 @@ export default class MWSandbox extends React.Component {
 
     selectChoice: React.PropTypes.func.isRequired,
     blurOptions: React.PropTypes.func.isRequired,
+    localizeStrings: React.PropTypes.func.isRequired,
 
     isActive: React.PropTypes.bool,
     activeChoice: React.PropTypes.string,
   };
+
+
+  getChoices(choices) {
+    const { id } = this.props.item;
+    return _.map(choices, (choice, index) => (
+      <Option
+        key={choice.id}
+        choice={choice}
+        index={index}
+        selectChoice={() => this.props.selectChoice(choice.id)}
+        updateChoice={
+          (newChoice, fileIds) => this.props.updateChoice(
+              id, choice.id, newChoice, fileIds)
+        }
+        deleteChoice={() => this.props.deleteChoice(choice)}
+        isActive={this.props.isActive && choice.id === this.props.activeChoice}
+      />
+    ));
+  }
 
   handleBlur(e) {
     this.props.updateItem({
@@ -33,28 +53,9 @@ export default class MWSandbox extends React.Component {
     });
   }
 
-  getChoices(choices) {
-    const { id } = this.props.item;
-    let index = 0;
-    return _.map(choices, (choice) => {
-      index += 1;
-      return (<Option
-        key={choice.id}
-        choice={choice}
-        index={index}
-        selectChoice={() => this.props.selectChoice(choice.id)}
-        updateChoice={
-          (newChoice, fileIds) => this.props.updateChoice(
-              id, choice.id, newChoice, fileIds)
-        }
-        deleteChoice={() => this.props.deleteChoice(choice)}
-        isActive={this.props.isActive && choice.id === this.props.activeChoice}
-      />);
-    });
-  }
-
   render() {
     const { question, id } = this.props.item;
+    const strings = this.props.localizeStrings('mwSandbox');
     return (
       <div onBlur={e => this.props.blurOptions(e)}>
         <div className="au-c-movable__audio-settings is-active">
@@ -68,17 +69,19 @@ export default class MWSandbox extends React.Component {
             this.getChoices(_.get(this.props.item, 'question.choices', {}))
           }
           <AddOption updateChoice={() => this.props.createChoice(id)} />
-          <div className="au-c-question__feedback">
-            <Feedback
-              updateItem={this.props.updateItem}
-              feedbackType="correctFeedback"
-              feedback={question.correctFeedback}
-              labelText="Feedback"
-              bankId={this.props.item.bankId}
-            />
-          </div>
+        </div>
+        <div className="au-c-question__feedback">
+          <Feedback
+            updateItem={this.props.updateItem}
+            feedbackType="correctFeedback"
+            feedback={question.correctFeedback}
+            labelText={strings.feedback}
+            bankId={this.props.item.bankId}
+          />
         </div>
       </div>
     );
   }
 }
+
+export default localize(MWSandbox);

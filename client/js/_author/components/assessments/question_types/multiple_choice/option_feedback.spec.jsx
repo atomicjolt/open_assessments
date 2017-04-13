@@ -1,7 +1,6 @@
 import React              from 'react';
-import Editor             from '../../../common/oea_editor';
-import guid               from '../../../../../utils/guid';
 import { shallow }        from 'enzyme';
+import Editor             from '../../../common/oea_editor';
 import OptionFeedback     from './option_feedback';
 
 describe('option feedback component', () => {
@@ -12,7 +11,7 @@ describe('option feedback component', () => {
   beforeEach(() => {
     calledFunc =  false;
     props = {
-      updateChoice: () => {calledFunc = true},
+      updateChoice: () => { calledFunc = true; },
       bankId: '7',
       feedback: '',
       id: '',
@@ -26,7 +25,7 @@ describe('option feedback component', () => {
     expect(result.find('label')).toBeDefined();
   });
 
-  it('renders Editor component with props', ()=> {
+  it('renders Editor component with props', () => {
     expect(result.find(Editor)).toBeDefined();
   });
 

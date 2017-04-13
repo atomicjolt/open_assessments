@@ -20,7 +20,7 @@ describe('default question header', () => {
     result = TestUtils.renderIntoDocument(<Stub><DefaultHeader {...props} /></Stub>);
   });
 
-  xit('deletes an item', () => {
+  it('deletes an item', () => {
     const buttons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'button');
     TestUtils.Simulate.click(_.last(buttons));
     expect(deleteCalled).toBeTruthy();

@@ -12,6 +12,7 @@ plugins:
   - jsx-a11y
   - import
 globals:
+  jest: false
   describe: false
   beforeEach: false
   afterEach: false
@@ -42,6 +43,7 @@ rules:
   padded-blocks: 0
   key-spacing: 0
   react/require-default-props: 0
+  react/no-danger: 0
   jsx-a11y/no-static-element-interactions: 0
   space-before-function-paren:
     - 2
@@ -57,5 +59,4 @@ rules:
     - forbid:
       - any
   import/extensions: 0
-  import/no-named-as-default: off
-  no-underscore-dangle: off
+  import/no-named-as-default: 0

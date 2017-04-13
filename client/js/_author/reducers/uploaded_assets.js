@@ -8,13 +8,28 @@ export default (state = initialState, action) => {
 
     case AssetConstants.UPLOAD_MEDIA_DONE: {
       const newState = _.cloneDeep(state);
+      const { vttGuids, transcriptGuids, mediaGuid } = action.original.fileGuids;
       if (action.error) {
-        newState[action.original.uploadScopeId] = { error: action.error };
+        newState[mediaGuid] = { error: action.error };
+        _.each(vttGuids.concat(transcriptGuids), (guid) => {
+          newState[guid] = { error: action.error };
+        });
+
         return newState;
       }
 
-      newState[action.original.uploadScopeId] = newState[action.original.uploadScopeId] || {};
-      newState[action.original.uploadScopeId][action.original.guid] = action.payload;
+      newState[mediaGuid] = action.payload;
+      if (!_.isEmpty(action.payload.transcript)) {
+        _.each(transcriptGuids, (guid) => {
+          newState[guid] = action.payload.transcript; // later we need to look up by language :(
+        });
+      }
+
+      if (!_.isEmpty(action.payload.vtt)) {
+        _.each(vttGuids, (guid) => {
+          newState[guid] = action.payload.vtt; // later we need to look up by language :(
+        });
+      }
 
       return newState;
     }

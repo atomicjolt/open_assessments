@@ -10,6 +10,7 @@ export default {
   reflection: 'reflection',
   multipleAnswer: 'multipleAnswer',
   multipleReflection: 'multipleReflection',
+  dragAndDrop: 'dragAndDrop',
 };
 
 export const audioLimit = 240;

@@ -3,6 +3,8 @@ import TestUtils          from 'react-addons-test-utils';
 import _                  from 'lodash';
 import { BankNavigator }  from './_bank_navigator';
 
+jest.mock('../../../libs/assets');
+
 describe('Bank Navigator', () => {
   let result;
   let props;
@@ -12,6 +14,7 @@ describe('Bank Navigator', () => {
     calledFuncts = [];
 
     props = {
+      assessments: {},
       banks: [
         {
           id: '1',
@@ -44,7 +47,9 @@ describe('Bank Navigator', () => {
       getItems           : () => { calledFuncts.push('getItems'); },
       createAssessment   : () => { calledFuncts.push('createAssessment'); },
       deleteAssessment   : () => { calledFuncts.push('deleteAssessment'); },
+      togglePublishAssessment: () => {},
       currentBankId      : '',
+      banksLoaded: false,
       getAssessmentOffered: () => {},
     };
     result = TestUtils.renderIntoDocument(<BankNavigator {...props} />);

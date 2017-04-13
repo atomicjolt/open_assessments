@@ -6,7 +6,7 @@ import appHistory from '../../history';
 
 export default function NavigationBar() {
   const handleClick = () => {
-    appHistory.goBack();
+    appHistory.push('/');
   };
 
   return (

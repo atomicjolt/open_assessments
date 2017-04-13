@@ -70,11 +70,11 @@ describe('assessment reducer', () => {
     const action = {
       type: AssessmentConstants.ANSWER_SELECTED,
       questionIndex:0,
-      answerId:1,
+      answerData:1,
       exclusive:false
     };
 
-    it("adds answerId to responses[][]", () => {
+    it('adds answerData to responses[][]', () => {
       const state = assessmentProgress(undefined, action);
       expect(state.getIn(['responses', '0']).toJS()).toEqual([1]);
     });
@@ -89,7 +89,7 @@ describe('assessment reducer', () => {
       let action = {
         type: AssessmentConstants.ANSWER_SELECTED,
         questionIndex:0,
-        answerId:1,
+        answerData:1,
         exclusive:true
       };
       var initialState = Immutable.fromJS({responses:[[2]]});

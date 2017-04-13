@@ -23,7 +23,7 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
   if (newChoiceAttributes.new) {
     choices.push({
       id: guid(),
-      text: newChoiceAttributes.new.text,
+      text: `<p></p><img src='${newChoiceAttributes.new.text}' alt='${newChoiceAttributes.new.altText}'>`,
       order: choices.length,
     });
   }
@@ -62,12 +62,13 @@ function serializeAnswers(choices, newChoiceAttributes, oldAnswers, correctFeedb
     genusTypeId: genusTypes.answer.wrongAnswer,
     feedback: _.get(incorrectFeedback, 'text'),
     type: genusTypes.answer.multipleAnswer,
-    choiceIds: _.map(_.filter(updatedChoices, { answerOrder: null }), 'id'),
+    choiceIds: [],
     fileIds: _.get(incorrectFeedback, 'fileIds'),
   };
 
   correctAnswer = scrub(correctAnswer);
   incorrectAnswer = scrub(incorrectAnswer);
+  incorrectAnswer.choiceIds = [];
   answers.push(correctAnswer);
   answers.push(incorrectAnswer);
 

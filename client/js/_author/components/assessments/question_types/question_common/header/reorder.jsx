@@ -1,12 +1,14 @@
 import React    from 'react';
+import localize from '../../../../../locales/localize';
 
-export default class ReorderHeader extends React.Component {
+class ReorderHeader extends React.Component {
   static propTypes = {
     topItem: React.PropTypes.bool,
     bottomItem: React.PropTypes.bool,
     toggleReorder: React.PropTypes.func,
     moveUp: React.PropTypes.func,
     moveDown: React.PropTypes.func,
+    localizeStrings: React.PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -16,7 +18,7 @@ export default class ReorderHeader extends React.Component {
   render() {
     const hideUp = this.props.topItem ? 'is-hidden' : '';
     const hideDown = this.props.bottomItem ? 'is-hidden' : '';
-
+    const strings = this.props.localizeStrings('reorderHeader');
     return (
       <div ref={ref => (this.header = ref)} className="au-o-right au-c-question-icons au-c-question-icons--reorder">
         <button
@@ -34,8 +36,10 @@ export default class ReorderHeader extends React.Component {
         <button
           onClick={this.props.toggleReorder}
           className="au-c-btn au-c-btn--sm au-c-btn--white"
-        > Done </button>
+        >{strings.done}</button>
       </div>
     );
   }
 }
+
+export default localize(ReorderHeader);

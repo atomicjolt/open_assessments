@@ -12,11 +12,11 @@
     @include flex(1);
   }
 
-.au-c-text-input{
+.au-c-text-input, .au-c-textarea{
   width: 100%;
   color: $text-color;
   border: none;
-  border-top: 0.1rem solid $white;
+  border-top: 0.2rem solid $white;
   background: none;
 
   &:focus{
@@ -33,10 +33,15 @@
   }
 }
 
+.au-c-textarea{
+  resize: none;
+  padding-top: 0.6rem;
+}
+
 .au-c-input__bottom{
   height: 0.2rem;
-  background: none;
-  border-top: 0.1rem solid $gray4;
+  background: $gray5;
+  // border-top: 0.1rem solid $gray4;
 
   &.no-border {
     border-top: none;
@@ -47,6 +52,7 @@
   }
   &.has-error{
     border-color: $red;
+    background: $red;
   }
 }
 
@@ -75,7 +81,7 @@
 .au-c-text-input--small{
   min-height: 3.5rem;
   font-size: 1.6rem;
-  @include semi-bold;
+  @include regular;
 
   .au-c-placeholder{
     line-height: 3.5rem;
@@ -270,16 +276,16 @@
   }
   .au-c-text-input{
     color: $white;
-    border-top: transparent;
-    height: 2.5rem;
+    border-top: 0.2rem solid transparent;
+    min-height: 2.5rem;
 
     &:focus{
-      border-top: 0.1rem solid $white;
+      border-top: 0.2rem solid $white;
     }
 
     &:focus + .au-c-input__bottom{
       border-color: $white;
-      background: transparent;
+      background: $white;
     }
   }
   .au-c-input__bottom{
@@ -292,7 +298,7 @@
   position: relative;
 
   select{
-    border: 0.1rem solid $gray4;
+    border: 0.1rem solid $gray5;
     background-color: $gray2;
     @include semi-bold;
     color: $text-color;

@@ -13,7 +13,10 @@ export default function ImageOrder(props) {
         _.map(choices, (choice, id) =>
           <div key={id} className="au-o-quarter">
             <ImageOption
-              {...choice}
+              id={id}
+              text={choice.text}
+              order={choice.order}
+              labelText={choice.labelText}
               updateChoice={
                 (newChoice, fileIds) => props.updateChoice(
                     props.item.id, choice.id, newChoice, fileIds)
@@ -28,8 +31,7 @@ export default function ImageOrder(props) {
       }
       <div className="au-o-quarter">
         <AddImage
-          uploadScopeId={props.item.id}
-          {...props}
+          item={props.item}
         />
       </div>
     </div>
@@ -44,5 +46,4 @@ ImageOrder.propTypes = {
     })
   }),
   deleteChoice: React.PropTypes.func,
-  updateChoice: React.PropTypes.func.isRequired,
 };

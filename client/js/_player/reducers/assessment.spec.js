@@ -1,5 +1,5 @@
 import Immutable                            from 'immutable';
-
+import { readFixture }                      from '../../../specs_support/utils';
 import { Constants as AssessmentConstants } from '../actions/assessment';
 import { parse }                            from '../../parsers/assessment';
 import assessment                           from './assessment';
@@ -12,8 +12,7 @@ describe('assessment reducer', () => {
 
   beforeAll(() => {
     const settings = Immutable.fromJS({assessmentId:1});
-    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
-    const data = readFixtures("qti1/assessment.xml");
+    const data = readFixture("qti1/assessment.xml");
     parsedAssessment = parse(settings, data);
   });
 
