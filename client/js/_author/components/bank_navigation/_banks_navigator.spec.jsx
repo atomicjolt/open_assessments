@@ -85,7 +85,7 @@ describe('Bank Navigator', () => {
 
   it('sorts the banks by name ascending', () => {
     result.sortBy('sortName');
-    const ascNameSorted = result.sortBanks();
+    const ascNameSorted = result.sortContents(props.banks);
 
     expect(ascNameSorted[0].displayName.text).toBe('apple');
     expect(ascNameSorted[1].displayName.text).toBe('rice');
@@ -95,7 +95,7 @@ describe('Bank Navigator', () => {
   it('sorts the banks by name descending', () => {
     result.sortBy('sortName');
     result.sortBy('sortName');
-    const ascNameSorted = result.sortBanks();
+    const ascNameSorted = result.sortContents(props.banks);
 
     expect(ascNameSorted[0].displayName.text).toBe('taco');
     expect(ascNameSorted[1].displayName.text).toBe('rice');
