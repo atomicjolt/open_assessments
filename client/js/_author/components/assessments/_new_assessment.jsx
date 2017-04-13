@@ -41,7 +41,7 @@ export class NewAssessment extends React.Component {
     const banks = this.flattenBanks(this.props.banks, flatBanks);
     this.props.updatePath(id, banks[id], true);
     this.props.getAssessments(id);
-    this.props.getItems(id);
+    // this.props.getItems(id);
     hashHistory.push('/');
   }
 

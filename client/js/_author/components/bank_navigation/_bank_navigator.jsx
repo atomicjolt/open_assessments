@@ -56,7 +56,8 @@ export class BankNavigator extends React.Component {
     const bank = _.find(this.props.banks, b => b.id === bankId);
     if (bank) { this.props.updatePath(bankId, bank); }
     this.props.getAssessments(bankId);
-    this.props.getItems(bankId);
+    // Commented out fixes a bad item call when clicking on bank. Why does it need to be here?
+    // this.props.getItems(bankId);
   }
 
   getEmbedCode(assessment) {
