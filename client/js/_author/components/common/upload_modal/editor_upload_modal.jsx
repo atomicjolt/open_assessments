@@ -128,7 +128,7 @@ export class EditorUploadModal extends React.Component {
   render() {
     const strings = this.props.localizeStrings('editorUploadModal');
     let name = _.get(this, 'state.uploadedMedia.name');
-    // debugger
+
     if (this.props.inProgress) {
       name = <Loader />;
     }
