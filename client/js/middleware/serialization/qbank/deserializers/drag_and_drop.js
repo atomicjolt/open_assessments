@@ -55,6 +55,7 @@ export default function dragAndDrop(item) {
     ...newItem.question,
     target: deserializeTarget(_.get(item, 'question.targets')),
     zones: deserializeZones(_.get(item, 'question.zones')),
+    visibleZones: _.get(item, 'question.zones[0].visible'),
     dropObjects: deserializeDropObjects(
       _.get(item, 'question.droppables'),
       _.get(correctAnswer, 'zoneConditions')),
