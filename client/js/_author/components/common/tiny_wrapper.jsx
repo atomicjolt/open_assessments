@@ -1,5 +1,5 @@
 import React   from 'react';
-import TinyMCE from 'react-tinymce';
+import TinyMCE from 'atomic-react-tinymce';
 
 import 'tinymce';
 import 'tinymce/themes/modern/theme';
@@ -13,7 +13,7 @@ import 'tinymce/plugins/charmap/plugin';
 import 'tinymce/plugins/lists/plugin';
 import 'tinymce/plugins/table/plugin';
 
-import guid    from '../../../utils/guid';
+import guid             from '../../../utils/guid';
 
 // TODO: figure out how to localize this.
 export default class TinyWrapper extends React.Component {
@@ -41,7 +41,7 @@ export default class TinyWrapper extends React.Component {
   tinyMCEConfig() {
     // Whenever you add a plugin, make sure that it is imported above.
     return {
-      fixed_toolbar_container: `#${this.id}`,
+      fixed_toolbar_container: `#toolbar-${this.props.editorKey || ''}${this.id}`,
       skin: false,
       menubar: false,
       statusbar: false,
@@ -82,10 +82,10 @@ export default class TinyWrapper extends React.Component {
   render() {
     return (
       <div>
-        <label htmlFor={`${this.id}-tinymce`} />
-        <div id={this.id} />
+        <label htmlFor={`${this.props.editorKey || ''}${this.id}-tinymce`} />
+        <div id={`toolbar-${this.props.editorKey || ''}${this.id}`} />
         <TinyMCE
-          id={`${this.id}-tinymce`}
+          id={`${this.props.editorKey || ''}${this.id}-tinymce`}
           content={this.props.text}
           config={this.tinyMCEConfig()}
           onBlur={(e) => { this.props.onBlur(e.target.getContent(), e.target.isDirty()); }}
