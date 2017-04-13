@@ -66,14 +66,10 @@ function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
 
   _.forEach(originalChoices, (choice) => {
     const newCorrectness = _.get(newChoiceAttributes, `[${choice.id}].isCorrect`);
-    if (!_.isNil(newCorrectness)) {
-      if (newCorrectness) {
-        correctAnswer.choiceIds.push(choice.id);
-      } else { incorrectAnswer.choiceIds.push(choice.id); }
+    if (!_.isNil(newCorrectness) && newCorrectness) {
+      correctAnswer.choiceIds.push(choice.id);
     } else if (choice.isCorrect) {
       correctAnswer.choiceIds.push(choice.id);
-    } else {
-      incorrectAnswer.choiceIds.push(choice.id);
     }
   });
 
