@@ -8,12 +8,12 @@
 .au-c-short-answer__example{
   margin-left: 3rem;
   margin-top: 2.2rem;
-  border: 0.2rem solid $gray3;
+  border: 0.2rem solid $gray5;
   border-radius: $radius;
   width: 100%;
   @include regular;
   font-size: 1.4rem;
-  color: $gray8;
+  color: $text-alt;
   text-align: center;
 
   &.is-small{

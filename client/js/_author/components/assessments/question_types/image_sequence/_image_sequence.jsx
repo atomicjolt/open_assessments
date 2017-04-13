@@ -2,8 +2,9 @@ import React        from 'react';
 import Feedback     from '../question_common/single_feedback';
 import ImageOrder   from './image_order';
 import SaveOptions  from '../question_common/save_option_button';
+import localize     from '../../../../locales/localize';
 
-export default class ImageSequence extends React.Component {
+class ImageSequence extends React.Component {
   static propTypes = {
     item: React.PropTypes.shape({
       bankId: React.PropTypes.string,
@@ -16,7 +17,7 @@ export default class ImageSequence extends React.Component {
       }),
     }).isRequired,
     updateItem: React.PropTypes.func,
-    activateChoice: React.PropTypes.func,
+    localizeStrings: React.PropTypes.func.isRequired,
     save: React.PropTypes.func,
   };
 
@@ -29,21 +30,21 @@ export default class ImageSequence extends React.Component {
 
   getFeedback() {
     const { question } = this.props.item;
-
+    const strings = this.props.localizeStrings('imageSequence');
     return (
       <div className="au-c-question__feedback">
         <Feedback
           updateItem={item => this.props.updateItem(item, true)}
           feedbackType="correctFeedback"
           feedback={question.correctFeedback}
-          labelText="Correct Feedback"
+          labelText={strings.correctFeedback}
           bankId={this.props.item.bankId}
         />
         <Feedback
           updateItem={item => this.props.updateItem(item, true)}
           feedbackType="incorrectFeedback"
           feedback={question.incorrectFeedback}
-          labelText="Incorrect Feedback"
+          labelText={strings.incorrectFeedback}
           bankId={this.props.item.bankId}
         />
       </div>
@@ -70,3 +71,5 @@ export default class ImageSequence extends React.Component {
     );
   }
 }
+
+export default localize(ImageSequence);

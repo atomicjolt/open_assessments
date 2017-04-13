@@ -1,13 +1,15 @@
-import React    from 'react';
+import React     from 'react';
+import localize  from '../../locales/localize';
 
-export default function addQuestionButton(props) {
+function addQuestionButton(props) {
+  const strings = props.localizeStrings('addQuestionButton');
   return (
     <div className="au-c-question-add">
       <button
         onClick={props.newItem}
         className="au-c-question-add__button"
       >
-        Add Question
+        {strings.addQuestion}
       </button>
     </div>
   );
@@ -15,4 +17,7 @@ export default function addQuestionButton(props) {
 
 addQuestionButton.propTypes = {
   newItem: React.PropTypes.func.isRequired,
+  localizeStrings: React.PropTypes.func.isRequired,
 };
+
+export default localize(addQuestionButton);

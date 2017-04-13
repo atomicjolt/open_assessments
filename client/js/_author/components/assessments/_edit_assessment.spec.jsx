@@ -2,6 +2,8 @@ import React            from 'react';
 import TestUtils        from 'react-addons-test-utils';
 import { EditAssessment }  from './_edit_assessment';
 
+jest.mock('../../../libs/assets');
+
 describe('_edit_assessment component', () => {
   let props;
   let result;
@@ -62,6 +64,7 @@ describe('_edit_assessment component', () => {
       getItems: () => {},
       banks: [],
       updateSingleItemOrPage: () => {},
+      isPublished: false,
     };
     result = TestUtils.renderIntoDocument(<EditAssessment {...props} />);
   });

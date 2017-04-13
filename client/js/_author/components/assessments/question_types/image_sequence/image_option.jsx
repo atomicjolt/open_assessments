@@ -1,11 +1,13 @@
-import React from 'react';
-import _ from 'lodash';
+import React        from 'react';
+import _            from 'lodash';
+import localize     from '../../../../locales/localize';
 
-export default function ImageOption(props) {
+function imageOption(props) {
   const { activateChoice, updateChoice, deleteChoice, id, order, numChoices } = props;
+  const strings = props.localizeStrings('imageOption');
   return (
     <div
-      className='au-c-image-sequence-answer is-active'
+      className="au-c-image-sequence-answer is-active"
       tabIndex="0"
       onClick={() => activateChoice(id)}
     >
@@ -21,7 +23,7 @@ export default function ImageOption(props) {
             })}
             defaultValue={order}
           >
-            <option key='option_key_null' value={null}> {'N/A'}</option>
+            <option key="option_key_null" value={null}>{strings.NA}</option>
             {
               _.map(_.range(1, numChoices + 1), (val, index) =>
                 <option key={`option_key_${index}`} value={val}>{ val }</option>
@@ -53,14 +55,16 @@ export default function ImageOption(props) {
   );
 }
 
-ImageOption.propTypes = {
+imageOption.propTypes = {
   deleteChoice: React.PropTypes.func,
   updateChoice: React.PropTypes.func,
   activateChoice: React.PropTypes.func,
   id: React.PropTypes.string,
-  activeChoice: React.PropTypes.string,
   text: React.PropTypes.string,
   labelText: React.PropTypes.string,
   order: React.PropTypes.number,
   numChoices: React.PropTypes.number.isRequired,
+  localizeStrings: React.PropTypes.func.isRequired,
 };
+
+export default localize(imageOption);

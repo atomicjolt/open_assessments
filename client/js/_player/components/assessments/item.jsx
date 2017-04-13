@@ -1,7 +1,7 @@
 'use strict';
 
-import React  from 'react';
-import _ from 'lodash';
+import React  from "react";
+import _                       from 'lodash';
 import videojs from 'video.js';
 import * as AssessmentActions  from '../../actions/assessment';
 import UniversalInput          from './universal_input';

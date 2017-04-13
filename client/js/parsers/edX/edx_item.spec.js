@@ -1,8 +1,9 @@
 "use strict";
 
-import EdxItem       from './edx_item.js';
+import EdxItem         from './edx_item.js';
+import { readFixture } from '../../../specs_support/utils';
 
-xdescribe('Parses edX Problem', function(){
+describe('Parses edX Problem', function(){
   var url;
   var xml;
   var res;
@@ -12,9 +13,8 @@ xdescribe('Parses edX Problem', function(){
     var id = "1bdd2690346d437eacc85567ed79702f";
 
     beforeAll(function(){
-      jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
       url = `https://dl.dropboxusercontent.com/u/7594429/edXCourse/problem/${id}.xml`;
-      xml = readFixtures(`edXCourse/problem/${id}.xml`);
+      xml = readFixture(`edXCourse/problem/${id}.xml`);
 
       // A response without a responseType will set the xml on the text. ie a request from Dropbox
       res = {
@@ -58,9 +58,8 @@ xdescribe('Parses edX Problem', function(){
     var id = "d0ef2adedeba45038d69b24517892d1d";
 
     beforeAll(function(){
-      jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
       url = `https://dl.dropboxusercontent.com/u/7594429/edXCourse/problem/${id}.xml`;
-      xml = readFixtures(`edXCourse/problem/${id}.xml`);
+      xml = readFixture(`edXCourse/problem/${id}.xml`);
 
       // A response without a responseType will set the xml on the text. ie a request from Dropbox
       res = {

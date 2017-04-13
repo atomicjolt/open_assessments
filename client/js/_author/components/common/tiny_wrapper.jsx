@@ -1,4 +1,3 @@
-import _       from 'lodash';
 import React   from 'react';
 import TinyMCE from 'react-tinymce';
 
@@ -12,13 +11,14 @@ import 'tinymce/plugins/media/plugin';
 import 'tinymce/plugins/image/plugin';
 import 'tinymce/plugins/charmap/plugin';
 import 'tinymce/plugins/lists/plugin';
+import 'tinymce/plugins/table/plugin';
 
 import guid    from '../../../utils/guid';
 
+// TODO: figure out how to localize this.
 export default class TinyWrapper extends React.Component {
   static propTypes = {
     text: React.PropTypes.string,
-    uploadMedia: React.PropTypes.func.isRequired,
     editorKey: React.PropTypes.string,
     onBlur: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func.isRequired,
@@ -45,8 +45,8 @@ export default class TinyWrapper extends React.Component {
       skin: false,
       menubar: false,
       statusbar: false,
-      plugins: 'autolink link lists paste code charmap media image',
-      toolbar: 'bold italic removeformat | bullist numlist  blockquote | code charmap subscript superscript | insert_image audio video',
+      plugins: 'autolink link lists paste code charmap media image table',
+      toolbar: 'bold italic removeformat | bullist numlist  blockquote table | code charmap subscript superscript | insert_image audio video',
       inline: true,
       paste_data_images: true,
       browser_spellcheck: true,
@@ -88,7 +88,7 @@ export default class TinyWrapper extends React.Component {
           id={`${this.id}-tinymce`}
           content={this.props.text}
           config={this.tinyMCEConfig()}
-          onBlur={e => { this.props.onBlur(e.target.getContent(), e.target.isDirty()); }}
+          onBlur={(e) => { this.props.onBlur(e.target.getContent(), e.target.isDirty()); }}
           onFocus={this.props.onFocus}
         />
       </div>

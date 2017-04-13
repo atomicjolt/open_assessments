@@ -1,6 +1,8 @@
 import React      from 'react';
+import localize   from '../../../../locales/localize';
 
-export default function AddOption(props) {
+function addOption(props) {
+  const strings = props.localizeStrings('addOption');
   return (
     <div
       className="au-c-answer au-o-flex-center au-c-answer--add"
@@ -14,7 +16,7 @@ export default function AddOption(props) {
             className="au-c-text-input au-c-text-input--small au-c-wysiwyg au-c-option"
             id="option2"
             type="text"
-            defaultValue="Add Option"
+            defaultValue={strings.addOption}
           />
           <div className="au-c-input__bottom no-border" />
         </div>
@@ -23,6 +25,9 @@ export default function AddOption(props) {
   );
 }
 
-AddOption.propTypes = {
+addOption.propTypes = {
   updateChoice: React.PropTypes.func.isRequired,
+  localizeStrings: React.PropTypes.func.isRequired,
 };
+
+export default localize(addOption);

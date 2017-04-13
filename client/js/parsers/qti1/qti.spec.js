@@ -1,4 +1,5 @@
 import Qti1Parser                              from './parser';
+import { readFixture }                         from '../../../specs_support/utils';
 import { getItems, loadOutcomes, checkAnswer } from './qti';
 import $                                       from 'jquery';
 
@@ -7,13 +8,12 @@ describe('QTI 1 Functions', () => {
   var settings;
 
   beforeAll(() => {
-    jasmine.getFixtures().fixturesPath = "base/specs_support/fixtures";
     settings = {};
   });
 
   describe('GetItems', () => {
     it('retrieves all items from assessment.xml', () => {
-      var data          = readFixtures("qti1/assessment.xml");
+      var data          = readFixture("qti1/assessment.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
       var assessment = Qti1Parser.parse(1, assessmentXml, xml);
@@ -22,7 +22,7 @@ describe('QTI 1 Functions', () => {
     });
 
     it('retrieves 5 items from assessment.xml', () => {
-      var data          = readFixtures("qti1/assessment.xml");
+      var data          = readFixture("qti1/assessment.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
       var assessment = Qti1Parser.parse(1, assessmentXml, xml);
@@ -31,7 +31,7 @@ describe('QTI 1 Functions', () => {
     });
 
     it('retrieves all items from dna.xml', () => {
-      var data          = readFixtures("qti1/dna.xml");
+      var data          = readFixture("qti1/dna.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
       var assessment = Qti1Parser.parse(1, assessmentXml, xml);
@@ -40,7 +40,7 @@ describe('QTI 1 Functions', () => {
     });
 
     it('retrieves 2 items from each section dna.xml', () => {
-      var data          = readFixtures("qti1/dna.xml");
+      var data          = readFixture("qti1/dna.xml");
       var xml           = $(data);
       var assessmentXml = xml.find('assessment').addBack('assessment');
       var assessment = Qti1Parser.parse(1, assessmentXml, xml);

@@ -1,8 +1,6 @@
 import React                  from 'react';
-import _                      from 'lodash';
-import SingleFeedback         from './single_feedback';
 import { shallow }            from 'enzyme';
-import TestUtils              from 'react-addons-test-utils';
+import SingleFeedback         from './single_feedback';
 import Editor                 from '../../../common/oea_editor';
 
 describe('single feedback component', () => {
@@ -13,7 +11,7 @@ describe('single feedback component', () => {
   beforeEach(() => {
     calledFunc =  false;
     props = {
-      updateItem: () => {calledFunc = true},
+      updateItem: () => { calledFunc = true; },
       feedbackType: '',
       bankId: '7',
     };
@@ -24,7 +22,7 @@ describe('single feedback component', () => {
     expect(result.find('label')).toBeDefined();
   });
 
-  it('renders Editor component with props', ()=> {
+  it('renders Editor component with props', () => {
     expect(result.find(Editor)).toBeDefined();
   });
 

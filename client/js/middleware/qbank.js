@@ -1,17 +1,21 @@
-import _                                    from 'lodash';
-import Network                              from '../constants/network';
-import server                               from './server';
-import api                                  from '../libs/api';
-import authorAppHistory                     from '../_author/history';
-import { DONE }                             from '../constants/wrapper';
-import { Constants as BankConstants }       from '../actions/qbank/banks';
-import { Constants as AssessmentConstants } from '../actions/qbank/assessments';
-import { Constants as ItemConstants }       from '../actions/qbank/items';
-import { Constants as AssetConstants }      from '../actions/qbank/assets';
-import serialize                            from './serialization/qbank/serializers/factory';
-import deserialize                          from './serialization/qbank/deserializers/factory';
-import { scrub }                            from './serialization/serializer_utils';
-import * as assessmentActions               from '../actions/qbank/assessments';
+import _                                            from 'lodash';
+import Network                                      from '../constants/network';
+import server                                       from './server';
+import api                                          from '../libs/api';
+import authorAppHistory                             from '../_author/history';
+import { DONE }                                     from '../constants/wrapper';
+import { Constants as BankConstants }               from '../actions/qbank/banks';
+import { Constants as AssessmentConstants }         from '../actions/qbank/assessments';
+import { Constants as ItemConstants }               from '../actions/qbank/items';
+import { Constants as AssetConstants }              from '../actions/qbank/assets';
+import serialize                                    from './serialization/qbank/serializers/factory';
+import deserialize                                  from './serialization/qbank/deserializers/factory';
+import { scrub }                                    from './serialization/serializer_utils';
+import * as assessmentActions                       from '../actions/qbank/assessments';
+import { updateItem }                               from '../actions/qbank/items';
+import { deserializeMedia, deserializeSingleMedia } from './serialization/qbank/deserializers/media';
+import { dispatchMany }                             from './utils';
+import guid                                         from '../utils/guid';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -41,6 +45,125 @@ function getAssessmentsTaken(state, bankId, assessmentsOffered) {
   });
 
   return Promise.all(assessmentsTaken);
+}
+
+function uploadMedia(state, action) {
+  const formData = new FormData();
+  formData.append('inputFile', action.body);
+  formData.append('returnUrl', true);
+  formData.append('createNew', true);
+  formData.append('mediaDescription', action.metaData['639-2%3AENG%40ISO'].description || '');
+  formData.append('locale', action.metaData['639-2%3AENG%40ISO'].locale);
+
+  formData.append('license', action.metaData['639-2%3AENG%40ISO'].license || '');
+  formData.append('copyright', action.metaData['639-2%3AENG%40ISO'].copyright || '');
+
+  if (action.metaData.mediaType === 'audio') {
+    formData.append('transcriptFile', action.metaData['639-2%3AENG%40ISO'].transcript || '');
+  } else if (action.metaData.mediaType === 'img') {
+    formData.append('altText', action.metaData['639-2%3AENG%40ISO'].altText || '');
+  } else if (action.metaData.mediaType === 'video') {
+    formData.append('vttFile', action.metaData['639-2%3AENG%40ISO'].vttFile || '');
+    formData.append('transcriptFile', action.metaData['639-2%3AENG%40ISO'].transcript || '');
+  }
+
+  return api.post(
+    `repository/repositories/${action.bankId}/assets`,
+    state.settings.api_url,
+    state.jwt,
+    state.settings.csrf_token,
+    null,
+    formData,
+    null,
+    action.timeout
+  );
+}
+
+function uploadMediaMeta(state, metaData, repositoryId, assetId, mediaType) {
+  const formData = new FormData();
+  formData.append('mediaDescription', metaData.description || '');
+  formData.append('locale', metaData.locale);
+
+  if (mediaType === 'audio') {
+    formData.append('transcriptFile', metaData.transcript || '');
+  } else if (mediaType === 'img') {
+    formData.append('altText', metaData.altText || '');
+  } else if (mediaType === 'video') {
+    formData.append('vttFile', metaData.vttFile || '');
+    formData.append('transcriptFile', metaData.transcript || '');
+  }
+
+  return api.put(
+    `repository/repositories/${repositoryId}/assets/${assetId}`,
+    state.settings.api_url,
+    state.jwt,
+    state.settings.csrf_token,
+    null,
+    formData,
+    null,
+    20000
+  );
+}
+
+function updateQBankItem(store, action) {
+  const state = store.getState();
+  const item = state.items[action.bankId][action.itemId];
+  const updatedAttributes = action.body;
+
+  const newItem = serialize(updatedAttributes.type || item.type)(item, updatedAttributes);
+
+  api.put(
+    `assessment/banks/${action.bankId}/items/${action.itemId}`,
+    state.settings.api_url,
+    state.jwt,
+    state.settings.csrf_token,
+    null,
+    newItem
+  ).then((res) => {
+    store.dispatch({
+      type: action.type + DONE,
+      original: action,
+      payload: deserialize(res.body.genusTypeId)(res.body)
+    });
+  });
+}
+
+function addMediaToItem(store, action, result) {
+  let id;
+  let assetId;
+  let genusTypeId;
+  if (result) {
+    id = _.get(result, 'body.assetContents[0].id');
+    assetId = _.get(result, 'body.assetContents[0].assetId');
+    genusTypeId = _.get(result, 'body.assetContents[0].genusTypeId');
+  } else {
+    id = _.get(action, 'body.original.assetContents[0].id');
+    assetId = _.get(action, 'body.original.assetContents[0].assetId');
+    genusTypeId = _.get(action, 'body.original.assetContents[0].genusTypeId');
+  }
+
+  const mediaGuid = guid();
+  let item = {
+    id: action.itemId,
+    question: {
+      fileIds: {
+        [mediaGuid] : {
+          assetContentId: id,
+          assetId,
+          assetContentTypeId: genusTypeId,
+        }
+      }
+    }
+  };
+
+  item = _.set(item, action.where, {
+    text: `AssetContent:${mediaGuid}`,
+    altText: action.file.altText,
+    id: _.last(action.where.split('.')),
+  });
+
+  const newAction = updateItem(action.bankId, item);
+  updateQBankItem(store, newAction);
 }
 
 // takingAgentId is used to delete all assessmentsTaken for a specific user. It
@@ -136,7 +259,7 @@ const qbank = {
       null,
       state.jwt,
       state.settings.csrf_token,
-      null,
+      { qBankHost: state.settings.qBankHost },
       null
     ).then((res) => {
       store.dispatch({
@@ -157,7 +280,7 @@ const qbank = {
         store.dispatch({
           type: 'GET_MEDIA_DONE',
           original: { bankId },
-          payload: res2.body
+          payload: deserializeMedia(res2.body)
         });
       });
 
@@ -276,33 +399,7 @@ const qbank = {
     url    : (url, action) => `${url}/assessment/banks/${action.bankId}/items`,
   },
 
-  [ItemConstants.UPDATE_ITEM]: (store, action) => {
-    const state = store.getState();
-    const item = state.items[action.bankId][action.itemId];
-    const updatedAttributes = action.body;
-
-    const newItem = serialize(updatedAttributes.type || item.type)(item, updatedAttributes);
-
-    api.put(
-      `assessment/banks/${action.bankId}/items/${action.itemId}`,
-      state.settings.api_url,
-      state.jwt,
-      state.settings.csrf_token,
-      null,
-      newItem
-    ).then((res) => {
-      store.dispatch({
-        type: action.type + DONE,
-        original: action,
-        payload: deserialize(res.body.genusTypeId)(res.body)
-      });
-    });
-  },
-
-  [AssetConstants.UPLOAD_MEDIA]: {
-    method : Network.POST,
-    url    : (url, action) => `${url}/repository/repositories/${action.bankId}/assets`,
-  },
+  [ItemConstants.UPDATE_ITEM]: updateQBankItem,
 
   [AssessmentConstants.CREATE_ITEM_IN_ASSESSMENT]: (store, action) => {
     createItemInAssessment(
@@ -392,16 +489,17 @@ const qbank = {
       }));
     });
   },
+
   [AssessmentConstants.TOGGLE_PUBLISH_ASSESSMENT] : (store, action) => {
     const state = store.getState();
     const { assessment } = action;
     const { publishedBankId, editableBankId } = state.settings;
 
     if (assessment.isPublished) {
-      [
+      dispatchMany([
         assessmentActions.deleteAssignedAssessment(assessment, publishedBankId),
         assessmentActions.editOrPublishAssessment(assessment, editableBankId),
-      ].forEach(newAction => store.dispatch(newAction));
+      ], store);
     } else {
       const actions = [];
       if (_.includes(assessment.assignedBankIds, editableBankId)) {
@@ -413,9 +511,47 @@ const qbank = {
       }
       actions.push(assessmentActions.editOrPublishAssessment(assessment, publishedBankId));
 
-      actions.forEach(newAction => store.dispatch(newAction));
+      dispatchMany(actions, store);
+
     }
-  }
+  },
+
+  [AssetConstants.UPLOAD_MEDIA]: (store, action) => {
+    const state = store.getState();
+
+    uploadMedia(state, action).then((res) => {
+      const additionalLanguageMeta = _.filter(action.metaData, metaData => (
+         !_.isUndefined(metaData.locale) && metaData.locale !== 'en'
+        )
+      );
+      const { repositoryId, id } = res.body;
+      _.forEach(additionalLanguageMeta, data => (
+        uploadMediaMeta(state, data, repositoryId, id, action.metaData.mediaType)
+      ));
+
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: deserializeSingleMedia(res.body, action.metaData['639-2%3AENG%40ISO'].autoPlay),
+      });
+    }, (error) => {
+      store.dispatch({
+        type: action.type + DONE,
+        payload: {},
+        original: action,
+        error,
+      }); // Dispatch the new error
+    });
+  },
+
+  [AssetConstants.ADD_MEDIA_TO_QUESTION]: (store, action) => {
+    const state = store.getState();
+    if (action.newMedia) {
+      uploadMedia(state, action).then(res => addMediaToItem(store, action, res));
+    } else {
+      addMediaToItem(store, action);
+    }
+  },
 };
 
 export default { ...server, ...qbank };

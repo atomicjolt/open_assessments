@@ -5,7 +5,7 @@
 }
 
 .au-c-wysiwyg-modal-background {
-  z-index: 100;
+  z-index: 900;
   zoom: 1;
   position: fixed;
   left: 0;
@@ -68,9 +68,9 @@
 
 .au-c-wysiwyg-media__label{
   @include semi-bold;
-  font-size: 1.4rem;
-  color: $text-color;
-  width: 10rem;
+  font-size: 1.2rem;
+  color: $text-alt;
+  min-width: 10rem;
   display: inline-block;
 }
 
@@ -88,26 +88,31 @@
   }
 }
 
-.au-c-input--file{
-  input + label{
-    width: 5rem;
-    height: 3rem;
-    text-align: center;
-    color: $gray9;
-    background: $gray2;
-    border: $border;
-    display: inline-block;
-    border-radius: $radius;
-    @include display-flex;
-    @include align-items(center);
-    @include justify-content(center);
-    cursor: pointer;
+.au-c-wysiwyg-media__upload {
+  width: 5rem;
+  height: 3rem;
+  padding: 0 1rem;
+  margin-left: 1rem;
+  text-align: center;
+  color: $gray9;
+  background: $gray2;
+  border: $border;
+  display: inline-block;
+  border-radius: $radius;
+  @include display-flex;
+  @include align-items(center);
+  @include justify-content(center);
+  cursor: pointer;
 
-    &:hover{
-      color: $text-color;
-      border-color: $gray8;
-    }
+  &:hover {
+    color: $text-color;
+    border-color: $gray8;
   }
+}
+
+.au-c-input--file{
+  cursor: pointer;
+
   input{
     width: 0.01rem;
     height: 0.01rem;
@@ -134,4 +139,147 @@
   padding: 0 2.5rem;
   @include display-flex;
   @include align-items(center);
+}
+
+.au-c-wysiwyg-modal__contain{
+  padding: 0 2.5rem;
+}
+.au-c-fake-modal{
+  width: 50rem;
+  padding: 2.5rem;
+  margin: 3rem auto 30rem;
+  background: $white;
+}
+
+.au-c-wysiwyg-modal__media{
+  border: $border;
+  position: relative;
+  min-height: 85px;
+}
+
+.au-c-modal-media__search{
+  padding: 0.5rem;
+}
+
+.au-c-input--search{
+
+  input{
+    border: $border;
+    padding: 0 4rem 0 1rem;
+  }
+  i{
+    position: absolute;
+    right: 0.8rem;
+    top: 0.6rem;
+    font-size: 2.2rem;
+    color: $gray9;
+  }
+}
+
+.au-c-modal-media__results{
+  // border-top: $border;
+  // border-bottom: $border;
+
+  table{
+    border-collapse: collapse;
+    width: 100%;
+  }
+  tr{
+    &:hover{
+      td{
+        background: $gray2;
+        cursor: pointer;
+      }
+    }
+    &.is-active{
+      td{
+        background: $purple;
+        color: $white;
+      }
+    }
+  }
+  td{
+    @include semi-bold;
+    font-size: 1.2rem;
+    height: 3rem;
+    vertical-align: middle;
+    border-top: $border;
+    border-bottom: $border;
+    &:nth-of-type(1){
+      width: 4rem;
+    }
+  }
+}
+
+.au-c-modal-media__thumbnail{
+  width: 2rem;
+  height: 1.5rem;
+  @include display-flex;
+  @include align-items(center);
+  @include justify-content(center);
+  margin: 0 1rem;
+
+  img{
+    max-width: 100%;
+  }
+}
+
+.au-c-modal-media__pagination{
+  height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+  @include display-flex;
+  @include justify-content(center);
+
+  ul {
+    display: inline-block;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  li {
+    display: inline-block;
+  }
+
+   .break a {
+    cursor: default;
+  }
+}
+
+.au-c-modal-media__pagination-pages {
+  cursor: pointer;
+
+  &:hover{
+    background: $gray2;
+    border-bottom: 0.2rem solid $gray10;
+  }
+  &.is-active{
+    border-bottom: 0.2rem solid $gray10;
+    a{
+      @include semi-bold;
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.au-c-modal-media__pagination-page {
+  //How can I make this whole thing more click-able
+  padding: 1rem;
+  font-size: 1.2rem;
+  @include regular;
+}
+
+.au-c-modal-media__pagination-previous, .au-c-modal-media__pagination-next {
+  cursor: pointer;
+  padding: 0.5rem;
+  &:hover{
+    color: $white;
+    background-color: $purple2;
+  }
+  &.inactive {
+    display: none;
+  }
+  i{
+    font-size: 2rem;
+  }
 }

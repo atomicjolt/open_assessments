@@ -20,8 +20,9 @@ export default function breadcrumbs(props) {
 }
 
 breadcrumbs.propTypes = {
-  name        : React.PropTypes.string.isRequired,
-  id          : React.PropTypes.string.isRequired,
-  current     : React.PropTypes.bool.isRequired,
-  updatePath  : React.PropTypes.func.isRequired,
+  name: React.PropTypes.string.isRequired,
+  id: React.PropTypes.string.isRequired,
+  current: React.PropTypes.bool.isRequired,
+  updatePath: React.PropTypes.func.isRequired,
+  getBankChildren: React.PropTypes.func.isRequired,
 };

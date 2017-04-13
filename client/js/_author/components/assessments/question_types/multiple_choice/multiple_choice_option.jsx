@@ -5,8 +5,10 @@ import Loader       from '../../../common/dot_loader';
 import Selector     from './correct_selector';
 import AnswerIcons  from './answer_icons';
 import Feedback     from './option_feedback';
+import localize     from '../../../../locales/localize';
 
-export default function multipleChoiceOptions(props) {
+function multipleChoiceOptions(props) {
+  const strings = props.localizeStrings('multipleChoiceOptions');
   const hideFeedback = (props.itemType !== types.multipleChoice) ||
     !(props.isActive || props.feedback);
 
@@ -42,10 +44,9 @@ export default function multipleChoiceOptions(props) {
           textSize="small"
           isActive={props.isActive}
           fileIds={props.questionFileIds}
-          placeholder="Option Text"
+          placeholder={strings.optionText}
           text={props.text}
           bankId={props.bankId}
-          uploadScopeId={props.itemId}
           onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
         />
 
@@ -78,15 +79,18 @@ multipleChoiceOptions.propTypes = {
   itemType: React.PropTypes.string,
   updateChoice: React.PropTypes.func.isRequired,
   deleteChoice: React.PropTypes.func.isRequired,
+  localizeStrings: React.PropTypes.func.isRequired,
   moveUp: React.PropTypes.func.isRequired,
   moveDown: React.PropTypes.func.isRequired,
+  setActiveChoice: React.PropTypes.func.isRequired,
   first: React.PropTypes.bool,
   last: React.PropTypes.bool,
   isCorrect: React.PropTypes.bool,
   shuffle: React.PropTypes.bool,
   isActive: React.PropTypes.bool,
-  itemId: React.PropTypes.string,
   bankId: React.PropTypes.string,
   questionFileIds: React.PropTypes.shape({}),
   fileIds: React.PropTypes.shape({}),
 };
+
+export default localize(multipleChoiceOptions);

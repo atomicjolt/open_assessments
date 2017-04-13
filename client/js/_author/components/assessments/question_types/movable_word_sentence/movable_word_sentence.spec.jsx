@@ -11,7 +11,7 @@ describe('movable word sentece component', () => {
   let calledFunc;
 
   beforeEach(() => {
-    calledFunc = false,
+    calledFunc = false;
     props = {
       item: {
         bankId: '',
@@ -28,9 +28,6 @@ describe('movable word sentece component', () => {
         question: {
           choices: {
             choice: {
-              id: '3',
-            },
-            choice: {
               id: '4',
             },
           },
@@ -42,20 +39,21 @@ describe('movable word sentece component', () => {
           },
         },
       },
-      updateChoice: () => {calledFunc = true},
-      deleteChoice: () => {calledFunc = true},
-      createChoice: () => {calledFunc = true},
-      selectChoice: () => {calledFunc = true},
-      blurOptions:  () => {calledFunc = true},
-      updateItem:   () => {calledFunc = true},
+      updateChoice: () => { calledFunc = true; },
+      deleteChoice: () => { calledFunc = true; },
+      createChoice: () => { calledFunc = true; },
+      selectChoice: () => { calledFunc = true; },
+      blurOptions:  () => { calledFunc = true; },
+      updateItem:   () => { calledFunc = true; },
       isActive: false,
       activeChoice: '',
+      save: () => {},
     };
     result = shallow(<MovableWordSentence {...props} />);
   });
 
   it('renders the movable word sentence component', () => {
-    expect(result.find('.au-c-movable__answers'))
+    expect(result.find('.au-c-movable__answers'));
   });
 
   it('renders Option', () => {

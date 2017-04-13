@@ -1,0 +1,67 @@
+.c-drag-target__background {
+  img {
+    max-width: 100%;
+  }
+}
+
+.c-drag-zone {
+  position: absolute;
+  border-radius: $radius;
+}
+
+.c-drag-zone.show-border {
+  border: 0.2rem solid black;
+  box-shadow: 0 0 0.2rem 0.2rem $white;
+}
+
+.c-drag-zone--snap {
+
+  .c-drag-zone__name {
+    @include center(both);
+    border: 0.2rem solid black;
+    white-space: nowrap;
+    border-radius: $radius;
+  }
+}
+
+.c-drag-zone__name {
+  @include semi-bold;
+  font-size: 1.2rem;
+  color: black;
+  padding: 0 0.5rem;
+  background: $white;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.c-droppable-container {
+  width: 100%;
+  max-height: 30rem;
+  overflow: auto;
+  @include display-flex;
+  flex-wrap: wrap;
+  border: 0.2rem solid $primary;
+  margin-top: 2rem;
+  padding: 1rem;
+  .c-droppable-item{
+    margin: 0.5rem;
+    box-shadow: 0 0 0.3rem rgba(0,0,0,0.3);
+  }
+}
+
+.c-droppable-item {
+  display: inline-block;
+  cursor: grab;
+  img{
+    max-height: 25rem;
+    display: block;
+  }
+  &:active{
+    cursor: grabbing;
+  }
+  &.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+}

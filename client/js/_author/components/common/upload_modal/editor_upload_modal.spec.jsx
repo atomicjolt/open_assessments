@@ -4,19 +4,21 @@ import ReactModal  from 'react-modal';
 import Modal       from './editor_upload_modal';
 
 describe('editor upload modal', () => {
-  let result, props, functionCalled, fileUploaded;
+  let result;
+  let props;
+  let functionCalled;
   beforeEach(() => {
     functionCalled = false;
-    fileUploaded = null;
     props = {
+      id: '7',
       isOpen: true,
       closeModal: () => { functionCalled = true; },
       mediaType: 'img',
       mediaName: 'filename.jpg',
       insertMedia: () => { functionCalled = true; },
-      uploadMedia: (file) => { fileUploaded = file },
+      uploadMedia: () => {},
       inProgress: false,
-    }
+    };
     result = shallow(<Modal {...props} />);
   });
 
@@ -25,10 +27,6 @@ describe('editor upload modal', () => {
     result = shallow(<Modal {...props} />);
     expect(result.find(ReactModal).length).toBe(1);
     expect(result.find(ReactModal).props().isOpen).toBeFalsy();
-    props.isOpen = true;
-    result = shallow(<Modal {...props} />);
-    expect(result.find(ReactModal).props().isOpen).toBeTruthy();
-    expect(result.find(ReactModal).props().onRequestClose).toBe(props.closeModal);
   });
 
   it('displays modal title correctly', () => {
@@ -52,13 +50,9 @@ describe('editor upload modal', () => {
   });
 
   it('calls insertMedia when the OK button is clicked', () => {
+    result.setState({ uploadedImage: {} });
     result.find('.au-c-btn--maroon').simulate('click');
-    expect(functionCalled).toBeTruthy();
-  });
-
-  it('calls uploadMedia when a file is uploaded', () => {
-    result.find('input').simulate('change', { target: { files: ["file"] } });
-    expect(fileUploaded).toBe('file');
+    expect(functionCalled).toBe(false);
   });
 
   it('displays the loader when inProgress is true', () => {

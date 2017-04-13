@@ -1,6 +1,9 @@
 import React            from 'react';
 import { shallow }      from 'enzyme';
 import { Question }     from './_question';
+import shortAnswer      from './short_answer';
+
+jest.mock('../../../../libs/assets.js');
 
 describe('question component', () => {
   let props;
@@ -34,12 +37,12 @@ describe('question component', () => {
       topItem: false,
       bottomItem: false,
       reorderActive: false,
-      updateItem: () => {itemUpdated = true},
+      updateItem: () => { itemUpdated = true; },
       updateChoice: () => {},
       activateItem: () => {},
       toggleReorder: () => {},
       deleteAssessmentItem: () => {},
-      moveItem: () => {movedUp = true},
+      moveItem: () => { movedUp = true; },
       uploadedAssets: () => {},
       makeReflection: () => {},
       createChoice: () => {},
@@ -62,7 +65,7 @@ describe('question component', () => {
 
   it('handles updateItem', () => {
     expect(itemUpdated).toBeFalsy();
-    result.instance().updateItem({ text: "asdf" });
+    result.instance().updateItem({ text: 'asdf' });
     expect(itemUpdated).toBeTruthy();
   });
 
@@ -95,8 +98,8 @@ describe('question component', () => {
     props.item.type = 'shortAnswer';
     result = shallow(<Question {...props} />);
 
-    const shortAnswer = result.find('ShortAnswer');
-    expect(shortAnswer.length).toBe(1);
+    const shortAns = result.find(shortAnswer);
+    expect(shortAns.length).toBe(1);
   });
 
   it('returns correct value from getClassName', () => {

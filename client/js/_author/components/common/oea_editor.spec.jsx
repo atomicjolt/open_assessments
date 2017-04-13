@@ -18,15 +18,13 @@ describe('qbank editor', () => {
         uploadedFileIds = fileIds;
       },
       bankId: 'bank_id',
-      uploadScopeId: 'scope_id',
       uploadMedia: () => { functionCalled = true; },
       uploadedAssets: {
         new_uploaded_guid: {
           id: 'asset_id',
-          assetContents: [{
-            id: 'new_content_id',
-            genusTypeId: 'genus_type_id',
-          }],
+          type: 'image',
+          extension: 'jpg',
+          assetContentId: 'new_content_id',
         },
       },
       fileIds: {
@@ -96,16 +94,19 @@ describe('qbank editor', () => {
     });
 
     it('passes fileIds created from uploadedAssets', () => {
+      result.instance().setState({ fileGuids: { new_uploaded_guid: {} } });
       result.instance().onBlur('asdf', true);
       expect(uploadedFileIds.new_uploaded_guid).toBeDefined();
       expect(uploadedFileIds.new_uploaded_guid.assetId).toBe('asset_id');
       expect(uploadedFileIds.new_uploaded_guid.assetContentId).toBe('new_content_id');
-      expect(uploadedFileIds.new_uploaded_guid.assetContentTypeId).toBe('genus_type_id');
+      expect(uploadedFileIds.new_uploaded_guid.assetContentTypeId).toBe('asset-content-genus-type%3Ajpg%40iana.org');
     });
   });
 
   describe('insert media', () => {
-    let insertText, insertContentCalled;
+    let insertText;
+    let insertContentCalled;
+    let file;
 
     beforeEach(() => {
       insertContentCalled = false;
@@ -125,28 +126,54 @@ describe('qbank editor', () => {
       expect(insertContentCalled).toBeFalsy();
     });
 
-    it('correctly inserts an img tag if state.mediaType is img', () => {
-      result.instance().setState({ mediaType: 'img' });
-      expect(insertContentCalled).toBeFalsy();
-      result.instance().insertMedia('http://example.com/image', 'image.jpg');
-      expect(insertContentCalled).toBeTruthy();
-      expect(insertText).toContain('<img src="http://example.com/image" />');
+    describe('from already existing assets', () => {
+      beforeEach(() => {
+        file = {
+          altText: { text: 'alt-text' },
+          id: 'id',
+          type: 'image',
+          extension: 'jpg',
+          url: 'http://example.com/image',
+        };
+      });
+
+      it('inserts an img tag if state.mediaType is img', () => {
+        result.instance().setState({ mediaType: 'img' });
+        expect(insertContentCalled).toBeFalsy();
+        result.instance().insertMedia(file);
+        expect(insertContentCalled).toBeTruthy();
+        expect(insertText).toContain('<img src="http://example.com/image" alt="alt-text">');
+      });
+
+      it('inserts a video tag if state.mediaType is video', () => {
+        result.instance().setState({ mediaType: 'video' });
+        expect(insertContentCalled).toBeFalsy();
+        result.instance().insertMedia(file);
+        expect(insertContentCalled).toBeTruthy();
+        expect(insertText).toContain('<video  name="media" controls><source src="http://example.com/image" type="video/jpg">');
+      });
+
+      it('inserts an audio tag if state.mediaType is audio', () => {
+        result.instance().setState({ mediaType: 'audio' });
+        expect(insertContentCalled).toBeFalsy();
+        result.instance().insertMedia(file);
+        expect(insertContentCalled).toBeTruthy();
+        expect(insertText).toContain('<audio  name="media" controls><source src="http://example.com/image" type="audio/jpg"></audio>');
+      });
     });
 
-    it('correctly inserts a video tag if state.mediaType is video', () => {
-      result.instance().setState({ mediaType: 'video' });
-      expect(insertContentCalled).toBeFalsy();
-      result.instance().insertMedia('http://example.com/image', 'image.mp4');
-      expect(insertContentCalled).toBeTruthy();
-      expect(insertText).toContain('<video autoplay name="media" controls><source src="http://example.com/image" type="video/mp4"/></video>');
-    });
+    describe('from newly uploaded assets', () => {
+      const metaData = {
+        altText: 'alt-text',
+        description: 'description',
+        license: 'license',
+        copyright: 'copyright',
+      };
 
-    it('correctly inserts an audio tag if state.mediaType is audio', () => {
-      result.instance().setState({ mediaType: 'audio' });
-      expect(insertContentCalled).toBeFalsy();
-      result.instance().insertMedia('http://example.com/image', 'image.mp3');
-      expect(insertContentCalled).toBeTruthy();
-      expect(insertText).toContain('<audio autoplay name="media" controls><source src="http://example.com/image" type="audio/mp3"/></audio>');
+      it('calls uploadMedia', () => {
+        result.instance().insertMedia(file, metaData, true);
+        expect(functionCalled).toBeTruthy();
+      });
     });
   });
 });

@@ -17,7 +17,7 @@ import localizeStrings                              from '../selectors/localize'
  * Determines whether or not a question has been answered or not based on the input
  */
 function isAnswered(userInput) {
-  return userInput.some((item) => !_.isEmpty(item) || item instanceof Blob);
+  return userInput.some(item => (!_.isEmpty(item) || item instanceof Blob));
 }
 
 function defaultHeaders(state, action = {}) {
@@ -59,19 +59,19 @@ function getBody(userInput, question) {
   if (type && type.startsWith('question')) {
     type = type.replace('question', 'answer');
   } else {
-    console.error("Couldn't get the question type");
+    console.error("Couldn't get the question type"); // eslint-disable-line no-console
   }
 
-  let item = transformItem(question);
+  const item = transformItem(question);
 
   switch (item.question_type) {
-    case 'short_answer_question':
+    case 'short_answer_question': {
       const text = _.isEmpty(userInput) ? '' : userInput.reduce((prev, current) => prev + current);
       return {
         type,
         text
       };
-      break;
+    }
 
     case 'fill_the_blank_question':
       return {
@@ -82,33 +82,41 @@ function getBody(userInput, question) {
           }
         }
       };
-      break;
+
     case 'numerical_input_question':
     case 'text_input_question':
       return {
         type,
-        [item.question_meta.responseIdentifier]: userInput[0] || ""
+        [item.question_meta.responseIdentifier]: userInput[0] || ''
       };
-      break;
 
     case 'file_upload_question':
-    case 'audio_upload_question':
+    case 'audio_upload_question': {
       if (_.isEmpty(userInput)) { return null; }
 
-      var formData = new FormData();
+      const formData = new FormData();
       formData.append('submission', userInput[0]);
-      if (userInput.length > 1){ console.error('Only one form submission is supported!'); }
+      if (userInput.length > 1) { console.error('Only one form submission is supported!'); } // eslint-disable-line no-console
       return formData;
+    }
 
-      break;
-
-    case 'movable_words_sandbox':
-      const audioFiles = userInput.filter((item) => { return item instanceof Blob; });
-      var formData = new FormData();
+    case 'movable_words_sandbox': {
+      const audioFiles = userInput.filter(input => (input instanceof Blob));
+      const formData = new FormData();
       formData.append('submission', _.last(audioFiles));
       return formData;
+    }
 
-      break;
+    case 'clix_drag_and_drop': {
+      return {
+        type,
+        coordinateConditions: _.map(userInput, input => ({
+          containerId: input.containerId,
+          droppableId: input.droppableId,
+          coordinateValues: input.coordinateValues,
+        }))
+      };
+    }
 
     default:
       return {
@@ -136,7 +144,10 @@ export function postQbank(state, url, body = {}, headers = {}, params = {}) {
 function checkAnswers(store, action) {
   const state = store.getState();
   const currentItemIndex = state.assessmentProgress.get('currentItemIndex');
-  const questionIndexes = _.range(currentItemIndex, currentItemIndex + state.settings.questions_per_page);
+  const questionIndexes = _.range(
+    currentItemIndex,
+    currentItemIndex + state.settings.questions_per_page
+  );
 
   return _.map(questionIndexes, (questionIndex) => {
     const question = state.assessment.items[questionIndex];
@@ -173,7 +184,7 @@ function checkAnswers(store, action) {
         original : action
       });
 
-      return;
+      return null;
     }
 
     const promise = postQbank(state, url, body);
@@ -199,11 +210,12 @@ function checkAnswers(store, action) {
           type: AssessmentProgressConstants.ASSESSMENT_CHECK_ANSWER_DONE,
           error
         });
-        console.error(error);
+        console.error(error); // eslint-disable-line no-console
       });
       return promise;
     }
 
+    return null;
   });
 }
 
@@ -244,7 +256,7 @@ export default {
   },
   [JwtConstants.REFRESH_JWT]: {
     method : Network.GET,
-    url    : (action) => (`api/sessions/${action.userId}`)
+    url    : action => (`api/sessions/${action.userId}`)
   },
 
   [AssessmentConstants.LOAD_ASSESSMENT]: (store, action) => {
@@ -286,30 +298,24 @@ export default {
     }
   },
 
-  [AssessmentProgressConstants.ASSESSMENT_PREVIOUS_QUESTIONS]: (store, action) => {
+  [AssessmentProgressConstants.ASSESSMENT_PREVIOUS_QUESTIONS]: () => {},
 
-  },
-
-  [AssessmentProgressConstants.ANSWER_SELECTED]: (store, action) => {
-
-  },
+  [AssessmentProgressConstants.ANSWER_SELECTED]: () => {},
 
   [AssessmentProgressConstants.ASSESSMENT_GRADED]: {
     method : Network.POST,
-    url    : (action) => { 'api/grades'; },
+    url    : () => 'api/grades',
     body   : (action) => {
 
       // Only send data needed for server-side grading.
-      const questions = action.questions.map(function(question){
-        return {
-          id               : question.id,
-          score            : question.score,
-          confidence_level : question.confidenceLevel,
-          time_spent       : question.timeSpent,
-          start_time       : question.startTime,
-          outcome_guid     : question.outcomeGuid
-        };
-      });
+      const questions = action.questions.map(question => ({
+        id               : question.id,
+        score            : question.score,
+        confidence_level : question.confidenceLevel,
+        time_spent       : question.timeSpent,
+        start_time       : question.startTime,
+        outcome_guid     : question.outcomeGuid
+      }));
 
       return {
         item_to_grade: {

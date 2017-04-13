@@ -3,14 +3,16 @@ import $    from 'jquery';
 import genusTypes from '../../constants/genus_types';
 
 export function scrub(item, protectedKeys) {
-  let scrubbedItem = _.cloneDeep(item);
-  scrubbedItem = _.omitBy(scrubbedItem, (val, key) => (
-    _.isNil(val) && !_.includes(protectedKeys, key)
+  if (_.isPlainObject(item)) {
+    return _.omitBy(item, (val, key) => (
+      (_.isNil(val) && !_.includes(protectedKeys, key))
+      || (_.isObject(val) && _.isEmpty(val) && !_.includes(protectedKeys, key))
+    ));
+  }
+
+  return _.reject(item, val => (
+    _.isNil(val) || (_.isObject(val) && _.isEmpty(val))
   ));
-  scrubbedItem = _.omitBy(scrubbedItem, (val, key) => (
-    _.isObject(val) && _.isEmpty(val) && !_.includes(protectedKeys, key)
-  ));
-  return scrubbedItem;
 }
 
 export function getSingleCorrectAnswer(originalItem, question) {
@@ -47,4 +49,14 @@ export function parseChoiceText(text) {
 export function parseChoiceWordType(text) {
   const parsedInput = $.parseHTML(text);
   return $(parsedInput).attr('class');
+}
+
+export function getImageUrl(text) {
+  const parsedInput = $.parseHTML(text);
+  const img = $(parsedInput).find('img');
+  const src = $(parsedInput).attr('src');
+  if (img && !src) {
+    return $(img).attr('src');
+  }
+  return src;
 }

@@ -1,8 +1,8 @@
 import React         from 'react';
-import TestUtils     from 'react-addons-test-utils';
-import _             from 'lodash';
-import Stub          from '../../../../../../../specs_support/stub';
+import { shallow }   from 'enzyme';
 import Header        from './_header';
+import Reorder       from './reorder';
+import DefaultHeader from './default';
 
 describe('header component', () => {
   let result;
@@ -14,51 +14,32 @@ describe('header component', () => {
       type: 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU',
       index: 7,
     };
-    result = TestUtils.renderIntoDocument(<Stub><Header {...props} /></Stub>);
+    result = shallow(<Header {...props} />);
   });
 
   it('displays the index number + 1', () => {
-    const questionNumber = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'au-c-question__number',
-    );
-    expect(questionNumber.textContent).toEqual('Question 8');
+    expect(result.find('.au-c-question__number').text()).toEqual('8');
   });
 
   it('displays Multiple Choice when specific value is present', () => {
     props.type = 'multipleChoice';
-    result = TestUtils.renderIntoDocument(<Stub><Header {...props} /></Stub>);
-    const questionType = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'au-c-question__type',
-    );
-    expect(questionType.textContent).toContain('Multiple Choice');
+    result = shallow(<Header {...props} />);
+    const questionType = result.find('.au-c-question__type');
+    expect(questionType.text()).toContain('Multiple Choice');
   });
 
   it('renders DefaultHeader when props.reorderActive is false', () => {
-    const defaultHeader = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'au-c-question-icons',
-    );
-    const reorderHeader = TestUtils.scryRenderedDOMComponentsWithClass(
-      result,
-      'au-c-question-icons--reorder',
-    );
-    expect(defaultHeader).toBeDefined();
-    expect(reorderHeader).toEqual([]);
+    const defaultHeader = result.find(DefaultHeader);
+    const reorderHeader = result.find(Reorder);
+    expect(defaultHeader.length).toBe(1);
+    expect(reorderHeader).toBeDefined();
   });
 
   it('renders ReorderHeader when props.reorderActive is true', () => {
     props.reorderActive = true;
-    result = TestUtils.renderIntoDocument(<Stub><Header {...props} /></Stub>);
-    const defaultHeader = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'au-c-question-icons',
-    );
-    const reorderHeader = TestUtils.findRenderedDOMComponentWithClass(
-      result,
-      'au-c-question-icons--reorder',
-    );
+    result = shallow(<Header {...props} />);
+    const defaultHeader = result.find('.au-c-question-icons');
+    const reorderHeader = result.find(Reorder);
     expect(defaultHeader).toBeDefined();
     expect(reorderHeader).toBeDefined();
   });

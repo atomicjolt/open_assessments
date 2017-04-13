@@ -34,6 +34,7 @@ describe('bank List', () => {
       sortBy: () => {},
       getBankChildren: () => {},
       baseEmbedUrl: 'LOOKASPEC',
+      banksLoaded: true,
     };
 
     result = TestUtils.renderIntoDocument(<Stub><BankList {...props} /></Stub>);
