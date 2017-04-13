@@ -24,7 +24,7 @@ const languageToLocale = {
 export class EditorUploadModal extends React.Component {
   static propTypes = {
     isOpen: React.PropTypes.bool,
-    localizeStrings: React.PropTypes.shape({}),
+    localizeStrings: React.PropTypes.func,
     closeModal: React.PropTypes.func.isRequired,
     loading: React.PropTypes.bool,
     media: React.PropTypes.shape({}),

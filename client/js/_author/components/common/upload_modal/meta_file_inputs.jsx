@@ -25,5 +25,5 @@ export default function metaDataFileInputs(props) {
 
 metaDataFileInputs.propTypes = {
   metadataFileTypes: React.PropTypes.shape({}),
-  labelName: React.PropTypes.shape({})
+  labelName: React.PropTypes.func
 };
