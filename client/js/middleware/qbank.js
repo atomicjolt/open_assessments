@@ -259,7 +259,8 @@ const qbank = {
       null,
       state.jwt,
       state.settings.csrf_token,
-      { qBankHost: state.settings.qBankHost },
+      // { qBankHost: state.settings.qBankHost },
+      null,
       null
     ).then((res) => {
       store.dispatch({
