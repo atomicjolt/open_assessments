@@ -30,8 +30,10 @@ export default class BankAssessment extends React.Component {
   }
 
   deleteAssessment(...args) {
-    this.setState({ deleting: true });
-    this.props.deleteAssessment(...args);
+    if (confirm('Are you sure you want to delete this assessment?')) {
+      this.setState({ deleting: true });
+      this.props.deleteAssessment(...args);
+    }
   }
 
   selectItem() {
