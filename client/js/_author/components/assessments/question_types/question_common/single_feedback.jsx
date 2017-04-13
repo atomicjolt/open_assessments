@@ -2,6 +2,7 @@ import React            from 'react';
 import _                from 'lodash';
 import Editor           from '../../../common/oea_editor';
 import { languageText } from '../../../../../utils/utils';
+import { getLanguage }  from '../../../../../constants/language_types';
 
 export default class SingleFeedback extends React.Component {
   static propTypes = {
@@ -31,7 +32,7 @@ export default class SingleFeedback extends React.Component {
       <div className="au-c-input au-c-input-label--left au-c-feedback">
         <label htmlFor="feedbackCorrect">{this.props.labelText}</label>
         <Editor
-          editorKey={this.props.language}
+          editorKey={getLanguage(this.props.language)}
           textSize="smaller"
           fileIds={_.get(this.props.feedback, 'fileIds')}
           text={text}

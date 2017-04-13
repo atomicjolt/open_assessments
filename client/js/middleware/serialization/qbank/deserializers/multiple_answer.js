@@ -45,7 +45,7 @@ export default function multipleAnswer(item) {
     },
     incorrectFeedback: {
       text: _.get(incorrectAnswer, 'feedback.text'),
-      texts: _.get(correctAnswer, 'feedbacks'),
+      texts: _.get(incorrectAnswer, 'feedbacks'),
       answerId: _.get(incorrectAnswer, 'id'),
       fileIds: _.get(incorrectAnswer, 'fileIds')
     },

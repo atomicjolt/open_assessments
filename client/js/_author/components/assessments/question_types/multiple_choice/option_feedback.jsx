@@ -2,6 +2,7 @@ import React            from 'react';
 import Editor           from '../../../common/oea_editor';
 import localize         from '../../../../locales/localize';
 import { languageText } from '../../../../../utils/utils';
+import { getLanguage } from '../../../../../constants/language_types';
 
 class optionFeedback extends React.Component {
   static propTypes = {
@@ -23,7 +24,7 @@ class optionFeedback extends React.Component {
       <div className={`au-c-input au-c-input-label--left au-c-feedback ${hidden}`}>
         <label htmlFor="feedback1">{strings.feedback}</label>
         <Editor
-          editorKey={this.props.language}
+          editorKey={getLanguage(this.props.language)}
           textSize="smaller"
           fileIds={this.props.fileIds}
           text={text || this.props.feedback}

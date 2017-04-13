@@ -77,7 +77,7 @@ function killAnswers(answers) {
 export default function multipleChoiceSerializer(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
 
-  const { question } = newItemAttributes;
+  const { question, language } = newItemAttributes;
   if (question) {
     newItem.question = {
       ...newItem.question,
@@ -91,7 +91,7 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
         newItem.answers = serializeAnswers(
           originalItem.question.choices,
           question.choices,
-          newItemAttributes.language
+          language
         );
       }
     }

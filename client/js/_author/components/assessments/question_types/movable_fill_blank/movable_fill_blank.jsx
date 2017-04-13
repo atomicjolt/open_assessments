@@ -26,6 +26,7 @@ class MovableFillBlank extends React.Component {
     localizeStrings: React.PropTypes.func.isRequired,
     isActive: React.PropTypes.bool,
     activeChoice: React.PropTypes.string,
+    language: React.PropTypes.string.isRequired,
   };
 
   render() {
@@ -56,6 +57,7 @@ class MovableFillBlank extends React.Component {
         </div>
         <div className="au-c-question__feedback">
           <Feedback
+            language={this.props.language}
             updateItem={this.props.updateItem}
             feedbackType="correctFeedback"
             feedback={question.correctFeedback}
@@ -63,6 +65,7 @@ class MovableFillBlank extends React.Component {
             bankId={this.props.item.bankId}
           />
           <Feedback
+            language={this.props.language}
             updateItem={this.props.updateItem}
             feedbackType="incorrectFeedback"
             feedback={question.incorrectFeedback}

@@ -32,11 +32,13 @@ export default function movableWordSentence(item) {
     shuffle: _.get(item, 'question.shuffle'),
     choices: deserializeChoices(_.get(item, 'question.choices'), correctAnswer, _.get(incorrectAnswer, 'id')),
     correctFeedback: {
+      texts: _.get(correctAnswer, 'feedbacks'),
       text: _.get(correctAnswer, 'feedback.text'),
       answerId: _.get(correctAnswer, 'id'),
       fileIds: _.get(correctAnswer, 'fileIds')
     },
     incorrectFeedback: {
+      texts: _.get(incorrectAnswer, 'feedbacks'),
       text: _.get(incorrectAnswer, 'feedback.text'),
       answerId: _.get(incorrectAnswer, 'id'),
       fileIds: _.get(incorrectAnswer, 'fileIds')

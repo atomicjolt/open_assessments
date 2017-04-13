@@ -1,8 +1,9 @@
 import _ from 'lodash';
-import { baseItem } from './base';
-import { scrub } from '../../serializer_utils';
-import guid from '../../../../utils/guid';
-import genusTypes from '../../../../constants/genus_types';
+
+import { baseItem }                       from './base';
+import { scrub, getSingleCorrectAnswer }  from '../../serializer_utils';
+import guid                               from '../../../../utils/guid';
+import genusTypes                         from '../../../../constants/genus_types';
 
 const makeChoiceText = (choice) => {
   if (choice.wordType) {
@@ -31,25 +32,9 @@ export function serializeFileIds(correctFeedback, incorrectFeedback) {
   };
 }
 
-export function serializeAnswers(correctFeedback, incorrectFeedback, originalItem) {
-  const originalCorrect = _.get(originalItem, 'question.correctFeedback', {});
-  const originalIncorrect = _.get(originalItem, 'question.incorrectFeedback', {});
-
-  return [{
-    id: originalCorrect.id,
-    genusTypeId: genusTypes.answer.rightAnswer,
-    feedback: _.get(correctFeedback, 'text') || originalCorrect.text,
-    fileIds: _.get(correctFeedback, 'fileIds', {}),
-  }, {
-    id: originalIncorrect.id,
-    genusTypeId: genusTypes.answer.wrongAnswer,
-    feedback: _.get(incorrectFeedback, 'text', '') || originalIncorrect.text,
-    fileIds: _.get(incorrectFeedback, 'fileIds', {}),
-  }].map(scrub);
-}
-
 export default function movableWordsSerializer(originalItem, newItemAttributes) {
   const newItem = baseItem(originalItem, newItemAttributes);
+  const { question, language } = newItemAttributes;
 
   // Serialize timeValue
   if (!_.isEmpty(_.get(newItemAttributes, 'question.timeValue', {}))) {
@@ -81,19 +66,12 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
     _.set(newItem, 'question.choices', serializeChoices(choices));
   }
 
-  // Serialize answers
-  const correctFeedback =
-    _.get(newItemAttributes, 'question.correctFeedback');
-  const incorrectFeedback =
-    _.get(newItemAttributes, 'question.incorrectFeedback');
+  const correctFeedback = _.get(question, 'correctFeedback');
 
-  if (correctFeedback || incorrectFeedback) {
-    const answers = serializeAnswers(
-      correctFeedback,
-      incorrectFeedback,
-      originalItem,
-    );
-    newItem.answers = answers;
+  if (correctFeedback) {
+    newItem.answers = [
+      getSingleCorrectAnswer(originalItem, question, language)
+    ];
   }
   return newItem;
 }

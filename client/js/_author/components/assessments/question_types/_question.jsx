@@ -241,7 +241,7 @@ export class Question extends React.Component {
           createChoice={(text, fileIds, type) =>
             this.props.createChoice(bankId, item.id, text, fileIds, type)}
           deleteChoice={choice => this.deleteChoice(choice)}
-          language={getLanguage(this.state.language)}
+          language={this.state.language}
           save={() => this.saveStateItem()}
         />
       );

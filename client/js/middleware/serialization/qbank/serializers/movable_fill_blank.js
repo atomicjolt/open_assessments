@@ -1,8 +1,8 @@
-import _                          from 'lodash';
-import baseSerializer             from './base';
-import { scrub, buildChoiceText } from '../../serializer_utils';
-import genusTypes                 from '../../../../constants/genus_types';
-import guid                       from '../../../../utils/guid';
+import _                                        from 'lodash';
+import baseSerializer                           from './base';
+import { scrub, buildChoiceText, languageText } from '../../serializer_utils';
+import genusTypes                               from '../../../../constants/genus_types';
+import guid                                     from '../../../../utils/guid';
 
 function serializeChoices(originalChoices, newChoiceAttributes, inlineRegionId) {
   const choices = _.map(originalChoices, (choice) => {
@@ -66,7 +66,7 @@ function serializeQuestion(originalQuestion, newQuestionAttributes, questionStri
 }
 
 function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
-  correctFeedback, incorrectFeedback
+  correctFeedback, incorrectFeedback, language
 ) {
   const region = _.get(_.values(originalChoices), '[0].blankId');
   const correctId = _.findKey(newChoiceAttributes, choice => choice.isCorrect)
@@ -76,7 +76,7 @@ function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
   let correctAnswer = {
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.rightAnswer }), 'id'),
     genusTypeId: genusTypes.answer.rightAnswer,
-    feedback: _.get(correctFeedback, 'text'),
+    feedback: languageText(_.get(correctFeedback, 'text'), language),
     choiceIds: [],
     fileIds: _.get(correctFeedback, 'fileIds'),
     region,
