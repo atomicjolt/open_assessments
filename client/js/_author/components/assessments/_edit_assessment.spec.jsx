@@ -61,7 +61,6 @@ describe('_edit_assessment component', () => {
       updateAnswer: () => {},
       deleteAssessmentItem: () => { handleFunction = true; },
       updatePath: () => {},
-      getItems: () => {},
       banks: [],
       updateSingleItemOrPage: () => {},
       isPublished: false,

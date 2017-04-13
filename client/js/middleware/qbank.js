@@ -408,11 +408,6 @@ const qbank = {
     url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/items/${action.itemId}`,
   },
 
-  [ItemConstants.GET_ITEMS]: {
-    method : Network.GET,
-    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/items`,
-  },
-
   [ItemConstants.CREATE_ITEM]: {
     method : Network.POST,
     url    : (url, action) => `${url}/assessment/banks/${action.bankId}/items`,

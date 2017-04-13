@@ -22,7 +22,6 @@ export class NewAssessment extends React.Component {
     createAssessmentWithItem: React.PropTypes.func.isRequired,
     updatePath: React.PropTypes.func.isRequired,
     getAssessments: React.PropTypes.func.isRequired,
-    getItems: React.PropTypes.func.isRequired,
     banks: React.PropTypes.arrayOf(React.PropTypes.shape({}))
   };
 
@@ -41,7 +40,6 @@ export class NewAssessment extends React.Component {
     const banks = this.flattenBanks(this.props.banks, flatBanks);
     this.props.updatePath(id, banks[id], true);
     this.props.getAssessments(id);
-    this.props.getItems(id);
     hashHistory.push('/');
   }
 
