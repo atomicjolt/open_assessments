@@ -137,6 +137,9 @@ export class EditorUploadModal extends React.Component {
       name = <div className="au-c-error-text">{strings.error}: {this.props.error}</div>;
     }
 
+    if (!this.props.isOpen && this.state.uploadedMedia) {
+      this.resetModal();
+    }
 
     return (
       <Modal
