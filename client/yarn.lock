@@ -368,9 +368,9 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-atomic-react-tinymce@^0.5.5:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/atomic-react-tinymce/-/atomic-react-tinymce-0.5.5.tgz#7ba9593477453b37b5b5e822c30ea6dad95ee51f"
+atomic-react-tinymce@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/atomic-react-tinymce/-/atomic-react-tinymce-0.5.6.tgz#b77d5f46ee4245c79572a3d5a6a34efda0664693"
   dependencies:
     lodash "^3.9.3"
 
