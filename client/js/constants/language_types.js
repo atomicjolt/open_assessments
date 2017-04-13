@@ -22,5 +22,18 @@ export function getScriptTypeId(langCode) {
   return _.findKey(languages.scriptTypeId, language => langCode === language) || null;
 }
 
+export function languageFromLocale(locale) {
+  switch (locale) {
+    case 'en':
+      return 'english';
+    case 'hi':
+      return 'hindi';
+    case 'te':
+      return 'telugu';
+    default:
+      throw new Error('Locale not recognized');
+  }
+}
+
 
 export default languages;

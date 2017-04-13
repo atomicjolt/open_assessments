@@ -16,6 +16,8 @@ import { updateItem }                               from '../actions/qbank/items
 import { deserializeMedia, deserializeSingleMedia } from './serialization/qbank/deserializers/media';
 import { dispatchMany }                             from './utils';
 import guid                                         from '../utils/guid';
+import {
+  languageFromLocale, languages as LanguageTypes }  from '../constants/language_types';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -81,13 +83,29 @@ function uploadMedia(state, action) {
 
 function uploadMediaMeta(state, metaData, repositoryId, assetId, mediaType) {
   const formData = new FormData();
-  formData.append('mediaDescription', metaData.description || '');
+
+  const language = languageFromLocale(metaData.locale);
+  formData.append('mediaDescription', JSON.stringify({
+    text: metaData.description || '',
+    languageTypeId: LanguageTypes.languageTypeId[language],
+    formatTypeId: LanguageTypes.formatTypeId,
+    scriptTypeId: LanguageTypes.scriptTypeId[language],
+  }));
+
   formData.append('locale', metaData.locale);
 
   if (mediaType === 'audio') {
     formData.append('transcriptFile', metaData.transcript || '');
   } else if (mediaType === 'img') {
-    formData.append('altText', metaData.altText || '');
+    formData.append(
+      'altText',
+      JSON.stringify({
+        text:metaData.altText || '',
+        languageTypeId: LanguageTypes.languageTypeId[language],
+        formatTypeId: LanguageTypes.formatTypeId,
+        scriptTypeId: LanguageTypes.scriptTypeId[language],
+      })
+    );
   } else if (mediaType === 'video') {
     formData.append('vttFile', metaData.vttFile || '');
     formData.append('transcriptFile', metaData.transcript || '');
