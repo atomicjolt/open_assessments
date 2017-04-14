@@ -2,24 +2,24 @@ import React        from 'react';
 import { connect }  from 'react-redux';
 import _            from 'lodash';
 
-import * as ItemActions   from '../../../../actions/qbank/items';
-import MovableFillBlank   from './movable_fill_blank/movable_fill_blank';
-import MultipleChoice     from './multiple_choice/multiple_choice';
-import QuestionHeader     from './question_common/header/_header';
-import Settings           from './question_common/settings';
-import QuestionText       from './question_common/text';
-import AudioUpload        from './audio_upload';
-import FileUpload         from './file_upload';
-import ImageSequence      from './image_sequence/_image_sequence';
-import ShortAnswer        from './short_answer';
-import WordSentence       from './movable_word_sentence/movable_word_sentence';
-import MovableWordSandbox from './movable_words_sandbox/movable_words_sandbox';
-import DragAndDrop        from './drag_and_drop/_drag_and_drop';
-import types              from '../../../../constants/question_types';
-import languages          from '../../../../constants/language_types';
-import Preview            from './preview_question';
-import { bankMedia }      from '../../../selectors/media';
-import localize           from '../../../locales/localize';
+import * as ItemActions           from '../../../../actions/qbank/items';
+import MovableFillBlank           from './movable_fill_blank/movable_fill_blank';
+import MultipleChoice             from './multiple_choice/multiple_choice';
+import QuestionHeader             from './question_common/header/_header';
+import Settings                   from './question_common/settings';
+import QuestionText               from './question_common/text';
+import AudioUpload                from './audio_upload';
+import FileUpload                 from './file_upload';
+import ImageSequence              from './image_sequence/_image_sequence';
+import ShortAnswer                from './short_answer';
+import WordSentence               from './movable_word_sentence/movable_word_sentence';
+import MovableWordSandbox         from './movable_words_sandbox/movable_words_sandbox';
+import DragAndDrop                from './drag_and_drop/_drag_and_drop';
+import types                      from '../../../../constants/question_types';
+import { languages, getLanguage } from '../../../../constants/language_types';
+import Preview                    from './preview_question';
+import { bankMedia }              from '../../../selectors/media';
+import localize                   from '../../../locales/localize';
 
 function select(state, props) {
   return {
@@ -208,12 +208,19 @@ export class Question extends React.Component {
 
   deleteChoice(choice) {
     const strings = this.props.localizeStrings('question');
+    const { item } = this.props;
     if (confirm(strings.confirm)) {
       this.updateItem({
         question: {
           choices: this.markedForDeletion(choice)
         }
       }, true);
+      if (_.includes(Question.stateDrivenTypes, item.type)
+        && _.get(this, `state.item.question.choices[${choice.id}]`)) {
+        const choices = this.state.item.question.choices;
+        delete choices[choice.id];
+        this.setState({ item: _.merge(this.state.item, { question: { choices } }) });
+      }
     }
   }
 
@@ -276,7 +283,7 @@ export class Question extends React.Component {
             itemType={type}
             fileIds={question.fileIds}
             itemId={id}
-            editorKey={languageTypeId}
+            editorKey={getLanguage(languageTypeId)}
             text={questionText}
             updateItem={newProps => this.updateItem(newProps, true)}
             bankId={bankId}

@@ -5,18 +5,23 @@ export default function metaDataFileInputs(props) {
   return (
     <div>
       {_.map(props.metadataFileTypes, type => (
-        <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
-          <label htmlFor={`meta_upload_${type}`}>{props.labelName(type)}</label>
-          <div className="au-c-input__contain">
+        <div className="au-u-mb-md au-u-mt-md" key={`metadata_input_${type}`}>
+          <label htmlFor={`metadata_input_${type}`} className="au-c-input--file au-o-flex-center">
+            <span className="au-c-wysiwyg-media__label">
+              {props.labelName(type)}
+            </span>
+            <div className="au-c-wysiwyg-media__source-text" tabIndex="0">
+              {_.get(props, `metaData.${type}.name`, '')}
+            </div>
             <input
-              className=""
-              id={`meta_upload_${type}`}
-              type="file"
-              tabIndex="0"
               onChange={e => props.updateMetadata(type, e.target.files[0])}
+              id={`metadata_input_${type}`}
+              type="file"
             />
-            <div className="au-c-input__bottom" />
-          </div>
+            <div className="au-c-wysiwyg-media__upload">
+              <i className="material-icons">find_in_page</i>
+            </div>
+          </label>
         </div>
       ))}
     </div>
@@ -24,6 +29,6 @@ export default function metaDataFileInputs(props) {
 }
 
 metaDataFileInputs.propTypes = {
-  metadataFileTypes: React.PropTypes.shape({}),
+  metadataFileTypes: React.PropTypes.arrayOf(React.PropTypes.string),
   labelName: React.PropTypes.func
 };

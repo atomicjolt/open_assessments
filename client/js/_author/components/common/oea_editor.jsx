@@ -57,6 +57,10 @@ export class OeaEditor extends React.Component {
       this.state.editor.insertContent(editorContent);
       this.closeModal();
     }
+
+    if (nextProps.text !== this.state.newText) {
+      this.setState({ newText: nextProps.text });
+    }
   }
 
   onBlur(editorText, isChanged) {
@@ -273,7 +277,7 @@ export class OeaEditor extends React.Component {
   render() {
     const isActive = this.state.focused || this.state.modalOpen;
     const activeClass = isActive ? 'is-focused' : 'no-border';
-    const hidePlaceholder = this.state.newText || isActive ? 'is-hidden' : '';
+    const hidePlaceholder = (this.state.newText && this.state.newText.length) || isActive ? 'is-hidden' : '';
 
     const { textSize } = this.props;
     const uploadedAsset = _.get(this.props, `uploadedAssets['${this.state.mediaGuid}'].assetContents[0]`);

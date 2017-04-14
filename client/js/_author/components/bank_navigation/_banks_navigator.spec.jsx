@@ -44,7 +44,6 @@ describe('Bank Navigator', () => {
       updatePath         : () => { calledFuncts.push('updatePath'); },
       getBanks           : () => { calledFuncts.push('getBanks'); },
       getAssessments     : () => { calledFuncts.push('getAssessments'); },
-      getItems           : () => { calledFuncts.push('getItems'); },
       createAssessment   : () => { calledFuncts.push('createAssessment'); },
       deleteAssessment   : () => { calledFuncts.push('deleteAssessment'); },
       togglePublishAssessment: () => {},
@@ -63,7 +62,6 @@ describe('Bank Navigator', () => {
   it('updates the path, gets assessments, and gets items, when a bank is selected', () => {
     result.getBankChildren({ id: 1, displayName: { text: 'tacos' } });
     expect(_.indexOf(calledFuncts, 'getAssessments')).toBeGreaterThan(-1);
-    expect(_.indexOf(calledFuncts, 'getItems')).toBeGreaterThan(-1);
   });
 
   it('correctly sorts by type', () => {
@@ -85,7 +83,7 @@ describe('Bank Navigator', () => {
 
   it('sorts the banks by name ascending', () => {
     result.sortBy('sortName');
-    const ascNameSorted = result.sortBanks();
+    const ascNameSorted = result.sortContents(props.banks);
 
     expect(ascNameSorted[0].displayName.text).toBe('apple');
     expect(ascNameSorted[1].displayName.text).toBe('rice');
@@ -95,7 +93,7 @@ describe('Bank Navigator', () => {
   it('sorts the banks by name descending', () => {
     result.sortBy('sortName');
     result.sortBy('sortName');
-    const ascNameSorted = result.sortBanks();
+    const ascNameSorted = result.sortContents(props.banks);
 
     expect(ascNameSorted[0].displayName.text).toBe('taco');
     expect(ascNameSorted[1].displayName.text).toBe('rice');
