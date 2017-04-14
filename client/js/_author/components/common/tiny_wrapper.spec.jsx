@@ -17,7 +17,7 @@ describe('tiny_wrapper component', () => {
     result = shallow(<TinyWrapper {...props} />);
   });
 
-  it('renders as a snapshot', () => {
-    expect(result).toMatchSnapshot();
+  it('renders component', () => {
+    expect(result.find('label').length).toBe(1);
   });
 });
