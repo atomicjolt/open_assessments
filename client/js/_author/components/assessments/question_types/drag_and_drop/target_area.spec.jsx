@@ -19,6 +19,7 @@ describe('target_area component', () => {
         zones: {},
       },
       uploadMedia: () => { uploadedMedia = true; },
+      setVisible: () => {},
       editZone: () => { zoneNew = true; },
     };
     result = shallow(<TargetArea {...props} />);

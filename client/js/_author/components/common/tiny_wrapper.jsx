@@ -85,7 +85,7 @@ export default class TinyWrapper extends React.Component {
         <label htmlFor={`${this.props.editorKey || ''}${this.id}-tinymce`} />
         <div id={`toolbar-${this.props.editorKey || ''}${this.id}`} />
         <TinyMCE
-          id={`${this.props.editorKey || ''}${this.id}-tinymce`}
+          id={`${this.id}-tinymce`}
           content={this.props.text}
           config={this.tinyMCEConfig()}
           onBlur={(e) => { this.props.onBlur(e.target.getContent(), e.target.isDirty()); }}

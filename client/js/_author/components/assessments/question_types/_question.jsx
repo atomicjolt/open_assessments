@@ -209,12 +209,19 @@ export class Question extends React.Component {
 
   deleteChoice(choice) {
     const strings = this.props.localizeStrings('question');
+    const { item } = this.props;
     if (confirm(strings.confirm)) {
       this.updateItem({
         question: {
           choices: this.markedForDeletion(choice)
         }
       }, true);
+      if (_.includes(Question.stateDrivenTypes, item.type)
+        && _.get(this, `state.item.question.choices[${choice.id}]`)) {
+        const choices = this.state.item.question.choices;
+        delete choices[choice.id];
+        this.setState({ item: _.merge(this.state.item, { question: { choices } }) });
+      }
     }
   }
 

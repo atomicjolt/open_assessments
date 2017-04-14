@@ -85,16 +85,12 @@ function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.wrongAnswer }), 'id'),
     genusTypeId: genusTypes.answer.wrongAnswer,
     feedback: _.get(incorrectFeedback, 'text'),
-    choiceIds: [],
     fileIds: _.get(incorrectFeedback, 'fileIds'),
-    region,
   };
 
   _.each(originalChoices, (choice) => {
     if (choice.id === correctId) {
       correctAnswer.choiceIds.push(choice.id);
-    } else {
-      incorrectAnswer.choiceIds.push(choice.id);
     }
   });
 
