@@ -128,7 +128,12 @@ export class OeaEditor extends React.Component {
       }
     });
 
-    text = doc.html();
+    // This is ugly, but qbank requires the html we send to be valid xml...
+    const xmlSerializer = new window.XMLSerializer();
+    text = xmlSerializer.serializeToString(doc[0]);
+    text = text.replace(/^<div xmlns="http:\/\/www.w3.org\/1999\/xhtml">/, '');
+    text = text.replace(/<\/div>$/, '');
+
     text = text.replace(/src-placeholder/g, 'src');
     text = text.replace(/autoplay-placeholder/g, 'autoplay');
 

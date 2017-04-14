@@ -41,6 +41,7 @@ export default class TinyWrapper extends React.Component {
   tinyMCEConfig() {
     // Whenever you add a plugin, make sure that it is imported above.
     return {
+      closed: /^(br|hr|input|meta|img|link|param|area|source|track)$/,
       fixed_toolbar_container: `#toolbar-${this.props.editorKey || ''}${this.id}`,
       skin: false,
       menubar: false,
