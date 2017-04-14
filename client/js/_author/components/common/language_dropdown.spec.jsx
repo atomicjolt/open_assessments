@@ -11,7 +11,7 @@ describe('language_dropdown component', () => {
     calledFunc = false;
     props = {
       updateItem: () => { calledFunc = true; },
-    },
+    };
     result = shallow(<LanguageDropdown {...props} />);
   });
 

@@ -24,7 +24,7 @@ describe('search media component', () => {
     expect(result.instance().state.offset).toBe(0);
     const data = {
       selected: 5,
-    }
+    };
     result.instance().handlePageClick(data);
     expect(result.instance().state.offset).toBe(40);
   });
