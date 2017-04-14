@@ -93,8 +93,6 @@ function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
   _.each(originalChoices, (choice) => {
     if (choice.id === correctId) {
       correctAnswer.choiceIds.push(choice.id);
-    } else {
-      incorrectAnswer.choiceIds.push(choice.id);
     }
   });
 
