@@ -6,7 +6,7 @@ export function targetMenu(props) {
   const strings = props.localizeStrings('targetMenu');
 
   return (
-    <div className="au-o-item__top">
+    <div className="au-o-item__top" onMouseLeave={() => props.toggleAdd(props.addType)}>
       <div className="au-o-left">
         <div className="au-c-question__type">{strings.targetImage}</div>
       </div>
