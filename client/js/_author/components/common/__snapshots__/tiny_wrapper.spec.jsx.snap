@@ -1,0 +1,196 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tiny_wrapper component renders as a snapshot 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <div>
+    <label
+        htmlFor="The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae-tinymce"
+    />
+    <div
+        id="toolbar-The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae"
+    />
+    <TinyMCE
+        config={
+            Object {
+                "browser_spellcheck": true,
+                "fixed_toolbar_container": "#toolbar-The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae",
+                "inline": true,
+                "menubar": false,
+                "paste_data_images": true,
+                "plugins": "autolink link lists paste code charmap media image table",
+                "setup": [Function],
+                "skin": false,
+                "statusbar": false,
+                "toolbar": "bold italic removeformat | bullist numlist  blockquote table | code charmap subscript superscript | insert_image audio video",
+              }
+        }
+        content="Spec 1, 2, 3"
+        id="The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae-tinymce"
+        onBlur={[Function]}
+        onChange={[Function]}
+        onFocus={[Function]}
+    />
+</div>,
+  "nodes": Array [
+    <div>
+      <label
+            htmlFor="The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae-tinymce"
+      />
+      <div
+            id="toolbar-The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae"
+      />
+      <TinyMCE
+            config={
+                  Object {
+                        "browser_spellcheck": true,
+                        "fixed_toolbar_container": "#toolbar-The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae",
+                        "inline": true,
+                        "menubar": false,
+                        "paste_data_images": true,
+                        "plugins": "autolink link lists paste code charmap media image table",
+                        "setup": [Function],
+                        "skin": false,
+                        "statusbar": false,
+                        "toolbar": "bold italic removeformat | bullist numlist  blockquote table | code charmap subscript superscript | insert_image audio video",
+                      }
+            }
+            content="Spec 1, 2, 3"
+            id="The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae-tinymce"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+      />
+</div>,
+  ],
+  "options": Object {},
+  "renderer": ReactShallowRenderer {
+    "_instance": ShallowComponentWrapper {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 0,
+      "_context": Object {},
+      "_currentElement": <TinyWrapper
+        editorKey="The key to success"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        openModal={[Function]}
+        text="Spec 1, 2, 3"
+/>,
+      "_debugID": 1,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": TinyWrapper {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "id": "07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae",
+        "props": Object {
+          "editorKey": "The key to success",
+          "onBlur": [Function],
+          "onFocus": [Function],
+          "openModal": [Function],
+          "text": "Spec 1, 2, 3",
+        },
+        "refs": Object {},
+        "state": null,
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 1,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <div>
+          <label
+                    htmlFor="The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae-tinymce"
+          />
+          <div
+                    id="toolbar-The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae"
+          />
+          <TinyMCE
+                    config={
+                              Object {
+                                        "browser_spellcheck": true,
+                                        "fixed_toolbar_container": "#toolbar-The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae",
+                                        "inline": true,
+                                        "menubar": false,
+                                        "paste_data_images": true,
+                                        "plugins": "autolink link lists paste code charmap media image table",
+                                        "setup": [Function],
+                                        "skin": false,
+                                        "statusbar": false,
+                                        "toolbar": "bold italic removeformat | bullist numlist  blockquote table | code charmap subscript superscript | insert_image audio video",
+                                      }
+                    }
+                    content="Spec 1, 2, 3"
+                    id="The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae-tinymce"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+          />
+</div>,
+        "_debugID": 2,
+        "_renderedOutput": <div>
+          <label
+                    htmlFor="The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae-tinymce"
+          />
+          <div
+                    id="toolbar-The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae"
+          />
+          <TinyMCE
+                    config={
+                              Object {
+                                        "browser_spellcheck": true,
+                                        "fixed_toolbar_container": "#toolbar-The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae",
+                                        "inline": true,
+                                        "menubar": false,
+                                        "paste_data_images": true,
+                                        "plugins": "autolink link lists paste code charmap media image table",
+                                        "setup": [Function],
+                                        "skin": false,
+                                        "statusbar": false,
+                                        "toolbar": "bold italic removeformat | bullist numlist  blockquote table | code charmap subscript superscript | insert_image audio video",
+                                      }
+                    }
+                    content="Spec 1, 2, 3"
+                    id="The key to success07d7e7e5-198e-e68b-12a2-4cfbe6d6fcae-tinymce"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+          />
+</div>,
+      },
+      "_renderedNodeType": 0,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <TinyWrapper
+    editorKey="The key to success"
+    onBlur={[Function]}
+    onFocus={[Function]}
+    openModal={[Function]}
+    text="Spec 1, 2, 3"
+/>,
+}
+`;
