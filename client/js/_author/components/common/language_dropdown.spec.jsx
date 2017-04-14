@@ -10,7 +10,7 @@ describe('language_dropdown component', () => {
   beforeEach(() => {
     calledFunc = false;
     props = {
-      updateItem: () => {calledFunc = true},
+      updateItem: () => { calledFunc = true; },
     },
     result = shallow(<LanguageDropdown {...props} />);
   });
