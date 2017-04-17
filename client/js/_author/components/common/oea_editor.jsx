@@ -63,6 +63,10 @@ export class OeaEditor extends React.Component {
     }
   }
 
+  onChange(editorText) {
+    this.setState({ newText: editorText });
+  }
+
   onBlur(editorText, isChanged) {
     this.setState({ focused: false, newText: editorText });
     if (!isChanged) return;
@@ -298,6 +302,7 @@ export class OeaEditor extends React.Component {
             {...this.props}
             text={this.cleanText()}
             onBlur={(editorText, isChanged) => this.onBlur(editorText, isChanged)}
+            onChange={editorText => this.onChange(editorText)}
             onFocus={() => this.setState({ focused: true })}
             openModal={(editor, type) => this.openModal(editor, type)}
           />
