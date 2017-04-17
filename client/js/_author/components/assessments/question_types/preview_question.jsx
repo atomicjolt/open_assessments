@@ -3,6 +3,7 @@ import _            from 'lodash';
 import Item         from '../../../../_player/components/assessments/item';
 import types        from '../../../../constants/question_types';
 import localize     from '../../../locales/localize';
+import Spinner      from '../../common/dot_loader';
 
 const exclusiveTypes = {
   multiple_choice_question: true,
@@ -191,8 +192,11 @@ class PreviewQuestion extends React.Component {
 
 
   render() {
-    const item = this.serializeForPlayer(this.props.item);
+    if (_.get(this.props, 'item.isUpdating', false)) {
+      return <Spinner />;
+    }
 
+    const item = this.serializeForPlayer(this.props.item);
     return (
       <div>
         <Item
