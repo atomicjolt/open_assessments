@@ -3,7 +3,6 @@ import _ from 'lodash';
 import { baseItem }                       from './base';
 import { scrub, getSingleCorrectAnswer }  from '../../serializer_utils';
 import guid                               from '../../../../utils/guid';
-import genusTypes                         from '../../../../constants/genus_types';
 
 const makeChoiceText = (choice) => {
   if (choice.wordType) {

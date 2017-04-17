@@ -1,8 +1,8 @@
-import _              from 'lodash';
-import baseSerializer from './base';
-import { scrub }      from '../../serializer_utils';
-import genusTypes     from '../../../../constants/genus_types';
-import guid           from '../../../../utils/guid';
+import _                        from 'lodash';
+import baseSerializer           from './base';
+import { scrub, languageText }  from '../../serializer_utils';
+import genusTypes               from '../../../../constants/genus_types';
+import guid                     from '../../../../utils/guid';
 
 function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
@@ -59,7 +59,7 @@ function killAnswers(answers) {
 export default function surveySerializer(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
 
-  const { question } = newItemAttributes;
+  const { question, language } = newItemAttributes;
   if (question) {
     newItem.question = {
       ...newItem.question,
@@ -72,7 +72,7 @@ export default function surveySerializer(originalItem, newItemAttributes) {
         newItem.answers = serializeAnswers(
           originalItem.question.choices,
           _.get(originalItem, 'originalItem.answers'),
-          _.get(question, 'correctFeedback.text')
+          languageText(_.get(question, 'correctFeedback.text'), language),
         );
       }
     }

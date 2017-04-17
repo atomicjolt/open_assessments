@@ -84,7 +84,7 @@ function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
   let incorrectAnswer = {
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.wrongAnswer }), 'id'),
     genusTypeId: genusTypes.answer.wrongAnswer,
-    feedback: _.get(incorrectFeedback, 'text'),
+    feedback: languageText(_.get(incorrectFeedback, 'text'), language),
     fileIds: _.get(incorrectFeedback, 'fileIds'),
   };
 
@@ -105,7 +105,7 @@ function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
 export default function movableFillBlank(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
 
-  const { question } = newItemAttributes;
+  const { question, language } = newItemAttributes;
   if (question) {
     newItem.question = {
       ...newItem.question,
@@ -117,7 +117,8 @@ export default function movableFillBlank(originalItem, newItemAttributes) {
         question.choices,
         _.get(originalItem, 'originalItem.answers'),
         _.get(question, 'correctFeedback'),
-        _.get(question, 'incorrectFeedback')
+        _.get(question, 'incorrectFeedback'),
+        language,
       );
     }
   }

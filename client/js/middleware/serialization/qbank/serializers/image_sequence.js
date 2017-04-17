@@ -79,7 +79,7 @@ function serializeAnswers(choices, newChoiceAttributes, oldAnswers,
 
 export default function imageSequenceSerializer(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
-  const { question } = newItemAttributes;
+  const { question, language } = newItemAttributes;
   if (question) {
     newItem.question = {
       ...newItem.question,
@@ -92,7 +92,8 @@ export default function imageSequenceSerializer(originalItem, newItemAttributes)
         question.choices,
         _.get(originalItem, 'originalItem.answers'),
         _.get(question, 'correctFeedback'),
-        _.get(question, 'incorrectFeedback')
+        _.get(question, 'incorrectFeedback'),
+        language
       );
     }
   }
