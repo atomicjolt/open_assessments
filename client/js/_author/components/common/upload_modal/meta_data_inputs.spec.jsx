@@ -18,7 +18,7 @@ describe('meta data inputs component', () => {
         language: 'English',
       },
       updateMetadata: () => { calledUpdate = true; },
-    },
+    };
     result = shallow(<MetaDataInputs {...props} />);
   });
 

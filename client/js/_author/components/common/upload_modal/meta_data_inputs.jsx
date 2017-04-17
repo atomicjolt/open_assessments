@@ -30,6 +30,6 @@ export default function metaDataInputs(props) {
 metaDataInputs.propTypes = {
   metadataTypes: React.PropTypes.array,
   metaData: React.PropTypes.shape({}),
-  updateMetadata: React.PropTypes.func.isRequired,
-  labelName: React.PropTypes.func.isRequired,
+  updateMetadata: React.PropTypes.func,
+  labelName: React.PropTypes.func,
 };

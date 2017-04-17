@@ -23,7 +23,7 @@ describe('MetaFileInputs component', () => {
 
   it('calls updateMetadata function', () => {
     expect(updateFunction).toBeFalsy();
-    result.find('input').simulate('change', { target: { files: 'SPEC' }});
+    result.find('input').simulate('change', { target: { files: 'SPEC' } });
     expect(updateFunction).toBeTruthy();
   });
 });
