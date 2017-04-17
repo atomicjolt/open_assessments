@@ -43,6 +43,7 @@ describe('image sequence component', () => {
       updateChoice: () => {},
       activateChoice: () => {},
       save: () => {},
+      language: 'eng',
     };
     result = shallow(<ImageSequence {...props} />);
   });

@@ -31,6 +31,7 @@ describe('preview question component', () => {
         settings: {},
         currentItemIndex: 12,
         questionResult: {},
+        isUpdating: false,
       },
     };
     result = TestUtils.renderIntoDocument(<PreviewQuestion {...props} />);

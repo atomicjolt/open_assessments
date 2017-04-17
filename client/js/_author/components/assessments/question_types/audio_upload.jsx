@@ -8,7 +8,7 @@ export default class AudioUpload extends React.Component {
   static propTypes = {
     updateItem: React.PropTypes.func.isRequired,
     item: React.PropTypes.object,
-    language: React.PropTypes.string,
+    language: React.PropTypes.string.isRequired,
   }
 
   handleBlur(e) {
