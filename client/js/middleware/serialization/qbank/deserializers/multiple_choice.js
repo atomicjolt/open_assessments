@@ -11,7 +11,7 @@ function deserializeChoices(choices, answers) {
       answerId: null,
       text: choice.text,
       order: index,
-      feedback: null,
+      feedback: '',
       fileIds: {},
       isCorrect: false,
     };
