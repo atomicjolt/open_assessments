@@ -193,7 +193,11 @@ class PreviewQuestion extends React.Component {
 
   render() {
     if (_.get(this.props, 'item.isUpdating', false)) {
-      return <Spinner />;
+      return (
+        <div className="loader-container">
+          <Spinner />
+        </div>
+      );
     }
 
     const item = this.serializeForPlayer(this.props.item);
