@@ -1,6 +1,6 @@
-import React            from 'react';
-import { shallow }      from 'enzyme';
-import BankAssessment   from './bank_assessment';
+import React                from 'react';
+import { shallow }          from 'enzyme';
+import { BankAssessment }   from './bank_assessment';
 
 describe('bank_assessment component', () => {
   let props;
