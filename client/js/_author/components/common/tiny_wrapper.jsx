@@ -1,3 +1,4 @@
+import _       from 'lodash';
 import React   from 'react';
 import TinyMCE from 'atomic-react-tinymce';
 
@@ -89,7 +90,11 @@ export default class TinyWrapper extends React.Component {
           id={`${this.id}-tinymce`}
           content={this.props.text}
           config={this.tinyMCEConfig()}
-          onBlur={(e) => { this.props.onBlur(e.target.getContent(), e.target.isDirty()); }}
+          onBlur={(e) => {
+            const content = e.target.getContent();
+            const isChanged = e.target.isDirty() || _.isEmpty(content);
+            this.props.onBlur(content, isChanged);
+          }}
           onFocus={this.props.onFocus}
           onChange={e => this.props.onBlur(e.target.getContent(), false)}
         />
