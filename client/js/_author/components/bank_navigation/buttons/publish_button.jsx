@@ -1,5 +1,4 @@
 import React from 'react';
-import _     from 'lodash';
 
 export default function PublishButton(props) {
   const { togglePublishAssessment, assessment } = props;
