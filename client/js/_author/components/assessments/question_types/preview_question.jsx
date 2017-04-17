@@ -3,6 +3,7 @@ import _            from 'lodash';
 import Item         from '../../../../_player/components/assessments/item';
 import types        from '../../../../constants/question_types';
 import localize     from '../../../locales/localize';
+import Spinner      from '../../common/dot_loader';
 
 const exclusiveTypes = {
   multiple_choice_question: true,
@@ -19,6 +20,7 @@ class PreviewQuestion extends React.Component {
     item: React.PropTypes.shape({
       type: React.PropTypes.string,
       question: React.PropTypes.shape({}),
+      isUpdating: React.PropTypes.bool.isRequired,
     }).isRequired,
     localizeStrings: React.PropTypes.func.isRequired
   };
@@ -191,8 +193,15 @@ class PreviewQuestion extends React.Component {
 
 
   render() {
-    const item = this.serializeForPlayer(this.props.item);
+    if (this.props.item.isUpdating) {
+      return (
+        <div className="loader-container">
+          <Spinner />
+        </div>
+      );
+    }
 
+    const item = this.serializeForPlayer(this.props.item);
     return (
       <div>
         <Item

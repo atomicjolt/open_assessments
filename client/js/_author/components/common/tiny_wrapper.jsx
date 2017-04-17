@@ -23,6 +23,7 @@ export default class TinyWrapper extends React.Component {
     onBlur: React.PropTypes.func.isRequired,
     onFocus: React.PropTypes.func.isRequired,
     openModal: React.PropTypes.func.isRequired,
+    onChange: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -89,9 +90,14 @@ export default class TinyWrapper extends React.Component {
           id={`${this.id}-tinymce`}
           content={this.props.text}
           config={this.tinyMCEConfig()}
-          onBlur={(e) => { this.props.onBlur(e.target.getContent(), e.target.isDirty()); }}
+          onBlur={(e) => {
+            const content = e.target.getContent();
+            const isChanged =
+              e.target.isDirty() || content !== this.props.text;
+            this.props.onBlur(content, isChanged);
+          }}
           onFocus={this.props.onFocus}
-          onChange={e => this.props.onBlur(e.target.getContent(), false)}
+          onChange={e => this.props.onChange(e.target.getContent())}
         />
       </div>
     );
