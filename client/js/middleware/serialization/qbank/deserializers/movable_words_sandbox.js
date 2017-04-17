@@ -2,7 +2,6 @@ import _ from 'lodash';
 import $ from 'jquery';
 
 import baseDeserializer                 from './base';
-import genusTypes                       from '../../../../constants/genus_types';
 import { audioLimit }                   from '../../../../constants/question_types';
 import { createSingleCorrectFeedback }  from '../../serializer_utils';
 
