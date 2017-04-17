@@ -526,7 +526,6 @@ const qbank = {
       actions.push(assessmentActions.editOrPublishAssessment(assessment, publishedBankId));
 
       dispatchMany(actions, store);
-
     }
   },
 
