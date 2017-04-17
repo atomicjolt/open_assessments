@@ -1,4 +1,3 @@
-import _       from 'lodash';
 import React   from 'react';
 import TinyMCE from 'atomic-react-tinymce';
 
