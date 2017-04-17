@@ -40,7 +40,6 @@ export class BankNavigator extends React.Component {
     createAssessment: React.PropTypes.func.isRequired,
     deleteAssessment: React.PropTypes.func.isRequired,
     currentBankId: React.PropTypes.string,
-    togglePublishAssessment: React.PropTypes.func.isRequired,
   };
 
   constructor() {
@@ -123,7 +122,6 @@ export class BankNavigator extends React.Component {
           sortName={this.state.sortName}
           sortPublished={this.state.sortPublished}
           deleteAssessment={(bankId, assessmentId) => this.deleteAssessment(bankId, assessmentId)}
-          togglePublishAssessment={assessment => this.props.togglePublishAssessment(assessment)}
         />
       </div>
     );
