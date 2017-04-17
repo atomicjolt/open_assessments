@@ -273,9 +273,11 @@ export class OeaEditor extends React.Component {
     if (!text) return text;
 
     text = text.replace(/autoplay/g, 'autoplay-placeholder');
+    text = text.replace(/src="/g, 'src-placeholder="');
     const doc = $(`<div>${text}</div>`);
     $('.transcriptWrapper', doc).remove();
-    const cleanedHtml = doc.html();
+    let cleanedHtml = doc.html();
+    cleanedHtml = cleanedHtml.replace(/src-placeholder/g, 'src');
     return cleanedHtml.replace(/autoplay-placeholder/g, 'autoplay');
   }
 
