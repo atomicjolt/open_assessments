@@ -1,16 +1,16 @@
-import React            from 'react';
-import _                from 'lodash';
+import React                  from 'react';
+import _                      from 'lodash';
 import { connect }            from 'react-redux';
 
-import appHistory       from '../../history';
-import ListItem         from './list_item';
+import appHistory             from '../../history';
+import ListItem               from './list_item';
 import * as AssessmentActions from '../../../actions/qbank/assessments';
-import PublishButton    from './buttons/publish_button';
-import EmbedButton      from './buttons/embed_button';
-import EditButton       from './buttons/edit_button';
-import DeleteButton     from './buttons/delete_button';
-import PreviewButton    from './buttons/preview_button';
-import DotLoader        from '../common/dot_loader';
+import PublishButton          from './buttons/publish_button';
+import EmbedButton            from './buttons/embed_button';
+import EditButton             from './buttons/edit_button';
+import DeleteButton           from './buttons/delete_button';
+import PreviewButton          from './buttons/preview_button';
+import DotLoader              from '../common/dot_loader';
 
 
 function select() {

@@ -7,7 +7,7 @@ export default function PublishButton(props) {
   const icon = isPublished ?
     <i className="material-icons is-published">cloud_done</i> :
     <i className="material-icons">cloud_upload</i>;
-  if (_.isUndefined(assessment.isToggling) || !assessment.isToggling) {
+  if (!assessment.isToggling) {
     return (
       <button
         className={`au-c-btn au-c-btn--square au-c-publish ${isPublished ? 'is-published' : ''}`}
