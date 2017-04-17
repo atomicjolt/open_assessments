@@ -14,6 +14,7 @@ describe('single feedback component', () => {
       updateItem: () => { calledFunc = true; },
       feedbackType: '',
       bankId: '7',
+      language: 'eng',
     };
     result = shallow(<SingleFeedback {...props} />);
   });

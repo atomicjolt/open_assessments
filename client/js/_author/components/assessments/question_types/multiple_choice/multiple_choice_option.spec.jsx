@@ -21,6 +21,7 @@ describe('Multiple Choice Option', () => {
       isActive: true,
       itemType: '',
       bankId: '',
+      language: 'eng',
     };
     result = shallow(<Option {...props} />);
   });

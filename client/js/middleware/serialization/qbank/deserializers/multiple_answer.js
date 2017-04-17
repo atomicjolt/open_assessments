@@ -39,11 +39,13 @@ export default function multipleAnswer(item) {
     choices: deserializeChoices(_.get(item, 'question.choices'), item.answers),
     correctFeedback: {
       text: _.get(correctAnswer, 'feedback.text'),
+      texts: _.get(correctAnswer, 'feedbacks'),
       answerId: _.get(correctAnswer, 'id'),
       fileIds: _.get(correctAnswer, 'fileIds')
     },
     incorrectFeedback: {
       text: _.get(incorrectAnswer, 'feedback.text'),
+      texts: _.get(incorrectAnswer, 'feedbacks'),
       answerId: _.get(incorrectAnswer, 'id'),
       fileIds: _.get(incorrectAnswer, 'fileIds')
     },

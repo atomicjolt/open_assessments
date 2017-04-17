@@ -19,6 +19,7 @@ class ImageSequence extends React.Component {
     updateItem: React.PropTypes.func,
     localizeStrings: React.PropTypes.func.isRequired,
     save: React.PropTypes.func,
+    language: React.PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -34,6 +35,7 @@ class ImageSequence extends React.Component {
     return (
       <div className="au-c-question__feedback">
         <Feedback
+          language={this.props.language}
           updateItem={item => this.props.updateItem(item, true)}
           feedbackType="correctFeedback"
           feedback={question.correctFeedback}
@@ -41,6 +43,7 @@ class ImageSequence extends React.Component {
           bankId={this.props.item.bankId}
         />
         <Feedback
+          language={this.props.language}
           updateItem={item => this.props.updateItem(item, true)}
           feedbackType="incorrectFeedback"
           feedback={question.incorrectFeedback}

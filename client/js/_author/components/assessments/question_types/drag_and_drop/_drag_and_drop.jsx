@@ -26,6 +26,7 @@ export class DragAndDrop extends React.Component {
     updateChoice: React.PropTypes.func.isRequired,
     localizeStrings: React.PropTypes.func.isRequired,
     loadingMedia: React.PropTypes.bool,
+    language: React.PropTypes.string.isRequired,
   };
 
   constructor() {
@@ -76,6 +77,7 @@ export class DragAndDrop extends React.Component {
         />
         <div className="au-c-question__feedback">
           <Feedback
+            language={this.props.language}
             updateItem={this.props.updateItem}
             feedbackType="correctFeedback"
             feedback={question.correctFeedback}
@@ -83,6 +85,7 @@ export class DragAndDrop extends React.Component {
             bankId={bankId}
           />
           <Feedback
+            language={this.props.language}
             updateItem={this.props.updateItem}
             feedbackType="incorrectFeedback"
             feedback={question.incorrectFeedback}

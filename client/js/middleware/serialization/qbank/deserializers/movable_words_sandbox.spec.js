@@ -1,5 +1,5 @@
-import genusTypes from '../../../../constants/genus_types';
-import { deserializeChoices, deserializeFeedback } from './movable_words_sandbox';
+import genusTypes         from '../../../../constants/genus_types';
+import deserializeSandbox from './movable_words_sandbox';
 
 describe('MovableWordsSandbox', () => {
 
@@ -18,14 +18,17 @@ describe('MovableWordsSandbox', () => {
         genusTypeId: genusTypes.answer.wrongAnswer,
         fileIds: {}
       }],
-      choices: [
-        {
-          id: 'id14a6824a-79f2-4c00-ac6a-b41cbb64db45',
-          text: '<p class=\'noun\'>the bus</p>'
-        }, {
-          id: 'id969e920d-6d22-4d06-b4ac-40a821e350c6',
-          text: '<p class=\'noun\'>the airport</p>'
-        }]
+      question: {
+        choices: [
+          {
+            id: 'id14a6824a-79f2-4c00-ac6a-b41cbb64db45',
+            text: '<p class=\'noun\'>the bus</p>'
+          }, {
+            id: 'id969e920d-6d22-4d06-b4ac-40a821e350c6',
+            text: '<p class=\'noun\'>the airport</p>'
+          }
+        ]
+      },
     };
   });
 
@@ -44,26 +47,19 @@ describe('MovableWordsSandbox', () => {
       }
     };
 
-    const result = deserializeChoices(item.choices);
-    expect(result).toEqual(expectedChoices);
+    const result = deserializeSandbox(item);
+    expect(result.question.choices).toEqual(expectedChoices);
   });
 
   it('should deserialize feedback', () => {
     const expectedFeedback = {
-      correctFeedback: {
-        id: '1',
-        text: '<p>Howdy</p>',
-        fileIds: {},
-      },
-      incorrectFeedback: {
-        id: '2',
-        text: '<p>hiya</p>',
-        fileIds: {},
-      },
+      answerId: '1',
+      text: '<p>Howdy</p>',
+      fileIds: {},
     };
 
-    const result = deserializeFeedback(item.answers);
+    const result = deserializeSandbox(item);
 
-    expect(result).toEqual(expectedFeedback);
+    expect(result.question.correctFeedback).toEqual(expectedFeedback);
   });
 });

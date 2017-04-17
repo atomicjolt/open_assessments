@@ -84,7 +84,7 @@ export default class TinyWrapper extends React.Component {
   render() {
     return (
       <div>
-        <label htmlFor={`${this.props.editorKey || ''}${this.id}-tinymce`} />
+        <label htmlFor={`${this.id}-tinymce`} />
         <div id={`toolbar-${this.props.editorKey || ''}${this.id}`} />
         <TinyMCE
           id={`${this.id}-tinymce`}

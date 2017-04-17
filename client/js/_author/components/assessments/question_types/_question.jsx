@@ -20,6 +20,7 @@ import { languages, getLanguage } from '../../../../constants/language_types';
 import Preview                    from './preview_question';
 import { bankMedia }              from '../../../selectors/media';
 import localize                   from '../../../locales/localize';
+import { languageText }           from '../../../../utils/utils';
 
 function select(state, props) {
   return {
@@ -247,6 +248,7 @@ export class Question extends React.Component {
           createChoice={(text, fileIds, type) =>
             this.props.createChoice(bankId, item.id, text, fileIds, type)}
           deleteChoice={choice => this.deleteChoice(choice)}
+          language={this.state.language}
           save={() => this.saveStateItem()}
         />
       );
@@ -258,11 +260,6 @@ export class Question extends React.Component {
     const { item } = this.props;
     const { name, type, id, question, bankId } = item;
     const { multipleAnswer, multipleReflection, reflection } = types;
-    const defaultLanguage = this.state.language;
-    const chosenLanguage = _.find(item.question.texts,
-      textObj => textObj.languageTypeId === defaultLanguage);
-    const questionText = _.get(chosenLanguage, 'text', '');
-    const languageTypeId = _.get(chosenLanguage, 'languageTypeId') || defaultLanguage;
 
     return (
       <div>
@@ -283,8 +280,8 @@ export class Question extends React.Component {
             itemType={type}
             fileIds={question.fileIds}
             itemId={id}
-            editorKey={getLanguage(languageTypeId)}
-            text={questionText}
+            editorKey={getLanguage(this.state.language)}
+            text={languageText(question.texts, this.state.language)}
             updateItem={newProps => this.updateItem(newProps, true)}
             bankId={bankId}
           />
