@@ -26,7 +26,7 @@ export default function banks(state = initialState, action) {
       if (!newState[bankId]) {
         newState[bankId] = {};
       }
-      newState[bankId][action.payload.id] = action.payload;
+      newState[bankId][action.payload.id] = _.merge(action.payload, { isUpdating: false });
 
       return newState;
     }
@@ -40,7 +40,7 @@ export default function banks(state = initialState, action) {
       }
 
       const item = newState[bankId][itemId];
-      newState[bankId][itemId] = _.merge(item, action.body);
+      newState[bankId][itemId] = _.merge(item, action.body, { isUpdating: true });
 
       return newState;
     }

@@ -142,6 +142,8 @@ export class OeaEditor extends React.Component {
   }
 
   getEditorContent(media) {
+    if (!_.isUndefined(media.error)) { return ''; }
+
     let editorContent = `<video><source src="${media.url}" /></video>`;
     const alt = _.isEmpty(media.altText) ? '' : media.altText.text;
     const autoPlay = media.autoPlay ? 'autoplay' : '';
@@ -273,9 +275,11 @@ export class OeaEditor extends React.Component {
     if (!text) return text;
 
     text = text.replace(/autoplay/g, 'autoplay-placeholder');
+    text = text.replace(/src="/g, 'src-placeholder="');
     const doc = $(`<div>${text}</div>`);
     $('.transcriptWrapper', doc).remove();
-    const cleanedHtml = doc.html();
+    let cleanedHtml = doc.html();
+    cleanedHtml = cleanedHtml.replace(/src-placeholder/g, 'src');
     return cleanedHtml.replace(/autoplay-placeholder/g, 'autoplay');
   }
 
@@ -294,6 +298,7 @@ export class OeaEditor extends React.Component {
             {...this.props}
             text={this.cleanText()}
             onBlur={(editorText, isChanged) => this.onBlur(editorText, isChanged)}
+            onChange={editorText => this.setState({ newText: editorText })}
             onFocus={() => this.setState({ focused: true })}
             openModal={(editor, type) => this.openModal(editor, type)}
           />
