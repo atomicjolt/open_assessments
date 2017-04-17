@@ -20,6 +20,7 @@ class PreviewQuestion extends React.Component {
     item: React.PropTypes.shape({
       type: React.PropTypes.string,
       question: React.PropTypes.shape({}),
+      isUpdating: React.PropTypes.bool.isRequired,
     }).isRequired,
     localizeStrings: React.PropTypes.func.isRequired
   };
@@ -192,7 +193,7 @@ class PreviewQuestion extends React.Component {
 
 
   render() {
-    if (_.get(this.props, 'item.isUpdating', false)) {
+    if (this.props.item.isUpdating) {
       return (
         <div className="loader-container">
           <Spinner />
