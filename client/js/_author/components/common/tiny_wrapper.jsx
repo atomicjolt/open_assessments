@@ -41,6 +41,7 @@ export default class TinyWrapper extends React.Component {
   tinyMCEConfig() {
     // Whenever you add a plugin, make sure that it is imported above.
     return {
+      closed: /^(br|hr|input|meta|img|link|param|area|source|track)$/,
       fixed_toolbar_container: `#toolbar-${this.props.editorKey || ''}${this.id}`,
       skin: false,
       menubar: false,
@@ -85,7 +86,7 @@ export default class TinyWrapper extends React.Component {
         <label htmlFor={`${this.props.editorKey || ''}${this.id}-tinymce`} />
         <div id={`toolbar-${this.props.editorKey || ''}${this.id}`} />
         <TinyMCE
-          id={`${this.props.editorKey || ''}${this.id}-tinymce`}
+          id={`${this.id}-tinymce`}
           content={this.props.text}
           config={this.tinyMCEConfig()}
           onBlur={(e) => { this.props.onBlur(e.target.getContent(), e.target.isDirty()); }}

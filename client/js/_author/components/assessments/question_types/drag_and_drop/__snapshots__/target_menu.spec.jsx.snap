@@ -10,6 +10,7 @@ ShallowWrapper {
   "length": 1,
   "node": <div
     className="au-o-item__top"
+    onMouseLeave={[Function]}
 >
     <div
         className="au-o-left"
@@ -64,6 +65,7 @@ ShallowWrapper {
   "nodes": Array [
     <div
       className="au-o-item__top"
+      onMouseLeave={[Function]}
 >
       <div
             className="au-o-left"
@@ -164,6 +166,7 @@ ShallowWrapper {
       "_renderedComponent": NoopInternalComponent {
         "_currentElement": <div
           className="au-o-item__top"
+          onMouseLeave={[Function]}
 >
           <div
                     className="au-o-left"
@@ -218,6 +221,7 @@ ShallowWrapper {
         "_debugID": 2,
         "_renderedOutput": <div
           className="au-o-item__top"
+          onMouseLeave={[Function]}
 >
           <div
                     className="au-o-left"

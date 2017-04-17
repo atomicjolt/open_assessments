@@ -8,7 +8,10 @@ import EmptyBankList from './empty_bank_list';
 
 export default class BankList extends React.Component {
   static propTypes = {
-    assessments: React.PropTypes.shape({}),
+    assessments: React.PropTypes.oneOfType([
+      React.PropTypes.array,
+      React.PropTypes.shape({}),
+    ]),
     banks: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.shape({})),
       React.PropTypes.shape({})
