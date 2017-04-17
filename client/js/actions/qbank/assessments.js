@@ -26,7 +26,7 @@ const requests = [
 
 export const Constants = wrapper(actions, requests);
 
-export function togglePublishAssessment(assessment){
+export function togglePublishAssessment(assessment) {
   return {
     assessment,
     type: Constants.TOGGLE_PUBLISH_ASSESSMENT,
@@ -157,10 +157,11 @@ export function deleteAssignedAssessment(assessment, assignedId) {
   };
 }
 
-export function editOrPublishAssessment(assessment, editOrPublishId) {
+export function editOrPublishAssessment(assessment, editOrPublishId, isToggling = true) {
   return {
     bankId       : assessment.bankId,
     assessmentId : assessment.id,
+    isToggling,
     apiCall      : true,
     type         : Constants.EDIT_OR_PUBLISH_ASSESSMENT,
     body         : { assignedBankIds: [editOrPublishId] }

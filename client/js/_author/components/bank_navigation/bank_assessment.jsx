@@ -1,16 +1,23 @@
-import React            from 'react';
-import _                from 'lodash';
+import React                  from 'react';
+import _                      from 'lodash';
+import { connect }            from 'react-redux';
 
-import appHistory       from '../../history';
-import ListItem         from './list_item';
-import PublishButton    from './buttons/publish_button';
-import EmbedButton      from './buttons/embed_button';
-import EditButton       from './buttons/edit_button';
-import DeleteButton     from './buttons/delete_button';
-import PreviewButton    from './buttons/preview_button';
-import DotLoader        from '../common/dot_loader';
+import appHistory             from '../../history';
+import ListItem               from './list_item';
+import * as AssessmentActions from '../../../actions/qbank/assessments';
+import PublishButton          from './buttons/publish_button';
+import EmbedButton            from './buttons/embed_button';
+import EditButton             from './buttons/edit_button';
+import DeleteButton           from './buttons/delete_button';
+import PreviewButton          from './buttons/preview_button';
+import DotLoader              from '../common/dot_loader';
 
-export default class BankAssessment extends React.Component {
+
+function select() {
+  return {};
+}
+
+export class BankAssessment extends React.Component {
   static propTypes = {
     assessment: React.PropTypes.shape({
       isPublished: React.PropTypes.bool.isRequired,
@@ -46,7 +53,7 @@ export default class BankAssessment extends React.Component {
   }
 
   render() {
-    const { assessment, togglePublishAssessment } = this.props;
+    const { assessment } = this.props;
     const displayName = _.get(assessment, 'displayName.text');
     // we pass empty functions to list item so that you cant open an assessment while its
     // being deleted.
@@ -66,7 +73,7 @@ export default class BankAssessment extends React.Component {
     return (
       <ListItem
         {...this.props}
-        bank={this.props.assessment}
+        bank={assessment}
         selectItem={() => this.selectItem()}
         onFocus={this.props.onFocus}
       >
@@ -77,7 +84,9 @@ export default class BankAssessment extends React.Component {
         <td>
           <PublishButton
             assessment={assessment}
-            togglePublishAssessment={togglePublishAssessment}
+            togglePublishAssessment={
+              selectedAssessment => this.props.togglePublishAssessment(selectedAssessment)
+            }
             onFocus={this.props.onFocus}
           />
         </td>
@@ -96,3 +105,7 @@ export default class BankAssessment extends React.Component {
     );
   }
 }
+
+export default connect(select, {
+  ...AssessmentActions,
+})(BankAssessment);
