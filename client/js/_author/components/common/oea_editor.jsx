@@ -142,6 +142,8 @@ export class OeaEditor extends React.Component {
   }
 
   getEditorContent(media) {
+    if (!_.isUndefined(media.error)) { return ''; }
+
     let editorContent = `<video><source src="${media.url}" /></video>`;
     const alt = _.isEmpty(media.altText) ? '' : media.altText.text;
     const autoPlay = media.autoPlay ? 'autoplay' : '';
