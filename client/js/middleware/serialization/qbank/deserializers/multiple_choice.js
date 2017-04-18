@@ -2,6 +2,12 @@ import _                  from 'lodash';
 import baseDeserializer   from './base';
 import genusTypes         from '../../../../constants/genus_types';
 
+function deserializeChoiceTexts(texts) {
+  return _.reduce(texts, (allTexts, text) => {
+    // TODO key should be language, and value should be object
+  }, {});
+}
+
 function deserializeChoices(choices, answers) {
   const newChoices = {};
 
@@ -9,7 +15,8 @@ function deserializeChoices(choices, answers) {
     newChoices[choice.id] = {
       id: choice.id,
       answerId: null,
-      text: choice.text,
+      text: choice.texts[0].text,
+      texts: {},
       order: index,
       feedback: '',
       fileIds: {},
@@ -34,14 +41,14 @@ function deserializeChoices(choices, answers) {
   return newChoices;
 }
 
-
 export default function multipleChoice(item) {
   const newItem = baseDeserializer(item);
 
   newItem.question = {
     ...newItem.question,
     shuffle: _.get(item, 'question.shuffle'),
-    choices: deserializeChoices(_.get(item, 'question.choices'), item.answers)
+    choices: deserializeChoices(_.get(item, 'question.multiLanguageChoices'), item.answers),
+    // choices: deserializeChoices(_.get(item, 'question.choices'), item.answers),
   };
 
   return newItem;
