@@ -13,7 +13,7 @@ ShallowWrapper {
 >
     <targetMenu
         addByRegion={[Function]}
-        addType={null}
+        addMenu={null}
         hasTarget={false}
         id={undefined}
         openModal={[Function]}
@@ -44,7 +44,7 @@ ShallowWrapper {
 >
       <targetMenu
             addByRegion={[Function]}
-            addType={null}
+            addMenu={null}
             hasTarget={false}
             id={undefined}
             openModal={[Function]}
@@ -108,7 +108,8 @@ ShallowWrapper {
         },
         "refs": Object {},
         "state": Object {
-          "add": null,
+          "addMenu": null,
+          "addType": null,
           "showModal": false,
         },
         "updater": Object {
@@ -134,7 +135,7 @@ ShallowWrapper {
 >
           <targetMenu
                     addByRegion={[Function]}
-                    addType={null}
+                    addMenu={null}
                     hasTarget={false}
                     id={undefined}
                     openModal={[Function]}
@@ -165,7 +166,7 @@ ShallowWrapper {
 >
           <targetMenu
                     addByRegion={[Function]}
-                    addType={null}
+                    addMenu={null}
                     hasTarget={false}
                     id={undefined}
                     openModal={[Function]}

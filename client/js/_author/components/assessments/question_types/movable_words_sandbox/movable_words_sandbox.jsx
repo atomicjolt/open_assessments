@@ -20,6 +20,7 @@ class MWSandbox extends React.Component {
 
     isActive: React.PropTypes.bool,
     activeChoice: React.PropTypes.string,
+    language: React.PropTypes.string.isRequired,
   };
 
 
@@ -72,6 +73,7 @@ class MWSandbox extends React.Component {
         </div>
         <div className="au-c-question__feedback">
           <Feedback
+            language={this.props.language}
             updateItem={this.props.updateItem}
             feedbackType="correctFeedback"
             feedback={question.correctFeedback}

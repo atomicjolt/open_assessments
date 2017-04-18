@@ -1,6 +1,6 @@
 import _                         from 'lodash';
 import baseSerializer            from './base';
-import { scrub }                 from '../../serializer_utils';
+import { scrub, languageText }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
@@ -42,7 +42,9 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   return scrub(newQuestion);
 }
 
-function serializeAnswers(choices, newChoiceAttributes, oldAnswers, correctFeedback, incorrectFeedback) {
+function serializeAnswers(choices, newChoiceAttributes, oldAnswers,
+  correctFeedback, incorrectFeedback, language) {
+
   const answers = [];
   const updatedChoices = _.cloneDeep(choices);
   _.forEach(newChoiceAttributes, (choice, id) => {
@@ -52,7 +54,7 @@ function serializeAnswers(choices, newChoiceAttributes, oldAnswers, correctFeedb
   let correctAnswer = {
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.rightAnswer }), 'id'),
     genusTypeId: genusTypes.answer.rightAnswer,
-    feedback: _.get(correctFeedback, 'text'),
+    feedback: languageText(_.get(correctFeedback, 'text'), language),
     type: genusTypes.answer.multipleAnswer,
     choiceIds: _.map(_.orderBy(_.filter(updatedChoices, choice => choice.order !== ''), 'order'), 'id'),
     fileIds: _.get(correctFeedback, 'fileIds'),
@@ -60,7 +62,7 @@ function serializeAnswers(choices, newChoiceAttributes, oldAnswers, correctFeedb
   let incorrectAnswer = {
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.wrongAnswer }), 'id'),
     genusTypeId: genusTypes.answer.wrongAnswer,
-    feedback: _.get(incorrectFeedback, 'text'),
+    feedback: languageText(_.get(incorrectFeedback, 'text'), language),
     type: genusTypes.answer.multipleAnswer,
     choiceIds: [],
     fileIds: _.get(incorrectFeedback, 'fileIds'),
@@ -77,7 +79,7 @@ function serializeAnswers(choices, newChoiceAttributes, oldAnswers, correctFeedb
 
 export default function imageSequenceSerializer(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
-  const { question } = newItemAttributes;
+  const { question, language } = newItemAttributes;
   if (question) {
     newItem.question = {
       ...newItem.question,
@@ -90,7 +92,8 @@ export default function imageSequenceSerializer(originalItem, newItemAttributes)
         question.choices,
         _.get(originalItem, 'originalItem.answers'),
         _.get(question, 'correctFeedback'),
-        _.get(question, 'incorrectFeedback')
+        _.get(question, 'incorrectFeedback'),
+        language
       );
     }
   }

@@ -7,7 +7,8 @@ import Feedback   from './question_common/single_feedback';
 export default class AudioUpload extends React.Component {
   static propTypes = {
     updateItem: React.PropTypes.func.isRequired,
-    item: React.PropTypes.object
+    item: React.PropTypes.object,
+    language: React.PropTypes.string.isRequired,
   }
 
   handleBlur(e) {
@@ -34,6 +35,7 @@ export default class AudioUpload extends React.Component {
         </div>
         <div className="au-c-question__feedback">
           <Feedback
+            language={this.props.language}
             feedbackType="correctFeedback"
             feedback={_.get(this.props.item, 'question.correctFeedback')}
             updateItem={this.props.updateItem}

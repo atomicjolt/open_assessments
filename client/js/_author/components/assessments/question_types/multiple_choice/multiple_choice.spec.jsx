@@ -52,6 +52,7 @@ describe('multiple choice component', () => {
       blurOptions: () => {},
       createChoice: () => {},
       deleteChoice: () => {},
+      language: 'eng',
     };
     result = shallow(<MultipleChoice {...props} />);
   });

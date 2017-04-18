@@ -1,6 +1,8 @@
 import _    from 'lodash';
 import $    from 'jquery';
-import genusTypes from '../../constants/genus_types';
+
+import genusTypes                 from '../../constants/genus_types';
+import { languages, getLanguage } from '../../constants/language_types';
 
 export function scrub(item, protectedKeys) {
   if (_.isPlainObject(item)) {
@@ -15,10 +17,20 @@ export function scrub(item, protectedKeys) {
   ));
 }
 
-export function getSingleCorrectAnswer(originalItem, question) {
+export function languageText(text, language) {
+  if (!text) return '';
+  return {
+    text,
+    languageTypeId: language,
+    formatTypeId: languages.formatTypeId,
+    scriptTypeId: languages.scriptTypeId[getLanguage(language)]
+  };
+}
+
+export function getSingleCorrectAnswer(originalItem, question, language) {
   const answer = {
     genusTypeId: genusTypes.answer.rightAnswer,
-    feedback: question.correctFeedback.text,
+    feedback: languageText(question.correctFeedback.text, language),
     fileIds: question.correctFeedback.fileIds,
   };
 
@@ -32,6 +44,7 @@ export function getSingleCorrectAnswer(originalItem, question) {
 export function createSingleCorrectFeedback(item) {
   return {
     text: _.get(item, 'answers[0].feedback.text'),
+    texts: _.get(item, 'answers[0].feedbacks'),
     answerId: _.get(item, 'answers[0].id'),
     fileIds: _.get(item, 'answers[0].fileIds'),
   };

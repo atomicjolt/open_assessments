@@ -13,6 +13,7 @@ describe('tiny_wrapper component', () => {
       onBlur: () => {},
       onFocus: () => {},
       openModal: () => {},
+      onChange: () => {},
     };
     result = shallow(<TinyWrapper {...props} />);
   });
