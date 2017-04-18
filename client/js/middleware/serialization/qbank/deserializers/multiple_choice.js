@@ -4,19 +4,19 @@ import genusTypes         from '../../../../constants/genus_types';
 
 function deserializeChoiceTexts(texts) {
   return _.reduce(texts, (allTexts, text) => {
-    // TODO key should be language, and value should be object
+    allTexts[text.languageTypeId] = text.text; // eslint-disable-line no-param-reassign
+    return allTexts;
   }, {});
 }
 
 function deserializeChoices(choices, answers) {
   const newChoices = {};
-
   _.forEach(choices, (choice, index) => {
     newChoices[choice.id] = {
       id: choice.id,
       answerId: null,
       text: choice.texts[0].text,
-      texts: {},
+      texts: deserializeChoiceTexts(choice.texts),
       order: index,
       feedback: '',
       fileIds: {},

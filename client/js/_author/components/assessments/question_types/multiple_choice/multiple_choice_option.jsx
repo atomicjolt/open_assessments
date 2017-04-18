@@ -1,4 +1,5 @@
 import React            from 'react';
+import _                from 'lodash';
 import types            from '../../../../../constants/question_types';
 import Editor           from '../../../common/oea_editor';
 import Loader           from '../../../common/dot_loader';
@@ -24,12 +25,13 @@ function multipleChoiceOptions(props) {
 
   const isActive = props.isActive ? 'is-active' : '';
   const isOrdered = props.shuffle ? 'is-ordered' : '';
-
+  const text = _.get(props, `texts[${props.language}]`, '');
   return (
     <div
       onFocus={() => props.setActiveChoice(props.id)}
       onClick={() => props.setActiveChoice(props.id)}
       className={`au-c-answer ${isActive} ${isOrdered}`}
+      key={props.language}
     >
       <div className="au-c-input">
         <Selector
@@ -45,7 +47,7 @@ function multipleChoiceOptions(props) {
           isActive={props.isActive}
           fileIds={props.questionFileIds}
           placeholder={strings.optionText}
-          text={props.text}
+          text={text}
           bankId={props.bankId}
           onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
         />
