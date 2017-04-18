@@ -8,7 +8,7 @@ import { parseChoiceText,
 function deserializeChoices(choices, answers, blankId) {
   const newChoices = {};
 
-  _.forEach(choices, (choice, index) => {
+  _.forEach(choices, (choice) => {
     newChoices[choice.id] = {
       id: choice.id,
       answerId: null,
@@ -88,11 +88,13 @@ export default function movableFillBlank(item) {
     ),
     inlineRegionId,
     correctFeedback: {
+      texts: _.get(correctAnswer, 'feedbacks'),
       text: _.get(correctAnswer, 'feedback.text'),
       answerId: _.get(correctAnswer, 'id'),
       fileIds: _.get(correctAnswer, 'fileIds')
     },
     incorrectFeedback: {
+      texts: _.get(incorrectAnswer, 'feedbacks'),
       text: _.get(incorrectAnswer, 'feedback.text'),
       answerId: _.get(incorrectAnswer, 'id'),
       fileIds: _.get(incorrectAnswer, 'fileIds')

@@ -66,6 +66,7 @@ function shortAnswer(props) {
           updateItem={props.updateItem}
           labelText={strings.feedback}
           bankId={props.item.bankId}
+          language={props.language}
         />
       </div>
     </div>
@@ -81,6 +82,7 @@ shortAnswer.propTypes = {
   }),
   updateItem: React.PropTypes.func.isRequired,
   localizeStrings: React.PropTypes.func.isRequired,
+  language: React.PropTypes.string.isRequired,
 };
 
 export default localize(shortAnswer);

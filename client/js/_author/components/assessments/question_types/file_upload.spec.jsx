@@ -32,6 +32,7 @@ describe('file upload component', () => {
           },
         },
       },
+      language: 'eng',
     };
     result = shallow(<FileUpload {...props} />);
   });

@@ -14,7 +14,8 @@ describe('Sets size for short answer', () => {
         question: {
           correctFeedBack: 'salad'
         }
-      }
+      },
+      language: 'eng',
     };
     result = shallow(
       <ShortAnswer {...props} />
