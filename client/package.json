@@ -3,7 +3,7 @@
     "postinstall": "node node_modules/phantomjs-prebuilt/install.js"
   },
   "dependencies": {
-    "atomic-react-tinymce": "^0.5.8",
+    "atomic-react-tinymce": "^0.5.9",
     "babel": "6.5.2",
     "babel-polyfill": "^6.20.0",
     "babel-runtime": "^6.20.0",
