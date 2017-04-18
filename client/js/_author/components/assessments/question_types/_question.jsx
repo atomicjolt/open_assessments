@@ -245,8 +245,8 @@ export class Question extends React.Component {
           activeChoice={this.state.activeChoice}
           selectChoice={choiceId => this.selectChoice(choiceId)}
           blurOptions={e => this.blurOptions(e)}
-          createChoice={(text, fileIds, type) =>
-            this.props.createChoice(bankId, item.id, text, fileIds, type)}
+          createChoice={(text, fileIds, type, language) =>
+            this.props.createChoice(bankId, item.id, text, fileIds, type, language)}
           deleteChoice={choice => this.deleteChoice(choice)}
           language={this.state.language}
           save={() => this.saveStateItem()}

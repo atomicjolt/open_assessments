@@ -18,7 +18,7 @@ export function scrub(item, protectedKeys) {
 }
 
 export function languageText(text, language) {
-  if (!text) return '';
+  // if (!text) return ''; TODO does this break other things?
   return {
     text,
     languageTypeId: language,
