@@ -304,6 +304,7 @@ export class Question extends React.Component {
     const className = this.getClassName();
     return (
       <div
+        key={id}
         className={`au-o-item au-c-question ${className}`}
         onClick={() => this.props.activateItem(id)}
         onFocus={() => this.props.activateItem(id)}
