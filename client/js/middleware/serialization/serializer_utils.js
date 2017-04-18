@@ -18,7 +18,7 @@ export function scrub(item, protectedKeys) {
 }
 
 export function languageText(text, language) {
-  if (!text) return '';
+  if (_.isNil(text)) return null;
   return {
     text,
     languageTypeId: language,
