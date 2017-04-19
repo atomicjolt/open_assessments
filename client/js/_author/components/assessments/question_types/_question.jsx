@@ -34,6 +34,7 @@ export class Question extends React.Component {
     item: React.PropTypes.shape({
       id: React.PropTypes.string,
       type: React.PropTypes.string,
+      isRemoving: React.PropTypes.bool,
       bankId: React.PropTypes.string,
       name: React.PropTypes.string,
       question: React.PropTypes.shape({
