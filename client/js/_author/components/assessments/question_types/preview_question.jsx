@@ -1,10 +1,11 @@
 import React        from 'react';
 import _            from 'lodash';
+import videojs      from 'video.js';
+
 import Item         from '../../../../_player/components/assessments/item';
 import types        from '../../../../constants/question_types';
 import localize     from '../../../locales/localize';
 import Spinner      from '../../common/dot_loader';
-import videojs from 'video.js';
 
 const exclusiveTypes = {
   multiple_choice_question: true,
@@ -63,7 +64,7 @@ class PreviewQuestion extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount() { // eslint-disable-line class-methods-use-this
     if (!_.isFunction(videojs)) return;
     // Look for videos that should be using videojs.
     const videoJSElements = document.querySelectorAll('video.video-js');
