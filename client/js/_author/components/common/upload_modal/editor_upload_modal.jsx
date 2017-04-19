@@ -57,6 +57,12 @@ export class EditorUploadModal extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+    if (!this.props.isOpen && this.state.uploadedMedia) {
+      this.resetModal();
+    }
+  }
+
   setters(key, val) {
     const languageMediaData = this.state.languageMediaData;
     languageMediaData[this.state.language][key] = val;
@@ -115,9 +121,11 @@ export class EditorUploadModal extends React.Component {
   }
 
   resetModal() {
-    this.setState({ uploadedMedia: null });
-    this.setState({ languageMediaData: EditorUploadModal.initLanguageMediaData() });
-    this.setState({ language: languages.languageTypeId.english });
+    this.setState({
+      uploadedMedia: null,
+      languageMediaData: EditorUploadModal.initLanguageMediaData(),
+      language: languages.languageTypeId.english
+    });
   }
 
   closeModal() {
@@ -135,10 +143,6 @@ export class EditorUploadModal extends React.Component {
 
     if (this.props.error) {
       name = <div className="au-c-error-text">{strings.error}: {this.props.error}</div>;
-    }
-
-    if (!this.props.isOpen && this.state.uploadedMedia) {
-      this.resetModal();
     }
 
     return (
