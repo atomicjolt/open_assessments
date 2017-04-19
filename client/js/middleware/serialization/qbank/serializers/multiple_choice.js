@@ -6,52 +6,26 @@ import guid                      from '../../../../utils/guid';
 import { languageText as findLanguageText } from '../../../../utils/utils';
 
 function serializeChoices(originalChoices, newChoiceAttributes, language) {
-  // const choices = _(originalChoices)
-  //   .filter(choice => {
-  //     return _.has(newChoiceAttributes, choice.id) || !_.isUndefined(choice.texts[language])
-  //   })
-  //   .map((choice) => {
-  //     const updateValues = newChoiceAttributes[choice.id];
-  //     const newOrder = _.get(updateValues, 'order');
-  //     const text = _.get(updateValues, 'text', choice.text);
-  //
-  //     return {
-  //       id: choice.id,
-  //       text: languageText(text, language),
-  //       order: _.isNil(newOrder) ? choice.order : newOrder,
-  //       delete: _.get(updateValues, 'delete'),
-  //     };
-  //   }).value();
-
-  let choices = []
+  const choices = [];
   if (newChoiceAttributes.new) {
-      choices.push({
-        id: guid(),
-        text: languageText('', newChoiceAttributes.new.language),
-        // order: choices.length,
-      });
+    choices.push({
+      id: guid(),
+      text: languageText('', newChoiceAttributes.new.language),
+    });
     return choices;
   }
 
-  choices = _(newChoiceAttributes)
+  const serializedChoices = _(newChoiceAttributes)
     .entries()
-    .filter(choice => !_.isUndefined(choice[1].text))
+    .filter(choice => choice[0] !== 'new' && !_.isUndefined(choice[1].text))
     .map(choice => ({
       id: choice[0],
       text: languageText(choice[1].text, language),
-      // order: _.isNil(newOrder) ? choice.order : newOrder,
       delete: choice[1].delete,
     }))
     .value();
 
-  // _.map(_.entries(newChoiceAttributes), choice =>
-  //   ({
-  //     id: choice[0],
-  //     text: languageText(choice[1].text, language),
-  //     // order: _.isNil(newOrder) ? choice.order : newOrder,
-  //     delete: choice[1].delete,
-  //   }));
-  return choices;
+  return choices.concat(serializedChoices);
 }
 
 function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
