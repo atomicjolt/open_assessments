@@ -150,7 +150,11 @@ describe('qbank editor', () => {
         expect(insertContentCalled).toBeFalsy();
         result.instance().insertMedia(file);
         expect(insertContentCalled).toBeTruthy();
-        expect(insertText).toContain('<video  name="media" controls><source src="http://example.com/image" type="video/jpg">');
+        expect(insertText).toContain('<video');
+        expect(insertText).toContain('controls');
+        expect(insertText).toContain('src="http://example.com/image"');
+        expect(insertText).toContain('type="video/jpg">');
+        expect(insertText).toContain('</video>');
       });
 
       it('inserts an audio tag if state.mediaType is audio', () => {
@@ -158,7 +162,11 @@ describe('qbank editor', () => {
         expect(insertContentCalled).toBeFalsy();
         result.instance().insertMedia(file);
         expect(insertContentCalled).toBeTruthy();
-        expect(insertText).toContain('<audio  name="media" controls><source src="http://example.com/image" type="audio/jpg"></audio>');
+        expect(insertText).toContain('<audio');
+        expect(insertText).toContain('controls');
+        expect(insertText).toContain('src="http://example.com/image"');
+        expect(insertText).toContain('type="audio/jpg">');
+        expect(insertText).toContain('</audio>');
       });
     });
 
