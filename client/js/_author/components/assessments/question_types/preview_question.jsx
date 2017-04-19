@@ -64,10 +64,10 @@ class PreviewQuestion extends React.Component {
     };
   }
 
-  componentDidMount() { // eslint-disable-line class-methods-use-this
+  componentDidMount() {
     if (!_.isFunction(videojs)) return;
     // Look for videos that should be using videojs.
-    const videoJSElements = document.querySelectorAll('video.video-js');
+    const videoJSElements = this.preview.querySelectorAll('video.video-js');
     _.each(videoJSElements, element => videojs(element));
   }
 
@@ -212,7 +212,7 @@ class PreviewQuestion extends React.Component {
 
     const item = this.serializeForPlayer(this.props.item);
     return (
-      <div>
+      <div ref={ref => (this.preview = ref)}>
         <Item
           settings={{}}
           question={item}
