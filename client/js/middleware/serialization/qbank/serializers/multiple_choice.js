@@ -82,6 +82,23 @@ function serializeAnswers(originalChoices, newChoiceAttributes, language) {
     if (_.get(choice, 'isCorrect')) { correctId = key; }
   });
 
+  const a = _(newChoiceAttributes)
+  .entries()
+  .filter(choice => choice[1].id !== 'new' && !_.isUndefined(choice[1].feedback))
+  .map((choice) => {
+    const original = originalChoices[choice[0]];
+    return scrub({
+      id: original.answerId,
+      genusTypeId: correctAnswer(correctId, original.id, original.isCorrect),
+      feedback: languageText(choice[1].feedback, language),
+      type: genusTypes.answer.multipleChoice,
+      choiceIds: [original.id],
+      fileIds: choice[1].fileIds,
+      delete: choice[1].delete,
+    });
+  }).value();
+  return a;
+
   return _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
     const feedbackText = _.get(updateValues, 'feedback') || choice.feedback;
