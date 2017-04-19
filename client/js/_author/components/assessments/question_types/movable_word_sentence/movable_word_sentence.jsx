@@ -25,6 +25,7 @@ class MovableWordSentence extends React.Component {
     isActive: React.PropTypes.bool,
     activeChoice: React.PropTypes.string,
     language: React.PropTypes.string.isRequired,
+    duplicateAnswers: React.PropTypes.arrayOf(React.PropTypes.string),
   };
 
   render() {
@@ -48,6 +49,7 @@ class MovableWordSentence extends React.Component {
                 deleteChoice={() => this.props.deleteChoice(choice)}
                 selectChoice={() => this.props.selectChoice(choice.id)}
                 itemCount={_.size(question.choices)}
+                duplicateAnswers={this.props.duplicateAnswers}
               />
             ))
           }
