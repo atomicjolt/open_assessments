@@ -3,6 +3,7 @@ import baseSerializer            from './base';
 import { scrub, languageText }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
+import { languageText as findLanguageText } from '../../../../utils/utils';
 
 function serializeChoices(originalChoices, newChoiceAttributes, language) {
   // const choices = _(originalChoices)
@@ -84,13 +85,18 @@ function serializeAnswers(originalChoices, newChoiceAttributes, language) {
 
   const a = _(newChoiceAttributes)
   .entries()
-  .filter(choice => choice[1].id !== 'new' && !_.isUndefined(choice[1].feedback))
+  .filter(choice => {
+    // debugger;
+    return choice[1].id !== 'new' &&
+      (!_.isUndefined(choice[1].feedback) || !_.isUndefined(choice[1].isCorrect));
+    })
   .map((choice) => {
     const original = originalChoices[choice[0]];
+    const text = choice[1].feedback || findLanguageText(original.feedbacks, language);
     return scrub({
       id: original.answerId,
       genusTypeId: correctAnswer(correctId, original.id, original.isCorrect),
-      feedback: languageText(choice[1].feedback, language),
+      feedback: languageText(text, language),
       type: genusTypes.answer.multipleChoice,
       choiceIds: [original.id],
       fileIds: choice[1].fileIds,
