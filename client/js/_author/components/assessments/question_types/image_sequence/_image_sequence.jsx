@@ -17,8 +17,11 @@ class ImageSequence extends React.Component {
       }),
     }).isRequired,
     updateItem: React.PropTypes.func,
+    deleteChoice: React.PropTypes.func,
+    updateChoice: React.PropTypes.func,
     localizeStrings: React.PropTypes.func.isRequired,
     save: React.PropTypes.func,
+    isActive: React.PropTypes.bool,
     language: React.PropTypes.string.isRequired,
   };
 
@@ -60,11 +63,13 @@ class ImageSequence extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ display: this.props.isActive ? 'block' : 'none' }}>
         <ImageOrder
-          {...this.props}
           activateChoice={choiceId => this.activateChoice(choiceId)}
           activeChoice={this.state.activeChoice}
+          deleteChoice={this.props.deleteChoice}
+          item={this.props.item}
+          updateChoice={this.props.updateChoice}
         />
         <SaveOptions save={this.props.save} />
         <div className="au-c-question__feedback">
