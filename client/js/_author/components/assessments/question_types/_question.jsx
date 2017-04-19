@@ -198,6 +198,21 @@ export class Question extends React.Component {
     this.setState({ activeChoice: choiceId });
   }
 
+  getDuplicateAnswers() {
+    const itemType = this.props.item.type;
+    if (!_.includes(Question.stateDrivenTypes, itemType)) { return []; }
+
+    const propChoices = this.props.item.question.choices;
+    const stateChoices = this.state.item.question.choices;
+
+    return _({})
+      .merge(propChoices, stateChoices)
+      .map(itemType === 'imageSequence' ? 'order' : 'answerOrder')
+      .groupBy()
+      .pickBy(x => x.length > 1)
+      .keys()
+      .value();
+  }
 
   blurOptions(e) {
     const currentTarget = e.currentTarget;
@@ -253,6 +268,7 @@ export class Question extends React.Component {
           deleteChoice={choice => this.deleteChoice(choice)}
           language={this.state.language}
           save={() => this.saveStateItem()}
+          duplicateAnswers={this.getDuplicateAnswers()}
         />
       );
     }
