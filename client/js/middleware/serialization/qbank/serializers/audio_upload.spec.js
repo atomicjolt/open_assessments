@@ -1,6 +1,5 @@
 import React          from 'react';
 import AudioUpload    from './audio_upload';
-import _              from 'lodash';
 
 describe('audio_upload serializer', () => {
   let result;
@@ -9,10 +8,15 @@ describe('audio_upload serializer', () => {
 
   beforeEach(() => {
     item = {
-      id: '7',
-      name: 'something',
+      question: {
+        id: 7,
+        type: '',
+        name: 'something',
+      }
     };
     newAttributes = {
+      id: 7,
+      name: 'something',
       question: {
         correctFeedback: 'Spec Feedback',
         timeValue: {
@@ -32,13 +36,7 @@ describe('audio_upload serializer', () => {
 
   it('returns a scrubbed new item from second if statement', () => {
     newAttributes.question.correctFeedback = null;
-    const get = _.get(newAttributes, 'question.timeValue', {})
-    console.log(get)
     result = AudioUpload(item, newAttributes);
-    console.log(item);
-    console.log(newAttributes);
-    const empty = !_.isEmpty(get)
-    console.log(empty)
-    console.log(result);
+    expect(result.question.timeValue.seconds).toBe(100);
   });
 });
