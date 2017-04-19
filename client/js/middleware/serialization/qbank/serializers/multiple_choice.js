@@ -5,26 +5,40 @@ import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
 function serializeChoices(originalChoices, newChoiceAttributes, language) {
-  const choices = _.map(originalChoices, (choice) => {
-    const updateValues = newChoiceAttributes[choice.id];
-    const newOrder = _.get(updateValues, 'order');
-    const text = _.get(updateValues, 'text', choice.text);
+  // const choices = _(originalChoices)
+  //   .filter(choice => {
+  //     return _.has(newChoiceAttributes, choice.id) || !_.isUndefined(choice.texts[language])
+  //   })
+  //   .map((choice) => {
+  //     const updateValues = newChoiceAttributes[choice.id];
+  //     const newOrder = _.get(updateValues, 'order');
+  //     const text = _.get(updateValues, 'text', choice.text);
+  //
+  //     return {
+  //       id: choice.id,
+  //       text: languageText(text, language),
+  //       order: _.isNil(newOrder) ? choice.order : newOrder,
+  //       delete: _.get(updateValues, 'delete'),
+  //     };
+  //   }).value();
 
-    return {
-      id: choice.id,
-      text: languageText(text, language),
-      order: _.isNil(newOrder) ? choice.order : newOrder,
-      delete: _.get(updateValues, 'delete'),
-    };
-  });
-
+  let choices = []
   if (newChoiceAttributes.new) {
-    choices.push({
-      id: guid(),
-      text: languageText('', newChoiceAttributes.new.language),
-      order: choices.length,
-    });
+      choices.push({
+        id: guid(),
+        text: languageText('', newChoiceAttributes.new.language),
+        // order: choices.length,
+      });
+    return choices;
   }
+
+  choices = _.map(_.entries(newChoiceAttributes), choice =>
+    ({
+      id: choice[0],
+      text: languageText(choice[1].text, language),
+      // order: _.isNil(newOrder) ? choice.order : newOrder,
+      delete: choice[1].delete,
+    }));
 
   return choices;
 }
