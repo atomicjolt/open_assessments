@@ -19,8 +19,6 @@ function select(state) {
   };
 }
 
-const VIDEO_CLASSES = 'video-js vjs-skin-colors-clix vjs-big-play-centered';
-
 // TODO: figure out how to localize this
 export class OeaEditor extends React.Component {
   static propTypes = {
@@ -35,6 +33,9 @@ export class OeaEditor extends React.Component {
     error: React.PropTypes.string,
     loadingMedia: React.PropTypes.bool,
   };
+
+  static VIDEO_CLASSES = 'video-js vjs-skin-colors-clix vjs-big-play-centered';
+
 
   constructor(props) {
     super(props);
@@ -162,7 +163,7 @@ export class OeaEditor extends React.Component {
       case 'video':
         {
           const track = _.isEmpty(media.vtt) ? '' : `<track src="${_.get(media, 'vtt.url')}" srclang="en">`;
-          editorContent = `<video class="${VIDEO_CLASSES}" ${autoPlay} name="media" controls>` +
+          editorContent = `<video class="${OeaEditor.VIDEO_CLASSES}" ${autoPlay} name="media" controls>` +
             `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
             `${track}</video>`;
         }
