@@ -6,9 +6,8 @@ import AddImage         from './add_image';
 
 export default function ImageOrder(props) {
   const choices = props.item.question.choices;
-
   return (
-    <div className="au-c-image-sequence__answers au-o-row">
+    <div className="au-c-image-sequence__answers au-o-row" >
       {
         _.map(choices, (choice, id) =>
           <div key={id} className="au-o-quarter">
