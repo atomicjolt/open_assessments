@@ -152,6 +152,7 @@ describe('qbank editor', () => {
         expect(insertContentCalled).toBeTruthy();
         expect(insertText).toContain('<video');
         expect(insertText).toContain('controls');
+        expect(insertText).toContain(`class="${OeaEditor.VIDEO_CLASSES}"`);
         expect(insertText).toContain('src="http://example.com/image"');
         expect(insertText).toContain('type="video/jpg">');
         expect(insertText).toContain('</video>');
@@ -163,6 +164,7 @@ describe('qbank editor', () => {
         result.instance().insertMedia(file);
         expect(insertContentCalled).toBeTruthy();
         expect(insertText).toContain('<audio');
+        expect(insertText).toContain('class="span_12_of_12"');
         expect(insertText).toContain('controls');
         expect(insertText).toContain('src="http://example.com/image"');
         expect(insertText).toContain('type="audio/jpg">');
