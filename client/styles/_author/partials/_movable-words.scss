@@ -39,6 +39,14 @@
         border-color: $green;
       }
     }
+
+    &.is-error {
+      opacity: 1;
+      pointer-events: auto;
+      select{
+        border-color: $red;
+      }
+    }
   }
 
   .au-c-answer--add {
@@ -121,6 +129,27 @@
   }
   .au-c-dropdown{
     display: none;
+  }
+
+  .au-c-dropdown--tiny{
+    opacity: 0;
+    pointer-events: none;
+
+    &.is-ordered {
+      opacity: 1;
+      pointer-events: auto;
+      select{
+        border-color: $green;
+      }
+    }
+
+    &.is-error {
+      opacity: 1;
+      pointer-events: auto;
+      select{
+        border-color: $red;
+      }
+    }
   }
 
   &.is-active{

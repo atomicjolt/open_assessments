@@ -22,7 +22,7 @@ export function updateItem(bankId, item) {
   };
 }
 
-export function createChoice(bankId, itemId, text, fileIds, choiceType) {
+export function createChoice(bankId, itemId, text, fileIds, choiceType, language) {
   const newItem = {
     id: itemId,
     question: {
@@ -30,7 +30,8 @@ export function createChoice(bankId, itemId, text, fileIds, choiceType) {
       [choiceType || 'choices']: {
         new: { id: 'new' },
       },
-    }
+    },
+    language
   };
   return {
     bankId,

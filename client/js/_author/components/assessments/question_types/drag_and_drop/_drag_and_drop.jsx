@@ -26,6 +26,7 @@ export class DragAndDrop extends React.Component {
     updateChoice: React.PropTypes.func.isRequired,
     localizeStrings: React.PropTypes.func.isRequired,
     loadingMedia: React.PropTypes.bool,
+    isActive: React.PropTypes.bool,
     language: React.PropTypes.string.isRequired,
   };
 
@@ -50,7 +51,7 @@ export class DragAndDrop extends React.Component {
 
     const strings = this.props.localizeStrings('dragAndDrop');
     return (
-      <div>
+      <div style={{ display: this.props.isActive ? 'block' : 'none' }}>
         <TargetArea
           id={id}
           question={question}

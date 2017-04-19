@@ -20,6 +20,8 @@ export default class Metadata extends React.Component {
     switch (type) {
       case 'altText':
         return 'Alt Text';
+      case 'citation':
+        return 'Citation';
       case 'license':
         return 'License';
       case 'copyright':

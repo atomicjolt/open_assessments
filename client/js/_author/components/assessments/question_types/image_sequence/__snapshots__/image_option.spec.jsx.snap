@@ -10,7 +10,7 @@ exports[`image_option component renders a snapshot 1`] = `
     className="au-c-image-sequence-answer__top"
   >
     <div
-      className="au-c-dropdown au-c-dropdown--tiny"
+      className="au-c-dropdown au-c-dropdown--tiny "
     >
       <label
         htmlFor="image_option_order"

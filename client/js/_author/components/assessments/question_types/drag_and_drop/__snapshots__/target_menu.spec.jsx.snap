@@ -49,14 +49,14 @@ ShallowWrapper {
         <addZoneDropdown
             active={false}
             addByImage={[Function]}
-            addByRegion={undefined}
+            addByRegion={[Function]}
             text="Add Snap Zone"
             toggle={[Function]}
         />
         <addZoneDropdown
             active={false}
             addByImage={[Function]}
-            addByRegion={undefined}
+            addByRegion={[Function]}
             text="Add Drop Zone"
             toggle={[Function]}
         />
@@ -104,14 +104,14 @@ ShallowWrapper {
             <addZoneDropdown
                   active={false}
                   addByImage={[Function]}
-                  addByRegion={undefined}
+                  addByRegion={[Function]}
                   text="Add Snap Zone"
                   toggle={[Function]}
             />
             <addZoneDropdown
                   active={false}
                   addByImage={[Function]}
-                  addByRegion={undefined}
+                  addByRegion={[Function]}
                   text="Add Drop Zone"
                   toggle={[Function]}
             />
@@ -205,14 +205,14 @@ ShallowWrapper {
                     <addZoneDropdown
                               active={false}
                               addByImage={[Function]}
-                              addByRegion={undefined}
+                              addByRegion={[Function]}
                               text="Add Snap Zone"
                               toggle={[Function]}
                     />
                     <addZoneDropdown
                               active={false}
                               addByImage={[Function]}
-                              addByRegion={undefined}
+                              addByRegion={[Function]}
                               text="Add Drop Zone"
                               toggle={[Function]}
                     />
@@ -260,14 +260,14 @@ ShallowWrapper {
                     <addZoneDropdown
                               active={false}
                               addByImage={[Function]}
-                              addByRegion={undefined}
+                              addByRegion={[Function]}
                               text="Add Snap Zone"
                               toggle={[Function]}
                     />
                     <addZoneDropdown
                               active={false}
                               addByImage={[Function]}
-                              addByRegion={undefined}
+                              addByRegion={[Function]}
                               text="Add Drop Zone"
                               toggle={[Function]}
                     />

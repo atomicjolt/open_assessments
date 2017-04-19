@@ -5,6 +5,11 @@ import localize     from '../../../../locales/localize';
 function imageOption(props) {
   const { activateChoice, updateChoice, deleteChoice, id, order, numChoices } = props;
   const strings = props.localizeStrings('imageOption');
+
+  let boxClass = '';
+  if (!_.isNil(order) && order !== '') { boxClass = 'is-ordered'; }
+  if (_.includes(props.duplicateAnswers, _.toString(order))) { boxClass = 'is-error'; }
+
   return (
     <div
       className="au-c-image-sequence-answer is-active"
@@ -12,7 +17,7 @@ function imageOption(props) {
       onClick={() => activateChoice(id)}
     >
       <div className="au-c-image-sequence-answer__top">
-        <div className="au-c-dropdown au-c-dropdown--tiny">
+        <div className={`au-c-dropdown au-c-dropdown--tiny ${boxClass}`}>
           <label htmlFor="image_option_order" />
           <select
             name=""
@@ -65,6 +70,7 @@ imageOption.propTypes = {
   order: React.PropTypes.number,
   numChoices: React.PropTypes.number.isRequired,
   localizeStrings: React.PropTypes.func.isRequired,
+  duplicateAnswers: React.PropTypes.arrayOf(React.PropTypes.string),
 };
 
 export default localize(imageOption);
