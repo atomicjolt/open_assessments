@@ -50,8 +50,6 @@ function serializeChoices(originalChoices, newChoiceAttributes, language) {
   //     // order: _.isNil(newOrder) ? choice.order : newOrder,
   //     delete: choice[1].delete,
   //   }));
-  debugger;
-
   return choices;
 }
 

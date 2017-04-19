@@ -7,11 +7,13 @@ import Selector         from './correct_selector';
 import AnswerIcons      from './answer_icons';
 import Feedback         from './option_feedback';
 import localize         from '../../../../locales/localize';
+import { languageText } from '../../../../../utils/utils';
 
 function multipleChoiceOptions(props) {
   const strings = props.localizeStrings('multipleChoiceOptions');
+  const feedbackText = languageText(props.feedbacks, props.language);
   const hideFeedback = (props.itemType !== types.multipleChoice) ||
-    !(props.isActive || props.feedback);
+    !(props.isActive || feedbackText);
 
   if (props.id === 'new') {
     return (

@@ -20,14 +20,18 @@ class optionFeedback extends React.Component {
     const hidden = this.props.hidden ? 'is-hidden' : '';
     const strings = this.props.localizeStrings('optionFeedback');
     const text = languageText(this.props.feedbacks, this.props.language);
+
     return (
-      <div className={`au-c-input au-c-input-label--left au-c-feedback ${hidden}`}>
+      <div
+        key={this.props.language}
+        className={`au-c-input au-c-input-label--left au-c-feedback ${hidden}`}
+      >
         <label htmlFor="feedback1">{strings.feedback}</label>
         <Editor
           editorKey={getLanguage(this.props.language)}
           textSize="smaller"
           fileIds={this.props.fileIds}
-          text={text || this.props.feedback}
+          text={text}
           bankId={this.props.bankId}
           onBlur={(newText, fileIds) => this.props.updateChoice({ feedback: newText, fileIds })}
         />
