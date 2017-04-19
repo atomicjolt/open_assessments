@@ -146,6 +146,7 @@ export class Question extends React.Component {
     const { item } = this.props;
     const saveItem = _.cloneDeep(this.state.item);
     saveItem.id = item.id;
+    saveItem.language = this.state.language;
     this.props.updateItem(this.props.bankId, saveItem);
   }
 
@@ -157,7 +158,8 @@ export class Question extends React.Component {
       question: {
         type,
         choices: {},
-      }
+      },
+      language: this.state.language
     });
   }
 
@@ -246,7 +248,7 @@ export class Question extends React.Component {
           selectChoice={choiceId => this.selectChoice(choiceId)}
           blurOptions={e => this.blurOptions(e)}
           createChoice={(text, fileIds, type) =>
-            this.props.createChoice(bankId, item.id, text, fileIds, type)}
+            this.props.createChoice(bankId, item.id, text, fileIds, type, this.state.language)}
           deleteChoice={choice => this.deleteChoice(choice)}
           language={this.state.language}
           save={() => this.saveStateItem()}
