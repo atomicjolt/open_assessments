@@ -72,6 +72,7 @@ export class Assessment extends React.Component {
       assessmentResult: React.PropTypes.string,
       isSubmitted: React.PropTypes.bool,
       currentItemIndex: React.PropTypes.number,
+      checkedResponses: React.PropTypes.array
     }),
     assessmentViewed: React.PropTypes.func,
     settings: React.PropTypes.shape({
@@ -144,7 +145,6 @@ export class Assessment extends React.Component {
   componentDidMount() {
     // Trigger action to indicate the assessment was viewed
     this.props.assessmentViewed(this.props.settings, this.props.assessment);
-
     this.props.sendSize();
     this.props.scrollParentToTop();
     this.props.hideLMSNavigation();
@@ -345,7 +345,13 @@ export class Assessment extends React.Component {
   }
 
   render() {
-    if (this.props.settings.assessment_kind === 'SUMMATIVE' && !__DEV__) {
+    // only show the alert window if they've attempted a question in Summative
+    const hasAttempted = this.props.assessmentProgress.checkedResponses ?
+      this.props.assessmentProgress.checkedResponses.length > 0 : true;
+
+    if (this.props.settings.assessment_kind === 'SUMMATIVE' &&
+        hasAttempted &&
+        !__DEV__) {
       window.onbeforeunload = () => this.popup();
     }
 
