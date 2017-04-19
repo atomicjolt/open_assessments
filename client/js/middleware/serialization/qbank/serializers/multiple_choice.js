@@ -57,13 +57,12 @@ function serializeAnswers(originalChoices, newChoiceAttributes, language) {
     if (_.get(choice, 'isCorrect')) { correctId = key; }
   });
 
-  const a = _(newChoiceAttributes)
+  const serializedAnswers = _(newChoiceAttributes)
   .entries()
-  .filter(choice => {
-    // debugger;
-    return choice[1].id !== 'new' &&
-      (!_.isUndefined(choice[1].feedback) || !_.isUndefined(choice[1].isCorrect));
-    })
+  .filter(choice =>
+    choice[1].id !== 'new' &&
+    (!_.isUndefined(choice[1].feedback) || !_.isUndefined(choice[1].isCorrect))
+  )
   .map((choice) => {
     const original = originalChoices[choice[0]];
     const text = choice[1].feedback || findLanguageText(original.feedbacks, language);
@@ -76,23 +75,9 @@ function serializeAnswers(originalChoices, newChoiceAttributes, language) {
       fileIds: choice[1].fileIds,
       delete: choice[1].delete,
     });
-  }).value();
-  return a;
-
-  return _.map(originalChoices, (choice) => {
-    const updateValues = newChoiceAttributes[choice.id];
-    const feedbackText = _.get(updateValues, 'feedback') || choice.feedback;
-
-    return scrub({
-      id: choice.answerId,
-      genusTypeId: correctAnswer(correctId, choice.id, choice.isCorrect),
-      feedback: languageText(feedbackText, language),
-      type: genusTypes.answer.multipleChoice,
-      choiceIds: [choice.id],
-      fileIds: _.get(updateValues, 'fileIds'),
-      delete: _.get(updateValues, 'delete'),
-    });
-  });
+  })
+  .value();
+  return serializedAnswers;
 }
 
 function killAnswers(answers) {
