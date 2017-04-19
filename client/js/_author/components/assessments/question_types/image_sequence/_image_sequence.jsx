@@ -23,6 +23,7 @@ class ImageSequence extends React.Component {
     save: React.PropTypes.func,
     isActive: React.PropTypes.bool,
     language: React.PropTypes.string.isRequired,
+    duplicateAnswers: React.PropTypes.arrayOf(React.PropTypes.string),
   };
 
   constructor(props) {
@@ -70,6 +71,7 @@ class ImageSequence extends React.Component {
           deleteChoice={this.props.deleteChoice}
           item={this.props.item}
           updateChoice={this.props.updateChoice}
+          duplicateAnswers={this.props.duplicateAnswers}
         />
         <SaveOptions save={this.props.save} />
         <div className="au-c-question__feedback">

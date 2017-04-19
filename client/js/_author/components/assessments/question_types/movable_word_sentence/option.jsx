@@ -6,13 +6,17 @@ import localize from '../../../../locales/localize';
 function option(props) {
   const strings = props.localizeStrings('movableWordSentanceOption');
 
+  let boxClass = '';
+  if (!_.isNil(props.answerOrder) && props.answerOrder !== '') { boxClass = 'is-ordered'; }
+  if (_.includes(props.duplicateAnswers, props.answerOrder)) { boxClass = 'is-error'; }
+
   return (
     <div
       onFocus={props.selectChoice}
       onClick={props.selectChoice}
       className={`au-c-answer au-o-flex-center ${props.isActive ? 'is-active' : ''}`}
     >
-      <div className={`au-c-dropdown au-c-dropdown--tiny au-u-mr-sm ${!_.isNil(props.answerOrder) && props.answerOrder !== '' ? 'is-ordered' : ''}`}>
+      <div className={`au-c-dropdown au-c-dropdown--tiny au-u-mr-sm ${boxClass}`}>
         <label htmlFor={`option_order_${props.id}`} />
         <select
           name=""
@@ -73,6 +77,7 @@ option.propTypes = {
   updateChoice: React.PropTypes.func.isRequired,
   deleteChoice: React.PropTypes.func.isRequired,
   localizeStrings: React.PropTypes.func.isRequired,
+  duplicateAnswers: React.PropTypes.arrayOf(React.PropTypes.string),
 };
 
 export default localize(option);
