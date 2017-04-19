@@ -4,6 +4,7 @@ import Item         from '../../../../_player/components/assessments/item';
 import types        from '../../../../constants/question_types';
 import localize     from '../../../locales/localize';
 import Spinner      from '../../common/dot_loader';
+import videojs from 'video.js';
 
 const exclusiveTypes = {
   multiple_choice_question: true,
@@ -60,6 +61,13 @@ class PreviewQuestion extends React.Component {
     this.state = {
       response: [],
     };
+  }
+
+  componentDidMount() {
+    if (!_.isFunction(videojs)) return;
+    // Look for videos that should be using videojs.
+    const videoJSElements = document.querySelectorAll('video.video-js');
+    _.each(videoJSElements, element => videojs(element));
   }
 
   serializeForPlayer(item) {
