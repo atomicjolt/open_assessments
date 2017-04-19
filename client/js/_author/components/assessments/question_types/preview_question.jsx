@@ -1,5 +1,7 @@
 import React        from 'react';
 import _            from 'lodash';
+import videojs      from 'video.js';
+
 import Item         from '../../../../_player/components/assessments/item';
 import types        from '../../../../constants/question_types';
 import localize     from '../../../locales/localize';
@@ -60,6 +62,13 @@ class PreviewQuestion extends React.Component {
     this.state = {
       response: [],
     };
+  }
+
+  componentDidMount() {
+    if (!_.isFunction(videojs)) return;
+    // Look for videos that should be using videojs.
+    const videoJSElements = this.preview.querySelectorAll('video.video-js');
+    _.each(videoJSElements, element => videojs(element));
   }
 
   serializeForPlayer(item) {
@@ -203,7 +212,7 @@ class PreviewQuestion extends React.Component {
 
     const item = this.serializeForPlayer(this.props.item);
     return (
-      <div>
+      <div ref={ref => (this.preview = ref)}>
         <Item
           settings={{}}
           question={item}

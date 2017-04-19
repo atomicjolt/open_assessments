@@ -34,6 +34,9 @@ export class OeaEditor extends React.Component {
     loadingMedia: React.PropTypes.bool,
   };
 
+  static VIDEO_CLASSES = 'video-js vjs-skin-colors-clix vjs-big-play-centered';
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -153,14 +156,14 @@ export class OeaEditor extends React.Component {
         break;
 
       case 'audio':
-        editorContent = `<audio ${autoPlay} name="media" controls>` +
+        editorContent = `<audio class="span_12_of_12" ${autoPlay} name="media" controls>` +
         `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
         '</audio>';
         break;
       case 'video':
         {
           const track = _.isEmpty(media.vtt) ? '' : `<track src="${_.get(media, 'vtt.url')}" srclang="en">`;
-          editorContent = `<video ${autoPlay} name="media" controls>` +
+          editorContent = `<video class="${OeaEditor.VIDEO_CLASSES}" ${autoPlay} name="media" controls>` +
             `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
             `${track}</video>`;
         }
