@@ -302,7 +302,7 @@ export class Question extends React.Component {
   }
 
   render() {
-    const { name, type, id } = this.props.item;
+    const { name, type, id, isRemoving } = this.props.item;
     const className = this.getClassName();
     return (
       <div
@@ -312,6 +312,7 @@ export class Question extends React.Component {
         onFocus={() => this.props.activateItem(id)}
       >
         <QuestionHeader
+          isRemoving={isRemoving}
           name={name}
           type={type}
           deleteAssessmentItem={this.props.deleteAssessmentItem}
