@@ -19,6 +19,12 @@ export default function banks(state = initialState, action) {
       return newState;
     }
 
+    case 'DELETE_ASSESSMENT_ITEM': {
+      const newState = _.cloneDeep(state);
+      newState[action.bankId][action.itemId].isRemoving = true;
+      return newState;
+    }
+
     case 'UPDATE_ITEM_DONE':
     case 'CREATE_ITEM_DONE': {
       const newState = _.cloneDeep(state);
