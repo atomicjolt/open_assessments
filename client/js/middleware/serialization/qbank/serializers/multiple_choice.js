@@ -32,13 +32,25 @@ function serializeChoices(originalChoices, newChoiceAttributes, language) {
     return choices;
   }
 
-  choices = _.map(_.entries(newChoiceAttributes), choice =>
-    ({
+  choices = _(newChoiceAttributes)
+    .entries()
+    .filter(choice => !_.isUndefined(choice[1].text))
+    .map(choice => ({
       id: choice[0],
       text: languageText(choice[1].text, language),
       // order: _.isNil(newOrder) ? choice.order : newOrder,
       delete: choice[1].delete,
-    }));
+    }))
+    .value();
+
+  // _.map(_.entries(newChoiceAttributes), choice =>
+  //   ({
+  //     id: choice[0],
+  //     text: languageText(choice[1].text, language),
+  //     // order: _.isNil(newOrder) ? choice.order : newOrder,
+  //     delete: choice[1].delete,
+  //   }));
+  debugger;
 
   return choices;
 }
