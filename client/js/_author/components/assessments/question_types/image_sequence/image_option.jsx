@@ -26,7 +26,7 @@ function imageOption(props) {
               id,
               order: parseInt(e.target.value, 10)
             })}
-            defaultValue={order}
+            value={order}
           >
             <option key="option_key_null" value={null}>{strings.NA}</option>
             {
