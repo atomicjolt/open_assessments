@@ -16,10 +16,10 @@ exports[`image_option component renders a snapshot 1`] = `
         htmlFor="image_option_order"
       />
       <select
-        defaultValue={undefined}
         id="image_option_order"
         name=""
         onChange={[Function]}
+        value={undefined}
       >
         <option
           value={null}
