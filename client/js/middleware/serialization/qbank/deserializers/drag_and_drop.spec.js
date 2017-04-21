@@ -1,3 +1,4 @@
+import _                  from 'lodash';
 import DragAndDrop        from './drag_and_drop';
 import genusTypes         from '../../../../constants/genus_types';
 
@@ -137,9 +138,9 @@ describe('drag_and_drop deserializer', () => {
           spatialUnitConditions: [],
           type: 'Answer',
           zoneConditions: [{
-            droppableId: '58ee8c84c89cd9429bc07304',
+            droppableId: 'drop01',
             match: true,
-            zoneId: '58ee8c73c89cd9429cf040f4',
+            zoneId: 'zone01',
           }],
         }, {
           assignedBankIds: ['bank01'],
@@ -239,12 +240,29 @@ describe('drag_and_drop deserializer', () => {
         droppables: [
           {
             dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
-            id: '58ee8c84c89cd9429bc07304',
+            id: 'drop01',
+            name: 'drop the beat',
+            reuse: 1,
+            text: '<img alt="" src="image01.png"/>',
+          }, {
+            dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
+            id: 'drop02',
             name: '',
             reuse: 1,
-            text: '<img alt="" src="image.png"/>',
+            text: '<img alt="" src="image02.png"/>',
+          }, {
+            dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
+            id: 'drop03',
+            name: '',
+            reuse: 1,
+            text: '<img alt="" src="image03.png"/>',
+          }, {
+            dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
+            id: 'drop04',
+            name: '',
+            reuse: 1,
+            text: '<img alt="" src="image04.png"/>',
           },
-        //  TODO: put more in here?
         ],
         fileIds: {
         //  some stuff goes here, please don't break
@@ -263,7 +281,7 @@ describe('drag_and_drop deserializer', () => {
         shuffleZones: true,
         targets: [{
           dropBehaviorType: 'drop.behavior%3Areject%40ODL.MIT.EDU',
-          id: '58ee699dc89cd9429cf03f5d',
+          id: 'target01',
           name: '',
           text: '<img alt="" src="targetImage.png"/>',
         }],
@@ -277,11 +295,11 @@ describe('drag_and_drop deserializer', () => {
         type: 'OsidObject',
         zones: [
           {
-            containerId: '58ee699dc89cd9429cf03f5d',
+            containerId: 'target01',
             description: 'A new zone',
             dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
-            id: '58efe526c89cd9559fbcd3e5',
-            name: '',
+            id: 'zone01',
+            name: 'I am the zoniest',
             reuse: 0,
             spatialUnit: {
               coordinateValues: [505, 76],
@@ -291,7 +309,37 @@ describe('drag_and_drop deserializer', () => {
               width: 187.5,
             },
             visible: true,
-          }, // TODO: add more of these
+          }, {
+            containerId: 'target01',
+            description: 'Another new zone',
+            dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
+            id: 'zone02',
+            name: '',
+            reuse: 0,
+            spatialUnit: {
+              coordinateValues: [200, 200],
+              height: 20,
+              recordTypes: ['osid.mapping.SpatialUnit%3Arectangle%40ODL.MIT.EDU'],
+              type: 'SpatialUnit',
+              width: 103,
+            },
+            visible: true,
+          }, {
+            containerId: 'target01',
+            description: 'A third zone',
+            dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
+            id: 'zone03',
+            name: '',
+            reuse: 0,
+            spatialUnit: {
+              coordinateValues: [600, 10],
+              height: 3,
+              recordTypes: ['osid.mapping.SpatialUnit%3Arectangle%40ODL.MIT.EDU'],
+              type: 'SpatialUnit',
+              width: 90,
+            },
+            visible: true,
+          },
         ],
       },
       recordTypeIds: [],
@@ -302,8 +350,43 @@ describe('drag_and_drop deserializer', () => {
     result = DragAndDrop(item);
   });
 
-  it('does something', () => {
-    console.log(result);
-    // TODO: add more of these
+  it('builds the question correctly', () => {
+    expect(result.question).toBeDefined();
+    expect(result.question.target).toBeDefined();
+    expect(result.question.zones).toBeDefined();
+    expect(result.question.visibleZones).toBeDefined();
+    expect(result.question.dropObjects).toBeDefined();
+    expect(result.question.correctFeedback).toBeDefined();
+    expect(result.question.incorrectFeedback).toBeDefined();
+  });
+
+  it('makes the target', () => {
+    const target = result.question.target;
+    expect(target.id).toBe('target01');
+    expect(target.image).toBe('targetImage.png');
+  });
+
+  it('makes the zones', () => {
+    const zones = result.question.zones;
+    expect(_.size(zones)).toBe(3);
+    expect(zones.zone01).toBeDefined();
+    expect(zones.zone01.id).toBe('zone01');
+    expect(zones.zone01.label).toBe('I am the zoniest');
+    expect(zones.zone01.height).toBe(146);
+    expect(zones.zone01.width).toBe(187.5);
+    expect(zones.zone01.xPos).toBe(505);
+    expect(zones.zone01.yPos).toBe(76);
+    expect(zones.zone01.type).toBe('snap');
+  });
+
+  it('makes the dropObjects', () => {
+    const drops = result.question.dropObjects;
+    expect(_.size(drops)).toBe(4);
+    expect(drops.drop01).toBeDefined();
+    expect(drops.drop01.id).toBe('drop01');
+    expect(drops.drop01.label).toBe('drop the beat');
+    expect(drops.drop01.image).toBe('image01.png');
+    expect(drops.drop01.type).toBe('snap');
+    expect(drops.drop01.correctZone).toBe('zone01');
   });
 });
