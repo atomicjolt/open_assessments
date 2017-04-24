@@ -299,6 +299,7 @@ export class OeaEditor extends React.Component {
         <div className={`au-c-text-input au-c-text-input--${textSize} au-c-wysiwyg ${activeClass}`}>
           <div className={`au-c-placeholder ${hidePlaceholder}`}>{this.props.placeholder}</div>
           <TinyWrapper
+            bankId={this.props.bankId}
             editorKey={this.props.editorKey}
             text={this.cleanText()}
             onBlur={(editorText, isChanged) => this.onBlur(editorText, isChanged)}
