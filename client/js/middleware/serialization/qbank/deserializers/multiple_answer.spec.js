@@ -1,4 +1,3 @@
-import _                from 'lodash';
 import genusTypes       from '../../../../constants/genus_types';
 import multipleAnswer   from './multiple_answer';
 
@@ -16,13 +15,15 @@ describe('multipleAnswer', () => {
       },
       answers: [{
         id: '1',
-        feedback: { text: '<p>Nice Job</p>' },
+        feedback: { text: 'Nice Job' },
+        feedbacks: 'Doing great',
         genusTypeId: genusTypes.answer.rightAnswer,
         fileIds: {},
         choiceIds: ['asdf']
       }, {
         id: '2',
-        feedback: { text: '<p>hiya</p>' },
+        feedback: { text: 'Maybe study more' },
+        feedbacks: 'Need to work harder',
         genusTypeId: genusTypes.answer.wrongAnswer,
         fileIds: {}
       }],
@@ -46,16 +47,15 @@ describe('multipleAnswer', () => {
   });
 
 
-  it('should check correctness of isCorrect attribute', () => {
+  it('should check correctness of feedbacks', () => {
     const result = multipleAnswer(item);
-    expect(result.question.choices.asdf.isCorrect).toBeTruthy();
-    expect(result.question.choices.qwer.isCorrect).toBeFalsy();
+    expect(result.question.correctFeedback.text).toBe('Nice Job');
+    expect(result.question.incorrectFeedback.text).toBe('Maybe study more');
   });
 
-  it('should set choice.id correctly', () => {
+  it('should check answer Ids', () => {
     const result = multipleAnswer(item);
-    const setKeys = _.keys(result.question.choices);
-    expect(setKeys).toContain('asdf');
-    expect(setKeys).toContain('qwer');
+    expect(result.question.correctFeedback.answerId).toBe('1');
+    expect(result.question.incorrectFeedback.answerId).toBe('2');
   });
 });
