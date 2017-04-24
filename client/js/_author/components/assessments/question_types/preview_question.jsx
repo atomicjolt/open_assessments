@@ -65,7 +65,17 @@ class PreviewQuestion extends React.Component {
   }
 
   componentDidMount() {
-    if (!_.isFunction(videojs)) return;
+    this.initializeVideoJs();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.item.isUpdating !== prevProps.item.isUpdating) {
+      this.initializeVideoJs();
+    }
+  }
+
+  initializeVideoJs() {
+    if (!_.isFunction(videojs) || !this.preview) return;
     // Look for videos that should be using videojs.
     const videoJSElements = this.preview.querySelectorAll('video.video-js');
     _.each(videoJSElements, element => videojs(element));
