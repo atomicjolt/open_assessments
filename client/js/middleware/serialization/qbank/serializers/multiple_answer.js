@@ -4,31 +4,37 @@ import { scrub, languageText }  from '../../serializer_utils';
 import genusTypes               from '../../../../constants/genus_types';
 import guid                     from '../../../../utils/guid';
 
-function serializeChoices(originalChoices, newChoiceAttributes) {
-  const choices = _.map(originalChoices, (choice) => {
-    const updateValues = newChoiceAttributes[choice.id];
-    const newOrder = _.get(updateValues, 'order');
+function serializeChoice(originalChoice, newChoiceAttributes, language) {
+  const originalText = _.get(originalChoice, `texts[${language}]`, '');
+  const updatedChoice = {
+    ...originalChoice,
+    ...newChoiceAttributes,
+    text: newChoiceAttributes.text || originalText
+  };
 
-    return {
-      id: choice.id,
-      text: _.get(updateValues, 'text') || choice.text,
-      order: _.isNil(newOrder) ? choice.order : newOrder,
-      delete: _.get(updateValues, 'delete'),
-    };
-  });
-
-  if (newChoiceAttributes.new) {
-    choices.push({
-      id: guid(),
-      text: '',
-      order: choices.length,
-    });
-  }
-
-  return choices;
+  return {
+    id: updatedChoice.id,
+    text: languageText(updatedChoice.text, language),
+    delete: updatedChoice.delete,
+  };
 }
 
-function serializeQuestion(originalQuestion, newQuestionAttributes) {
+function serializeChoices(originalChoices, newChoiceAttributes, language) {
+  if (newChoiceAttributes.new) {
+    const newChoice = serializeChoice({
+      id: guid(),
+      text: ''
+    }, {}, language);
+    return [newChoice];
+  }
+
+  return _.map(
+    _.toPairs(newChoiceAttributes),
+    choice => serializeChoice(originalChoices[choice[0]], choice[1], language)
+  );
+}
+
+function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
   const newQuestion = {
     multiAnswer: newQuestionAttributes.multiAnswer,
     shuffle: newQuestionAttributes.shuffle,
@@ -37,10 +43,23 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   };
 
   if (newQuestionAttributes.choices) {
-    newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
+    newQuestion.choices = serializeChoices(
+      originalQuestion.choices,
+      newQuestionAttributes.choices,
+      language
+    );
   }
 
   return scrub(newQuestion);
+}
+
+function correctChoiceIds(choices) {
+  const result = _(choices)
+    .toPairs()
+    .filter(choice => choice[1].isCorrect)
+    .map(choice => choice[0])
+    .value();
+  return result;
 }
 
 function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
@@ -64,14 +83,13 @@ function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
     fileIds: _.get(incorrectFeedback, 'fileIds'),
   };
 
-  _.forEach(originalChoices, (choice) => {
-    const newCorrectness = _.get(newChoiceAttributes, `[${choice.id}].isCorrect`);
-    if (!_.isNil(newCorrectness) && newCorrectness) {
-      correctAnswer.choiceIds.push(choice.id);
-    } else if (choice.isCorrect) {
-      correctAnswer.choiceIds.push(choice.id);
-    }
-  });
+  const allChoices = _.merge(
+    {},
+    originalChoices,
+    newChoiceAttributes,
+  );
+
+  correctAnswer.choiceIds.push(...correctChoiceIds(allChoices));
 
   correctAnswer = scrub(correctAnswer, ['choiceIds']);
   incorrectAnswer = scrub(incorrectAnswer, ['choiceIds']);
@@ -92,7 +110,7 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
   if (question) {
     newItem.question = {
       ...newItem.question,
-      ...serializeQuestion(originalItem.question, question)
+      ...serializeQuestion(originalItem.question, question, language)
     };
     if (question.choices || question.correctFeedback || question.incorrectFeedback) {
       if (newItemAttributes.type && originalItem.type !== newItemAttributes.type) {
