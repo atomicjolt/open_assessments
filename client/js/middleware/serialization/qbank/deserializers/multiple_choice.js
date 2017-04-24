@@ -1,13 +1,7 @@
-import _                  from 'lodash';
-import baseDeserializer   from './base';
-import genusTypes         from '../../../../constants/genus_types';
-
-function deserializeChoiceTexts(texts) {
-  return _.reduce(texts, (allTexts, text) => {
-    allTexts[text.languageTypeId] = text.text; // eslint-disable-line no-param-reassign
-    return allTexts;
-  }, {});
-}
+import _                      from 'lodash';
+import baseDeserializer       from './base';
+import genusTypes             from '../../../../constants/genus_types';
+import deserializeChoiceTexts from '../../serializer_utils';
 
 function deserializeChoices(choices, answers) {
   const newChoices = {};
@@ -48,7 +42,6 @@ export default function multipleChoice(item) {
     ...newItem.question,
     shuffle: _.get(item, 'question.shuffle'),
     choices: deserializeChoices(_.get(item, 'question.multiLanguageChoices'), item.answers),
-    // choices: deserializeChoices(_.get(item, 'question.choices'), item.answers),
   };
 
   return newItem;
