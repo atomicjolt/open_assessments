@@ -26,11 +26,12 @@ class MWSandbox extends React.Component {
 
   getChoices(choices) {
     const { id } = this.props.item;
-    return _.map(choices, (choice, index) => (
+    let index = 1;
+    return _.map(choices, (choice) => (
       <Option
         key={choice.id}
         choice={choice}
-        index={index}
+        index={index++}
         selectChoice={() => this.props.selectChoice(choice.id)}
         updateChoice={
           (newChoice, fileIds) => this.props.updateChoice(
