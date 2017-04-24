@@ -14,16 +14,41 @@ describe('drag_and_drop serializer', () => {
         type: '',
         name: 'something',
         fileIds: {},
-        zones: {},
-        correctFeedback: {
-          text: 'correctamundo',
-          fileIds: '77',
+        zones: [{
+          visible: 'vision'
+        }],
+        droppables: {
+          id: 1,
+          name: 'This is my name',
+          text: 'urlforimage.example.com',
+          dropBehaviorType: 'a type of a lot of things',
+        },
+        targets: {
+          id: 7,
+          text: 'anotherfunurl.com',
         },
       },
       answers: [
         {
           id: 1,
           genusTypeId: genusTypes.answer.rightAnswer,
+          feedback: {
+            text: 'something from nothing',
+          },
+          feedbacks: 'nothing from nothing',
+          fileIds: {},
+          zoneConditions: {
+            zoneId: 1,
+          },
+        },
+        {
+          id: 2,
+          genusTypeId: genusTypes.answer.wrongAnswer,
+          feedback: {
+            text: 'this is way worse than I thought',
+          },
+          feedbacks: 'weird',
+          fileIds: {},
         },
       ],
     };
