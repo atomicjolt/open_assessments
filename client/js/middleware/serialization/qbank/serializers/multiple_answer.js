@@ -43,6 +43,14 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   return scrub(newQuestion);
 }
 
+function correctChoiceIds(choices) {
+  return _(choices)
+    .toPairs()
+    .filter(choice => choice[1].isCorrect)
+    .map(choice => choice[0])
+    .value();
+}
+
 function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
   correctFeedback, incorrectFeedback, language
 ) {
@@ -64,14 +72,11 @@ function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
     fileIds: _.get(incorrectFeedback, 'fileIds'),
   };
 
-  _.forEach(originalChoices, (choice) => {
-    const newCorrectness = _.get(newChoiceAttributes, `[${choice.id}].isCorrect`);
-    if (!_.isNil(newCorrectness) && newCorrectness) {
-      correctAnswer.choiceIds.push(choice.id);
-    } else if (choice.isCorrect) {
-      correctAnswer.choiceIds.push(choice.id);
-    }
-  });
+  const allChoices = {
+    ...originalChoices,
+    ...newChoiceAttributes,
+  };
+  correctAnswer.choiceIds.push(...correctChoiceIds(allChoices));
 
   correctAnswer = scrub(correctAnswer, ['choiceIds']);
   incorrectAnswer = scrub(incorrectAnswer, ['choiceIds']);

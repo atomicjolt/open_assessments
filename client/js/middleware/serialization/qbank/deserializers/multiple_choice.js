@@ -22,7 +22,6 @@ function deserializeChoices(choices, answers) {
       fileIds: {},
       isCorrect: false,
     };
-    // debugger; //TODO serialize answers for each language
     _.forEach(answers, (answer) => {
       if (_.includes(answer.choiceIds, choice.id)) {
         newChoices[choice.id] = {
