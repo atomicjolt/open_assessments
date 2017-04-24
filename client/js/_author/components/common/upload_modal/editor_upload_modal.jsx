@@ -115,9 +115,9 @@ export class EditorUploadModal extends React.Component {
   metadataTypes() {
     const { mediaType } = this.props;
     if (mediaType === 'audio' || mediaType === 'video') {
-      return ['license', 'copyright'];
+      return ['citation', 'copyright', 'license'];
     }
-    return ['altText', 'copyright', 'license'];
+    return ['altText', 'citation', 'copyright', 'license'];
   }
 
   resetModal() {
