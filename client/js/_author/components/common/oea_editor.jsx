@@ -32,6 +32,7 @@ export class OeaEditor extends React.Component {
     textSize: React.PropTypes.string,
     error: React.PropTypes.string,
     loadingMedia: React.PropTypes.bool,
+    editorKey: React.PropTypes.string
   };
 
   static VIDEO_CLASSES = 'video-js vjs-skin-colors-clix vjs-big-play-centered';
@@ -298,7 +299,7 @@ export class OeaEditor extends React.Component {
         <div className={`au-c-text-input au-c-text-input--${textSize} au-c-wysiwyg ${activeClass}`}>
           <div className={`au-c-placeholder ${hidePlaceholder}`}>{this.props.placeholder}</div>
           <TinyWrapper
-            {...this.props}
+            editorKey={this.props.editorKey}
             text={this.cleanText()}
             onBlur={(editorText, isChanged) => this.onBlur(editorText, isChanged)}
             onChange={editorText => this.setState({ newText: editorText })}
