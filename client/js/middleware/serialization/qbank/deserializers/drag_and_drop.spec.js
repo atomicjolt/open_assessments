@@ -1,6 +1,5 @@
 import _                  from 'lodash';
 import DragAndDrop        from './drag_and_drop';
-import genusTypes         from '../../../../constants/genus_types';
 
 describe('drag_and_drop deserializer', () => {
   let item;
