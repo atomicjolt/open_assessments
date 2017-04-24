@@ -34,7 +34,8 @@ export function createChoice(bankId, itemId, text, fileIds, choiceType, language
           language,
         },
       },
-    }
+    },
+    language
   };
   return {
     bankId,

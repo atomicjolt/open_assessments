@@ -25,6 +25,7 @@ export default function ImageOrder(props) {
               activeChoice={props.activeChoice}
               deleteChoice={props.deleteChoice}
               numChoices={_.size(choices)}
+              duplicateAnswers={props.duplicateAnswers}
             />
           </div>
         )
@@ -46,4 +47,5 @@ ImageOrder.propTypes = {
     })
   }),
   deleteChoice: React.PropTypes.func,
+  duplicateAnswers: React.PropTypes.arrayOf(React.PropTypes.string),
 };

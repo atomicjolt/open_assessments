@@ -6,7 +6,6 @@ import { getLanguage } from '../../../../../constants/language_types';
 
 class optionFeedback extends React.Component {
   static propTypes = {
-    feedback: React.PropTypes.string,
     feedbacks: React.PropTypes.arrayOf(React.PropTypes.object),
     bankId: React.PropTypes.string.isRequired,
     updateChoice: React.PropTypes.func.isRequired,
@@ -20,7 +19,6 @@ class optionFeedback extends React.Component {
     const hidden = this.props.hidden ? 'is-hidden' : '';
     const strings = this.props.localizeStrings('optionFeedback');
     const text = languageText(this.props.feedbacks, this.props.language);
-
     return (
       <div
         key={this.props.language}
@@ -31,7 +29,7 @@ class optionFeedback extends React.Component {
           editorKey={getLanguage(this.props.language)}
           textSize="smaller"
           fileIds={this.props.fileIds}
-          text={text}
+          text={languageText(this.props.feedbacks, this.props.language)}
           bankId={this.props.bankId}
           onBlur={(newText, fileIds) => this.props.updateChoice({ feedback: newText, fileIds })}
         />
