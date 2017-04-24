@@ -18,7 +18,6 @@ class optionFeedback extends React.Component {
   render() {
     const hidden = this.props.hidden ? 'is-hidden' : '';
     const strings = this.props.localizeStrings('optionFeedback');
-    const text = languageText(this.props.feedbacks, this.props.language);
     return (
       <div
         key={this.props.language}
