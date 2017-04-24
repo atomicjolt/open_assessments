@@ -16,7 +16,6 @@ describe('audio_upload serializer', () => {
     };
     newAttributes = {
       id: 7,
-      name: 'something',
       question: {
         correctFeedback: 'Spec Feedback',
         timeValue: {
