@@ -4,50 +4,34 @@ import { scrub, languageText }  from '../../serializer_utils';
 import genusTypes               from '../../../../constants/genus_types';
 import guid                     from '../../../../utils/guid';
 
-function serializeChoice(choice, language) {
-  debugger
+function serializeChoice(originalChoice, newChoiceAttributes, language) {
+  const originalText = _.get(originalChoice, `texts[${language}]`, '');
+  const updatedChoice = {
+    ...originalChoice,
+    ...newChoiceAttributes,
+    text: newChoiceAttributes.text || originalText
+  };
+
   return {
-    id: choice.id,
-    text: languageText(choice.text, language),
-    delete: choice.delete,
+    id: updatedChoice.id,
+    text: languageText(updatedChoice.text, language),
+    delete: updatedChoice.delete,
   };
 }
 
 function serializeChoices(originalChoices, newChoiceAttributes, language) {
-  // const choices = _.map(originalChoices, (choice) => {
-  //   const updateValues = newChoiceAttributes[choice.id];
-  //   const newOrder = _.get(updateValues, 'order');
-  //
-  //   const choiceText = _.get(updateValues, 'text') || choice.text;
-  //   return {
-  //     id: choice.id,
-  //     text: languageText(choiceText, language),
-  //     order: _.isNil(newOrder) ? choice.order : newOrder,
-  //     delete: _.get(updateValues, 'delete'),
-  //   };
-  // });
-
-
   if (newChoiceAttributes.new) {
-    const newChoices = [
-      serializeChoice({
-        id: guid(),
-        text: ''
-      })
-    ];
-    // debugger;
-    return newChoices;
+    const newChoice = serializeChoice({
+      id: guid(),
+      text: ''
+    }, {}, language);
+    return [newChoice];
   }
 
-  // const choicePairs = ;
-  const choices = _.map(
+  return _.map(
     _.toPairs(newChoiceAttributes),
-    (choice) => {
-      const mergedChoice = { ...originalChoices[choice[0]], ...choice[1] };
-      return serializeChoice(mergedChoice, language);
-    }
+    choice => serializeChoice(originalChoices[choice[0]], choice[1], language)
   );
-  return choices;
 }
 
 function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
@@ -99,10 +83,12 @@ function serializeAnswers(originalChoices, newChoiceAttributes, oldAnswers,
     fileIds: _.get(incorrectFeedback, 'fileIds'),
   };
 
-  const allChoices = {
-    ...originalChoices,
-    ...newChoiceAttributes,
-  };
+  const allChoices = _.merge(
+    {},
+    originalChoices,
+    newChoiceAttributes,
+  );
+
   correctAnswer.choiceIds.push(...correctChoiceIds(allChoices));
 
   correctAnswer = scrub(correctAnswer, ['choiceIds']);
