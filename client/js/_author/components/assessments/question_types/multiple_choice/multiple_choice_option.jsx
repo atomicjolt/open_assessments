@@ -8,6 +8,7 @@ import AnswerIcons      from './answer_icons';
 import Feedback         from './option_feedback';
 import localize         from '../../../../locales/localize';
 import { languageText } from '../../../../../utils/utils';
+import { getLanguage }  from '../../../../../constants/language_types';
 
 function multipleChoiceOptions(props) {
   const strings = props.localizeStrings('multipleChoiceOptions');
@@ -33,7 +34,6 @@ function multipleChoiceOptions(props) {
       onFocus={() => props.setActiveChoice(props.id)}
       onClick={() => props.setActiveChoice(props.id)}
       className={`au-c-answer ${isActive} ${isOrdered}`}
-      key={props.language}
     >
       <div className="au-c-input">
         <Selector
@@ -45,6 +45,7 @@ function multipleChoiceOptions(props) {
         />
         <label htmlFor="option1" />
         <Editor
+          editorKey={getLanguage(props.language)}
           textSize="small"
           isActive={props.isActive}
           fileIds={props.questionFileIds}
