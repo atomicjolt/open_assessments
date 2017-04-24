@@ -1,4 +1,4 @@
-import React              from 'react';
+
 import DragAndDrop        from './drag_and_drop';
 import genusTypes         from '../../../../constants/genus_types';
 
