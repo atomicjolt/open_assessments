@@ -4,6 +4,8 @@ import { scrub, languageText }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
+import { languageText as textFromLanguage } from '../../../../utils/utils';
+
 function serializeChoices(originalChoices, newChoiceAttributes) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
@@ -56,7 +58,11 @@ function serializeAnswers(originalChoices, newChoiceAttributes, language) {
 
   return _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
-    const feedbackText = _.get(updateValues, 'feedback') || choice.feedback;
+    const newFeedback = _.get(updateValues, 'feedback');
+
+    const feedbackText = _.isNil(newFeedback)
+    ? textFromLanguage(choice.feedbacks, language)
+    : newFeedback;
 
     return scrub({
       id: choice.answerId,
