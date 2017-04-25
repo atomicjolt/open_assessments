@@ -4,6 +4,7 @@ import { createSingleCorrectFeedback } from '../../serializer_utils';
 
 export default function shortAnswer(item) {
   const newItem = baseDeserializer(item);
+  // debugger
   newItem.question = {
     ...newItem.question,
     correctFeedback: createSingleCorrectFeedback(item),
