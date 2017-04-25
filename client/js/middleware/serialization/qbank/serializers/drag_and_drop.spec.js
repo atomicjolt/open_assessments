@@ -1,5 +1,5 @@
 
-import DragAndDrop        from './drag_and_drop';
+import dragAndDrop        from './drag_and_drop';
 import genusTypes         from '../../../../constants/genus_types';
 
 describe('drag_and_drop serializer', () => {
@@ -101,7 +101,7 @@ describe('drag_and_drop serializer', () => {
       question: {},
     };
 
-    result = DragAndDrop(item, newItem);
+    result = dragAndDrop(item, newItem);
   });
 
   it('accepts original item and newItemAttr', () => {

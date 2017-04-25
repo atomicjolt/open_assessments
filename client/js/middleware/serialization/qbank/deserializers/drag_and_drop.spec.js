@@ -1,5 +1,5 @@
 import _                  from 'lodash';
-import DragAndDrop        from './drag_and_drop';
+import dragAndDrop        from './drag_and_drop';
 
 describe('drag_and_drop deserializer', () => {
   let item;
@@ -346,7 +346,7 @@ describe('drag_and_drop deserializer', () => {
       type: 'Item',
     };
 
-    result = DragAndDrop(item);
+    result = dragAndDrop(item);
   });
 
   it('builds the question correctly', () => {
