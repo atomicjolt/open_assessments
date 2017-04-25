@@ -5,40 +5,21 @@ import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
 function serializeChoices(originalChoices, newChoiceAttributes, language) {
-  // const choices = _.map(originalChoices, (choice) => {
-  //   const updateValues = newChoiceAttributes[choice.id];
-  //   const newOrder = _.get(updateValues, 'order');
-  //   const labelText = _.get(updateValues, 'labelText', choice.labelText);
-  //   const imageSrc = choice.text;
-  //   const imageAlt = choice.altText;
-  //   const text = `<p>${labelText}</p><img src='${imageSrc}' alt='${imageAlt}'>`;
-  //   debugger;
-  //   return {
-  //     id: choice.id,
-  //     text,
-  //     order: _.isNil(newOrder) ? choice.order : newOrder,
-  //     delete: _.get(updateValues, 'delete'),
-  //   };
-  // });
-
-  // const choices = [];
-
-  const choices = _(newChoiceAttributes)
-    .toPairs()
-    .filter(choice => !_.isUndefined(originalChoices[choice[0]]))
-    .map((choice) => {
-      const original = originalChoices[choice[0]];
-      const labelText = _.get(choice, 'text', original.labelText);
-      const imageSrc = _.get(original, `texts[${language}].text`, '');
-      const imageAlt = _.get(original, `texts[${language}].altText`, '');
-      const text = `<p>${labelText}</p><img src='${imageSrc}' alt='${imageAlt}'>`;
-      return {
-        id: original.id,
-        text,
-        delete: choice.delete,
-      };
-    })
-    .value();
+  const choices = _.map(originalChoices, (choice) => {
+    const updateValues = newChoiceAttributes[choice.id];
+    const newOrder = _.get(updateValues, 'order');
+    const originalLabelText = _.get(choice, `texts[${language}].labelText`, '');
+    const labelText = _.get(updateValues, 'labelText', originalLabelText);
+    const imageSrc = _.get(choice, `texts[${language}].text`, '');
+    const imageAlt = _.get(choice, `texts[${language}].altText`, '');
+    const text = `<p>${labelText}</p><img src='${imageSrc}' alt='${imageAlt}'>`;
+    return {
+      id: choice.id,
+      text,
+      order: _.isNil(newOrder) ? choice.order : newOrder,
+      delete: _.get(updateValues, 'delete'),
+    };
+  });
 
   if (newChoiceAttributes.new) {
     choices.push({
@@ -120,6 +101,6 @@ export default function imageSequenceSerializer(originalItem, newItemAttributes)
       );
     }
   }
-  debugger;
+
   return scrub(newItem);
 }

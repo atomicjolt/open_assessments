@@ -11,12 +11,12 @@ export default function ImageOrder(props) {
     <div className="au-c-image-sequence__answers au-o-row">
       {
         _.map(choices, (choice, id) => {
-          const text = choice.texts[props.language];
+          const text = _.get(choice, `texts[${props.language}].text`, '');
           return (
             <div key={id} className="au-o-quarter">
               <ImageOption
                 id={id}
-                text={text.text}
+                text={text}
                 order={choice.order}
                 labelText={text.labelText}
                 updateChoice={
