@@ -1,5 +1,4 @@
-
-import MultipleChoice    from './multiple_choice';
+import multipleChoice    from './multiple_choice';
 import genusTypes         from '../../../../constants/genus_types';
 
 describe('multipleChoice serializer', () => {
@@ -96,7 +95,7 @@ describe('multipleChoice serializer', () => {
       },
     };
 
-    result = MultipleChoice(item, newItem);
+    result = multipleChoice(item, newItem);
   });
 
   it('accepts original item and newItemAttr', () => {
@@ -124,7 +123,7 @@ describe('multipleChoice serializer', () => {
     //   },
     // };
 
-    result = MultipleChoice(item, newItem);
+    result = multipleChoice(item, newItem);
     expect(result.answers.length).toBe(3);
     expect(result.answers[0].genusTypeId).toBe(genusTypes.answer.wrongAnswer);
     expect(result.answers[1].genusTypeId).toBe(genusTypes.answer.rightAnswer);
