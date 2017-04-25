@@ -85,9 +85,9 @@ export class EditorUploadModal extends React.Component {
     };
 
     if (this.state.uploadedMedia) {
-      this.props.insertMedia(this.state.uploadedMedia, metaData, true);
+      this.props.insertMedia(this.state.uploadedMedia, metaData, true, this.state.language);
     } else if (this.state.selectedMedia) {
-      this.props.insertMedia(this.state.selectedMedia);
+      this.props.insertMedia(this.state.selectedMedia, null, false, this.state.language);
     }
   }
 

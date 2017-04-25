@@ -127,8 +127,10 @@ function uploadMediaMeta(state, metaData, repositoryId, assetId, mediaType) {
 function updateQBankItem(store, action) {
   const state = store.getState();
   const item = state.items[action.bankId][action.itemId];
-  const updatedAttributes = action.body;
-
+  const updatedAttributes = {
+    ...action.body,
+    // language: LanguageTypes.languageTypeId[item.language]
+  };
   const newItem = serialize(updatedAttributes.type || item.type)(item, updatedAttributes);
 
   api.put(
@@ -181,7 +183,10 @@ function addMediaToItem(store, action, result) {
     id: _.last(action.where.split('.')),
   });
 
-  const newAction = updateItem(action.bankId, item);
+  const newAction = updateItem(
+    action.bankId,
+    { ...item, language: action.language }
+  );
   updateQBankItem(store, newAction);
 }
 

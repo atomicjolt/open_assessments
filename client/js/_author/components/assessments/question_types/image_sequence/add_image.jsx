@@ -47,7 +47,7 @@ export class AddImage extends React.Component {
     );
   }
 
-  uploadMedia(file, metadata, newMedia) {
+  uploadMedia(file, metadata, newMedia, language) {
     this.setState({ modal: false });
 
     this.props.addMediaToQuestion(
@@ -56,7 +56,8 @@ export class AddImage extends React.Component {
       this.props.item.id,
       'question.choices.new',
       metadata,
-      newMedia
+      newMedia,
+      language
     );
   }
 
@@ -76,7 +77,9 @@ export class AddImage extends React.Component {
             mediaName=""
             media={this.props.images}
             loading={this.props.loadingMedia}
-            insertMedia={(media, metaData, newMedia) => this.uploadMedia(media, metaData, newMedia)}
+            insertMedia={
+              (media, metaData, newMedia, language) =>
+                this.uploadMedia(media, metaData, newMedia, language)}
             inProgress={false}
             error={null}
           />

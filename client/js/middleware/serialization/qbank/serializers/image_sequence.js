@@ -13,12 +13,15 @@ function serializeChoices(originalChoices, newChoiceAttributes, language) {
     const imageSrc = _.get(choice, `texts[${language}].text`, '');
     const imageAlt = _.get(choice, `texts[${language}].altText`, '');
     const text = `<p>${labelText}</p><img src='${imageSrc}' alt='${imageAlt}'>`;
-    return {
+
+    const a = {
       id: choice.id,
-      text,
+      text: languageText(text, language),
       order: _.isNil(newOrder) ? choice.order : newOrder,
       delete: _.get(updateValues, 'delete'),
     };
+    debugger
+    return a;
   });
 
   if (newChoiceAttributes.new) {
@@ -82,6 +85,7 @@ function serializeAnswers(choices, newChoiceAttributes, oldAnswers,
 }
 
 export default function imageSequenceSerializer(originalItem, newItemAttributes) {
+  debugger;
   const newItem = baseSerializer(originalItem, newItemAttributes);
   const { question, language } = newItemAttributes;
   if (question) {
