@@ -19,21 +19,25 @@ describe('multipleChoice', () => {
         feedback: { text: '<p>Nice Job</p>' },
         genusTypeId: genusTypes.answer.rightAnswer,
         fileIds: {},
-        choiceIds: ['asdf']
+        choiceIds: ['asdf'],
+        languageTypeId: 'something cool',
+        text: 'not sure what this is supposed to be',
       }, {
         id: '2',
         feedback: { text: '<p>hiya</p>' },
         genusTypeId: genusTypes.answer.wrongAnswer,
-        fileIds: {}
+        fileIds: {},
+        languageTypeId: 'something cool',
+        text: 'not sure what this is supposed to be',
       }],
       question: {
         id: 'questionId',
-        choices: [{
+        multiLanguageChoices: [{
           id: 'asdf',
-          text: 'choiceText1',
+          texts: ['choiceText1', 'meh'],
         }, {
           id: 'qwer',
-          text: 'choiceText2'
+          texts: ['choiceText2', 'meh2'],
         }],
         fileIds: {},
         shuffle: false,

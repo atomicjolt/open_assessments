@@ -64,7 +64,35 @@ describe('multipleChoice serializer', () => {
     newItem = {
       id: 'item01',
       question: {
-        choices: {}
+        choices: {
+          choice01: {
+            answerId: 'answer01',
+            feedback: '',
+            fileIds: {},
+            id: 'choice01',
+            isCorrect: false,
+            order: 1,
+            text: '<p>Steak</p>',
+          },
+          choice02: {
+            answerId: 'answer02',
+            feedback: '',
+            fileIds: {},
+            id: 'choice02',
+            isCorrect: true,
+            order: 2,
+            text: '<p>bacon</p>',
+          },
+          choice03: {
+            answerId: null,
+            feedback: 'answer03',
+            fileIds: {},
+            id: 'choice03',
+            isCorrect: false,
+            order: 3,
+            text: '<p>salad</p>',
+          },
+        },
       },
     };
 
@@ -86,15 +114,15 @@ describe('multipleChoice serializer', () => {
   });
 
   it('answers', () => {
-    newItem = {
-      id: 'item01',
-      question: {
-        choices: {
-          id: 'choice01',
-          answerId: 'answer01',
-        }
-      },
-    };
+    // newItem = {
+    //   id: 'item01',
+    //   question: {
+    //     choices: {
+    //       id: 'choice01',
+    //       answerId: 'answer01',
+    //     }
+    //   },
+    // };
 
     result = MultipleChoice(item, newItem);
     expect(result.answers.length).toBe(3);

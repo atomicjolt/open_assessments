@@ -8,54 +8,60 @@ import movableWordSandbox   from './movable_words_sandbox';
 import movableWordSentence  from './movable_word_sentence';
 import imageSequence        from './image_sequence';
 import dragAndDrop          from './drag_and_drop';
+import genusTypes           from '../../../../constants/genus_types';
+import base                 from './base';
 
 describe('factory', () => {
-  it('throws an error without valid case', () => {
-    expect(Factory).toThrow(new Error('We could not find a type for serializing'));
+  let result;
+  let type;
+
+  it('calls base', () => {
+    result = Factory();
+    expect(result).toBe(base);
   });
 
   it('calls audioUpload', () => {
-    const result = Factory('audioUpload');
+    const result = Factory(genusTypes.item.audioUpload);
     expect(result).toBe(AudioUpload);
   });
 
   it('calls multipleChoice', () => {
-    const result = Factory('multipleChoice');
+    const result = Factory(genusTypes.item.multipleChoice);
     expect(result).toBe(MultipleChoice);
   });
 
   it('calls multipleAnswer', () => {
-    const result = Factory('multipleAnswer');
+    const result = Factory(genusTypes.item.multipleAnswer);
     expect(result).toBe(MultipleAnswer);
   });
 
   it('calls fileUpload', () => {
-    const result = Factory('fileUpload');
+    const result = Factory(genusTypes.item.fileUpload);
     expect(result).toBe(FileUpload);
   });
 
   it('calls movableFillBlank', () => {
-    const result = Factory('movableFillBlank');
+    const result = Factory(genusTypes.item.movableFillBlank);
     expect(result).toBe(movableFillBlank);
   });
 
   it('calls movableWordSandbox', () => {
-    const result = Factory('movableWordSandbox');
+    const result = Factory(genusTypes.item.movableWordSandbox);
     expect(result).toBe(movableWordSandbox);
   });
 
   it('calls movableWordSentence', () => {
-    const result = Factory('movableWordSentence');
+    const result = Factory(genusTypes.item.movableWordSentence);
     expect(result).toBe(movableWordSentence);
   });
 
   it('calls imageSequence', () => {
-    const result = Factory('imageSequence');
+    const result = Factory(genusTypes.item.imageSequence);
     expect(result).toBe(imageSequence);
   });
 
   it('calls dragAndDrop', () => {
-    const result = Factory('dragAndDrop');
+    result = Factory(genusTypes.item.dragAndDrop);
     expect(result).toBe(dragAndDrop);
   });
 });
