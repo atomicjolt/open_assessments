@@ -1,6 +1,5 @@
-import MovableFillBlank         from './movable_fill_blank';
+import movableFillBlank         from './movable_fill_blank';
 import genusTypes               from '../../../../constants/genus_types';
-import languages                from '../../../../constants/language_types';
 
 describe('movable_fill_blank serializer', () => {
   let item;
@@ -37,7 +36,7 @@ describe('movable_fill_blank serializer', () => {
         },
       },
     };
-    result = MovableFillBlank(item, newItemAttr);
+    result = movableFillBlank(item, newItemAttr);
   });
 
   it('handles the serialization of this serializer', () => {
@@ -47,7 +46,7 @@ describe('movable_fill_blank serializer', () => {
   it('skips the answers when proper data not available', () => {
     newItemAttr.question.choices = null;
     newItemAttr.question.correctFeedback = null;
-    result = MovableFillBlank(item, newItemAttr);
+    result = movableFillBlank(item, newItemAttr);
     expect(result.answers).not.toBeDefined();
   });
 
@@ -57,14 +56,14 @@ describe('movable_fill_blank serializer', () => {
       fileIds: {},
       id: '2',
     };
-    result = MovableFillBlank(item, newItemAttr);
+    result = movableFillBlank(item, newItemAttr);
     expect(result.answers[1].feedback.text).toBe(newItemAttr.question.incorrectFeedback.text);
   });
 
   it('adds string to question', () => {
     newItemAttr.language = '639-2%3AENG%40ISO';
     newItemAttr.question.text = 'I am a little spec';
-    result = MovableFillBlank(item, newItemAttr);
+    result = movableFillBlank(item, newItemAttr);
     expect(result.question.questionString).toBeDefined();
   });
 });

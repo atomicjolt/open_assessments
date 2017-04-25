@@ -1,5 +1,5 @@
 
-import MultipleAnswer    from './multiple_answer';
+import multipleAnswer    from './multiple_answer';
 import genusTypes         from '../../../../constants/genus_types';
 
 describe('multipleAnswer serializer', () => {
@@ -97,7 +97,7 @@ describe('multipleAnswer serializer', () => {
     };
 
 
-    result = MultipleAnswer(item, newItem);
+    result = multipleAnswer(item, newItem);
   });
 
   it('accepts original item and newItemAttr', () => {
@@ -125,7 +125,7 @@ describe('multipleAnswer serializer', () => {
       },
     };
 
-    result = MultipleAnswer(item, newItem);
+    result = multipleAnswer(item, newItem);
     expect(result.answers.length).toBe(2);
     expect(result.answers[0].genusTypeId).toBe(genusTypes.answer.rightAnswer);
     expect(result.answers[1].genusTypeId).toBe(genusTypes.answer.wrongAnswer);

@@ -1,5 +1,5 @@
 import React          from 'react';
-import AudioUpload    from './audio_upload';
+import audioUpload    from './audio_upload';
 
 describe('audio_upload serializer', () => {
   let result;
@@ -29,13 +29,13 @@ describe('audio_upload serializer', () => {
   });
 
   it('returns a scrubbed new item from first if statement', () => {
-    result = AudioUpload(item, newAttributes);
+    result = audioUpload(item, newAttributes);
     expect(result.answers[0].genusTypeId).toContain('MIT.EDU');
   });
 
   it('returns a scrubbed new item from second if statement', () => {
     newAttributes.question.correctFeedback = null;
-    result = AudioUpload(item, newAttributes);
+    result = audioUpload(item, newAttributes);
     expect(result.question.timeValue.seconds).toBe(100);
   });
 });

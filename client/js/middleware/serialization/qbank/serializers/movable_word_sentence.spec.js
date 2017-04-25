@@ -1,5 +1,4 @@
-import MovableWordSentence          from './movable_word_sentence';
-import languages                    from '../../../../constants/language_types';
+import movableWordSentence          from './movable_word_sentence';
 import genusTypes                   from '../../../../constants/genus_types';
 
 describe('movable_word_sentence serializer', () => {
@@ -45,24 +44,24 @@ describe('movable_word_sentence serializer', () => {
         },
       },
     };
-    result = MovableWordSentence(item, newItemAttr);
+    result = movableWordSentence(item, newItemAttr);
   });
 
   it('should serialize the choices', () => {
     const expectedChoices = [
-      { 
+      {
         id: 'id14a6824a-79f2-4c00-ac6a-b41cbb64db45',
         text: '<p class="noun">the bus</p>',
         order: undefined,
         delete: undefined,
       },
-      { 
+      {
         id: 'id969e920d-6d22-4d06-b4ac-40a821e350c6',
         text: '<p class="noun">the airport</p>',
         order: undefined,
         delete: undefined,
       },
-    ]
+    ];
     expect(result.question.choices).toEqual(expectedChoices);
   });
 
@@ -83,7 +82,7 @@ describe('movable_word_sentence serializer', () => {
         type: 'answer-record-type%3Amulti-choice-answer%40ODL.MIT.EDU',
         choiceIds: []
       }
-    ]
+    ];
     expect(result.answers).toEqual(expectedAnswers);
   });
 });
