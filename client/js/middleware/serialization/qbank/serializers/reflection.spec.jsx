@@ -1,6 +1,5 @@
-import Reflection             from './reflection';
+import reflection             from './reflection';
 import genusTypes             from '../../../../constants/genus_types';
-import languages              from '../../../../constants/language_types';
 
 describe('reflection serializer', () => {
   let item;
@@ -45,7 +44,7 @@ describe('reflection serializer', () => {
         },
       },
     };
-    result = Reflection(item, newItemAttr);
+    result = reflection(item, newItemAttr);
   });
 
   it('serializes the choices', () => {
