@@ -138,7 +138,7 @@ class MultipleChoice extends React.Component {
             }
             {
               !this.state.newChoice && this.props.isActive ? <Add
-                createChoice={() => this.props.createChoice(id)}
+                createChoice={() => this.props.createChoice()}
               /> : null
             }
           </div>

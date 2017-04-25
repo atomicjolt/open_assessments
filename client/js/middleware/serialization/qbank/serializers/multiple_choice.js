@@ -3,31 +3,32 @@ import baseSerializer            from './base';
 import { scrub, languageText }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
+import { languageText as findLanguageText } from '../../../../utils/utils';
 
-function serializeChoices(originalChoices, newChoiceAttributes) {
-  const choices = _.map(originalChoices, (choice) => {
-    const updateValues = newChoiceAttributes[choice.id];
-    const newOrder = _.get(updateValues, 'order');
-    return {
-      id: choice.id,
-      text: _.get(updateValues, 'text') || choice.text,
-      order: _.isNil(newOrder) ? choice.order : newOrder,
-      delete: _.get(updateValues, 'delete'),
-    };
-  });
-
+function serializeChoices(originalChoices, newChoiceAttributes, language) {
+  const choices = [];
   if (newChoiceAttributes.new) {
     choices.push({
       id: guid(),
-      text: '',
-      order: choices.length,
+      text: languageText('', newChoiceAttributes.new.language),
     });
+    return choices;
   }
 
-  return choices;
+  const serializedChoices = _(newChoiceAttributes)
+    .entries()
+    .filter(choice => choice[0] !== 'new' && !_.isUndefined(choice[1].text))
+    .map(choice => ({
+      id: choice[0],
+      text: languageText(choice[1].text, language),
+      delete: choice[1].delete,
+    }))
+    .value();
+
+  return choices.concat(serializedChoices);
 }
 
-function serializeQuestion(originalQuestion, newQuestionAttributes) {
+function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
   const newQuestion = {
     shuffle: _.isNil(newQuestionAttributes.shuffle) ? null : newQuestionAttributes.shuffle,
     timeValue: newQuestionAttributes.timeValue,
@@ -35,7 +36,9 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   };
 
   if (newQuestionAttributes.choices) {
-    newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
+    newQuestion.choices = serializeChoices(
+      originalQuestion.choices, newQuestionAttributes.choices, language
+    );
   }
 
   return scrub(newQuestion);
@@ -54,20 +57,27 @@ function serializeAnswers(originalChoices, newChoiceAttributes, language) {
     if (_.get(choice, 'isCorrect')) { correctId = key; }
   });
 
-  return _.map(originalChoices, (choice) => {
-    const updateValues = newChoiceAttributes[choice.id];
-    const feedbackText = _.get(updateValues, 'feedback') || choice.feedback;
-
+  const serializedAnswers = _(newChoiceAttributes)
+  .entries()
+  .filter(choice =>
+    choice[1].id !== 'new' &&
+    (!_.isUndefined(choice[1].feedback) || !_.isUndefined(choice[1].isCorrect))
+  )
+  .map((choice) => {
+    const original = originalChoices[choice[0]];
+    const text = choice[1].feedback || findLanguageText(original.feedbacks, language);
     return scrub({
-      id: choice.answerId,
-      genusTypeId: correctAnswer(correctId, choice.id, choice.isCorrect),
-      feedback: languageText(feedbackText, language),
+      id: original.answerId,
+      genusTypeId: correctAnswer(correctId, original.id, original.isCorrect),
+      feedback: languageText(text, language),
       type: genusTypes.answer.multipleChoice,
-      choiceIds: [choice.id],
-      fileIds: _.get(updateValues, 'fileIds'),
-      delete: _.get(updateValues, 'delete'),
+      choiceIds: [original.id],
+      fileIds: choice[1].fileIds,
+      delete: choice[1].delete,
     });
-  });
+  })
+  .value();
+  return serializedAnswers;
 }
 
 function killAnswers(answers) {
@@ -81,7 +91,7 @@ export default function multipleChoiceSerializer(originalItem, newItemAttributes
   if (question) {
     newItem.question = {
       ...newItem.question,
-      ...serializeQuestion(originalItem.question, question)
+      ...serializeQuestion(originalItem.question, question, language)
     };
 
     if (question.choices) {

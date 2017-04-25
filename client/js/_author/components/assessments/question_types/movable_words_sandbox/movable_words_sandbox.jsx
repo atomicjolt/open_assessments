@@ -26,20 +26,24 @@ class MWSandbox extends React.Component {
 
   getChoices(choices) {
     const { id } = this.props.item;
-    return _.map(choices, (choice, index) => (
-      <Option
-        key={choice.id}
-        choice={choice}
-        index={index}
-        selectChoice={() => this.props.selectChoice(choice.id)}
-        updateChoice={
-          (newChoice, fileIds) => this.props.updateChoice(
+    let index = 0;
+    return _.map(choices, (choice) => {
+      index += 1;
+      return (
+        <Option
+          key={choice.id}
+          choice={choice}
+          index={index}
+          selectChoice={() => this.props.selectChoice(choice.id)}
+          updateChoice={
+            (newChoice, fileIds) => this.props.updateChoice(
               id, choice.id, newChoice, fileIds)
-        }
-        deleteChoice={() => this.props.deleteChoice(choice)}
-        isActive={this.props.isActive && choice.id === this.props.activeChoice}
-      />
-    ));
+          }
+          deleteChoice={() => this.props.deleteChoice(choice)}
+          isActive={this.props.isActive && choice.id === this.props.activeChoice}
+        />
+      );
+    });
   }
 
   handleBlur(e) {

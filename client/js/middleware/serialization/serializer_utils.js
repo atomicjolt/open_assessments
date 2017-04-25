@@ -59,6 +59,14 @@ export function parseChoiceText(text) {
   return $(parsedInput).text();
 }
 
+export function deserializeChoiceTexts(texts) {
+  return _.reduce(texts, (allTexts, text) => {
+    allTexts[text.languageTypeId] = text.text; // eslint-disable-line no-param-reassign
+    return allTexts;
+  }, {});
+}
+
+
 export function parseChoiceWordType(text) {
   const parsedInput = $.parseHTML(text);
   return $(parsedInput).attr('class');
