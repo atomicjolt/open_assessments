@@ -1,4 +1,4 @@
-import ImageSequence          from './image_sequence';
+import imageSequence          from './image_sequence';
 import languages              from '../../../../constants/language_types';
 import genusTypes             from '../../../../constants/genus_types';
 
@@ -36,7 +36,7 @@ describe('image_sequence serialization', () => {
       },
       language: languages.languageTypeId.english,
     };
-    result = ImageSequence(item, newItemAttr);
+    result = imageSequence(item, newItemAttr);
   });
 
   it('handles the serialization', () => {
@@ -46,7 +46,7 @@ describe('image_sequence serialization', () => {
   it('skips the answers when proper data not available', () => {
     newItemAttr.question.choices = null;
     newItemAttr.question.correctFeedback = null;
-    result = ImageSequence(item, newItemAttr);
+    result = imageSequence(item, newItemAttr);
     expect(result.answers).not.toBeDefined();
   });
 });

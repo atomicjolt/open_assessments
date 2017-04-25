@@ -1,4 +1,3 @@
-import React          from 'react';
 import audioUpload    from './audio_upload';
 
 describe('audio_upload serializer', () => {
@@ -24,7 +23,7 @@ describe('audio_upload serializer', () => {
           seconds: 100,
         },
       },
-      answers: {},  
+      answers: {},
     };
   });
 

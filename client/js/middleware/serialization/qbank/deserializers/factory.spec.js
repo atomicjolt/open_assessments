@@ -13,7 +13,6 @@ import base                 from './base';
 
 describe('factory', () => {
   let result;
-  let type;
 
   it('calls base', () => {
     result = factory();
