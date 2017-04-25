@@ -24,6 +24,8 @@ class MovableWordSentence extends React.Component {
     localizeStrings: React.PropTypes.func.isRequired,
     isActive: React.PropTypes.bool,
     activeChoice: React.PropTypes.string,
+    language: React.PropTypes.string.isRequired,
+    duplicateAnswers: React.PropTypes.arrayOf(React.PropTypes.string),
   };
 
   render() {
@@ -47,6 +49,7 @@ class MovableWordSentence extends React.Component {
                 deleteChoice={() => this.props.deleteChoice(choice)}
                 selectChoice={() => this.props.selectChoice(choice.id)}
                 itemCount={_.size(question.choices)}
+                duplicateAnswers={this.props.duplicateAnswers}
               />
             ))
           }
@@ -57,6 +60,7 @@ class MovableWordSentence extends React.Component {
         </div>
         <div className="au-c-question__feedback">
           <Feedback
+            language={this.props.language}
             updateItem={item => this.props.updateItem(item, true)}
             feedbackType="correctFeedback"
             feedback={question.correctFeedback}
@@ -64,6 +68,7 @@ class MovableWordSentence extends React.Component {
             bankId={this.props.item.bankId}
           />
           <Feedback
+            language={this.props.language}
             updateItem={item => this.props.updateItem(item, true)}
             feedbackType="incorrectFeedback"
             feedback={question.incorrectFeedback}

@@ -11,6 +11,7 @@ export default function FileUpload(props) {
         feedback={_.get(props.item, 'question.correctFeedback')}
         updateItem={props.updateItem}
         labelText="Feedback"
+        language={props.language}
       />
     </div>
   );
@@ -18,5 +19,6 @@ export default function FileUpload(props) {
 
 FileUpload.propTypes = {
   updateItem: React.PropTypes.func.isRequired,
-  item: React.PropTypes.object
+  item: React.PropTypes.object,
+  language: React.PropTypes.string.isRequired,
 };

@@ -6,7 +6,7 @@ export function targetMenu(props) {
   const strings = props.localizeStrings('targetMenu');
 
   return (
-    <div className="au-o-item__top">
+    <div className="au-o-item__top" onMouseLeave={() => props.toggleAdd('close')}>
       <div className="au-o-left">
         <div className="au-c-question__type">{strings.targetImage}</div>
       </div>
@@ -25,23 +25,23 @@ export function targetMenu(props) {
         </div>
         <button
           className="au-c-btn au-c-btn--sm au-c-btn--gray"
-          onClick={props.openModal}
+          onClick={() => props.openModal(null)}
         >
           {props.hasTarget ? strings.replace : strings.addImage}
         </button>
         <AddZone
-          active={props.addType === 'snap'}
+          active={props.addMenu === 'snap'}
           text={strings.addSnap}
           toggle={() => props.toggleAdd('snap')}
-          addByRegion={props.addByRegion}
-          addByImage={props.openModal}
+          addByRegion={() => props.addByRegion('snap')}
+          addByImage={() => props.openModal('snap')}
         />
         <AddZone
-          active={props.addType === 'drop'}
+          active={props.addMenu === 'drop'}
           text={strings.addDrop}
           toggle={() => props.toggleAdd('drop')}
-          addByRegion={props.addByRegion}
-          addByImage={props.openModal}
+          addByRegion={() => props.addByRegion('drop')}
+          addByImage={() => props.openModal('drop')}
         />
       </div>
     </div>
@@ -56,7 +56,7 @@ targetMenu.propTypes = {
   toggleVisible: React.PropTypes.func.isRequired,
   hasTarget: React.PropTypes.bool,
   visibleZones: React.PropTypes.bool,
-  addType: React.PropTypes.string,
+  addMenu: React.PropTypes.string,
   id: React.PropTypes.string,
 };
 

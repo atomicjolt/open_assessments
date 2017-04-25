@@ -35,6 +35,15 @@ export default function banks(state = initialState, action) {
       const bankId = action.original.bankId;
       const assessmentId = action.original.assessmentId;
       newState[bankId][assessmentId].assignedBankIds.push(changeId);
+      newState[bankId][assessmentId].isToggling = false;
+      return newState;
+    }
+
+    case 'EDIT_OR_PUBLISH_ASSESSMENT': {
+      const newState = _.cloneDeep(state);
+      const bankId = action.bankId;
+      const assessmentId = action.assessmentId;
+      newState[bankId][assessmentId].isToggling = true;
       return newState;
     }
 

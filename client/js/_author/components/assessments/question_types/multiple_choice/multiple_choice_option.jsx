@@ -1,16 +1,20 @@
-import React        from 'react';
-import types        from '../../../../../constants/question_types';
-import Editor       from '../../../common/oea_editor';
-import Loader       from '../../../common/dot_loader';
-import Selector     from './correct_selector';
-import AnswerIcons  from './answer_icons';
-import Feedback     from './option_feedback';
-import localize     from '../../../../locales/localize';
+import React            from 'react';
+import _                from 'lodash';
+import types            from '../../../../../constants/question_types';
+import Editor           from '../../../common/oea_editor';
+import Loader           from '../../../common/dot_loader';
+import Selector         from './correct_selector';
+import AnswerIcons      from './answer_icons';
+import Feedback         from './option_feedback';
+import localize         from '../../../../locales/localize';
+import { languageText } from '../../../../../utils/utils';
+import { getLanguage }  from '../../../../../constants/language_types';
 
 function multipleChoiceOptions(props) {
   const strings = props.localizeStrings('multipleChoiceOptions');
+  const feedbackText = languageText(props.feedbacks, props.language);
   const hideFeedback = (props.itemType !== types.multipleChoice) ||
-    !(props.isActive || props.feedback);
+    !(props.isActive || feedbackText);
 
   if (props.id === 'new') {
     return (
@@ -24,7 +28,7 @@ function multipleChoiceOptions(props) {
 
   const isActive = props.isActive ? 'is-active' : '';
   const isOrdered = props.shuffle ? 'is-ordered' : '';
-
+  const text = _.get(props, `texts[${props.language}]`, '');
   return (
     <div
       onFocus={() => props.setActiveChoice(props.id)}
@@ -41,11 +45,12 @@ function multipleChoiceOptions(props) {
         />
         <label htmlFor="option1" />
         <Editor
+          editorKey={getLanguage(props.language)}
           textSize="small"
           isActive={props.isActive}
           fileIds={props.questionFileIds}
           placeholder={strings.optionText}
-          text={props.text}
+          text={text}
           bankId={props.bankId}
           onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
         />
@@ -61,17 +66,20 @@ function multipleChoiceOptions(props) {
       </div>
       <Feedback
         feedback={props.feedback}
+        feedbacks={props.feedbacks}
         bankId={props.bankId}
         itemId={props.itemId}
         updateChoice={props.updateChoice}
         fileIds={props.fileIds}
         hidden={hideFeedback}
+        language={props.language}
       />
     </div>
   );
 }
 
 multipleChoiceOptions.propTypes = {
+  setActiveChoice: React.PropTypes.func.isRequired,
   text: React.PropTypes.string,
   feedback: React.PropTypes.string,
   id: React.PropTypes.string,
@@ -91,6 +99,8 @@ multipleChoiceOptions.propTypes = {
   bankId: React.PropTypes.string,
   questionFileIds: React.PropTypes.shape({}),
   fileIds: React.PropTypes.shape({}),
+  language: React.PropTypes.string.isRequired,
+  feedbacks: React.PropTypes.shape({})
 };
 
 export default localize(multipleChoiceOptions);

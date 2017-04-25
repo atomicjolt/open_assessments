@@ -32,7 +32,11 @@ export class OeaEditor extends React.Component {
     textSize: React.PropTypes.string,
     error: React.PropTypes.string,
     loadingMedia: React.PropTypes.bool,
+    editorKey: React.PropTypes.string
   };
+
+  static VIDEO_CLASSES = 'video-js vjs-skin-colors-clix vjs-big-play-centered';
+
 
   constructor(props) {
     super(props);
@@ -128,7 +132,12 @@ export class OeaEditor extends React.Component {
       }
     });
 
-    text = doc.html();
+    // This is ugly, but qbank requires the html we send to be valid xml...
+    const xmlSerializer = new window.XMLSerializer();
+    text = xmlSerializer.serializeToString(doc[0]);
+    text = text.replace(/^<div xmlns="http:\/\/www.w3.org\/1999\/xhtml">/, '');
+    text = text.replace(/<\/div>$/, '');
+
     text = text.replace(/src-placeholder/g, 'src');
     text = text.replace(/autoplay-placeholder/g, 'autoplay');
 
@@ -137,6 +146,8 @@ export class OeaEditor extends React.Component {
   }
 
   getEditorContent(media) {
+    if (!_.isUndefined(media.error)) { return ''; }
+
     let editorContent = `<video><source src="${media.url}" /></video>`;
     const alt = _.isEmpty(media.altText) ? '' : media.altText.text;
     const autoPlay = media.autoPlay ? 'autoplay' : '';
@@ -146,14 +157,14 @@ export class OeaEditor extends React.Component {
         break;
 
       case 'audio':
-        editorContent = `<audio ${autoPlay} name="media" controls>` +
+        editorContent = `<audio class="span_12_of_12" ${autoPlay} name="media" controls>` +
         `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
         '</audio>';
         break;
       case 'video':
         {
           const track = _.isEmpty(media.vtt) ? '' : `<track src="${_.get(media, 'vtt.url')}" srclang="en">`;
-          editorContent = `<video ${autoPlay} name="media" controls>` +
+          editorContent = `<video class="${OeaEditor.VIDEO_CLASSES}" ${autoPlay} name="media" controls>` +
             `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
             `${track}</video>`;
         }
@@ -268,9 +279,11 @@ export class OeaEditor extends React.Component {
     if (!text) return text;
 
     text = text.replace(/autoplay/g, 'autoplay-placeholder');
+    text = text.replace(/src="/g, 'src-placeholder="');
     const doc = $(`<div>${text}</div>`);
     $('.transcriptWrapper', doc).remove();
-    const cleanedHtml = doc.html();
+    let cleanedHtml = doc.html();
+    cleanedHtml = cleanedHtml.replace(/src-placeholder/g, 'src');
     return cleanedHtml.replace(/autoplay-placeholder/g, 'autoplay');
   }
 
@@ -286,9 +299,11 @@ export class OeaEditor extends React.Component {
         <div className={`au-c-text-input au-c-text-input--${textSize} au-c-wysiwyg ${activeClass}`}>
           <div className={`au-c-placeholder ${hidePlaceholder}`}>{this.props.placeholder}</div>
           <TinyWrapper
-            {...this.props}
+            bankId={this.props.bankId}
+            editorKey={this.props.editorKey}
             text={this.cleanText()}
             onBlur={(editorText, isChanged) => this.onBlur(editorText, isChanged)}
+            onChange={editorText => this.setState({ newText: editorText })}
             onFocus={() => this.setState({ focused: true })}
             openModal={(editor, type) => this.openModal(editor, type)}
           />

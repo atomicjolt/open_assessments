@@ -20,25 +20,30 @@ class MWSandbox extends React.Component {
 
     isActive: React.PropTypes.bool,
     activeChoice: React.PropTypes.string,
+    language: React.PropTypes.string.isRequired,
   };
 
 
   getChoices(choices) {
     const { id } = this.props.item;
-    return _.map(choices, (choice, index) => (
-      <Option
-        key={choice.id}
-        choice={choice}
-        index={index}
-        selectChoice={() => this.props.selectChoice(choice.id)}
-        updateChoice={
-          (newChoice, fileIds) => this.props.updateChoice(
+    let index = 0;
+    return _.map(choices, (choice) => {
+      index += 1;
+      return (
+        <Option
+          key={choice.id}
+          choice={choice}
+          index={index}
+          selectChoice={() => this.props.selectChoice(choice.id)}
+          updateChoice={
+            (newChoice, fileIds) => this.props.updateChoice(
               id, choice.id, newChoice, fileIds)
-        }
-        deleteChoice={() => this.props.deleteChoice(choice)}
-        isActive={this.props.isActive && choice.id === this.props.activeChoice}
-      />
-    ));
+          }
+          deleteChoice={() => this.props.deleteChoice(choice)}
+          isActive={this.props.isActive && choice.id === this.props.activeChoice}
+        />
+      );
+    });
   }
 
   handleBlur(e) {
@@ -72,6 +77,7 @@ class MWSandbox extends React.Component {
         </div>
         <div className="au-c-question__feedback">
           <Feedback
+            language={this.props.language}
             updateItem={this.props.updateItem}
             feedbackType="correctFeedback"
             feedback={question.correctFeedback}

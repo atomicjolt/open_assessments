@@ -1,8 +1,11 @@
 import React        from 'react';
 import _            from 'lodash';
+import videojs      from 'video.js';
+
 import Item         from '../../../../_player/components/assessments/item';
 import types        from '../../../../constants/question_types';
 import localize     from '../../../locales/localize';
+import Spinner      from '../../common/dot_loader';
 
 const exclusiveTypes = {
   multiple_choice_question: true,
@@ -19,6 +22,7 @@ class PreviewQuestion extends React.Component {
     item: React.PropTypes.shape({
       type: React.PropTypes.string,
       question: React.PropTypes.shape({}),
+      isUpdating: React.PropTypes.bool.isRequired,
     }).isRequired,
     localizeStrings: React.PropTypes.func.isRequired
   };
@@ -58,6 +62,23 @@ class PreviewQuestion extends React.Component {
     this.state = {
       response: [],
     };
+  }
+
+  componentDidMount() {
+    this.initializeVideoJs();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.item.isUpdating !== prevProps.item.isUpdating) {
+      this.initializeVideoJs();
+    }
+  }
+
+  initializeVideoJs() {
+    if (!_.isFunction(videojs) || !this.preview) return;
+    // Look for videos that should be using videojs.
+    const videoJSElements = this.preview.querySelectorAll('video.video-js');
+    _.each(videoJSElements, element => videojs(element));
   }
 
   serializeForPlayer(item) {
@@ -191,10 +212,17 @@ class PreviewQuestion extends React.Component {
 
 
   render() {
-    const item = this.serializeForPlayer(this.props.item);
+    if (this.props.item.isUpdating) {
+      return (
+        <div className="loader-container">
+          <Spinner />
+        </div>
+      );
+    }
 
+    const item = this.serializeForPlayer(this.props.item);
     return (
-      <div>
+      <div ref={ref => (this.preview = ref)}>
         <Item
           settings={{}}
           question={item}

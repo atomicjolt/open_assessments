@@ -59,6 +59,7 @@ function uploadMedia(state, action) {
 
   formData.append('license', action.metaData['639-2%3AENG%40ISO'].license || '');
   formData.append('copyright', action.metaData['639-2%3AENG%40ISO'].copyright || '');
+  formData.append('provider', action.metaData['639-2%3AENG%40ISO'].citation || '');
 
   if (action.metaData.mediaType === 'audio') {
     formData.append('transcriptFile', action.metaData['639-2%3AENG%40ISO'].transcript || '');
@@ -526,7 +527,6 @@ const qbank = {
       actions.push(assessmentActions.editOrPublishAssessment(assessment, publishedBankId));
 
       dispatchMany(actions, store);
-
     }
   },
 

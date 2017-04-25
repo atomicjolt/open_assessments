@@ -44,6 +44,7 @@ describe('the movable words sandbox component', () => {
       isActive: false,
       activeChoice: '',
       save: () => {},
+      language: 'eng',
     };
 
     result = shallow(<MovableWords {...props} />);
