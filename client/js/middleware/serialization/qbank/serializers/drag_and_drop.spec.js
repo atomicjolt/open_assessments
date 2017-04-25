@@ -135,7 +135,7 @@ describe('drag_and_drop serializer', () => {
       },
     };
 
-    result = DragAndDrop(item, newItem);
+    result = dragAndDrop(item, newItem);
     expect(result.question.targets[0].text).toContain('<img src="newTargetImage.png" alt=');
     expect(result.question.targets[0].dropBehaviorType).toBe(genusTypes.target.reject);
   });
@@ -153,7 +153,7 @@ describe('drag_and_drop serializer', () => {
       },
     };
 
-    result = DragAndDrop(item, newItem);
+    result = dragAndDrop(item, newItem);
     expect(result.question.droppables[0].text).toContain('<img src="newImage.png" alt=');
   });
 
@@ -170,7 +170,7 @@ describe('drag_and_drop serializer', () => {
       },
     };
 
-    result = DragAndDrop(item, newItem);
+    result = dragAndDrop(item, newItem);
     expect(result.question.droppables[3].text).toContain('<img src="newImage.png" alt=');
     expect(result.question.droppables[3].dropBehaviorType).toBe(genusTypes.zone.snap);
   });
@@ -190,7 +190,7 @@ describe('drag_and_drop serializer', () => {
       },
     };
 
-    result = DragAndDrop(item, newItem);
+    result = dragAndDrop(item, newItem);
     expect(result.question.zones[0].spatialUnit.height).toBe(111);
     expect(result.question.zones[0].spatialUnit.width).toBe(117);
     expect(result.question.zones[0].spatialUnit.coordinateValues[0]).toBe(208);
@@ -214,7 +214,7 @@ describe('drag_and_drop serializer', () => {
       },
     };
 
-    result = DragAndDrop(item, newItem);
+    result = dragAndDrop(item, newItem);
     expect(result.answers.length).toBe(2);
     expect(result.answers[0].genusTypeId).toBe(genusTypes.answer.rightAnswer);
     expect(result.answers[0].zoneConditions.length).toBe(3);

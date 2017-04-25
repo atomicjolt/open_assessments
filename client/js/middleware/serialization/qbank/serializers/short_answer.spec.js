@@ -1,5 +1,4 @@
-import ShortAnswer      from './short_answer';
-import genusTypes       from '../../../../constants/genus_types';
+import shortAnswer      from './short_answer';
 import languages        from '../../../../constants/language_types';
 
 describe('short answer serializer', () => {
@@ -27,7 +26,7 @@ describe('short answer serializer', () => {
         },
       },
       language: languages.languageTypeId.english,
-    }
+    };
     newItemAttr = {
       question: {
         choices: [{},
@@ -42,7 +41,7 @@ describe('short answer serializer', () => {
         maxStrings: 20,
       },
     };
-    result = ShortAnswer(item, newItemAttr);
+    result = shortAnswer(item, newItemAttr);
   });
 
   it('scrubs the question and answer', () => {
