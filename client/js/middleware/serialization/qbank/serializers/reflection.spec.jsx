@@ -78,8 +78,8 @@ describe('reflection serializer', () => {
         },
         type: 'answer-record-type%3Amulti-choice-answer%40ODL.MIT.EDU',
         choiceIds:
-         [ 'id14a6824a-79f2-4c00-ac6a-b41cbb64db45',
-           'id969e920d-6d22-4d06-b4ac-40a821e350c6' ]
+         ['id14a6824a-79f2-4c00-ac6a-b41cbb64db45',
+          'id969e920d-6d22-4d06-b4ac-40a821e350c6']
       },
     ];
     expect(result.answers).toEqual(expectedAnswers);
