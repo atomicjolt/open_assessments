@@ -1,4 +1,4 @@
-import MovableFillBlank     from './movable_fill_blank';
+import movableFillBlank     from './movable_fill_blank';
 import genusTypes           from '../../../../constants/genus_types';
 
 describe('movable_fill_blank deserializer', () => {
@@ -34,7 +34,7 @@ describe('movable_fill_blank deserializer', () => {
       }],
       language: '639-2%3AENG%40ISO',
     };
-    result = MovableFillBlank(item);
+    result = movableFillBlank(item);
   });
 
   it('deserializes the question', () => {

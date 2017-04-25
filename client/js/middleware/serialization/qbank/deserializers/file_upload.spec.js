@@ -1,4 +1,4 @@
-import FileUpload    from './file_upload';
+import fileUpload    from './file_upload';
 
 describe('file_upload deserializer', () => {
   it('deserializes the question', () => {
@@ -21,7 +21,7 @@ describe('file_upload deserializer', () => {
         fileIds: {},
       }],
     };
-    const result = FileUpload(item);
+    const result = fileUpload(item);
     expect(result.question.correctFeedback.text).toEqual('something witty');
   });
 });
