@@ -52,7 +52,6 @@ export class UpdateImage extends React.Component {
   uploadMedia(file, metadata, newMedia, language) {
     this.setState({ modal: false });
 
-    debugger;
     this.props.addMediaToQuestion(
       file,
       this.props.item.bankId,

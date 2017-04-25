@@ -109,6 +109,5 @@ export default function imageSequenceSerializer(originalItem, newItemAttributes)
     }
   }
 
-  debugger;
   return scrub(newItem);
 }
