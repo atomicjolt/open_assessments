@@ -12,13 +12,14 @@ export default function ImageOrder(props) {
       {
         _.map(choices, (choice, id) => {
           const text = _.get(choice, `texts[${props.language}].text`, '');
+          const labelText = _.get(choice, `texts[${props.language}].labelText`, '');
           return (
-            <div key={id} className="au-o-quarter">
+            <div key={`${id}_${props.language}`} className="au-o-quarter">
               <ImageOption
                 id={id}
                 text={text}
                 order={choice.order}
-                labelText={text.labelText}
+                labelText={labelText}
                 updateChoice={
                   (newChoice, fileIds) => props.updateChoice(
                       props.item.id, choice.id, newChoice, fileIds)
