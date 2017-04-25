@@ -21,7 +21,8 @@ export class AddImage extends React.Component {
     loadingMedia: React.PropTypes.bool,
     addMediaToQuestion: React.PropTypes.func,
     images: React.PropTypes.shape({}),
-    localizeStrings:  React.PropTypes.func.isRequired
+    localizeStrings:  React.PropTypes.func.isRequired,
+    language: React.PropTypes.string,
   };
 
   constructor() {
@@ -82,6 +83,7 @@ export class AddImage extends React.Component {
                 this.uploadMedia(media, metaData, newMedia, language)}
             inProgress={false}
             error={null}
+            language={this.props.language}
           />
           {strings.addImage}
         </button>

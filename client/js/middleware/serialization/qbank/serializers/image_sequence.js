@@ -4,10 +4,6 @@ import { scrub, languageText }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
-function serializeChoice() {
-
-}
-
 function serializeChoices(originalChoices, newChoiceAttributes, language) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
@@ -109,6 +105,6 @@ export default function imageSequenceSerializer(originalItem, newItemAttributes)
       );
     }
   }
-  debugger;
+
   return scrub(newItem);
 }

@@ -1,13 +1,13 @@
-import React            from 'react';
-import Modal            from 'react-modal';
-import _                from 'lodash';
+import React                             from 'react';
+import Modal                             from 'react-modal';
+import _                                 from 'lodash';
 
-import Loader           from '../dot_loader';
-import languages        from '../../../../constants/language_types';
-import SearchMedia      from './search_media';
-import LanguageSelect   from '../language_dropdown';
-import Metadata         from './meta_data';
-import localize         from '../../../locales/localize';
+import Loader                            from '../dot_loader';
+import { languages, getLanguage }        from '../../../../constants/language_types';
+import SearchMedia                       from './search_media';
+import LanguageSelect                    from '../language_dropdown';
+import Metadata                          from './meta_data';
+import localize                          from '../../../locales/localize';
 
 const tagNameMap = {
   audio: 'Audio',
@@ -33,6 +33,7 @@ export class EditorUploadModal extends React.Component {
     inProgress: React.PropTypes.bool,
     error: React.PropTypes.string,
     uploadOnly: React.PropTypes.bool,
+    language: React.PropTypes.string,
   };
 
   static initLanguageMediaData() {
@@ -45,7 +46,7 @@ export class EditorUploadModal extends React.Component {
    );
   }
 
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       languageMediaData: EditorUploadModal.initLanguageMediaData(),
@@ -53,8 +54,12 @@ export class EditorUploadModal extends React.Component {
       mediaAutoPlay: false,
       uploadedMedia: null,
       selectedMedia: null,
-      language: languages.languageTypeId.english, //default to english
+      language: props.language || languages.languageTypeId.english, //default to english
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ language: nextProps.language });
   }
 
   componentDidUpdate() {
@@ -159,6 +164,7 @@ export class EditorUploadModal extends React.Component {
           </h3>
           <LanguageSelect
             updateItem={language => this.setState(language)}
+            language={getLanguage(this.state.language)}
           />
           <button onClick={() => this.closeModal()} className="au-c-wysiwyg-modal__close">
             <i className="material-icons">close</i>

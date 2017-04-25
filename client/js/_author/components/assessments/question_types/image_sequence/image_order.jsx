@@ -36,6 +36,7 @@ export default function ImageOrder(props) {
       <div className="au-o-quarter">
         <AddImage
           item={props.item}
+          language={props.language}
         />
       </div>
     </div>
@@ -51,4 +52,5 @@ ImageOrder.propTypes = {
   }),
   deleteChoice: React.PropTypes.func,
   duplicateAnswers: React.PropTypes.arrayOf(React.PropTypes.string),
+  language: React.PropTypes.string
 };
