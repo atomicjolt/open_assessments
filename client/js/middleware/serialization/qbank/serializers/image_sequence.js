@@ -4,39 +4,62 @@ import { scrub, languageText }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
-function serializeChoices(originalChoices, newChoiceAttributes) {
-  const choices = _.map(originalChoices, (choice) => {
-    const updateValues = newChoiceAttributes[choice.id];
-    const newOrder = _.get(updateValues, 'order');
-    const labelText = _.get(updateValues, 'labelText', choice.labelText);
-    const imageSrc = choice.text;
-    const imageAlt = choice.altText;
-    const text = `<p>${labelText}</p><img src='${imageSrc}' alt='${imageAlt}'>`;
-    return {
-      id: choice.id,
-      text,
-      order: _.isNil(newOrder) ? choice.order : newOrder,
-      delete: _.get(updateValues, 'delete'),
-    };
-  });
+function serializeChoices(originalChoices, newChoiceAttributes, language) {
+  // const choices = _.map(originalChoices, (choice) => {
+  //   const updateValues = newChoiceAttributes[choice.id];
+  //   const newOrder = _.get(updateValues, 'order');
+  //   const labelText = _.get(updateValues, 'labelText', choice.labelText);
+  //   const imageSrc = choice.text;
+  //   const imageAlt = choice.altText;
+  //   const text = `<p>${labelText}</p><img src='${imageSrc}' alt='${imageAlt}'>`;
+  //   debugger;
+  //   return {
+  //     id: choice.id,
+  //     text,
+  //     order: _.isNil(newOrder) ? choice.order : newOrder,
+  //     delete: _.get(updateValues, 'delete'),
+  //   };
+  // });
+
+  // const choices = [];
+
+  const choices = _(newChoiceAttributes)
+    .toPairs()
+    .filter(choice => !_.isUndefined(originalChoices[choice[0]]))
+    .map((choice) => {
+      const original = originalChoices[choice[0]];
+      const labelText = _.get(choice, 'text', original.labelText);
+      const imageSrc = _.get(original, `texts[${language}].text`, '');
+      const imageAlt = _.get(original, `texts[${language}].altText`, '');
+      const text = `<p>${labelText}</p><img src='${imageSrc}' alt='${imageAlt}'>`;
+      return {
+        id: original.id,
+        text,
+        delete: choice.delete,
+      };
+    })
+    .value();
 
   if (newChoiceAttributes.new) {
     choices.push({
       id: guid(),
       text: `<p></p><img src='${newChoiceAttributes.new.text}' alt='${newChoiceAttributes.new.altText}'>`,
-      order: choices.length,
     });
   }
 
   return choices;
 }
 
-function serializeQuestion(originalQuestion, newQuestionAttributes) {
+function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
   const newQuestion = {
     choices: null,
   };
   if (newQuestionAttributes.choices) {
-    newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
+    newQuestion.choices = serializeChoices(
+      originalQuestion.choices,
+      newQuestionAttributes.choices,
+      language
+    );
   }
 
   return scrub(newQuestion);
@@ -83,7 +106,7 @@ export default function imageSequenceSerializer(originalItem, newItemAttributes)
   if (question) {
     newItem.question = {
       ...newItem.question,
-      ...serializeQuestion(originalItem.question, question)
+      ...serializeQuestion(originalItem.question, question, language)
     };
 
     if (question.choices || question.correctFeedback || question.incorrectFeedback) {
@@ -97,5 +120,6 @@ export default function imageSequenceSerializer(originalItem, newItemAttributes)
       );
     }
   }
+  debugger;
   return scrub(newItem);
 }
