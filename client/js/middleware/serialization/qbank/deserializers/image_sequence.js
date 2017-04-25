@@ -3,6 +3,25 @@ import $                  from 'jquery';
 import baseDeserializer   from './base';
 import genusTypes         from '../../../../constants/genus_types';
 
+function deserializeChoiceText(choice) {
+  const nodes = $('<div>').html(choice.text);
+  const image = $('img', nodes);
+  const label = $('p', nodes);
+  return {
+    text: image ? image.attr('src') : '',
+    altText: image ? image.attr('alt') : '',
+    labelText: label ? label.text() : '',
+  };
+}
+
+function deserializeChoiceTexts(choices) {
+  const all = {};
+  _.each(
+    choices,
+    (choice) => { all[choice.languageTypeId] = deserializeChoiceText(choice); }
+  );
+  return all;
+}
 
 function deserializeChoices(choices, correctAnswer, incorrectId) {
   const newChoices = {};
@@ -20,6 +39,7 @@ function deserializeChoices(choices, correctAnswer, incorrectId) {
       altText: image ? image.attr('alt') : '',
       order: index + 1,
       labelText: label ? label.text() : '',
+      texts: deserializeChoiceTexts(choice.texts)
     };
   });
 
@@ -34,7 +54,7 @@ export default function imageSequence(item) {
   newItem.question = {
     ...newItem.question,
     shuffle: _.get(item, 'question.shuffle'),
-    choices: deserializeChoices(_.get(item, 'question.choices'), correctAnswer, _.get(incorrectAnswer, 'id')),
+    choices: deserializeChoices(_.get(item, 'question.multiLanguageChoices'), correctAnswer, _.get(incorrectAnswer, 'id')),
     correctFeedback: {
       text: _.get(correctAnswer, 'feedback.text'),
       texts: _.get(correctAnswer, 'feedbacks'),
