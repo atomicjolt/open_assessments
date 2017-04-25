@@ -4,6 +4,10 @@ import { scrub, languageText }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
+function serializeChoice() {
+
+}
+
 function serializeChoices(originalChoices, newChoiceAttributes, language) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
@@ -14,20 +18,21 @@ function serializeChoices(originalChoices, newChoiceAttributes, language) {
     const imageAlt = _.get(choice, `texts[${language}].altText`, '');
     const text = `<p>${labelText}</p><img src='${imageSrc}' alt='${imageAlt}'>`;
 
-    const a = {
+    return {
       id: choice.id,
       text: languageText(text, language),
       order: _.isNil(newOrder) ? choice.order : newOrder,
       delete: _.get(updateValues, 'delete'),
     };
-    debugger
-    return a;
   });
 
   if (newChoiceAttributes.new) {
+    const text = `<p></p><img src='${newChoiceAttributes.new.text}' alt='${newChoiceAttributes.new.altText}'>`;
+
     choices.push({
       id: guid(),
-      text: `<p></p><img src='${newChoiceAttributes.new.text}' alt='${newChoiceAttributes.new.altText}'>`,
+      text: languageText(text, language),
+      order: choices.length
     });
   }
 
@@ -85,7 +90,6 @@ function serializeAnswers(choices, newChoiceAttributes, oldAnswers,
 }
 
 export default function imageSequenceSerializer(originalItem, newItemAttributes) {
-  debugger;
   const newItem = baseSerializer(originalItem, newItemAttributes);
   const { question, language } = newItemAttributes;
   if (question) {
@@ -105,6 +109,6 @@ export default function imageSequenceSerializer(originalItem, newItemAttributes)
       );
     }
   }
-
+  debugger;
   return scrub(newItem);
 }
