@@ -26,6 +26,7 @@ describe('drag_and_drop component', () => {
       addMediaToQuestion: () => { uploadedMedia = true; },
       updateChoice: () => {},
       loadingMedia: false,
+      language: 'eng',
     };
     result = shallow(<DragAndDrop {...props} />);
   });

@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import $ from 'jquery';
 
-import baseDeserializer from './base';
-import genusTypes from '../../../../constants/genus_types';
-import { audioLimit } from '../../../../constants/question_types';
+import baseDeserializer                 from './base';
+import { audioLimit }                   from '../../../../constants/question_types';
+import { createSingleCorrectFeedback }  from '../../serializer_utils';
 
 export function deserializeChoices(choices) {
   return choices.reduce((all, choice) => {
@@ -17,26 +17,7 @@ export function deserializeChoices(choices) {
   }, {});
 }
 
-export function deserializeFeedback(answers) {
-  return _.reduce(answers, (feedbacks, feedback) => {
-    if (feedback.genusTypeId === genusTypes.answer.rightAnswer) {
-      feedbacks.correctFeedback = {
-        id: feedback.id,
-        text: feedback.feedback.text,
-        fileIds: feedback.fileIds,
-      };
-    } else if (feedback.genusTypeId === genusTypes.answer.wrongAnswer) {
-      feedbacks.incorrectFeedback = {
-        id: feedback.id,
-        text: feedback.feedback.text,
-        fileIds: feedback.fileIds,
-      };
-    }
-    return feedbacks;
-  }, {});
-}
-
-export default function fileUpload(item) {
+export default function movableWordSandbox(item) {
   const newItem = baseDeserializer(item);
   const timeValue = _.get(item, 'question.timeValue', {
     hours: '00',
@@ -45,13 +26,12 @@ export default function fileUpload(item) {
   });
 
   const choices = deserializeChoices(_.get(item, 'question.choices', {}));
-  const feedback = deserializeFeedback(_.get(item, 'answers', []));
 
   newItem.question = {
     ...newItem.question,
     timeValue,
     choices,
-    ...feedback,
+    correctFeedback: createSingleCorrectFeedback(item),
   };
 
   return newItem;

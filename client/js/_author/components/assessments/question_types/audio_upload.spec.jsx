@@ -32,6 +32,7 @@ describe('audio_upload component', () => {
           },
         },
       },
+      language: 'eng',
     };
     result = shallow(<AudioUpload {...props} />);
   });

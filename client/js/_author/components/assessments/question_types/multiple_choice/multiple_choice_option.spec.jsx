@@ -14,6 +14,7 @@ describe('Multiple Choice Option', () => {
       key: 'assessmentChoice_1',
       updateChoice: (attr) => { updatedChoice = attr; },
       text: 'This is dummy text',
+      texts: { eng: 'This is dummy text' },
       deleteChoice: () => {},
       shuffle: false,
       moveUp: () => {},
@@ -21,6 +22,7 @@ describe('Multiple Choice Option', () => {
       isActive: true,
       itemType: '',
       bankId: '',
+      language: 'eng',
     };
     result = shallow(<Option {...props} />);
   });

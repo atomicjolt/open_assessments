@@ -19,6 +19,12 @@ export default function banks(state = initialState, action) {
       return newState;
     }
 
+    case 'DELETE_ASSESSMENT_ITEM': {
+      const newState = _.cloneDeep(state);
+      newState[action.bankId][action.itemId].isRemoving = true;
+      return newState;
+    }
+
     case 'UPDATE_ITEM_DONE':
     case 'CREATE_ITEM_DONE': {
       const newState = _.cloneDeep(state);
@@ -26,7 +32,7 @@ export default function banks(state = initialState, action) {
       if (!newState[bankId]) {
         newState[bankId] = {};
       }
-      newState[bankId][action.payload.id] = action.payload;
+      newState[bankId][action.payload.id] = _.merge(action.payload, { isUpdating: false });
 
       return newState;
     }
@@ -40,7 +46,7 @@ export default function banks(state = initialState, action) {
       }
 
       const item = newState[bankId][itemId];
-      newState[bankId][itemId] = _.merge(item, action.body);
+      newState[bankId][itemId] = _.merge(item, action.body, { isUpdating: true });
 
       return newState;
     }

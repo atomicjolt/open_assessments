@@ -1,17 +1,18 @@
-import _                  from 'lodash';
-import baseDeserializer   from './base';
-import genusTypes         from '../../../../constants/genus_types';
+import _                          from 'lodash';
+import baseDeserializer           from './base';
+import genusTypes                 from '../../../../constants/genus_types';
+import { deserializeChoiceTexts } from '../../serializer_utils';
 
 function deserializeChoices(choices, answers) {
   const newChoices = {};
-
   _.forEach(choices, (choice, index) => {
     newChoices[choice.id] = {
       id: choice.id,
       answerId: null,
-      text: choice.text,
+      text: choice.texts[0].text,
+      texts: deserializeChoiceTexts(choice.texts),
       order: index,
-      feedback: null,
+      feedback: '',
       fileIds: {},
       isCorrect: false,
     };
@@ -20,6 +21,7 @@ function deserializeChoices(choices, answers) {
         newChoices[choice.id] = {
           ...newChoices[choice.id],
           feedback: _.get(answer, 'feedback.text'),
+          feedbacks: _.get(answer, 'feedbacks'),
           isCorrect: answer.genusTypeId === genusTypes.answer.rightAnswer,
           answerId: answer.id,
           fileIds: {
@@ -33,14 +35,13 @@ function deserializeChoices(choices, answers) {
   return newChoices;
 }
 
-
 export default function multipleChoice(item) {
   const newItem = baseDeserializer(item);
 
   newItem.question = {
     ...newItem.question,
     shuffle: _.get(item, 'question.shuffle'),
-    choices: deserializeChoices(_.get(item, 'question.choices'), item.answers)
+    choices: deserializeChoices(_.get(item, 'question.multiLanguageChoices'), item.answers),
   };
 
   return newItem;

@@ -8,7 +8,13 @@ ShallowWrapper {
     "findWhereUnwrapped": [Function],
   },
   "length": 1,
-  "node": <div>
+  "node": <div
+    style={
+        Object {
+            "display": "none",
+          }
+    }
+>
     <TargetArea
         editZone={[Function]}
         id=""
@@ -47,6 +53,7 @@ ShallowWrapper {
             feedback={undefined}
             feedbackType="correctFeedback"
             labelText="Correct Feedback"
+            language="eng"
             updateItem={[Function]}
         />
         <SingleFeedback
@@ -54,12 +61,19 @@ ShallowWrapper {
             feedback={undefined}
             feedbackType="incorrectFeedback"
             labelText="Incorrect Feedback"
+            language="eng"
             updateItem={[Function]}
         />
     </div>
 </div>,
   "nodes": Array [
-    <div>
+    <div
+      style={
+            Object {
+                  "display": "none",
+                }
+      }
+>
       <TargetArea
             editZone={[Function]}
             id=""
@@ -98,6 +112,7 @@ ShallowWrapper {
                   feedback={undefined}
                   feedbackType="correctFeedback"
                   labelText="Correct Feedback"
+                  language="eng"
                   updateItem={[Function]}
             />
             <SingleFeedback
@@ -105,6 +120,7 @@ ShallowWrapper {
                   feedback={undefined}
                   feedbackType="incorrectFeedback"
                   labelText="Incorrect Feedback"
+                  language="eng"
                   updateItem={[Function]}
             />
       </div>
@@ -130,6 +146,7 @@ ShallowWrapper {
                         },
                       }
         }
+        language="eng"
         loadingMedia={false}
         localizeStrings={[Function]}
         updateChoice={[Function]}
@@ -153,6 +170,7 @@ ShallowWrapper {
               "zones": Object {},
             },
           },
+          "language": "eng",
           "loadingMedia": false,
           "localizeStrings": [Function],
           "updateChoice": [Function],
@@ -178,7 +196,13 @@ ShallowWrapper {
       "_pendingReplaceState": false,
       "_pendingStateQueue": null,
       "_renderedComponent": NoopInternalComponent {
-        "_currentElement": <div>
+        "_currentElement": <div
+          style={
+                    Object {
+                              "display": "none",
+                            }
+          }
+>
           <TargetArea
                     editZone={[Function]}
                     id=""
@@ -217,6 +241,7 @@ ShallowWrapper {
                               feedback={undefined}
                               feedbackType="correctFeedback"
                               labelText="Correct Feedback"
+                              language="eng"
                               updateItem={[Function]}
                     />
                     <SingleFeedback
@@ -224,12 +249,19 @@ ShallowWrapper {
                               feedback={undefined}
                               feedbackType="incorrectFeedback"
                               labelText="Incorrect Feedback"
+                              language="eng"
                               updateItem={[Function]}
                     />
           </div>
 </div>,
         "_debugID": 2,
-        "_renderedOutput": <div>
+        "_renderedOutput": <div
+          style={
+                    Object {
+                              "display": "none",
+                            }
+          }
+>
           <TargetArea
                     editZone={[Function]}
                     id=""
@@ -268,6 +300,7 @@ ShallowWrapper {
                               feedback={undefined}
                               feedbackType="correctFeedback"
                               labelText="Correct Feedback"
+                              language="eng"
                               updateItem={[Function]}
                     />
                     <SingleFeedback
@@ -275,6 +308,7 @@ ShallowWrapper {
                               feedback={undefined}
                               feedbackType="incorrectFeedback"
                               labelText="Incorrect Feedback"
+                              language="eng"
                               updateItem={[Function]}
                     />
           </div>
@@ -304,6 +338,7 @@ ShallowWrapper {
             },
           }
     }
+    language="eng"
     loadingMedia={false}
     localizeStrings={[Function]}
     updateChoice={[Function]}

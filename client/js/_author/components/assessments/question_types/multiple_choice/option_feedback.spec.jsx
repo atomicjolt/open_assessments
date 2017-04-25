@@ -17,6 +17,7 @@ describe('option feedback component', () => {
       id: '',
       hidden: false,
       fileIds: {},
+      language: 'eng',
     };
     result = shallow(<OptionFeedback {...props} />);
   });

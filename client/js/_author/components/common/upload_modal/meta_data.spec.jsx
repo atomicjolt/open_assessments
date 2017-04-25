@@ -24,6 +24,7 @@ describe('Metadata', () => {
           text: 'silly license text',
         },
       },
+
       updateMetadata: () => {},
     };
 

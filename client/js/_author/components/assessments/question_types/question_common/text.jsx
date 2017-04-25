@@ -1,7 +1,7 @@
-import React      from 'react';
-import Editor     from '../../../common/oea_editor';
-import types      from '../../../../../constants/question_types';
-import localize   from '../../../../locales/localize';
+import React            from 'react';
+import Editor           from '../../../common/oea_editor';
+import types            from '../../../../../constants/question_types';
+import localize         from '../../../../locales/localize';
 
 class QuestionText extends React.Component {
   static propTypes = {

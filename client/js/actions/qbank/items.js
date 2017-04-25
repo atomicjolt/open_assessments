@@ -22,15 +22,20 @@ export function updateItem(bankId, item) {
   };
 }
 
-export function createChoice(bankId, itemId, text, fileIds, choiceType) {
+export function createChoice(bankId, itemId, text, fileIds, choiceType, language) {
   const newItem = {
     id: itemId,
+    language,
     question: {
       fileIds,
       [choiceType || 'choices']: {
-        new: { id: 'new' },
+        new: {
+          id: 'new',
+          language,
+        },
       },
-    }
+    },
+    language
   };
   return {
     bankId,

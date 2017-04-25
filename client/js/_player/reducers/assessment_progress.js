@@ -1,4 +1,5 @@
 import Immutable  from 'immutable';
+import _          from 'lodash';
 import { Constants as AssessmentConstants }   from '../actions/assessment_progress';
 
 const initialState = Immutable.fromJS({
@@ -54,6 +55,10 @@ export default (state = initialState, action) => {
       const answerIndex = responses.findIndex((answer) => {
         if (typeof answerData === 'string' || typeof answerData === 'number') {
           return answerData === answer;
+        }
+
+        if (answerData instanceof Blob) {
+          return _.isEqual(answerData, answer);
         }
 
         return Immutable.is(answer.get('id'), answerData.get('id'));

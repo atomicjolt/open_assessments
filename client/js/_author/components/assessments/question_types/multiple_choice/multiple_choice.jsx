@@ -27,6 +27,7 @@ class MultipleChoice extends React.Component {
     deleteChoice: React.PropTypes.func.isRequired,
     localizeStrings: React.PropTypes.func.isRequired,
     activeChoice: React.PropTypes.string,
+    language: React.PropTypes.string.isRequired,
   };
 
   constructor() {
@@ -59,6 +60,7 @@ class MultipleChoice extends React.Component {
           <Feedback
             updateItem={this.props.updateItem}
             feedbackType="correctFeedback"
+            language={this.props.language}
             feedback={question.correctFeedback}
             labelText={text}
             bankId={this.props.item.bankId}
@@ -71,6 +73,7 @@ class MultipleChoice extends React.Component {
               feedback={question.incorrectFeedback}
               labelText={strings.incorrectFeedback}
               bankId={this.props.item.bankId}
+              language={this.props.language}
             />
           }
         </div>
@@ -129,12 +132,13 @@ class MultipleChoice extends React.Component {
                   questionFileIds={question.fileIds}
                   setActiveChoice={choiceId => this.props.selectChoice(choiceId)}
                   isActive={this.props.isActive && choice.id === this.props.activeChoice}
+                  language={this.props.language}
                 />
               ))
             }
             {
               !this.state.newChoice && this.props.isActive ? <Add
-                createChoice={() => this.props.createChoice(id)}
+                createChoice={() => this.props.createChoice()}
               /> : null
             }
           </div>

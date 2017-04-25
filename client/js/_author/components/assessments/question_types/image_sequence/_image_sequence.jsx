@@ -17,8 +17,13 @@ class ImageSequence extends React.Component {
       }),
     }).isRequired,
     updateItem: React.PropTypes.func,
+    deleteChoice: React.PropTypes.func,
+    updateChoice: React.PropTypes.func,
     localizeStrings: React.PropTypes.func.isRequired,
     save: React.PropTypes.func,
+    isActive: React.PropTypes.bool,
+    language: React.PropTypes.string.isRequired,
+    duplicateAnswers: React.PropTypes.arrayOf(React.PropTypes.string),
   };
 
   constructor(props) {
@@ -34,6 +39,7 @@ class ImageSequence extends React.Component {
     return (
       <div className="au-c-question__feedback">
         <Feedback
+          language={this.props.language}
           updateItem={item => this.props.updateItem(item, true)}
           feedbackType="correctFeedback"
           feedback={question.correctFeedback}
@@ -41,6 +47,7 @@ class ImageSequence extends React.Component {
           bankId={this.props.item.bankId}
         />
         <Feedback
+          language={this.props.language}
           updateItem={item => this.props.updateItem(item, true)}
           feedbackType="incorrectFeedback"
           feedback={question.incorrectFeedback}
@@ -57,11 +64,14 @@ class ImageSequence extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ display: this.props.isActive ? 'block' : 'none' }}>
         <ImageOrder
-          {...this.props}
           activateChoice={choiceId => this.activateChoice(choiceId)}
           activeChoice={this.state.activeChoice}
+          deleteChoice={this.props.deleteChoice}
+          item={this.props.item}
+          updateChoice={this.props.updateChoice}
+          duplicateAnswers={this.props.duplicateAnswers}
         />
         <SaveOptions save={this.props.save} />
         <div className="au-c-question__feedback">

@@ -1,11 +1,20 @@
-import { serializeChoices, serializeAnswers } from './movable_words_sandbox';
-import genusTypes from '../../../../constants/genus_types';
+import movableWordsSerializer from './movable_words_sandbox';
+import genusTypes             from '../../../../constants/genus_types';
+import languages              from '../../../../constants/language_types';
+import { languageText }       from '../../serializer_utils';
 
 describe('MovableWordsSandbox', () => {
 
   let item;
+  let originalItem;
 
   beforeEach(() => {
+    originalItem = {
+      question: {
+        correctFeedback: { answerId: '1' }
+      },
+    };
+
     item = {
       question: {
         choices: [{
@@ -17,9 +26,14 @@ describe('MovableWordsSandbox', () => {
           id: 'id969e920d-6d22-4d06-b4ac-40a821e350c6',
           text: 'the airport',
           wordType: 'noun',
-        }
-        ]
-      }
+        }],
+        correctFeedback: {
+          text: 'correctText',
+          fileIds: {},
+          id: '1',
+        },
+      },
+      language: languages.languageTypeId.english,
     };
   });
 
@@ -32,41 +46,19 @@ describe('MovableWordsSandbox', () => {
       text: '<p class=\'noun\'>the airport</p>'
     }];
 
-    const result = serializeChoices(item.question.choices);
-    expect(result).toEqual(expectedChoices);
+    const result = movableWordsSerializer(originalItem, item);
+    expect(result.question.choices).toEqual(expectedChoices);
   });
 
   it('should serialize answers', () => {
-    const correctFeedback = {
-      text: 'correctText',
-      fileIds: {},
-      id: '1',
-    };
-
-    const incorrectFeedback = {
-      text: 'incorrectText',
-      fileIds: {},
-      id: '2',
-    };
-
-    const originalItem = {
-      question: {
-        correctFeedback: { id: '1' },
-        incorrectFeedback: { id: '2' }
-      }
-    };
-
     const expectedAnswers = [{
       genusTypeId: genusTypes.answer.rightAnswer,
-      feedback: correctFeedback.text,
-      id: correctFeedback.id,
-    }, {
-      genusTypeId: genusTypes.answer.wrongAnswer,
-      feedback: incorrectFeedback.text,
-      id: incorrectFeedback.id,
+      feedback: languageText(item.question.correctFeedback.text, item.language),
+      id: item.question.correctFeedback.id,
+      fileIds: {}
     }];
 
-    const result = serializeAnswers(correctFeedback, incorrectFeedback, originalItem);
-    expect(result).toEqual(expectedAnswers);
+    const result = movableWordsSerializer(originalItem, item);
+    expect(result.answers).toEqual(expectedAnswers);
   });
 });

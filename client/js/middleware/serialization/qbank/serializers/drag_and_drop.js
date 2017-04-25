@@ -1,6 +1,6 @@
 import _                         from 'lodash';
 import baseSerializer            from './base';
-import { scrub }                 from '../../serializer_utils';
+import { scrub, languageText }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 
 function buildImageTag(url, alt, fileIds) {
@@ -120,14 +120,14 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   return scrub(newQuestion);
 }
 
-function serializeAnswers(
-  oldDropObjects, dropObjects, oldAnswers, correctFeedback, incorrectFeedback) {
+function serializeAnswers(oldDropObjects, dropObjects, oldAnswers,
+  correctFeedback, incorrectFeedback, language) {
   const answers = [];
 
   let correctAnswer = {
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.rightAnswer }), 'id'),
     genusTypeId: genusTypes.answer.rightAnswer,
-    feedback: _.get(correctFeedback, 'text'),
+    feedback: languageText(_.get(correctFeedback, 'text'), language),
     fileIds: _.get(correctFeedback, 'fileIds'),
     zoneConditions: scrub(_.map(oldDropObjects, (object) => {
       const zoneId = _.get(dropObjects, `[${object.id}].correctZone`, object.correctZone);
@@ -143,7 +143,7 @@ function serializeAnswers(
   let incorrectAnswer = {
     id: _.get(_.find(oldAnswers, { genusTypeId: genusTypes.answer.wrongAnswer }), 'id'),
     genusTypeId: genusTypes.answer.wrongAnswer,
-    feedback: _.get(incorrectFeedback, 'text'),
+    feedback: languageText(_.get(incorrectFeedback, 'text'), language),
     fileIds: _.get(incorrectFeedback, 'fileIds'),
     zoneConditions: [],
   };
@@ -159,7 +159,7 @@ function serializeAnswers(
 export default function dragAndDrop(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
 
-  const { question } = newItemAttributes;
+  const { question, language } = newItemAttributes;
   if (question) {
     newItem.question = {
       ...newItem.question,
@@ -176,7 +176,8 @@ export default function dragAndDrop(originalItem, newItemAttributes) {
       question.dropObjects,
       _.get(originalItem, 'originalItem.answers'),
       _.get(question, 'correctFeedback'),
-      _.get(question, 'incorrectFeedback')
+      _.get(question, 'incorrectFeedback'),
+      language
     );
   }
 

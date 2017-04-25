@@ -4,11 +4,12 @@ import { scrub, getSingleCorrectAnswer } from '../../serializer_utils';
 
 export default function shortAnswerSerializer(originalItem, newItemAttributes) {
   const newItem = baseSerializer(originalItem, newItemAttributes);
-  const { question } = newItemAttributes;
+  const { question, language } = newItemAttributes;
 
   if (question) {
     if (question.correctFeedback) {
-      newItem.answers = [getSingleCorrectAnswer(originalItem, question)];
+      newItem.answers = [
+        getSingleCorrectAnswer(originalItem, question, language)];
     }
 
     // we always send all size attributes if we send one

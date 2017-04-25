@@ -1,6 +1,8 @@
-import React    from 'react';
+import React     from 'react';
+import DotLoader from '../../../../common/dot_loader';
 
 export default function DefaultHeader(props) {
+  if (props.isRemoving) { return <DotLoader />; }
   return (
     <div className="au-o-right au-c-question-icons">
       <button
@@ -32,5 +34,6 @@ DefaultHeader.propTypes = {
   id: React.PropTypes.string,
   deleteAssessmentItem: React.PropTypes.func,
   toggleReorder: React.PropTypes.func,
+  isRemoving: React.PropTypes.bool,
   togglePreview: React.PropTypes.func,
 };

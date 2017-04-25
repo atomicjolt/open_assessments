@@ -48,6 +48,7 @@ describe('movable word sentece component', () => {
       isActive: false,
       activeChoice: '',
       save: () => {},
+      language: 'eng',
     };
     result = shallow(<MovableWordSentence {...props} />);
   });
