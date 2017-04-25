@@ -9,9 +9,12 @@ function serializeChoices(originalChoices, newChoiceAttributes, language) {
     const updateValues = newChoiceAttributes[choice.id];
     const newOrder = _.get(updateValues, 'order');
     const originalLabelText = _.get(choice, `texts[${language}].labelText`, '');
+    const originalImageSrc = _.get(choice, `texts[${language}].text`, '');
+    const originalAltText = _.get(choice, `texts[${language}].altText`, '');
+
+    const imageSrc = _.get(updateValues, 'text', originalImageSrc);
     const labelText = _.get(updateValues, 'labelText', originalLabelText);
-    const imageSrc = _.get(choice, `texts[${language}].text`, '');
-    const imageAlt = _.get(choice, `texts[${language}].altText`, '');
+    const imageAlt = _.get(updateValues, 'altText', originalAltText);
     const text = `<p>${labelText}</p><img src='${imageSrc}' alt='${imageAlt}'>`;
 
     return {
@@ -106,5 +109,6 @@ export default function imageSequenceSerializer(originalItem, newItemAttributes)
     }
   }
 
+  debugger;
   return scrub(newItem);
 }

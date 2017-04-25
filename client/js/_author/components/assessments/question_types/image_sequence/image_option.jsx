@@ -1,6 +1,7 @@
 import React        from 'react';
 import _            from 'lodash';
 import localize     from '../../../../locales/localize';
+import UpdateImage     from './update_image';
 
 function imageOption(props) {
   const { activateChoice, updateChoice, deleteChoice, id, order, numChoices } = props;
@@ -53,9 +54,18 @@ function imageOption(props) {
           <div className="au-c-input__bottom" />
         </div>
       </div>
-      <div className="au-c-image-sequence-answer__image">
-        <img src={props.text} alt="" />
-      </div>
+      {
+        !_.isEmpty(props.text) ?
+          <div className="au-c-image-sequence-answer__image">
+            <img src={props.text} alt="" />
+          </div>
+          :
+          <UpdateImage
+            item={props.item}
+            language={props.language}
+            optionId={props.id}
+          />
+      }
     </div>
   );
 }

@@ -29,6 +29,8 @@ export default function ImageOrder(props) {
                 deleteChoice={props.deleteChoice}
                 numChoices={_.size(choices)}
                 duplicateAnswers={props.duplicateAnswers}
+                item={props.item}
+                language={props.language}
               />
             </div>
           );
