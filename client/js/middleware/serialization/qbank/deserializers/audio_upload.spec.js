@@ -1,4 +1,4 @@
-import AudioUpload    from './audio_upload';
+import audioUpload    from './audio_upload';
 
 describe('audio_upload deserializer', () => {
   it('deserializes the question', () => {
@@ -19,7 +19,7 @@ describe('audio_upload deserializer', () => {
       minutes: 70,
       seconds: 100,
     };
-    const result = AudioUpload(item);
+    const result = audioUpload(item);
     expect(result.question.timeValue).toEqual(expectedTimeValue);
   });
 });

@@ -21,42 +21,42 @@ describe('factory', () => {
   });
 
   it('calls audioUpload', () => {
-    const result = factory(genusTypes.item.audioUpload);
+    result = factory(genusTypes.item.audioUpload);
     expect(result).toBe(AudioUpload);
   });
 
   it('calls multipleChoice', () => {
-    const result = factory(genusTypes.item.multipleChoice);
+    result = factory(genusTypes.item.multipleChoice);
     expect(result).toBe(MultipleChoice);
   });
 
   it('calls multipleAnswer', () => {
-    const result = factory(genusTypes.item.multipleAnswer);
+    result = factory(genusTypes.item.multipleAnswer);
     expect(result).toBe(MultipleAnswer);
   });
 
   it('calls fileUpload', () => {
-    const result = factory(genusTypes.item.fileUpload);
+    result = factory(genusTypes.item.fileUpload);
     expect(result).toBe(FileUpload);
   });
 
   it('calls movableFillBlank', () => {
-    const result = factory(genusTypes.item.movableFillBlank);
+    result = factory(genusTypes.item.movableFillBlank);
     expect(result).toBe(movableFillBlank);
   });
 
   it('calls movableWordSandbox', () => {
-    const result = factory(genusTypes.item.movableWordSandbox);
+    result = factory(genusTypes.item.movableWordSandbox);
     expect(result).toBe(movableWordSandbox);
   });
 
   it('calls movableWordSentence', () => {
-    const result = factory(genusTypes.item.movableWordSentence);
+    result = factory(genusTypes.item.movableWordSentence);
     expect(result).toBe(movableWordSentence);
   });
 
   it('calls imageSequence', () => {
-    const result = factory(genusTypes.item.imageSequence);
+    result = factory(genusTypes.item.imageSequence);
     expect(result).toBe(imageSequence);
   });
 
