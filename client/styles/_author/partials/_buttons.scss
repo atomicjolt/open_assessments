@@ -1,0 +1,251 @@
+.au-c-btn{
+  border: none;
+  background: none;
+  @include bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: $radius;
+  @include display-flex;
+  @include align-items(center);
+
+  &:active{
+    @include transform(scale(0.98));
+  }
+
+  // This is for the preview assessment button, I had to put a link in
+  a{
+    font-size: 1.2rem;
+  }
+}
+
+.au-c-btn--sm{
+  height: 3rem;
+  padding: 0 2rem;
+
+  i{
+    margin-right: 0.8rem;
+    margin-left: -0.4rem;
+    font-size: 2rem;
+  }
+}
+
+.au-c-btn--md{
+  height: 4rem;
+  padding: 0 2rem;
+
+  i{
+    margin-right: 0.8rem;
+    margin-left: -0.4rem;
+    font-size: 2rem;
+  }
+}
+
+.au-c-btn--square{
+  height: 3rem;
+  width: 3rem;
+  text-align: center;
+
+  &:active{
+    @include transform(scale(0.96));
+  }
+}
+
+.au-c-btn--md{
+
+}
+
+.au-c-btn--outline{
+  border: 0.2rem solid $maroon;
+  color: $maroon;
+  @include transition(all 0.1s ease);
+
+  &:hover{
+    background-color: $maroon;
+    color: $white;
+  }
+}
+
+  .au-c-btn--back{
+    padding: 0 1.5rem;
+
+    i{
+      margin-right: 0.5rem;
+      margin-left: -1rem;
+    }
+  }
+
+.au-c-btn--green{
+  border: 0.2rem solid $green;
+  background-color: $green;
+  color: $white;
+  @include transition(all 0.1s ease);
+
+  &:hover{
+    background-color: $white;
+    color: $green;
+  }
+}
+
+.au-c-btn--gray{
+  border: 0.1rem solid $gray5;
+  background-color: $gray2;
+  color: $text-alt;
+  @include transition(all 0.1s ease);
+
+  &:hover{
+    background-color: $white;
+    border-color: $gray8;
+    color: $text-color;
+  }
+}
+
+.au-c-btn--white{
+  border: 0.2rem solid $white;
+  background-color: $white;
+  color: $blue;
+  @include transition(all 0.1s ease);
+
+  &:hover{
+    background-color: transparent;
+    color: $white;
+  }
+}
+
+.au-c-btn--maroon{
+  border: 0.2rem solid $maroon;
+  background-color: $maroon;
+  color: $white;
+  @include transition(all 0.1s ease);
+
+  &:hover{
+    background-color: $white;
+    color: $maroon;
+  }
+}
+
+  .au-c-btn--new{
+    min-width: 15rem;
+    @include justify-content(center);
+  }
+
+.au-c-btn--breadcrumb{
+  text-transform: none;
+  font-size: 1.6rem;
+  @include regular;
+  color: $text-color;
+  border: 0.1rem solid transparent;
+  @include transition(all 0.1s ease);
+
+  i{
+    font-size: 2rem;
+    margin-right: 1rem;
+    color: $gray8;
+  }
+
+  &:hover{
+    background: $gray2;
+    border: $border;
+  }
+
+  &.is-active{
+    @include semi-bold;
+    cursor: auto;
+    pointer-events: none;
+  }
+}
+
+.au-c-btn--table{
+  background-color: $purple2;
+  margin-left: 1rem;
+  color: $white;
+  @include transition(all 0.1s ease);
+
+  i{
+    color: $white;
+    @include transition(color 0.1s ease);
+  }
+
+  &:hover{
+    background-color: $white;
+    color: $purple;
+
+    i{
+      color: $purple;
+    }
+  }
+  &.is-inactive{
+    color: rgba(255,255,255,0.5);
+    pointer-events: none;
+    i{
+      color: rgba(255,255,255,0.5);
+    }
+  }
+}
+
+.au-c-button-dropdown{
+  & > li{
+    position: relative;
+    width: 100%;
+  }
+  li{
+    display: block;
+  }
+}
+
+  .au-c-button-dropdown__dropdown{
+    display: none;
+    position: absolute;
+    border-top: 0.2rem solid $maroon;
+    background: $maroon;
+    padding-bottom: 0.2rem;
+    top: 2.8rem;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+
+    &.is-active{
+      display: block;
+    }
+  }
+
+.au-c-btn--dropdown{
+  width: 15rem;
+  padding: 0 1rem;
+  border: 0.2rem solid $maroon;
+  background-color: $maroon;
+  color: $white;
+  @include transition(all 0.1s ease);
+  position: relative;
+  z-index: 101;
+
+  &:hover{
+    background-color: darken($maroon, 10%);
+    border-color: darken($maroon, 10%);
+  }
+
+  i{
+    margin-left: 1rem;
+    margin-right: -0.5rem;
+  }
+}
+
+.au-c-btn--dropdown-item{
+  width: 100%;
+  padding: 0 1rem;
+  border-top: 0.2rem solid $maroon;
+  background-color: darken($maroon, 10%);
+  color: $white;
+  @include transition(all 0.1s ease);
+  border-radius: 0;
+  height: 3.2rem;
+
+  &:hover{
+    background-color: darken($maroon, 15%);
+  }
+
+  i{
+    margin-right: 1rem;
+    margin-left: 0rem;
+  }
+}

@@ -1,0 +1,388 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`drop_object component renders a snapshot of the component 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <div
+    className="au-o-quarter au-set-active"
+    onClick={[Function]}
+>
+    <div
+        className="au-c-drop-zone-answer "
+        tabIndex="0"
+    >
+        <div
+            className="au-c-drop-zone-answer__top"
+        >
+            <div
+                className="au-c-dropdown au-c-dropdown--small"
+            >
+                <label
+                    htmlFor="drag_object_dropDown_7"
+                />
+                <select
+                    id="drag_object_dropDown_7"
+                    name=""
+                    onChange={[Function]}
+                    value={undefined}
+                >
+                    <option
+                        value={null}
+                    >
+                        Select Answer
+                    </option>
+                </select>
+            </div>
+            <button
+                className="au-c-answer--delete"
+                onClick={[Function]}
+            >
+                <i
+                    className="material-icons"
+                >
+                    close
+                </i>
+            </button>
+        </div>
+        <div
+            className="au-c-input au-c-input-label--left"
+        >
+            <label
+                htmlFor="drag_object_label_7"
+            >
+                Label
+            </label>
+            <div
+                className="au-c-input__contain"
+            >
+                <input
+                    className="au-c-text-input au-c-text-input--smaller"
+                    defaultValue="Spec"
+                    id="drag_object_label_7"
+                    onBlur={[Function]}
+                    type="text"
+                />
+                <div
+                    className="au-c-input__bottom"
+                />
+            </div>
+        </div>
+        <div
+            className="au-c-drop-zone-answer__image"
+        >
+            <img
+                alt="default"
+                src={undefined}
+            />
+        </div>
+    </div>
+</div>,
+  "nodes": Array [
+    <div
+      className="au-o-quarter au-set-active"
+      onClick={[Function]}
+>
+      <div
+            className="au-c-drop-zone-answer "
+            tabIndex="0"
+      >
+            <div
+                  className="au-c-drop-zone-answer__top"
+            >
+                  <div
+                        className="au-c-dropdown au-c-dropdown--small"
+                  >
+                        <label
+                              htmlFor="drag_object_dropDown_7"
+                        />
+                        <select
+                              id="drag_object_dropDown_7"
+                              name=""
+                              onChange={[Function]}
+                              value={undefined}
+                        >
+                              <option
+                                    value={null}
+                              >
+                                    Select Answer
+                              </option>
+                        </select>
+                  </div>
+                  <button
+                        className="au-c-answer--delete"
+                        onClick={[Function]}
+                  >
+                        <i
+                              className="material-icons"
+                        >
+                              close
+                        </i>
+                  </button>
+            </div>
+            <div
+                  className="au-c-input au-c-input-label--left"
+            >
+                  <label
+                        htmlFor="drag_object_label_7"
+                  >
+                        Label
+                  </label>
+                  <div
+                        className="au-c-input__contain"
+                  >
+                        <input
+                              className="au-c-text-input au-c-text-input--smaller"
+                              defaultValue="Spec"
+                              id="drag_object_label_7"
+                              onBlur={[Function]}
+                              type="text"
+                        />
+                        <div
+                              className="au-c-input__bottom"
+                        />
+                  </div>
+            </div>
+            <div
+                  className="au-c-drop-zone-answer__image"
+            >
+                  <img
+                        alt="default"
+                        src={undefined}
+                  />
+            </div>
+      </div>
+</div>,
+  ],
+  "options": Object {},
+  "renderer": ReactShallowRenderer {
+    "_instance": ShallowComponentWrapper {
+      "_calledComponentWillUnmount": false,
+      "_compositeType": 2,
+      "_context": Object {},
+      "_currentElement": <dropObject
+        isActive={false}
+        object={
+                Object {
+                        "id": "7",
+                        "label": "Spec",
+                      }
+        }
+        setActive={[Function]}
+        updateObject={[Function]}
+        zones={Object {}}
+/>,
+      "_debugID": 1,
+      "_hostContainerInfo": null,
+      "_hostParent": null,
+      "_instance": StatelessComponent {
+        "_reactInternalInstance": [Circular],
+        "context": Object {},
+        "props": Object {
+          "isActive": false,
+          "object": Object {
+            "id": "7",
+            "label": "Spec",
+          },
+          "setActive": [Function],
+          "updateObject": [Function],
+          "zones": Object {},
+        },
+        "refs": Object {},
+        "state": null,
+        "updater": Object {
+          "enqueueCallback": [Function],
+          "enqueueCallbackInternal": [Function],
+          "enqueueElementInternal": [Function],
+          "enqueueForceUpdate": [Function],
+          "enqueueReplaceState": [Function],
+          "enqueueSetState": [Function],
+          "isMounted": [Function],
+          "validateCallback": [Function],
+        },
+      },
+      "_mountOrder": 1,
+      "_pendingCallbacks": null,
+      "_pendingElement": null,
+      "_pendingForceUpdate": false,
+      "_pendingReplaceState": false,
+      "_pendingStateQueue": null,
+      "_renderedComponent": NoopInternalComponent {
+        "_currentElement": <div
+          className="au-o-quarter au-set-active"
+          onClick={[Function]}
+>
+          <div
+                    className="au-c-drop-zone-answer "
+                    tabIndex="0"
+          >
+                    <div
+                              className="au-c-drop-zone-answer__top"
+                    >
+                              <div
+                                        className="au-c-dropdown au-c-dropdown--small"
+                              >
+                                        <label
+                                                  htmlFor="drag_object_dropDown_7"
+                                        />
+                                        <select
+                                                  id="drag_object_dropDown_7"
+                                                  name=""
+                                                  onChange={[Function]}
+                                                  value={undefined}
+                                        >
+                                                  <option
+                                                            value={null}
+                                                  >
+                                                            Select Answer
+                                                  </option>
+                                        </select>
+                              </div>
+                              <button
+                                        className="au-c-answer--delete"
+                                        onClick={[Function]}
+                              >
+                                        <i
+                                                  className="material-icons"
+                                        >
+                                                  close
+                                        </i>
+                              </button>
+                    </div>
+                    <div
+                              className="au-c-input au-c-input-label--left"
+                    >
+                              <label
+                                        htmlFor="drag_object_label_7"
+                              >
+                                        Label
+                              </label>
+                              <div
+                                        className="au-c-input__contain"
+                              >
+                                        <input
+                                                  className="au-c-text-input au-c-text-input--smaller"
+                                                  defaultValue="Spec"
+                                                  id="drag_object_label_7"
+                                                  onBlur={[Function]}
+                                                  type="text"
+                                        />
+                                        <div
+                                                  className="au-c-input__bottom"
+                                        />
+                              </div>
+                    </div>
+                    <div
+                              className="au-c-drop-zone-answer__image"
+                    >
+                              <img
+                                        alt="default"
+                                        src={undefined}
+                              />
+                    </div>
+          </div>
+</div>,
+        "_debugID": 2,
+        "_renderedOutput": <div
+          className="au-o-quarter au-set-active"
+          onClick={[Function]}
+>
+          <div
+                    className="au-c-drop-zone-answer "
+                    tabIndex="0"
+          >
+                    <div
+                              className="au-c-drop-zone-answer__top"
+                    >
+                              <div
+                                        className="au-c-dropdown au-c-dropdown--small"
+                              >
+                                        <label
+                                                  htmlFor="drag_object_dropDown_7"
+                                        />
+                                        <select
+                                                  id="drag_object_dropDown_7"
+                                                  name=""
+                                                  onChange={[Function]}
+                                                  value={undefined}
+                                        >
+                                                  <option
+                                                            value={null}
+                                                  >
+                                                            Select Answer
+                                                  </option>
+                                        </select>
+                              </div>
+                              <button
+                                        className="au-c-answer--delete"
+                                        onClick={[Function]}
+                              >
+                                        <i
+                                                  className="material-icons"
+                                        >
+                                                  close
+                                        </i>
+                              </button>
+                    </div>
+                    <div
+                              className="au-c-input au-c-input-label--left"
+                    >
+                              <label
+                                        htmlFor="drag_object_label_7"
+                              >
+                                        Label
+                              </label>
+                              <div
+                                        className="au-c-input__contain"
+                              >
+                                        <input
+                                                  className="au-c-text-input au-c-text-input--smaller"
+                                                  defaultValue="Spec"
+                                                  id="drag_object_label_7"
+                                                  onBlur={[Function]}
+                                                  type="text"
+                                        />
+                                        <div
+                                                  className="au-c-input__bottom"
+                                        />
+                              </div>
+                    </div>
+                    <div
+                              className="au-c-drop-zone-answer__image"
+                    >
+                              <img
+                                        alt="default"
+                                        src={undefined}
+                              />
+                    </div>
+          </div>
+</div>,
+      },
+      "_renderedNodeType": 0,
+      "_rootNodeID": 0,
+      "_topLevelWrapper": null,
+      "_updateBatchNumber": null,
+      "_warnedAboutRefsInRender": false,
+    },
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <dropObject
+    isActive={false}
+    object={
+        Object {
+            "id": "7",
+            "label": "Spec",
+          }
+    }
+    setActive={[Function]}
+    updateObject={[Function]}
+    zones={Object {}}
+/>,
+}
+`;

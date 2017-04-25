@@ -1,0 +1,253 @@
+.au-c-movable__answers{
+
+  .au-c-answer{
+    padding: 0 1.5rem;
+
+    &.is-active{
+
+      .au-c-dropdown--smaller, .au-c-answer--delete, .au-c-dropdown--tiny{
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+    &:hover{
+      .au-c-answer--delete{
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+  }
+
+  .au-c-dropdown--smaller, .au-c-answer--delete{
+    opacity: 0;
+    pointer-events: none;
+
+    &.is-ordered {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  .au-c-dropdown--tiny{
+    opacity: 0;
+    pointer-events: none;
+
+    &.is-ordered {
+      opacity: 1;
+      pointer-events: auto;
+      select{
+        border-color: $green;
+      }
+    }
+
+    &.is-error {
+      opacity: 1;
+      pointer-events: auto;
+      select{
+        border-color: $red;
+      }
+    }
+  }
+
+  .au-c-answer--add {
+    padding-left: 5.5rem;
+  }
+}
+
+.au-c-movable__answers--maintain {
+  .au-c-answer{
+    padding: 0.75rem 5.5rem;
+  }
+}
+
+.au-c-movable__audio-settings{
+  display: none;
+  width: 100%;
+  margin-top: 3rem;
+  @include align-items(center);
+
+  span{
+    display: inline-block;
+    @include semi-bold;
+    font-size: 1.2rem;
+    color: $gray8;
+  }
+
+  .au-c-input--inline{
+    margin: 0 0.5rem;
+    max-width: 5rem;
+
+    input{
+      padding: 0 1rem;
+      font-size: 1.6rem;
+    }
+  }
+
+  &.is-active{
+    @include display-flex;
+  }
+
+  .au-c-inline-error{
+    color: $red;
+    margin-left: 1rem;
+  }
+}
+
+
+
+
+// Image Sequence
+.au-c-image-sequence__answers{
+  margin: 3rem 0 3rem;
+
+  &.au-o-row{
+    margin-left: -2rem;
+    @include align-items(stretch);
+  }
+  .au-o-quarter{
+    margin-bottom: 2rem;
+  }
+}
+
+.au-c-image-sequence-answer{
+  padding: 1rem;
+  height: 100%;
+  border-radius: $radius;
+  background: $white;
+  box-shadow: 0 0 0.5rem rgba(0,0,0,0.15);
+  cursor: pointer;
+
+  &:hover{
+    box-shadow: 0 0 0.7rem rgba(0,0,0,0.3);
+  }
+
+  .au-c-input-label--left{
+    display: none;
+    min-width: auto;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .au-c-dropdown{
+    display: none;
+  }
+
+  .au-c-dropdown--tiny{
+    opacity: 0;
+    pointer-events: none;
+
+    &.is-ordered {
+      opacity: 1;
+      pointer-events: auto;
+      select{
+        border-color: $green;
+      }
+    }
+
+    &.is-error {
+      opacity: 1;
+      pointer-events: auto;
+      select{
+        border-color: $red;
+      }
+    }
+  }
+
+  &.is-active{
+    .au-c-dropdown{
+      display: block;
+    }
+    .au-c-input-label--left{
+      @include display-flex;
+    }
+    .au-c-image-sequence-answer__image{
+      margin-top: -7.7rem; //offset the dropdown and label for centering
+      padding-top: 7.7rem;
+      max-height: 32.7rem;
+    }
+  }
+}
+
+.au-c-image-sequence-answer__top{
+  @include display-flex;
+  @include align-items(center);
+}
+
+.au-c-image-sequence-answer__image{
+  height: 100%;
+  max-height: 10rem;
+  @include display-flex;
+  @include align-items(center);
+  @include justify-content(center);
+
+  img{
+    max-width: 100%;
+    max-height: 10rem;
+  }
+}
+
+.au-c-image-sequence-answer-add{
+  display: block;
+  height: 100%;
+  min-height: 10rem;
+}
+
+.au-c-image-sequence-answer-add__button{
+  width: 100%;
+  height: 100%;
+  background: none;
+  text-align: center;
+  @include transition(background 0.1s ease, transform 0.1s ease);
+  cursor: pointer;
+  border: 0.2rem dashed $gray4;
+  border-image: url('../../assets/images/border.png') 2 round;
+  @include semi-bold;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: $text-color;
+
+  &:hover{
+    background: $gray1;
+  }
+  &:active{
+    @include transform(scale(0.99));
+  }
+}
+
+
+
+
+// Fill in the Blank
+.au-c-fill-in-the-blank__answers{
+  .au-c-answer{
+    padding: 0 1.5rem 0 5.5rem;
+
+    &.is-active{
+
+      .au-c-answer--delete{
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+    &:hover{
+      .au-c-answer--delete{
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+  }
+
+  .au-c-answer--delete{
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.au-c-movable__answers__label{
+  @include semi-bold;
+  font-size: 1.2rem;
+  color: $text-alt;
+}
+
+.au-c-fill-in-the-blank-text{
+  //margin-bottom: 0.5rem;
+}

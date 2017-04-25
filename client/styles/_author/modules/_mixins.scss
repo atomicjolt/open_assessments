@@ -1,0 +1,184 @@
+
+$border: 0.1rem solid $gray4;
+
+@mixin display-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+@mixin justify-content($flex) {
+  -webkit-justify-content: $flex;
+  justify-content: $flex;
+}
+@mixin align-items($flex) {
+  -webkit-align-items: $flex;
+  align-items: $flex;
+}
+@mixin flex($flex...) {
+  -webkit-flex: $flex;
+  flex: $flex;
+}
+
+@mixin center($position) {
+
+  @if $position == 'vertical' {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  @else if $position == 'horizontal' {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translate(-50%);
+  }
+  @else if $position == 'both' {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+// Transition mixin
+// Add CSS transition to any element
+@mixin transform($transform...) {
+    -webkit-transform: $transform;
+    -moz-transform: $transform;
+    -o-transform: $transform;
+    -ms-transform: $transform;
+    transform: $transform;
+}
+
+// Transition mixin
+// Add CSS transition to any element
+@mixin transition($transition...) {
+    -webkit-transition: $transition;
+    -moz-transition: $transition;
+    -o-transition: $transition;
+    -ms-transition: $transition;
+    transition: $transition;
+}
+
+// Animation mixin
+// Animate an element
+@mixin animation($animation...) {
+	-webkit-animation: $animation;
+	-moz-animation: $animation;
+	-o-animation: $animation;
+	animation: $animation;
+}
+
+// Clearfix hack mixin
+// Add clearfix hack - to contain floats within containers
+@mixin clearfix {
+    &:before,
+    &:after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+}
+
+// Box sizing mixin
+// Set box sizing for an element
+@mixin boxSizing($sizing) {
+	-webkit-box-sizing: $sizing;
+	-moz-box-sizing: $sizing;
+	box-sizing: $sizing;
+}
+
+// Truncate mixin
+// Truncate single line text
+@mixin truncate {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
+//Includes for custom fonts
+@font-face {
+    font-family: 'open_sansbold';
+    src: url('fonts/opensans-bold-webfont.woff2') format('woff2'),
+         url('fonts/opensans-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'open_sansregular';
+    src: url('fonts/opensans-regular-webfont.woff2') format('woff2'),
+         url('fonts/opensans-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'open_sanslight';
+    src: url('fonts/opensans-light-webfont.woff2') format('woff2'),
+         url('fonts/opensans-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'open_sanssemibold';
+    src: url('fonts/opensans-semibold-webfont.woff2') format('woff2'),
+         url('fonts/opensans-semibold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+//Open Sans font sizes mixins
+@mixin light{
+  font-family: 'open_sanslight', sans-serif;
+}
+@mixin regular{
+  font-family: 'open_sansregular', sans-serif;
+}
+@mixin semi-bold{
+  font-family: 'open_sanssemibold', sans-serif;
+}
+@mixin bold{
+  font-family: 'open_sansbold', sans-serif;
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/MaterialIcons-Regular.eot'); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url('fonts/MaterialIcons-Regular.woff2') format('woff2'),
+       url('fonts/MaterialIcons-Regular.woff') format('woff'),
+       url('fonts/MaterialIcons-Regular.ttf') format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}

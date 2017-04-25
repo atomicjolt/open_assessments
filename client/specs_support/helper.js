@@ -1,5 +1,6 @@
 import _                  from 'lodash';
-import configureStore     from '../js/store/configure_store';
+import configureStore     from '../js/_player/store/configure_store';
+import nock               from 'nock';
 
 export default class Helper {
 
@@ -8,56 +9,61 @@ export default class Helper {
     return {
       subscribe: () => {},
       dispatch: () => {},
-      getState: () => {
-        return {...state};
-      }
+      getState: () => ({ ...state })
     };
   }
 
   // Create a real store that can be used for testing
   static makeStore(settings) {
     const initialState = {
-      jwt      : "fake_jwt_token",
-      settings : _.assign({
-                    csrf     : "csrf_token",
-                    api_url  : "http://www.example.com"
-                  }, settings)
+      jwt: 'fake_jwt_token',
+      settings: _.assign({
+        csrf: 'csrf_token',
+        api_url: 'http://www.example.com'
+      }, settings)
     };
     return configureStore(initialState);
   }
 
   static testPayload() {
     return JSON.stringify([{
-      "id":1,
-      "name":"Starter App"
+      id: 1,
+      name: 'Starter App'
     }]);
   }
 
-  static stubAjax() {
+  static mockRequest(method, apiUrl, url, expectedHeaders) {
+    return nock(apiUrl, expectedHeaders)
+    .intercept(url, method)
+    .reply(
+      200,
+      Helper.testPayload(),
+      { 'content-type': 'application/json' }
+    );
+  }
+
+  static mockAllAjax() {
     beforeEach(() => {
-      jasmine.Ajax.install();
-
-      jasmine.Ajax.stubRequest(
-          RegExp('.*/api/test')
-        ).andReturn({
-          status: 200,
-          contentType: "application/json",
-          statusText: "OK",
-          responseText: Helper.testPayload()
-        });
-
-      jasmine.Ajax.stubRequest(
-          RegExp('.*/api/test/.+')
-        ).andReturn({
-          status: 200,
-          contentType: "application/json",
-          statusText: "OK",
-          responseText: Helper.testPayload()
-        });
+      nock('http://www.example.com')
+        .persist()
+        .get(RegExp('.*'))
+        .reply(200, Helper.testPayload(), { 'content-type': 'application/json' });
+      nock('http://www.example.com')
+        .persist()
+        .post(RegExp('.*'))
+        .reply(200, Helper.testPayload(), { 'content-type': 'application/json' });
+      nock('http://www.example.com')
+        .persist()
+        .put(RegExp('.*'))
+        .reply(200, Helper.testPayload(), { 'content-type': 'application/json' });
+      nock('http://www.example.com')
+        .persist()
+        .delete(RegExp('.*'))
+        .reply(200, Helper.testPayload(), { 'content-type': 'application/json' });
     });
 
     afterEach(() => {
-      jasmine.Ajax.uninstall();
+      nock.cleanAll();
     });
   }
 

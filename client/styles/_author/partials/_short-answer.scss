@@ -1,0 +1,32 @@
+.au-c-question.is-active{
+  .au-c-question__answers.au-c-short-answer__answers{
+    @include display-flex;
+    @include align-items(stretch);
+  }
+}
+
+.au-c-short-answer__example{
+  margin-left: 3rem;
+  margin-top: 2.2rem;
+  border: 0.2rem solid $gray5;
+  border-radius: $radius;
+  width: 100%;
+  @include regular;
+  font-size: 1.4rem;
+  color: $text-alt;
+  text-align: center;
+
+  &.is-small{
+    max-width: 25rem;
+    line-height: 3.7rem;
+    height: 4rem;
+  }
+  &.is-medium{
+    line-height: 3.7rem;
+    height: 4rem;
+  }
+  &.is-large{
+    line-height: 11.7rem;
+    height: 12rem;
+  }
+}

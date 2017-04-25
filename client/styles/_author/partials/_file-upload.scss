@@ -1,0 +1,65 @@
+  .au-c-radio--file{
+
+    label{
+      display: block;
+      border: 0.2rem solid $gray3;
+      border-radius: $radius;
+      width: 100%;
+      @include semi-bold;
+      font-size: 1.6rem;
+      color: $gray8;
+      text-align: center;
+      height: 4rem;
+      line-height: 3.7rem;
+    }
+
+    input[type="radio"]:checked + label{
+      border-color: $blue;
+      color: $text-color;
+    }
+
+    input:focus + label{
+      outline: thin dotted;
+    }
+
+    input{
+      opacity: 0;
+      margin: 0;
+      height: 0.01rem;
+      width: 0.01rem;
+      position: absolute;
+    }
+  }
+
+  .au-c-file-upload__audio-settings{
+    display: none;
+    width: 100%;
+    padding-left: 3rem;
+    @include align-items(center);
+
+    span{
+      display: inline-block;
+      @include semi-bold;
+      font-size: 1.2rem;
+      color: $gray8;
+    }
+
+    .au-c-input--inline{
+      margin: 0 0.5rem;
+      max-width: 5rem;
+
+      input{
+        padding: 0 1rem;
+        font-size: 1.6rem;
+      }
+    }
+
+    &.is-active{
+      @include display-flex;
+    }
+
+    .au-c-inline-error{
+      color: $red;
+      margin-left: 1rem;
+    }
+  }

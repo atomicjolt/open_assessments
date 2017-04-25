@@ -1,0 +1,517 @@
+.au-c-input{
+  position: relative;
+  width: 100%;
+}
+
+.au-c-input--inline{
+  display: inline-block;
+  width: auto;
+}
+
+  .au-c-input__contain{
+    @include flex(1);
+  }
+
+.au-c-text-input, .au-c-textarea{
+  width: 100%;
+  color: $text-color;
+  border: none;
+  border-top: 0.2rem solid $white;
+  background: none;
+
+  &:focus{
+    outline: none;
+
+    & + .au-c-input__bottom{
+      border-color: $blue;
+      background: $blue;
+    }
+    & + .au-c-input__bottom.has-error{
+      border-color: $red;
+      background: $red;
+    }
+  }
+}
+
+.au-c-textarea{
+  resize: none;
+  padding-top: 0.6rem;
+}
+
+.au-c-input__bottom{
+  height: 0.2rem;
+  background: $gray5;
+  // border-top: 0.1rem solid $gray4;
+
+  &.no-border {
+    border-top: none;
+  }
+  &.is-focused{
+    border-color: $blue;
+    background: $blue;
+  }
+  &.has-error{
+    border-color: $red;
+    background: $red;
+  }
+}
+
+.au-c-error-text{
+  color: $red;
+  @include semi-bold;
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.au-c-text-input--large{
+  font-size: 3rem;
+  @include semi-bold;
+}
+
+.au-c-text-input--medium{
+  min-height: 4rem;
+  font-size: 2rem;
+  @include semi-bold;
+
+  .au-c-placeholder{
+    line-height: 4rem;
+  }
+}
+
+.au-c-text-input--small{
+  min-height: 3.5rem;
+  font-size: 1.6rem;
+  @include regular;
+
+  .au-c-placeholder{
+    line-height: 3.5rem;
+  }
+}
+
+.au-c-text-input--smaller{
+  min-height: 3rem;
+  font-size: 1.2rem;
+  @include semi-bold;
+
+  .au-c-placeholder{
+    line-height: 3rem;
+  }
+}
+
+.au-c-wysiwyg{
+  ul {
+    list-style-type: disc;
+    margin: 20px 0;
+    padding-left: 40px;
+  }
+
+  &.is-focused{
+
+    .mce-content-body{
+      border-top: $border;
+      outline: none;
+    }
+
+    .mce-panel{
+      display: block !important;
+    }
+  }
+
+  .mce-content-body{
+    padding: 0.5rem 0;
+    overflow: auto;
+  }
+
+  .mce-panel{
+    background: none;
+    width: 100% !important;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    border-top: 0.1rem solid $blue;
+  }
+
+  .mce-btn{
+    background: none;
+    border-radius: $radius;
+    border: 0.1rem solid transparent;
+    &:hover{
+      background: $gray3;
+      border: $border;
+      .mce-ico{
+        color: $text-color;
+      }
+    }
+    &.mce-active{
+      background: $gray2;
+      border: $border;
+      .mce-ico{
+        color: $text-color;
+      }
+      &:hover{
+        background: $gray3;
+        border: $border;
+      }
+    }
+    .mce-i-audio{
+      font-family: 'Material Icons';
+      font-size: 2rem;
+      width: auto;
+
+      &:before{
+        content: '\e050';
+      }
+    }
+    .mce-i-image{
+      font-family: 'Material Icons';
+      font-size: 2rem;
+      width: auto;
+
+      &:before{
+        content: '\e251';
+      }
+    }
+    .mce-i-video{
+      font-family: 'Material Icons';
+      font-size: 2rem;
+      width: auto;
+
+      &:before{
+        content: '\e04B';
+      }
+    }
+  }
+
+  .mce-flow-layout-item{
+    margin: 0;
+  }
+
+  .mce-ico{
+    color: $gray9;
+  }
+
+  p{
+    margin: 0;
+  }
+  strong{
+    @include bold;
+  }
+  sub{
+    vertical-align: sub !important;
+  }
+  sup{
+    vertical-align: super !important;
+  }
+}
+
+.mce-floatpanel{
+
+  .mce-window-head{
+    height: 5rem;
+    padding: 0 1rem 0 2rem;
+    @include display-flex;
+    @include align-items(center);
+    .mce-close{
+      position: relative;
+      margin-left: auto;
+    }
+  }
+  .mce-btn button{
+    border: none;
+    background: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: $radius;
+    @include display-flex;
+    @include align-items(center);
+    height: 3rem;
+    padding: 0 2rem;
+
+    span{
+      @include bold;
+      font-size: 1.2rem;
+    }
+
+    &:active{
+      @include transform(scale(0.98));
+    }
+  }
+}
+
+.au-c-input-label--left{
+  @include display-flex;
+  @include align-items(center);
+  @include semi-bold;
+  color: $text-alt;
+  font-size: 1.2rem;
+  min-width: 25rem;
+
+  label{
+    white-space: nowrap;
+  }
+
+  .au-c-input__contain{
+    margin-left: 1rem;
+  }
+}
+
+.au-c-input-label--top{
+  @include semi-bold;
+  color: $text-alt;
+  font-size: 1.2rem;
+  min-width: 25rem;
+  height: 1.7rem;
+
+  .au-c-input__contain, select{
+    margin-top: 0.5rem;
+  }
+}
+
+.au-c-input-label--large{
+  font-size: 1.6rem;
+}
+
+.au-c-input--white{
+  label{
+    color: $gray2;
+  }
+  .au-c-text-input{
+    color: $white;
+    border-top: 0.2rem solid transparent;
+    min-height: 2.5rem;
+
+    &:focus{
+      border-top: 0.2rem solid $white;
+    }
+
+    &:focus + .au-c-input__bottom{
+      border-color: $white;
+      background: $white;
+    }
+  }
+  .au-c-input__bottom{
+    border-color: $white;
+  }
+}
+
+.au-c-dropdown{
+  min-width: 20rem;
+  position: relative;
+
+  select{
+    border: 0.1rem solid $gray5;
+    background-color: $gray2;
+    @include semi-bold;
+    color: $text-color;
+    -webkit-appearance: none;
+    height: 3rem;
+    border-radius: 0;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  &:before{
+    content: "\E5C5";
+    font-family: 'Material Icons';
+    font-size: 2rem;
+    color: $text-color;
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    pointer-events: none;
+  }
+}
+
+.au-c-dropdown--small select{
+  font-size: 1.2rem;
+  padding: 0 1rem;
+}
+
+.au-c-dropdown--smaller {
+  min-width: 15rem;
+
+  select{
+    font-size: 1.2rem;
+    padding: 0 1rem;
+  }
+  &:before{
+    right: 0.5rem;
+  }
+}
+
+.au-c-dropdown--tiny {
+  min-width: 6.5rem;
+
+  select{
+    font-size: 1.2rem;
+    padding: 0 1rem;
+  }
+  &:before{
+    right: 0.5rem;
+  }
+}
+
+.au-c-dropdown--medium {
+  select{
+    height: 4rem;
+    font-size: 1.6rem;
+    padding: 0 2rem;
+  }
+  &:before{
+    top: 1rem;
+    right: 2rem;
+  }
+  &.au-c-input-label--top:before{
+    top: 3.2rem;
+    right: 1.5rem;
+  }
+}
+
+.au-c-checkbox{
+
+  label{
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    @include semi-bold;
+    font-size: 1.2rem;
+    color: $text-color;
+    padding-left: 2.7rem;
+    height: 2rem;
+    line-height: 2rem;
+    min-width: 3rem;
+  }
+
+  input[type="checkbox"] + label:before{
+    content: "\E835";
+    color: $gray8;
+    font-size: 2rem;
+    font-family: 'Material Icons';
+    font-weight: normal;
+    position: absolute;
+    line-height: 1;
+    top: 0;
+    left: 0;
+  }
+
+  input[type="checkbox"]:checked + label:before{
+    content: "\E834";
+    color: $blue;
+  }
+
+  input:focus + label{
+    outline: thin dotted;
+  }
+
+  input{
+    opacity: 0;
+    margin: 0;
+    height: 0.01rem;
+    width: 0.01rem;
+    position: absolute;
+  }
+}
+
+.au-c-radio{
+
+  label{
+    min-width: 3rem;
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    @include semi-bold;
+    font-size: 1.2rem;
+    color: $text-color;
+    padding-left: 2.7rem;
+    height: 2rem;
+    line-height: 2rem;
+  }
+
+  input[type="radio"] + label:before{
+    content: "\E836";
+    color: $gray8;
+    font-size: 2rem;
+    font-family: 'Material Icons';
+    font-weight: normal;
+    position: absolute;
+    line-height: 1;
+    top: 0;
+    left: 0;
+  }
+
+  input[type="radio"]:checked + label:before{
+    content: "\E837";
+    color: $blue;
+  }
+
+  input:focus + label{
+    outline: thin dotted;
+  }
+
+  input{
+    opacity: 0;
+    margin: 0;
+    height: 0.01rem;
+    width: 0.01rem;
+    position: absolute;
+  }
+}
+
+input.au-c-file{
+  opacity: 0;
+  margin: 0;
+  height: 0.01rem;
+  width: 0.01rem;
+  position: absolute;
+  z-index: -1;
+}
+
+.au-c-answer{
+
+  .au-c-checkbox, .au-c-radio{
+    position: absolute;
+    left: -4rem;
+    top: 0.2rem;
+    height: 3rem;
+    width: 3rem;
+
+    label{
+      padding: 0;
+      height: 3rem;
+      line-height: 3rem;
+    }
+  }
+
+  .au-c-radio{
+
+    input[type="radio"] + label:before{
+      font-size: 3rem;
+    }
+
+    input[type="radio"]:checked + label:before{
+      color: $green;
+    }
+  }
+
+  .au-c-checkbox{
+
+    input[type="checkbox"] + label:before{
+      font-size: 3rem;
+    }
+
+    input[type="checkbox"]:checked + label:before{
+      color: $green;
+    }
+  }
+}
+
+.au-c-placeholder{
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: $gray5;
+
+  &.is-hidden{
+    display: none;
+  }
+}

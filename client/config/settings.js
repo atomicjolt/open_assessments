@@ -10,13 +10,13 @@ const prodRelativeOutput = '/';
 const devOutput  = path.join(__dirname, '../../build/dev', devRelativeOutput);
 const prodOutput = path.join(__dirname, '../../build/prod', prodRelativeOutput);
 
-//const prodAssetsUrl = ''; // Set this to the url where the assets will be deployed.
+// const prodAssetsUrl = ''; // Set this to the url where the assets will be deployed.
                           // If you want the paths to be relative to the deploy then leave this
                           // value as an empty string. This value could also be a CDN or
                           // it could be the ssl version of your S3 bucket ie:
                           // https://s3.amazonaws.com/' + deployConfig.domain;
 
-const prodAssetsUrl = `https://s3.amazonaws.com/${deployConfig.domain}`;
+const prodAssetsUrl = ''; // `https://s3.amazonaws.com/${deployConfig.domain}`;
 
 // There is a warning if the .env file is missing
 // This is fine in a production setting, where settings
@@ -48,11 +48,13 @@ module.exports = {
   staticDir: `${clientAppPath}static`,
 
   entries: {
-    app: `${clientAppPath}js/app.jsx`
+    player : `${clientAppPath}js/_player/app.jsx`,
+    author : `${clientAppPath}js/_author/app.jsx`,
   },
 
   cssEntries: {
-    styles: `${clientAppPath}styles/styles.js`
+    player_styles : `${clientAppPath}styles/player_styles.js`,
+    author_styles : `${clientAppPath}styles/author_styles.js`
   }
 
 };

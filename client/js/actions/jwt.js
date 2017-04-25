@@ -13,8 +13,8 @@ export const Constants = wrapper(actions, requests);
 
 export function refreshJwt(userId) {
   return {
-    type:   Constants.REFRESH_JWT,
-    apiCall: true,
-    userId
+    type   : Constants.REFRESH_JWT,
+    method : Network.GET,
+    url    : `api/jwts/${userId}`,
   };
 }

@@ -1,24 +1,31 @@
-#Open Assessments
-Open Assessments is a QTI client that can interpret QTI 1.x and 2.x.
+#Open Assessments [![Build Status](https://travis-ci.org/atomicjolt/open_assessments.svg?branch=master)](https://travis-ci.org/atomicjolt/open_assessments) 
+Open Assessments is a QTI client that can interpret QTI 1.x and 2.x as well as an authoring tool for generating
+QTI files. It currently works with MIT's QBank system.
 
 #Getting Started:
 -----------------------
 
-Make sure to install git and npm before you start then:
+Make sure to install git, npm and yarn before you start then:
 
-1. git clone https://github.com/atomicjolt/react_client_starter_app.git my_project_name
-2. Rename .env.example to .env. This file contains the port the server will use. The default 8080 should be fine, but you can also use a local domain or ngrok if you wish.
-3. npm install
+1. git clone https://github.com/atomicjolt/open_assessments my_project_name
+2. Rename .env.example to .env. This file contains the port the server will use.
+   The default 8080 should be fine, but you can also use a local domain or ngrok if you wish.
+3. Install packages with
+
+    `yarn`
+
 4. Start server with:
 
-  `npm run hot`
+  `yarn hot`
 
 then visit http://localhost:8080
 
 
 #Background
 -----------------------
-This code based has was originally developed in partnership with MIT and Atomic Jolt. It has since been adapted by Lumen Learning and again by MIT. It is currently use in production at institutions through the United States and Internationally.
+This code based has was originally developed in partnership with MIT and Atomic Jolt.
+It has since been adapted by Lumen Learning and again by MIT. It is currently use in
+production at institutions through the United States and Internationally.
 
 ###QTI
 -----------------------
@@ -58,7 +65,82 @@ Just specify a src_url. CORS must be enabled on the server specified by src_url.
 
 http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest&src_url=https%253A%252F%252Fdl.dropboxusercontent.com%252Fu%252F7594429%252FedXCourse%252Fsequential%252F97cc2d1812204294b5fcbb91a1157368.xml
 
-####Settings - can be passed via window.DEFAULT_SETTINGS or url params
+
+## Assets
+-----------
+Any files added to the assets directory can be used by in code and assigned to a variable. This
+allows for referring to assets using dynamically generated strings. The assets will be built according to
+the rules specified in your webpack configuration. Typically, this means that in production the names will
+be changed to include a SHA.
+
+First importing the assets:
+  `import assets from '../libs/assets';`
+
+Then assign the assest to a variable:
+  `const img = assets("./images/atomicjolt.jpg");`
+
+The value can then be used when rendering:
+  `render(){
+    const img = assets("./images/atomicjolt.jpg");
+    return<div>
+    <img src={img} />
+    </div>;
+  }`
+
+
+## Static
+-----------
+Files added to the static directory will be copied directly into the build. These files will not be renamed.
+
+
+#Tests
+-----------
+Karma and Jasmine are used for testing. To run tests run:
+
+  `yarn test`
+
+
+#Check for updates
+-----------
+Inside the client directory run:
+
+  `yarn upgrade-interactive`
+
+
+#Deploy to S3:
+-----------------------
+
+  1. Setup credentials. If you've already setup your Amazon credentials in ~/.aws/credentials
+  you will be able to do something similar to the following where "myprofile" is one of
+  the AWS profiles found in ~/.aws/credentials:
+
+    export AWS_DEFAULT_PROFILE=myprofile
+    export AWS_PROFILE=myprofile
+
+  You can also use a .env file. See the [s3-website](https://github.com/klaemo/s3-website) documentation for more options.
+
+  2. Edit configuration.
+
+    Open up .s3-website.json and set the desired bucket name
+
+  3. Configure the bucket as a website
+
+    `yarn create`
+
+  4. Deploy.
+
+    `yarn release`
+
+#Production
+-----------------------
+If you want to see what your application will look like in production run
+
+  `yarn live`
+
+This will serve files from the build/prod directory.
+
+
+#Settings - can be passed via window.DEFAULT_SETTINGS or url params
 -----------------------
 
     ##### General
@@ -91,7 +173,7 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     confidence_levels            - Whether or not to show confidence controls
     locale                       - Sets player language. Languages currently supported: "en"
     audio_recorder_timeout       - Maximum allowed audio recording length, should be a value of seconds.
-    
+
     // User settings
     role                         - The current user's role. This will control if certain controls show up. The server is still responsible for security.
 
@@ -140,11 +222,11 @@ http://www.openassessments.com/assessments/load?confidence_levels=true&eid=atest
     bank                         - The id of the QBank bank. Looks something like: "assessment.Bank%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU"
     assessment_offered_id        - An identifier provided by QBank that uniquely identifies the assessment to be taken. Use this id to get an assessment taken id. Looks something like "assessment.AssessmentOffered%3A576d7ee94a40456f9a434e4d%40ODL.MIT.EDU"
 
-####Embed
+#Embed
 Open Assessments is embedded into the page via an iframe. Example:
     `<iframe id="openassessments_container" src="//www.openassessments.com/assessments/load?confidence_levels=true&src_url=http://www.openassessments.com/api/assessments/55.xml&results_end_point=http://www.openassessments.com/api&assessment_id=55&eid=ch15" frameborder="0" style="border:none;width:100%;height:100%;min-height:400px;"></iframe><script src="http://www.openassessments.com/assets/openassessments.js" type="text/javascript"></script>`
 
-####Stats
+#Stats
 -----------------------
 For assessments loaded into http://www.openassessments.com you simply need to browse to the assessment and click on the bar graph.
 Stats are available on the site, as json and as csv. Loading stats for an assessment that was loaded via a src_url is a bit trickier.
@@ -166,9 +248,3 @@ json:
 http://www.openassessments.com/assessment_results/0.json?eid=atest
 
 We recommend using a GUID for the eid to prevent conflicts with other assessments.
-
-#Tests
------------
-Karma and Jasmine are used for testing. To run tests run:
-
-  `npm run test`

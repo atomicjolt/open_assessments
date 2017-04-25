@@ -1,0 +1,27 @@
+/*-------------------------------------*\
+      #IMPORTS
+\*-------------------------------------*/
+
+//themes (to switch themes, target the appropriate file)
+@import "themes/themes.mit";
+
+//tools
+@import "tools/tools.mixins";
+
+//base
+@import "base/base";
+
+//objects
+@import "objects/objects.objects";
+
+//components
+@import "components/components.header";
+@import "components/components.question-prompt";
+@import "components/components.answers";
+@import "components/components.assessment-navigation";
+@import "components/components.feedback";
+@import "components/components.confidence-map";
+@import "components/components.assessment-loading";
+@import "components/components.word-box";
+@import "components/_components.assessment-finished";
+@import "components/_components.clix-drag-and-drop";

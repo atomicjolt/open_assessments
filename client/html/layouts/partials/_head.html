@@ -1,0 +1,46 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Open Assessments</title>
+<meta name="description" content="Open Assessments">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript">
+  window.DEFAULT_SETTINGS = {
+    user_id      : 0,
+    max_attempts : 1,
+    eid          : "external_identifier",
+    // api_url      : "https://qbank-clix-staging.mit.edu/api/v1",
+    api_url      : "https://qbank-clix-dev.mit.edu/api/v1",
+    bank:          "assessment.Bank%3A577fcf7cc89cd90cbd5616fa%40ODL.MIT.EDU",
+    assessment_offered_id: "assessment.AssessmentOffered%3A58824256c89cd9741bab8942%40ODL.MIT.EDU",
+    lambda_url: 'https://4h8n6sg95j.execute-api.us-east-1.amazonaws.com/dev/proxy',
+    assessment_kind: "SUMMATIVE",
+    // qBankHost: 'https://qbank-clix-staging.mit.edu',
+    qBankHost: 'https://qbank-clix-dev.mit.edu',
+    assessmentPlayerUrl: 'http://openassessments.com.s3-website-us-east-1.amazonaws.com',
+    editableBankId: 'assessment.Bank%3A588f9225c89cd977c3560780%40ODL.MIT.EDU',
+    publishedBankId: 'assessment.Bank%3A588f9240c89cd977c3560781%40ODL.MIT.EDU',
+    // baseEmbedUrl: 'http://openassessments.com.s3-website-us-east-1.amazonaws.com/?unlock_next=ON_CORRECT&api_url=https://qbank-clix-staging.mit.edu/api/v1',
+    baseEmbedUrl: 'http://openassessments.com.s3-website-us-east-1.amazonaws.com/?unlock_next=ON_CORRECT&api_url=https://qbank-clix-dev.mit.edu/api/v1',
+    one_item_per_page: 'assessment-offered-genus-type%3Asingle-item%40ODL.MIT.EDU',
+    single_page: 'assessment-offered-genus-type%3Asingle-page%40ODL.MIT.EDU',
+    questions_per_section:1,
+    questions_per_page:1,
+    unlock_next: "ON_CORRECT",
+    locale: "en",
+    audio_recorder_timeout: 100,
+  };
+  window.DEFAULT_JWT = null;
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src="MathJax/MathJax.js?config=TeX-MML-AM_HTMLorMML.js"></script>
