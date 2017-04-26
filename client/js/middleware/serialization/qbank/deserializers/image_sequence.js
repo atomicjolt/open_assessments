@@ -26,6 +26,7 @@ function deserializeChoiceTexts(choices) {
 
 function deserializeChoices(choices, correctAnswer, incorrectId) {
   const newChoices = {};
+
   _.forEach(choices, (choice, index) => {
     const answerIndex = correctAnswer.choiceIds.indexOf(choice.id);
     const isCorrect = answerIndex >= 0;
@@ -49,7 +50,6 @@ export default function imageSequence(item) {
   const newItem = baseDeserializer(item);
   const correctAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.rightAnswer });
   const incorrectAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.wrongAnswer });
-
   newItem.question = {
     ...newItem.question,
     shuffle: _.get(item, 'question.shuffle'),
