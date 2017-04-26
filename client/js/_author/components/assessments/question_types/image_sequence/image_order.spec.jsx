@@ -16,6 +16,7 @@ describe('image_order component', () => {
       },
       deleteChoice: () => {},
       updateChoice: () => {},
+      language: 'fake_language_id'
     };
     result = shallow(<ImageOrder {...props} />);
   });
