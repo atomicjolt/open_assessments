@@ -26,8 +26,8 @@ export function deserializeMultiLanguageChoice(choice) {
   const englishTypeId = languages.languageTypeId.english;
   return {
     id: choice.id,
-    text: texts[englishTypeId].text,
-    wordType: texts[englishTypeId].wordType,
+    text: _.get(texts, `[${englishTypeId}].text`, ''),
+    wordType: _.get(texts, `[${englishTypeId}].wordType`, ''),
     texts
   };
 }
@@ -60,7 +60,6 @@ export default function movableWordSandbox(item) {
     seconds: _.toString(audioLimit)
   });
 
-  // const choices = deserializeChoices(_.get(item, 'question.choices', {}));
   const choices = deserializeMultiLanguageChoices(_.get(item, 'question.multiLanguageChoices', {}));
 
   newItem.question = {
