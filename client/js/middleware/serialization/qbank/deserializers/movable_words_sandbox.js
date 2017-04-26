@@ -46,10 +46,11 @@ function deserializeChoice(choice) {
 }
 
 export function deserializeChoices(choices) {
-  return choices.reduce((all, choice) => {
+  const all = {};
+  _.each(choices, (choice) => {
     all[choice.id] = deserializeChoice(choice);
-    return all;
-  }, {});
+  });
+  return all;
 }
 
 export default function movableWordSandbox(item) {
