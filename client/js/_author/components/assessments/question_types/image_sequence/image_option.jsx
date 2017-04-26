@@ -81,6 +81,8 @@ imageOption.propTypes = {
   numChoices: React.PropTypes.number.isRequired,
   localizeStrings: React.PropTypes.func.isRequired,
   duplicateAnswers: React.PropTypes.arrayOf(React.PropTypes.string),
+  item: React.PropTypes.shape({}),
+  language: React.PropTypes.string
 };
 
 export default localize(imageOption);
