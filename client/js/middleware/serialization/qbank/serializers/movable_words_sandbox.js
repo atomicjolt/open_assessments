@@ -1,8 +1,12 @@
 import _ from 'lodash';
 
-import { baseItem }                       from './base';
-import { scrub, getSingleCorrectAnswer }  from '../../serializer_utils';
-import guid                               from '../../../../utils/guid';
+import { baseItem }        from './base';
+import {
+  scrub,
+  getSingleCorrectAnswer,
+  languageText
+}                          from '../../serializer_utils';
+import guid                from '../../../../utils/guid';
 
 const makeChoiceText = (choice) => {
   if (choice.wordType) {
@@ -11,17 +15,26 @@ const makeChoiceText = (choice) => {
   return `<p>${choice.text}</p>`;
 };
 
-const makeChoice = choice => (
-  scrub({
+const makeNewChoice = language => ({
+  id: guid(),
+  texts: {
+    [language]: { text: '' }
+  }
+});
+
+const makeChoice = (choice, language) => {
+  const text = choice.text || _.get(choice, `texts[${language}].text`, '');
+  const wordType = choice.wordType || _.get(choice, `texts[${language}].wordType`, '');
+  return scrub({
     delete: choice.delete,
     id: choice.id,
-    text: makeChoiceText(choice),
-  })
-);
+    text: languageText(makeChoiceText({ text, wordType }), language),
+  });
+};
 
 
-export function serializeChoices(choices) {
-  return _.map(choices, (choice => makeChoice(choice)));
+export function serializeChoices(choices, language) {
+  return _.map(choices, (choice => makeChoice(choice, language)));
 }
 
 export function serializeFileIds(correctFeedback, incorrectFeedback) {
@@ -43,28 +56,24 @@ export default function movableWordsSerializer(originalItem, newItemAttributes) 
     );
   }
 
-  // Serialize choices
-  let choices =  _.get(newItem, 'question.choices', {});
+
   const newChoiceAttributes = _.get(newItemAttributes, 'question.choices', {});
-  if (newChoiceAttributes.new) {
-    const id = guid();
-    choices[id] = {
-      id,
-      text: '',
-    };
-  } else if (!_.isEmpty(newChoiceAttributes)) {
-    choices = _.merge(
-      {},
-      _.get(originalItem, 'question.choices', {}),
-      choices,
-      newChoiceAttributes
-    );
-  }
+  if (!_.isEmpty(newChoiceAttributes)) {
+    const originalChoices = _.get(originalItem, 'question.choices', {});
+    const toUpdate = _.map(newChoiceAttributes, (choice) => {
+      const originalChoice = _.get(originalChoices, `[${choice.id}]`, {});
+      if (choice.id === 'new') { return makeNewChoice(language); }
+      return _.merge(
+        {},
+        {
+          texts: originalChoice.texts
+        },
+        choice
+      );
+    });
 
-  if (!_.isEmpty(choices)) {
-    _.set(newItem, 'question.choices', serializeChoices(choices));
+    _.set(newItem, 'question.choices', serializeChoices(toUpdate, language));
   }
-
   const correctFeedback = _.get(question, 'correctFeedback');
 
   if (correctFeedback) {
