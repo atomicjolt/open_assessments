@@ -22,7 +22,7 @@ describe('image_option component', () => {
       },
       activateChoice: () => { activatedChoice = true; },
       id: '7',
-      text: '',
+      text: 'sample_text',
       labelText: '',
       order: 2,
       numChoices: 3,
@@ -32,7 +32,7 @@ describe('image_option component', () => {
   });
 
   it('renders a snapshot', () => {
-    const tree = renderer.create(<ImageOption />).toJSON();
+    const tree = renderer.create(<ImageOption text={props.text} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 

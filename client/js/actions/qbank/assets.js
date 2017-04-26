@@ -25,7 +25,7 @@ export function uploadMedia(file, fileGuids, bankId, metaData = {}) {
   };
 }
 
-export function addMediaToQuestion(file, bankId, itemId, where, metaData, newMedia) {
+export function addMediaToQuestion(file, bankId, itemId, where, metaData, newMedia, language) {
   return {
     bankId,
     file,
@@ -37,5 +37,6 @@ export function addMediaToQuestion(file, bankId, itemId, where, metaData, newMed
     type: Constants.ADD_MEDIA_TO_QUESTION,
     body: file,
     timeout: 2000000,
+    language
   };
 }
