@@ -3,6 +3,8 @@ import _        from 'lodash';
 import WordType from '../question_common/word_type_dropdown';
 import localize from '../../../../locales/localize';
 
+const defaultText = { text: '', wordType: undefined };
+
 function option(props) {
   const strings = props.localizeStrings('movableWordSentanceOption');
 
@@ -10,6 +12,7 @@ function option(props) {
   if (!_.isNil(props.answerOrder) && props.answerOrder !== '') { boxClass = 'is-ordered'; }
   if (_.includes(props.duplicateAnswers, props.answerOrder)) { boxClass = 'is-error'; }
 
+  const choiceText = _.get(props, `texts[${props.language}]`, defaultText);
   return (
     <div
       onFocus={props.selectChoice}
@@ -42,7 +45,7 @@ function option(props) {
         <label htmlFor={`option_text_${props.id}`} />
         <div className="au-c-input__contain">
           <input
-            defaultValue={props.text}
+            defaultValue={choiceText.text}
             onBlur={e => props.updateChoice({ text: e.target.value })}
             className="au-c-text-input au-c-text-input--small au-c-wysiwyg"
             id={`option_text_${props.id}`}
@@ -55,7 +58,7 @@ function option(props) {
 
       <WordType
         id={props.id}
-        wordType={props.wordType}
+        wordType={choiceText.wordType}
         updateChoice={props.updateChoice}
       />
 

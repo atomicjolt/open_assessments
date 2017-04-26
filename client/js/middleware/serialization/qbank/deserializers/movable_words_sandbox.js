@@ -32,6 +32,7 @@ export function deserializeMultiLanguageChoice(choice) {
   };
 }
 
+// TODO import these from utils and use them
 export function deserializeMultiLanguageChoices(choices) {
   const all = {};
   _.each(
