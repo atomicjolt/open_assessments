@@ -31,7 +31,7 @@ class MWSandbox extends React.Component {
       index += 1;
       return (
         <Option
-          key={choice.id}
+          key={`${choice.id}_${this.props.language}`}
           choice={choice}
           index={index}
           selectChoice={() => this.props.selectChoice(choice.id)}
@@ -41,6 +41,7 @@ class MWSandbox extends React.Component {
           }
           deleteChoice={() => this.props.deleteChoice(choice)}
           isActive={this.props.isActive && choice.id === this.props.activeChoice}
+          language={this.props.language}
         />
       );
     });
