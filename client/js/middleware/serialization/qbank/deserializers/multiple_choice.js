@@ -37,7 +37,6 @@ function deserializeChoices(choices, answers) {
 
 export default function multipleChoice(item) {
   const newItem = baseDeserializer(item);
-
   newItem.question = {
     ...newItem.question,
     shuffle: _.get(item, 'question.shuffle'),
