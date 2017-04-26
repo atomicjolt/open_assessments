@@ -2,13 +2,15 @@ import _                       from 'lodash';
 import baseDeserializer        from './base';
 import genusTypes              from '../../../../constants/genus_types';
 import { parseChoiceText,
-         parseChoiceWordType } from '../../serializer_utils';
+         parseChoiceWordType,
+         deserializeMultiLanguageChoices } from '../../serializer_utils';
 
 function deserializeChoices(choices, correctAnswer, incorrectId) {
   const newChoices = {};
   _.forEach(choices, (choice, index) => {
     const answerIndex = correctAnswer.choiceIds.indexOf(choice.id);
     const isCorrect = answerIndex >= 0;
+    debugger;
     newChoices[choice.id] = {
       id: choice.id,
       answerId: isCorrect ? correctAnswer.id : incorrectId,
@@ -30,7 +32,7 @@ export default function movableWordSentence(item) {
   newItem.question = {
     ...newItem.question,
     shuffle: _.get(item, 'question.shuffle'),
-    choices: deserializeChoices(_.get(item, 'question.choices'), correctAnswer, _.get(incorrectAnswer, 'id')),
+    choices: deserializeMultiLanguageChoices(_.get(item, 'question.multiLanguageChoices', {})),
     correctFeedback: {
       texts: _.get(correctAnswer, 'feedbacks'),
       text: _.get(correctAnswer, 'feedback.text'),
