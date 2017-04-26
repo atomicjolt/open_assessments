@@ -248,3 +248,17 @@ json:
 http://www.openassessments.com/assessment_results/0.json?eid=atest
 
 We recommend using a GUID for the eid to prevent conflicts with other assessments.
+
+# Build issues on Linux
+It has been observed on Linux machines (specifically Ubuntu, but may happen on other platforms as well), that
+`yarn build` sometimes results in missing `css` classes in the build output. This is because `node-sass` was not
+installed properly, so the `.scss` files do not get compiled by `webpack`. To solve this, you need to
+re-build `node-sass`  with the following command:
+
+```
+npm rebuild node-sass
+yarn build
+```
+
+You can check for this problem by looking for a component class like `c-header` in `player_styles-*hash*.css`
+in `build/prod`.
