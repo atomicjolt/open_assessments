@@ -3,7 +3,7 @@ import _        from 'lodash';
 import WordType from '../question_common/word_type_dropdown';
 import localize from '../../../../locales/localize';
 
-const defaultText = { text: '', wordType: undefined };
+const defaultText = { text: '', wordType: 'other' };
 
 function option(props) {
   const strings = props.localizeStrings('movableWordSentanceOption');
@@ -58,7 +58,7 @@ function option(props) {
 
       <WordType
         id={props.id}
-        wordType={choiceText.wordType}
+        wordType={props.wordType}
         updateChoice={props.updateChoice}
       />
 
