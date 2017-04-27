@@ -3,12 +3,42 @@ import $                  from 'jquery';
 import baseDeserializer   from './base';
 import genusTypes         from '../../../../constants/genus_types';
 import { parseChoiceText,
-         parseChoiceWordType } from '../../serializer_utils';
+         parseChoiceWordType,
+         deserializeMultiLanguageChoices,
+         deserializeMultiLanguageChoice
+        } from '../../serializer_utils';
+
+// function _deserializeChoices(choices, answers, blankId) {
+//   const newChoices = {};
+//
+//   _.forEach(choices, (choice) => {
+//     newChoices[choice.id] = {
+//       id: choice.id,
+//       answerId: null,
+//       text: parseChoiceText(choice.text),
+//       wordType: parseChoiceWordType(choice.text),
+//       isCorrect: false,
+//       blankId,
+//     };
+//     _.forEach(answers, (answer) => {
+//       if (_.includes(_.get(answer, `inlineRegions.${blankId}.choiceIds`), choice.id)) {
+//         newChoices[choice.id] = {
+//           ...newChoices[choice.id],
+//           feedback: _.get(answer, 'feedback.text'),
+//           isCorrect: answer.genusTypeId === genusTypes.answer.rightAnswer,
+//           answerId: answer.id,
+//         };
+//       }
+//     });
+//   });
+//   return newChoices;
+// }
 
 function deserializeChoices(choices, answers, blankId) {
   const newChoices = {};
 
   _.forEach(choices, (choice) => {
+    const multiLangAttributes = deserializeMultiLanguageChoice(choice);
     newChoices[choice.id] = {
       id: choice.id,
       answerId: null,
@@ -16,6 +46,7 @@ function deserializeChoices(choices, answers, blankId) {
       wordType: parseChoiceWordType(choice.text),
       isCorrect: false,
       blankId,
+      ...multiLangAttributes
     };
     _.forEach(answers, (answer) => {
       if (_.includes(_.get(answer, `inlineRegions.${blankId}.choiceIds`), choice.id)) {
@@ -77,12 +108,20 @@ export default function movableFillBlank(item) {
   // We are assuming only one blank, so it will only ever be the first key.
   const inlineRegionId = getInlineRegionId(item);
 
+  // const a = _.get(item, 'question.multiLanguageChoices', {});
+  // const multiLangChoices = deserializeChoices(
+  //   _.get(item, `question.multiLanguageChoices["${inlineRegionId}"]`)
+  // );
+    // _(item)
+    // .get('question.multiLanguageChoices', {})
+    // _(a).map( choices => deserializeMultiLanguageChoices(choices)).value();
+
   newItem.question = {
     ...newItem.question,
     text: convertToText(newItem.question.text),
     texts: handleTexts(newItem.question.texts),
     choices: deserializeChoices(
-      _.get(item, `question.choices["${inlineRegionId}"]`),
+      _.get(item, `question.multiLanguageChoices["${inlineRegionId}"]`),
       item.answers,
       inlineRegionId
     ),
