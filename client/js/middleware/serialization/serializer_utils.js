@@ -72,14 +72,6 @@ export function parseChoiceWordType(text) {
   return $(parsedInput).attr('class');
 }
 
-// function parseChoiceText(text) {
-//   const nodes = $.parseHTML(text);
-//   return {
-//     text: $(nodes).text(),
-//     wordType: $(nodes).attr('class'),
-//   };
-// }
-
 export function deserializeMultiLanguageChoice(choice) {
   const texts = {};
   _.each(
