@@ -29,12 +29,26 @@ describe('movableWordSentence', () => {
       }],
       question: {
         id: 'questionId',
-        choices: [{
+        multiLanguageChoices: [{
           id: 'asdf',
           text: 'choiceText1',
+          texts: {
+            '639-2%3AENG%40ISO': {
+              text: 'choiceText1',
+              languageTypeId: '639-2%3AENG%40ISO',
+              wordType: 'noun'
+            }
+          }
         }, {
           id: 'qwer',
-          text: 'choiceText2'
+          text: 'choiceText2',
+          texts: {
+            '639-2%3AENG%40ISO': {
+              text: 'choiceText2',
+              languageTypeId: '639-2%3AENG%40ISO',
+              wordType: 'noun'
+            }
+          }
         }],
         fileIds: {},
         shuffle: false,
@@ -55,8 +69,8 @@ describe('movableWordSentence', () => {
 
   it('should check text', () => {
     const result = movableWordSentence(item);
-    expect(result.question.choices.asdf.text).toBe('choiceText1');
-    expect(result.question.choices.qwer.text).toBe('choiceText2');
+    expect(result.question.choices.asdf.texts['639-2%3AENG%40ISO'].text).toBe('choiceText1');
+    expect(result.question.choices.qwer.texts['639-2%3AENG%40ISO'].text).toBe('choiceText2');
   });
 
   it('should check order', () => {
