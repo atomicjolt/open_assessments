@@ -1,26 +1,7 @@
-import _                       from 'lodash';
-import baseDeserializer        from './base';
-import genusTypes              from '../../../../constants/genus_types';
-import { parseChoiceText,
-         parseChoiceWordType,
-         deserializeMultiLanguageChoices } from '../../serializer_utils';
-
-// function deserializeChoices(choices, correctAnswer, incorrectId) {
-//   const newChoices = {};
-//   _.forEach(choices, (choice, index) => {
-//     const answerIndex = correctAnswer.choiceIds.indexOf(choice.id);
-//     const isCorrect = answerIndex >= 0;
-//     newChoices[choice.id] = {
-//       id: choice.id,
-//       answerId: isCorrect ? correctAnswer.id : incorrectId,
-//       text: parseChoiceText(choice.text),
-//       wordType: parseChoiceWordType(choice.text),
-//       order: index,
-//       answerOrder: isCorrect ? answerIndex : '',
-//     };
-//   });
-//   return newChoices;
-// }
+import _                                   from 'lodash';
+import baseDeserializer                    from './base';
+import genusTypes                          from '../../../../constants/genus_types';
+import { deserializeMultiLanguageChoices } from '../../serializer_utils';
 
 function deserializeChoices(choices, correctAnswer, incorrectId) {
   const deserializedChoices = deserializeMultiLanguageChoices(choices);
@@ -40,22 +21,6 @@ function deserializeChoices(choices, correctAnswer, incorrectId) {
     count += 1;
   });
   return deserializedChoices;
-
-    // TODO add answerOrder and order
-  // const newChoices = {};
-  // _.forEach(choices, (choice, index) => {
-  //   const answerIndex = correctAnswer.choiceIds.indexOf(choice.id);
-  //   const isCorrect = answerIndex >= 0;
-  //   newChoices[choice.id] = {
-  //     id: choice.id,
-  //     answerId: isCorrect ? correctAnswer.id : incorrectId,
-  //     text: parseChoiceText(choice.text),
-  //     wordType: parseChoiceWordType(choice.text),
-  //     order: index,
-  //     answerOrder: isCorrect ? answerIndex : '',
-  //   };
-  // });
-  // return newChoices;
 }
 
 export default function movableWordSentence(item) {

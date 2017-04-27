@@ -110,6 +110,6 @@ export default function movableWordSentence(originalItem, newItemAttributes) {
       );
     }
   }
-  debugger;
+
   return scrub(newItem);
 }

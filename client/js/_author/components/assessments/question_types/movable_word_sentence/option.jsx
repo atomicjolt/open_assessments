@@ -13,7 +13,7 @@ function option(props) {
   if (_.includes(props.duplicateAnswers, props.answerOrder)) { boxClass = 'is-error'; }
 
   const choiceText = _.get(props, `texts[${props.language}]`, defaultText);
-  console.log(props.answerOrder);
+
   return (
     <div
       onFocus={props.selectChoice}
@@ -72,7 +72,6 @@ function option(props) {
 
 option.propTypes = {
   id: React.PropTypes.string.isRequired,
-  text: React.PropTypes.string,
   wordType: React.PropTypes.string,
   answerOrder: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string]),
   itemCount: React.PropTypes.number.isRequired,
@@ -82,6 +81,7 @@ option.propTypes = {
   deleteChoice: React.PropTypes.func.isRequired,
   localizeStrings: React.PropTypes.func.isRequired,
   duplicateAnswers: React.PropTypes.arrayOf(React.PropTypes.string),
+  language: React.PropTypes.string,
 };
 
 export default localize(option);
