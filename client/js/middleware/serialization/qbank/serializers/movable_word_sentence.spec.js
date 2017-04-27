@@ -1,5 +1,6 @@
 import movableWordSentence          from './movable_word_sentence';
 import genusTypes                   from '../../../../constants/genus_types';
+import { languages }                from '../../../../constants/language_types';
 
 describe('movable_word_sentence serializer', () => {
   let item;
@@ -12,13 +13,21 @@ describe('movable_word_sentence serializer', () => {
         correctFeedback: { answerId: '1' },
         choices: [{
           id: 'id14a6824a-79f2-4c00-ac6a-b41cbb64db45',
-          text: 'the bus',
-          wordType: 'noun',
+          texts: {
+            '639-2%3AENG%40ISO': {
+              text: 'the bus',
+              wordType: 'noun'
+            }
+          }
         },
         {
           id: 'id969e920d-6d22-4d06-b4ac-40a821e350c6',
-          text: 'the airport',
-          wordType: 'noun',
+          texts: {
+            '639-2%3AENG%40ISO': {
+              text: 'the airport',
+              wordType: 'noun'
+            }
+          }
         }],
       },
       answers: [{
@@ -43,6 +52,7 @@ describe('movable_word_sentence serializer', () => {
           id: '1',
         },
       },
+      language: '639-2%3AENG%40ISO',
     };
     result = movableWordSentence(item, newItemAttr);
   });
@@ -51,13 +61,23 @@ describe('movable_word_sentence serializer', () => {
     const expectedChoices = [
       {
         id: 'id14a6824a-79f2-4c00-ac6a-b41cbb64db45',
-        text: '<p class="noun">the bus</p>',
+        text: {
+          formatTypeId: languages.formatTypeId,
+          languageTypeId: languages.languageTypeId.english,
+          scriptTypeId: languages.scriptTypeId.english,
+          text: '<p class="noun">the bus</p>',
+        },
         order: undefined,
         delete: undefined,
       },
       {
         id: 'id969e920d-6d22-4d06-b4ac-40a821e350c6',
-        text: '<p class="noun">the airport</p>',
+        text: {
+          formatTypeId: languages.formatTypeId,
+          languageTypeId: languages.languageTypeId.english,
+          scriptTypeId: languages.scriptTypeId.english,
+          text: '<p class="noun">the airport</p>',
+        },
         order: undefined,
         delete: undefined,
       },
@@ -71,9 +91,9 @@ describe('movable_word_sentence serializer', () => {
         genusTypeId: 'answer-type%3Aright-answer%40ODL.MIT.EDU',
         feedback: {
           text: 'correctText',
-          languageTypeId: undefined,
+          languageTypeId: languages.languageTypeId.english,
           formatTypeId: 'TextFormats%3APLAIN%40okapia.net',
-          scriptTypeId: undefined,
+          scriptTypeId: languages.scriptTypeId.english,
         },
         type: 'answer-record-type%3Amulti-choice-answer%40ODL.MIT.EDU'
       },
