@@ -13,6 +13,7 @@ function option(props) {
   if (_.includes(props.duplicateAnswers, props.answerOrder)) { boxClass = 'is-error'; }
 
   const choiceText = _.get(props, `texts[${props.language}]`, defaultText);
+  console.log(props.answerOrder);
   return (
     <div
       onFocus={props.selectChoice}
