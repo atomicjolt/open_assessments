@@ -126,7 +126,6 @@ export class Question extends React.Component {
   }
 
   updateChoice(itemId, choiceId, choice, fileIds, type) {
-    debugger;
     const { item } = this.props;
     const updateAttributes = {
       id: itemId,

@@ -24,6 +24,7 @@ import { parseChoiceText,
 
 function deserializeChoices(choices, correctAnswer, incorrectId) {
   const deserializedChoices = deserializeMultiLanguageChoices(choices);
+  let count = 0;
   _.each(deserializedChoices, (choice, index) => {
     const answerIndex = correctAnswer.choiceIds.indexOf(choice.id);
     const isCorrect = answerIndex >= 0;
@@ -32,10 +33,11 @@ function deserializeChoices(choices, correctAnswer, incorrectId) {
       choice,
       {
         answerId: isCorrect ? correctAnswer.id : incorrectId,
-        order: index,
+        order: count,
         answerOrder: isCorrect ? answerIndex : '',
       }
     );
+    count += 1;
   });
   return deserializedChoices;
 
