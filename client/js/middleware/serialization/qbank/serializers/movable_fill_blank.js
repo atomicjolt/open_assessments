@@ -10,12 +10,14 @@ function serializeChoices(originalChoices, newChoiceAttributes, inlineRegionId, 
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
     const originalText = _.get(choice, `texts[${language}]`, defaultChoiceText());
+    const updatedText = _.get(updateValues, `texts[${language}]`, {});
+
 
     const text = buildChoiceText(
-      _.get(updateValues, 'text', originalText.text),
-      _.get(updateValues, 'wordType') || choice.wordType,
+      updatedText.text || originalText.text,
+      updatedText.wordType || originalText.wordType
     );
-    // debugger;
+
     return {
       id: choice.id,
       text: languageText(text, language),

@@ -43,7 +43,7 @@ class MovableFillBlank extends React.Component {
                   key={`assessmentChoice_${choice.id}_${this.props.language}`}
                   {...choice}
                   updateChoice={newChoice => this.props.updateChoice(id, choice.id, newChoice)}
-                  deleteChoice={() => this.props.deleteChoice(choice)}
+                  deleteChoice={() => this.props.deleteChoice({ id: choice.id })}
                   setActiveChoice={this.props.selectChoice}
                   isActive={this.props.isActive && choice.id === this.props.activeChoice}
                   language={this.props.language}

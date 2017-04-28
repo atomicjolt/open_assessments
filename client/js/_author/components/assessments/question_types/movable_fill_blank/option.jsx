@@ -17,6 +17,7 @@ export default function multipleChoiceOptions(props) {
 
   const isActive = props.isActive ? 'is-active' : '';
   const choiceText = _.get(props, `texts[${props.language}]`, {});
+
   return (
     <div
       onFocus={() => props.setActiveChoice(props.id)}
@@ -37,15 +38,23 @@ export default function multipleChoiceOptions(props) {
             id={`${props.id}_text`}
             type="text"
             defaultValue={choiceText.text}
-            onBlur={e => props.updateChoice({ text: e.target.value })}
+            onBlur={e => props.updateChoice({
+              texts:{
+                [props.language]: { text: e.target.value }
+              }
+            })}
           />
           <div className="au-c-input__bottom" />
         </div>
       </div>
       <WordType
         id={props.id}
-        wordType={props.wordType}
-        updateChoice={props.updateChoice}
+        wordType={choiceText.wordType}
+        updateChoice={choice => props.updateChoice({
+          texts: {
+            [props.language]: choice
+          }
+        })}
       />
       <button
         className="au-c-answer--delete"
@@ -59,7 +68,6 @@ export default function multipleChoiceOptions(props) {
 }
 
 multipleChoiceOptions.propTypes = {
-  text: React.PropTypes.string,
   id: React.PropTypes.string,
   updateChoice: React.PropTypes.func.isRequired,
   deleteChoice: React.PropTypes.func.isRequired,
@@ -67,5 +75,5 @@ multipleChoiceOptions.propTypes = {
   isCorrect: React.PropTypes.bool,
   isActive: React.PropTypes.bool,
   itemId: React.PropTypes.string,
-  wordType: React.PropTypes.string,
+  language: React.PropTypes.string
 };

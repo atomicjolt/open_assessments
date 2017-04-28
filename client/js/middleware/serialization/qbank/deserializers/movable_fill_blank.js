@@ -4,35 +4,8 @@ import baseDeserializer   from './base';
 import genusTypes         from '../../../../constants/genus_types';
 import { parseChoiceText,
          parseChoiceWordType,
-         deserializeMultiLanguageChoices,
          deserializeMultiLanguageChoice
         } from '../../serializer_utils';
-
-// function _deserializeChoices(choices, answers, blankId) {
-//   const newChoices = {};
-//
-//   _.forEach(choices, (choice) => {
-//     newChoices[choice.id] = {
-//       id: choice.id,
-//       answerId: null,
-//       text: parseChoiceText(choice.text),
-//       wordType: parseChoiceWordType(choice.text),
-//       isCorrect: false,
-//       blankId,
-//     };
-//     _.forEach(answers, (answer) => {
-//       if (_.includes(_.get(answer, `inlineRegions.${blankId}.choiceIds`), choice.id)) {
-//         newChoices[choice.id] = {
-//           ...newChoices[choice.id],
-//           feedback: _.get(answer, 'feedback.text'),
-//           isCorrect: answer.genusTypeId === genusTypes.answer.rightAnswer,
-//           answerId: answer.id,
-//         };
-//       }
-//     });
-//   });
-//   return newChoices;
-// }
 
 function deserializeChoices(choices, answers, blankId) {
   const newChoices = {};
