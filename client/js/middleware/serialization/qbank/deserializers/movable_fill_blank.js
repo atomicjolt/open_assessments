@@ -81,14 +81,6 @@ export default function movableFillBlank(item) {
   // We are assuming only one blank, so it will only ever be the first key.
   const inlineRegionId = getInlineRegionId(item);
 
-  // const a = _.get(item, 'question.multiLanguageChoices', {});
-  // const multiLangChoices = deserializeChoices(
-  //   _.get(item, `question.multiLanguageChoices["${inlineRegionId}"]`)
-  // );
-    // _(item)
-    // .get('question.multiLanguageChoices', {})
-    // _(a).map( choices => deserializeMultiLanguageChoices(choices)).value();
-
   newItem.question = {
     ...newItem.question,
     text: convertToText(newItem.question.text),
