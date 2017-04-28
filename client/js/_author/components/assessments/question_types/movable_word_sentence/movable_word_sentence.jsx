@@ -31,6 +31,7 @@ class MovableWordSentence extends React.Component {
   render() {
     const { question, id } = this.props.item;
     const strings = this.props.localizeStrings('movableWordSentence');
+
     return (
       <div>
         <div
@@ -40,7 +41,7 @@ class MovableWordSentence extends React.Component {
           {
             _.map(question.choices, choice => (
               <Option
-                key={`assessmentChoice_${choice.id}`}
+                key={`assessmentChoice_${choice.id}_${this.props.language}`}
                 {...choice}
                 updateChoice={
                   (newChoice, fileIds) => this.props.updateChoice(id, choice.id, newChoice, fileIds)
@@ -50,6 +51,7 @@ class MovableWordSentence extends React.Component {
                 selectChoice={() => this.props.selectChoice(choice.id)}
                 itemCount={_.size(question.choices)}
                 duplicateAnswers={this.props.duplicateAnswers}
+                language={this.props.language}
               />
             ))
           }

@@ -1,20 +1,32 @@
 import _ from 'lodash';
 import $ from 'jquery';
 
-import baseDeserializer                 from './base';
-import { audioLimit }                   from '../../../../constants/question_types';
-import { createSingleCorrectFeedback }  from '../../serializer_utils';
+import baseDeserializer                    from './base';
+import { audioLimit }                      from '../../../../constants/question_types';
+import {
+  createSingleCorrectFeedback,
+  deserializeMultiLanguageChoices
+}                                          from '../../serializer_utils';
+
+
+function parseChoiceText(text) {
+  const nodes = $.parseHTML(text);
+  return {
+    text: $(nodes).text(),
+    wordType: $(nodes).attr('class'),
+  };
+}
+
+function deserializeChoice(choice) {
+  return { ...parseChoiceText(choice.text), id: choice.id };
+}
 
 export function deserializeChoices(choices) {
-  return choices.reduce((all, choice) => {
-    const nodes = $.parseHTML(choice.text);
-    all[choice.id] = {
-      id: choice.id,
-      text: $(nodes).text(),
-      wordType: $(nodes).attr('class'),
-    };
-    return all;
-  }, {});
+  const all = {};
+  _.each(choices, (choice) => {
+    all[choice.id] = deserializeChoice(choice);
+  });
+  return all;
 }
 
 export default function movableWordSandbox(item) {
@@ -25,7 +37,7 @@ export default function movableWordSandbox(item) {
     seconds: _.toString(audioLimit)
   });
 
-  const choices = deserializeChoices(_.get(item, 'question.choices', {}));
+  const choices = deserializeMultiLanguageChoices(_.get(item, 'question.multiLanguageChoices', {}));
 
   newItem.question = {
     ...newItem.question,
