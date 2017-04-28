@@ -1,7 +1,7 @@
-import movableWordsSerializer from './movable_words_sandbox';
-import genusTypes             from '../../../../constants/genus_types';
-import languages              from '../../../../constants/language_types';
-import { languageText }       from '../../serializer_utils';
+import movableWordsSerializer       from './movable_words_sandbox';
+import genusTypes                   from '../../../../constants/genus_types';
+import { languages, getLanguage }   from '../../../../constants/language_types';
+import { languageText }             from '../../serializer_utils';
 
 describe('MovableWordsSandbox', () => {
 
@@ -40,10 +40,20 @@ describe('MovableWordsSandbox', () => {
   it('should serialize choices', () => {
     const expectedChoices = [{
       id: 'id14a6824a-79f2-4c00-ac6a-b41cbb64db45',
-      text: '<p class=\'noun\'>the bus</p>'
+      text: {
+        text: '<p class=\'noun\'>the bus</p>',
+        languageTypeId: languages.languageTypeId.english,
+        formatTypeId: languages.formatTypeId,
+        scriptTypeId: languages.scriptTypeId[getLanguage(languages.languageTypeId.english)]
+      }
     }, {
       id: 'id969e920d-6d22-4d06-b4ac-40a821e350c6',
-      text: '<p class=\'noun\'>the airport</p>'
+      text: {
+        text: '<p class=\'noun\'>the airport</p>',
+        languageTypeId: languages.languageTypeId.english,
+        formatTypeId: languages.formatTypeId,
+        scriptTypeId: languages.scriptTypeId[getLanguage(languages.languageTypeId.english)]
+      }
     }];
 
     const result = movableWordsSerializer(originalItem, item);

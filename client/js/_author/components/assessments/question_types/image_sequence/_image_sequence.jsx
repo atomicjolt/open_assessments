@@ -66,6 +66,7 @@ class ImageSequence extends React.Component {
     return (
       <div style={{ display: this.props.isActive ? 'block' : 'none' }}>
         <ImageOrder
+          language={this.props.language}
           activateChoice={choiceId => this.activateChoice(choiceId)}
           activeChoice={this.state.activeChoice}
           deleteChoice={this.props.deleteChoice}

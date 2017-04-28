@@ -72,7 +72,7 @@ exports[`image_option component renders a snapshot 1`] = `
   >
     <img
       alt=""
-      src={undefined}
+      src="sample_text"
     />
   </div>
 </div>

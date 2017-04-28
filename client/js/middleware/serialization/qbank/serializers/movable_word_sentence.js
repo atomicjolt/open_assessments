@@ -6,17 +6,22 @@ import guid                                     from '../../../../utils/guid';
 
 const defaultWordChoice = 'other';
 
-function serializeChoices(originalChoices, newChoiceAttributes) {
+function serializeChoices(originalChoices, newChoiceAttributes, language) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
     const newOrder = _.get(updateValues, 'order');
     const newWordType = _.get(updateValues, 'wordType');
+    const originalText = _.get(choice, `texts[${language}].text`, '');
+    const originalWordType = _.get(choice, `texts[${language}].wordType`, '');
+
+    const text = buildChoiceText(
+      _.get(updateValues, 'text') || originalText,
+      newWordType || originalWordType || defaultWordChoice,
+    );
+
     return {
       id: choice.id,
-      text: buildChoiceText(
-        _.get(updateValues, 'text') || choice.text,
-        newWordType || choice.wordType || defaultWordChoice,
-      ),
+      text: languageText(text, language),
       order: _.isNil(newOrder) ? choice.order : newOrder,
       delete: _.get(updateValues, 'delete'),
     };
@@ -33,14 +38,15 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
   return choices;
 }
 
-function serializeQuestion(originalQuestion, newQuestionAttributes) {
+function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
   const newQuestion = {
     shuffle: _.isNil(newQuestionAttributes.shuffle) ? null : newQuestionAttributes.shuffle,
     choices: null,
   };
 
   if (newQuestionAttributes.choices) {
-    newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
+    newQuestion.choices =
+      serializeChoices(originalQuestion.choices, newQuestionAttributes.choices, language);
   }
 
   return scrub(newQuestion);
@@ -90,7 +96,7 @@ export default function movableWordSentence(originalItem, newItemAttributes) {
   if (question) {
     newItem.question = {
       ...newItem.question,
-      ...serializeQuestion(originalItem.question, question)
+      ...serializeQuestion(originalItem.question, question, language)
     };
 
     if (question.choices || question.correctFeedback || question.incorrectFeedback) {
@@ -104,5 +110,6 @@ export default function movableWordSentence(originalItem, newItemAttributes) {
       );
     }
   }
+
   return scrub(newItem);
 }

@@ -11,7 +11,7 @@ function select(state) {
   };
 }
 
-export class AddImage extends React.Component {
+export class UpdateImage extends React.Component {
 
   static propTypes = {
     item: React.PropTypes.shape({
@@ -23,6 +23,7 @@ export class AddImage extends React.Component {
     images: React.PropTypes.shape({}),
     localizeStrings:  React.PropTypes.func.isRequired,
     language: React.PropTypes.string,
+    optionId: React.PropTypes.string
   };
 
   constructor() {
@@ -55,7 +56,7 @@ export class AddImage extends React.Component {
       file,
       this.props.item.bankId,
       this.props.item.id,
-      'question.choices.new',
+      `question.choices.${this.props.optionId}`,
       metadata,
       newMedia,
       language
@@ -67,7 +68,6 @@ export class AddImage extends React.Component {
     return (
       <div className="au-c-image-sequence-answer-add">
         <button
-          className="au-c-image-sequence-answer-add__button"
           onClick={() => this.setState({ modal: true })}
         >
           <UploadModal
@@ -92,4 +92,4 @@ export class AddImage extends React.Component {
   }
 }
 
-export default connect(select, AssetActions)(localize(AddImage));
+export default connect(select, AssetActions)(localize(UpdateImage));

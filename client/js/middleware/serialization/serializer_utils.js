@@ -72,6 +72,36 @@ export function parseChoiceWordType(text) {
   return $(parsedInput).attr('class');
 }
 
+export function deserializeMultiLanguageChoice(choice) {
+  const texts = {};
+  _.each(
+    choice.texts,
+    (text) => {
+      texts[text.languageTypeId] = {
+        text: parseChoiceText(text.text),
+        wordType: parseChoiceWordType(text.text)
+      };
+    }
+  );
+
+  const englishTypeId = languages.languageTypeId.english;
+  return {
+    id: choice.id,
+    text: _.get(texts, `[${englishTypeId}].text`, ''),
+    wordType: _.get(texts, `[${englishTypeId}].wordType`, ''),
+    texts
+  };
+}
+
+export function deserializeMultiLanguageChoices(choices) {
+  const all = {};
+  _.each(
+    choices,
+    (choice) => { all[choice.id] = deserializeMultiLanguageChoice(choice); }
+  );
+  return all;
+}
+
 export function getImageUrl(text) {
   const parsedInput = $.parseHTML(text);
   const img = $(parsedInput).find('img');

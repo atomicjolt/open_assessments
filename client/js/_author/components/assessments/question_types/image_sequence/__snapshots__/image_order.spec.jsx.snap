@@ -23,6 +23,7 @@ ShallowWrapper {
                     },
                   }
             }
+            language="fake_language_id"
         />
     </div>
 </div>,
@@ -42,6 +43,7 @@ ShallowWrapper {
                               },
                             }
                   }
+                  language="fake_language_id"
             />
       </div>
 </div>,
@@ -62,6 +64,7 @@ ShallowWrapper {
                         },
                       }
         }
+        language="fake_language_id"
         updateChoice={[Function]}
 />,
       "_debugID": 1,
@@ -78,6 +81,7 @@ ShallowWrapper {
               "choices": Object {},
             },
           },
+          "language": "fake_language_id",
           "updateChoice": [Function],
         },
         "refs": Object {},
@@ -115,6 +119,7 @@ ShallowWrapper {
                                                   },
                                                 }
                               }
+                              language="fake_language_id"
                     />
           </div>
 </div>,
@@ -134,6 +139,7 @@ ShallowWrapper {
                                                   },
                                                 }
                               }
+                              language="fake_language_id"
                     />
           </div>
 </div>,
@@ -158,6 +164,7 @@ ShallowWrapper {
             },
           }
     }
+    language="fake_language_id"
     updateChoice={[Function]}
 />,
 }
