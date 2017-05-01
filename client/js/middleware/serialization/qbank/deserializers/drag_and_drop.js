@@ -1,15 +1,36 @@
 import _                        from 'lodash';
 import baseDeserializer         from './base';
 import { getQbankType, types }  from '../../../../constants/genus_types';
+import { languages }            from '../../../../constants/language_types';
 import { getImageUrl }          from '../../serializer_utils';
 
+
+// TODO
+// function deserializeTarget(targets) {
+//   const target = targets[0];
+//   if (target) {
+//     return {
+//       id: target.id,
+//       image: getImageUrl(target.text),
+//     };
+//   }
+//   return {};
+// }
 
 function deserializeTarget(targets) {
   const target = targets[0];
   if (target) {
+
+    const images = {};
+    _.each(
+      target.texts,
+      (text) => { images[text.languageTypeId] = getImageUrl(text.text); }
+    );
+
     return {
       id: target.id,
-      image: getImageUrl(target.text),
+      image: images[languages.languageTypeId.english],
+      images
     };
   }
   return {};
@@ -53,7 +74,7 @@ export default function dragAndDrop(item) {
 
   newItem.question = {
     ...newItem.question,
-    target: deserializeTarget(_.get(item, 'question.targets')),
+    target: deserializeTarget(_.get(item, 'question.multiLanguageTargets')),
     zones: deserializeZones(_.get(item, 'question.zones')),
     visibleZones: _.get(item, 'question.zones[0].visible'),
     dropObjects: deserializeDropObjects(
@@ -72,6 +93,7 @@ export default function dragAndDrop(item) {
       fileIds: _.get(incorrectAnswer, 'fileIds')
     },
   };
+  debugger;
 
   return newItem;
 }
