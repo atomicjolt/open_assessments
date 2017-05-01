@@ -36,22 +36,48 @@ function deserializeTarget(targets) {
   return {};
 }
 
+function deserializeZone(zone) {
+  const labels = _.reduce(zone.names, (all, name) => ({
+    ...all,
+    [name.languageTypeId]: name
+  }), {});
+  return {
+    id: zone.id,
+    label: _.get(labels, `[${languages.languageTypeId.english}].text`),
+    labels,
+    height: zone.spatialUnit.height,
+    width: zone.spatialUnit.width,
+    xPos: zone.spatialUnit.coordinateValues[0],
+    yPos: zone.spatialUnit.coordinateValues[1],
+    type: getQbankType(zone.dropBehaviorType),
+    index: zone.index
+  };
+}
+
 function deserializeZones(zones) {
   const newZones = {};
   _.forEach(zones, (zone, index) => {
-    newZones[zone.id] = {
-      id: zone.id,
-      label: zone.name,
-      height: zone.spatialUnit.height,
-      width: zone.spatialUnit.width,
-      xPos: zone.spatialUnit.coordinateValues[0],
-      yPos: zone.spatialUnit.coordinateValues[1],
-      type: getQbankType(zone.dropBehaviorType),
-      index
-    };
+    newZones[zone.id] = deserializeZone({ ...zone, index });
   });
   return newZones;
 }
+
+// function deserializeZones(zones) {
+//   const newZones = {};
+//   _.forEach(zones, (zone, index) => {
+//     newZones[zone.id] = {
+//       id: zone.id,
+//       label: zone.name,
+//       height: zone.spatialUnit.height,
+//       width: zone.spatialUnit.width,
+//       xPos: zone.spatialUnit.coordinateValues[0],
+//       yPos: zone.spatialUnit.coordinateValues[1],
+//       type: getQbankType(zone.dropBehaviorType),
+//       index
+//     };
+//   });
+//   return newZones;
+// }
 
 function deserializeDropObjects(droppables, zoneConditions) {
   const newDropObjects = {};
@@ -75,7 +101,7 @@ export default function dragAndDrop(item) {
   newItem.question = {
     ...newItem.question,
     target: deserializeTarget(_.get(item, 'question.multiLanguageTargets')),
-    zones: deserializeZones(_.get(item, 'question.zones')),
+    zones: deserializeZones(_.get(item, 'question.multiLanguageZones')),
     visibleZones: _.get(item, 'question.zones[0].visible'),
     dropObjects: deserializeDropObjects(
       _.get(item, 'question.droppables'),
