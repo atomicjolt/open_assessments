@@ -17,6 +17,7 @@ export default class TargetArea extends React.Component {
     uploadMedia: React.PropTypes.func.isRequired,
     setVisible: React.PropTypes.func.isRequired,
     editZone: React.PropTypes.func.isRequired,
+    language: React.PropTypes.string,
   };
 
   constructor() {
@@ -78,6 +79,7 @@ export default class TargetArea extends React.Component {
           zones={this.props.question.zones}
           editZone={this.props.editZone}
           openModal={() => this.setState({ showModal: true })}
+          language={this.props.language}
         />
         <MediaModal
           isOpen={this.state.showModal}

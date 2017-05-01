@@ -63,6 +63,7 @@ export class DragAndDrop extends React.Component {
           setVisible={visibleZones => this.props.updateItem({ question: { visibleZones } }, true)}
           editZone={(zoneId, attributes) =>
             this.props.updateChoice(id, zoneId, attributes, null, 'zones')}
+          language={this.props.language}
 
         />
         <div className="au-c-drop-zone__answers__label">{strings.draggableAnswers}</div>
