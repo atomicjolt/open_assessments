@@ -14,6 +14,7 @@ export class DropZone extends React.Component {
     setActive: React.PropTypes.func.isRequired,
     localizeStrings: React.PropTypes.func.isRequired,
     isActive: React.PropTypes.bool,
+    language: React.PropTypes.string
   };
 
   static saveZoneToState(zone) {
@@ -146,9 +147,10 @@ export class DropZone extends React.Component {
   }
 
   render() {
-    const { zone, isActive } = this.props;
+    const { zone, isActive, language } = this.props;
     const corners = ['topLeft', 'topRight', 'bottomLeft', 'bottomRight'];
     const strings = this.props.localizeStrings('dropZone');
+    const labelText = _.get(zone, `labels[${language}].text`, '');
 
     return (
       <div
@@ -191,7 +193,7 @@ export class DropZone extends React.Component {
               <input
                 id={`dropZone_${zone.id}`}
                 className="au-c-text-input au-c-text-input--smaller"
-                defaultValue={zone.label}
+                defaultValue={labelText}
                 onBlur={e => this.props.editZone(zone.id, { label: e.target.value })}
                 type="text"
               />

@@ -49,6 +49,7 @@ export default class TargetZone extends React.Component {
               editZone={editZone}
               setActive={e => this.setActiveZone(e, zone.id)}
               isActive={this.state.activeZone === zone.id}
+              language={this.props.language}
             />
           ))
         }
