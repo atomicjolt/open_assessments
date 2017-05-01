@@ -158,7 +158,6 @@ export default function dragAndDrop(item) {
       fileIds: _.get(incorrectAnswer, 'fileIds')
     },
   };
-  debugger;
 
   return newItem;
 }

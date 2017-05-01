@@ -75,6 +75,7 @@ export class DragAndDrop extends React.Component {
           images={this.props.images}
           uploadMedia={(file, where, metadata, newMedia) =>
             this.uploadMedia(file, where, metadata, newMedia)}
+          language={this.props.language}
         />
         <div className="au-c-question__feedback">
           <Feedback

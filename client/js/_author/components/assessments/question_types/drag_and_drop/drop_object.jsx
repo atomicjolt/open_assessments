@@ -8,6 +8,9 @@ function dropObject(props) {
   const logo = assets('./_author/images/CLIx-logo.png');
   const strings = props.localizeStrings('dropObject');
 
+  const labelText = _.get(props, `object.labels[${props.language}].text`, '');
+  const image = _.get(props, `object.images[${props.language}].text`, '');
+
   return (
     <div
       className="au-o-quarter au-set-active"
@@ -55,7 +58,7 @@ function dropObject(props) {
               id={`drag_object_label_${object.id}`}
               className="au-c-text-input au-c-text-input--smaller"
               type="text"
-              defaultValue={object.label}
+              defaultValue={labelText}
               onBlur={e => updateObject({ label: e.target.value })}
             />
             <div className="au-c-input__bottom" />
@@ -63,7 +66,7 @@ function dropObject(props) {
         </div>
 
         <div className="au-c-drop-zone-answer__image">
-          <img src={object.image || logo} alt="default" />
+          <img src={image || logo} alt="default" />
         </div>
       </div>
     </div>
@@ -77,6 +80,7 @@ dropObject.propTypes = {
   setActive: React.PropTypes.func.isRequired,
   localizeStrings: React.PropTypes.func.isRequired,
   isActive: React.PropTypes.bool,
+  language: React.PropTypes.string,
 };
 
 export default localize(dropObject);
