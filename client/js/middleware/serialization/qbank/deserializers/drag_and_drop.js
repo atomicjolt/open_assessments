@@ -17,6 +17,11 @@ import { getImageUrl }          from '../../serializer_utils';
 //   return {};
 // }
 
+function toLanguageObject(textObjects) {
+  return _.reduce(textObjects,
+    (all, textObject) => ({ ...all, [textObject.languageTypeId]: textObject }), {});
+}
+
 function deserializeTarget(targets) {
   const target = targets[0];
   if (target) {
@@ -79,19 +84,50 @@ function deserializeZones(zones) {
 //   return newZones;
 // }
 
+function deserializeDropObject(droppable, zoneCondition) {
+  const imageTexts = _.map(
+    droppable.texts,
+    (text) => {
+      const imageText = getImageUrl(text.text);
+      return { ...text, text: imageText };
+    }
+  );
+  const labels = toLanguageObject(droppable.names);
+  const images = toLanguageObject(imageTexts);
+
+  return {
+    id: droppable.id,
+    label: _.get(labels, `[${languages.languageTypeId.english}].text`),
+    labels,
+    image: _.get(images, `[${languages.languageTypeId.english}].text`),
+    images,
+    type: getQbankType(droppable.dropBehaviorType),
+    correctZone: _.get(zoneCondition, 'zoneId'),
+  };
+}
+
 function deserializeDropObjects(droppables, zoneConditions) {
   const newDropObjects = {};
   _.forEach(droppables, (droppable) => {
-    newDropObjects[droppable.id] = {
-      id: droppable.id,
-      label: droppable.name,
-      image: getImageUrl(droppable.text),
-      type: getQbankType(droppable.dropBehaviorType),
-      correctZone: _.get(_.find(zoneConditions, { droppableId: droppable.id }), 'zoneId'),
-    };
+    const zoneCondition = _.find(zoneConditions, { droppableId: droppable.id });
+    newDropObjects[droppable.id] = deserializeDropObject(droppable, zoneCondition);
   });
   return newDropObjects;
 }
+
+// function deserializeDropObjects(droppables, zoneConditions) {
+//   const newDropObjects = {};
+//   _.forEach(droppables, (droppable) => {
+//     newDropObjects[droppable.id] = {
+//       id: droppable.id,
+//       label: droppable.name,
+//       image: getImageUrl(droppable.text),
+//       type: getQbankType(droppable.dropBehaviorType),
+//       correctZone: _.get(_.find(zoneConditions, { droppableId: droppable.id }), 'zoneId'),
+//     };
+//   });
+//   return newDropObjects;
+// }
 
 export default function dragAndDrop(item) {
   const newItem = baseDeserializer(item);
@@ -103,8 +139,11 @@ export default function dragAndDrop(item) {
     target: deserializeTarget(_.get(item, 'question.multiLanguageTargets')),
     zones: deserializeZones(_.get(item, 'question.multiLanguageZones')),
     visibleZones: _.get(item, 'question.zones[0].visible'),
+    // dropObjects: deserializeDropObjects(
+    //   _.get(item, 'question.droppables'),
+    //   _.get(correctAnswer, 'zoneConditions')),
     dropObjects: deserializeDropObjects(
-      _.get(item, 'question.droppables'),
+      _.get(item, 'question.multiLanguageDroppables'),
       _.get(correctAnswer, 'zoneConditions')),
     correctFeedback: {
       text: _.get(correctAnswer, 'feedback.text'),
