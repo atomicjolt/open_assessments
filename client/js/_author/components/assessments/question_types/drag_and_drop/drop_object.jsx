@@ -1,12 +1,10 @@
 import React       from 'react';
 import _           from 'lodash';
-import assets      from '../../../../../libs/assets';
 import localize    from '../../../../locales/localize';
 import UpdateMedia from './update_media';
 
 function dropObject(props) {
   const { object, zones, updateObject, setActive, isActive } = props;
-  const logo = assets('./_author/images/CLIx-logo.png');
   const strings = props.localizeStrings('dropObject');
 
   const labelText = _.get(props, `object.labels[${props.language}].text`, '');
