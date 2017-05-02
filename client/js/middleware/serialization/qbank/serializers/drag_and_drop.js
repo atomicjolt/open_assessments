@@ -15,16 +15,17 @@ function buildImageTag(url, alt, fileIds) {
   return `<img src="${resolvedUrl}" alt="${alt}"/>`;
 }
 
-function serializeTargets(originalTarget, newTarget, fileIds) {
+function serializeTargets(originalTarget, newTarget, fileIds, language) {
   if (!newTarget) { return null; }
-  debugger;
+  const originalImage = _.get(originalTarget, `images[${language}]`, '');
+  const text = buildImageTag(
+    _.get(newTarget, 'text', originalImage),
+    _.get(newTarget, 'altText'),
+    fileIds
+  );
   return [scrub({
     id: _.get(originalTarget, 'id'),
-    text: buildImageTag(
-      _.get(newTarget, 'text', originalTarget.image),
-      _.get(newTarget, 'altText'),
-      fileIds
-    ),
+    text: languageText(text, language),
     name: _.get(newTarget, 'altText'),
     dropBehaviorType: genusTypes.target.reject,
   })];
@@ -110,7 +111,12 @@ function serializeDroppables(originalDroppables, newDroppables, fileIds, languag
 function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
   const fileIds = { ...originalQuestion.fileIds, ...newQuestionAttributes.fileIds };
   const newQuestion = {
-    targets: serializeTargets(originalQuestion.target, newQuestionAttributes.target, fileIds),
+    targets: serializeTargets(
+      originalQuestion.target,
+      newQuestionAttributes.target,
+      fileIds,
+      language
+    ),
     droppables: serializeDroppables(
       originalQuestion.dropObjects,
       newQuestionAttributes.dropObjects,
@@ -126,7 +132,6 @@ function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
     ),
   };
 
-  debugger;
   return scrub(newQuestion);
 }
 
