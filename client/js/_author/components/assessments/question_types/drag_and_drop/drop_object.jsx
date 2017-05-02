@@ -1,7 +1,8 @@
-import React    from 'react';
-import _        from 'lodash';
-import assets   from '../../../../../libs/assets';
-import localize from '../../../../locales/localize';
+import React       from 'react';
+import _           from 'lodash';
+import assets      from '../../../../../libs/assets';
+import localize    from '../../../../locales/localize';
+import UpdateMedia from './update_media';
 
 function dropObject(props) {
   const { object, zones, updateObject, setActive, isActive } = props;
@@ -70,10 +71,18 @@ function dropObject(props) {
             <div className="au-c-input__bottom" />
           </div>
         </div>
-
-        <div className="au-c-drop-zone-answer__image">
-          <img src={image || logo} alt="default" />
-        </div>
+        {
+          image ?
+            <div className="au-c-drop-zone-answer__image">
+              <img src={image} alt="default" />
+            </div>
+            :
+            <UpdateMedia
+              dropObject={props.object}
+              updateMedia={props.uploadMedia}
+              language={props.language}
+            />
+        }
       </div>
     </div>
   );
@@ -87,6 +96,7 @@ dropObject.propTypes = {
   localizeStrings: React.PropTypes.func.isRequired,
   isActive: React.PropTypes.bool,
   language: React.PropTypes.string,
+  uploadMedia: React.PropTypes.func
 };
 
 export default localize(dropObject);

@@ -80,9 +80,11 @@ function serializeDroppables(originalDroppables, newDroppables, fileIds, languag
   if (!newDroppables) { return null; }
   const droppables =  _.map(originalDroppables, (droppable) => {
     const newDroppable = _.get(newDroppables, `[${droppable.id}]`, {});
-    const images = _.merge({}, droppable.images, newDroppable.images);
+    const images = _.merge(
+      {}, droppable.images, newDroppable.images
+    );
     const labels = _.merge({}, droppable.labels, newDroppable.labels);
-    const image = _.get(images, `${language}.text`, '');
+    const image = newDroppable.text || _.get(images, `${language}.text`, '');
     const label = _.get(labels, `${language}.text`, '');
 
     const text = buildImageTag(image, label, fileIds);
@@ -104,7 +106,6 @@ function serializeDroppables(originalDroppables, newDroppables, fileIds, languag
       reuse: 1,
     });
   }
-
   return droppables;
 }
 
