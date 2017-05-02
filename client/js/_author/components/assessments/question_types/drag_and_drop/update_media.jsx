@@ -1,10 +1,10 @@
-import React from 'react';
+import React             from 'react';
 import { connect }       from 'react-redux';
 
 import * as AssetActions from '../../../../../actions/qbank/assets';
 import localize          from '../../../../locales/localize';
-import assets   from '../../../../../libs/assets';
-import MediaModal from '../../../common/upload_modal/editor_upload_modal';
+import assets            from '../../../../../libs/assets';
+import MediaModal        from '../../../common/upload_modal/editor_upload_modal';
 
 function select(state) {
   return {
