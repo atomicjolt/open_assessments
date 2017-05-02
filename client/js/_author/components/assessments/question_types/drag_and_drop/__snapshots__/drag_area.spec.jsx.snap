@@ -13,13 +13,20 @@ ShallowWrapper {
 >
     <dropObject
         isActive={false}
+        language="639-2%3AENG%40ISO"
         object={
             Object {
                 "id": "7",
+                "images": Object {
+                  "639-2%3AENG%40ISO": Object {
+                    "text": "fake_image",
+                  },
+                },
               }
         }
         setActive={[Function]}
         updateObject={[Function]}
+        uploadMedia={[Function]}
         zones={Object {}}
     />
     <div
@@ -52,13 +59,20 @@ ShallowWrapper {
 >
       <dropObject
             isActive={false}
+            language="639-2%3AENG%40ISO"
             object={
                   Object {
                         "id": "7",
+                        "images": Object {
+                          "639-2%3AENG%40ISO": Object {
+                            "text": "fake_image",
+                          },
+                        },
                       }
             }
             setActive={[Function]}
             updateObject={[Function]}
+            uploadMedia={[Function]}
             zones={Object {}}
       />
       <div
@@ -97,10 +111,16 @@ ShallowWrapper {
                 Object {
                         "object": Object {
                           "id": "7",
+                          "images": Object {
+                            "639-2%3AENG%40ISO": Object {
+                              "text": "fake_image",
+                            },
+                          },
                         },
                       }
         }
         images={Object {}}
+        language="639-2%3AENG%40ISO"
         loadingMedia={false}
         localizeStrings={[Function]}
         updateDropObject={[Function]}
@@ -117,9 +137,15 @@ ShallowWrapper {
           "dropObjects": Object {
             "object": Object {
               "id": "7",
+              "images": Object {
+                "639-2%3AENG%40ISO": Object {
+                  "text": "fake_image",
+                },
+              },
             },
           },
           "images": Object {},
+          "language": "639-2%3AENG%40ISO",
           "loadingMedia": false,
           "localizeStrings": [Function],
           "updateDropObject": [Function],
@@ -154,13 +180,20 @@ ShallowWrapper {
 >
           <dropObject
                     isActive={false}
+                    language="639-2%3AENG%40ISO"
                     object={
                               Object {
                                         "id": "7",
+                                        "images": Object {
+                                          "639-2%3AENG%40ISO": Object {
+                                            "text": "fake_image",
+                                          },
+                                        },
                                       }
                     }
                     setActive={[Function]}
                     updateObject={[Function]}
+                    uploadMedia={[Function]}
                     zones={Object {}}
           />
           <div
@@ -193,13 +226,20 @@ ShallowWrapper {
 >
           <dropObject
                     isActive={false}
+                    language="639-2%3AENG%40ISO"
                     object={
                               Object {
                                         "id": "7",
+                                        "images": Object {
+                                          "639-2%3AENG%40ISO": Object {
+                                            "text": "fake_image",
+                                          },
+                                        },
                                       }
                     }
                     setActive={[Function]}
                     updateObject={[Function]}
+                    uploadMedia={[Function]}
                     zones={Object {}}
           />
           <div
@@ -242,10 +282,16 @@ ShallowWrapper {
         Object {
             "object": Object {
               "id": "7",
+              "images": Object {
+                "639-2%3AENG%40ISO": Object {
+                  "text": "fake_image",
+                },
+              },
             },
           }
     }
     images={Object {}}
+    language="639-2%3AENG%40ISO"
     loadingMedia={false}
     localizeStrings={[Function]}
     updateDropObject={[Function]}

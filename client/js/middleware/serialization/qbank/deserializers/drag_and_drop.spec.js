@@ -1,5 +1,6 @@
 import _                  from 'lodash';
 import dragAndDrop        from './drag_and_drop';
+import { languages }      from '../../../../constants/language_types';
 
 describe('drag_and_drop deserializer', () => {
   let item;
@@ -182,10 +183,124 @@ describe('drag_and_drop deserializer', () => {
         id: 'assessment.Item%3A58ee65fdc89cd94299786eea%40ODL.MIT.EDU',
         learningObjectiveIds: [],
         multiLanguageDroppables: [
-        //  should match droppables, and so forth
+          {
+            dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
+            id: 'drop01',
+            name: 'drop the beat',
+            names: [{
+              languageTypeId: languages.languageTypeId.english,
+              text: 'drop the beat'
+            }],
+            reuse: 1,
+            text: '<img alt="" src="image01.png"/>',
+            texts: [{
+              languageTypeId: languages.languageTypeId.english,
+              text: '<img alt="" src="image01.png"/>',
+            }]
+          }, {
+            dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
+            id: 'drop02',
+            name: '',
+            names: [{
+              languageTypeId: languages.languageTypeId.english,
+              text: ''
+            }],
+            reuse: 1,
+            text: '<img alt="" src="image02.png"/>',
+            texts: [{
+              languageTypeId: languages.languageTypeId.english,
+              text: '<img alt="" src="image02.png"/>',
+            }]
+          }, {
+            dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
+            id: 'drop03',
+            name: '',
+            names: [{
+              languageTypeId: languages.languageTypeId.english,
+              text: ''
+            }],
+            reuse: 1,
+            text: '<img alt="" src="image03.png"/>',
+            texts: [{
+              languageTypeId: languages.languageTypeId.english,
+              text: '<img alt="" src="image03.png"/>',
+            }]
+          }, {
+            dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
+            id: 'drop04',
+            name: '',
+            names: [{
+              languageTypeId: languages.languageTypeId.english,
+              text: ''
+            }],
+            reuse: 1,
+            text: '<img alt="" src="image04.png"/>',
+            texts: [{
+              languageTypeId: languages.languageTypeId.english,
+              text: '<img alt="" src="image04.png"/>',
+            }]
+          },
         ],
-        multiLanguageTargets: [],
-        multiLanguageZones: [],
+        multiLanguageTargets: [{
+          dropBehaviorType: 'drop.behavior%3Areject%40ODL.MIT.EDU',
+          id: 'target01',
+          name: '',
+          text: '<img alt="" src="targetImage.png"/>',
+          texts: [{
+            languageTypeId: languages.languageTypeId.english,
+            text: '<img alt="" src="targetImage.png"/>'
+          }]
+        }],
+        multiLanguageZones: [{
+          containerId: 'target01',
+          description: 'A new zone',
+          dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
+          id: 'zone01',
+          name: 'I am the zoniest',
+          names: [{
+            languageTypeId: languages.languageTypeId.english,
+            text: 'I am the zoniest'
+          }],
+          reuse: 0,
+          spatialUnit: {
+            coordinateValues: [505, 76],
+            height: 146,
+            recordTypes: ['osid.mapping.SpatialUnit%3Arectangle%40ODL.MIT.EDU'],
+            type: 'SpatialUnit',
+            width: 187.5,
+          },
+          visible: true,
+        }, {
+          containerId: 'target01',
+          description: 'Another new zone',
+          dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
+          id: 'zone02',
+          name: '',
+          reuse: 0,
+          spatialUnit: {
+            coordinateValues: [200, 200],
+            height: 20,
+            recordTypes: ['osid.mapping.SpatialUnit%3Arectangle%40ODL.MIT.EDU'],
+            type: 'SpatialUnit',
+            width: 103,
+          },
+          visible: true,
+        }, {
+          containerId: 'target01',
+          description: 'A third zone',
+          dropBehaviorType: 'drop.behavior%3Asnap%40ODL.MIT.EDU',
+          id: 'zone03',
+          name: '',
+          reuse: 0,
+          spatialUnit: {
+            coordinateValues: [600, 10],
+            height: 3,
+            recordTypes: ['osid.mapping.SpatialUnit%3Arectangle%40ODL.MIT.EDU'],
+            type: 'SpatialUnit',
+            width: 90,
+          },
+          visible: true,
+        }],
         recordTypeIds: [],
         shuffleDroppables: true,
         shuffleTargets: true,
@@ -295,7 +410,7 @@ describe('drag_and_drop deserializer', () => {
     expect(_.size(drops)).toBe(4);
     expect(drops.drop01).toBeDefined();
     expect(drops.drop01.id).toBe('drop01');
-    expect(drops.drop01.label).toBe('drop the beat');
+    expect(drops.drop01.labels[languages.languageTypeId.english].text).toBe('drop the beat');
     expect(drops.drop01.image).toBe('image01.png');
     expect(drops.drop01.type).toBe('snap');
     expect(drops.drop01.correctZone).toBe('zone01');

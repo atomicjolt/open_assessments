@@ -23,6 +23,7 @@ ShallowWrapper {
     />
     <TargetZone
         editZone={[Function]}
+        language="639-2%3AENG%40ISO"
         openModal={[Function]}
         target={Object {}}
         zones={Object {}}
@@ -54,6 +55,7 @@ ShallowWrapper {
       />
       <TargetZone
             editZone={[Function]}
+            language="639-2%3AENG%40ISO"
             openModal={[Function]}
             target={Object {}}
             zones={Object {}}
@@ -79,6 +81,7 @@ ShallowWrapper {
       "_currentElement": <TargetArea
         editZone={[Function]}
         images={Object {}}
+        language="639-2%3AENG%40ISO"
         loadingMedia={false}
         question={
                 Object {
@@ -98,6 +101,7 @@ ShallowWrapper {
         "props": Object {
           "editZone": [Function],
           "images": Object {},
+          "language": "639-2%3AENG%40ISO",
           "loadingMedia": false,
           "question": Object {
             "target": Object {},
@@ -145,6 +149,7 @@ ShallowWrapper {
           />
           <TargetZone
                     editZone={[Function]}
+                    language="639-2%3AENG%40ISO"
                     openModal={[Function]}
                     target={Object {}}
                     zones={Object {}}
@@ -176,6 +181,7 @@ ShallowWrapper {
           />
           <TargetZone
                     editZone={[Function]}
+                    language="639-2%3AENG%40ISO"
                     openModal={[Function]}
                     target={Object {}}
                     zones={Object {}}
@@ -205,6 +211,7 @@ ShallowWrapper {
   "unrendered": <TargetArea
     editZone={[Function]}
     images={Object {}}
+    language="639-2%3AENG%40ISO"
     loadingMedia={false}
     question={
         Object {

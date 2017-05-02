@@ -14,6 +14,7 @@ class DragArea extends React.Component {
     updateDropObject: React.PropTypes.func.isRequired,
     localizeStrings: React.PropTypes.func.isRequired,
     loadingMedia: React.PropTypes.bool,
+    language: React.PropTypes.string,
   };
 
   constructor() {
@@ -37,12 +38,14 @@ class DragArea extends React.Component {
         {
           _.map(this.props.dropObjects, object => (
             <DropObject
-              key={`drop_object_${object.id}`}
+              key={`drop_object_${object.id}_${this.props.language}`}
               object={object}
               zones={this.props.zones}
               setActive={() => this.setState({ activeObject: object.id })}
               isActive={this.state.activeObject === object.id}
               updateObject={newAttributes => this.props.updateDropObject(object.id, newAttributes)}
+              uploadMedia={this.props.uploadMedia}
+              language={this.props.language}
             />
           ))
         }
