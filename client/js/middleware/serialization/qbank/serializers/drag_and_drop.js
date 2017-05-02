@@ -72,27 +72,30 @@ function serializeZones(originalZones, newZones, targetId, visible) {
   return zones;
 }
 
-function serializeDroppables(originalDroppables, newDroppables, fileIds) {
+function serializeDroppables(originalDroppables, newDroppables, fileIds, language) {
   if (!newDroppables) { return null; }
   const droppables =  _.map(originalDroppables, (droppable) => {
-    const newDroppable = newDroppables[droppable.id];
+    const newDroppable = _.get(newDroppables, `[${droppable.id}]`, {});
+    const images = _.merge({}, droppable.images, newDroppable.images);
+    const labels = _.merge({}, droppable.labels, newDroppable.labels);
+    const image = _.get(images, `${language}.text`, '');
+    const label = _.get(labels, `${language}.text`, '');
+
+    const text = buildImageTag(image, label, fileIds);
     return scrub({
       id: droppable.id,
-      text: buildImageTag(
-        _.get(newDroppable, 'image', droppable.image),
-        _.get(newDroppable, 'label', droppable.label),
-        fileIds
-      ),
+      text: languageText(text, language),
       dropBehaviorType: genusTypes.zone[_.get(newDroppable, 'type', droppable.type)],
-      name: _.get(newDroppable, 'label', droppable.label),
+      name: languageText(label, language),
       reuse: 1,
       delete: _.get(newDroppable, 'delete'),
     });
   });
 
   if (newDroppables && newDroppables.new) {
+    const newText = buildImageTag(newDroppables.new.text, newDroppables.new.altText, fileIds);
     droppables.push({
-      text: buildImageTag(newDroppables.new.text, newDroppables.new.altText, fileIds),
+      text: languageText(newText, language),
       dropBehaviorType: genusTypes.zone.snap,
       reuse: 1,
     });
@@ -101,14 +104,15 @@ function serializeDroppables(originalDroppables, newDroppables, fileIds) {
   return droppables;
 }
 
-function serializeQuestion(originalQuestion, newQuestionAttributes) {
+function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
   const fileIds = { ...originalQuestion.fileIds, ...newQuestionAttributes.fileIds };
   const newQuestion = {
     targets: serializeTargets(originalQuestion.target, newQuestionAttributes.target, fileIds),
     droppables: serializeDroppables(
       originalQuestion.dropObjects,
       newQuestionAttributes.dropObjects,
-      fileIds
+      fileIds,
+      language
     ),
     zones: serializeZones(
       originalQuestion.zones,
@@ -117,6 +121,8 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
       _.get(newQuestionAttributes, 'visibleZones')
     ),
   };
+
+  debugger;
   return scrub(newQuestion);
 }
 
@@ -157,13 +163,14 @@ function serializeAnswers(oldDropObjects, dropObjects, oldAnswers,
 }
 
 export default function dragAndDrop(originalItem, newItemAttributes) {
+  debugger;
   const newItem = baseSerializer(originalItem, newItemAttributes);
 
   const { question, language } = newItemAttributes;
   if (question) {
     newItem.question = {
       ...newItem.question,
-      ...serializeQuestion(originalItem.question, question)
+      ...serializeQuestion(originalItem.question, question, language)
     };
   }
 

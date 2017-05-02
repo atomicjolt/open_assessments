@@ -42,7 +42,8 @@ export class DragAndDrop extends React.Component {
       this.props.item.id,
       `question.${where}`,
       metadata,
-      newMedia
+      newMedia,
+      this.props.language
     );
   }
 

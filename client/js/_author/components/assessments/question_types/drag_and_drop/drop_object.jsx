@@ -59,7 +59,13 @@ function dropObject(props) {
               className="au-c-text-input au-c-text-input--smaller"
               type="text"
               defaultValue={labelText}
-              onBlur={e => updateObject({ label: e.target.value })}
+              onBlur={e => updateObject({
+                labels:{
+                  [props.language]: {
+                    text: e.target.value
+                  }
+                }
+              })}
             />
             <div className="au-c-input__bottom" />
           </div>
