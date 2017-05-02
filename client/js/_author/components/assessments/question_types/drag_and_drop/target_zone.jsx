@@ -43,7 +43,7 @@ export default class TargetZone extends React.Component {
         {
           _.map(zones, zone => (
             <DropZone
-              key={`drop_zone_${zone.id}`}
+              key={`drop_zone_${zone.id}_${this.props.language}`}
               zone={zone}
               target={this.target}
               editZone={editZone}

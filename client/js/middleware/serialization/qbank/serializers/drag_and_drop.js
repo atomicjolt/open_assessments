@@ -17,6 +17,7 @@ function buildImageTag(url, alt, fileIds) {
 
 function serializeTargets(originalTarget, newTarget, fileIds) {
   if (!newTarget) { return null; }
+  debugger;
   return [scrub({
     id: _.get(originalTarget, 'id'),
     text: buildImageTag(
@@ -29,9 +30,11 @@ function serializeTargets(originalTarget, newTarget, fileIds) {
   })];
 }
 
-function serializeZones(originalZones, newZones, targetId, visible) {
+function serializeZones(originalZones, newZones, targetId, visible, language) {
   if (!newZones && _.isNil(visible)) { return null; }
   const zones = _.map(originalZones, (zone) => {
+    const originalLabel = _.get(zones, `labels[${language}].text`, '');
+
     const newZone = _.get(newZones, `[${zone.id}]`);
     return scrub({
       id: _.get(zone, 'id'),
@@ -44,7 +47,7 @@ function serializeZones(originalZones, newZones, targetId, visible) {
       },
       reuse: 0, // an integer to indicate how many times something can be re-used 0 is infinite
       dropBehaviorType: genusTypes.zone[_.get(newZone, 'type', zone.type)],
-      name: _.get(newZone, 'label', zone.label),
+      name: languageText(_.get(newZone, 'label', originalLabel), language),
       visible,
       containerId: targetId,
       // description: 'left of ball'   // Dunno what this is for
@@ -118,7 +121,8 @@ function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
       originalQuestion.zones,
       newQuestionAttributes.zones,
       _.get(originalQuestion, 'target.id'),
-      _.get(newQuestionAttributes, 'visibleZones')
+      _.get(newQuestionAttributes, 'visibleZones'),
+      language
     ),
   };
 
@@ -163,7 +167,6 @@ function serializeAnswers(oldDropObjects, dropObjects, oldAnswers,
 }
 
 export default function dragAndDrop(originalItem, newItemAttributes) {
-  debugger;
   const newItem = baseSerializer(originalItem, newItemAttributes);
 
   const { question, language } = newItemAttributes;
