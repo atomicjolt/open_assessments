@@ -45,10 +45,13 @@ export class UpdateMedia extends React.Component {
     const logo = assets('./_author/images/CLIx-logo.png');
     return (
       <div>
-        <button onClick={() => this.setState({ showModal: true })}>
-          Add Photo
-        </button>
         <img src={logo} alt="default" />
+        <button
+          onClick={() => this.setState({ showModal: true })}
+          className="au-c-drop-zone-answer-add__button"
+        >
+          Add Image
+        </button>
         <MediaModal
           isOpen={this.state.showModal}
           closeModal={() => this.setState({ showModal: false })}
