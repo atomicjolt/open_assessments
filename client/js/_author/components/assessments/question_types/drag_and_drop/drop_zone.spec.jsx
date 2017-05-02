@@ -1,6 +1,7 @@
 import React            from 'react';
 import { shallow }      from 'enzyme';
 import DropZone         from './drop_zone';
+import { languages }    from '../../../../../constants/language_types';
 
 describe('drop zone component', () => {
   let props;
@@ -31,6 +32,7 @@ describe('drop zone component', () => {
       editZone: () => { calledEditZone = true; },
       setActive: () => {},
       isActive: false,
+      language: languages.languageTypeId.english,
     };
     zone = {
       leftPos: props.zone.xPos,
