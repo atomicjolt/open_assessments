@@ -79,6 +79,7 @@ export function updateLanguageChoices(allChoices, updatedChoices) {
 }
 
 export function addNewChoices(choices, language) {
+  // debugger; NOTE: does not adding text break everything?
   return _.map(choices, (choice) => {
     if (!_.isEmpty(choice.texts[language])) { return choice; }
     const { id, text } = choice;
@@ -93,7 +94,7 @@ export function addNewChoices(choices, language) {
             id,
             language,
             wordType,
-            text
+            text: ''
           }
         }
       });

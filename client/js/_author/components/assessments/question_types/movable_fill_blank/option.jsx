@@ -17,7 +17,6 @@ export default function multipleChoiceOptions(props) {
 
   const isActive = props.isActive ? 'is-active' : '';
   const choiceText = _.get(props, `texts[${props.language}]`, {});
-
   return (
     <div
       onFocus={() => props.setActiveChoice(props.id)}
@@ -49,7 +48,7 @@ export default function multipleChoiceOptions(props) {
       </div>
       <WordType
         id={props.id}
-        wordType={choiceText.wordType}
+        wordType={props.wordType}
         updateChoice={choice => props.updateChoice({
           texts: {
             [props.language]: choice
