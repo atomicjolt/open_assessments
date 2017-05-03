@@ -40,7 +40,12 @@ export function extractAllLanguageChoices(choices) {
       const { id } = choice;
       const multiLanguageTexts = _.map(
         choice.texts,
-        (choiceText, key) => ({ ...choiceText, id, language: key })
+        (choiceText, key) => ({
+          order: choice.order,
+          ...choiceText,
+          id,
+          language: key
+        })
       );
       return all.concat(multiLanguageTexts);
     },
