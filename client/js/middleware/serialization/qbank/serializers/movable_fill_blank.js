@@ -9,9 +9,8 @@ const defaultChoiceText = () => ({ text: '', wordType: 'other' });
 
 function serializeChoices(originalChoices, newChoiceAttributes, inlineRegionId, language) {
   const allChoices = extractAllLanguageChoices(addNewChoices(originalChoices, language));
-  const choices = _.map( allChoices /*originalChoices*/, (choice) => {
+  const choices = _.map(allChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
-    // const originalText = _.get(choice, `texts[${language}]`, defaultChoiceText());
     const isUpdatedLanguage = choice.language && choice.language === language;
     const updatedText = _.get(updateValues, `texts[${language}]`, {});
 
@@ -30,7 +29,6 @@ function serializeChoices(originalChoices, newChoiceAttributes, inlineRegionId, 
     choices.push({
       id: guid(),
       text: languageText('', language),
-      // order: choices.length,
     });
   }
 
