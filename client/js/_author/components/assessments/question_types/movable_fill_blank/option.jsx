@@ -74,5 +74,6 @@ multipleChoiceOptions.propTypes = {
   isCorrect: React.PropTypes.bool,
   isActive: React.PropTypes.bool,
   itemId: React.PropTypes.string,
-  language: React.PropTypes.string
+  language: React.PropTypes.string,
+  wordType: React.PropTypes.string
 };
