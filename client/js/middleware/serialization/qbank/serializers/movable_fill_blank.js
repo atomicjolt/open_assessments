@@ -1,26 +1,29 @@
 import _                                        from 'lodash';
 import baseSerializer                           from './base';
-import { scrub, buildChoiceText, languageText } from '../../serializer_utils';
+import {
+  scrub,
+  buildChoiceText,
+  languageText,
+  extractAllLanguageChoices,
+  addNewChoices
+}                                               from '../../serializer_utils';
 import genusTypes                               from '../../../../constants/genus_types';
 import guid                                     from '../../../../utils/guid';
 
-const defaultChoiceText = () => ({ text: '', wordType: 'other' });
-
 function serializeChoices(originalChoices, newChoiceAttributes, inlineRegionId, language) {
-  const choices = _.map(originalChoices, (choice) => {
+  const allChoices = extractAllLanguageChoices(addNewChoices(originalChoices, language));
+  const choices = _.map(allChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
-    const originalText = _.get(choice, `texts[${language}]`, defaultChoiceText());
+    const isUpdatedLanguage = choice.language && choice.language === language;
     const updatedText = _.get(updateValues, `texts[${language}]`, {});
 
+    const newText = isUpdatedLanguage ? updatedText.text || choice.text : choice.text;
+    const newWordType = updatedText.wordType || choice.wordType;
 
-    const text = buildChoiceText(
-      updatedText.text || originalText.text,
-      updatedText.wordType || originalText.wordType
-    );
-
+    const text = buildChoiceText(newText, newWordType);
     return {
       id: choice.id,
-      text: languageText(text, language),
+      text: languageText(text, choice.language),
       delete: _.get(updateValues, 'delete'),
     };
   });
@@ -29,7 +32,6 @@ function serializeChoices(originalChoices, newChoiceAttributes, inlineRegionId, 
     choices.push({
       id: guid(),
       text: languageText('', language),
-      order: choices.length,
     });
   }
 
