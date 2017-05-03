@@ -33,7 +33,7 @@ const makeChoice = (choice) => {
   });
 };
 
-function extractAllLanguageChoices(choices) {
+export function extractAllLanguageChoices(choices) {
   return _.reduce(
     choices,
     (all, choice) => {
@@ -48,7 +48,7 @@ function extractAllLanguageChoices(choices) {
   );
 }
 
-function updateLanguageChoice(choice, update) {
+export function updateLanguageChoice(choice, update) {
   const { id, text, wordType, language } = choice;
   const updatedLanguage = choice.language && choice.language === update.language;
   const updatedText = update.text || text;
@@ -62,7 +62,7 @@ function updateLanguageChoice(choice, update) {
   };
 }
 
-function updateLanguageChoices(allChoices, updatedChoices) {
+export function updateLanguageChoices(allChoices, updatedChoices) {
   return _.reduce(updatedChoices, (changed, choice) => {
     const childChoices = _.filter(allChoices, c => c.id === choice.id);
     const updatedChildren = _.map(
@@ -73,7 +73,7 @@ function updateLanguageChoices(allChoices, updatedChoices) {
   }, []);
 }
 
-function addNewChoices(choices, language) {
+export function addNewChoices(choices, language) {
   return _.map(choices, (choice) => {
     if (!_.isEmpty(choice.texts[language])) { return choice; }
     const { id, text } = choice;
