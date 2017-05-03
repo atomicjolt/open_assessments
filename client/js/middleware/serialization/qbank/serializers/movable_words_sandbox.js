@@ -4,7 +4,9 @@ import { baseItem }        from './base';
 import {
   scrub,
   getSingleCorrectAnswer,
-  languageText
+  languageText,
+  extractAllLanguageChoices,
+  addNewChoices
 }                          from '../../serializer_utils';
 import guid                from '../../../../utils/guid';
 
@@ -33,26 +35,6 @@ const makeChoice = (choice) => {
   });
 };
 
-export function extractAllLanguageChoices(choices) {
-  return _.reduce(
-    choices,
-    (all, choice) => {
-      const { id } = choice;
-      const multiLanguageTexts = _.map(
-        choice.texts,
-        (choiceText, key) => ({
-          order: choice.order,
-          ...choiceText,
-          id,
-          language: key
-        })
-      );
-      return all.concat(multiLanguageTexts);
-    },
-    []
-  );
-}
-
 export function updateLanguageChoice(choice, update) {
   const { id, text, wordType, language } = choice;
   const updatedLanguage = choice.language && choice.language === update.language;
@@ -77,30 +59,6 @@ export function updateLanguageChoices(allChoices, updatedChoices) {
     return changed.concat(updatedChildren);
   }, []);
 }
-
-export function addNewChoices(choices, language) {
-  // debugger; NOTE: does not adding text break everything?
-  return _.map(choices, (choice) => {
-    if (!_.isEmpty(choice.texts[language])) { return choice; }
-    const { id, text } = choice;
-    const wordType = choice.wordType || _.find(choice.texts, langText => langText.wordType);
-
-    return _.merge(
-      {},
-      choice,
-      {
-        texts: {
-          [language]: {
-            id,
-            language,
-            wordType,
-            text: ''
-          }
-        }
-      });
-  });
-}
-
 
 export function serializeChoices(choices, language) {
   const allChoices = extractAllLanguageChoices(addNewChoices(choices, language));

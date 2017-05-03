@@ -1,11 +1,14 @@
 import _                                        from 'lodash';
 import baseSerializer                           from './base';
-import { scrub, buildChoiceText, languageText } from '../../serializer_utils';
+import {
+  scrub,
+  buildChoiceText,
+  languageText,
+  extractAllLanguageChoices,
+  addNewChoices
+}                                               from '../../serializer_utils';
 import genusTypes                               from '../../../../constants/genus_types';
 import guid                                     from '../../../../utils/guid';
-import { extractAllLanguageChoices, addNewChoices }   from './movable_words_sandbox';
-
-const defaultChoiceText = () => ({ text: '', wordType: 'other' });
 
 function serializeChoices(originalChoices, newChoiceAttributes, inlineRegionId, language) {
   const allChoices = extractAllLanguageChoices(addNewChoices(originalChoices, language));
