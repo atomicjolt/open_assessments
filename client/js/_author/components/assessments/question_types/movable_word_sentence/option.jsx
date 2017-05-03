@@ -61,12 +61,6 @@ function option(props) {
         wordType={props.wordType}
         updateChoice={props.updateChoice}
       />
-    {
-        // updateChoice={e => props.updateChoice({
-        //   texts: { [props.language]: { ...e } }
-        // })
-    }
-
       <button onClick={props.deleteChoice} className="au-c-answer--delete">
         <i className="material-icons">close</i>
       </button>

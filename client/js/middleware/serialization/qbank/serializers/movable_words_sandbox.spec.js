@@ -20,11 +20,17 @@ describe('MovableWordsSandbox', () => {
         choices: [{
           id: 'id14a6824a-79f2-4c00-ac6a-b41cbb64db45',
           text: 'the bus',
+          texts: {
+            [languages.languageTypeId.english] : 'the bus'
+          },
           wordType: 'noun',
         },
         {
           id: 'id969e920d-6d22-4d06-b4ac-40a821e350c6',
           text: 'the airport',
+          texts: {
+            [languages.languageTypeId.english] : 'the airport'
+          },
           wordType: 'noun',
         }],
         correctFeedback: {
