@@ -57,7 +57,8 @@ function updateLanguageChoice(choice, update) {
     id,
     text: updatedLanguage ? updatedText : text,
     wordType: update.wordType || wordType,
-    language
+    language,
+    delete: update.delete
   };
 }
 
@@ -72,9 +73,31 @@ function updateLanguageChoices(allChoices, updatedChoices) {
   }, []);
 }
 
+function addNewChoices(choices, language) {
+  return _.map(choices, (choice) => {
+    if (!_.isEmpty(choice.texts[language])) { return choice; }
+    const { id, text } = choice;
+    const wordType = choice.wordType || _.find(choice.texts, langText => langText.wordType);
+
+    return _.merge(
+      {},
+      choice,
+      {
+        texts: {
+          [language]: {
+            id,
+            language,
+            wordType,
+            text
+          }
+        }
+      });
+  });
+}
+
 
 export function serializeChoices(choices, language) {
-  const allChoices = extractAllLanguageChoices(choices);
+  const allChoices = extractAllLanguageChoices(addNewChoices(choices, language));
   const updates = _.map(choices, choice => ({ ...choice, language }));
   const updatedChoices = updateLanguageChoices(allChoices, updates);
   return _.map(updatedChoices, (choice => makeChoice(choice)));
