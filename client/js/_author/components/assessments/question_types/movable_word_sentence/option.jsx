@@ -59,7 +59,7 @@ function option(props) {
 
       <WordType
         id={props.id}
-        wordType={props.wordType}
+        wordType={choiceText.wordType}
         updateChoice={props.updateChoice}
       />
 
