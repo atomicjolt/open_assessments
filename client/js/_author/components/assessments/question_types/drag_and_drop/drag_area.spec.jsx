@@ -1,6 +1,7 @@
 import React                    from 'react';
 import { shallow, mount }       from 'enzyme';
 import DragArea                 from './drag_area';
+import { languages }            from '../../../../../constants/language_types';
 
 jest.mock('../../../../../libs/assets.js');
 
@@ -13,6 +14,9 @@ describe('drag area component', () => {
       dropObjects: {
         object: {
           id: '7',
+          images: {
+            [languages.languageTypeId.english]: { text: 'fake_image' }
+          }
         },
       },
       zones: {},
@@ -20,6 +24,7 @@ describe('drag area component', () => {
       uploadMedia: () => {},
       updateDropObject: () => {},
       loadingMedia: false,
+      language: languages.languageTypeId.english
     };
     result = shallow(<DragArea {...props} />);
   });

@@ -19,7 +19,6 @@ export default function Option(props) {
   }
 
   const choiceText = _.get(props, `choice.texts[${props.language}]`, defaultText);
-
   return (
     <div
       onFocus={props.selectChoice}
@@ -48,7 +47,7 @@ export default function Option(props) {
         <select
           name=""
           id="word_drop_down"
-          value={choiceText.wordType}
+          value={props.choice.wordType}
           onChange={e => props.updateChoice({
             id: props.choice.id,
             wordType: e.target.value

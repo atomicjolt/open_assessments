@@ -9,6 +9,7 @@ export default class TargetZone extends React.Component {
     zones: React.PropTypes.shape({}),
     editZone: React.PropTypes.func.isRequired,
     openModal: React.PropTypes.func.isRequired,
+    language: React.PropTypes.string,
   };
 
   constructor() {
@@ -25,7 +26,9 @@ export default class TargetZone extends React.Component {
   }
 
   render() {
-    const { target, zones, editZone } = this.props;
+    const { target, zones, editZone, language } = this.props;
+    const targetImage = _.get(target, `images[${language}]`, '');
+
     return (
       <div
         className="au-c-drag-and-drop__target-image"
@@ -33,19 +36,20 @@ export default class TargetZone extends React.Component {
         onClick={() => this.setState({ activeZone: null })}
       >
         {
-          _.isEmpty(target) ?
+          _.isEmpty(targetImage) ?
             <Placeholder onClick={this.props.openModal} />
-            : <img src={target.image} alt="target" />
+            : <img src={targetImage} alt="target" />
         }
         {
           _.map(zones, zone => (
             <DropZone
-              key={`drop_zone_${zone.id}`}
+              key={`drop_zone_${zone.id}_${this.props.language}`}
               zone={zone}
               target={this.target}
               editZone={editZone}
               setActive={e => this.setActiveZone(e, zone.id)}
               isActive={this.state.activeZone === zone.id}
+              language={this.props.language}
             />
           ))
         }

@@ -111,3 +111,45 @@ export function getImageUrl(text) {
   }
   return src;
 }
+
+export function extractAllLanguageChoices(choices) {
+  return _.reduce(
+    choices,
+    (all, choice) => {
+      const { id } = choice;
+      const multiLanguageTexts = _.map(
+        choice.texts,
+        (choiceText, key) => ({
+          order: choice.order,
+          ...choiceText,
+          id,
+          language: key
+        })
+      );
+      return all.concat(multiLanguageTexts);
+    },
+    []
+  );
+}
+
+export function addNewChoices(choices, language) {
+  return _.map(choices, (choice) => {
+    if (!_.isEmpty(choice.texts[language])) { return choice; }
+    const { id } = choice;
+    const wordType = choice.wordType || _.find(choice.texts, langText => langText.wordType);
+
+    return _.merge(
+      {},
+      choice,
+      {
+        texts: {
+          [language]: {
+            id,
+            language,
+            wordType,
+            text: ''
+          }
+        }
+      });
+  });
+}

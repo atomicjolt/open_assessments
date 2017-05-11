@@ -1,19 +1,29 @@
 import _                                        from 'lodash';
 import baseSerializer                           from './base';
-import { scrub, buildChoiceText, languageText } from '../../serializer_utils';
+import {
+  scrub,
+  buildChoiceText,
+  languageText,
+  extractAllLanguageChoices,
+  addNewChoices
+}                                               from '../../serializer_utils';
 import genusTypes                               from '../../../../constants/genus_types';
 import guid                                     from '../../../../utils/guid';
 
-function serializeChoices(originalChoices, newChoiceAttributes, inlineRegionId) {
-  const choices = _.map(originalChoices, (choice) => {
+function serializeChoices(originalChoices, newChoiceAttributes, inlineRegionId, language) {
+  const allChoices = extractAllLanguageChoices(addNewChoices(originalChoices, language));
+  const choices = _.map(allChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
+    const isUpdatedLanguage = choice.language && choice.language === language;
+    const updatedText = _.get(updateValues, `texts[${language}]`, {});
 
+    const newText = isUpdatedLanguage ? updatedText.text || choice.text : choice.text;
+    const newWordType = updatedText.wordType || choice.wordType;
+
+    const text = buildChoiceText(newText, newWordType);
     return {
       id: choice.id,
-      text: buildChoiceText(
-        _.get(updateValues, 'text') || choice.text,
-        _.get(updateValues, 'wordType') || choice.wordType || 'other',
-      ),
+      text: languageText(text, choice.language),
       delete: _.get(updateValues, 'delete'),
     };
   });
@@ -21,15 +31,14 @@ function serializeChoices(originalChoices, newChoiceAttributes, inlineRegionId) 
   if (newChoiceAttributes.new) {
     choices.push({
       id: guid(),
-      text: '',
-      order: choices.length,
+      text: languageText('', language),
     });
   }
 
   return { [inlineRegionId]: { choices } };
 }
 
-function serializeQuestion(originalQuestion, newQuestionAttributes, questionString) {
+function serializeQuestion(originalQuestion, newQuestionAttributes, questionString, language) {
   const newQuestion = {
     inlineRegions: null,
   };
@@ -39,7 +48,8 @@ function serializeQuestion(originalQuestion, newQuestionAttributes, questionStri
     newQuestion.inlineRegions = serializeChoices(
       originalQuestion.choices,
       newQuestionAttributes.choices,
-      inlineRegionId
+      inlineRegionId,
+      language
     );
   } else if (!originalQuestion.inlineRegionId) {
     newQuestion.inlineRegions = { [inlineRegionId]: { choices: [] } };
@@ -109,7 +119,12 @@ export default function movableFillBlank(originalItem, newItemAttributes) {
   if (question) {
     newItem.question = {
       ...newItem.question,
-      ...serializeQuestion(originalItem.question, question, newItem.question.questionString)
+      ...serializeQuestion(
+          originalItem.question,
+          question,
+          newItem.question.questionString,
+          language
+        )
     };
     if (question.choices || question.correctFeedback || question.incorrectFeedback) {
       newItem.answers = serializeAnswers(

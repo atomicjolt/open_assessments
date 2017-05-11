@@ -19,6 +19,7 @@ ShallowWrapper {
         editZone={[Function]}
         id=""
         images={Object {}}
+        language="eng"
         loadingMedia={false}
         question={
             Object {
@@ -39,6 +40,7 @@ ShallowWrapper {
     <DragArea
         dropObjects={Object {}}
         images={Object {}}
+        language="eng"
         loadingMedia={false}
         localizeStrings={[Function]}
         updateDropObject={[Function]}
@@ -78,6 +80,7 @@ ShallowWrapper {
             editZone={[Function]}
             id=""
             images={Object {}}
+            language="eng"
             loadingMedia={false}
             question={
                   Object {
@@ -98,6 +101,7 @@ ShallowWrapper {
       <DragArea
             dropObjects={Object {}}
             images={Object {}}
+            language="eng"
             loadingMedia={false}
             localizeStrings={[Function]}
             updateDropObject={[Function]}
@@ -207,6 +211,7 @@ ShallowWrapper {
                     editZone={[Function]}
                     id=""
                     images={Object {}}
+                    language="eng"
                     loadingMedia={false}
                     question={
                               Object {
@@ -227,6 +232,7 @@ ShallowWrapper {
           <DragArea
                     dropObjects={Object {}}
                     images={Object {}}
+                    language="eng"
                     loadingMedia={false}
                     localizeStrings={[Function]}
                     updateDropObject={[Function]}
@@ -266,6 +272,7 @@ ShallowWrapper {
                     editZone={[Function]}
                     id=""
                     images={Object {}}
+                    language="eng"
                     loadingMedia={false}
                     question={
                               Object {
@@ -286,6 +293,7 @@ ShallowWrapper {
           <DragArea
                     dropObjects={Object {}}
                     images={Object {}}
+                    language="eng"
                     loadingMedia={false}
                     localizeStrings={[Function]}
                     updateDropObject={[Function]}
