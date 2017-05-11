@@ -13,7 +13,6 @@ function option(props) {
   if (_.includes(props.duplicateAnswers, props.answerOrder)) { boxClass = 'is-error'; }
 
   const choiceText = _.get(props, `texts[${props.language}]`, defaultText);
-
   return (
     <div
       onFocus={props.selectChoice}
@@ -62,7 +61,6 @@ function option(props) {
         wordType={props.wordType}
         updateChoice={props.updateChoice}
       />
-
       <button onClick={props.deleteChoice} className="au-c-answer--delete">
         <i className="material-icons">close</i>
       </button>

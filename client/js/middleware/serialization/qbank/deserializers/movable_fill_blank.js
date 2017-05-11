@@ -3,12 +3,15 @@ import $                  from 'jquery';
 import baseDeserializer   from './base';
 import genusTypes         from '../../../../constants/genus_types';
 import { parseChoiceText,
-         parseChoiceWordType } from '../../serializer_utils';
+         parseChoiceWordType,
+         deserializeMultiLanguageChoice
+        } from '../../serializer_utils';
 
 function deserializeChoices(choices, answers, blankId) {
   const newChoices = {};
 
   _.forEach(choices, (choice) => {
+    const multiLangAttributes = deserializeMultiLanguageChoice(choice);
     newChoices[choice.id] = {
       id: choice.id,
       answerId: null,
@@ -16,6 +19,7 @@ function deserializeChoices(choices, answers, blankId) {
       wordType: parseChoiceWordType(choice.text),
       isCorrect: false,
       blankId,
+      ...multiLangAttributes
     };
     _.forEach(answers, (answer) => {
       if (_.includes(_.get(answer, `inlineRegions.${blankId}.choiceIds`), choice.id)) {
@@ -82,7 +86,7 @@ export default function movableFillBlank(item) {
     text: convertToText(newItem.question.text),
     texts: handleTexts(newItem.question.texts),
     choices: deserializeChoices(
-      _.get(item, `question.choices["${inlineRegionId}"]`),
+      _.get(item, `question.multiLanguageChoices["${inlineRegionId}"]`),
       item.answers,
       inlineRegionId
     ),

@@ -1,22 +1,30 @@
-import _                                        from 'lodash';
-import baseSerializer                           from './base';
-import { scrub, buildChoiceText, languageText } from '../../serializer_utils';
-import genusTypes                               from '../../../../constants/genus_types';
-import guid                                     from '../../../../utils/guid';
+import _                                              from 'lodash';
+import baseSerializer                                 from './base';
+import {
+  scrub,
+  buildChoiceText,
+  languageText,
+  extractAllLanguageChoices,
+  addNewChoices
+}                                                     from '../../serializer_utils';
+import genusTypes                                     from '../../../../constants/genus_types';
+import guid                                           from '../../../../utils/guid';
 
 const defaultWordChoice = 'other';
 
-function serializeChoices(originalChoices, newChoiceAttributes, language) {
-  const choices = _.map(originalChoices, (choice) => {
+function serializeChoices(originalChoices, newChoiceAttributes, lang) {
+  const allChoices = extractAllLanguageChoices(addNewChoices(originalChoices, lang));
+  const choices = _.map(allChoices, (choice) => {
+    const { language } = choice;
     const updateValues = newChoiceAttributes[choice.id];
     const newOrder = _.get(updateValues, 'order');
     const newWordType = _.get(updateValues, 'wordType');
-    const originalText = _.get(choice, `texts[${language}].text`, '');
-    const originalWordType = _.get(choice, `texts[${language}].wordType`, '');
 
+    const newText = lang && lang === choice.language ?
+      _.get(updateValues, 'text') : '';
     const text = buildChoiceText(
-      _.get(updateValues, 'text') || originalText,
-      newWordType || originalWordType || defaultWordChoice,
+      newText || choice.text,
+      newWordType || choice.wordType || defaultWordChoice,
     );
 
     return {

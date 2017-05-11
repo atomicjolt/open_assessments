@@ -1,6 +1,7 @@
 import React            from 'react';
 import { shallow }      from 'enzyme';
 import DropObject       from './drop_object';
+import { languages }    from '../../../../../constants/language_types';
 
 describe('drop_object component', () => {
   let props;
@@ -15,7 +16,11 @@ describe('drop_object component', () => {
       object: {
         id: '7',
         label: 'Spec',
+        labels: {
+          [languages.languageTypeId.english]: 'Spec'
+        },
       },
+      language: languages.languageTypeId.english,
       zones: {},
       updateObject: () => { updatedObject = true; },
       setActive: () => { calledSetActive = true; },
