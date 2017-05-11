@@ -1,7 +1,7 @@
-import React        from 'react';
-import TestUtils    from 'react-addons-test-utils';
+import React            from 'react';
+import TestUtils        from 'react-dom/test-utils';
 import localizeStrings  from '../../selectors/localize';
-import RecorderTimer from './recorder_timer';
+import RecorderTimer    from './recorder_timer';
 
 
 describe('recorder timer', () => {

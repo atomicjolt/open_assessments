@@ -1,6 +1,6 @@
 import React                from 'react';
 import ReactDOM             from 'react-dom';
-import TestUtils            from 'react-addons-test-utils';
+import TestUtils            from 'react-dom/test-utils';
 import wrapInDndContext     from '../../../../../specs_support/dnd_wrapper';
 import { MovableWords, __RewireAPI__ as RewireAPI }     from './movable_words';
 

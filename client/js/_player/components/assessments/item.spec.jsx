@@ -1,10 +1,10 @@
 import React                from 'react';
 import ReactDOM             from 'react-dom';
-import TestUtils            from 'react-addons-test-utils';
+import TestUtils            from 'react-dom/test-utils';
 import Item                 from './item';
 import localizeStrings      from '../../selectors/localize';
 
-describe('item', function() {
+describe('item', () => {
 
   let question = {
     title:'Test Question Title'

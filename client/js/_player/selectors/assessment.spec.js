@@ -130,3 +130,26 @@ describe('currentItems', () => {
     expect(result).toEqual([]);
   });
 });
+
+describe('isPrevUnlocked', () => {
+  let unlockPrev;
+
+  it('returns true for ALWAYS', () => {
+    unlockPrev = 'ALWAYS';
+    const result = AssessmentSelectors._isPrevUnlocked(unlockPrev);
+    expect(result).toEqual(true);
+  });
+
+  it('returns false for NEVER', () => {
+    unlockPrev = 'NEVER';
+    const result = AssessmentSelectors._isPrevUnlocked(unlockPrev);
+    expect(result).toEqual(false);
+  });
+
+  it('returns false for null', () => {
+    unlockPrev = null;
+    const result = AssessmentSelectors._isPrevUnlocked(unlockPrev);
+    expect(result).toEqual(false);
+  });
+});
+

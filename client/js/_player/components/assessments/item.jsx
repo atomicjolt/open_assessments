@@ -1,6 +1,4 @@
-'use strict';
-
-import React  from "react";
+import React  from 'react';
 import _                       from 'lodash';
 import videojs from 'video.js';
 import * as AssessmentActions  from '../../actions/assessment';
@@ -120,7 +118,7 @@ export default class Item extends React.Component {
               </div>
             );
         }
-      } else if (response.correct === false) {
+      } else if (response.correct === false || response.correct === null) {
         answerFeedback = (
           <div className="c-question-feedback  c-feedback--incorrect">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
@@ -138,6 +136,24 @@ export default class Item extends React.Component {
     );
   }
 
+  disabledCheck() {
+    const questRslt = this.props.questionResult;
+    if (questRslt.correct === true) {
+      return true;
+    }
+    return false;
+  }
+  // stopKeypress() {
+  //   document.onkeydown = (e) => {
+  //     if (e.which) {
+  //       return false;
+  //       console.log('keyboard off');
+  //     }
+  //     return true;
+  //     console.log('keyboard on');
+  //   };
+  // }
+
   render() {
     return (
       <div className="c-question">
@@ -148,9 +164,10 @@ export default class Item extends React.Component {
           <UniversalInput
             settings={this.props.settings}
             item={this.props.question}
-            isResult={false}
+            isResult={this.disabledCheck()}
             selectAnswer={this.props.selectAnswer}
             response={this.props.response}
+            questionResult={this.props.questionResult}
             localizedStrings={this.props.localizedStrings}
             audioRecordStart={this.props.audioRecordStart}
             audioRecordStop={this.props.audioRecordStop}

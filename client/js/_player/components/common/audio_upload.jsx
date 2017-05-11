@@ -14,9 +14,15 @@ class AudioUpload extends React.Component {
     // Maximum audio recording length in seconds
     timeout: React.PropTypes.number,
 
+    // Saved response to be displayed
+    savedResponse: React.PropTypes.string,
+
     // Actions to call when recording is started or stopped
     audioRecordStart: React.PropTypes.func.isRequired,
-    audioRecordStop : React.PropTypes.func.isRequired
+    audioRecordStop : React.PropTypes.func.isRequired,
+
+    // Whether or not input should be disabled
+    isDisabled: React.PropTypes.bool
   };
 
   constructor() {
@@ -68,6 +74,7 @@ class AudioUpload extends React.Component {
     let audioEl; // handle toggling between viewing Recorder Timer and audio element
     let buttonText;
     let buttonClass;
+    let hideButClass;
     if (this.state.recorder === RecorderCommands.start) {
       buttonClass = 'c-btn--stop';
       buttonText = this.props.localizedStrings.stop;
@@ -78,16 +85,20 @@ class AudioUpload extends React.Component {
         />);  // show Recorder Timer
     } else {
       buttonText = this.props.localizedStrings.record;
-      audioEl = <audio src={this.state.audioURL} type="audio/wav" controls />; // show audio element
+      audioEl = <audio src={this.props.savedResponse || this.state.audioURL} type="audio/wav" controls />; // show audio element
+    }
+    if (this.props.isDisabled) {
+      hideButClass = 'c-btn--subdue';
     }
     return (
       <div className="c-record">
-        <a
+        <button
           onClick={() => { this.toggle(); }}
-          className={`c-btn  c-btn--record ${buttonClass || ''}`}
+          className={`c-btn  c-btn--record ${buttonClass || ''} ${hideButClass || ''}`}
+          disabled={this.props.isDisabled}
         >
           <span>{ buttonText }</span>
-        </a>
+        </button>
         <span className="c-audio-holder">{audioEl}</span>
         <Recorder
           command={this.state.recorder}

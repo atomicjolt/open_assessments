@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import _     from 'lodash';
 
 export default class FileUpload extends React.Component {
@@ -6,8 +6,15 @@ export default class FileUpload extends React.Component {
   static propTypes = {
     selectAnswer: React.PropTypes.func,
 
+    // Saved response to be displayed
+    savedResponse: React.PropTypes.string,
+
     // User facing strings of the language specified by the 'locale' setting
-    localizedStrings: React.PropTypes.object.isRequired // TODO when we add styles, localize strings
+    localizedStrings: React.PropTypes.object.isRequired,
+    // TODO when we add styles, localize strings
+
+    // Whether or not input should be disabled
+    isDisabled: React.PropTypes.bool
   };
 
   constructor() {
@@ -25,7 +32,7 @@ export default class FileUpload extends React.Component {
       this.props.selectAnswer(e.target.files[0]);
     }
 
-    // fake the behavior of what the standard input type="file" shows the user
+    // Simulate the behavior of what the standard input type="file" shows the user
     if (e.target.files[0] !== undefined) {
       this.setState({ uplFile:e.target.files[0].name });
     } else {
@@ -33,11 +40,18 @@ export default class FileUpload extends React.Component {
     }
   }
 
+  handleFileNmDisplay() {
+    if (this.props.savedResponse) {
+      return this.props.savedResponse;
+    }
+    return this.state.uplFile ? this.state.uplFile : this.props.localizedStrings.noFile;
+  }
+
   render() {
     return (
       <label htmlFor="file-upload" className="c-file-upload">
         <span>{this.props.localizedStrings.chooseFile}</span>
-        <input id="file-upload" ref={(input) => { this.inputField = input; }} onChange={e => this.handleChange(e)} type="file" className="c-file-upload-input" /><input type="text" value={this.state.uplFile ? this.state.uplFile : this.props.localizedStrings.noFile} readOnly />
+        <input id="file-upload" ref={(input) => { this.inputField = input; }} onChange={e => this.handleChange(e)} type="file" className="c-file-upload-input" disabled={this.props.isDisabled} /><input type="text" value={this.handleFileNmDisplay()} readOnly />
       </label>
     );
   }

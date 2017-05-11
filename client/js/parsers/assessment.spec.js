@@ -1,3 +1,4 @@
+
 import $                                                 from 'jquery';
 import Immutable                                         from 'immutable';
 import { parse, getAssessmentFormat, AssessmentFormats } from './assessment';

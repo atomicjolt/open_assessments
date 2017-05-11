@@ -1,15 +1,13 @@
-import React        from 'react';
-import TestUtils    from 'react-addons-test-utils';
-import { __RewireAPI__ as AudioUploadRewireApi } from './audio_upload';
+import React                                                   from 'react';
+import TestUtils                                               from 'react-dom/test-utils';
+import localizeStrings                                         from '../../selectors/localize';
+import AudioUpload, { __RewireAPI__ as AudioUploadRewireApi }  from './audio_upload';
 
-import localizeStrings  from '../../selectors/localize';
-import AudioUpload  from './audio_upload';
-
-const FakeRecorder = React.createClass({
+class FakeRecorder extends React.Component {
   render() {
     return null;
   }
-});
+}
 
 describe('audio upload', () => {
 

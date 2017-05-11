@@ -169,8 +169,10 @@
 }
 
 .c-btn--record{
+  background: $white;
   border-color: $incorrect;
   width: 10.5rem;
+  text-align: left;
   @include transition(all 0.1s ease);
 
   &:hover{
@@ -216,8 +218,34 @@
     }
   }
   &.c-btn--stop:active{
-    background: darken($incorrect, 15%);
-    border-color: darken($incorrect, 15%);
+    background: darken($incorrect, 10%);
+    border-color: darken($incorrect, 10%);
+  }
+
+  &.c-btn--subdue[disabled]{
+    visibility: visible;
+    background: $white;
+    color: darken($light-gray, 10%);
+    border-color: darken($light-gray, 10%);
+
+    &:hover{
+      background: $white;
+      border-color: darken($light-gray, 10%);
+
+      span{
+        color: darken($light-gray, 10%);
+        &:before{
+          background: darken($light-gray, 10%);
+        }
+      }
+    }
+
+    span{
+      color: darken($light-gray, 10%);
+      &:before{
+          background: darken($light-gray, 10%);
+        }
+    }
   }
 }
 
@@ -305,4 +333,6 @@
   }
 }
 
-
+.c-disable-pointer-n-keys {
+  pointer-events: none;
+}
