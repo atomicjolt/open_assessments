@@ -1,5 +1,5 @@
-export const CommunicatorMsg = 'open_assessments_msg';
-export const CommunicatorResizeMsg = 'open_assessments_resize';
+export const CommunicatorMsg         = 'open_assessments_msg';
+export const CommunicatorResizeMsg   = 'open_assessments_resize';
 
 export const CommunicatorSizeRequest = 'open_assessments_size_request';
 
@@ -15,7 +15,7 @@ export default class Communicator {
   }
 
   static commMsg(msg, payload) {
-    parent.postMessage(JSON.stringify({ [CommunicatorMsg]: msg, payload }), '*');
+    parent.postMessage(JSON.stringify({ [CommunicatorMsg]: msg, 'payload': payload }), '*');
   }
 
   static broadcastMsg(payload) {
@@ -30,5 +30,4 @@ export default class Communicator {
       p = p.parent;
     }
   }
-
 }
