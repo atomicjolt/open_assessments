@@ -15,7 +15,7 @@ const requests = [];
 
 export const Constants = wrapper(constants, requests);
 
-// TODO: what do any of these do?
+export const sendSize = () => ({ type: Constants.SEND_SIZE });
 export const scrollParentToTop = () => ({ type: Constants.SCROLL_PARENT_TO_TOP });
 export const navigateHome = () => ({ type: Constants.LTI_NAVIGATE_HOME });
 export const navigateNext = () => ({ type: Constants.LTI_NAVIGATE_NEXT });
