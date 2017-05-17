@@ -245,8 +245,9 @@ export class Question extends React.Component {
 
   markedForDeletion(choice) {
     const newChoices = _.cloneDeep(this.props.item.question.choices);
-    newChoices[choice.id].delete = true;
-    return newChoices;
+    const toDelete = newChoices[choice.id];
+    toDelete.delete = true;
+    return { [toDelete.id]: toDelete };
   }
 
   content() {

@@ -5,11 +5,12 @@ import genusTypes               from '../../../../constants/genus_types';
 import guid                     from '../../../../utils/guid';
 
 function serializeChoices(originalChoices, newChoiceAttributes, language) {
-  const choices = _.map(originalChoices, (choice) => {
-    const updateValues = newChoiceAttributes[choice.id];
-    const text = _.get(updateValues, 'text', choice.text);
+  const choices = _.map(newChoiceAttributes, (updateValues, id) => {
+    const choice = originalChoices[id];
+    const originalText = _.get(choice, `texts[${language}]`, '');
+    const text = _.get(updateValues, 'text', originalText);
     return {
-      id: choice.id,
+      id,
       text: languageText(text, language),
       delete: _.get(updateValues, 'delete'),
     };
