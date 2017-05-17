@@ -4,13 +4,14 @@ import { scrub, languageText }  from '../../serializer_utils';
 import genusTypes               from '../../../../constants/genus_types';
 import guid                     from '../../../../utils/guid';
 
-function serializeChoices(originalChoices, newChoiceAttributes) {
-  const choices = _.map(originalChoices, (choice) => {
-    const updateValues = newChoiceAttributes[choice.id];
+function serializeChoices(originalChoices, newChoiceAttributes, language) {
+  const choices = _.map(newChoiceAttributes, (updateValues, id) => {
+    const choice = originalChoices[id];
+    const originalText = _.get(choice, `texts[${language}]`, '');
+    const text = _.get(updateValues, 'text', originalText);
     return {
-      id: choice.id,
-      text: _.get(updateValues, 'text', choice.text),
-      order: _.get(updateValues, 'order', choice.order),
+      id,
+      text: languageText(text, language),
       delete: _.get(updateValues, 'delete'),
     };
   });
@@ -18,15 +19,14 @@ function serializeChoices(originalChoices, newChoiceAttributes) {
   if (newChoiceAttributes.new) {
     choices.push({
       id: guid(),
-      text: '',
-      order: choices.length,
+      text: languageText('', language),
     });
   }
 
   return choices;
 }
 
-function serializeQuestion(originalQuestion, newQuestionAttributes) {
+function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
   const newQuestion = {
     multiAnswer: newQuestionAttributes.multiAnswer,
     shuffle: newQuestionAttributes.shuffle,
@@ -35,7 +35,11 @@ function serializeQuestion(originalQuestion, newQuestionAttributes) {
   };
 
   if (newQuestionAttributes.choices) {
-    newQuestion.choices = serializeChoices(originalQuestion.choices, newQuestionAttributes.choices);
+    newQuestion.choices = serializeChoices(
+      originalQuestion.choices,
+      newQuestionAttributes.choices,
+      language
+    );
   }
 
   return scrub(newQuestion);
@@ -63,7 +67,7 @@ export default function surveySerializer(originalItem, newItemAttributes) {
   if (question) {
     newItem.question = {
       ...newItem.question,
-      ...serializeQuestion(originalItem.question, question)
+      ...serializeQuestion(originalItem.question, question, language)
     };
     if (question.choices || question.correctFeedback) {
       if (newItemAttributes.type && originalItem.type !== newItemAttributes.type) {
