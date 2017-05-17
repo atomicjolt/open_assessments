@@ -26,7 +26,9 @@ function serializeChoices(originalChoices, newChoiceAttributes, language) {
   });
 
   if (newChoiceAttributes.new) {
-    const text = `<p></p><img src='${newChoiceAttributes.new.text}' alt='${newChoiceAttributes.new.altText}'>`;
+    const src = _.get(newChoiceAttributes, 'new.text', '');
+    const altText = _.get(newChoiceAttributes, 'new.altText.text');
+    const text = `<p></p><img src='${src}' alt='${altText}'>`;
 
     choices.push({
       id: guid(),
