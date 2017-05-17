@@ -1,4 +1,3 @@
-import _                  from 'lodash';
 import React              from 'react';
 
 import Checkbox           from '../../assessments/question_types/question_common/option_checkbox';
