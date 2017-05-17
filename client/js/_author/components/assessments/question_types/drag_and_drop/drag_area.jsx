@@ -69,6 +69,7 @@ class DragArea extends React.Component {
           media={this.props.images}
           mediaType={'img'}
           insertMedia={(img, metadata, isNew) => this.insertMedia(img, metadata, isNew)}
+          language={this.props.language}
         />
       </div>
     );

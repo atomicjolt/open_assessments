@@ -20,13 +20,13 @@ function serializeTargets(originalTarget, newTarget, fileIds, language) {
   const originalImage = _.get(originalTarget, `images[${language}]`, '');
   const text = buildImageTag(
     _.get(newTarget, 'text', originalImage),
-    _.get(newTarget, 'altText'),
+    _.get(newTarget, 'altText.text'),
     fileIds
   );
   return [scrub({
     id: _.get(originalTarget, 'id'),
     text: languageText(text, language),
-    name: _.get(newTarget, 'altText'),
+    name: _.get(newTarget, 'altText.text'),
     dropBehaviorType: genusTypes.target.reject,
   })];
 }
@@ -86,8 +86,9 @@ function serializeDroppables(originalDroppables, newDroppables, fileIds, languag
     const labels = _.merge({}, droppable.labels, newDroppable.labels);
     const image = newDroppable.text || _.get(images, `${language}.text`, '');
     const label = _.get(labels, `${language}.text`, '');
+    const altText = _.get(droppable, `altTexts[${language}].text`, label);
+    const text = buildImageTag(image, altText, fileIds);
 
-    const text = buildImageTag(image, label, fileIds);
     return scrub({
       id: droppable.id,
       text: languageText(text, language),
@@ -99,7 +100,8 @@ function serializeDroppables(originalDroppables, newDroppables, fileIds, languag
   });
 
   if (newDroppables && newDroppables.new) {
-    const newText = buildImageTag(newDroppables.new.text, newDroppables.new.altText, fileIds);
+    const newAltText = _.get(newDroppables, 'new.altText.text');
+    const newText = buildImageTag(newDroppables.new.text, newAltText, fileIds);
     droppables.push({
       text: languageText(newText, language),
       dropBehaviorType: genusTypes.zone.snap,
