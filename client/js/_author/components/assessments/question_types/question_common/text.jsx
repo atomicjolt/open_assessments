@@ -13,6 +13,7 @@ class QuestionText extends React.Component {
     bankId: React.PropTypes.string.isRequired,
     itemType: React.PropTypes.string,
     fileIds: React.PropTypes.shape({})
+    language: React.PropTypes.shape({})
   };
 
   constructor(props) {
