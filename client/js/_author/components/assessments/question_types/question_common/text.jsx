@@ -12,7 +12,8 @@ class QuestionText extends React.Component {
     localizeStrings: React.PropTypes.func.isRequired,
     bankId: React.PropTypes.string.isRequired,
     itemType: React.PropTypes.string,
-    fileIds: React.PropTypes.shape({})
+    fileIds: React.PropTypes.shape({}),
+    language: React.PropTypes.shape({})
   };
 
   constructor(props) {
@@ -66,6 +67,7 @@ class QuestionText extends React.Component {
               editorKey={this.props.editorKey}
               onBlur={(val, fileIds) => this.props.updateItem({ question: { text: val, fileIds } })}
               bankId={this.props.bankId}
+              language={this.props.language}
             />
           </div>
         );

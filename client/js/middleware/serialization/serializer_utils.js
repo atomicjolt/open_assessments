@@ -112,6 +112,16 @@ export function getImageUrl(text) {
   return src;
 }
 
+export function getAltText(text) {
+  const parsedInput = $.parseHTML(text);
+  const img = $(parsedInput).find('img');
+  const alt = $(parsedInput).attr('alt');
+  if (img && !alt) {
+    return $(img).attr('alt');
+  }
+  return alt;
+}
+
 export function extractAllLanguageChoices(choices) {
   return _.reduce(
     choices,
