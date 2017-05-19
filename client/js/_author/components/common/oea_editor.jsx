@@ -15,7 +15,7 @@ function select(state) {
     video: state.media.video,
     audio: state.media.audio,
     loadingMedia: state.media.loading,
-    uploadedAssets: state.uploadedAssets
+    uploadedAssets: state.uploadedAssets,
   };
 }
 
@@ -29,6 +29,7 @@ export class OeaEditor extends React.Component {
     uploadMedia: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}),
     fileIds: React.PropTypes.shape({}),
+    language: React.PropTypes.shape({}),
     textSize: React.PropTypes.string,
     error: React.PropTypes.string,
     loadingMedia: React.PropTypes.bool,
@@ -321,6 +322,7 @@ export class OeaEditor extends React.Component {
           mediaType={this.state.mediaType}
           media={this.props[this.state.mediaType]}
           loading={this.props.loadingMedia}
+          language={this.props.language}
         />
       </div>
     );
