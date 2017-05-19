@@ -12,7 +12,7 @@ class QuestionText extends React.Component {
     localizeStrings: React.PropTypes.func.isRequired,
     bankId: React.PropTypes.string.isRequired,
     itemType: React.PropTypes.string,
-    fileIds: React.PropTypes.shape({})
+    fileIds: React.PropTypes.shape({}),
     language: React.PropTypes.shape({})
   };
 
