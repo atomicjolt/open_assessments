@@ -158,9 +158,12 @@ export class OeaEditor extends React.Component {
         break;
 
       case 'audio':
-        editorContent = `<audio class="span_12_of_12" ${autoPlay} name="media" controls>` +
-        `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
-        '</audio>';
+        {
+          const extension = media.extension === 'm4a' ? 'mp4' : media.extension; // Chrome doesn't play nice with m4a
+          editorContent = `<audio class="span_12_of_12" ${autoPlay} name="media" controls>` +
+          `<source src="${media.url}" type="${this.state.mediaType}/${extension}">` +
+          '</audio>';
+        }
         break;
       case 'video':
         {
