@@ -304,6 +304,7 @@ export class Question extends React.Component {
             text={languageText(question.texts, this.state.language)}
             updateItem={newProps => this.updateItem(newProps, true)}
             bankId={bankId}
+            language={this.state.language}
           />
           {this.content()}
         </div>

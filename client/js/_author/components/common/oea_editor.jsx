@@ -15,7 +15,7 @@ function select(state) {
     video: state.media.video,
     audio: state.media.audio,
     loadingMedia: state.media.loading,
-    uploadedAssets: state.uploadedAssets
+    uploadedAssets: state.uploadedAssets,
   };
 }
 
@@ -318,6 +318,7 @@ export class OeaEditor extends React.Component {
           mediaType={this.state.mediaType}
           media={this.props[this.state.mediaType]}
           loading={this.props.loadingMedia}
+          language={this.props.language}
         />
       </div>
     );

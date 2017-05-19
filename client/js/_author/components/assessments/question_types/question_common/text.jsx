@@ -66,6 +66,7 @@ class QuestionText extends React.Component {
               editorKey={this.props.editorKey}
               onBlur={(val, fileIds) => this.props.updateItem({ question: { text: val, fileIds } })}
               bankId={this.props.bankId}
+              language={this.props.language}
             />
           </div>
         );
