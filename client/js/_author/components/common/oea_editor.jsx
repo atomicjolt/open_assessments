@@ -15,7 +15,7 @@ function select(state) {
     video: state.media.video,
     audio: state.media.audio,
     loadingMedia: state.media.loading,
-    uploadedAssets: state.uploadedAssets
+    uploadedAssets: state.uploadedAssets,
   };
 }
 
@@ -29,6 +29,7 @@ export class OeaEditor extends React.Component {
     uploadMedia: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}),
     fileIds: React.PropTypes.shape({}),
+    language: React.PropTypes.shape({}),
     textSize: React.PropTypes.string,
     error: React.PropTypes.string,
     loadingMedia: React.PropTypes.bool,
@@ -157,9 +158,12 @@ export class OeaEditor extends React.Component {
         break;
 
       case 'audio':
-        editorContent = `<audio class="span_12_of_12" ${autoPlay} name="media" controls>` +
-        `<source src="${media.url}" type="${this.state.mediaType}/${media.extension}">` +
-        '</audio>';
+        {
+          const extension = media.extension === 'm4a' ? 'mp4' : media.extension; // Chrome doesn't play nice with m4a
+          editorContent = `<audio class="span_12_of_12" ${autoPlay} name="media" controls>` +
+          `<source src="${media.url}" type="${this.state.mediaType}/${extension}">` +
+          '</audio>';
+        }
         break;
       case 'video':
         {
@@ -318,6 +322,7 @@ export class OeaEditor extends React.Component {
           mediaType={this.state.mediaType}
           media={this.props[this.state.mediaType]}
           loading={this.props.loadingMedia}
+          language={this.props.language}
         />
       </div>
     );

@@ -3,7 +3,6 @@ import { connect }       from 'react-redux';
 
 import * as AssetActions from '../../../../../actions/qbank/assets';
 import localize          from '../../../../locales/localize';
-import assets            from '../../../../../libs/assets';
 import MediaModal        from '../../../common/upload_modal/editor_upload_modal';
 
 function select(state) {
@@ -42,10 +41,8 @@ export class UpdateMedia extends React.Component {
   }
 
   render() {
-    const logo = assets('./_author/images/CLIx-logo.png');
     return (
       <div>
-        <img src={logo} alt="default" />
         <button
           onClick={() => this.setState({ showModal: true })}
           className="au-c-drop-zone-answer-add__button"

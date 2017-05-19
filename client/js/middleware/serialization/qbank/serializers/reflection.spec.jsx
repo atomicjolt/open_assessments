@@ -1,5 +1,6 @@
 import reflection             from './reflection';
 import genusTypes             from '../../../../constants/genus_types';
+import { languages }          from '../../../../constants/language_types';
 
 describe('reflection serializer', () => {
   let item;
@@ -35,14 +36,19 @@ describe('reflection serializer', () => {
     };
     newItemAttr = {
       question: {
-        choices: [{},
-        {}],
+        choices: {
+          'id969e920d-6d22-4d06-b4ac-40a821e350c6': {
+            id: 'id969e920d-6d22-4d06-b4ac-40a821e350c6',
+            text: 'the airport',
+            wordType: 'noun',
+          } },
         correctFeedback: {
           text: 'correctText',
           fileIds: {},
           id: '1',
         },
       },
+      language: languages.languageTypeId.english
     };
     result = reflection(item, newItemAttr);
   });
@@ -50,15 +56,13 @@ describe('reflection serializer', () => {
   it('serializes the choices', () => {
     const expectedChoices = [
       {
-        id: 'id14a6824a-79f2-4c00-ac6a-b41cbb64db45',
-        text: 'the bus',
-        order: undefined,
-        delete: undefined,
-      },
-      {
         id: 'id969e920d-6d22-4d06-b4ac-40a821e350c6',
-        text: 'the airport',
-        order: undefined,
+        text: {
+          formatTypeId: languages.formatTypeId,
+          languageTypeId: languages.languageTypeId.english,
+          scriptTypeId: languages.scriptTypeId.english,
+          text: 'the airport'
+        },
         delete: undefined,
       },
     ];
@@ -72,9 +76,9 @@ describe('reflection serializer', () => {
         genusTypeId: 'answer-type%3Aright-answer%40ODL.MIT.EDU',
         feedback: {
           text: 'correctText',
-          languageTypeId: undefined,
-          formatTypeId: 'TextFormats%3APLAIN%40okapia.net',
-          scriptTypeId: undefined,
+          languageTypeId: languages.languageTypeId.english,
+          formatTypeId: languages.formatTypeId,
+          scriptTypeId: languages.scriptTypeId.english,
         },
         type: 'answer-record-type%3Amulti-choice-answer%40ODL.MIT.EDU',
         choiceIds:

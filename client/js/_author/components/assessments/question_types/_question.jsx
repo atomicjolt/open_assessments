@@ -245,8 +245,9 @@ export class Question extends React.Component {
 
   markedForDeletion(choice) {
     const newChoices = _.cloneDeep(this.props.item.question.choices);
-    newChoices[choice.id].delete = true;
-    return newChoices;
+    const toDelete = newChoices[choice.id];
+    toDelete.delete = true;
+    return { [toDelete.id]: toDelete };
   }
 
   content() {
@@ -303,6 +304,7 @@ export class Question extends React.Component {
             text={languageText(question.texts, this.state.language)}
             updateItem={newProps => this.updateItem(newProps, true)}
             bankId={bankId}
+            language={this.state.language}
           />
           {this.content()}
         </div>

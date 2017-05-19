@@ -1,8 +1,8 @@
-import _                        from 'lodash';
-import baseDeserializer         from './base';
-import { getQbankType, types }  from '../../../../constants/genus_types';
-import { languages }            from '../../../../constants/language_types';
-import { getImageUrl }          from '../../serializer_utils';
+import _                           from 'lodash';
+import baseDeserializer            from './base';
+import { getQbankType, types }     from '../../../../constants/genus_types';
+import { languages }               from '../../../../constants/language_types';
+import { getImageUrl, getAltText } from '../../serializer_utils';
 
 function toLanguageObject(textObjects) {
   return _.reduce(textObjects,
@@ -62,6 +62,15 @@ function deserializeDropObject(droppable, zoneCondition) {
       return { ...text, text: imageText };
     }
   );
+  const imageAltTexts = _.map(
+    droppable.texts,
+    (text) => {
+      const imageText = getAltText(text.text);
+      return { ...text, text: imageText };
+    }
+  );
+
+  const altTexts = toLanguageObject(imageAltTexts);
   const labels = toLanguageObject(droppable.names);
   const images = toLanguageObject(imageTexts);
 
@@ -73,6 +82,7 @@ function deserializeDropObject(droppable, zoneCondition) {
     images,
     type: getQbankType(droppable.dropBehaviorType),
     correctZone: _.get(zoneCondition, 'zoneId'),
+    altTexts
   };
 }
 

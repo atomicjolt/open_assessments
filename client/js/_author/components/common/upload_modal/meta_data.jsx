@@ -1,6 +1,6 @@
-import React      from 'react';
-
-import Checkbox   from '../../assessments/question_types/question_common/option_checkbox';
+import React              from 'react';
+import _ from 'lodash';
+import Checkbox           from '../../assessments/question_types/question_common/option_checkbox';
 import MetaDataFileInputs from './meta_file_inputs';
 import MetaDataInputs     from './meta_data_inputs';
 
@@ -68,7 +68,7 @@ export default class Metadata extends React.Component {
           <label htmlFor="meta_upload_desc">Description</label>
           <div className="au-c-input__contain">
             <textarea
-              value={this.props.metaData.description || ''}
+              value={_.get(this, 'props.metaData.description', '')}
               ref={(area) => { this.textArea = area; }}
               className="au-c-textarea au-c-text-input--smaller"
               id="meta_upload_desc"
