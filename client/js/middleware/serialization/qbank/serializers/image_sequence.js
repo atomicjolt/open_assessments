@@ -4,7 +4,19 @@ import { scrub, languageText }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 
-function serializeChoices(originalChoices, newChoiceAttributes, language) {
+function buildImageTag(url, alt, fileIds) {
+  const match = /.*\/(.*)\/stream$/.exec(url);
+  let resolvedUrl = url;
+
+  if (match) {
+    const id = _.findKey(fileIds, { assetContentId: match[1] });
+    resolvedUrl = `AssetContent:${id}`;
+  }
+
+  return `<img src="${resolvedUrl}" alt="${alt}"/>`;
+}
+
+function serializeChoices(originalChoices, newChoiceAttributes, language, fileIds) {
   const choices = _.map(originalChoices, (choice) => {
     const updateValues = newChoiceAttributes[choice.id];
     const newOrder = _.get(updateValues, 'order');
@@ -15,7 +27,7 @@ function serializeChoices(originalChoices, newChoiceAttributes, language) {
     const imageSrc = _.get(updateValues, 'text', originalImageSrc);
     const labelText = _.get(updateValues, 'labelText', originalLabelText);
     const imageAlt = _.get(updateValues, 'altText', originalAltText);
-    const text = `<p>${labelText}</p><img src='${imageSrc}' alt='${imageAlt}'>`;
+    const text = `<p>${labelText}</p>${buildImageTag(imageSrc, imageAlt, fileIds)}`;
 
     return {
       id: choice.id,
@@ -40,7 +52,8 @@ function serializeChoices(originalChoices, newChoiceAttributes, language) {
   return choices;
 }
 
-function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
+function serializeQuestion(originalQuestion, newQuestionAttributes, language, oldFileIds) {
+  const fileIds = { ...oldFileIds, ...originalQuestion.fileIds, ...newQuestionAttributes.fileIds };
   const newQuestion = {
     choices: null,
   };
@@ -48,7 +61,8 @@ function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
     newQuestion.choices = serializeChoices(
       originalQuestion.choices,
       newQuestionAttributes.choices,
-      language
+      language,
+      fileIds
     );
   }
 
@@ -96,7 +110,7 @@ export default function imageSequenceSerializer(originalItem, newItemAttributes)
   if (question) {
     newItem.question = {
       ...newItem.question,
-      ...serializeQuestion(originalItem.question, question, language)
+      ...serializeQuestion(originalItem.question, question, language, _.get(originalItem, 'originalItem.question.fileIds'))
     };
 
     if (question.choices || question.correctFeedback || question.incorrectFeedback) {
