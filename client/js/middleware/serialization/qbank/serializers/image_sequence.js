@@ -52,8 +52,8 @@ function serializeChoices(originalChoices, newChoiceAttributes, language, fileId
   return choices;
 }
 
-function serializeQuestion(originalQuestion, newQuestionAttributes, language) {
-  const fileIds = { ...originalQuestion.fileIds, ...newQuestionAttributes.fileIds };
+function serializeQuestion(originalQuestion, newQuestionAttributes, language, oldFileIds) {
+  const fileIds = { ...oldFileIds, ...originalQuestion.fileIds, ...newQuestionAttributes.fileIds };
   const newQuestion = {
     choices: null,
   };
@@ -110,7 +110,7 @@ export default function imageSequenceSerializer(originalItem, newItemAttributes)
   if (question) {
     newItem.question = {
       ...newItem.question,
-      ...serializeQuestion(originalItem.question, question, language)
+      ...serializeQuestion(originalItem.question, question, language, _.get(originalItem, 'originalItem.question.fileIds'))
     };
 
     if (question.choices || question.correctFeedback || question.incorrectFeedback) {
