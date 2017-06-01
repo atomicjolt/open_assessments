@@ -72,7 +72,8 @@ export class Assessment extends React.Component {
       assessmentResult: React.PropTypes.string,
       isSubmitted: React.PropTypes.bool,
       currentItemIndex: React.PropTypes.number,
-      checkedResponses: React.PropTypes.array
+      checkedResponses: React.PropTypes.array,
+      numQuestionsChecking: React.PropTypes.number,
     }),
     assessmentViewed: React.PropTypes.func,
     settings: React.PropTypes.shape({
@@ -185,6 +186,7 @@ export class Assessment extends React.Component {
         question={props.allQuestions[index]}
         response={props.responses[index] || []}
         currentItemIndex={index}
+        numQuestionsChecking={props.assessmentProgress.numQuestionsChecking}
         questionCount={props.questionCount}
         questionResult={props.questionResults[index] || {}}
         allQuestions={props.allQuestions}

@@ -13,10 +13,12 @@ describe('item', () => {
   let currentItemIndex = 0;
   let assessment = {};
   let questionCount = 10;
+  let numQuestionsChecking;
 
   let result;
   let subject;
   let svgTest;
+  let classTest;
 
   const renderItem = () => {
     result = TestUtils.renderIntoDocument(<Item
@@ -26,6 +28,8 @@ describe('item', () => {
       questionCount={questionCount}
       assessment={assessment}
       localizedStrings={localizeStrings({ settings: { locale:'en' } })}
+      numQuestionsChecking={numQuestionsChecking}
+
     />);
     subject = ReactDOM.findDOMNode(result);
   };
@@ -47,9 +51,18 @@ describe('item', () => {
     expect(subject.textContent).toContain('Test Question Material');
   });
 
+  it('renders null if numQuestionsChecking === 1', () => {
+    questionResult = { correct:true, feedback:'Correct answer' };
+    numQuestionsChecking = 1;
+    renderItem();
+    classTest = TestUtils.scryRenderedDOMComponentsWithClass(result, 'c-question-feedback'); // look for class
+    expect(classTest.length).toEqual(0); // expect no class because numQuestionsChecking is truthy
+  });
+
   describe('feedback', () => {
     it('renders non-survey question with tick mark when item is correct', () => {
       questionResult = { correct:true, feedback:'Correct answer' };
+      numQuestionsChecking = 0;
       renderItem();
       svgTest = TestUtils.scryRenderedDOMComponentsWithTag(result, 'svg'); // look for svg tag
       expect(svgTest.length).toEqual(1); // expect svg tag to exist
@@ -64,6 +77,7 @@ describe('item', () => {
         question_type: 'survey_question' // set question type
       };
       questionResult = { correct:true, feedback:'Correct answer' };
+      numQuestionsChecking = 0;
       renderItem();
       svgTest = TestUtils.scryRenderedDOMComponentsWithTag(result, 'svg'); // look for svg tag
       expect(svgTest.length).toEqual(0); // expect no svg tag
@@ -76,6 +90,7 @@ describe('item', () => {
 
     it('renders incorrect when item is incorrect', () => {
       questionResult = { correct:false, feedback:'Incorrect answer' };
+      numQuestionsChecking = 0;
       renderItem();
       svgTest = TestUtils.scryRenderedDOMComponentsWithTag(result, 'svg'); // look for svg tag
       expect(svgTest.length).toEqual(1); // expect svg tag to exist
@@ -88,6 +103,7 @@ describe('item', () => {
 
     it('renders without feedback when item is unchecked', () => {
       questionResult = {};
+      numQuestionsChecking = 0;
       renderItem();
       expect(subject.textContent).not.toContain('Incorrect');
       expect(subject.textContent).not.toContain('incorrect answer');

@@ -1,9 +1,7 @@
-import React  from 'react';
+import React                   from 'react';
 import _                       from 'lodash';
-import videojs from 'video.js';
-import * as AssessmentActions  from '../../actions/assessment';
+import videojs                 from 'video.js';
 import UniversalInput          from './universal_input';
-
 
 export default class Item extends React.Component {
 
@@ -19,6 +17,9 @@ export default class Item extends React.Component {
 
     // The position of the item in the array of items
     currentItemIndex  : React.PropTypes.number.isRequired,
+
+    // How many questions are being checked
+    numQuestionsChecking  : React.PropTypes.number.isRequired,
 
     // The total number of items in the array of items
     questionCount     : React.PropTypes.number.isRequired,
@@ -39,7 +40,7 @@ export default class Item extends React.Component {
     audioPause        : React.PropTypes.func.isRequired,
     audioRecordStart  : React.PropTypes.func.isRequired,
     audioRecordStop   : React.PropTypes.func.isRequired,
-  };
+  }
 
   componentDidMount() {
 
@@ -94,37 +95,43 @@ export default class Item extends React.Component {
   }
 
   getFeedback() {
-    const response = this.props.questionResult;
+    const questionResult = this.props.questionResult;
     const questionType = this.props.question.question_type;
     let answerFeedback;
 
-    if (response) {
-      if (response.correct === true) {
+
+    if (questionResult) {
+
+      if (questionResult.correct === true) {
         switch (questionType) {
           case 'survey_question':
             answerFeedback = (
               <div className="c-question-feedback  c-feedback--correct">
-                <div dangerouslySetInnerHTML={{ __html:response.feedback }} />
+                <div dangerouslySetInnerHTML={{ __html:questionResult.feedback }} />
               </div>
             );
-            break; // leaving this uncommented out makes linter complain
+            break;
           default:
             answerFeedback = (
               <div className="c-question-feedback  c-feedback--correct">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
                   <path d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z" />
                 </svg>
-                <div dangerouslySetInnerHTML={{ __html:response.feedback }} />
+                <div dangerouslySetInnerHTML={{ __html:questionResult.feedback }} />
               </div>
             );
         }
-      } else if (response.correct === false || response.correct === null) {
+      } else if (questionResult.correct === false || questionResult.correct === null) {
+
         answerFeedback = (
           <div className="c-question-feedback  c-feedback--incorrect">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
               <path d="M24 4c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.95 20-20-8.95-20-20-20zm10 27.17l-2.83 2.83-7.17-7.17-7.17 7.17-2.83-2.83 7.17-7.17-7.17-7.17 2.83-2.83 7.17 7.17 7.17-7.17 2.83 2.83-7.17 7.17 7.17 7.17z" />
             </svg>
-            <div dangerouslySetInnerHTML={{ __html:response.feedback }} />
+            <div
+              dangerouslySetInnerHTML={{ __html:questionResult.feedback }}
+              ref={node => (this.responseNode = node)}
+            />
           </div>
         );
       }
@@ -143,18 +150,9 @@ export default class Item extends React.Component {
     }
     return false;
   }
-  // stopKeypress() {
-  //   document.onkeydown = (e) => {
-  //     if (e.which) {
-  //       return false;
-  //       console.log('keyboard off');
-  //     }
-  //     return true;
-  //     console.log('keyboard on');
-  //   };
-  // }
 
   render() {
+    const numQuestionsChecking = this.props.numQuestionsChecking;
     return (
       <div className="c-question">
         <div className="c-question-prompt">
@@ -173,7 +171,7 @@ export default class Item extends React.Component {
             audioRecordStop={this.props.audioRecordStop}
           />
         </div>
-        {this.getFeedback()}
+        {numQuestionsChecking ? null : this.getFeedback() }
       </div>
     );
   }
