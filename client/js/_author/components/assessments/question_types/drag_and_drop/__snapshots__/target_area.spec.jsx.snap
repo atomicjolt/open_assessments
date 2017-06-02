@@ -32,6 +32,7 @@ ShallowWrapper {
         closeModal={[Function]}
         insertMedia={[Function]}
         isOpen={false}
+        language="639-2%3AENG%40ISO"
         loading={false}
         localizeStrings={[Function]}
         media={Object {}}
@@ -64,6 +65,7 @@ ShallowWrapper {
             closeModal={[Function]}
             insertMedia={[Function]}
             isOpen={false}
+            language="639-2%3AENG%40ISO"
             loading={false}
             localizeStrings={[Function]}
             media={Object {}}
@@ -158,6 +160,7 @@ ShallowWrapper {
                     closeModal={[Function]}
                     insertMedia={[Function]}
                     isOpen={false}
+                    language="639-2%3AENG%40ISO"
                     loading={false}
                     localizeStrings={[Function]}
                     media={Object {}}
@@ -190,6 +193,7 @@ ShallowWrapper {
                     closeModal={[Function]}
                     insertMedia={[Function]}
                     isOpen={false}
+                    language="639-2%3AENG%40ISO"
                     loading={false}
                     localizeStrings={[Function]}
                     media={Object {}}
