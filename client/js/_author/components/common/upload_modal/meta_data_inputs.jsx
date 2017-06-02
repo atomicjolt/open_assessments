@@ -3,10 +3,11 @@ import _          from 'lodash';
 import languages  from '../../../../constants/language_types';
 
 export default function metaDataInputs(props) {
+  const shouldDisplay = type => props.selectedLanguage === languages.languageTypeId.english || type === 'altText';
   return (
     <div>
       {_.map(props.metadataTypes, type => (
-        props.selectedLanguage === languages.languageTypeId.english ?
+        shouldDisplay(type) ?
           <div className="au-c-input au-c-input-label--left" key={`metadata_input_${type}`}>
             <label htmlFor={`meta_upload_${type}`}>{props.labelName(type)}</label>
             <div className="au-c-input__contain">
