@@ -35,7 +35,10 @@ export default {
     assessmentForm: {
       singlePageAssessment: 'Single page assessment',
       nameRequired: 'Name is required in order to edit',
-      placeholder: 'Untitled Assessment'
+      placeholder: 'Untitled Assessment',
+      nOfMLabel: 'N of M selector',
+      all: 'All questions',
+      nOfM: '{0} of {1}'
     },
     audioLimit: {
       rangeWarning: 'Please enter a positive number under'

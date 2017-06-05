@@ -21,11 +21,24 @@ export default function banks(state = initialState, action) {
 
     case 'UPDATE_ASSESSMENT_DONE': {
       const newState = _.cloneDeep(state);
+
       const bankId = action.payload.bankId;
       if (!newState[bankId]) {
         newState[bankId] = {};
       }
+
+      // to preserve the assessmentOffered in state tree,
+      // when tabbing back to N of M or editing the assessment
+      let existingAssessmentOffereds = [];
+
+      if (bankId in state &&
+          action.payload.id in state[bankId] &&
+          'assessmentOffered' in state[bankId][action.payload.id]) {
+        existingAssessmentOffereds = state[bankId][action.payload.id].assessmentOffered;
+      }
+
       newState[bankId][action.payload.id] = action.payload;
+      newState[bankId][action.payload.id].assessmentOffered = existingAssessmentOffereds;
       return newState;
     }
 
@@ -75,6 +88,26 @@ export default function banks(state = initialState, action) {
       ][
         action.original.assessmentId
       ].assessmentOffered = action.payload;
+      return newState;
+    }
+
+    case 'UPDATE_N_OF_M_DONE': {
+      const newState = _.cloneDeep(state);
+
+      // An offered should always exist by this point
+      //   ....but just in case not.
+      if (action.original.bankId in newState &&
+          action.original.assessmentId in newState[action.original.bankId] &&
+          newState[action.original.bankId][action.original.assessmentId].assessmentOffered &&
+          newState[action.original.bankId][
+            action.original.assessmentId
+          ].assessmentOffered.length > 0) {
+        newState[
+          action.original.bankId
+        ][
+          action.original.assessmentId
+        ].assessmentOffered[0].nOfM = action.payload;
+      }
       return newState;
     }
 

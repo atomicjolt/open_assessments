@@ -34,7 +34,6 @@ export class EditAssessment extends React.Component {
     assessment: React.PropTypes.shape({
       id: React.PropTypes.string,
       bankId: React.PropTypes.string,
-      assessmentOffered: React.PropTypes.shape({}),
       items: React.PropTypes.arrayOf(React.PropTypes.shape({})),
     }),
     settings: React.PropTypes.shape({
@@ -46,8 +45,10 @@ export class EditAssessment extends React.Component {
     getAssessments: React.PropTypes.func.isRequired,
     updateAssessment: React.PropTypes.func.isRequired,
     updateSingleItemOrPage: React.PropTypes.func.isRequired,
+    updateNofM: React.PropTypes.func.isRequired,
     updateAssessmentItems: React.PropTypes.func.isRequired,
     getAssessmentItems: React.PropTypes.func.isRequired,
+    getAssessmentOffered: React.PropTypes.func.isRequired,
     createItemInAssessment: React.PropTypes.func.isRequired,
     updateItem: React.PropTypes.func.isRequired,
     localizeStrings: React.PropTypes.func.isRequired,
@@ -60,6 +61,12 @@ export class EditAssessment extends React.Component {
   componentDidMount() {
     this.props.getAssessments(this.props.params.bankId);
     this.props.getAssessmentItems(
+      this.props.params.bankId,
+      this.props.params.id
+    );
+    // getAssessmentOffered so that N of M shows up properly
+    // and the Publish button won't create a new offered if one exists.
+    this.props.getAssessmentOffered(
       this.props.params.bankId,
       this.props.params.id
     );
@@ -100,6 +107,16 @@ export class EditAssessment extends React.Component {
       this.props.params.id,
       itemIds
     );
+  }
+
+  updateNofM(nOfM) {
+    const { assessment } = this.props;
+    let finalNofM = nOfM;
+    if (!finalNofM) {
+      // if they selected the header option "N of M"
+      finalNofM = -1;
+    }
+    this.props.updateNofM(assessment, finalNofM);
   }
 
   updateSingleItemOrPage(setSinglePage) {
@@ -147,6 +164,7 @@ export class EditAssessment extends React.Component {
           bankId={this.props.params.bankId}
           publishedAndOffered={publishedAndOffered}
           updateSingleItemOrPage={setSinglePage => this.updateSingleItemOrPage(setSinglePage)}
+          updateNofM={nOfM => this.updateNofM(nOfM)}
           {...this.props.assessment}
           updateAssessment={newFields => this.updateAssessment(newFields)}
           updateItemOrder={itemIds => this.updateItemOrder(itemIds)}

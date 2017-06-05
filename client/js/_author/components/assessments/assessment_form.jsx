@@ -5,6 +5,9 @@ import AddQuestion     from './add_question_button';
 import Question        from './question_types/_question';
 import localize        from '../../locales/localize';
 
+// ideally we would get this directly from this.props.localizeStrings...
+import stringFormatter from '../../locales/locales';
+
 class AssessmentForm extends React.Component {
   static propTypes = {
     items: React.PropTypes.oneOfType(
@@ -17,8 +20,11 @@ class AssessmentForm extends React.Component {
     publishedAndOffered: React.PropTypes.bool,
     createItem: React.PropTypes.func,
     updateSingleItemOrPage: React.PropTypes.func,
+    updateNofM: React.PropTypes.func,
     deleteAssessmentItem: React.PropTypes.func,
     localizeStrings: React.PropTypes.func,
+    assessmentOffered: React.PropTypes.arrayOf(
+      React.PropTypes.shape({ nOfM: React.PropTypes.number }))
   };
 
   constructor() {
@@ -59,7 +65,68 @@ class AssessmentForm extends React.Component {
     this.props.updateItemOrder(itemIds);
   }
 
+  showNofMOption() {
+    // Always show this option when editing an assessment
+    // N is the number of questions the student has to answer
+    // M is the total number of questions in the assessment
+    // N < M. If N == M, then we just send -1 to the server, to indicate
+    //    that the student has to answer all questions, so we leave
+    //    the N == M option out of the selector.
+    if (!this.props.items) {
+      return null;
+    }
+
+    const strings = this.props.localizeStrings('assessmentForm');
+    return (
+      <div className="au-o-item__top">
+        <div className="au-c-dropdown au-c-dropdown--small au-c-dropdown--side-label au-c-input-label--left au-u-ml-md au-u-right">
+          <label
+            className="au-u-mr-sm"
+            htmlFor="nOfM"
+          >
+            {strings.nOfMLabel}</label>
+          <select
+            onChange={e => this.props.updateNofM(e.target.value)}
+            name="nOfM"
+            id="nOfM"
+            value={this.props.assessmentOffered &&
+              this.props.assessmentOffered.length > 0 ?
+              this.props.assessmentOffered[0].nOfM : -1}
+          >
+            <option
+              className="n-of-m-option"
+              key="n_of_m_all"
+              value={-1}
+            >
+              {strings.all}</option>
+            {
+              _.map(_.range(1, this.props.items.length), (ind) => {
+                const label = stringFormatter.formatString(
+                  strings.nOfM,
+                  ind,
+                  this.props.items.length
+                );
+                return (
+                  <option
+                    className="n-of-m-option"
+                    key={`n_of_m_${ind}`}
+                    value={ind}
+                  >
+                    {label}
+                  </option>
+                );
+              })
+            }
+          </select>
+        </div>
+      </div>
+    );
+  }
+
   showSinglePageOption() {
+    // Now that publishing disallows you from editing the assessment,
+    //   if you want to show this section, you need to remove the
+    //   if() conditional.
     if (this.props.publishedAndOffered) {
       const strings = this.props.localizeStrings('assessmentForm');
       return (
@@ -96,6 +163,7 @@ class AssessmentForm extends React.Component {
     return (
       <div className="au-o-contain">
         <div className="au-o-item">
+          {this.showNofMOption()}
           {this.showSinglePageOption()}
           <div className="au-c-assessment-title">
             <label htmlFor="title_field" className="au-c-input test_label">

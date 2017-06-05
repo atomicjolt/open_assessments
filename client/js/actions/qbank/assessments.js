@@ -21,6 +21,7 @@ const requests = [
   'DELETE_ASSIGNED_ASSESSMENT',
   'GET_ASSESSMENT_PREVIEW',
   'UPDATE_SINGLE_ITEM_OR_PAGE',
+  'UPDATE_N_OF_M',
   'TOGGLE_PUBLISH_ASSESSMENT'
 ];
 
@@ -175,5 +176,19 @@ export function updateSingleItemOrPage(assessmentOffered, genusTypeId) {
     apiCall      : true,
     type         : Constants.UPDATE_SINGLE_ITEM_OR_PAGE,
     body         : { genusTypeId }
+  };
+}
+
+export function updateNofM(assessment, nOfM) {
+  const offeredId = assessment.assessmentOffered &&
+    assessment.assessmentOffered.length > 0 ?
+    assessment.assessmentOffered[0].id : null;
+  return {
+    bankId: assessment.bankId,
+    assessmentId: assessment.id,
+    assessmentOfferedId: offeredId,
+    apiCall: true,
+    type: Constants.UPDATE_N_OF_M,
+    body: { nOfM }
   };
 }
