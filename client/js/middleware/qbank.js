@@ -174,9 +174,12 @@ function addMediaToItem(store, action, result) {
     }
   };
 
+  const altText = _.get(action, `metaData[${action.language}].altText`);
   item = _.set(item, action.where, {
     text: `AssetContent:${mediaGuid}`,
-    altText: action.file.altText,
+    altText: {
+      text: altText,
+    },
     id: _.last(action.where.split('.')),
   });
 
