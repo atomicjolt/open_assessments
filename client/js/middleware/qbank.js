@@ -544,14 +544,24 @@ const qbank = {
         )
       );
       const { repositoryId, id } = res.body;
-      _.forEach(additionalLanguageMeta, data => (
+      const languagePromises = _.map(additionalLanguageMeta, data => (
         uploadMediaMeta(state, data, repositoryId, id, action.metaData.mediaType)
       ));
 
-      store.dispatch({
-        type: action.type + DONE,
-        original: action,
-        payload: deserializeSingleMedia(res.body, action.metaData['639-2%3AENG%40ISO'].autoPlay),
+      Promise.all(languagePromises).then((val) => {
+        const { body } = _.last(val);
+        store.dispatch({
+          type: action.type + DONE,
+          original: action,
+          payload: deserializeSingleMedia(body, action.metaData['639-2%3AENG%40ISO'].autoPlay),
+        });
+      }, (err) => {
+        store.dispatch({
+          type: action.type + DONE,
+          original: action,
+          payload: {},
+          error: err
+        });
       });
     }, (error) => {
       store.dispatch({
