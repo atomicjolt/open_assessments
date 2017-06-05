@@ -1,7 +1,7 @@
 import React          from 'react';
 import { shallow }    from 'enzyme';
 import  { OeaEditor } from './oea_editor';
-import { languages } from '../../../constants/language_types'
+import { languages } from '../../../constants/language_types';
 
 describe('qbank editor', () => {
   let result;
