@@ -22,13 +22,12 @@ function serializeChoices(originalChoices, newChoiceAttributes, language, fileId
     const newOrder = _.get(updateValues, 'order');
     const originalLabelText = _.get(choice, `texts[${language}].labelText`, '');
     const originalImageSrc = _.get(choice, `texts[${language}].text`, '');
-    const originalAltText = _.get(choice, `texts[${language}].altText`, '');
+    const originalAltText = _.get(choice, `texts[${language}].altText.text`, '');
 
     const imageSrc = _.get(updateValues, 'text', originalImageSrc);
     const labelText = _.get(updateValues, 'labelText', originalLabelText);
-    const imageAlt = _.get(updateValues, 'altText', originalAltText);
+    const imageAlt = _.get(updateValues, 'altText.text', originalAltText);
     const text = `<p>${labelText}</p>${buildImageTag(imageSrc, imageAlt, fileIds)}`;
-
     return {
       id: choice.id,
       text: languageText(text, language),
@@ -39,7 +38,7 @@ function serializeChoices(originalChoices, newChoiceAttributes, language, fileId
 
   if (newChoiceAttributes.new) {
     const src = _.get(newChoiceAttributes, 'new.text', '');
-    const altText = _.get(newChoiceAttributes, 'new.altText.text');
+    const altText = _.get(newChoiceAttributes, 'new.altText.text', '');
     const text = `<p></p><img src='${src}' alt='${altText}'>`;
 
     choices.push({

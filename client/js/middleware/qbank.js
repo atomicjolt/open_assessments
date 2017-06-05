@@ -82,7 +82,7 @@ function uploadMedia(state, action) {
   );
 }
 
-function uploadMediaMeta(state, metaData, repositoryId, assetId, mediaType) {
+function uploadMetaData(state, metaData, repositoryId, assetId, mediaType) {
   const formData = new FormData();
 
   const language = languageFromLocale(metaData.locale);
@@ -122,6 +122,22 @@ function uploadMediaMeta(state, metaData, repositoryId, assetId, mediaType) {
     null,
     20000
   );
+}
+
+function uploadMediaBuilder(store, action) {
+  return function uploadMediaMeta(res) {
+    const state = store.getState();
+    const additionalLanguageMeta = _.filter(action.metaData, metaData => (
+       !_.isUndefined(metaData.locale) && metaData.locale !== 'en'
+      )
+    );
+    const { repositoryId, id } = res.body;
+    const languagePromises = _.map(additionalLanguageMeta, data => (
+      uploadMetaData(state, data, repositoryId, id, action.metaData.mediaType)
+    ));
+
+    return Promise.all(languagePromises);
+  };
 }
 
 function updateQBankItem(store, action) {
@@ -538,45 +554,39 @@ const qbank = {
   [AssetConstants.UPLOAD_MEDIA]: (store, action) => {
     const state = store.getState();
 
-    uploadMedia(state, action).then((res) => {
-      const additionalLanguageMeta = _.filter(action.metaData, metaData => (
-         !_.isUndefined(metaData.locale) && metaData.locale !== 'en'
-        )
-      );
-      const { repositoryId, id } = res.body;
-      const languagePromises = _.map(additionalLanguageMeta, data => (
-        uploadMediaMeta(state, data, repositoryId, id, action.metaData.mediaType)
-      ));
-
-      Promise.all(languagePromises).then((val) => {
-        const { body } = _.last(val);
-        store.dispatch({
-          type: action.type + DONE,
-          original: action,
-          payload: deserializeSingleMedia(body, action.metaData['639-2%3AENG%40ISO'].autoPlay),
-        });
-      }, (err) => {
-        store.dispatch({
-          type: action.type + DONE,
-          original: action,
-          payload: {},
-          error: err
-        });
-      });
-    }, (error) => {
+    uploadMedia(state, action).then(
+      uploadMediaBuilder(store, action)
+    , (error) => {
       store.dispatch({
         type: action.type + DONE,
         payload: {},
         original: action,
         error,
       }); // Dispatch the new error
+    })
+    .then((responses) => {
+      const { body } = _.last(responses);
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: deserializeSingleMedia(body, action.metaData['639-2%3AENG%40ISO'].autoPlay),
+      });
+    }, (err) => {
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: {},
+        error: err
+      });
     });
   },
 
   [AssetConstants.ADD_MEDIA_TO_QUESTION]: (store, action) => {
     const state = store.getState();
     if (action.newMedia) {
-      uploadMedia(state, action).then(res => addMediaToItem(store, action, res));
+      uploadMedia(state, action)
+        .then(uploadMediaBuilder(store, action))
+        .then(res => addMediaToItem(store, action, _.last(res)));
     } else {
       addMediaToItem(store, action);
     }
