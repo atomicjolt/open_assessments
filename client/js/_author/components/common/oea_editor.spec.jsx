@@ -1,6 +1,7 @@
 import React          from 'react';
 import { shallow }    from 'enzyme';
 import  { OeaEditor } from './oea_editor';
+import { languages } from '../../../constants/language_types';
 
 describe('qbank editor', () => {
   let result;
@@ -35,6 +36,7 @@ describe('qbank editor', () => {
         },
       },
       textSize: 'medium',
+      language: languages.languageTypeId.english
     };
     result = shallow(<OeaEditor {...props} />);
   });
@@ -130,6 +132,10 @@ describe('qbank editor', () => {
       beforeEach(() => {
         file = {
           altText: { text: 'alt-text' },
+          altTexts: [{
+            languageTypeId: languages.languageTypeId.english,
+            text: 'alt-text'
+          }],
           id: 'id',
           type: 'image',
           extension: 'jpg',
