@@ -171,7 +171,11 @@ export function buildImageTag(url, alt, fileIds) {
   if (match) {
     const id = _.findKey(fileIds, { assetContentId: match[1] });
     resolvedUrl = `AssetContent:${id}`;
-    const assetId = _.get(fileIds, `[${id}].assetId`);
+  }
+  // NOTE get id from assetId
+  const id = _.last(resolvedUrl.match(/:(.+)/));
+  const assetId = _.get(fileIds, `[${id}].assetId`);
+  if (assetId) {
     const altTextId = _.findKey(
       fileIds,
       asset =>

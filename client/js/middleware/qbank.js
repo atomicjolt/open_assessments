@@ -220,6 +220,7 @@ function addMediaToItem(store, action, result) {
   }
 
   const altText = _.get(action, `metaData[${action.language}].altText`);
+  debugger;
   item = _.set(item, action.where, {
     text: `AssetContent:${mediaGuid}`,
     altText: {
@@ -229,7 +230,7 @@ function addMediaToItem(store, action, result) {
     id: _.last(action.where.split('.')),
   });
 
-  debugger;
+  // debugger;
   const newAction = updateItem(
     action.bankId,
     { ...item, language: action.language }
@@ -619,6 +620,7 @@ const qbank = {
         .then(uploadMediaBuilder(store, action))
         .then(res => addMediaToItem(store, action, _.last(res)));
     } else {
+      // NOTE where does this action get dispatched from?
       addMediaToItem(store, action);
     }
   },

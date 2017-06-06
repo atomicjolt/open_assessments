@@ -8,7 +8,9 @@ import guid                      from '../../../../utils/guid';
 
 
 function serializeChoices(originalChoices, newChoiceAttributes, language, fileIds) {
+  // debugger;
   const choices = _.map(originalChoices, (choice) => {
+    // debugger;
     const updateValues = newChoiceAttributes[choice.id];
     const newOrder = _.get(updateValues, 'order');
     const originalLabelText = _.get(choice, `texts[${language}].labelText`, '');
