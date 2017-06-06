@@ -4,11 +4,10 @@ import baseDeserializer   from './base';
 import genusTypes         from '../../../../constants/genus_types';
 import { languages }      from '../../../../../js/constants/language_types';
 
-function deserializeChoiceText(choice, fileIds) {
+function deserializeChoiceText(choice) {
   const nodes = $('<div>').html(choice.text);
   const image = $('img', nodes);
   const label = $('p', nodes);
-  debugger;
 
   return {
     text: image ? image.attr('src') : '',
