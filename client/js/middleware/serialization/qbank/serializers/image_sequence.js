@@ -12,7 +12,8 @@ function buildImageTag(url, alt, fileIds) {
     const id = _.findKey(fileIds, { assetContentId: match[1] });
     resolvedUrl = `AssetContent:${id}`;
   }
-
+// TODO send right thing
+  debugger;
   return `<img src="${resolvedUrl}" alt="${alt}"/>`;
 }
 
@@ -27,6 +28,8 @@ function serializeChoices(originalChoices, newChoiceAttributes, language, fileId
     const imageSrc = _.get(updateValues, 'text', originalImageSrc);
     const labelText = _.get(updateValues, 'labelText', originalLabelText);
     const imageAlt = _.get(updateValues, 'altText.text', originalAltText);
+    debugger
+    // TODO deserialize altText Id
     const text = `<p>${labelText}</p>${buildImageTag(imageSrc, imageAlt, fileIds)}`;
     return {
       id: choice.id,
@@ -38,9 +41,8 @@ function serializeChoices(originalChoices, newChoiceAttributes, language, fileId
 
   if (newChoiceAttributes.new) {
     const src = _.get(newChoiceAttributes, 'new.text', '');
-    const altText = _.get(newChoiceAttributes, 'new.altText.text', '');
-    const text = `<p></p><img src='${src}' alt='${altText}'>`;
-
+    const altText = _.get(newChoiceAttributes, 'new.altText', {});
+    const text = `<p></p><img src='${src}' alt='AssetContent:${altText.id}'>`;
     choices.push({
       id: guid(),
       text: languageText(text, language),

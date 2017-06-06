@@ -4,10 +4,12 @@ import baseDeserializer   from './base';
 import genusTypes         from '../../../../constants/genus_types';
 import { languages }      from '../../../../../js/constants/language_types';
 
-function deserializeChoiceText(choice) {
+function deserializeChoiceText(choice, fileIds) {
   const nodes = $('<div>').html(choice.text);
   const image = $('img', nodes);
   const label = $('p', nodes);
+  debugger;
+
   return {
     text: image ? image.attr('src') : '',
     altText: image ? image.attr('alt') : '',
@@ -15,22 +17,22 @@ function deserializeChoiceText(choice) {
   };
 }
 
-function deserializeChoiceTexts(choices) {
+function deserializeChoiceTexts(choices, fileIds) {
   const all = {};
   _.each(
     choices,
-    (choice) => { all[choice.languageTypeId] = deserializeChoiceText(choice); }
+    (choice) => { all[choice.languageTypeId] = deserializeChoiceText(choice, fileIds); }
   );
   return all;
 }
 
-function deserializeChoices(choices, correctAnswer, incorrectId) {
+function deserializeChoices(choices, correctAnswer, incorrectId, fileIds) {
   const newChoices = {};
 
   _.forEach(choices, (choice, index) => {
     const answerIndex = correctAnswer.choiceIds.indexOf(choice.id);
     const isCorrect = answerIndex >= 0;
-    const texts = deserializeChoiceTexts(choice.texts);
+    const texts = deserializeChoiceTexts(choice.texts, fileIds);
 
     newChoices[choice.id] = {
       id: choice.id,
@@ -50,10 +52,16 @@ export default function imageSequence(item) {
   const newItem = baseDeserializer(item);
   const correctAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.rightAnswer });
   const incorrectAnswer = _.find(item.answers, { genusTypeId: genusTypes.answer.wrongAnswer });
+
   newItem.question = {
     ...newItem.question,
     shuffle: _.get(item, 'question.shuffle'),
-    choices: deserializeChoices(_.get(item, 'question.multiLanguageChoices'), correctAnswer, _.get(incorrectAnswer, 'id')),
+    choices: deserializeChoices(
+      _.get(item, 'question.multiLanguageChoices'),
+      correctAnswer,
+      _.get(incorrectAnswer, 'id'),
+      _.get(item, 'question.fileIds')
+    ),
     correctFeedback: {
       text: _.get(correctAnswer, 'feedback.text'),
       texts: _.get(correctAnswer, 'feedbacks'),

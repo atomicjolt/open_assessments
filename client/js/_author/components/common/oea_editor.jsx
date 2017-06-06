@@ -158,6 +158,7 @@ export class OeaEditor extends React.Component {
     const autoPlay = media.autoPlay ? 'autoplay' : '';
     switch (this.state.mediaType) {
       case 'img':
+        debugger;
         editorContent = `<img src="${media.url}" alt="${alt}">`;
         break;
 
