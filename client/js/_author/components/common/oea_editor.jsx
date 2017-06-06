@@ -92,6 +92,18 @@ export class OeaEditor extends React.Component {
         // Get assetId from mediaGuid
         // get key of altText with matching assetId
         // Insert key into altText attribute
+        const altTextId = null;  // TODO: <---
+
+        let altTextGuid = null;
+        if (!_.includes(this.state.fileGuids, altTextId)) {
+          altTextGuid = guid();
+          this.setState({ fileGuids: { ...this.state.fileGuids, [altTextGuid]: {} } });
+        } else {
+          altTextGuid = altTextId;
+        }
+
+        media.attr('alt', `AssetContent:${altTextGuid}`);
+        const farts = this;
         debugger;
       }
     });
