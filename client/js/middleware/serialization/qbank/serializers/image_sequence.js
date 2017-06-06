@@ -1,30 +1,11 @@
 import _                         from 'lodash';
 import baseSerializer            from './base';
-import { scrub, languageText }   from '../../serializer_utils';
+import { scrub, languageText, buildImageTag }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
 // TODO duplicate these things for drag and drops
 
-function buildImageTag(url, alt, fileIds) {
-  const match = /.*\/(.*)\/stream$/.exec(url);
-  let resolvedUrl = url;
 
-  if (match) {
-    const id = _.findKey(fileIds, { assetContentId: match[1] });
-    resolvedUrl = `AssetContent:${id}`;
-    const assetId = _.get(fileIds, `[${id}].assetId`);
-    const altTextId = _.findKey(
-      fileIds,
-      asset =>
-        asset.assetId === assetId &&
-          asset.assetContentTypeId === genusTypes.assets.altText.altText
-    );
-    if (altTextId) {
-      return `<img src="${resolvedUrl}" alt="AssetContent:${altTextId}"/>`;
-    }
-  }
-  return `<img src="${resolvedUrl}" alt="${alt}"/>`;
-}
 
 function serializeChoices(originalChoices, newChoiceAttributes, language, fileIds) {
   const choices = _.map(originalChoices, (choice) => {
