@@ -89,6 +89,10 @@ export class OeaEditor extends React.Component {
         if (mediaGuid) {
           media.attr('src-placeholder', `AssetContent:${mediaGuid}`);
         }
+        // Get assetId from mediaGuid
+        // get key of altText with matching assetId
+        // Insert key into altText attribute
+        debugger;
       }
     });
 
@@ -158,7 +162,6 @@ export class OeaEditor extends React.Component {
     const autoPlay = media.autoPlay ? 'autoplay' : '';
     switch (this.state.mediaType) {
       case 'img':
-        debugger;
         editorContent = `<img src="${media.url}" alt="${alt}">`;
         break;
 
