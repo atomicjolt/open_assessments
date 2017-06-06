@@ -175,6 +175,8 @@ function addMediaToItem(store, action, result) {
     assetId = _.get(action, 'body.original.assetContents[0].assetId');
     genusTypeId = _.get(action, 'body.original.assetContents[0].genusTypeId');
   }
+  debugger;
+  // NOTE add altText guid here
 
   const mediaGuid = guid();
   let item = {
