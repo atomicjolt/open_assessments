@@ -163,10 +163,6 @@ function updateQBankItem(store, action) {
   });
 }
 
-function findAssetContent(assetContents, type) {
-  return _.find(assetContents, content => content.assetContentTypeId === type);
-}
-
 function addMediaToItem(store, action, result) {
   let id;
   let assetId;
