@@ -8,6 +8,7 @@ export default (state = initialState, action) => {
 
     case AssetConstants.UPLOAD_MEDIA_DONE: {
       const newState = _.cloneDeep(state);
+      debugger;
       const { vttGuids, transcriptGuids, mediaGuid } = action.original.fileGuids;
       if (action.error) {
         newState[mediaGuid] = { error: action.error };

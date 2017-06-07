@@ -90,14 +90,23 @@ export class OeaEditor extends React.Component {
           media.attr('src-placeholder', `AssetContent:${mediaGuid}`);
         }
 
-        const asset = this.props.uploadedAssets[mediaGuid];
-        if (asset) {
-          const altText = _.find(
+        let altText = _.head(
+          _.filter(
+            this.findMetaGuids(mediaGuid),
+            assetContent => assetContent.assetContentTypeId === GenusTypes.assets.altText.altText
+          )
+        );
+
+        if (!altText) {
+          const asset = this.props.uploadedAssets[mediaGuid];
+          altText = _.find(
             _.get(asset, 'original.assetContents'),
             content => content.genusTypeId === GenusTypes.assets.altText.altText
           );
+        }
 
-          const existingGuid = this.findMediaGuid(altText.id);
+        if (altText) {
+          const existingGuid = this.findMediaGuid(altText.id || altText.assetContentId);
           const altTextGuid = existingGuid || guid();
           if (_.isUndefined(existingGuid)) {
             fileIds[altTextGuid] = {
@@ -109,19 +118,6 @@ export class OeaEditor extends React.Component {
 
           media.attr('alt', `AssetContent:${altTextGuid}`);
         }
-
-        // Handle altText
-        // const assetId = asset.id;
-        // const _assetContentId = asset.assetContentId; // TODO we need the assetContentId
-        // That corresponds to the actual altText object
-
-        // if () {}
-        // Add to fileIds?
-
-        // TODO need fileIds object from question
-        // Get assetId from mediaGuid
-        // get key of altText with matching assetId
-        // Insert key into altText attribute
       }
     });
 
@@ -218,8 +214,6 @@ export class OeaEditor extends React.Component {
 
     return editorContent;
   }
-
-
 
   // Find all assets whose assetId match the asset with assetGuid
   findMetaGuids(assetGuid) {

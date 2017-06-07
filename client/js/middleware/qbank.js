@@ -598,6 +598,7 @@ const qbank = {
     })
     .then((responses) => {
       const { body } = _.last(responses);
+      debugger;
       store.dispatch({
         type: action.type + DONE,
         original: action,
