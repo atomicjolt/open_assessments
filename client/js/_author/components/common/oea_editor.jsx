@@ -89,6 +89,35 @@ export class OeaEditor extends React.Component {
         if (mediaGuid) {
           media.attr('src-placeholder', `AssetContent:${mediaGuid}`);
         }
+
+        let altText = _.head(
+          _.filter(
+            this.findMetaGuids(mediaGuid),
+            assetContent => assetContent.assetContentTypeId === GenusTypes.assets.altText.altText
+          )
+        );
+
+        if (!altText) {
+          const asset = this.props.uploadedAssets[mediaGuid];
+          altText = _.find(
+            _.get(asset, 'original.assetContents'),
+            content => content.genusTypeId === GenusTypes.assets.altText.altText
+          );
+        }
+
+        if (altText) {
+          const existingGuid = this.findMediaGuid(altText.id || altText.assetContentId);
+          const altTextGuid = existingGuid || guid();
+          if (_.isUndefined(existingGuid)) {
+            fileIds[altTextGuid] = {
+              assetId: altText.assetId,
+              assetContentId: altText.id,
+              assetContentTypeId: altText.genusTypeId,
+            };
+          }
+
+          media.attr('alt', `AssetContent:${altTextGuid}`);
+        }
       }
     });
 
@@ -152,6 +181,7 @@ export class OeaEditor extends React.Component {
     let editorContent = `<video><source src="${media.url}" /></video>`;
     const altText = _.find(media.altTexts, text => text.languageTypeId === language);
     const alt = _.get(altText, 'text', '');
+
     const autoPlay = media.autoPlay ? 'autoplay' : '';
     switch (this.state.mediaType) {
       case 'img':

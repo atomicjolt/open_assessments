@@ -18,6 +18,7 @@ import { dispatchMany }                             from './utils';
 import guid                                         from '../utils/guid';
 import {
   languageFromLocale, languages as LanguageTypes }  from '../constants/language_types';
+import { types } from '../constants/genus_types';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -166,14 +167,17 @@ function addMediaToItem(store, action, result) {
   let id;
   let assetId;
   let genusTypeId;
+  let assetContents;
   if (result) {
     id = _.get(result, 'body.assetContents[0].id');
     assetId = _.get(result, 'body.assetContents[0].assetId');
     genusTypeId = _.get(result, 'body.assetContents[0].genusTypeId');
+    assetContents = _.get(result, 'body.assetContents');
   } else {
     id = _.get(action, 'body.original.assetContents[0].id');
     assetId = _.get(action, 'body.original.assetContents[0].assetId');
     genusTypeId = _.get(action, 'body.original.assetContents[0].genusTypeId');
+    assetContents = _.get(action, 'body.original.assetContents');
   }
 
   const mediaGuid = guid();
@@ -185,16 +189,35 @@ function addMediaToItem(store, action, result) {
           assetContentId: id,
           assetId,
           assetContentTypeId: genusTypeId,
-        }
+        },
       }
     }
   };
+
+  const altTextAssestContent = _.find(
+    assetContents,
+    content => content.genusTypeId === types.assets.altText.altText
+  );
+
+  const altTextGuid = guid();
+  if (!_.isEmpty(altTextAssestContent)) {
+    item = _.set(
+      item,
+      `question.fileIds[${altTextGuid}]`,
+      {
+        assetContentId: altTextAssestContent.id,
+        assetId: altTextAssestContent.assetId,
+        assetContentTypeId: altTextAssestContent.genusTypeId,
+      }
+    );
+  }
 
   const altText = _.get(action, `metaData[${action.language}].altText`);
   item = _.set(item, action.where, {
     text: `AssetContent:${mediaGuid}`,
     altText: {
       text: altText,
+      id: altTextGuid
     },
     id: _.last(action.where.split('.')),
   });
