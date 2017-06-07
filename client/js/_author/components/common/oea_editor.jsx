@@ -89,22 +89,39 @@ export class OeaEditor extends React.Component {
         if (mediaGuid) {
           media.attr('src-placeholder', `AssetContent:${mediaGuid}`);
         }
+
+        const asset = this.props.uploadedAssets[mediaGuid];
+        if (asset) {
+          const altText = _.find(
+            _.get(asset, 'original.assetContents'),
+            content => content.genusTypeId === GenusTypes.assets.altText.altText
+          );
+
+          const existingGuid = this.findMediaGuid(altText.id);
+          const altTextGuid = existingGuid || guid();
+          if (_.isUndefined(existingGuid)) {
+            fileIds[altTextGuid] = {
+              assetId: altText.assetId,
+              assetContentId: altText.id,
+              assetContentTypeId: altText.genusTypeId,
+            };
+          }
+
+          media.attr('alt', `AssetContent:${altTextGuid}`);
+        }
+
+        // Handle altText
+        // const assetId = asset.id;
+        // const _assetContentId = asset.assetContentId; // TODO we need the assetContentId
+        // That corresponds to the actual altText object
+
+        // if () {}
+        // Add to fileIds?
+
+        // TODO need fileIds object from question
         // Get assetId from mediaGuid
         // get key of altText with matching assetId
         // Insert key into altText attribute
-        const altTextId = null;  // TODO: <---
-
-        let altTextGuid = null;
-        if (!_.includes(this.state.fileGuids, altTextId)) {
-          altTextGuid = guid();
-          this.setState({ fileGuids: { ...this.state.fileGuids, [altTextGuid]: {} } });
-        } else {
-          altTextGuid = altTextId;
-        }
-
-        media.attr('alt', `AssetContent:${altTextGuid}`);
-        const farts = this;
-        debugger;
       }
     });
 
@@ -158,6 +175,7 @@ export class OeaEditor extends React.Component {
     text = text.replace(/src-placeholder/g, 'src');
     text = text.replace(/autoplay-placeholder/g, 'autoplay');
 
+    debugger;
     this.props.onBlur(text, fileIds);
     this.setState({ fileGuids: {} });
   }
@@ -200,6 +218,8 @@ export class OeaEditor extends React.Component {
 
     return editorContent;
   }
+
+
 
   // Find all assets whose assetId match the asset with assetGuid
   findMetaGuids(assetGuid) {
