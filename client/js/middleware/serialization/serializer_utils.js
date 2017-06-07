@@ -172,7 +172,6 @@ export function buildImageTag(url, alt, fileIds) {
     const id = _.findKey(fileIds, { assetContentId: match[1] });
     resolvedUrl = `AssetContent:${id}`;
   }
-  // NOTE get id from assetId
   const id = _.last(resolvedUrl.match(/:(.+)/));
   const assetId = _.get(fileIds, `[${id}].assetId`);
   if (assetId) {

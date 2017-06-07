@@ -171,7 +171,6 @@ export class OeaEditor extends React.Component {
     text = text.replace(/src-placeholder/g, 'src');
     text = text.replace(/autoplay-placeholder/g, 'autoplay');
 
-    debugger;
     this.props.onBlur(text, fileIds);
     this.setState({ fileGuids: {} });
   }
@@ -182,8 +181,6 @@ export class OeaEditor extends React.Component {
     let editorContent = `<video><source src="${media.url}" /></video>`;
     const altText = _.find(media.altTexts, text => text.languageTypeId === language);
     const alt = _.get(altText, 'text', '');
-    // debugger;
-    // NOTE This is where we need to guid
 
     const autoPlay = media.autoPlay ? 'autoplay' : '';
     switch (this.state.mediaType) {
@@ -268,7 +265,6 @@ export class OeaEditor extends React.Component {
       this.closeModal();
       return;
     }
-    // NOTE we need to add altText guids here
 
     const mediaGuid = guid();
     const fileGuids = _.cloneDeep(this.state.fileGuids);

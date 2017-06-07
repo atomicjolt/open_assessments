@@ -183,9 +183,6 @@ function addMediaToItem(store, action, result) {
     genusTypeId = _.get(action, 'body.original.assetContents[0].genusTypeId');
     assetContents = _.get(action, 'body.original.assetContents');
   }
-  // NOTE add altText guid here
-
-  // debugger;
 
   const mediaGuid = guid();
   let item = {
@@ -220,7 +217,6 @@ function addMediaToItem(store, action, result) {
   }
 
   const altText = _.get(action, `metaData[${action.language}].altText`);
-  debugger;
   item = _.set(item, action.where, {
     text: `AssetContent:${mediaGuid}`,
     altText: {
@@ -230,7 +226,6 @@ function addMediaToItem(store, action, result) {
     id: _.last(action.where.split('.')),
   });
 
-  // debugger;
   const newAction = updateItem(
     action.bankId,
     { ...item, language: action.language }
@@ -598,7 +593,6 @@ const qbank = {
     })
     .then((responses) => {
       const { body } = _.last(responses);
-      debugger;
       store.dispatch({
         type: action.type + DONE,
         original: action,
@@ -621,7 +615,6 @@ const qbank = {
         .then(uploadMediaBuilder(store, action))
         .then(res => addMediaToItem(store, action, _.last(res)));
     } else {
-      // NOTE where does this action get dispatched from?
       addMediaToItem(store, action);
     }
   },
