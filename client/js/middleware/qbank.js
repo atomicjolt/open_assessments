@@ -133,11 +133,22 @@ function uploadMediaBuilder(store, action) {
       )
     );
     const { repositoryId, id } = res.body;
-    const languagePromises = _.map(additionalLanguageMeta, data => (
-      uploadMetaData(state, data, repositoryId, id, action.metaData.mediaType)
-    ));
 
-    return Promise.all(languagePromises);
+    async function uploadAllMetadata() {
+      const results = [];
+      for (let i = 0; i < additionalLanguageMeta.length; i += 1) {
+        const result = await uploadMetaData(
+          state,
+          additionalLanguageMeta[i],
+          repositoryId,
+          id,
+          action.metaData.mediaType
+        );
+        results.push(result);
+      }
+      return results;
+    }
+    return uploadAllMetadata(additionalLanguageMeta);
   };
 }
 
