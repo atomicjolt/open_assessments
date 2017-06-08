@@ -1,13 +1,14 @@
-import React                             from 'react';
-import Modal                             from 'react-modal';
-import _                                 from 'lodash';
+import React from 'react';
+import Modal from 'react-modal';
+import _ from 'lodash';
 
-import Loader                            from '../dot_loader';
-import { languages, getLanguage }        from '../../../../constants/language_types';
-import SearchMedia                       from './search_media';
-import LanguageSelect                    from '../language_dropdown';
-import Metadata                          from './meta_data';
-import localize                          from '../../../locales/localize';
+import Loader from '../dot_loader';
+import { languages, getLanguage } from '../../../../constants/language_types';
+import { types } from '../../../../constants/genus_types';
+import SearchMedia from './search_media';
+import LanguageSelect from '../language_dropdown';
+import Metadata from './meta_data';
+import localize from '../../../locales/localize';
 
 const tagNameMap = {
   audio: 'Audio',
@@ -92,7 +93,20 @@ export class EditorUploadModal extends React.Component {
     if (this.state.uploadedMedia) {
       this.props.insertMedia(this.state.uploadedMedia, metaData, true, this.state.language);
     } else if (this.state.selectedMedia) {
-      this.props.insertMedia(this.state.selectedMedia, null, false, this.state.language);
+      const { selectedMedia } = this.state;
+      const altTexts = _.find(
+        selectedMedia.original.assetContents,
+        content => content.genusTypeId === types.assets.altText.altText
+      );
+      const altText = _.find(
+        altTexts,
+        text => this.state.language && text.languageTypeId === this.state.language
+      );
+
+      if (altText) {
+        metaData[this.state.language].altText = altText.text;
+      }
+      this.props.insertMedia(selectedMedia, metaData, false, this.state.language);
     }
   }
 

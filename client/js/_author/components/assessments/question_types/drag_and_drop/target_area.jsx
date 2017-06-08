@@ -89,6 +89,7 @@ export default class TargetArea extends React.Component {
           mediaType={'img'}
           insertMedia={(media, metadata, newMedia) => this.selectImage(media, metadata, newMedia)}
           uploadOnly={!!this.state.addType}
+          language={this.props.language}
         />
       </div>
     );

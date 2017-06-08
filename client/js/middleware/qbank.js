@@ -18,6 +18,7 @@ import { dispatchMany }                             from './utils';
 import guid                                         from '../utils/guid';
 import {
   languageFromLocale, languages as LanguageTypes }  from '../constants/language_types';
+import { types } from '../constants/genus_types';
 
 function getAssessmentsOffered(state, bankId, assessmentId) {
   const path = `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`;
@@ -82,7 +83,7 @@ function uploadMedia(state, action) {
   );
 }
 
-function uploadMediaMeta(state, metaData, repositoryId, assetId, mediaType) {
+function uploadMetaData(state, metaData, repositoryId, assetId, mediaType) {
   const formData = new FormData();
 
   const language = languageFromLocale(metaData.locale);
@@ -124,6 +125,33 @@ function uploadMediaMeta(state, metaData, repositoryId, assetId, mediaType) {
   );
 }
 
+function uploadMediaBuilder(store, action) {
+  return function uploadMediaMeta(res) {
+    const state = store.getState();
+    const additionalLanguageMeta = _.filter(action.metaData, metaData => (
+       !_.isUndefined(metaData.locale) && metaData.locale !== 'en'
+      )
+    );
+    const { repositoryId, id } = res.body;
+
+    async function uploadAllMetadata() {
+      const results = [];
+      for (let i = 0; i < additionalLanguageMeta.length; i += 1) {
+        const result = await uploadMetaData(
+          state,
+          additionalLanguageMeta[i],
+          repositoryId,
+          id,
+          action.metaData.mediaType
+        );
+        results.push(result);
+      }
+      return results;
+    }
+    return uploadAllMetadata(additionalLanguageMeta);
+  };
+}
+
 function updateQBankItem(store, action) {
   const state = store.getState();
   const item = state.items[action.bankId][action.itemId];
@@ -150,14 +178,17 @@ function addMediaToItem(store, action, result) {
   let id;
   let assetId;
   let genusTypeId;
+  let assetContents;
   if (result) {
     id = _.get(result, 'body.assetContents[0].id');
     assetId = _.get(result, 'body.assetContents[0].assetId');
     genusTypeId = _.get(result, 'body.assetContents[0].genusTypeId');
+    assetContents = _.get(result, 'body.assetContents');
   } else {
     id = _.get(action, 'body.original.assetContents[0].id');
     assetId = _.get(action, 'body.original.assetContents[0].assetId');
     genusTypeId = _.get(action, 'body.original.assetContents[0].genusTypeId');
+    assetContents = _.get(action, 'body.original.assetContents');
   }
 
   const mediaGuid = guid();
@@ -169,14 +200,36 @@ function addMediaToItem(store, action, result) {
           assetContentId: id,
           assetId,
           assetContentTypeId: genusTypeId,
-        }
+        },
       }
     }
   };
 
+  const altTextAssestContent = _.find(
+    assetContents,
+    content => content.genusTypeId === types.assets.altText.altText
+  );
+
+  const altTextGuid = guid();
+  if (!_.isEmpty(altTextAssestContent)) {
+    item = _.set(
+      item,
+      `question.fileIds[${altTextGuid}]`,
+      {
+        assetContentId: altTextAssestContent.id,
+        assetId: altTextAssestContent.assetId,
+        assetContentTypeId: altTextAssestContent.genusTypeId,
+      }
+    );
+  }
+
+  const altText = _.get(action, `metaData[${action.language}].altText`);
   item = _.set(item, action.where, {
     text: `AssetContent:${mediaGuid}`,
-    altText: action.file.altText,
+    altText: {
+      text: altText,
+      id: altTextGuid
+    },
     id: _.last(action.where.split('.')),
   });
 
@@ -598,35 +651,39 @@ const qbank = {
   [AssetConstants.UPLOAD_MEDIA]: (store, action) => {
     const state = store.getState();
 
-    uploadMedia(state, action).then((res) => {
-      const additionalLanguageMeta = _.filter(action.metaData, metaData => (
-         !_.isUndefined(metaData.locale) && metaData.locale !== 'en'
-        )
-      );
-      const { repositoryId, id } = res.body;
-      _.forEach(additionalLanguageMeta, data => (
-        uploadMediaMeta(state, data, repositoryId, id, action.metaData.mediaType)
-      ));
-
-      store.dispatch({
-        type: action.type + DONE,
-        original: action,
-        payload: deserializeSingleMedia(res.body, action.metaData['639-2%3AENG%40ISO'].autoPlay),
-      });
-    }, (error) => {
+    uploadMedia(state, action).then(
+      uploadMediaBuilder(store, action)
+    , (error) => {
       store.dispatch({
         type: action.type + DONE,
         payload: {},
         original: action,
         error,
       }); // Dispatch the new error
+    })
+    .then((responses) => {
+      const { body } = _.last(responses);
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: deserializeSingleMedia(body, action.metaData['639-2%3AENG%40ISO'].autoPlay),
+      });
+    }, (err) => {
+      store.dispatch({
+        type: action.type + DONE,
+        original: action,
+        payload: {},
+        error: err
+      });
     });
   },
 
   [AssetConstants.ADD_MEDIA_TO_QUESTION]: (store, action) => {
     const state = store.getState();
     if (action.newMedia) {
-      uploadMedia(state, action).then(res => addMediaToItem(store, action, res));
+      uploadMedia(state, action)
+        .then(uploadMediaBuilder(store, action))
+        .then(res => addMediaToItem(store, action, _.last(res)));
     } else {
       addMediaToItem(store, action);
     }

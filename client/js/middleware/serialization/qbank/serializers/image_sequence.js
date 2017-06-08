@@ -1,20 +1,8 @@
 import _                         from 'lodash';
 import baseSerializer            from './base';
-import { scrub, languageText }   from '../../serializer_utils';
+import { scrub, languageText, buildImageTag }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
-
-function buildImageTag(url, alt, fileIds) {
-  const match = /.*\/(.*)\/stream$/.exec(url);
-  let resolvedUrl = url;
-
-  if (match) {
-    const id = _.findKey(fileIds, { assetContentId: match[1] });
-    resolvedUrl = `AssetContent:${id}`;
-  }
-
-  return `<img src="${resolvedUrl}" alt="${alt}"/>`;
-}
 
 function serializeChoices(originalChoices, newChoiceAttributes, language, fileIds) {
   const choices = _.map(originalChoices, (choice) => {
@@ -22,13 +10,12 @@ function serializeChoices(originalChoices, newChoiceAttributes, language, fileId
     const newOrder = _.get(updateValues, 'order');
     const originalLabelText = _.get(choice, `texts[${language}].labelText`, '');
     const originalImageSrc = _.get(choice, `texts[${language}].text`, '');
-    const originalAltText = _.get(choice, `texts[${language}].altText`, '');
+    const originalAltText = _.get(choice, `texts[${language}].altText.text`, '');
 
     const imageSrc = _.get(updateValues, 'text', originalImageSrc);
     const labelText = _.get(updateValues, 'labelText', originalLabelText);
-    const imageAlt = _.get(updateValues, 'altText', originalAltText);
+    const imageAlt = _.get(updateValues, 'altText.text', originalAltText);
     const text = `<p>${labelText}</p>${buildImageTag(imageSrc, imageAlt, fileIds)}`;
-
     return {
       id: choice.id,
       text: languageText(text, language),
@@ -39,9 +26,8 @@ function serializeChoices(originalChoices, newChoiceAttributes, language, fileId
 
   if (newChoiceAttributes.new) {
     const src = _.get(newChoiceAttributes, 'new.text', '');
-    const altText = _.get(newChoiceAttributes, 'new.altText.text');
-    const text = `<p></p><img src='${src}' alt='${altText}'>`;
-
+    const altText = _.get(newChoiceAttributes, 'new.altText', {});
+    const text = `<p></p><img src='${src}' alt='AssetContent:${altText.id}'>`;
     choices.push({
       id: guid(),
       text: languageText(text, language),
