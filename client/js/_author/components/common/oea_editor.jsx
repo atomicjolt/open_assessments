@@ -57,7 +57,7 @@ export class OeaEditor extends React.Component {
       _.get(nextProps.uploadedAssets, this.state.mediaGuid)
     ) {
       const media = nextProps.uploadedAssets[this.state.mediaGuid];
-      const editorContent = this.getEditorContent(media);
+      const editorContent = this.getEditorContent(media, this.props.language);
 
       this.state.editor.insertContent(editorContent);
       this.closeModal();
@@ -88,6 +88,35 @@ export class OeaEditor extends React.Component {
         const mediaGuid = this.findMediaGuid(assetContentId);
         if (mediaGuid) {
           media.attr('src-placeholder', `AssetContent:${mediaGuid}`);
+        }
+
+        let altText = _.head(
+          _.filter(
+            this.findMetaGuids(mediaGuid),
+            assetContent => assetContent.assetContentTypeId === GenusTypes.assets.altText.altText
+          )
+        );
+
+        if (!altText) {
+          const asset = this.props.uploadedAssets[mediaGuid];
+          altText = _.find(
+            _.get(asset, 'original.assetContents'),
+            content => content.genusTypeId === GenusTypes.assets.altText.altText
+          );
+        }
+
+        if (altText) {
+          const existingGuid = this.findMediaGuid(altText.id || altText.assetContentId);
+          const altTextGuid = existingGuid || guid();
+          if (_.isUndefined(existingGuid)) {
+            fileIds[altTextGuid] = {
+              assetId: altText.assetId,
+              assetContentId: altText.id,
+              assetContentTypeId: altText.genusTypeId,
+            };
+          }
+
+          media.attr('alt', `AssetContent:${altTextGuid}`);
         }
       }
     });
@@ -146,11 +175,13 @@ export class OeaEditor extends React.Component {
     this.setState({ fileGuids: {} });
   }
 
-  getEditorContent(media) {
+  getEditorContent(media, language) {
     if (!_.isUndefined(media.error)) { return ''; }
 
     let editorContent = `<video><source src="${media.url}" /></video>`;
-    const alt = _.isEmpty(media.altText) ? '' : media.altText.text;
+    const altText = _.find(media.altTexts, text => text.languageTypeId === language);
+    const alt = _.get(altText, 'text', '');
+
     const autoPlay = media.autoPlay ? 'autoplay' : '';
     switch (this.state.mediaType) {
       case 'img':
@@ -267,7 +298,7 @@ export class OeaEditor extends React.Component {
       );
       this.setState({ mediaGuid });
     } else {
-      const editorContent = this.getEditorContent(file);
+      const editorContent = this.getEditorContent(file, this.props.language);
       this.state.editor.insertContent(editorContent);
       fileGuids[mediaGuid] = file;
       fileGuids[guid()] = file.vtt;

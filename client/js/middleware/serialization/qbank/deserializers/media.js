@@ -34,6 +34,7 @@ export function deserializeSingleMedia(asset, autoPlay = null) {
       }
       case 'altText':
         newMedia.altText = content.altText;
+        newMedia.altTexts = content.altTexts;
         break;
       case 'description':
         newMedia.description = content.mediaDescription;

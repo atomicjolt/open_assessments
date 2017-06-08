@@ -53,6 +53,7 @@ function multipleChoiceOptions(props) {
           text={text}
           bankId={props.bankId}
           onBlur={(text, fileIds) => props.updateChoice({ text }, fileIds)}
+          language={props.language}
         />
 
         <AnswerIcons

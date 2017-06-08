@@ -163,3 +163,27 @@ export function addNewChoices(choices, language) {
       });
   });
 }
+
+export function buildImageTag(url, alt, fileIds) {
+  const match = /.*\/(.*)\/stream$/.exec(url);
+  let resolvedUrl = url;
+
+  if (match) {
+    const id = _.findKey(fileIds, { assetContentId: match[1] });
+    resolvedUrl = `AssetContent:${id}`;
+  }
+  const id = _.last(resolvedUrl.match(/:(.+)/));
+  const assetId = _.get(fileIds, `[${id}].assetId`);
+  if (assetId) {
+    const altTextId = _.findKey(
+      fileIds,
+      asset =>
+        asset.assetId === assetId &&
+          asset.assetContentTypeId === genusTypes.assets.altText.altText
+    );
+    if (altTextId) {
+      return `<img src="${resolvedUrl}" alt="AssetContent:${altTextId}"/>`;
+    }
+  }
+  return `<img src="${resolvedUrl}" alt="${alt}"/>`;
+}

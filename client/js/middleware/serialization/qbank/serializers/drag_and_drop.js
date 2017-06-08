@@ -1,19 +1,7 @@
 import _                         from 'lodash';
 import baseSerializer            from './base';
-import { scrub, languageText }   from '../../serializer_utils';
+import { scrub, languageText, buildImageTag }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
-
-function buildImageTag(url, alt, fileIds) {
-  const match = /.*\/(.*)\/stream$/.exec(url);
-  let resolvedUrl = url;
-
-  if (match) {
-    const guid = _.findKey(fileIds, { assetContentId: match[1] });
-    resolvedUrl = `AssetContent:${guid}`;
-  }
-
-  return `<img src="${resolvedUrl}" alt="${alt}"/>`;
-}
 
 function serializeTargets(originalTarget, newTarget, fileIds, language) {
   if (!newTarget) { return null; }
