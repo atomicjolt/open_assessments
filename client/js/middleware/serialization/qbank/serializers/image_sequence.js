@@ -1,20 +1,8 @@
 import _                         from 'lodash';
 import baseSerializer            from './base';
-import { scrub, languageText }   from '../../serializer_utils';
+import { scrub, languageText, buildImageTag }   from '../../serializer_utils';
 import genusTypes                from '../../../../constants/genus_types';
 import guid                      from '../../../../utils/guid';
-
-function buildImageTag(url, alt, fileIds) {
-  const match = /.*\/(.*)\/stream$/.exec(url);
-  let resolvedUrl = url;
-
-  if (match) {
-    const id = _.findKey(fileIds, { assetContentId: match[1] });
-    resolvedUrl = `AssetContent:${id}`;
-  }
-
-  return `<img src="${resolvedUrl}" alt="${alt}"/>`;
-}
 
 function serializeChoices(originalChoices, newChoiceAttributes, language, fileIds) {
   const choices = _.map(originalChoices, (choice) => {
@@ -38,9 +26,8 @@ function serializeChoices(originalChoices, newChoiceAttributes, language, fileId
 
   if (newChoiceAttributes.new) {
     const src = _.get(newChoiceAttributes, 'new.text', '');
-    const altText = _.get(newChoiceAttributes, 'new.altText.text', '');
-    const text = `<p></p><img src='${src}' alt='${altText}'>`;
-
+    const altText = _.get(newChoiceAttributes, 'new.altText', {});
+    const text = `<p></p><img src='${src}' alt='AssetContent:${altText.id}'>`;
     choices.push({
       id: guid(),
       text: languageText(text, language),
