@@ -16,7 +16,8 @@ class RecorderTimer extends React.Component {
       minsCt       : 0,
       secsCt       : 0,
       secsStringCt : '00',
-      prcntCt      : 0
+      prcntCt      : 0,
+      timerCt      : 0,
     };
   }
 
@@ -30,7 +31,8 @@ class RecorderTimer extends React.Component {
 
   tick() {
     this.setState(prevState => ({
-      prcntCt: Math.floor(((prevState.secsCt + 1) / this.props.audioTimeout) * 100),
+      prcntCt: Math.floor(((this.state.timerCt) / this.props.audioTimeout) * 100),
+      timerCt: prevState.timerCt + 1,
     }));
 
     if (this.state.secsCt < 9) {
@@ -64,6 +66,7 @@ class RecorderTimer extends React.Component {
         secsCt       : 0,
         secsStringCt : '00',
         prcntCt      : 0,
+        timerCt      : 0,
       }
       );
   }
