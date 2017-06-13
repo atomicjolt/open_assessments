@@ -12,7 +12,7 @@ export default class SentenceSandbox extends React.Component {
     localizedStrings: React.PropTypes.object.isRequired,
 
     // Maximum audio recording length in seconds
-    timeout: React.PropTypes.number,
+    audioTimeout: React.PropTypes.number,
 
     // Saved response to be displayed
     savedResponse: React.PropTypes.string,
@@ -32,7 +32,7 @@ export default class SentenceSandbox extends React.Component {
       <div>
         <MovableWords {...this.props} />
         <AudioUpload
-          timeout={this.props.timeout}
+          audioTimeout={this.props.audioTimeout}
           localizedStrings={this.props.localizedStrings}
           selectAnswer={this.props.selectAnswer}
           audioRecordStart={this.props.audioRecordStart}

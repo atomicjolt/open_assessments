@@ -13,7 +13,7 @@ describe('item', () => {
   let currentItemIndex = 0;
   let assessment = {};
   let questionCount = 10;
-  let numQuestionsChecking;
+  let numQuestionsChecking = 0;
 
   let result;
   let subject;
@@ -29,6 +29,14 @@ describe('item', () => {
       assessment={assessment}
       localizedStrings={localizeStrings({ settings: { locale:'en' } })}
       numQuestionsChecking={numQuestionsChecking}
+      response={[]}
+      videoPlay={() => {}}
+      videoPause={() => {}}
+      audioPlay={() => {}}
+      audioPause={() => {}}
+      audioRecordStart={() => {}}
+      audioRecordStop={() => {}}
+      selectAnswer={() => {}}
 
     />);
     subject = ReactDOM.findDOMNode(result);

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assessmentItem adaptive="False" identifier="assessment.Item%3A59382ed2c89cd95ade2ba0d1%40assessment-session" timeDependent="False" title="" xml_ns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd http://www.w3.org/1998/Math/MathML http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd">
+  <outcomeDeclaration baseType="float" cardinality="single" identifier="SCORE">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration baseType="float" cardinality="single" identifier="MAXSCORE">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration baseType="float" cardinality="single" identifier="MINSCORE" view="testConstructor">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration baseType="identifier" cardinality="single" identifier="FEEDBACKBASIC">
+    <defaultValue>
+      <value>empty</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <p>make a sentence, record some audio up to 5 seconds</p>
+    <orderInteraction responseIdentifier="RESPONSE_1" shuffle="true">
+      <simpleChoice identifier="366db442-9db3-3b74-f072-59e18a3cf8bd">
+        <p>the</p>
+      </simpleChoice>
+      <simpleChoice identifier="3f9485a8-0e45-d04f-8ec4-228fbddaef1b">
+        <p class="adverb">here</p>
+      </simpleChoice>
+      <simpleChoice identifier="22fc7cd6-9654-8da6-f47d-06487b224821">
+        <p class="verb">hops</p>
+      </simpleChoice>
+      <simpleChoice identifier="6520fc34-8b7b-d4b2-c139-44c6e081303f">
+        <p class="noun">bunny</p>
+      </simpleChoice>
+    </orderInteraction>
+  </itemBody>
+</assessmentItem>

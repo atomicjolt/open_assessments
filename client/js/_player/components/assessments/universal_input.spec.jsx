@@ -456,6 +456,8 @@ describe('Assessment Questions', () => {
         selectAnswer: () => {},
         questionResult: {},
         isResult: false,
+        audioRecordStart: () => {},
+        audioRecordStop: () => {},
       };
     });
 
@@ -465,7 +467,7 @@ describe('Assessment Questions', () => {
       result = '';
     });
 
-    it('Enables the file buttons for answering', () => {
+    it('Enables the *save answer* button', () => {
       mountResult(); // to find disabled attr in child
       expect(result.find('button[disabled=true]').exists()).toBe(false);
     });

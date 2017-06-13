@@ -22,6 +22,7 @@ var allQuestions,
   questionsPerPage,
   responses,
   settings,
+  numQuestionsChecking,
   submitAssessment;
 
 var result;
@@ -81,6 +82,7 @@ function reset(){
     questions_per_page : 1,
     assessment_kind    : "SUMMATIVE"
   };
+  numQuestionsChecking = 0;
 
   props = {
     allQuestions,
@@ -102,6 +104,7 @@ function reset(){
     secondaryActionState: {buttonState: SECONDARY_ACTION.PREV},
     sendSize: () => {},
     settings,
+    numQuestionsChecking,
     submitAssessment: () => {},
     application: {},
     videoPlay: () => {},

@@ -10,7 +10,7 @@ describe('recorder timer', () => {
   let props;
   beforeEach(() => {
     props = {
-      timeout: 100,
+      audioTimeout: 100,
       localizedStrings : localizeStrings({ settings: { locale: 'en' } }),
     };
     result = TestUtils.renderIntoDocument(<RecorderTimer {...props} />);

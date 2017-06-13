@@ -12,7 +12,7 @@ class AudioUpload extends React.Component {
     localizedStrings: React.PropTypes.object.isRequired,
 
     // Maximum audio recording length in seconds
-    timeout: React.PropTypes.number,
+    audioTimeout: React.PropTypes.number,
 
     // Saved response to be displayed
     savedResponse: React.PropTypes.string,
@@ -55,7 +55,7 @@ class AudioUpload extends React.Component {
           recorder : RecorderCommands.stop,
           timeoutId: null
         });
-      }, this.props.timeout * 1000); // Convert seconds to milliseconds
+      }, this.props.audioTimeout * 1000); // Convert seconds to milliseconds
       this.props.audioRecordStart();
       this.setState({
         recorder: RecorderCommands.start,
@@ -75,13 +75,14 @@ class AudioUpload extends React.Component {
     let buttonText;
     let buttonClass;
     let hideButClass;
+
     if (this.state.recorder === RecorderCommands.start) {
       buttonClass = 'c-btn--stop';
       buttonText = this.props.localizedStrings.stop;
       audioEl = (
         <RecorderTimer
           localizedStrings={this.props.localizedStrings}
-          timeout={this.props.timeout}
+          audioTimeout={this.props.audioTimeout}
         />);  // show Recorder Timer
     } else {
       buttonText = this.props.localizedStrings.record;

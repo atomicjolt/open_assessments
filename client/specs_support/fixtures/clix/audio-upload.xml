@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assessmentItem adaptive="False" identifier="assessment.Item%3A59382ed2c89cd95ade2ba0d0%40assessment-session" timeDependent="False" title="" xml_ns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd http://www.w3.org/1998/Math/MathML http://www.w3.org/Math/XMLSchema/mathml2/mathml2.xsd">
+  <outcomeDeclaration baseType="float" cardinality="single" identifier="SCORE">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration baseType="float" cardinality="single" identifier="MAXSCORE">
+    <defaultValue>
+      <value>1</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <outcomeDeclaration baseType="float" cardinality="single" identifier="MINSCORE" view="testConstructor">
+    <defaultValue>
+      <value>0</value>
+    </defaultValue>
+  </outcomeDeclaration>
+  <itemBody>
+    <p>record up to 3 secs</p>
+    <uploadInteraction responseIdentifier="RESPONSE_1"/>
+  </itemBody>
+</assessmentItem>
