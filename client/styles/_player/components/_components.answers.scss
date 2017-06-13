@@ -268,7 +268,7 @@
     border: 0.1rem solid $light-gray;
     border-radius: $radius;
     // min-height: 10rem;
-    width: 100%;
+    max-width: 100%;
     resize: none;
     padding: 0.5rem 1rem;
     @include regular;
