@@ -46,6 +46,7 @@ export class EditAssessment extends React.Component {
     updateAssessment: React.PropTypes.func.isRequired,
     updateSingleItemOrPage: React.PropTypes.func.isRequired,
     updateNofM: React.PropTypes.func.isRequired,
+    updatePrevBtnSetting: React.PropTypes.func.isRequired,
     updateAssessmentItems: React.PropTypes.func.isRequired,
     getAssessmentItems: React.PropTypes.func.isRequired,
     getAssessmentOffered: React.PropTypes.func.isRequired,
@@ -119,6 +120,15 @@ export class EditAssessment extends React.Component {
     this.props.updateNofM(assessment, finalNofM);
   }
 
+  updatePrevBtnSetting(unlockPrev) {
+    const { assessment } = this.props;
+    let finalUnlockPrev = unlockPrev;
+    if (!finalUnlockPrev) {
+      finalUnlockPrev = 'ALWAYS';
+    }
+    this.props.updatePrevBtnSetting(assessment, finalUnlockPrev);
+  }
+
   updateSingleItemOrPage(setSinglePage) {
     const { settings, assessment } = this.props;
     const { assessmentOffered } = assessment;
@@ -165,6 +175,7 @@ export class EditAssessment extends React.Component {
           publishedAndOffered={publishedAndOffered}
           updateSingleItemOrPage={setSinglePage => this.updateSingleItemOrPage(setSinglePage)}
           updateNofM={nOfM => this.updateNofM(nOfM)}
+          updatePrevBtnSetting={unlockPrev => this.updatePrevBtnSetting(unlockPrev)}
           {...this.props.assessment}
           updateAssessment={newFields => this.updateAssessment(newFields)}
           updateItemOrder={itemIds => this.updateItemOrder(itemIds)}

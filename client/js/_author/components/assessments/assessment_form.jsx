@@ -21,10 +21,14 @@ class AssessmentForm extends React.Component {
     createItem: React.PropTypes.func,
     updateSingleItemOrPage: React.PropTypes.func,
     updateNofM: React.PropTypes.func,
+    updatePrevBtnSetting: React.PropTypes.func,
     deleteAssessmentItem: React.PropTypes.func,
     localizeStrings: React.PropTypes.func,
     assessmentOffered: React.PropTypes.arrayOf(
-      React.PropTypes.shape({ nOfM: React.PropTypes.number }))
+      React.PropTypes.shape({
+        nOfM: React.PropTypes.number,
+        unlockPrevious: React.PropTypes.string
+      }))
   };
 
   constructor() {
@@ -65,6 +69,16 @@ class AssessmentForm extends React.Component {
     this.props.updateItemOrder(itemIds);
   }
 
+  showAssessmentOptions() {
+    return (
+      <div className="au-o-item__top">
+        {this.showPreviousBtnOption()}
+        {this.showNofMOption()}
+        {this.showSinglePageOption()}
+      </div>
+    );
+  }
+
   showNofMOption() {
     // Always show this option when editing an assessment
     // N is the number of questions the student has to answer
@@ -78,47 +92,86 @@ class AssessmentForm extends React.Component {
 
     const strings = this.props.localizeStrings('assessmentForm');
     return (
-      <div className="au-o-item__top">
-        <div className="au-c-dropdown au-c-dropdown--small au-c-dropdown--side-label au-c-input-label--left au-u-ml-md au-u-right">
-          <label
-            className="au-u-mr-sm"
-            htmlFor="nOfM"
+      <div className="au-c-dropdown au-c-dropdown--small au-c-dropdown--side-label au-c-input-label--left au-u-ml-md au-u-right">
+        <label
+          className="au-u-mr-sm n-of-m-label"
+          htmlFor="nOfM"
+        >
+          {strings.nOfMLabel}</label>
+        <select
+          onChange={e => this.props.updateNofM(e.target.value)}
+          name="nOfM"
+          id="nOfM"
+          value={this.props.assessmentOffered &&
+            this.props.assessmentOffered.length > 0 ?
+            this.props.assessmentOffered[0].nOfM : -1}
+        >
+          <option
+            className="n-of-m-option"
+            key="n_of_m_all"
+            value={-1}
           >
-            {strings.nOfMLabel}</label>
-          <select
-            onChange={e => this.props.updateNofM(e.target.value)}
-            name="nOfM"
-            id="nOfM"
-            value={this.props.assessmentOffered &&
-              this.props.assessmentOffered.length > 0 ?
-              this.props.assessmentOffered[0].nOfM : -1}
+            {strings.all}</option>
+          {
+            _.map(_.range(1, this.props.items.length), (ind) => {
+              const label = stringFormatter.formatString(
+                strings.nOfM,
+                ind,
+                this.props.items.length
+              );
+              return (
+                <option
+                  className="n-of-m-option"
+                  key={`n_of_m_${ind}`}
+                  value={ind}
+                >
+                  {label}
+                </option>
+              );
+            })
+          }
+        </select>
+      </div>
+    );
+  }
+
+  showPreviousBtnOption() {
+    // Shows the option flags for the "unlock_prev" setting.
+    // ALWAYS means the previous button is always shown for all assessments.
+    // NEVER means the previous button is only shown for N of M assessments.
+    if (!this.props.items) {
+      return null;
+    }
+
+    const strings = this.props.localizeStrings('assessmentForm');
+    return (
+      <div className="au-c-dropdown au-c-dropdown--small au-c-dropdown--side-label au-c-input-label--left au-u-ml-md au-u-left">
+        <label
+          className="au-u-mr-sm unlock-previous-label"
+          htmlFor="unlockPrev"
+        >
+          {strings.prevBtnLabel}</label>
+        <select
+          onChange={e => this.props.updatePrevBtnSetting(e.target.value)}
+          name="unlockPrev"
+          id="unlockPrev"
+          value={this.props.assessmentOffered &&
+            this.props.assessmentOffered.length > 0 ?
+            this.props.assessmentOffered[0].unlockPrevious : 'ALWAYS'}
+        >
+          <option
+            className="unlock-previous-option"
+            key="unlock_previous_always"
+            value="ALWAYS"
           >
-            <option
-              className="n-of-m-option"
-              key="n_of_m_all"
-              value={-1}
-            >
-              {strings.all}</option>
-            {
-              _.map(_.range(1, this.props.items.length), (ind) => {
-                const label = stringFormatter.formatString(
-                  strings.nOfM,
-                  ind,
-                  this.props.items.length
-                );
-                return (
-                  <option
-                    className="n-of-m-option"
-                    key={`n_of_m_${ind}`}
-                    value={ind}
-                  >
-                    {label}
-                  </option>
-                );
-              })
-            }
-          </select>
-        </div>
+            {strings.prevBtnAlways}</option>
+          <option
+            className="unlock-previous-option"
+            key="unlock_previous_never"
+            value="NEVER"
+          >
+            {strings.prevBtnNever}</option>
+        </select>
       </div>
     );
   }
@@ -130,11 +183,9 @@ class AssessmentForm extends React.Component {
     if (this.props.publishedAndOffered) {
       const strings = this.props.localizeStrings('assessmentForm');
       return (
-        <div className="au-o-item__top">
-          <div className="au-c-checkbox au-u-right">
-            <input type="checkbox" id="assessmentFormCheck01" name="check" onChange={e => this.props.updateSingleItemOrPage(e.target.checked)} />
-            <label htmlFor="assessmentFormCheck01">{strings.singlePageAssessment}</label>
-          </div>
+        <div className="au-c-checkbox au-u-right">
+          <input type="checkbox" id="assessmentFormCheck01" name="check" onChange={e => this.props.updateSingleItemOrPage(e.target.checked)} />
+          <label htmlFor="assessmentFormCheck01">{strings.singlePageAssessment}</label>
         </div>
       );
     }
@@ -163,8 +214,7 @@ class AssessmentForm extends React.Component {
     return (
       <div className="au-o-contain">
         <div className="au-o-item">
-          {this.showNofMOption()}
-          {this.showSinglePageOption()}
+          {this.showAssessmentOptions()}
           <div className="au-c-assessment-title">
             <label htmlFor="title_field" className="au-c-input test_label">
               <div className="au-c-input__contain">

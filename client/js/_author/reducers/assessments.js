@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { hasOffereds } from '../selectors/assessment';
 
 // Leave this empty. It will hold assessments by bank id. IE `state[someId] = {a_bank}`
 const initialState = {};
@@ -96,17 +97,27 @@ export default function banks(state = initialState, action) {
 
       // An offered should always exist by this point
       //   ....but just in case not.
-      if (action.original.bankId in newState &&
-          action.original.assessmentId in newState[action.original.bankId] &&
-          newState[action.original.bankId][action.original.assessmentId].assessmentOffered &&
-          newState[action.original.bankId][
-            action.original.assessmentId
-          ].assessmentOffered.length > 0) {
+      if (hasOffereds(action, newState)) {
         newState[
           action.original.bankId
         ][
           action.original.assessmentId
         ].assessmentOffered[0].nOfM = action.payload;
+      }
+      return newState;
+    }
+
+    case 'UPDATE_UNLOCK_PREVIOUS_DONE': {
+      const newState = _.cloneDeep(state);
+
+      // An offered should always exist by this point
+      //   ....but just in case not.
+      if (hasOffereds(action, newState)) {
+        newState[
+          action.original.bankId
+        ][
+          action.original.assessmentId
+        ].assessmentOffered[0].unlockPrevious = action.payload;
       }
       return newState;
     }

@@ -9,7 +9,23 @@ export default function EmbedButton(props) {
 
   if (isPublished) {
     if (assessOffered) {
-      const embedUrlCode = `${baseEmbedUrl}&bank=${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}#/assessment`;
+      let embedUrlCode = `${baseEmbedUrl}&bank=${assessOffered.bankId}&assessment_offered_id=${assessOffered.id}`;
+
+      if (assessOffered.unlockPrevious) {
+        switch (assessOffered.unlockPrevious) {
+          case 'ALWAYS':
+            embedUrlCode += '&unlock_prev=ALWAYS';
+            break;
+
+          case 'NEVER':
+            embedUrlCode += '&unlock_prev=NEVER';
+            break;
+
+          default:
+            break;
+        }
+
+      }
 
       return (
         <div className="au-c-embed-contain">

@@ -54,4 +54,50 @@ describe('assessments reducer', () => {
       expect(state[1][2].assessmentOffered[0].nOfM).toEqual(-1);
     });
   });
+
+  describe('update unlock previous done', () => {
+    it('updates the assessment offered value', () => {
+      const initialState = {
+        1: {
+          2: {
+            assessmentOffered: [{
+              unlockPrevious: 'always'
+            }]
+          }
+        }
+      };
+      const action = {
+        original: {
+          bankId: 1,
+          assessmentId: 2
+        },
+        type: 'UPDATE_UNLOCK_PREVIOUS_DONE',
+        payload: 5
+      };
+      const state = banks(initialState, action);
+      expect(state[1][2].assessmentOffered[0].unlockPrevious).toEqual(5);
+    });
+
+    it('does not update the assessment offered value of other assessments', () => {
+      const initialState = {
+        1: {
+          2: {
+            assessmentOffered: [{
+              unlockPrevious: -1
+            }]
+          }
+        }
+      };
+      const action = {
+        original: {
+          bankId: 1,
+          assessmentId: 3
+        },
+        type: 'UPDATE_UNLOCK_PREVIOUS_DONE',
+        payload: 5
+      };
+      const state = banks(initialState, action);
+      expect(state[1][2].assessmentOffered[0].unlockPrevious).toEqual(-1);
+    });
+  });
 });

@@ -38,7 +38,10 @@ export default {
       placeholder: 'Untitled Assessment',
       nOfMLabel: 'N of M selector',
       all: 'All questions',
-      nOfM: '{0} of {1}'
+      nOfM: '{0} of {1}',
+      prevBtnLabel: 'Unlock Previous',
+      prevBtnAlways: 'Always',
+      prevBtnNever: 'Never'
     },
     audioLimit: {
       rangeWarning: 'Please enter a positive number under'

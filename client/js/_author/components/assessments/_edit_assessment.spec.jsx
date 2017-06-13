@@ -67,6 +67,7 @@ describe('_edit_assessment component', () => {
       banks: [],
       updateSingleItemOrPage: () => {},
       updateNofM: () => { handleFunction = true; },
+      updatePrevBtnSetting: () => { handleFunction = true; },
       createAssessmentOffered: () => {},
       isPublished: false,
     };
@@ -116,6 +117,12 @@ describe('_edit_assessment component', () => {
   it('runs updateNofM', () => {
     expect(handleFunction).toEqual(false);
     result.updateNofM();
+    expect(handleFunction).toEqual(true);
+  });
+
+  it('runs updatePrevBtnSetting', () => {
+    expect(handleFunction).toEqual(false);
+    result.updatePrevBtnSetting();
     expect(handleFunction).toEqual(true);
   });
 

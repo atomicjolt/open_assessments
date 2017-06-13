@@ -343,7 +343,7 @@ function createAssessmentOffered(store, bankId, assessmentId, body) {
   );
 }
 
-function updateOfferedNofM(store, bankId, offeredId, nOfM) {
+function updateOffered(store, bankId, offeredId, updatedInfo) {
   const state = store.getState();
   return api.put(
     `assessment/banks/${bankId}/assessmentsoffered/${offeredId}`,
@@ -351,7 +351,7 @@ function updateOfferedNofM(store, bankId, offeredId, nOfM) {
     state.jwt,
     state.settings.csrf_token,
     null,
-    nOfM
+    updatedInfo
   );
 }
 
@@ -637,12 +637,45 @@ const qbank = {
       });
     } else {
       // just update the offered with N of M
-      updateOfferedNofM(store, action.bankId, action.assessmentOfferedId, action.body)
+      updateOffered(store, action.bankId, action.assessmentOfferedId, action.body)
       .then(() => {
         store.dispatch({
           type: action.type + DONE,
           original: action,
           payload: action.body.nOfM
+        });
+      });
+    }
+  },
+
+  [AssessmentConstants.UPDATE_UNLOCK_PREVIOUS]: (store, action) => {
+    if (!action.assessmentOfferedId) {
+      // need to create the offered first
+      createAssessmentOffered(store, action.bankId, action.assessmentId, action.body)
+      .then((res) => {
+        const offered = res.body;
+        store.dispatch({
+          type: AssessmentConstants.CREATE_ASSESSMENT_OFFERED + DONE,
+          original: action,
+          payload: [offered]
+        });
+
+        const updatedAction = _.cloneDeep(action);
+        updatedAction.assessmentOfferedId = offered.id;
+        store.dispatch({
+          type: updatedAction.type + DONE,
+          original: updatedAction,
+          payload: updatedAction.unlockPrevious
+        });
+      });
+    } else {
+      // just update the offered with unlockPrevious
+      updateOffered(store, action.bankId, action.assessmentOfferedId, action.body)
+      .then(() => {
+        store.dispatch({
+          type: action.type + DONE,
+          original: action,
+          payload: action.body.unlockPrevious
         });
       });
     }
