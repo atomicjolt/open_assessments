@@ -26,7 +26,8 @@ describe('recorder timer', () => {
         minsCt       : 0,
         secsCt       : 0,
         secsStringCt : '00',
-        prcntCt      : 0
+        prcntCt      : 0,
+        timerCt      : 0,
       });
     });
 
@@ -37,7 +38,8 @@ describe('recorder timer', () => {
         minsCt       : 0,
         secsCt       : 0,
         secsStringCt : '00',
-        prcntCt      : 0
+        prcntCt      : 0,
+        timerCt      : 0,
       });
     });
   });
@@ -45,6 +47,7 @@ describe('recorder timer', () => {
   describe('count secs', () => {
     let secCt = 8;
     const minCt = 0;
+    let timerCt = 8;
     it('counts from 08 to 09 as a string', () => {
       result.setState(
         {
@@ -52,6 +55,7 @@ describe('recorder timer', () => {
           secsCt       : secCt,
           secsStringCt : `0${secCt + 1}`,
           prcntCt      : result.state.prcntCt,
+          timerCt,
         }
       );
       result.tick(secCt);
@@ -59,17 +63,20 @@ describe('recorder timer', () => {
         minsCt       : 0,
         secsCt       : 9,
         secsStringCt : '09',
-        prcntCt      : result.state.prcntCt
+        prcntCt      : result.state.prcntCt,
+        timerCt      : result.state.timerCt,
       });
     });
     it('counts from 09 to 10, going from string back to number', () => {
       secCt = 9;
+      timerCt = 9;
       result.setState(
         {
           minsCt       : minCt,
           secsCt       : secCt,
           secsStringCt : `0${secCt + 1}`,
           prcntCt      : result.state.prcntCt,
+          timerCt,
         }
       );
       result.tick(secCt);
@@ -77,17 +84,20 @@ describe('recorder timer', () => {
         minsCt       : minCt,
         secsCt       : 10,
         secsStringCt : 10,
-        prcntCt      : result.state.prcntCt
+        prcntCt      : result.state.prcntCt,
+        timerCt      : result.state.timerCt,
       });
     });
     it('counts from 59 to 00, going from number back to string', () => {
       secCt = 59;
+      timerCt = 59;
       result.setState(
         {
           minsCt       : minCt,
           secsCt       : secCt,
           secsStringCt : '59',
           prcntCt      : result.state.prcntCt,
+          timerCt,
         }
       );
       result.tick(secCt);
@@ -95,22 +105,25 @@ describe('recorder timer', () => {
         minsCt       : minCt + 1,
         secsCt       : 0,
         secsStringCt : '00',
-        prcntCt      : result.state.prcntCt
+        prcntCt      : result.state.prcntCt,
+        timerCt      : result.state.timerCt,
       });
     });
   });
 
   describe('calc percentage', () => {
     const secCt = 49;
-    const prctCt = 49;
+    const prcntCt = 49;
     const minCt = 0;
+    const timerCt = 49;
     it('calculates the percent', () => {
       result.setState(
         {
           minsCt       : minCt,
           secsCt       : secCt,
           secsStringCt : 49,
-          prcntCt      : prctCt,
+          prcntCt,
+          timerCt,
         }
       );
       result.tick(secCt);
@@ -118,7 +131,8 @@ describe('recorder timer', () => {
         minsCt       : minCt,
         secsCt       : 50,
         secsStringCt : 50,
-        prcntCt      : 50
+        prcntCt      : result.state.prcntCt,
+        timerCt      : result.state.timerCt,
       });
     });
   });
