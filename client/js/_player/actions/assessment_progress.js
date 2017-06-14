@@ -19,7 +19,7 @@ const requests = [
 
 export const Constants = wrapper(constants, requests);
 
-export const start = (assessmentId) => ({
+export const start = assessmentId => ({
   type: Constants.ASSESSMENT_START,
   assessmentId
 });

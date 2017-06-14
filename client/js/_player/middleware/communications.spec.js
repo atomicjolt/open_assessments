@@ -1,5 +1,5 @@
-import communication, { communicationHandler } from './communications';
-import { Constants as CommunicationConstants }  from '../_player/actions/communications';
+import { default as communication, communicationHandler }               from "./communications";
+import { Constants as CommunicationConstants }  from "../actions/communications";
 
 describe('iframe communication middleware', () => {
   describe('middleware behaviour', () => {
@@ -9,17 +9,17 @@ describe('iframe communication middleware', () => {
       const nextHandler = () => {};
       const actionHandler = middleware(nextHandler);
 
-      expect(communication.length).toBe(1);           // api middleware takes one arg
-      expect(typeof middleware).toBe('function');     // api middleware must return a function to handle next
+      expect(communication.length).toBe(1);                     // api middleware takes one arg
+      expect(typeof middleware).toBe("function");     // api middleware must return a function to handle next
       expect(middleware.length).toBe(1);              // next handler returned by api middleware must take one argument
-      expect(typeof actionHandler).toBe('function');  // next handler must return a function to handle action
+      expect(typeof actionHandler).toBe("function");  // next handler must return a function to handle action
       expect(actionHandler.length).toBe(1);           // action handler must take one argument
     });
 
     it('passes action on to next middleware', () => {
       const store = { getState: () => {} };
       const action = {
-        type: 'TEST'
+        type: "TEST"
       };
       const nextHandler = communication(store);
       const next = (actionPassed) => {
@@ -31,10 +31,7 @@ describe('iframe communication middleware', () => {
   });
 
   describe('action responses', () => {
-    let store;
-    let middleware;
-    let nextHandler;
-    let actionHandler;
+    var store, action, middleware, nextHandler, actionHandler;
 
     beforeEach(() => {
       spyOn(communicationHandler, 'sendSize');
@@ -48,7 +45,7 @@ describe('iframe communication middleware', () => {
     });
 
     it('calls comm handler sendsize when it recieves SEND_SIZE', () => {
-      const action = {
+      action = {
         type: CommunicationConstants.SEND_SIZE
       };
       actionHandler(action);
@@ -71,7 +68,7 @@ describe('iframe communication middleware', () => {
       };
       actionHandler(action);
 
-      expect(communicationHandler.broadcast).toHaveBeenCalledWith({ subject: 'lti.navigation', location: 'next' });
+      expect(communicationHandler.broadcast).toHaveBeenCalledWith({subject: "lti.navigation", location: "next"});
     });
 
     it('broadcasts lti.navigation previous when it recieves LTI_NAVIGATE_PREVIOUS', () => {
@@ -80,7 +77,7 @@ describe('iframe communication middleware', () => {
       };
       actionHandler(action);
 
-      expect(communicationHandler.broadcast).toHaveBeenCalledWith({ subject: 'lti.navigation', location: 'previous' });
+      expect(communicationHandler.broadcast).toHaveBeenCalledWith({subject: "lti.navigation", location: "previous"});
     });
 
     it('broadcasts lti.navigation home when it recieves LTI_NAVIGATE_HOME', () => {
@@ -89,7 +86,7 @@ describe('iframe communication middleware', () => {
       };
       actionHandler(action);
 
-      expect(communicationHandler.broadcast).toHaveBeenCalledWith({ subject: 'lti.navigation', location: 'home' });
+      expect(communicationHandler.broadcast).toHaveBeenCalledWith({subject: "lti.navigation", location: "home"});
     });
 
     it('broadcasts lti.showModuleNavigation true when it recieves SHOW_LMS_NAVIGATION', () => {
@@ -98,7 +95,7 @@ describe('iframe communication middleware', () => {
       };
       actionHandler(action);
 
-      expect(communicationHandler.broadcast).toHaveBeenCalledWith({ subject: 'lti.showModuleNavigation', show: true });
+      expect(communicationHandler.broadcast).toHaveBeenCalledWith({subject: "lti.showModuleNavigation", show: true});
     });
 
     it('broadcasts lti.showModuleNavigation false when it recieves HIDE_LMS_NAVIGATION', () => {
@@ -107,7 +104,7 @@ describe('iframe communication middleware', () => {
       };
       actionHandler(action);
 
-      expect(communicationHandler.broadcast).toHaveBeenCalledWith({ subject: 'lti.showModuleNavigation', show: false });
+      expect(communicationHandler.broadcast).toHaveBeenCalledWith({subject: "lti.showModuleNavigation", show: false});
     });
   });
 });

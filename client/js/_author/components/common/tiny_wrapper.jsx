@@ -12,6 +12,7 @@ import 'tinymce/plugins/image/plugin';
 import 'tinymce/plugins/charmap/plugin';
 import 'tinymce/plugins/lists/plugin';
 import 'tinymce/plugins/table/plugin';
+import 'tinymce/plugins/emoticons/plugin';
 
 import guid             from '../../../utils/guid';
 
@@ -47,8 +48,8 @@ export default class TinyWrapper extends React.Component {
       skin: false,
       menubar: false,
       statusbar: false,
-      plugins: 'autolink link lists paste code charmap media image table',
-      toolbar: 'bold italic removeformat | bullist numlist  blockquote table | code charmap subscript superscript | insert_image audio video',
+      plugins: 'autolink link lists paste code charmap media image table emoticons',
+      toolbar: 'bold italic removeformat | bullist numlist  blockquote table | code charmap subscript superscript | emoticons | insert_image audio video',
       inline: true,
       paste_data_images: true,
       browser_spellcheck: true,

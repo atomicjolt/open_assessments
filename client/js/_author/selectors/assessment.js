@@ -72,3 +72,13 @@ export const isPublished = createSelector(
   settings,
   _isPublished,
 );
+
+export function hasOffereds(action, state) {
+  // checks if the active assessment in state has assessments offered or not
+  return action.original.bankId in state &&
+    action.original.assessmentId in state[action.original.bankId] &&
+    'assessmentOffered' in state[action.original.bankId][action.original.assessmentId] &&
+    state[action.original.bankId][
+      action.original.assessmentId
+    ].assessmentOffered.length > 0;
+}

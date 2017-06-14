@@ -10,12 +10,12 @@ const BOX_SIZES = {
     maxStrings: 1,
   },
   medium: {
-    expectedLines: 1,
+    expectedLines: 3,
     expectedLength: 200,
     maxStrings: 1,
   },
   large: {
-    expectedLines: 5,
+    expectedLines: 10,
     expectedLength: 200,
     maxStrings: 1,
   }

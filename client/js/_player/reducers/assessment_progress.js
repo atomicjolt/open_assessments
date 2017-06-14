@@ -14,7 +14,7 @@ const initialState = Immutable.fromJS({
   responses:             [],
   startedAt:             0,
   finishedAt:            0,
-  assessmentResult:      null
+  assessmentResult:      null,
 });
 
 export default (state = initialState, action) => {

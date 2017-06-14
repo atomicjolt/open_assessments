@@ -1,13 +1,14 @@
-import Communicator, { CommunicatorResizeMsg, CommunicatorSizeRequest } from './communicator';
-import { availableLocales } from '../_player/locales/locales';
+import Communicator                                       from './communicator';
+import { CommunicatorResizeMsg, CommunicatorSizeRequest } from './communicator';
+import { availableLocales }                               from "../locales/locales";
 
 export default class {
 
-  constructor() {
+  constructor(){
     Communicator.enableListener(this);
   }
 
-  getHeight() {
+  getHeight(){
     return Math.max(
       document.body.clientHeight,
       document.body.scrollHeight,
@@ -17,8 +18,7 @@ export default class {
       document.documentElement.offsetHeight
     );
   }
-
-  getWidth() {
+  getWidth(){
     return Math.max(
       document.body.clientWidth,              /* width of <body> */
       document.documentElement.clientWidth,   /* width of <html> */
@@ -27,11 +27,11 @@ export default class {
     );
   }
 
-  sendSize() {
+  sendSize(){
     const height = this.getHeight();
     const width = this.getWidth();
 
-    if (height === this.prevHeight && width === this.prevWidth) { return; }
+    if(height == this.prevHeight && width == this.prevWidth) {return;}
     this.prevHeight = height;
     this.prevWidth = width;
 
@@ -41,7 +41,7 @@ export default class {
     };
 
     const ltiPayload = {
-      subject: 'lti.frameResize',
+      subject: "lti.frameResize",
       height
     };
 
@@ -55,7 +55,7 @@ export default class {
   // get rid of LMS module navigation
   hideLMSNavigation() {
     Communicator.broadcastMsg({
-      subject: 'lti.showModuleNavigation',
+      subject: "lti.showModuleNavigation",
       show: false
     });
   }
@@ -63,7 +63,7 @@ export default class {
   // show LMS module navigation
   showLMSNavigation() {
     Communicator.broadcastMsg({
-      subject: 'lti.showModuleNavigation',
+      subject: "lti.showModuleNavigation",
       show: true
     });
   }
@@ -71,48 +71,45 @@ export default class {
   // Tell the parent iFrame to scroll to top
   scrollParentToTop() {
     Communicator.broadcastMsg({
-      open_assessments_msg: 'scrollToTop',
+      open_assessments_msg: "scrollToTop",
     });
   }
 
-  navigateHome() {
-    this.navigate('home');
+  navigateHome(){
+    this.navigate("home");
   }
 
-  navigateNext() {
-    this.navigate('next');
+  navigateNext(){
+    this.navigate("next");
   }
 
-  navigatePrevious() {
-    this.navigate('previous');
+  navigatePrevious(){
+    this.navigate("previous");
   }
 
-  navigate(location) {
+  navigate(location){
     Communicator.broadcastMsg({
-      subject: 'lti.navigation',
+      subject: "lti.navigation",
       location
     });
   }
 
-  availableLocales() {
+  availableLocales(){
     Communicator.broadcastMsg({
-      open_assessments_msg: 'open_assessments_available_locales',
+      open_assessments_msg: "open_assessments_available_locales",
       available_locales: availableLocales()
     });
   }
 
-  broadcast(payload) {
+  broadcast(payload){
     Communicator.broadcastMsg(payload);
   }
 
-  handleComm(e) {
-    switch(e.data.open_assessments_msg) {
+  handleComm(e){
+    switch(e.data.open_assessments_msg){
       case CommunicatorSizeRequest:
         this.sendSize();
         break;
-      default:
-        break;
     }
   }
-
-}
+};

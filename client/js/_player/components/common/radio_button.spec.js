@@ -1,7 +1,7 @@
-import React              from 'react';
-import ReactDOM           from 'react-dom';
-import TestUtils          from 'react-addons-test-utils';
-import RadioButton        from './radio_button';
+import React                            from 'react';
+import ReactDOM                         from 'react-dom';
+import TestUtils                        from 'react-dom/test-utils';
+import RadioButton                      from './radio_button';
 import { CORRECT, INCORRECT, UNGRADED } from "../assessments/universal_input";
 
 describe('radio button', function() {
@@ -24,7 +24,7 @@ describe('radio button', function() {
 
   beforeEach(function(){
     spyOn(props, "selectAnswer");
-    
+
     result = TestUtils.renderIntoDocument(<RadioButton {...props} />);
     subject = ReactDOM.findDOMNode(result);
   });

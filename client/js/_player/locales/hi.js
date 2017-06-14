@@ -48,10 +48,12 @@ export default {
     },
     audioUpload: {
       record: "दर्ज करें",
-      stop: "रुकिए"
+      stop: "रुकिए",
+      recordTime: "Recording time"
     },
     fileUpload: {
-      chooseFile: "अपलोड करने के लिए एक फाइल चुनें"
+      chooseFile: "अपलोड करने के लिए एक फाइल चुनें",
+      noFile: "No file chosen"
     },
     middleware: {
       // Text displayed when a user tries to check an answer without

@@ -16,6 +16,7 @@ globals:
   describe: false
   beforeEach: false
   afterEach: false
+  afterAll: false
   it: false
   expect: false
   xit: false

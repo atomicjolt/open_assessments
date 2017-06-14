@@ -7,20 +7,22 @@ import { FillTheBlank }                             from './fill_the_blank';
 import { __RewireAPI__ as FillTheBlankRewireApi }   from './fill_the_blank';
 
 describe('fill the blank', () => {
-  var result, props, WrappedComponent;
+  let result;
+  let props;
+  let WrappedComponent;
   beforeEach(() => {
     props = {
       answers: [{
         id: 1,
-        text: "Word1"
+        text: 'Word1'
       }],
-      question: "<p>word1</p><div class=\"interaction-placeholder\"></div><p>word2</p>",
+      question: '<p>word1</p><div class="interaction-placeholder"></div><p>word2</p>',
       selectAnswer: () => {},
       linkWord: () => {},
     };
 
-    FillTheBlankRewireApi.__Rewire__('FillTheBlankWordChain', () => { return <div>WordChain</div>; })
-    FillTheBlankRewireApi.__Rewire__('FillTheBlankWordDropZone', () => { return <div>WordCloud</div>; })
+    FillTheBlankRewireApi.__Rewire__('FillTheBlankWordChain', () => (<div>WordChain</div>));
+    FillTheBlankRewireApi.__Rewire__('FillTheBlankWordDropZone', () => (<div>WordCloud</div>));
     WrappedComponent = wrapInDndContext(FillTheBlank);
     result = TestUtils.renderIntoDocument(<WrappedComponent {...props} />);
   });
