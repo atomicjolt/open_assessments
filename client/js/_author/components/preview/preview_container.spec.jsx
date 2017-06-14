@@ -34,8 +34,16 @@ describe('preview container component', () => {
   });
 
   describe('buildEmbedUrl', () => {
-    it('build embed url', () => {
+    it('build embed url without unlockPrevious', () => {
       const expectedResult = 'http://example.com?unlock_next=ON_CORRECT&api_url=http://api.example.com&bank=bankId&assessment_offered_id=assessOfferedId#/assessment';
+      const url = result.buildEmbedUrl(props);
+
+      expect(url).toEqual(expectedResult);
+    });
+
+    it('build embed url with unlockPrevious', () => {
+      props.assessment.assessmentOffered[0].unlockPrevious = 'ALWAYS';
+      const expectedResult = 'http://example.com?unlock_next=ON_CORRECT&unlock_prev=ALWAYS&api_url=http://api.example.com&bank=bankId&assessment_offered_id=assessOfferedId#/assessment';
       const url = result.buildEmbedUrl(props);
 
       expect(url).toEqual(expectedResult);

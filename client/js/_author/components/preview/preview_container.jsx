@@ -26,8 +26,27 @@ export default class PreviewContainer extends React.Component {
     const { assessmentPlayerUrl, apiUrl, assessment, unlockNext } = this.props;
 
     const bankId = assessment.bankId;
-    const assessmentOfferedId = _.get(assessment, 'assessmentOffered[0].id');
-    const previewSettings = [`unlock_next=${unlockNext}`].join('&');
+    const assessmentOffered = _.get(assessment, 'assessmentOffered[0]');
+    const assessmentOfferedId = assessmentOffered.id;
+    const settings = [`unlock_next=${unlockNext}`];
+
+    if (assessmentOffered.unlockPrevious) {
+      switch (assessmentOffered.unlockPrevious) {
+        case 'ALWAYS':
+          settings.push('unlock_prev=ALWAYS');
+          break;
+
+        case 'NEVER':
+          settings.push('unlock_prev=NEVER');
+          break;
+
+        default:
+          break;
+      }
+
+    }
+
+    const previewSettings = settings.join('&');
 
     return `${assessmentPlayerUrl}?${previewSettings}&api_url=${apiUrl}&bank=${bankId}&assessment_offered_id=${assessmentOfferedId}#/assessment`;
   }
