@@ -211,6 +211,7 @@ describe('Assessment Questions', () => {
           question_type: 'short_answer_question',
           question_meta: {
             expectedLines: 1,
+            expectedLength: 50,
           },
           answers: ['abc'],
         },
@@ -231,6 +232,32 @@ describe('Assessment Questions', () => {
       shallowResult();
       expect(result.find('textarea[disabled=true]').exists()).toBe(false);
       expect(result.find('.empty').exists()).toBe(false);
+    });
+
+    it('Sizes the small answer box', () => {
+      shallowResult();
+      expect(result.find('textarea[cols=50]').exists()).toBe(true);
+      expect(result.find('textarea[rows=1]').exists()).toBe(true);
+    });
+
+    it('Sizes the medium answer box', () => {
+      props.item.question_meta = {
+        expectedLines: 3,
+        expectedLength: 200,
+      };
+      shallowResult();
+      expect(result.find('textarea[cols=200]').exists()).toBe(true);
+      expect(result.find('textarea[rows=3]').exists()).toBe(true);
+    });
+
+    it('Sizes the large answer box', () => {
+      props.item.question_meta = {
+        expectedLines: 10,
+        expectedLength: 200,
+      };
+      shallowResult();
+      expect(result.find('textarea[cols=200]').exists()).toBe(true);
+      expect(result.find('textarea[rows=10]').exists()).toBe(true);
     });
 
     it('Shows saved response in UI, adds class, disables textarea', () => {

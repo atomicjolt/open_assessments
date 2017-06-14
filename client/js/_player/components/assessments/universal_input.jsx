@@ -172,6 +172,7 @@ export default class UniversalInput extends React.Component {
             <textarea
               placeholder="Enter answer here..."
               onBlur={e => props.selectAnswer(e.target.value, true)}
+              cols={parseInt(props.item.question_meta.expectedLength, 10) || 200}
               rows={parseInt(props.item.question_meta.expectedLines, 10) || 1}
               disabled={props.isResult}
               value={savedResponse || undefined}
