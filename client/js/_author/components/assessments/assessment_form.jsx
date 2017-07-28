@@ -8,6 +8,10 @@ import localize        from '../../locales/localize';
 // ideally we would get this directly from this.props.localizeStrings...
 import stringFormatter from '../../locales/locales';
 
+// exported for testing
+// don't set this to '', otherwise will see the ``Name required`` warning on page load
+export const DEFAULT_NAME = 'xyzRandomName';
+
 class AssessmentForm extends React.Component {
   static propTypes = {
     items: React.PropTypes.oneOfType(
@@ -37,7 +41,8 @@ class AssessmentForm extends React.Component {
       addingItem: false,
       activeItem: '',
       reorderActive: false,
-      title: 'start'
+      title: DEFAULT_NAME,
+      savingAssessment: false
     };
   }
   componentWillUpdate(nextProps) {
@@ -202,8 +207,12 @@ class AssessmentForm extends React.Component {
   }
 
   updateAssessment(e) {
-    if (e.target.value) {
+    if (_.isString(e) && e !== '' && e !== DEFAULT_NAME) {
+      this.props.updateAssessment({ name: e });
+      this.setState({ savingAssessment: true });
+    } else if (e.target.value) {
       this.props.updateAssessment({ name: e.target.value });
+      this.setState({ savingAssessment: true });
     }
   }
 
@@ -211,6 +220,61 @@ class AssessmentForm extends React.Component {
     const reorderActive = this.state.reorderActive;
     const canAddItem = !this.state.addingItem && this.props.name;
     const strings = this.props.localizeStrings('assessmentForm');
+
+    // simple proxy test so we can differentiate the assessmentTitle
+    //   input from having a save button or change ``onBlur``
+    const isNewAssessmentForm = this.props.bankId === '';
+
+    let titleInput = (
+      <input
+        key={this.props.name}
+        defaultValue={this.props.name}
+        className="au-c-text-input au-c-text-input--large"
+        type="text"
+        id="title_field"
+        placeholder={strings.placeholder}
+        onChange={e => this.setState({ title: e.target.value })}
+        onBlur={e => this.updateAssessment(e)}
+      />);
+
+    let saveButton;
+
+    if (isNewAssessmentForm) {
+      titleInput = (
+        <input
+          key={this.props.name}
+          defaultValue={this.props.name}
+          className="au-c-text-input au-c-text-input--large"
+          type="text"
+          id="title_field"
+          placeholder={strings.placeholder}
+          onChange={e => this.setState({ title: e.target.value })}
+        />);
+
+      // by default leave the button disabled
+      saveButton = (
+        <button
+          disabled
+          className="is-inactive au-u-right au-c-assessment-next au-c-btn au-c-btn--md au-c-btn--maroon"
+        >
+          {strings.saveAssessmentTitle}
+        </button>
+      );
+
+      if (!this.state.savingAssessment &&
+          this.state.title !== '' &&
+          this.state.title !== DEFAULT_NAME) {
+        saveButton = (
+          <button
+            onClick={() => this.updateAssessment(this.state.title)}
+            className="au-u-right au-c-assessment-next au-c-btn au-c-btn--md au-c-btn--maroon"
+          >
+            {strings.saveAssessmentTitle}
+          </button>
+        );
+      }
+    }
+
     return (
       <div className="au-o-contain">
         <div className="au-o-item">
@@ -218,16 +282,7 @@ class AssessmentForm extends React.Component {
           <div className="au-c-assessment-title">
             <label htmlFor="title_field" className="au-c-input test_label">
               <div className="au-c-input__contain">
-                <input
-                  key={this.props.name}
-                  defaultValue={this.props.name}
-                  className="au-c-text-input au-c-text-input--large"
-                  type="text"
-                  id="title_field"
-                  placeholder={strings.placeholder}
-                  onChange={e => this.setState({ title: e.target.value })}
-                  onBlur={e => this.updateAssessment(e)}
-                />
+                {titleInput}
                 { _.isEmpty(this.state.title) ?
                   <div>
                     <div className="au-c-input__bottom has-error" />
@@ -235,6 +290,7 @@ class AssessmentForm extends React.Component {
                   </div> :
                   <div className="au-c-input__bottom" />
                 }
+                {saveButton}
               </div>
             </label>
           </div>
