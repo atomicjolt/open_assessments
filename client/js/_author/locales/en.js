@@ -35,7 +35,7 @@ export default {
     assessmentForm: {
       singlePageAssessment: 'Single page assessment',
       nameRequired: 'Name is required in order to edit',
-      placeholder: 'Untitled Assessment',
+      placeholder: 'Please enter your assessment title here',
       nOfMLabel: 'N of M selector',
       all: 'All questions',
       nOfM: '{0} of {1}',
