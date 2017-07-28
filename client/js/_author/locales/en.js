@@ -138,7 +138,7 @@ export default {
       reflection: 'Reflection'
     },
     shortAnswer: {
-      answerBox: 'Answer Box',
+      answerBox: 'Answer Box Size',
       small: 'Small',
       medium: 'Medium',
       large: 'Large',

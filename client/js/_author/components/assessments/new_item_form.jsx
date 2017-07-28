@@ -71,7 +71,7 @@ class NewItemForm extends React.Component {
                     id="questionType"
                   >
                     {
-                      _.map(types, type => (
+                      _.map(_.sortBy(types), type => (
                         <option key={`new_item_${type}`} value={type}>
                           {strings[type]}
                         </option>
