@@ -77,6 +77,7 @@ class AssessmentForm extends React.Component {
   showAssessmentOptions() {
     return (
       <div className="au-o-item__top">
+        <div className="au-c-input-label--left au-u-ml-md au-u-right" />
         {this.showPreviousBtnOption()}
         {this.showNofMOption()}
         {this.showSinglePageOption()}
@@ -150,7 +151,7 @@ class AssessmentForm extends React.Component {
 
     const strings = this.props.localizeStrings('assessmentForm');
     return (
-      <div className="au-c-dropdown au-c-dropdown--small au-c-dropdown--side-label au-c-input-label--left au-u-ml-md au-u-left">
+      <div className="au-c-dropdown au-c-dropdown--small au-c-dropdown--side-label au-c-input-label--left au-u-ml-md au-u-right">
         <label
           className="au-u-mr-sm unlock-previous-label"
           htmlFor="unlockPrev"
@@ -278,7 +279,6 @@ class AssessmentForm extends React.Component {
     return (
       <div className="au-o-contain">
         <div className="au-o-item">
-          {this.showAssessmentOptions()}
           <div className="au-c-assessment-title">
             <label htmlFor="title_field" className="au-c-input test_label">
               <div className="au-c-input__contain">
@@ -294,6 +294,7 @@ class AssessmentForm extends React.Component {
               </div>
             </label>
           </div>
+          {this.showAssessmentOptions()}
         </div>
         { this.props.name ?
           _.map(_.compact(this.props.items), (item, index) => (
