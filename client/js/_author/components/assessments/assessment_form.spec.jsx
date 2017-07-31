@@ -1,6 +1,6 @@
 import React          from 'react';
 import { shallow }    from 'enzyme';
-import AssessmentForm from './assessment_form';
+import AssessmentForm, { DEFAULT_NAME } from './assessment_form';
 
 jest.mock('../../../libs/assets');
 
@@ -9,6 +9,7 @@ describe('AssessmentForm component', () => {
   let result;
   let createItem;
   let updateItemOrderFunction;
+  let calledUpdateAssessments = false;
 
   beforeEach(() => {
     createItem = false;
@@ -43,7 +44,7 @@ describe('AssessmentForm component', () => {
         nOfM: 1,
         unlockPrevious: 'NEVER'
       }],
-      updateAssessment: () => {},
+      updateAssessment: (value) => { calledUpdateAssessments = value; },
       updateItemOrder: () => { updateItemOrderFunction = true; },
       createItem: () => { createItem = true; },
       updateItem: () => {},
@@ -170,6 +171,65 @@ describe('AssessmentForm component', () => {
     const newIndex = '77';
     result.instance().moveItem(oldIndex, newIndex);
     expect(updateItemOrderFunction).toBeTruthy();
+  });
+
+  it('renders the next button on new assessments', () => {
+    props.bankId = '';
+    result = shallow(<AssessmentForm {...props} />);
+    expect(result.find('.au-c-assessment-next').length).toEqual(1);
+  });
+
+  it('does not render the next button when editing assessments', () => {
+    expect(result.find('.au-c-assessment-next').length).toEqual(0);
+  });
+
+  it('does not call updateAssessment onBlur for new assessment', () => {
+    props.bankId = '';
+    result = shallow(<AssessmentForm {...props} />);
+    result.find('input').simulate('blur', {
+      target: {
+        value: 'foo'
+      }
+    });
+    expect(calledUpdateAssessments).toEqual(false);
+    expect(result.state('title')).toEqual(DEFAULT_NAME);
+  });
+
+  it('disables the button if no text, for new assessment', () => {
+    props.bankId = '';
+    result = shallow(<AssessmentForm {...props} />);
+    result.find('button').simulate('click');
+    expect(calledUpdateAssessments).toEqual(false);
+  });
+
+  it('calls updateAssessment onClick of Next button for new assessment', () => {
+    props.bankId = '';
+    result = shallow(<AssessmentForm {...props} />);
+    result.setState({ title: 'foo' });
+    result.find('button').simulate('click');
+    expect(calledUpdateAssessments).toEqual({
+      name: 'foo'
+    });
+  });
+
+  it('sets the savingAssessment state to true, onClick of Next button for new assessment', () => {
+    props.bankId = '';
+    result = shallow(<AssessmentForm {...props} />);
+    result.setState({ title: 'foo' });
+    expect(result.state('savingAssessment')).toEqual(false);
+    result.find('button').simulate('click');
+    expect(result.state('savingAssessment')).toEqual(true);
+  });
+
+  it('calls updateAssessment onBlur for existing assessment', () => {
+    result.find('input').simulate('blur', {
+      target: {
+        value: 'foo'
+      }
+    });
+    expect(calledUpdateAssessments).toEqual({
+      name: 'foo'
+    });
   });
 
 });

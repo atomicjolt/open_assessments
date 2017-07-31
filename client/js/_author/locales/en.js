@@ -41,7 +41,8 @@ export default {
       nOfM: '{0} of {1}',
       prevBtnLabel: 'Unlock Previous',
       prevBtnAlways: 'Always',
-      prevBtnNever: 'Never'
+      prevBtnNever: 'Never',
+      saveAssessmentTitle: 'Next'
     },
     audioLimit: {
       rangeWarning: 'Please enter a positive number under'
