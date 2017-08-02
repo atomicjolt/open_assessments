@@ -12,7 +12,7 @@ ShallowWrapper {
     className="au-c-drop-zone__answers au-o-row"
 >
     <dropObject
-        isActive={false}
+        isActive={true}
         language="639-2%3AENG%40ISO"
         object={
             Object {
@@ -59,7 +59,7 @@ ShallowWrapper {
       className="au-c-drop-zone__answers au-o-row"
 >
       <dropObject
-            isActive={false}
+            isActive={true}
             language="639-2%3AENG%40ISO"
             object={
                   Object {
@@ -181,7 +181,7 @@ ShallowWrapper {
           className="au-c-drop-zone__answers au-o-row"
 >
           <dropObject
-                    isActive={false}
+                    isActive={true}
                     language="639-2%3AENG%40ISO"
                     object={
                               Object {
@@ -228,7 +228,7 @@ ShallowWrapper {
           className="au-c-drop-zone__answers au-o-row"
 >
           <dropObject
-                    isActive={false}
+                    isActive={true}
                     language="639-2%3AENG%40ISO"
                     object={
                               Object {
