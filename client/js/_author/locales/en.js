@@ -39,7 +39,7 @@ export default {
       nOfMLabel: 'N of M selector',
       all: 'All questions',
       nOfM: '{0} of {1}',
-      prevBtnLabel: 'Unlock Previous',
+      prevBtnLabel: 'Display Previous Questions',
       prevBtnAlways: 'Always',
       prevBtnNever: 'Never',
       saveAssessmentTitle: 'Next'
