@@ -171,8 +171,8 @@ export default {
     },
     questionText: {
       instructions: 'To insert blank, add [ _ ] where you want the blank to show up.',
-      fitbPlaceholder: 'Fill in the [ _ ] Text',
-      otherPlaceholder: 'Question Text'
+      fitbPlaceholder: 'Fill in the [ _ ] Text in English',
+      otherPlaceholder: 'Please enter the question text in English'
     },
     dragAndDrop: {
       draggableAnswers: 'Draggable answers'

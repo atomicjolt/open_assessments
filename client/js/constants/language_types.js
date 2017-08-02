@@ -35,5 +35,17 @@ export function languageFromLocale(locale) {
   }
 }
 
+export function localeFromLanguage(language) {
+  switch (language) {
+    case '639-2%3AENG%40ISO':
+      return 'en';
+    case '639-2%3AHIN%40ISO':
+      return 'hi';
+    case '639-2%3ATEL%40ISO':
+      return 'te';
+    default:
+      return 'en';
+  }
+}
 
 export default languages;
