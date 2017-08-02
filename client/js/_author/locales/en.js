@@ -80,11 +80,12 @@ export default {
       addOption: 'Add Option'
     },
     movableFillBlank: {
+      newOption: 'Enter Option Text',
       ...feedback
     },
     movableWordSentanceOption: {
       NA: 'N/A',
-      newOption: 'New Option'
+      newOption: 'Enter Option Text'
     },
     movableWordSentence: {
       ...feedback
@@ -93,9 +94,10 @@ export default {
       ...feedback
     },
     multipleChoiceOptions: {
-      optionText: 'Option Text'
+      optionText: 'Enter Option Text'
     },
     mwSandbox: {
+      newOption: 'Enter Option {0} Text',
       feedback: 'Feedback',
     },
     navigationBarContent: {

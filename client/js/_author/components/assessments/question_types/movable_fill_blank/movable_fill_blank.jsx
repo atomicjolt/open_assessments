@@ -47,6 +47,7 @@ class MovableFillBlank extends React.Component {
                   setActiveChoice={this.props.selectChoice}
                   isActive={this.props.isActive && choice.id === this.props.activeChoice}
                   language={this.props.language}
+                  strings={strings}
                 />
               ))
             }

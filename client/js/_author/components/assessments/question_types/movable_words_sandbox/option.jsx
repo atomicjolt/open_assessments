@@ -2,6 +2,9 @@ import React  from 'react';
 import _      from 'lodash';
 import Loader from '../../../common/dot_loader';
 
+// ideally we would get this directly from this.props.localizeStrings...
+import stringFormatter from '../../../../locales/locales';
+
 const defaultText = { text: '', wordType: undefined };
 
 export default function Option(props) {
@@ -18,6 +21,12 @@ export default function Option(props) {
     );
   }
 
+  const strings = props.strings;
+  const label = stringFormatter.formatString(
+    strings.newOption,
+    props.index
+  );
+
   const choiceText = _.get(props, `choice.texts[${props.language}]`, defaultText);
   return (
     <div
@@ -33,7 +42,7 @@ export default function Option(props) {
             id={id}
             type="text"
             defaultValue={choiceText.text}
-            placeholder={`Option ${props.index}`}
+            placeholder={label}
             onBlur={e => props.updateChoice({
               id: props.choice.id,
               text: e.target.value
@@ -86,4 +95,5 @@ Option.propTypes = {
   index: React.PropTypes.number.isRequired,
   isActive: React.PropTypes.bool.isRequired,
   language: React.PropTypes.string.isRequired,
+  strings: React.PropTypes.shape({}).isRequired,
 };

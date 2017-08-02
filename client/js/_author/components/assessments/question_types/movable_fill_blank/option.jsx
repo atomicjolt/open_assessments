@@ -37,6 +37,7 @@ export default function multipleChoiceOptions(props) {
             id={`${props.id}_text`}
             type="text"
             defaultValue={choiceText.text}
+            placeholder={props.strings.newOption}
             onBlur={e => props.updateChoice({
               texts:{
                 [props.language]: { text: e.target.value }
@@ -75,5 +76,8 @@ multipleChoiceOptions.propTypes = {
   isActive: React.PropTypes.bool,
   itemId: React.PropTypes.string,
   language: React.PropTypes.string,
-  wordType: React.PropTypes.string
+  wordType: React.PropTypes.string,
+  strings: React.PropTypes.shape({
+    newOption: React.PropTypes.string.isRequired
+  }).isRequired,
 };

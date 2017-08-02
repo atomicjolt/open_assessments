@@ -42,6 +42,7 @@ class MWSandbox extends React.Component {
           deleteChoice={() => this.props.deleteChoice(choice)}
           isActive={this.props.isActive && choice.id === this.props.activeChoice}
           language={this.props.language}
+          strings={this.props.localizeStrings('mwSandbox')}
         />
       );
     });

@@ -21,6 +21,9 @@ describe('option component', () => {
       isActive: false,
       itemId: '',
       wordType: '',
+      strings: {
+        newOption: ''
+      }
     };
 
     result = shallow(<Option {...props} />);
