@@ -48,8 +48,8 @@ describe('image_option component', () => {
     expect(updatedChoice).toBeTruthy();
   });
 
-  it('calls updateChoice on input change', () => {
+  it('should not render the label input', () => {
     expect(inputUpdate).toBeFalsy();
-    result.find('input').simulate('blur', { target: { value: 2 } });
+    expect(result.find('input').length).toBe(0);
   });
 });
