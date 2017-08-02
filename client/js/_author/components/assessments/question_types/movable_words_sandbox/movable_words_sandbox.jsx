@@ -21,6 +21,8 @@ class MWSandbox extends React.Component {
     isActive: React.PropTypes.bool,
     activeChoice: React.PropTypes.string,
     language: React.PropTypes.string.isRequired,
+    instructions: React.PropTypes.shape({}),
+
   };
 
 
@@ -72,6 +74,7 @@ class MWSandbox extends React.Component {
           />
         </div>
         <div className="au-c-question__answers au-c-movable__answers">
+          {this.props.instructions}
           {
             this.getChoices(_.get(this.props.item, 'question.choices', {}))
           }

@@ -44,6 +44,7 @@ describe('image sequence component', () => {
       activateChoice: () => {},
       save: () => {},
       language: 'eng',
+      instructions: 'do something'
     };
     result = shallow(<ImageSequence {...props} />);
   });
@@ -65,5 +66,9 @@ describe('image sequence component', () => {
     const feedback = result.find(Feedback);
     feedback.at(0).nodes[0].props.updateItem();
     expect(calledFunc).toBeTruthy();
+  });
+
+  it('does render the passed-in instructions', () => {
+    expect(result.text()).toContain('do something');
   });
 });

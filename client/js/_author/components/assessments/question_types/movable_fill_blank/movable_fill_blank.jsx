@@ -27,6 +27,7 @@ class MovableFillBlank extends React.Component {
     isActive: React.PropTypes.bool,
     activeChoice: React.PropTypes.string,
     language: React.PropTypes.string.isRequired,
+    instructions: React.PropTypes.shape({}),
   };
 
   render() {
@@ -37,6 +38,7 @@ class MovableFillBlank extends React.Component {
       <div>
         <div className="au-c-question__answers au-c-fill-in-the-blank__answers">
           <div className="au-no-outline" onBlur={e => this.props.blurOptions(e)} tabIndex="-1">
+            {this.props.instructions}
             {
               _.map(_.orderBy(question.choices, 'order'), choice => (
                 <Option

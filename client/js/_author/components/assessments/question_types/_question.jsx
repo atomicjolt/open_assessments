@@ -68,10 +68,22 @@ export class Question extends React.Component {
     [types.shortAnswer]: ShortAnswer,
     [types.fileUpload]: FileUpload,
     [types.audioUpload]: AudioUpload,
-    [types.movableWordSandbox]: MovableWordSandbox,
-    [types.movableWordSentence]: WordSentence,
     [types.dragAndDrop]: DragAndDrop,
     [types.imageSequence]: ImageSequence,
+  };
+
+  static optionInstructionsLeft = {
+    [types.movableFillBlank]: 'fitbLeft',
+    [types.movableWordSentence]: 'mwLeft',
+    [types.multipleAnswer]: 'mcmaLeft',
+    [types.multipleChoice]: 'mcLeft',
+    [types.imageSequence]: 'imageSequenceLeft',
+  };
+
+  static optionInstructionsRight = {
+    [types.movableFillBlank]: 'fitbRight',
+    [types.movableWordSandbox]: 'mwRight',
+    [types.movableWordSentence]: 'mwRight'
   };
 
   static stateDrivenTypes = [
@@ -250,6 +262,48 @@ export class Question extends React.Component {
     return { [toDelete.id]: toDelete };
   }
 
+  contentInstructions() {
+    const { item } = this.props;
+    const leftInstructionsKey = _.get(Question.optionInstructionsLeft,
+      item.type,
+      null);
+    const rightInstructionsKey = _.get(Question.optionInstructionsRight,
+        item.type,
+        null);
+    const instructionStrings = this.props.localizeStrings('optionInstructions');
+    let leftInstructions = (
+      <div className="au-c-question__option-instructions-left" />
+    );
+    let rightInstructions;
+
+    if (leftInstructionsKey) {
+      leftInstructions = (
+        <div className="au-c-question__option-instructions-left">
+          {instructionStrings[leftInstructionsKey]}
+        </div>
+      );
+    }
+    if (rightInstructionsKey) {
+      rightInstructions = (
+        <div className="au-c-question__option-instructions-right">
+          {instructionStrings[rightInstructionsKey]}
+        </div>
+      );
+    }
+
+    if (this.props.isActive &&
+      _.keys(item.question.choices).length > 0 &&
+      (leftInstructions || rightInstructions)) {
+      return (
+        <div className="au-c-question__option-instructions">
+          {leftInstructions}
+          {rightInstructions}
+        </div>
+      );
+    }
+    return null;
+  }
+
   content() {
     const { bankId, item } = this.props;
     const Component = Question.questionComponents[this.props.item.type];
@@ -270,6 +324,7 @@ export class Question extends React.Component {
           language={this.state.language}
           save={() => this.saveStateItem()}
           duplicateAnswers={this.getDuplicateAnswers()}
+          instructions={this.contentInstructions()}
         />
       );
     }

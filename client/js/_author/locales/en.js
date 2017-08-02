@@ -117,6 +117,15 @@ export default {
     optionFeedback: {
       feedback: 'Feedback',
     },
+    optionInstructions: {
+      fitbLeft: 'Select the correct answer',
+      fitbRight: 'Select the part of speech for each option',
+      mwRight: 'Select the part of speech for each option',
+      mwLeft: 'Number the options in the correct order',
+      mcmaLeft: 'Select all the options that form the correct answer',
+      mcLeft: 'Select the correct answer',
+      imageSequenceLeft: 'Number the options in the correct order'
+    },
     previewHeader: {
       closePreview: 'Close Preview'
     },

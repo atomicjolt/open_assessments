@@ -53,6 +53,7 @@ describe('multiple choice component', () => {
       createChoice: () => {},
       deleteChoice: () => {},
       language: 'eng',
+      instructions: 'do something'
     };
     result = shallow(<MultipleChoice {...props} />);
   });
@@ -68,9 +69,13 @@ describe('multiple choice component', () => {
     expect(choiceUpdated).toBeTruthy();
   });
 
-  it('doesnt show add option if newChioce == true', () => {
+  it('doesnt show add option if newChoice == true', () => {
     result.setState({ newChoice: true });
     const add = result.find(AddOption);
     expect(add.node).not.toBeDefined();
+  });
+
+  it('does render the passed-in instructions', () => {
+    expect(result.text()).toContain('do something');
   });
 });

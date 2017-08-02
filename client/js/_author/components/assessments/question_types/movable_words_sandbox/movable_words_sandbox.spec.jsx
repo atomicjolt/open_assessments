@@ -45,6 +45,7 @@ describe('the movable words sandbox component', () => {
       activeChoice: '',
       save: () => {},
       language: 'eng',
+      instructions: 'do something'
     };
 
     result = shallow(<MovableWords {...props} />);
@@ -80,5 +81,9 @@ describe('the movable words sandbox component', () => {
     expect(calledFunc).toBeFalsy();
     result.instance().handleBlur({ target: { value: '' } });
     expect(calledFunc).toBeTruthy();
+  });
+
+  it('does render the passed-in instructions', () => {
+    expect(result.text()).toContain('do something');
   });
 });

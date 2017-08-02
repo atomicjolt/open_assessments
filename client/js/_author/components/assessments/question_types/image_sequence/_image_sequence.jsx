@@ -24,6 +24,7 @@ class ImageSequence extends React.Component {
     isActive: React.PropTypes.bool,
     language: React.PropTypes.string.isRequired,
     duplicateAnswers: React.PropTypes.arrayOf(React.PropTypes.string),
+    instructions: React.PropTypes.shape({}),
   };
 
   constructor(props) {
@@ -65,6 +66,7 @@ class ImageSequence extends React.Component {
   render() {
     return (
       <div style={{ display: this.props.isActive ? 'block' : 'none' }}>
+        {this.props.instructions}
         <ImageOrder
           language={this.props.language}
           activateChoice={choiceId => this.activateChoice(choiceId)}
