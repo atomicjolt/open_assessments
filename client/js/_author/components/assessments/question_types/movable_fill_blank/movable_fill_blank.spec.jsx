@@ -4,7 +4,6 @@ import MovableFillBlank   from './movable_fill_blank';
 import Feedback           from '../question_common/single_feedback';
 import Option             from './option';
 import Add                from '../question_common/add_option';
-import Radio              from '../question_common/option_radio';
 
 describe('movable_fill_blank component', () => {
   let props;
