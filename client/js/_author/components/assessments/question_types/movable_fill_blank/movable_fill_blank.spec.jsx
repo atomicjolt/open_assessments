@@ -66,6 +66,16 @@ describe('movable_fill_blank component', () => {
     expect(result.find(Option)).toBeDefined();
   });
 
+  it('renders unchecked options', () => {
+    expect(result.find(Option).first().html()).not.toContain('checked=""');
+  });
+
+  it('renders checked options', () => {
+    props.item.question.choices.choice.isCorrect = true;
+    result = shallow(<MovableFillBlank {...props} />);
+    expect(result.find(Option).first().html()).toContain('checked=""');
+  });
+
   it('renders add option', () => {
     expect(result.find(Add)).toBeDefined();
   });
