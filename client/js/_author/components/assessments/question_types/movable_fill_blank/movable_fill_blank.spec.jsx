@@ -4,6 +4,7 @@ import MovableFillBlank   from './movable_fill_blank';
 import Feedback           from '../question_common/single_feedback';
 import Option             from './option';
 import Add                from '../question_common/add_option';
+import Radio              from '../question_common/option_radio';
 
 describe('movable_fill_blank component', () => {
   let props;
@@ -64,6 +65,16 @@ describe('movable_fill_blank component', () => {
 
   it('renders option', () => {
     expect(result.find(Option)).toBeDefined();
+  });
+
+  it('renders unchecked options', () => {
+    expect(result.find(Option).first().html()).not.toContain('checked=""');
+  });
+
+  it('renders checked options', () => {
+    props.item.question.choices.choice.isCorrect = true;
+    result = shallow(<MovableFillBlank {...props} />);
+    expect(result.find(Option).first().html()).toContain('checked=""');
   });
 
   it('renders add option', () => {
