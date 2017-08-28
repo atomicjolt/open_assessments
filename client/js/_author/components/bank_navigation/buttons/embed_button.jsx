@@ -27,6 +27,9 @@ export default function EmbedButton(props) {
 
       }
 
+      const displayName = assessment.displayName ? assessment.displayName.text : '';
+      const iframeCode = `<iframe src="${embedUrlCode}" title="${displayName} Assessment"/>`;
+
       return (
         <div className="au-c-embed-contain">
           <label className="au-c-input--purple" htmlFor="embedInput">
@@ -36,10 +39,10 @@ export default function EmbedButton(props) {
               className="au-c-text-input au-c-text-input--smaller"
               readOnly
               type="text"
-              value={`<iframe src="${embedUrlCode}"/>`}
+              value={iframeCode}
             />
           </label>
-          <CopyToClipboard text={`<iframe src="${embedUrlCode}"/>`}>
+          <CopyToClipboard text={iframeCode}>
             <button
               className="au-c-btn au-c-btn--square au-c-btn--embed "
               onClick={e => e.stopPropagation()}
