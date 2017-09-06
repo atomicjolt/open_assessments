@@ -115,6 +115,7 @@ export default class Item extends React.Component {
             answerFeedback = (
               <div className="c-question-feedback  c-feedback--correct">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                  <title>Correct</title>
                   <path d="M24 4C12.95 4 4 12.95 4 24c0 11.04 8.95 20 20 20 11.04 0 20-8.96 20-20 0-11.05-8.96-20-20-20zm-4 30L10 24l2.83-2.83L20 28.34l15.17-15.17L38 16 20 34z" />
                 </svg>
                 <div dangerouslySetInnerHTML={{ __html:questionResult.feedback }} />
@@ -122,10 +123,18 @@ export default class Item extends React.Component {
             );
         }
       } else if (questionResult.correct === false || questionResult.correct === null) {
-
+        // This is not great....but want to account for the fact that when you try to
+        //   submit the answer without selecting a choice, the red X graphic
+        //   also shows up. Having that <title> be `Incorrect` seems misleading,
+        //   so here we provide "Invalid response". There is the risk that the
+        //   actual feedback includes one of the provided defaults, i.e.
+        //   "Please select a valid answer", but hopefully that is low-risk.
+        const defaultFeedbackStrings = _.flatMap(this.props.localizedStrings.middleware);
+        const svgTitle = _.find(defaultFeedbackStrings, feedback => questionResult.feedback.indexOf(feedback) >= 0) ? 'Invalid response' : 'Incorrect';
         answerFeedback = (
           <div className="c-question-feedback  c-feedback--incorrect">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+              <title>{svgTitle}</title>
               <path d="M24 4c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.95 20-20-8.95-20-20-20zm10 27.17l-2.83 2.83-7.17-7.17-7.17 7.17-2.83-2.83 7.17-7.17-7.17-7.17 2.83-2.83 7.17 7.17 7.17-7.17 2.83 2.83-7.17 7.17 7.17 7.17z" />
             </svg>
             <div
