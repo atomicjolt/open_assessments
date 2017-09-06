@@ -12,7 +12,7 @@ describe('embed_button component', () => {
     props = {
       assessment: {
         isPublished: true,
-        assessOffered: false,
+        assessOffered: false
       },
       getEmbedCode: () => {},
       onFocus: () => { focused = true; },
@@ -59,5 +59,16 @@ describe('embed_button component', () => {
     }];
     result = shallow(<EmbedButton {...props} />);
     expect(result.find('#embedInput').html()).not.toContain('&amp;unlock_prev');
+  });
+
+  it('includes a title attribute in the embed code', () => {
+    props.assessment.assessmentOffered = [{
+      foo: 'bar'
+    }];
+    props.assessment.displayName = {
+      text: 'test'
+    };
+    result = shallow(<EmbedButton {...props} />);
+    expect(result.find('#embedInput').html()).toContain('title=&quot;test Assessment&quot;');
   });
 });
