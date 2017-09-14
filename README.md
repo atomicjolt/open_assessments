@@ -1,8 +1,9 @@
-#Open Assessments [![Build Status](https://travis-ci.org/atomicjolt/open_assessments.svg?branch=master)](https://travis-ci.org/atomicjolt/open_assessments) 
+# Open Assessments [![Build Status](https://travis-ci.org/atomicjolt/open_assessments.svg?branch=master)](https://travis-ci.org/atomicjolt/open_assessments) 
+
 Open Assessments is a QTI client that can interpret QTI 1.x and 2.x as well as an authoring tool for generating
 QTI files. It currently works with MIT's QBank system.
 
-#Getting Started:
+# Getting Started:
 -----------------------
 
 Make sure to install git, npm and yarn before you start then:
@@ -21,17 +22,17 @@ Make sure to install git, npm and yarn before you start then:
 then visit http://localhost:8080
 
 
-#Background
+# Background
 -----------------------
 This code based has was originally developed in partnership with MIT and Atomic Jolt.
 It has since been adapted by Lumen Learning and again by MIT. It is currently use in
 production at institutions through the United States and Internationally.
 
-###QTI
+### QTI
 -----------------------
 Open Assessments supports both QTI 1.x and 2.x
 
-###Question Types
+### Question Types
 -----------------------
 The Open Assessments Client supports the following question types:
 
@@ -52,13 +53,13 @@ The Open Assessments Client supports the following question types:
 15. movable words sandbox
 16. fill the blank
 
-####edX Support
+#### edX Support
 -----------------------
 Development of edX support has been paused. Open Assessments did supports the drag and drop and multiple choice question types from edX
 and the code is still in place, but has not been used or tested in recent versions. Support is still possible but will require work.
 For more information on the edX xml structure see http://edx-open-learning-xml.readthedocs.org/en/latest/index.html
 
-####Assessment by Url
+#### Assessment by Url
 -----------------------
 Assessments can be loaded directly from a remote url - the assessment need not be loaded into http://www.openassessments.com.
 Just specify a src_url. CORS must be enabled on the server specified by src_url. Example:
@@ -93,21 +94,21 @@ The value can then be used when rendering:
 Files added to the static directory will be copied directly into the build. These files will not be renamed.
 
 
-#Tests
+# Tests
 -----------
 Karma and Jasmine are used for testing. To run tests run:
 
   `yarn test`
 
 
-#Check for updates
+# Check for updates
 -----------
 Inside the client directory run:
 
   `yarn upgrade-interactive`
 
 
-#Deploy to S3:
+# Deploy to S3:
 -----------------------
 
   1. Setup credentials. If you've already setup your Amazon credentials in ~/.aws/credentials
@@ -131,7 +132,7 @@ Inside the client directory run:
 
     `yarn release`
 
-#Production
+# Production
 -----------------------
 If you want to see what your application will look like in production run
 
@@ -140,7 +141,7 @@ If you want to see what your application will look like in production run
 This will serve files from the build/prod directory.
 
 
-#Settings - can be passed via window.DEFAULT_SETTINGS or url params
+# Settings - can be passed via window.DEFAULT_SETTINGS or url params
 -----------------------
 
     ##### General
@@ -222,11 +223,12 @@ This will serve files from the build/prod directory.
     bank                         - The id of the QBank bank. Looks something like: "assessment.Bank%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU"
     assessment_offered_id        - An identifier provided by QBank that uniquely identifies the assessment to be taken. Use this id to get an assessment taken id. Looks something like "assessment.AssessmentOffered%3A576d7ee94a40456f9a434e4d%40ODL.MIT.EDU"
 
-#Embed
+# Embed
+
 Open Assessments is embedded into the page via an iframe. Example:
     `<iframe id="openassessments_container" src="//www.openassessments.com/assessments/load?confidence_levels=true&src_url=http://www.openassessments.com/api/assessments/55.xml&results_end_point=http://www.openassessments.com/api&assessment_id=55&eid=ch15" frameborder="0" style="border:none;width:100%;height:100%;min-height:400px;"></iframe><script src="http://www.openassessments.com/assets/openassessments.js" type="text/javascript"></script>`
 
-#Stats
+# Stats
 -----------------------
 For assessments loaded into http://www.openassessments.com you simply need to browse to the assessment and click on the bar graph.
 Stats are available on the site, as json and as csv. Loading stats for an assessment that was loaded via a src_url is a bit trickier.
