@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "QTI client and authoring tool written in React.js",
   "engines": {
-    "node": "7.4.0"
+    "node": ">7.4.0"
   },
   "author": "atomicjolt",
   "license": "MIT",

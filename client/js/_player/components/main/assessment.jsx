@@ -1,5 +1,6 @@
 import React        from 'react';
 import { connect }  from 'react-redux';
+import { Helmet } from 'react-helmet';
 
 import * as AssessmentProgress    from '../../actions/assessment_progress';
 import * as CommunicationActions  from '../../actions/communications';
@@ -111,6 +112,7 @@ export class Assessment extends React.Component {
         unansweredQuestionWarning: React.PropTypes.string,
         leavingQuizPopup: React.PropTypes.string,
       }),
+      getLanguage: React.PropTypes.func
     }),
     currentItem: React.PropTypes.number,
     correctItemCount: React.PropTypes.number,
@@ -381,13 +383,15 @@ export class Assessment extends React.Component {
         );
       }
     }
-
     return (
       <div
         className="o-assessment-container"
         lang={this.props.settings.locale}
         dir={this.props.localizedStrings.dir}
       >
+        <Helmet>
+          <html lang={this.props.localizedStrings.getLanguage()} />
+        </Helmet>
         <div className="c-header">
           {this.renderRemainingStatus()}
           <div className="c-header__title">{titleText}</div>
