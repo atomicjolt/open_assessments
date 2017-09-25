@@ -112,6 +112,7 @@ export class Assessment extends React.Component {
         unansweredQuestionWarning: React.PropTypes.string,
         leavingQuizPopup: React.PropTypes.string,
       }),
+      getLanguage: React.PropTypes.func
     }),
     currentItem: React.PropTypes.number,
     correctItemCount: React.PropTypes.number,
@@ -382,7 +383,6 @@ export class Assessment extends React.Component {
         );
       }
     }
-    console.log('trying to set html lang to ', this.props.localizedStrings.getLanguage())
     return (
       <div
         className="o-assessment-container"
