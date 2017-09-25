@@ -1,5 +1,6 @@
 import React        from 'react';
 import { connect }  from 'react-redux';
+import { Helmet } from 'react-helmet';
 
 import * as AssessmentProgress    from '../../actions/assessment_progress';
 import * as CommunicationActions  from '../../actions/communications';
@@ -381,13 +382,16 @@ export class Assessment extends React.Component {
         );
       }
     }
-
+    console.log('trying to set html lang to ', this.props.localizedStrings.getLanguage())
     return (
       <div
         className="o-assessment-container"
         lang={this.props.settings.locale}
         dir={this.props.localizedStrings.dir}
       >
+        <Helmet>
+          <html lang={this.props.localizedStrings.getLanguage()} />
+        </Helmet>
         <div className="c-header">
           {this.renderRemainingStatus()}
           <div className="c-header__title">{titleText}</div>
