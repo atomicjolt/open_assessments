@@ -410,7 +410,7 @@ export class Assessment extends React.Component {
         <Helmet>
           <html lang={this.props.localizedStrings.getLanguage()} />
         </Helmet>
-        <header className="c-header">
+        <header className="c-header" role="banner">
           {this.renderRemainingStatus()}
           <h1 className="c-header__title">{titleText}</h1>
           <h2

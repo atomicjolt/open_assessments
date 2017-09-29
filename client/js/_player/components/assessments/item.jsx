@@ -181,6 +181,7 @@ export default class Item extends React.Component {
         className="c-question-feedback__wrapper"
         tabIndex={-1}
         ref={(feedback) => { this.feedback = feedback; }}
+        aria-label="feedback"
       >
         {answerFeedback}
       </div>
@@ -220,10 +221,10 @@ export default class Item extends React.Component {
     const numQuestionsChecking = this.props.numQuestionsChecking;
     return (
       <div className="c-question">
-        <div className="c-question-prompt">
+        <section className="c-question-prompt" aria-label="question">
           <div dangerouslySetInnerHTML={{ __html: this.props.question.material }} />
-        </div>
-        <div className="c-answers">
+        </section>
+        <section className="c-answers" aria-label="response">
           <UniversalInput
             settings={this.props.settings}
             item={this.props.question}
@@ -235,7 +236,7 @@ export default class Item extends React.Component {
             audioRecordStart={this.props.audioRecordStart}
             audioRecordStop={this.props.audioRecordStop}
           />
-        </div>
+        </section>
         {numQuestionsChecking ? null : this.getFeedback() }
       </div>
     );

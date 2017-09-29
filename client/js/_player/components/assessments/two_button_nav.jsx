@@ -74,14 +74,14 @@ export default class TwoButtonNav extends React.Component {
 
   render() {
     return (
-      <div className="c-assessment-navigation">
+      <nav className="c-assessment-navigation" aria-label="question">
         <div className="c-button-slot">
           {this.secondaryButton(this.props)}
         </div>
         <div className="c-button-slot">
           {this.primaryButton(this.props)}
         </div>
-      </div>
+      </nav>
     );
   }
 };
