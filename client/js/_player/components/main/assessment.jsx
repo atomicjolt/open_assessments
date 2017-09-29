@@ -1,6 +1,6 @@
-import React        from 'react';
-import { connect }  from 'react-redux';
-import { Helmet } from 'react-helmet';
+import React           from 'react';
+import { connect }     from 'react-redux';
+import { Helmet }      from 'react-helmet';
 
 import * as AssessmentProgress    from '../../actions/assessment_progress';
 import * as CommunicationActions  from '../../actions/communications';
@@ -153,6 +153,16 @@ export class Assessment extends React.Component {
     this.props.hideLMSNavigation();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.currentItem !==
+      nextProps.currentItem ||
+      this.props.assessmentLoaded !==
+      nextProps.assessmentLoaded
+    ) {
+      this.wrapper.focus();
+    }
+  }
+
   componentDidUpdate(prevProps) {
     this.props.sendSize();
 
@@ -163,6 +173,10 @@ export class Assessment extends React.Component {
     if (this.props.assessmentProgress.currentItemIndex !==
       prevProps.assessmentProgress.currentItemIndex
     ) {
+      // Also set focus to the top of this component, so keyboard
+      //   navigation works smoothly.
+      this.wrapper.focus();
+
       this.props.scrollParentToTop(); // Scroll to top when we get a new question
       window.scrollTo(0, 0);
     }
@@ -269,16 +283,18 @@ export class Assessment extends React.Component {
   /**
    * Returns inner text for question counter
    */
-  getCounter() {
-    if (!this.props.assessmentLoaded) return '';
+  getCounter(propsArg) {
+    const props = propsArg || this.props;
 
-    const strings = this.props.localizedStrings;
-    if (this.props.questionsPerPage === 1) {
+    if (!props.assessmentLoaded) return '';
+
+    const strings = props.localizedStrings;
+    if (props.questionsPerPage === 1) {
       return (
         strings.formatString(
           strings.assessment.counterQuestion,
-          `${this.props.currentItem + 1}`,
-          `${this.props.questionCount}`
+          `${props.currentItem + 1}`,
+          `${props.questionCount}`
         )
       );
     }
@@ -292,8 +308,8 @@ export class Assessment extends React.Component {
     return (
       strings.formatString(
         strings.assessment.counterPage,
-        `${this.props.currentItem + 1}`,
-        `${this.props.questionCount}`
+        `${props.currentItem + 1}`,
+        `${props.questionCount}`
       )
     );
 
@@ -388,15 +404,21 @@ export class Assessment extends React.Component {
         className="o-assessment-container"
         lang={this.props.settings.locale}
         dir={this.props.localizedStrings.dir}
+        ref={(wrapper) => { this.wrapper = wrapper; }}
+        tabIndex={-1}
       >
         <Helmet>
           <html lang={this.props.localizedStrings.getLanguage()} />
         </Helmet>
-        <div className="c-header">
+        <header className="c-header">
           {this.renderRemainingStatus()}
-          <div className="c-header__title">{titleText}</div>
-          <div className="c-header__question-number">{counter}</div>
-        </div>
+          <h1 className="c-header__title">{titleText}</h1>
+          <h2
+            className="c-header__question-number"
+            aria-live="polite"
+            aria-atomic
+          >{counter}</h2>
+        </header>
         {warning}
         {content}
         {nav}

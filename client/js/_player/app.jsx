@@ -5,6 +5,7 @@ import React                   from 'react';
 import ReactDOM                from 'react-dom';
 import { Provider }            from 'react-redux';
 import injectTapEventPlugin    from 'react-tap-event-plugin';
+import { LiveAnnouncer }       from 'react-aria-live';
 
 import routes                  from './routes';
 import DevTools                from '../dev/dev_tools';
@@ -30,12 +31,14 @@ class Root extends React.Component {
     const devTools = __DEV__ ? <DevTools /> : null;
     const { store } = this.props;
     return (
-      <Provider store={store}>
-        <div>
-          {routes}
-          {devTools}
-        </div>
-      </Provider>
+      <LiveAnnouncer>
+        <Provider store={store}>
+          <div>
+            {routes}
+            {devTools}
+          </div>
+        </Provider>
+      </LiveAnnouncer>
     );
   }
 }

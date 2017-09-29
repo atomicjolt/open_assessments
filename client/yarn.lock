@@ -7432,6 +7432,10 @@ react-addons-test-utils@^15.4.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
+react-aria-live@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-aria-live/-/react-aria-live-1.0.4.tgz#3f154670f156c5b64d9bd31f5dc620ca3760ab1c"
+
 react-base16-styling@^0.5.1:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/react-base16-styling/-/react-base16-styling-0.5.3.tgz#3858f24e9c4dd8cbd3f702f3f74d581ca2917269"

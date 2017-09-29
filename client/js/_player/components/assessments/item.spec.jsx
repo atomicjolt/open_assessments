@@ -67,7 +67,78 @@ describe('item', () => {
     expect(classTest.length).toEqual(0); // expect no class because numQuestionsChecking is truthy
   });
 
+  it('correctly identifies when a student has submitted a response', () => {
+    let hasSubmitted = result.submittedResponse({
+      numQuestionsChecking: 0
+    }, {
+      numQuestionsChecking: 0
+    });
+    expect(hasSubmitted).toEqual(false);
+
+    hasSubmitted = result.submittedResponse({
+      numQuestionsChecking: 0
+    }, {
+      numQuestionsChecking: 1
+    });
+    expect(hasSubmitted).toEqual(false);
+
+    hasSubmitted = result.submittedResponse({
+      numQuestionsChecking: 1
+    }, {
+      numQuestionsChecking: 0
+    });
+    expect(hasSubmitted).toEqual(true);
+  });
+
+  it('correctly identifies when a student has tried to submit a null response', () => {
+    let hasSubmitted = result.submittedNullResponse({
+      questionResult: {}
+    }, {
+      questionResult: {}
+    });
+    expect(hasSubmitted).toEqual(false);
+
+    hasSubmitted = result.submittedNullResponse({
+      questionResult: {
+        correct: true
+      }
+    }, {
+      questionResult: {}
+    });
+    expect(hasSubmitted).toEqual(false);
+
+    hasSubmitted = result.submittedNullResponse({
+      questionResult: {}
+    }, {
+      questionResult: {
+        correct: true
+      }
+    });
+    expect(hasSubmitted).toEqual(true);
+  });
+
+  it('correctly identifies feedback as coming from a null response', () => {
+    let isNoResponse = result.noResponseSelected({
+      feedback: '<p>Please select a valid answer.</p>'
+    });
+    expect(isNoResponse).toEqual(true);
+
+    isNoResponse = result.noResponseSelected({
+      feedback: '<p>Please do the hokey-pokey.</p>'
+    });
+
+    expect(isNoResponse).toEqual(false);
+  });
+
   describe('feedback', () => {
+    it('has a tabIndex, so it is focusable', () => {
+      questionResult = { correct:true, feedback:'Correct answer' };
+      numQuestionsChecking = 0;
+      renderItem();
+      const feedbackWrapper = TestUtils.findRenderedDOMComponentWithClass(result, 'c-question-feedback__wrapper'); // look for class
+      expect(feedbackWrapper.tabIndex).toEqual(-1);
+    });
+
     it('renders non-survey question with tick mark when item is correct', () => {
       questionResult = { correct:true, feedback:'Correct answer' };
       numQuestionsChecking = 0;
