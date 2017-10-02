@@ -79,6 +79,7 @@ describe('Assessment Questions', () => {
         edXMaterial : '<p>hello world</p>',
         answers  : [{ id: '0', material: 'test1' }, { id: '1', material: 'test2' }],
         isGraded : true,
+        material: '<p>hello world</p>',
         messages : ['My Message1', 'My Message2'],
         solution : '<p>solution text</p>'
       };
@@ -95,6 +96,11 @@ describe('Assessment Questions', () => {
 
     it('It Renders the radio buttons', () => {
       expect(TestUtils.scryRenderedComponentsWithType(result, 'radio')).toBeDefined();
+    });
+
+    it('It Renders the a11y elements', () => {
+      expect(TestUtils.scryRenderedComponentsWithType(result, 'fieldset')).toBeDefined();
+      expect(TestUtils.scryRenderedComponentsWithType(result, 'legend')).toBeDefined();
     });
 
     it('It Renders the option text', () => {
@@ -329,6 +335,7 @@ describe('Assessment Questions', () => {
         edXMaterial : '<p>hello world</p>',
         answers  : [{ id: '0', material: 'test1' }, { id: '1', material: 'test2' }],
         isGraded : true,
+        material: '<p>hello world</p>',
         messages : ['My Message1', 'My Message2'],
         solution : '<p>solution text</p>'
       };
@@ -351,6 +358,11 @@ describe('Assessment Questions', () => {
 
     it('Renders the checkboxes', () => {
       expect(TestUtils.scryRenderedComponentsWithType(result, 'checkbox')).toBeDefined();
+    });
+
+    it('Renders the a11y components', () => {
+      expect(TestUtils.scryRenderedComponentsWithType(result, 'fieldset')).toBeDefined();
+      expect(TestUtils.scryRenderedComponentsWithType(result, 'legend')).toBeDefined();
     });
 
     it('Checkbox text is rendered', () => {

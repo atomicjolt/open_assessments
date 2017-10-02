@@ -37,3 +37,22 @@ p{
   opacity: 0 !important;
   pointer-events: none;
 }
+
+/*ACCESSIBILITY*/
+
+.visuallyhidden {
+  border: 0;
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  display: inline-block;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.domhidden {
+  display: none;
+}

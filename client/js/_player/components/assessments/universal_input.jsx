@@ -124,11 +124,18 @@ export default class UniversalInput extends React.Component {
             />
           );
         };
-        answerInputs = _.chunk(item.answers, 2).map(row => (
-          <ul key={`${item.id}_row_${row[0].id}`} className="o-grid">
-            {row.map(multipleChoiceAnswer)}
-          </ul>
-        ));
+        answerInputs = (
+          <fieldset>
+            <legend
+              className="visuallyhidden"
+              dangerouslySetInnerHTML={{ __html: props.item.material }}
+            />
+            {_.chunk(item.answers, 2).map(row => (
+              <ul key={`${item.id}_row_${row[0].id}`} className="o-grid">
+                {row.map(multipleChoiceAnswer)}
+              </ul>
+            ))}
+          </fieldset>);
         break;
       }
       case 'edx_dropdown': {
@@ -211,11 +218,18 @@ export default class UniversalInput extends React.Component {
             />
           );
         };
-        answerInputs = _.chunk(item.answers, 2).map(row => (
-          <ul key={`${item.id}_row_${row[0].id}`} className="o-grid">
-            {row.map(multipleAnswer)}
-          </ul>
-        ));
+        answerInputs = (
+          <fieldset>
+            <legend
+              className="visuallyhidden"
+              dangerouslySetInnerHTML={{ __html: props.item.material }}
+            />
+            {_.chunk(item.answers, 2).map(row => (
+              <ul key={`${item.id}_row_${row[0].id}`} className="o-grid">
+                {row.map(multipleAnswer)}
+              </ul>
+            ))}
+          </fieldset>);
         break;
       }
       case 'edx_image_mapped_input': {
