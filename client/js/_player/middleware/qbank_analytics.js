@@ -39,7 +39,7 @@ function getAnswerSelectedData(store, action) {
   switch (question.question_type) {
     case 'movable_words_sentence':
     case 'movable_words_sandbox':
-      if (action.answerData instanceof String) {
+      if (_.isString(action.answerData)) {
         if (currentAnswers.includes(action.answerData)) {
           return {
             action          : 'disconnect word',
@@ -70,7 +70,8 @@ function getAnswerSelectedData(store, action) {
       };
 
     case 'fill_the_blank_question':
-      if (_.isEmpty(currentAnswers)) {
+      if (currentAnswers.size === 0) {
+      // if (_.isEmpty(currentAnswers)) {
         return {
           action     : 'connect word',
           targetWord : answersById[action.answerData].material
@@ -82,6 +83,7 @@ function getAnswerSelectedData(store, action) {
       };
 
     case 'multiple_choice_question':
+    case 'survey_question':
       return {
         action       : 'select answer',
         targetAnswer : answersById[action.answerData].material
@@ -99,6 +101,21 @@ function getAnswerSelectedData(store, action) {
         action         : 'select answer',
         targetAnswer   : answersById[action.answerData].material,
         currentAnswers : currentAnswers.map(answerData => (answersById[answerData].material))
+      };
+
+    case 'clix_drag_and_drop':
+      if (action.answerData.droppableId) {
+        // dragged a draggable from the palette to the target zone
+        return {
+          action      : 'dropped draggable onto zone',
+          targetZone  : action.answerData.id,
+          answerData  : action.answerData
+        };
+      }
+      // removed a draggable from the zone
+      return {
+        action        : 'cleared zone',
+        targetZone    : action.answerData.id
       };
 
     default:
