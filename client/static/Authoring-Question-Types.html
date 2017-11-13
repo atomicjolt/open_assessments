@@ -1,0 +1,400 @@
+<h1>
+<a id="user-content-common--shared-question-fields-and-options" class="anchor" href="#common--shared-question-fields-and-options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Common / Shared Question Fields and Options</h1>
+<p>Some of the question fields are shared across all or multiple question types, so we will describe them here. Typically how to specify the "correct answer" and how to populate the feedback fields are what differentiate the different types of questions, and will be described later in this document.</p>
+<h2>
+<a id="user-content-shared-across-all-question-types" class="anchor" href="#shared-across-all-question-types" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Shared Across All Question Types</h2>
+<h3>
+<a id="user-content-actions" class="anchor" href="#actions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Actions</h3>
+<p>On the top-right of each question, you'll see three icons for preview, move, and delete:</p>
+<p><a href="/imgs/question_action_icons.png" target="_blank"><img src="/imgs/question_action_icons.png" alt="Question icons: preview, move, and delete" style="max-width:100%;"></a></p>
+<h4>
+<a id="user-content-preview" class="anchor" href="#preview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Preview</h4>
+<p><a href="/imgs/md_visibility.svg?sanitize=true" target="_blank"><img src="/imgs/md_visibility.svg?sanitize=true" alt="preview" style="max-width:100%;"></a></p>
+<p>When clicking the <code>preview</code> icon, you will see how the question stem and options would render for the student, though you will not be able to interact with the question. For example, for Movable Words -- Fill in the Blank, the preview will turn the authoring UI:</p>
+<p><a href="/imgs/authoring_views/fitb.png" target="_blank"><img src="/imgs/authoring_views/fitb.png" alt="Fill-in-the-blank authoring form" style="max-width:100%;"></a></p>
+<p>Into this:</p>
+<p><a href="/imgs/student_previews/fitb.png" target="_blank"><img src="/imgs/student_previews/fitb.png" alt="Fill-in-the-blank preview" style="max-width:100%;"></a></p>
+<p>Clicking the "Close Preview" button returns you to authoring view.</p>
+<h4>
+<a id="user-content-move" class="anchor" href="#move" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Move</h4>
+<p><a href="/imgs/md_swap_vert.svg?sanitize=true" target="_blank"><img src="/imgs/md_swap_vert.svg?sanitize=true" alt="move" style="max-width:100%;"></a></p>
+<p>For students, questions will appear in the order that they appear in the assessment authoring page. To change the order of questions, authors need to use this <code>move</code> button. Clicking <code>move</code> changes the question header and shows three options: Move up, Move down, and Close.</p>
+<p><a href="/imgs/move_question_header.png" target="_blank"><img src="/imgs/move_question_header.png" alt="Updated move header for changing question order" style="max-width:100%;"></a></p>
+<p>Clicking the <code>move up</code> arrow will swap the current question with the previous one. Clicking the <code>move down</code> arrow will swap the current question with the next one, and clicking <code>close</code> will keep the question in the same location and return the user to the normal question header.</p>
+<h4>
+<a id="user-content-delete" class="anchor" href="#delete" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Delete</h4>
+<p><a href="/imgs/md_delete.svg?sanitize=true" target="_blank"><img src="/imgs/md_delete.svg?sanitize=true" alt="delete" style="max-width:100%;"></a></p>
+<p>This permanently deletes the question from the assessment and the system -- there is <strong>no</strong> way to recover the question. An alert window will appear, confirming that you wish to permanently delete the question.</p>
+<p><a href="/imgs/delete_question_alert.png" target="_blank"><img src="/imgs/delete_question_alert.png" alt="Alert window for deleting a question from an assessment" style="max-width:100%;"></a></p>
+<p>Subsequent questions are moved up in terms of sequence order.</p>
+<h3>
+<a id="user-content-input-fields" class="anchor" href="#input-fields" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Input Fields</h3>
+<h4>
+<a id="user-content-question-name" class="anchor" href="#question-name" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Question Name</h4>
+<p>This field is used to help identify the question. Currently it is not shown anywhere other than when editing the question, but should be populated with a name that will help you easily identify the question (i.e. <code>Forces on a ball rolling down ramp</code> would be better than <code>Question 1</code>). Future iterations of this tool may allow authors to search the question bank, and this name will be helpful in finding the question.</p>
+<p><a href="/imgs/question_title_field.png" target="_blank"><img src="/imgs/question_title_field.png" alt="Question title input field" style="max-width:100%;"></a></p>
+<h4>
+<a id="user-content-language" class="anchor" href="#language" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Language</h4>
+<p>For all the text in a question, we support three languages: English (default), Hindi, and Telugu. Selecting a different language in this menu causes all the language fields for the question to "reset", allowing authors to input translations for each text field.</p>
+<p><strong>NOTE: Because all the text is reset when the language setting changes, images and media files will also need to be uploaded for each language.</strong></p>
+<p><a href="/imgs/question_language_select.png" target="_blank"><img src="/imgs/question_language_select.png" alt="Question language select menu" style="max-width:100%;"></a></p>
+<h4>
+<a id="user-content-question-text" class="anchor" href="#question-text" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Question Text</h4>
+<p>All question types have a question stem or prompt that is shown to students, for example "What is the color of the sky?". This field supports basic text formatting and image / audio / video upload.</p>
+<p>For Movable Words -- Fill in the Blank questions, you need to make sure that you include one (and only one) <code>[ _ ]</code> in the question text, to indicate where the blank should go, otherwise this question will break and the assessment will not render for students. Make sure that no punctuation is next to the <code>[ _ ]</code> (or include a space: <code>[ _ ] .</code> works, but <code>[ _ ].</code> breaks). For example: <code>The sky is [ _ ] .</code>. We currently do <strong>not</strong> support more than one blank space.</p>
+<p><a href="/imgs/question_text_field.png" target="_blank"><img src="/imgs/question_text_field.png" alt="Fill-in-the-blank question text input field" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-text-fields-and-media" class="anchor" href="#text-fields-and-media" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Text Fields and Media</h2>
+<p>All text fields that use this editor allow you to upload image / audio / video media:</p>
+<p><a href="/imgs/wysiwyg_editor.png" target="_blank"><img src="/imgs/wysiwyg_editor.png" alt="Rich-text editor activated, around a text input field" style="max-width:100%;"></a></p>
+<p>This means that for the question text (non-fill-in-the-blank), options (non-fill-in-the-blank), or feedback, you can include media elements.</p>
+<p><a href="/imgs/wysiwyg_editor_upload_media.png" target="_blank"><img src="/imgs/wysiwyg_editor_upload_media.png" alt="Three media upload buttons, in the rich-text editor" style="max-width:100%;"></a></p>
+<p>A modal will appear, allowing you to select from an existing media asset of the same type, or uploading a new one.</p>
+<p><a href="/imgs/upload_image_modal.png" target="_blank"><img src="/imgs/upload_image_modal.png" alt="New image modal. Top-half lets you select from existing content, bottom half lets you upload a new image." style="max-width:100%;"></a></p>
+<p>When uploading images, audio, or video, you should also include all of the metadata fields, like alt-text, descriptions, transcript files, and caption files, so the media is accessible for all your students.</p>
+<p><a href="/imgs/upload_image_metadata.png" target="_blank"><img src="/imgs/upload_image_metadata.png" alt="Upload image modal, metadata fields." style="max-width:100%;"></a></p>
+<p>Make sure that you <strong>do not</strong> change the language setting at the upload modal -- by default, it should come up as the same language the question language dropdown is set to. Changing that value will mean the data you provide will not save to the right spot in the database, and it will not appear correctly for students.</p>
+<p><a href="/imgs/upload_image_modal_language_selector.png" target="_blank"><img src="/imgs/upload_image_modal_language_selector.png" alt="Upload image modal, language select dropdown." style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-shared-options-for-multiple-choice--reflection-questions" class="anchor" href="#shared-options-for-multiple-choice--reflection-questions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Shared Options for Multiple Choice &amp; Reflection Questions</h2>
+<p>There are a set of three option checkboxes for the multiple choice and reflection questions.</p>
+<p><a href="/imgs/mc_option_checkboxes.png" target="_blank"><img src="/imgs/mc_option_checkboxes.png" alt="Three checkboxes for multiple choice type questions" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-maintain-choice-order" class="anchor" href="#maintain-choice-order" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Maintain Choice Order</h3>
+<p>When this box is checked, all students see the choice order in the order that they are authored. When this box is unchecked, each student will see the choices in a randomly shuffled order.</p>
+<h3>
+<a id="user-content-multiple-answer" class="anchor" href="#multiple-answer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Multiple Answer</h3>
+<p>This checkbox is a shortcut for changing the question type between Multiple Choice and Multiple Choice -- Multiple Select (or Multiple Choice -- Reflection and Multiple Choice -- Multiple Select &amp; Reflection). The single select question shows radio buttons next to each choice, and students can only select one of the given choices.</p>
+<p><a href="/imgs/single_select_radio_buttons.png" target="_blank"><img src="/imgs/single_select_radio_buttons.png" alt="Single select choices will render as radio buttons" style="max-width:100%;"></a></p>
+<p>Multiple select questions show check boxes next to each choice, and students can select one or more of the given choices.</p>
+<p><a href="/imgs/multi_select_options.png" target="_blank"><img src="/imgs/multi_select_options.png" alt="Multiple select options will render as checkboxes" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-reflection" class="anchor" href="#reflection" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Reflection</h3>
+<p>This checkbox is a shortcut for changing the question type between Multiple Choice and Multiple Choice -- Reflection (or Multiple Choice -- Multiple Select and Multiple Choice -- Multiple Select &amp; Reflection). The non-reflection questions need to have a specific right-answer specified while authoring, and provide both correct feedback and incorrect feedback (for each incorrect choice). All the reflection questions accept any response as a valid / correct response, and only provide a generic feedback on submission.</p>
+<h1>
+<a id="user-content-audio-record" class="anchor" href="#audio-record" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Audio Record</h1>
+<h2>
+<a id="user-content-description" class="anchor" href="#description" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+<p>You will use this question when you want students to record their voices and submit a recording. Students can record and playback the audio as many times as they wish before submitting the final recording to the server. There is no way to "recover" previously recorded audio -- each recording over-writes previous recordings.</p>
+<h3>
+<a id="user-content-author-view" class="anchor" href="#author-view" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author View</h3>
+<p><a href="/imgs/authoring_views/art.png" target="_blank"><img src="/imgs/authoring_views/art.png" alt="Audio record tool authoring view" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-student-view" class="anchor" href="#student-view" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Student View</h3>
+<p><a href="/imgs/student_previews/art.png" target="_blank"><img src="/imgs/student_previews/art.png" alt="Audio record tool preview" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-other-authored-inputs" class="anchor" href="#other-authored-inputs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other Authored Inputs</h2>
+<p>You can set the time-limit for the audio recording, to adjust to the expected length of audio. The default (and maximum allowable) is 240 seconds (4 minutes), and can be as low as 1 second (though this is unrealistic and will not capture any audio).</p>
+<p><a href="/imgs/authoring_views/art_time_limit.png" target="_blank"><img src="/imgs/authoring_views/art_time_limit.png" alt="Audio record tool, input field for setting the maximum audio recording time" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-indicating-correctness" class="anchor" href="#indicating-correctness" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indicating Correctness</h2>
+<p>Audio Record questions are always "correct", as long as the student submits an audio recording, so there is no need to indicate a specific "correct" answer.</p>
+<h2>
+<a id="user-content-providing-feedback" class="anchor" href="#providing-feedback" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Providing Feedback</h2>
+<p>You can provide a feedback string that the student sees after submitting their audio recording.</p>
+<p><a href="/imgs/authoring_views/art_feedback.png" target="_blank"><img src="/imgs/authoring_views/art_feedback.png" alt="Audio record tool, input field for submission feedback" style="max-width:100%;"></a></p>
+<h1>
+<a id="user-content-drag-and-drop" class="anchor" href="#drag-and-drop" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Drag and Drop</h1>
+<h2>
+<a id="user-content-description-1" class="anchor" href="#description-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+<p>Drag and drop allows authors to define a background image, draggable answers, and drop zones. The idea is for students to drag the draggable answers and place them in the correct locations on top of the background image.</p>
+<h3>
+<a id="user-content-author-view-1" class="anchor" href="#author-view-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author View</h3>
+<p><a href="/imgs/authoring_views/drag_and_drop.png" target="_blank"><img src="/imgs/authoring_views/drag_and_drop.png" alt="Drag and drop authoring view" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-student-view-1" class="anchor" href="#student-view-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Student View</h3>
+<p><a href="/imgs/student_previews/drag_and_drop.png" target="_blank"><img src="/imgs/student_previews/drag_and_drop.png" alt="Drag and drop preview" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-other-authored-inputs-1" class="anchor" href="#other-authored-inputs-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other Authored Inputs</h2>
+<h3>
+<a id="user-content-target-image" class="anchor" href="#target-image" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Target Image</h3>
+<p>The target image is the background upon which the zones and draggables will be placed. You must have one for this question type, and the dimensions must be &lt;= <strong>920x300px</strong> -- and the tool will preserve these, i.e. the image will not be scaled or resized when shown to students. So make sure to upload the image in the final resolution that you want students to see it.</p>
+<p><a href="/imgs/authoring_views/drag_and_drop_add_image.png" target="_blank"><img src="/imgs/authoring_views/drag_and_drop_add_image.png" alt="Drag and drop, add new target image" style="max-width:100%;"></a></p>
+<p><a href="/imgs/authoring_views/drag_and_drop_replace_image.png" target="_blank"><img src="/imgs/authoring_views/drag_and_drop_replace_image.png" alt="Drag and drop, replace existing target image" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-draggable-answers" class="anchor" href="#draggable-answers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Draggable Answers</h3>
+<p>These are the images that students will drag and drop onto the target image.</p>
+<p><a href="/imgs/authoring_views/drag_and_drop_draggables.png" target="_blank"><img src="/imgs/authoring_views/drag_and_drop_draggables.png" alt="Drag and drop, draggable answers area" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-zones" class="anchor" href="#zones" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Zones</h3>
+<p>Zones are the regions on the target image that will accept the draggables. You should make sure that they <strong>do not</strong> overlap, otherwise the server will not be able to guarantee a correct evaluation of the response.</p>
+<p>There are two types of zones, snap and drop. For snap zones, the draggable images will automatically snap to the center of each zone when placed inside the zone. For drop zones, the image will stay where it is placed, within the zone.</p>
+<p><a href="/imgs/authoring_views/drag_and_drop_zone_buttons.png" target="_blank"><img src="/imgs/authoring_views/drag_and_drop_zone_buttons.png" alt="Drag and drop, two buttons that create two different types of zones" style="max-width:100%;"></a></p>
+<p>For each type of zone, you can create them by region (drawing freehand) or by uploading an image (the zone will be initially sized to match the image size). For both options, you can resize the zone after it is created, and move it around on the target image.</p>
+<p><a href="/imgs/authoring_views/drag_and_drop_zone_dropdown.png" target="_blank"><img src="/imgs/authoring_views/drag_and_drop_zone_dropdown.png" alt="Drag and drop, drop-down menu to create a snap zone by region or image" style="max-width:100%;"></a></p>
+<p>For accessibility, you should add a label to each zone that can be read out loud by a screenreader. To do this, click on the zone, and a tooltip should appear with a <code>label</code> field. Once you've typed into the <code>label</code> field, <strong>make sure you tab out</strong> to save your changes. Clicking elsewhere without tabbing out of the field causes the tooltip to disappear and <strong>not save</strong> your <code>label</code> text.</p>
+<p><a href="/imgs/authoring_views/drag_and_drop_zone_label.png" target="_blank"><img src="/imgs/authoring_views/drag_and_drop_zone_label.png" alt="Drag and drop, the label input field appears in a tooltip when you click on a zone" style="max-width:100%;"></a></p>
+<p>Do delete a zone, click on it, and then the trash can icon on the right of the tooltip.</p>
+<p><a href="/imgs/authoring_views/drag_and_drop_zone_delete.png" target="_blank"><img src="/imgs/authoring_views/drag_and_drop_zone_delete.png" alt="Drag and drop, the delete zone button appears in a tooltip when you click on a zone" style="max-width:100%;"></a></p>
+<h4>
+<a id="user-content-visibility" class="anchor" href="#visibility" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Visibility</h4>
+<p><a href="/imgs/authoring_views/drag_and_drop_show_zones.png" target="_blank"><img src="/imgs/authoring_views/drag_and_drop_show_zones.png" alt="Drag and drop, zone visibility checkbox" style="max-width:100%;"></a></p>
+<p>A check box is provided to either show or hide the zones for the student. Hiding the zones can make the question more challenging.</p>
+<p><a href="/imgs/student_previews/drag_and_drop_zones_visible.png" target="_blank"><img src="/imgs/student_previews/drag_and_drop_zones_visible.png" alt="Drag and drop, with zones visible" style="max-width:100%;"></a></p>
+<p><a href="/imgs/student_previews/drag_and_drop_zones_hidden.png" target="_blank"><img src="/imgs/student_previews/drag_and_drop_zones_hidden.png" alt="Drag and drop, with zones hidden" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-indicating-correctness-1" class="anchor" href="#indicating-correctness-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indicating Correctness</h2>
+<p>To indicate correctness, you need to select the matching zone for each droppable. Each zone has a label, like <code>Zone A</code> -- these appear in the dropdown list in each draggable. Picking the zone label indicates that the draggable needs to be dropped in that zone to be <code>correct</code>. Multiple draggables can be assigned to the same zone, and all the draggables must be in their correct zone for the entire answer to be correct. For draggables that are not part of the correctness calculation, you can leave the dropdown as <code>Select Answer</code>.</p>
+<p><a href="/imgs/authoring_views/drag_and_drop_answer_selector.png" target="_blank"><img src="/imgs/authoring_views/drag_and_drop_answer_selector.png" alt="Drag and drop, zone dropdown for draggable answers" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-providing-feedback-1" class="anchor" href="#providing-feedback-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Providing Feedback</h2>
+<p>The bottom of the authoring view gives you input for the correct feedback and the incorrect feedback. The incorrect feedback will be shown to the student for every incorrect combination submitted as a response.</p>
+<p><a href="/imgs/authoring_views/drag_and_drop_feedback.png" target="_blank"><img src="/imgs/authoring_views/drag_and_drop_feedback.png" alt="Drag and drop feedback fields" style="max-width:100%;"></a></p>
+<h1>
+<a id="user-content-file-upload" class="anchor" href="#file-upload" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>File Upload</h1>
+<h2>
+<a id="user-content-description-2" class="anchor" href="#description-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+<p>This question type is meant to be used mostly with other tools. For example, your students might create a model in Turtle Blocks, which they can submit as their solution to a File Upload question.</p>
+<h3>
+<a id="user-content-author-view-2" class="anchor" href="#author-view-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author View</h3>
+<p><a href="/imgs/authoring_views/file_upload.png" target="_blank"><img src="/imgs/authoring_views/file_upload.png" alt="File upload authoring view" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-student-view-2" class="anchor" href="#student-view-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Student View</h3>
+<p><a href="/imgs/student_previews/file_upload.png" target="_blank"><img src="/imgs/student_previews/file_upload.png" alt="File upload preview" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-other-authored-inputs-2" class="anchor" href="#other-authored-inputs-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other Authored Inputs</h2>
+<p>None</p>
+<h2>
+<a id="user-content-indicating-correctness-2" class="anchor" href="#indicating-correctness-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indicating Correctness</h2>
+<p>File Upload questions are always "correct", as long as the student submits a file, so there is no need to indicate a specific "correct" answer.</p>
+<h2>
+<a id="user-content-providing-feedback-2" class="anchor" href="#providing-feedback-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Providing Feedback</h2>
+<p>You can provide a feedback string that the student sees after submitting their file.</p>
+<h1>
+<a id="user-content-image-sequence" class="anchor" href="#image-sequence" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Image Sequence</h1>
+<h2>
+<a id="user-content-description-3" class="anchor" href="#description-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+<p>These questions involve the student placing a set of images into the correct order, typically so the story told by the images makes logical sense. The images are dragged down from a central "cloud" onto an answer bar, and they will snap together.</p>
+<h3>
+<a id="user-content-author-view-3" class="anchor" href="#author-view-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author View</h3>
+<p><a href="/imgs/authoring_views/image_sequence.png" target="_blank"><img src="/imgs/authoring_views/image_sequence.png" alt="Image sequence authoring view" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-student-view-3" class="anchor" href="#student-view-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Student View</h3>
+<p><a href="/imgs/student_previews/image_sequence.png" target="_blank"><img src="/imgs/student_previews/image_sequence.png" alt="Image sequence preview" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-other-authored-inputs-3" class="anchor" href="#other-authored-inputs-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other Authored Inputs</h2>
+<p>You will need to make sure your images are no more than 100px wide, before uploading them. The tool will <strong>not</strong> scale your images for you. Each image needs to be added, and then collectively they need to be assigned the "correct answer" order.</p>
+<p><a href="/imgs/authoring_views/image_sequence_order_dropdown.png" target="_blank"><img src="/imgs/authoring_views/image_sequence_order_dropdown.png" alt="Image sequence, image option order dropdown" style="max-width:100%;"></a></p>
+<p>Note that adding a new option automatically adds the option to the question, but in order to save the image or sequence number, you need to click the <code>Save Changes</code> button.</p>
+<p><a href="/imgs/authoring_views/image_sequence_save_changes_button.png" target="_blank"><img src="/imgs/authoring_views/image_sequence_save_changes_button.png" alt="Image sequence, save changes button for image options" style="max-width:100%;"></a></p>
+<p>You can also delete the image with the <code>X</code> icon on the upper-right.</p>
+<p><a href="/imgs/authoring_views/image_sequence_delete_x.png" target="_blank"><img src="/imgs/authoring_views/image_sequence_delete_x.png" alt="Image sequence, delete option button" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-indicating-correctness-3" class="anchor" href="#indicating-correctness-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indicating Correctness</h2>
+<p>Once the numbers are in the correct order, you need to click the <code>Save Option Changes</code> button. This saves the correct answer on the server.</p>
+<p><a href="/imgs/authoring_views/image_sequence_save_changes_button.png" target="_blank"><img src="/imgs/authoring_views/image_sequence_save_changes_button.png" alt="Image sequence, save changes button for image options" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-providing-feedback-3" class="anchor" href="#providing-feedback-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Providing Feedback</h2>
+<p>There are two fields for feedback, one for the correct answer, and another for all incorrect responses.</p>
+<p><a href="/imgs/authoring_views/image_sequence_feedback.png" target="_blank"><img src="/imgs/authoring_views/image_sequence_feedback.png" alt="Image sequence, feedback fields" style="max-width:100%;"></a></p>
+<h1>
+<a id="user-content-movable-word----fill-in-the-blank" class="anchor" href="#movable-word----fill-in-the-blank" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Movable Word -- Fill in the Blank</h1>
+<h2>
+<a id="user-content-description-4" class="anchor" href="#description-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+<p>In this question type, students are presented with a word cloud and a sentence with a blank space in it (currently we only support one blank space). Students must drag the correct word from the cloud down into the space. They can drag the current word back and replace it with another one, as often as they want, before submitting.</p>
+<h3>
+<a id="user-content-author-view-4" class="anchor" href="#author-view-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author View</h3>
+<p><a href="/imgs/authoring_views/fitb.png" target="_blank"><img src="/imgs/authoring_views/fitb.png" alt="Fill-in-the-blank authoring view" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-student-view-4" class="anchor" href="#student-view-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Student View</h3>
+<p><a href="/imgs/student_previews/fitb.png" target="_blank"><img src="/imgs/student_previews/fitb.png" alt="Fill-in-the-blank preview" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-other-authored-inputs-4" class="anchor" href="#other-authored-inputs-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other Authored Inputs</h2>
+<p>Each word or phrase that you want to appear in the word cloud must be entered as a separate option.</p>
+<p><a href="/imgs/authoring_views/fitb_option_bar.png" target="_blank"><img src="/imgs/authoring_views/fitb_option_bar.png" alt="Fill-in-the-blank option bar" style="max-width:100%;"></a></p>
+<p>Each option has several controls inside. The radio button on the left indicates the correct option (more in the next section), and the dropdown menu on the right lets you select a word type for this option.</p>
+<p><a href="/imgs/authoring_views/fitb_word_type_selector.png" target="_blank"><img src="/imgs/authoring_views/fitb_word_type_selector.png" alt="Fill-in-the-blank option word type selector" style="max-width:100%;"></a></p>
+<p>Each word type shows up as a different color when the question is rendered for the student.</p>
+<p><a href="/imgs/authoring_views/fitb_word_cloud.png" target="_blank"><img src="/imgs/authoring_views/fitb_word_cloud.png" alt="Fill-in-the-blank word cloud" style="max-width:100%;"></a></p>
+<p>You can also delete the option with the <code>X</code> icon on the right.</p>
+<p><a href="/imgs/authoring_views/fitb_delete_option.png" target="_blank"><img src="/imgs/authoring_views/fitb_delete_option.png" alt="Fill-in-the-blank delete option icon" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-indicating-correctness-4" class="anchor" href="#indicating-correctness-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indicating Correctness</h2>
+<p>To indicate which of the word choices is the correct one, you need to select the radio button in that option. Doing so will turn it solid green.</p>
+<p><a href="/imgs/authoring_views/fitb_correct_selection.png" target="_blank"><img src="/imgs/authoring_views/fitb_correct_selection.png" alt="Fill-in-the-blank green, filled radio button that indicates the correct option" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-providing-feedback-4" class="anchor" href="#providing-feedback-4" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Providing Feedback</h2>
+<p>At the bottom of the question, there are two feedback fields. One is for the correct answer, and the other is provided for all incorrect responses.</p>
+<p><a href="/imgs/authoring_views/fitb_feedback.png" target="_blank"><img src="/imgs/authoring_views/fitb_feedback.png" alt="Fill-in-the-blank feedback fields" style="max-width:100%;"></a></p>
+<h1>
+<a id="user-content-movable-word----sandbox" class="anchor" href="#movable-word----sandbox" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Movable Word -- Sandbox</h1>
+<h2>
+<a id="user-content-description-5" class="anchor" href="#description-5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+<p>This version of Movable Word is meant for the students to practice reading the words out loud. As in other versions, the words appear in a word cloud. Students can drag the words down to an answer region, where they will snap together. A recording tool is present to record the students speaking the sentence they formed; each recording overwrites previous recordings. To complete the question, students submit one of their audio recordings.</p>
+<h3>
+<a id="user-content-author-view-5" class="anchor" href="#author-view-5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author View</h3>
+<p><a href="/imgs/authoring_views/mw_sandbox.png" target="_blank"><img src="/imgs/authoring_views/mw_sandbox.png" alt="Movable words sandbox, authoring view" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-student-view-5" class="anchor" href="#student-view-5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Student View</h3>
+<p><a href="/imgs/student_previews/mw_sandbox.png" target="_blank"><img src="/imgs/student_previews/mw_sandbox.png" alt="Movable words sandbox, preview" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-other-authored-inputs-5" class="anchor" href="#other-authored-inputs-5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other Authored Inputs</h2>
+<p>Each word or phrase that you want to appear in the word cloud must be entered as a separate option.</p>
+<p><a href="/imgs/authoring_views/mw_sandbox_option_bar.png" target="_blank"><img src="/imgs/authoring_views/mw_sandbox_option_bar.png" alt="Movable words sandbox, option bar" style="max-width:100%;"></a></p>
+<p>Each option has several controls inside. The dropdown menu on the right lets you select a word type for this option.</p>
+<p><a href="/imgs/authoring_views/mw_sandbox_word_type_selector.png" target="_blank"><img src="/imgs/authoring_views/mw_sandbox_word_type_selector.png" alt="Movable words sandbox, option word type selector" style="max-width:100%;"></a></p>
+<p>Each word type shows up as a different color when the question is rendered for the student.</p>
+<p><a href="/imgs/student_previews/mw_sandbox_word_cloud.png" target="_blank"><img src="/imgs/student_previews/mw_sandbox_word_cloud.png" alt="Movable words sandbox, word cloud" style="max-width:100%;"></a></p>
+<p>You can also delete the option with the <code>X</code> icon on the right.</p>
+<p><a href="/imgs/authoring_views/mw_sandbox_delete_option.png" target="_blank"><img src="/imgs/authoring_views/mw_sandbox_delete_option.png" alt="Movable words sandbox, delete option button" style="max-width:100%;"></a></p>
+<p>You can set the time-limit for the audio recording, to adjust to the expected length of audio. The default (and maximum allowable) is 240 seconds (4 minutes), and can be as low as 1 second (though this is unrealistic and will not capture any audio).</p>
+<p><a href="/imgs/authoring_views/mw_sandbox_time_limit.png" target="_blank"><img src="/imgs/authoring_views/mw_sandbox_time_limit.png" alt="Movable words sandbox, input field for setting the audio record time limit" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-indicating-correctness-5" class="anchor" href="#indicating-correctness-5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indicating Correctness</h2>
+<p>All audio submissions are considered correct, so no special indicator is required.</p>
+<h2>
+<a id="user-content-providing-feedback-5" class="anchor" href="#providing-feedback-5" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Providing Feedback</h2>
+<p>A single feedback input allows authors to show students a message after submitting their audio recording.</p>
+<p><a href="/imgs/authoring_views/mw_sandbox_feedback.png" target="_blank"><img src="/imgs/authoring_views/mw_sandbox_feedback.png" alt="Movable words sandbox, feedback field" style="max-width:100%;"></a></p>
+<h1>
+<a id="user-content-movable-word----sentence" class="anchor" href="#movable-word----sentence" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Movable Word -- Sentence</h1>
+<h2>
+<a id="user-content-description-6" class="anchor" href="#description-6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+<p>This version of Movable Word is an assessment tool for joining words or symbols, and student responses will be evaluated for correctness. As in other versions, the words appear in a word cloud. Students can drag the words down to an answer region, where they will snap together. Students can unsnap their current answer at any word in the chain, and start over. When they feel like they have constructed the entire word chain correctly, they can submit it.</p>
+<h3>
+<a id="user-content-author-view-6" class="anchor" href="#author-view-6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author View</h3>
+<p><a href="/imgs/authoring_views/mw_sentence.png" target="_blank"><img src="/imgs/authoring_views/mw_sentence.png" alt="Movable words sentence authoring view" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-student-view-6" class="anchor" href="#student-view-6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Student View</h3>
+<p><a href="/imgs/student_previews/mw_sentence.png" target="_blank"><img src="/imgs/student_previews/mw_sentence.png" alt="Movable words sentence preview" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-other-authored-inputs-6" class="anchor" href="#other-authored-inputs-6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other Authored Inputs</h2>
+<p>Each word or phrase that you want to appear in the word cloud must be entered as a separate option.</p>
+<p><a href="/imgs/authoring_views/mw_sentence_option_bar.png" target="_blank"><img src="/imgs/authoring_views/mw_sentence_option_bar.png" alt="Movable words sentence, option bar" style="max-width:100%;"></a></p>
+<p>Each option has several controls inside. On the left is a dropdown menu with a set of numbers, used to indicate correctness (see next section). The dropdown menu on the right lets you select a word type for this option.</p>
+<p><a href="/imgs/authoring_views/mw_sentence_word_type_selector.png" target="_blank"><img src="/imgs/authoring_views/mw_sentence_word_type_selector.png" alt="Movable words sentence, option word type selector" style="max-width:100%;"></a></p>
+<p>Each word type shows up as a different color when the question is rendered for the student.</p>
+<p><a href="/imgs/student_previews/mw_sentence_word_cloud.png" target="_blank"><img src="/imgs/student_previews/mw_sentence_word_cloud.png" alt="Movable words sentence, word cloud" style="max-width:100%;"></a></p>
+<p>You can also delete the option with the <code>X</code> icon on the right.</p>
+<p><a href="/imgs/authoring_views/mw_sentence_delete_option.png" target="_blank"><img src="/imgs/authoring_views/mw_sentence_delete_option.png" alt="Movable words sentence, delete word option button" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-indicating-correctness-6" class="anchor" href="#indicating-correctness-6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indicating Correctness</h2>
+<p>Correctness is evaluated as getting the words in the right order -- the order specified by the numbers on the left of each option box. Currently, all options must have a number associated with them, i.e. there can be <strong>no</strong> unused word choices. Leaving an option box at <code>N/A</code> means the authoring tool will automatically insert that option into the correct sequence.</p>
+<p>Note that adding a new option automatically adds the option to the question, but in order to save the text, word type, or sequence number, you need to click the <code>Save Changes</code> button.</p>
+<p><a href="/imgs/authoring_views/mw_sentence_save_changes_button.png" target="_blank"><img src="/imgs/authoring_views/mw_sentence_save_changes_button.png" alt="Movable words sentence, button for saving option changes" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-providing-feedback-6" class="anchor" href="#providing-feedback-6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Providing Feedback</h2>
+<p>Two feedback fields at the bottom of the question allow you to enter a correct feedback response, or an incorrect feedback response (shown for all incorrect word combinations).</p>
+<p><a href="/imgs/authoring_views/mw_sentence_feedback_fields.png" target="_blank"><img src="/imgs/authoring_views/mw_sentence_feedback_fields.png" alt="Movable words sentence, feedback input fields" style="max-width:100%;"></a></p>
+<h1>
+<a id="user-content-multiple-choice----multiple-select" class="anchor" href="#multiple-choice----multiple-select" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Multiple Choice -- Multiple Select</h1>
+<h2>
+<a id="user-content-description-7" class="anchor" href="#description-7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+<p>This question type presents a set of choices to the student, and they have to select one or more as the correct answer.</p>
+<h3>
+<a id="user-content-author-view-7" class="anchor" href="#author-view-7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author View</h3>
+<p><a href="/imgs/authoring_views/mc_ms.png" target="_blank"><img src="/imgs/authoring_views/mc_ms.png" alt="Authoring view of a multiple-select, multiple-choice question" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-student-view-7" class="anchor" href="#student-view-7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Student View</h3>
+<p><a href="/imgs/student_previews/mc_ms.png" target="_blank"><img src="/imgs/student_previews/mc_ms.png" alt="Preview of a multiple-select, multiple-choice question" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-other-authored-inputs-7" class="anchor" href="#other-authored-inputs-7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other Authored Inputs</h2>
+<p>Each choice will appear as a separate option bar.</p>
+<p><a href="/imgs/authoring_views/mc_ms_option_bar.png" target="_blank"><img src="/imgs/authoring_views/mc_ms_option_bar.png" alt="Multiple-select, multiple-choice question option bar" style="max-width:100%;"></a></p>
+<p>Each option has a checkbox on the left, used to indicate correctness (see next section). You can also delete the option with the <code>X</code> icon on the right.</p>
+<p><a href="/imgs/authoring_views/mc_ms_delete_option.png" target="_blank"><img src="/imgs/authoring_views/mc_ms_delete_option.png" alt="Multiple-select, multiple-choice question delete option icon" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-indicating-correctness-7" class="anchor" href="#indicating-correctness-7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indicating Correctness</h2>
+<p>To indicate which set of choices is correct, you need to check the boxes on the left of each choice:</p>
+<p><a href="/imgs/authoring_views/mc_ms_correct_choice.png" target="_blank"><img src="/imgs/authoring_views/mc_ms_correct_choice.png" alt="Multiple-select, multiple-choice question's correct options render with a green, checked box on the left" style="max-width:100%;"></a></p>
+<p>Students must select <strong>all</strong> of the same boxes that you check. A subset of the correct choices will be evaluated as <strong>incorrect</strong>, i.e. the checkboxes indicate <code>AND</code>, not <code>OR</code> (both <code>a</code> AND <code>c</code> are required to be correct, <strong>not</strong> either <code>a</code> OR <code>c</code> are correct).</p>
+<h2>
+<a id="user-content-providing-feedback-7" class="anchor" href="#providing-feedback-7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Providing Feedback</h2>
+<p>Two feedback fields are provided for you, one for the correct answer feedback, and the other for all incorrect responses.</p>
+<p><a href="/imgs/authoring_views/mc_ms_feedback_fields.png" target="_blank"><img src="/imgs/authoring_views/mc_ms_feedback_fields.png" alt="Multiple-select, multiple-choice question feedback input fields" style="max-width:100%;"></a></p>
+<h1>
+<a id="user-content-multiple-choice" class="anchor" href="#multiple-choice" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Multiple Choice</h1>
+<h2>
+<a id="user-content-description-8" class="anchor" href="#description-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+<p>This question type presents a set of choices to the student, and they have to select one, and only one, as the correct answer.</p>
+<h3>
+<a id="user-content-author-view-8" class="anchor" href="#author-view-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author View</h3>
+<p><a href="/imgs/authoring_views/mc.png" target="_blank"><img src="/imgs/authoring_views/mc.png" alt="Single-select, multiple-choice question authoring view" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-student-view-8" class="anchor" href="#student-view-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Student View</h3>
+<p><a href="/imgs/student_previews/mc.png" target="_blank"><img src="/imgs/student_previews/mc.png" alt="Single-select, multiple-choice question preview" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-other-authored-inputs-8" class="anchor" href="#other-authored-inputs-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other Authored Inputs</h2>
+<p>Each choice will appear as a separate option bar.</p>
+<p><a href="/imgs/authoring_views/mc_option_bar.png" target="_blank"><img src="/imgs/authoring_views/mc_option_bar.png" alt="Single-select, multiple-choice question option view" style="max-width:100%;"></a></p>
+<p>Each option has a radio button on the left, used to indicate correctness (see next section). You can also delete the option with the <code>X</code> icon on the right.</p>
+<p><a href="/imgs/authoring_views/mc_delete_option.png" target="_blank"><img src="/imgs/authoring_views/mc_delete_option.png" alt="Single-select, multiple-choice question delete option icon" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-indicating-correctness-8" class="anchor" href="#indicating-correctness-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indicating Correctness</h2>
+<p>To indicate which set of choices is correct, you need to check the radio button on the left of the correct choice:</p>
+<p><a href="/imgs/authoring_views/mc_correct_option.png" target="_blank"><img src="/imgs/authoring_views/mc_correct_option.png" alt="Single-select, multiple-choice question shows the correct option with a green, filled-in radio button" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-providing-feedback-8" class="anchor" href="#providing-feedback-8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Providing Feedback</h2>
+<p>For these questions, each choice has its own feedback field.</p>
+<p><a href="/imgs/authoring_views/mc_feedback_field.png" target="_blank"><img src="/imgs/authoring_views/mc_feedback_field.png" alt="Single-select, multiple-choice question feedback fields within each option bar" style="max-width:100%;"></a></p>
+<p>You can type in individual, per-choice feedback. The feedback associated with the submitted response will be returned and displayed to the student. This means that you can provide choice-specific incorrect feedback, which is unique to this question type.</p>
+<h1>
+<a id="user-content-multiple-choice----multiple-select--reflection" class="anchor" href="#multiple-choice----multiple-select--reflection" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Multiple Choice -- Multiple Select &amp; Reflection</h1>
+<h2>
+<a id="user-content-description-9" class="anchor" href="#description-9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+<p>This question type presents a set of choices to the student, and they have to select one or more and submit them with no evaluation of correctness. This is typically used for a survey-type situation, i.e. <code>What did you learn in this lesson?</code>.</p>
+<h3>
+<a id="user-content-author-view-9" class="anchor" href="#author-view-9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author View</h3>
+<p><a href="/imgs/authoring_views/mc_msr.png" target="_blank"><img src="/imgs/authoring_views/mc_msr.png" alt="Multiple-select, multiple-choice reflection question authoring view" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-student-view-9" class="anchor" href="#student-view-9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Student View</h3>
+<p><a href="/imgs/student_previews/mc_msr.png" target="_blank"><img src="/imgs/student_previews/mc_msr.png" alt="Multiple-select, multiple-choice reflection question preview" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-other-authored-inputs-9" class="anchor" href="#other-authored-inputs-9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other Authored Inputs</h2>
+<p>Each choice will appear as a separate option bar.</p>
+<p><a href="/imgs/authoring_views/mc_msr_option_bar.png" target="_blank"><img src="/imgs/authoring_views/mc_msr_option_bar.png" alt="Multiple-select, multiple-choice reflection question option bar" style="max-width:100%;"></a></p>
+<p>You can also delete the option with the <code>X</code> icon on the right.</p>
+<p><a href="/imgs/authoring_views/mc_msr_delete_option.png" target="_blank"><img src="/imgs/authoring_views/mc_msr_delete_option.png" alt="Multiple-select, multiple-choice reflection question delete option icon" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-indicating-correctness-9" class="anchor" href="#indicating-correctness-9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indicating Correctness</h2>
+<p>Since all submissions are acceptable, there is no way to indicate or evaluate correctness.</p>
+<h2>
+<a id="user-content-providing-feedback-9" class="anchor" href="#providing-feedback-9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Providing Feedback</h2>
+<p>A single feedback field is at the bottom of the question, which is shown to the student upon submission of their response.</p>
+<p><a href="/imgs/authoring_views/mc_msr_feedback_field.png" target="_blank"><img src="/imgs/authoring_views/mc_msr_feedback_field.png" alt="Multiple-select, multiple-choice reflection question feedback field" style="max-width:100%;"></a></p>
+<h1>
+<a id="user-content-multiple-choice----reflection" class="anchor" href="#multiple-choice----reflection" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Multiple Choice -- Reflection</h1>
+<h2>
+<a id="user-content-description-10" class="anchor" href="#description-10" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+<p>This question type presents a set of choices to the student, and they have to select one and submit it with no evaluation of correctness. This is typically used for a survey-type situation, i.e. <code>How easily did you understand this lesson?</code>.</p>
+<h3>
+<a id="user-content-author-view-10" class="anchor" href="#author-view-10" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author View</h3>
+<p><a href="/imgs/authoring_views/mc_r.png" target="_blank"><img src="/imgs/authoring_views/mc_r.png" alt="Single-select, multiple-choice reflection question authoring view" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-student-view-10" class="anchor" href="#student-view-10" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Student View</h3>
+<p><a href="/imgs/student_previews/mc_r.png" target="_blank"><img src="/imgs/student_previews/mc_r.png" alt="Single-select, multiple-choice reflection question preview" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-other-authored-inputs-10" class="anchor" href="#other-authored-inputs-10" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other Authored Inputs</h2>
+<p>Each choice will appear as a separate option bar.</p>
+<p><a href="/imgs/authoring_views/mc_r_option_bar.png" target="_blank"><img src="/imgs/authoring_views/mc_r_option_bar.png" alt="Single-select, multiple-choice reflection question option bar" style="max-width:100%;"></a></p>
+<p>You can also delete the option with the <code>X</code> icon on the right.</p>
+<p><a href="/imgs/authoring_views/mc_r_delete_option.png" target="_blank"><img src="/imgs/authoring_views/mc_r_delete_option.png" alt="Single-select, multiple-choice reflection question delete option icon" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-indicating-correctness-10" class="anchor" href="#indicating-correctness-10" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indicating Correctness</h2>
+<p>Since all submissions are acceptable, there is no way to indicate or evaluate correctness.</p>
+<h2>
+<a id="user-content-providing-feedback-10" class="anchor" href="#providing-feedback-10" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Providing Feedback</h2>
+<p>A single feedback field is at the bottom of the question, which is shown to the student upon submission of their response.</p>
+<p><a href="/imgs/authoring_views/mc_r_feedback_field.png" target="_blank"><img src="/imgs/authoring_views/mc_r_feedback_field.png" alt="Single-select, multiple-choice reflection question feedback input field" style="max-width:100%;"></a></p>
+<h1>
+<a id="user-content-short-answer" class="anchor" href="#short-answer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Short Answer</h1>
+<h2>
+<a id="user-content-description-11" class="anchor" href="#description-11" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Description</h2>
+<p>This question type shows a text entry box to the student and accepts text input.</p>
+<h3>
+<a id="user-content-author-view-11" class="anchor" href="#author-view-11" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Author View</h3>
+<p><a href="/imgs/authoring_views/short_answer.png" target="_blank"><img src="/imgs/authoring_views/short_answer.png" alt="Short answer text response, authoring view" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-student-view-11" class="anchor" href="#student-view-11" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Student View</h3>
+<p><a href="/imgs/student_previews/short_answer.png" target="_blank"><img src="/imgs/student_previews/short_answer.png" alt="Short answer text response, preview" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-other-authored-inputs-11" class="anchor" href="#other-authored-inputs-11" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Other Authored Inputs</h2>
+<p>You can select the size of the displayed text box (small, medium, or large). While the assessment player does not enforce any text limitations, the box size is supposed to indicate to the student how much to type. For example, a small box will accept a couple of words, while a large box will accept a paragraph. So depending on what you are asking the students to type out, you can select an appropriately sized text entry box.</p>
+<p><a href="/imgs/authoring_views/short_answer_box_selector.png" target="_blank"><img src="/imgs/authoring_views/short_answer_box_selector.png" alt="Short answer text response, response box selector" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-indicating-correctness-11" class="anchor" href="#indicating-correctness-11" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Indicating Correctness</h2>
+<p>All text entries are accepted, so there is no way to indicate correctness.</p>
+<h2>
+<a id="user-content-providing-feedback-11" class="anchor" href="#providing-feedback-11" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Providing Feedback</h2>
+<p>A single feedback field is provided at the bottom of the question. This is shown to the student upon submission of their response.</p>
+<p><a href="/imgs/authoring_views/short_answer_feedback_field.png" target="_blank"><img src="/imgs/authoring_views/short_answer_feedback_field.png" alt="Short answer text response, feedback input field" style="max-width:100%;"></a></p>
