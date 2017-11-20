@@ -15,7 +15,7 @@
     "lodash": "4.17.4",
     "moment": "^2.13.0",
     "rc-progress": "^2.0.6",
-    "react": "15.4.2",
+    "react": "15.6.2",
     "react-aria-live": "^1.0.4",
     "react-copy-to-clipboard": "^4.2.3",
     "react-dnd": "^2.1.4",
