@@ -46,7 +46,7 @@ describe('item', () => {
   beforeEach(() => {
     question = {
       title:'Test Question Title',
-      material:'Test Question Material',
+      material:'Test Question Material'
     };
     currentItemIndex = 0;
     assessment = {};
@@ -153,7 +153,8 @@ describe('item', () => {
 
     it('renders survey question without tick mark when item is correct', () => {
       question = {
-        question_type: 'survey_question' // set question type
+        question_type: 'survey_question', // set question type
+        answers: []
       };
       questionResult = { correct:true, feedback:'Correct answer' };
       numQuestionsChecking = 0;

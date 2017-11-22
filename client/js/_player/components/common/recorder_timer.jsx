@@ -73,7 +73,7 @@ class RecorderTimer extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="c-audio-bar">
         <div className="c-audio-timer"><small>{this.props.localizedStrings.recordTime}</small> {this.state.minsCt}:{this.state.secsStringCt}</div>
         <Line percent={this.state.prcntCt} strokeWidth="1" strokeColor="#D0021B" />
       </div>

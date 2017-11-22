@@ -47,11 +47,41 @@ export default class FileUpload extends React.Component {
     return this.state.uplFile ? this.state.uplFile : this.props.localizedStrings.noFile;
   }
 
+  focusInput(shouldFocus) { // set currently-focused item
+    if (shouldFocus) {
+      this.setState({ focusedInput: true });
+    } else {
+      this.setState({ focusedInput: false });
+    }
+  }
+
   render() {
     return (
-      <label htmlFor="file-upload" className="c-file-upload">
-        <span>{this.props.localizedStrings.chooseFile}</span>
-        <input id="file-upload" ref={(input) => { this.inputField = input; }} onChange={e => this.handleChange(e)} type="file" className="c-file-upload-input" disabled={this.props.isDisabled} /><input type="text" value={this.handleFileNmDisplay()} readOnly />
+      <label
+        htmlFor="file-upload"
+        className={this.state.focusedInput
+        ? 'c-file-upload c-file-up--focused'
+        : 'c-file-upload'}
+      >
+        <span>
+          {this.props.localizedStrings.chooseFile}
+        </span>
+        <input
+          id="file-upload"
+          ref={(input) => { this.inputField = input; }}
+          onChange={e => this.handleChange(e)}
+          type="file"
+          className="c-file-upload-input"
+          disabled={this.props.isDisabled}
+          onFocus={() => this.focusInput(true)}
+          onBlur={() => this.focusInput(false)}
+        />
+        <input
+          type="text"
+          value={this.handleFileNmDisplay()}
+          tabIndex="-1"
+          readOnly
+        />
       </label>
     );
   }

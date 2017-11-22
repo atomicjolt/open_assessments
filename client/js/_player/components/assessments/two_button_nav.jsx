@@ -52,7 +52,7 @@ export default class TwoButtonNav extends React.Component {
   primaryButton(props) {
     switch (props.primaryAction) {
       case PRIMARY_ACTION.NEXT:
-        return <NextButton/>;
+        return <NextButton />;
 
       case PRIMARY_ACTION.CHECK_ANSWERS:
         return <CheckButton />;
@@ -63,6 +63,8 @@ export default class TwoButtonNav extends React.Component {
           buttonText={props.localizedStrings.submitButton}
           onClick={props.submitAssessment}
         />);
+      default:
+        break;
     }
   }
 
@@ -76,12 +78,12 @@ export default class TwoButtonNav extends React.Component {
     return (
       <nav className="c-assessment-navigation" aria-label="question">
         <div className="c-button-slot">
-          {this.secondaryButton(this.props)}
+          {this.primaryButton(this.props)}
         </div>
         <div className="c-button-slot">
-          {this.primaryButton(this.props)}
+          {this.secondaryButton(this.props)}
         </div>
       </nav>
     );
   }
-};
+}

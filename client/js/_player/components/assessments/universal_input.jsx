@@ -48,11 +48,26 @@ export default class UniversalInput extends React.Component {
     audioRecordStop: React.PropTypes.func
   };
 
+  constructor() {
+    super();
+    this.state = {
+      focusedItem: null
+    };
+  }
+
   wasSelected(id) {
     if (this.props.response) {
       return this.props.response.indexOf(id) > -1;
     }
     return null;
+  }
+
+  focusItem(shouldFocus, item) { // set currently-focused item
+    if (shouldFocus) {
+      this.setState({ focusedItem: item });
+    } else {
+      this.setState({ focusedItem: null });
+    }
   }
 
   render() {
@@ -121,21 +136,15 @@ export default class UniversalInput extends React.Component {
               name="answer-radio"
               checked={this.wasSelected(answer.id)}
               selectAnswer={selectRadio}
+              focused={this.state.focusedItem === answer.id}
+              onFocus={shouldFocus => this.focusItem(shouldFocus, answer.id)}
             />
           );
         };
         answerInputs = (
-          <fieldset>
-            <legend
-              className="visuallyhidden"
-              dangerouslySetInnerHTML={{ __html: props.item.material }}
-            />
-            {_.chunk(item.answers, 2).map(row => (
-              <ul key={`${item.id}_row_${row[0].id}`} className="o-grid">
-                {row.map(multipleChoiceAnswer)}
-              </ul>
-            ))}
-          </fieldset>);
+          <div className="o-grid__wrapper" role="radiogroup">
+            {item.answers.map(multipleChoiceAnswer)}
+          </div>);
         break;
       }
       case 'edx_dropdown': {
@@ -211,25 +220,21 @@ export default class UniversalInput extends React.Component {
               isDisabled={props.isResult}
               key={id}
               id={id}
+              name="answer-checkbox"
               item={answer}
               isHtml={item.isHtml}
               checked={this.wasSelected(answer.id)}
               selectAnswer={selectCheckbox}
+              focused={this.state.focusedItem === answer.id}
+              onFocus={shouldFocus => this.focusItem(shouldFocus, answer.id)}
             />
           );
         };
         answerInputs = (
-          <fieldset>
-            <legend
-              className="visuallyhidden"
-              dangerouslySetInnerHTML={{ __html: props.item.material }}
-            />
-            {_.chunk(item.answers, 2).map(row => (
-              <ul key={`${item.id}_row_${row[0].id}`} className="o-grid">
-                {row.map(multipleAnswer)}
-              </ul>
-            ))}
-          </fieldset>);
+          <div className="o-grid__wrapper" role="group">
+            {item.answers.map(multipleAnswer)}
+          </div>
+        );
         break;
       }
       case 'edx_image_mapped_input': {

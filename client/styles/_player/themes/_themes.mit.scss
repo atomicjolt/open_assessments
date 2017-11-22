@@ -7,7 +7,7 @@
 
 //Text colors
 $text-color: #4A4A4A;
-$subtext-color: #9B9B9B;
+$subtext-color: #777777;
 
 //Shades of gray
 $dark-gray: #636463;
@@ -55,9 +55,21 @@ $header-border: $lightest-gray;
 }
 //Answer container styling when selected
 @mixin answer-clicked{
+  background: darken($primary, 20%);
+  border-color: darken($primary, 20%);
+}
+
+//Answer container styling when focused
+@mixin answer-focused{
   background: $primary;
   border-color: $primary;
 }
+
+@mixin answer-disabled{
+  background: $primary;
+  border-color: $primary;
+}
+
 //Color for answer text
 $answer-text: $text-color;
 //Text color when answer is selected
@@ -149,4 +161,43 @@ $question-feedback-background: $lightest-gray;
 }
 @mixin bold{
   font-family: 'open_sansbold', sans-serif;
+}
+
+
+// Material icons
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('fonts/MaterialIcons-Regular.eot'); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url('fonts/MaterialIcons-Regular.woff2') format('woff2'),
+       url('fonts/MaterialIcons-Regular.woff') format('woff'),
+       url('fonts/MaterialIcons-Regular.ttf') format('truetype');
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }

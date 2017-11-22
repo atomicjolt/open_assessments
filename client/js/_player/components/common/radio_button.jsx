@@ -1,88 +1,91 @@
-"use strict";
+import React                             from 'react';
 
-import React                             from "react";
-
-export default class RadioButton extends React.Component{
+export default class RadioButton extends React.Component {
 
   static propTypes = {
-    // Item being displayed
     item: React.PropTypes.object.isRequired,
-
-    // Unique html element id
     id: React.PropTypes.string.isRequired,
-
-    // Whether the material is raw HTML to be embedded "dangerously."
     isHtml: React.PropTypes.bool,
-
     selectAnswer: React.PropTypes.func.isRequired,
-
-    // Whether or not input should be disabled
     isDisabled: React.PropTypes.bool,
-
-    // Whether or not input should be selected
-    checked: React.PropTypes.bool
+    checked: React.PropTypes.bool,
+    name: React.PropTypes.string.isRequired,
+    focused: React.PropTypes.bool,
+    onFocus: React.PropTypes.func.isRequired
   }
 
-  selectAnswer(){
-    this.props.selectAnswer(this.props.item.id);
-  }
-
-  checkedStatus(){
-    let checked = null;
-    let optionFlag = null;
-
-    if(this.props.checked === true) {
-      checked = true;
-    } else if(this.props.checked === false) {
-      checked = false;
-    } else if(!this.props.isDisabled) {
-      // checked = (AssessmentStore.studentAnswers() && AssessmentStore.studentAnswers().indexOf(this.props.item.id) > -1) ? "true" : null; TODO
+  selectAnswer() {
+    if (!this.props.isDisabled) {
+      this.props.selectAnswer(this.props.item.id);
     }
-
-    return checked;
   }
 
   renderMaterial(material, isHtml) {
-    if(isHtml) {
-      return <div className="c-answer-container__content"
-                  dangerouslySetInnerHTML={{__html: material}} />;
-    } else {
+    if (isHtml) {
       return (
-        <div className="c-answer-container__content">
-          <p>{material}</p>
-        </div>
-      );
+        <div
+          className="c-answer-container__content"
+          dangerouslySetInnerHTML={{ __html: material }}
+        />);
     }
+
+    return (
+      <div className="c-answer-container__content">
+        <p>{material}</p>
+      </div>
+    );
   }
 
   render() {
-    const props = this.props;
-    var containerStyle = "";
-
-    if(this.props.checked === true){containerStyle = "is-clicked";}
+    const {
+      id, item, name, isDisabled, isHtml, checked, focused, onFocus
+    } = this.props;
 
     return (
-      <li className={`c-answer-container ${containerStyle}`}>
+      <div className="o-grid">
         <label
-          htmlFor={props.id}>
+          htmlFor={id}
+          key={id}
+          className={isDisabled // eslint-disable-line no-nested-ternary
+          ? 'c-answer-container--disabled'
+          : ((focused && !isDisabled) || (checked && !isDisabled)
+          ? 'c-answer-container is-focused'
+          : 'c-answer-container')
+          }
+          onClick={() => this.selectAnswer()}
+        >
           <div className="c-answer-container__radio">
             <div className="c-radio-button">
-              <input type="radio"
-                     checked={this.checkedStatus()}
-                     disabled={props.isDisabled}
-                     name="radio"
-                     id={props.id}
-                     onChange={() => { this.selectAnswer(); }} />
-                   <div className="c-radio-button__border">
-                <span></span>
-               </div>
+              <div className="c-radio-button__border">
+                <i
+                  className={(focused && !isDisabled) || (checked && !isDisabled)
+                  ? 'material-icons c-material-icon-resize radio_button--focused'
+                  : 'material-icons c-material-icon-resize'}
+                  aria-hidden
+                >
+                  {checked
+                  ? 'radio_button_checked'
+                  : 'radio_button_unchecked'}
+                </i>
+                <input
+                  type="radio"
+                  disabled={isDisabled}
+                  name={name}
+                  id={id}
+                  checked={checked}
+                  onChange={() => this.selectAnswer()}
+                  onFocus={() => onFocus(true)}
+                  onBlur={() => onFocus(false)}
+                />
+                <span />
+              </div>
             </div>
           </div>
           <div className="c-answer-container__content">
-            {this.renderMaterial(props.item.material, props.isHtml)}
+            {this.renderMaterial(item.material, isHtml)}
           </div>
         </label>
-      </li>
+      </div>
     );
   }
 }

@@ -86,7 +86,11 @@ class AudioUpload extends React.Component {
         />);  // show Recorder Timer
     } else {
       buttonText = this.props.localizedStrings.record;
-      audioEl = <audio src={this.props.savedResponse || this.state.audioURL} type="audio/wav" controls />; // show audio element
+      audioEl = (
+        <div className="c-audio-bar">
+          <audio src={this.props.savedResponse || this.state.audioURL} type="audio/wav" controls /> {/* eslint-disable jsx-a11y/media-has-caption */}
+        </div> // show audio element
+      );
     }
     if (this.props.isDisabled) {
       hideButClass = 'c-btn--subdue';
