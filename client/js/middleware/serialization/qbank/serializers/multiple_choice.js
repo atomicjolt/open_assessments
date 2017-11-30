@@ -56,24 +56,27 @@ function serializeAnswers(originalChoices, newChoiceAttributes, language) {
   _.forEach(newChoiceAttributes, (choice, key) => {
     if (_.get(choice, 'isCorrect')) { correctId = key; }
   });
-
-  const serializedAnswers = _(newChoiceAttributes)
+  const serializedAnswers = _(originalChoices)
   .entries()
   .filter(choice =>
     choice[1].id !== 'new' &&
     (!_.isUndefined(choice[1].feedback) || !_.isUndefined(choice[1].isCorrect))
   )
   .map((choice) => {
-    const original = originalChoices[choice[0]];
-    const text = choice[1].feedback || findLanguageText(original.feedbacks, language);
+    const originalChoiceId = choice[0];
+    const original = choice[1];
+    const newChoice = newChoiceAttributes[originalChoiceId];
+    const text = newChoice
+      ? newChoice.feedback
+      : findLanguageText(original.feedbacks, language);
     return scrub({
       id: original.answerId,
       genusTypeId: correctAnswer(correctId, original.id, original.isCorrect),
       feedback: languageText(text, language),
       type: genusTypes.answer.multipleChoice,
       choiceIds: [original.id],
-      fileIds: choice[1].fileIds,
-      delete: choice[1].delete,
+      fileIds: newChoice ? newChoice.fileIds : null,
+      delete: newChoice ? newChoice.delete : null
     });
   })
   .value();

@@ -129,4 +129,27 @@ describe('multipleChoice serializer', () => {
     expect(result.answers[1].genusTypeId).toBe(genusTypes.answer.rightAnswer);
     expect(result.answers[2].genusTypeId).toBe(genusTypes.answer.wrongAnswer);
   });
+
+  it('should change the correct choice answer', () => {
+    // Because for MultipleChoice, the other answers / choices
+    //   also need to be updated with `isCorrect` = `false`,
+    //   so verify that works.
+    newItem = {
+      id: 'item01',
+      question: {
+        choices: {
+          choice01: {
+            id: 'choice01',
+            isCorrect: true
+          },
+        }
+      }
+    };
+    result = multipleChoice(item, newItem);
+    expect(result.answers.length).toBe(3);
+    expect(result.answers[0].genusTypeId).toBe(genusTypes.answer.rightAnswer);
+    expect(result.answers[1].genusTypeId).toBe(genusTypes.answer.wrongAnswer);
+    expect(result.answers[2].genusTypeId).toBe(genusTypes.answer.wrongAnswer);
+
+  });
 });
