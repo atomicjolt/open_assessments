@@ -63,8 +63,9 @@ function serializeQuestion(originalQuestion, newQuestionAttributes, questionStri
     const chunks = newQuestionString.text.replace('[ _ ]', '[_]').split(' ');
 
     newQuestionString.text = _.map(chunks, (word) => {
-      if (word === '[_]') {
-        return `<inlineChoiceInteraction responseIdentifier="${inlineRegionId}"></inlineChoiceInteraction>`;
+      if (word.substring(0, 3) === '[_]') {
+        const punctuation = buildChoiceText(_.replace(word, '[_]', ''), 'other');
+        return `<inlineChoiceInteraction responseIdentifier="${inlineRegionId}"></inlineChoiceInteraction>${punctuation}`;
       }
       return buildChoiceText(word, 'other');
     }).join('');
