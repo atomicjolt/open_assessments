@@ -1,5 +1,5 @@
 import React      from 'react';
-import TestUtils  from 'react-addons-test-utils';
+import TestUtils  from 'react-dom/test-utils';
 import NewItem    from './new_item_form';
 
 describe('New Item Form', () => {
@@ -61,5 +61,10 @@ describe('New Item Form', () => {
     TestUtils.Simulate.change(input, { target: { value: 'item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU' } });
     TestUtils.Simulate.click(button);
     expect(called.type).toBe('item-genus-type%3Aqti-choice-interaction%40ODL.MIT.EDU');
+  });
+
+  it('should include a help link', () => {
+    const helpLinks = TestUtils.scryRenderedDOMComponentsWithClass(result, 'help-link');
+    expect(helpLinks.length).toBe(1);
   });
 });

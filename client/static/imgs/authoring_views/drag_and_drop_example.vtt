@@ -1,0 +1,218 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:06.000
+Here I'm going to show you how we can create drag-and-drop assessments, which is one of the more complicated assessments.
+
+2
+00:00:06.001 --> 00:00:11.000
+First thing you'll see when you sign into the authoring tool is a very simple navigation structure.
+
+3
+00:00:11.001 --> 00:00:16.000
+And you'll navigate to the folder that matches the subject you're teaching.
+
+4
+00:00:16.001 --> 00:00:22.000
+I'm just going to use the English folder -- you may not be teaching English, so you'll have to find your own folder.
+
+5
+00:00:22.001 --> 00:00:25.000
+This is just our example.
+
+6
+00:00:25.001 --> 00:00:29.000
+The first thing you'll do is create an assessment using this "new" button in the top right.
+
+7
+00:00:29.001 --> 00:00:33.000
+You'll want to give your assessment a very specific name so you can find it later.
+
+8
+00:00:33.001 --> 00:00:39.000
+We'll say "Drag and drop example assessment for help video".
+
+9
+00:00:39.001 --> 00:00:42.000
+Then you click the "Next" button.
+
+10
+00:00:42.001 --> 00:00:45.000
+Once the assessment exists you can then add questions to it.
+
+11
+00:00:45.001 --> 00:00:50.000
+Here we'll do "cycle of life drag and drop question".
+
+12
+00:00:50.001 --> 00:00:54.000
+And from the drop down list we'll pick "Drag and Drop".
+
+13
+00:00:54.001 --> 00:00:57.000
+Then save this question to the assessment.
+
+14
+00:00:57.001 --> 00:01:01.000
+You'll see this is a fairly complicated screen. There are three sections.
+
+15
+00:01:01.001 --> 00:01:05.000
+The first is "Prompt" -- the text prompt the students will see.
+
+16
+00:01:05.001 --> 00:01:11.000
+This section is how we manage the background image and different zones, where images can be placed.
+
+17
+00:01:11.001 --> 00:01:15.000
+And then every image that can be dragged is considered a draggable answer.
+
+18
+00:01:15.001 --> 00:01:18.000
+So we'll go through how that works.
+
+19
+00:01:18.001 --> 00:01:27.000
+Here we'll say "Drag each image of a frog's life stage onto the cycle of life".
+
+20
+00:01:27.001 --> 00:01:30.000
+So this is the text prompt that students will see.
+
+21
+00:01:30.001 --> 00:01:36.000
+And then here we add a background image. We'll upload it from our computer.
+
+22
+00:01:36.001 --> 00:01:46.000
+And make sure to give it a description and alt tag. Five stage cycle of life.
+
+23
+00:01:46.001 --> 00:01:56.000
+And then for citation / copyright / license for all of the images, you'll have to go by the guidance given to you by CLIx.
+
+24
+00:01:56.001 --> 00:02:00.000
+I'm just filling these fields in to show that you should fill them in.
+
+25
+00:02:00.001 --> 00:02:03.000
+And then the image will show up here.
+
+26
+00:02:03.001 --> 00:02:11.000
+What you can do is add different zones into the image where students can drag the draggable images.
+
+27
+00:02:11.001 --> 00:02:14.000
+There are snap zones and drop zones.
+
+28
+00:02:14.001 --> 00:02:19.000
+Snap zones are if you want the dropped images to automatically snap to the center of the zone.
+
+29
+00:02:19.001 --> 00:02:23.000
+In drop zones, the images will not snap to the center of the zones.
+
+30
+00:02:23.001 --> 00:02:26.000
+We'll just add some snap zones.
+
+31
+00:02:26.001 --> 00:02:32.000
+Once you create it you can drag it and resize the zone.
+
+32
+00:02:36.000 --> 00:02:40.000
+You'll want to make sure it covers whatever you think the answer is.
+
+33
+00:02:40.001 --> 00:02:51.000
+We'll add a couple of those -- one for each of the circles in the cycle of life.
+
+34
+00:02:51.001 --> 00:03:07.000
+Ideally you want to try and not make the zones overlap at all, otherwise the tool will not know which zone an image belongs to if it is dropped in the overlapping region.
+
+35
+00:03:07.001 --> 00:03:14.000
+So we have three, and we need two more.
+
+36
+00:03:27.000 --> 00:03:30.000
+And the last one.
+
+37
+00:03:34.000 --> 00:03:40.000
+We'll resize this one to also make it cover the whole circle.
+
+38
+00:03:40.001 --> 00:03:45.000
+Once you have these five zones you can start uploading the individual draggable images.
+
+39
+00:03:45.001 --> 00:03:48.000
+So I have them here.
+
+40
+00:03:48.001 --> 00:03:52.000
+This is an adolescent frog.
+
+41
+00:03:56.000 --> 00:04:08.000
+And then we'll upload them all, and I'll show you how you can create the different matches from the draggable to the answer.
+
+42
+00:04:33.000 --> 00:04:36.000
+Last two.
+
+43
+00:04:48.000 --> 00:04:51.000
+And then we'll get one more.
+
+44
+00:05:04.000 --> 00:05:08.000
+And you'll see that each one of these draggable answers has a drop-down at the top.
+
+45
+00:05:08.001 --> 00:05:13.000
+That's how you match the image to where it's supposed to go on the target image.
+
+46
+00:05:13.001 --> 00:05:23.000
+So the first one is the eggs, and then it should be the tadpole, the little froglet,
+and then finally the adult frog.
+
+47
+00:05:23.001 --> 00:05:28.000
+So you'll see they are in order of A, B, C, D, E, which is what the expected order should be.
+
+48
+00:05:28.001 --> 00:05:35.000
+We'll give the students some good feedback, depending on how they answer this.
+
+49
+00:05:35.001 --> 00:05:38.000
+Once you have everything set, you can preview the question.
+
+50
+00:05:38.001 --> 00:05:42.000
+You won't be able to check whether it's right or wrong. But this is what students will see.
+
+51
+00:05:42.001 --> 00:05:46.000
+They won't be able to see the zone outlines. You can disable or enable that.
+
+52
+00:05:46.001 --> 00:05:55.000
+They will be able to drag images onto the background images, and they can check to see how this corresponds to the correct answer.
+
+53
+00:05:55.001 --> 00:06:00.000
+Notice how the images are snapping to the middle.
+
+54
+00:06:03.000 --> 00:06:07.000
+And that's it for authoring a drag-and-drop question.

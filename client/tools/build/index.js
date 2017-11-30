@@ -2,6 +2,7 @@ const path          = require('path');
 const fs            = require('fs-extra');
 const webpack       = require('webpack');
 const nodeWatch     = require('node-watch');
+const _             = require('lodash');
 
 const file          = require('./file');
 const content       = require('./content');
@@ -59,6 +60,15 @@ function buildWebpackEntries(isHot) {
 }
 
 
+const onlyCopyVideoJSVendor = (src, dest) => {
+  if (src.indexOf('node_modules') >= 0 &&
+      !_.endsWith(src, 'node_modules') &&
+      src.indexOf('video.js') === -1) {
+    return false;
+  }
+  return true;
+}
+
 // -----------------------------------------------------------------------------
 // main build
 // -----------------------------------------------------------------------------
@@ -72,7 +82,7 @@ function build(isHot) {
       try {
         // const stats = fs.statSync(settings.staticDir);
         console.log(`Copying static files in ${settings.staticDir}`);
-        fs.copySync(settings.staticDir, outputPath);
+        fs.copySync(settings.staticDir, outputPath, { filter: onlyCopyVideoJSVendor });
       } catch (err) {
         // No static dir. Do nothing
       }

@@ -28,6 +28,7 @@
     "react, qti, assessments, quizzes"
   ],
   "dependencies": {
-    "del": "^2.2.2"
+    "del": "^2.2.2",
+    "video.js": "^6.4.0"
   }
 }

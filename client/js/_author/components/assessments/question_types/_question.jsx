@@ -332,7 +332,7 @@ export class Question extends React.Component {
   }
 
   editContent() {
-    const { item } = this.props;
+    const { item, isActive } = this.props;
     const { name, type, id, question, bankId } = item;
     const { multipleAnswer, multipleReflection, reflection } = types;
 
@@ -352,6 +352,7 @@ export class Question extends React.Component {
         />
         <div className={`au-c-question__content ${this.props.reorderActive ? 'is-reordering' : ''}`}>
           <QuestionText
+            isActive={isActive}
             itemType={type}
             fileIds={question.fileIds}
             itemId={id}

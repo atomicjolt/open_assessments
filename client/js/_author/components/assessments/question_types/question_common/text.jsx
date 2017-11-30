@@ -3,6 +3,7 @@ import Editor                 from '../../../common/oea_editor';
 import types                  from '../../../../../constants/question_types';
 import { localeFromLanguage } from '../../../../../constants/language_types';
 import localize               from '../../../../locales/localize';
+import HelpLink                   from '../../help_link';
 
 class QuestionText extends React.Component {
   static propTypes = {
@@ -14,7 +15,8 @@ class QuestionText extends React.Component {
     bankId: React.PropTypes.string.isRequired,
     itemType: React.PropTypes.string,
     fileIds: React.PropTypes.shape({}),
-    language: React.PropTypes.string
+    language: React.PropTypes.string,
+    isActive: React.PropTypes.bool,
   };
 
   constructor(props) {
@@ -34,6 +36,9 @@ class QuestionText extends React.Component {
     const strings = this.props.localizeStrings();
     strings.setLanguage(localeFromLanguage(this.props.language));
     const questionTextStrings = strings.questionText;
+    const helpLink = this.props.isActive ?
+      <HelpLink to="/Help.html#user-content-question-text" /> :
+      null;
     switch (this.props.itemType) {
       case types.movableFillBlank:
         return (
@@ -42,6 +47,7 @@ class QuestionText extends React.Component {
               {strings.instructions}
             </div>
             <div className="au-c-input au-c-fill-in-the-blank-text">
+              {helpLink}
               <label htmlFor={`fillBlankText_${this.props.itemId}`} />
               <div className="au-c-input__contain">
                 <input
@@ -61,6 +67,7 @@ class QuestionText extends React.Component {
       default:
         return (
           <div className="au-c-input au-c-question__text">
+            {helpLink}
             <label htmlFor={`question_text_${this.props.itemId}`} />
             <Editor
               textSize="medium"

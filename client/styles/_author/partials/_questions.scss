@@ -53,7 +53,8 @@
     margin-left: 2rem;
   }
 
-.au-c-question-icons button {
+.au-c-question-icons button,
+.au-c-question-icons a {
   display: none;
 }
 
@@ -109,7 +110,8 @@
     .au-c-question-settings{
       @include display-flex;
     }
-    .au-c-question-icons button{
+    .au-c-question-icons button,
+    .au-c-question-icons a{
       display: inline-block;
     }
     .au-c-question__feedback{
