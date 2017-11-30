@@ -117,7 +117,10 @@ export default class ItemChain extends React.Component {
         }
       }
 
-      let startBlock = <div className={startBlockClassName} />;
+      let startBlock = (
+        <div
+          className={startBlockClassName}
+        />);
 
       if(this.props.noStartBlock) {
         startBlock = <div></div>;
