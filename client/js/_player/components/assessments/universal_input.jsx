@@ -211,7 +211,8 @@ export default class UniversalInput extends React.Component {
         );
         break;
       }
-      case 'multiple_answers_question': {
+      case 'multiple_answers_question':
+      case 'multiple_answer_survey_question': {
         const multipleAnswer = (answer) => {
           const selectCheckbox = _.partialRight(props.selectAnswer, false);
           const id = `${item.id}_${answer.id}`;

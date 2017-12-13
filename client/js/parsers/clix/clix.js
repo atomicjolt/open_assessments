@@ -56,7 +56,8 @@ export function transformItem(item) {
         'question-type%3Aqti-order-interaction-object-manipulation%40ODL.MIT.EDU': 'movable_object_chain',
         'question-type%3Aqti-upload-interaction-generic%40ODL.MIT.EDU': 'file_upload_question',
         'question-type%3Aqti-numeric-response%40ODL.MIT.EDU': 'numerical_input_question',
-        'question-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU': 'survey_question'
+        'question-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU': 'survey_question',
+        'question-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU': 'multiple_answer_survey_question'
       };
 
       if (mapGenusType[item.json.genusTypeId]) {

@@ -3,6 +3,7 @@ import ReactDOM                  from 'react-dom';
 import TestUtils                 from 'react-dom/test-utils';
 import { mount, shallow }        from 'enzyme';
 import UniversalInput            from './universal_input';
+import CheckBox                  from '../common/checkbox';
 
 describe('Assessment Questions', () => {
 
@@ -362,7 +363,7 @@ describe('Assessment Questions', () => {
           selectAnswer={selectAnswer}
         />
       );
-      result = TestUtils.renderIntoDocument(Content);
+      result = mount(Content);
     });
 
     afterEach(() => {
@@ -372,7 +373,7 @@ describe('Assessment Questions', () => {
     });
 
     it('Renders the checkboxes', () => {
-      expect(TestUtils.scryRenderedComponentsWithType(result, 'checkbox')).toBeDefined();
+      expect(result.find(CheckBox).length).toEqual(2);
     });
 
     it('Renders the a11y components', () => {
@@ -381,8 +382,56 @@ describe('Assessment Questions', () => {
     });
 
     it('Checkbox text is rendered', () => {
-      expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers[0].material);
-      expect(ReactDOM.findDOMNode(result).textContent).toContain(item.answers[1].material);
+      expect(result.find(CheckBox).first().html()).toContain(item.answers[0].material);
+      expect(result.find(CheckBox).last().html()).toContain(item.answers[1].material);
+    });
+  });
+
+  describe('Multiple Answer Survey Question', () => {
+    beforeEach(() => {
+      item = {
+        id       : 0,
+        question_type: 'multiple_answer_survey_question',
+        url      : 'www.iamcool.com',
+        title    : 'title',
+        xml      : null,
+        standard : 'edX',
+        edXMaterial : '<p>hello world</p>',
+        answers  : [{ id: '0', material: 'test1' }, { id: '1', material: 'test2' }],
+        isGraded : true,
+        material: '<p>hello world</p>',
+        messages : ['My Message1', 'My Message2'],
+        solution : '<p>solution text</p>'
+      };
+
+      Content = (
+        <UniversalInput
+          settings={{}}
+          item={item}
+          selectAnswer={selectAnswer}
+        />
+      );
+      result = mount(Content);
+    });
+
+    afterEach(() => {
+      item = {};
+      Content = '';
+      result = '';
+    });
+
+    it('Renders the checkboxes', () => {
+      expect(result.find(CheckBox).length).toEqual(2);
+    });
+
+    it('Renders the a11y components', () => {
+      expect(TestUtils.scryRenderedComponentsWithType(result, 'fieldset')).toBeDefined();
+      expect(TestUtils.scryRenderedComponentsWithType(result, 'legend')).toBeDefined();
+    });
+
+    it('Checkbox text is rendered', () => {
+      expect(result.find(CheckBox).first().html()).toContain(item.answers[0].material);
+      expect(result.find(CheckBox).last().html()).toContain(item.answers[1].material);
     });
   });
 

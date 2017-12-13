@@ -41,7 +41,20 @@ describe('transformItem', () => {
       }],
     },
   };
-
+  const multiSelectSurvey = {
+    json: {
+      genusTypeId: 'question-type%3Aqti-choice-interaction-multi-select-survey%40ODL.MIT.EDU',
+    },
+    title: '',
+    xml: '',
+  };
+  const survey = {
+    json: {
+      genusTypeId: 'question-type%3Aqti-choice-interaction-survey%40ODL.MIT.EDU',
+    },
+    title: '',
+    xml: '',
+  };
 
   it('transforms ART question with timeValue into allQuestions state', () => {
     // the clix parser expects xml, pass it in as a file
@@ -66,5 +79,21 @@ describe('transformItem', () => {
     item.xml = $($.parseXML(data));
     result = transformItem(item);
     expect(result.audioTimeout).toEqual(null);
+  });
+
+  it('transforms multi-select Reflection question type', () => {
+    data = readFixture('clix/multi-select-survey-question.xml');
+    item = multiSelectSurvey;
+    item.xml = $($.parseXML(data));
+    result = transformItem(item);
+    expect(result.question_type).toEqual('multiple_answer_survey_question');
+  });
+
+  it('transforms Reflection question type', () => {
+    data = readFixture('clix/survey-question.xml');
+    item = survey;
+    item.xml = $($.parseXML(data));
+    result = transformItem(item);
+    expect(result.question_type).toEqual('survey_question');
   });
 });

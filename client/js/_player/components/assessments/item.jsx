@@ -138,6 +138,7 @@ export default class Item extends React.Component {
       if (questionResult.correct === true) {
         switch (questionType) {
           case 'survey_question':
+          case 'multiple_answer_survey_question':
             answerFeedback = (
               <div className="c-question-feedback  c-feedback--correct">
                 <div dangerouslySetInnerHTML={{ __html: questionResult.feedback }} />

@@ -168,6 +168,23 @@ describe('item', () => {
       expect(subject.textContent).not.toContain('Incorrect answer');
     });
 
+    it('renders multi-select survey question without tick mark when item is correct', () => {
+      question = {
+        question_type: 'multiple_answer_survey_question', // set question type
+        answers: []
+      };
+      questionResult = { correct:true, feedback:'Correct answer' };
+      numQuestionsChecking = 0;
+      renderItem();
+      svgTest = TestUtils.scryRenderedDOMComponentsWithTag(result, 'svg'); // look for svg tag
+      expect(svgTest.length).toEqual(0); // expect no svg tag
+      expect(question.question_type).toContain('survey_question');
+      expect(subject.textContent).toContain('Correct');
+      expect(subject.textContent).toContain('Correct answer');
+      expect(subject.textContent).not.toContain('Incorrect');
+      expect(subject.textContent).not.toContain('Incorrect answer');
+    });
+
     it('renders incorrect when item is incorrect', () => {
       questionResult = { correct:false, feedback:'Incorrect answer' };
       numQuestionsChecking = 0;
