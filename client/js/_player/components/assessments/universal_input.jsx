@@ -186,7 +186,7 @@ export default class UniversalInput extends React.Component {
         answerInputs = (
           <div className="c-text-answer">
             <textarea
-              placeholder="Enter answer here..."
+              placeholder={props.localizedStrings.textArea.placeholder}
               onBlur={e => props.selectAnswer(e.target.value, true)}
               cols={parseInt(props.item.question_meta.expectedLength, 10) || 200}
               rows={parseInt(props.item.question_meta.expectedLines, 10) || 1}
@@ -201,7 +201,7 @@ export default class UniversalInput extends React.Component {
         answerInputs = (
           <div className="c-text-answer">
             <textarea
-              placeholder="Enter answer here..."
+              placeholder={props.localizedStrings.textArea.placeholder}
               onBlur={e => props.selectAnswer(e.target.value, true)}
               rows={parseInt(props.item.question_meta.expectedLines, 10) || 1}
               disabled={props.isResult}

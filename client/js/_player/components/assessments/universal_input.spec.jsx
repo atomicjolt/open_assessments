@@ -38,6 +38,11 @@ describe('Assessment Questions', () => {
         selectAnswer: () => {},
         questionResult: {},
         isResult: false,
+        localizedStrings: {
+          textArea: {
+            placeholder: 'foo'
+          }
+        }
       };
     });
 
@@ -225,6 +230,11 @@ describe('Assessment Questions', () => {
         selectAnswer: () => {},
         questionResult: {},
         isResult: false,
+        localizedStrings: {
+          textArea: {
+            placeholder: 'foo'
+          }
+        }
       };
     });
 
@@ -294,6 +304,11 @@ describe('Assessment Questions', () => {
         selectAnswer: () => {},
         questionResult: {},
         isResult: false,
+        localizedStrings: {
+          textArea: {
+            placeholder: 'foo'
+          }
+        }
       };
     });
 
