@@ -31,7 +31,7 @@ class NavigationBarContent extends React.Component {
             <Icon type={this.props.isPublished ? 'Published' : 'Publish'} />
             {this.props.isPublished ? strings.unpublish : strings.publish}
           </button>
-          <HelpLink to="/Help.html#publishing-workflow" />
+          <HelpLink to="/help.html#publishing-workflow" />
         </div>
       );
     }

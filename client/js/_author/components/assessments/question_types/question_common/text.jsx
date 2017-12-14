@@ -37,7 +37,7 @@ class QuestionText extends React.Component {
     strings.setLanguage(localeFromLanguage(this.props.language));
     const questionTextStrings = strings.questionText;
     const helpLink = this.props.isActive ?
-      <HelpLink to="/Help.html#user-content-question-text" /> :
+      <HelpLink to="/help.html#user-content-question-text" /> :
       null;
     switch (this.props.itemType) {
       case types.movableFillBlank:

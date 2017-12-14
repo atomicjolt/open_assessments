@@ -6,7 +6,7 @@ import HelpLink  from '../../../help_link';
 export default function DefaultHeader(props) {
   if (props.isRemoving) { return <DotLoader />; }
 
-  let helpLinkPath = '/Help.html';
+  let helpLinkPath = '/help.html';
   switch (props.type) {
     case types.audioUpload:
       helpLinkPath += '#user-content-audio-record';
