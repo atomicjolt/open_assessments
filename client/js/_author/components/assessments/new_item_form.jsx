@@ -64,7 +64,7 @@ class NewItemForm extends React.Component {
             <div className="au-o-half">
               <div className="au-c-input">
                 <div>
-                  <HelpLink to="/Help.html#authoring-question-types" />
+                  <HelpLink to="/help.html#authoring-question-types" />
                 </div>
                 <label htmlFor="questionType" />
                 <div className="au-c-dropdown au-c-dropdown--medium">
