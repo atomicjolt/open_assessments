@@ -173,6 +173,7 @@ This will serve files from the build/prod directory.
     confidence_levels            - Whether or not to show confidence controls
     locale                       - Sets player language. Languages currently supported: "en"
     audio_recorder_timeout       - Maximum allowed audio recording length, should be a value of seconds.
+    unlock_prev                  - When the previous question should be available to the user. ALWAYS (always allow the user to view past questions, but not re-submit), NEVER (never allow the user to navigate to previous questions, except for N of M questions).
 
     // User settings
     role                         - The current user's role. This will control if certain controls show up. The server is still responsible for security.
