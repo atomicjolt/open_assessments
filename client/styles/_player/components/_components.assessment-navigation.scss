@@ -79,10 +79,6 @@
       background: $btn-secondary-background-hover;
       color: $btn-secondary-text-hover;
 
-      &:before {
-        @include boxShadow(-4px 0 $btn-secondary-background);
-      }
-
       &:after {
         @include boxShadow(4px 0 $btn-secondary-background);
       }
@@ -181,13 +177,11 @@
 
 
   a.c-btn--check-answer, .c-btn--check-answer,
-  a.c-btn--finish, .c-btn--finish,
-  a.c-btn--next, .c-btn--next {
+  a.c-btn--finish, .c-btn--finish, {
     background: $btn-primary-background;
     color: $btn-primary-text;
     border-color: $btn-primary-border;
     outline: 0;
-    // @include transition(all 0.1s ease);
 
     &:hover {
       border-color: $btn-primary-border-hover;
@@ -203,6 +197,36 @@
       &:after {
         @include boxShadow(4px 0 $btn-primary-text);
       }
+    }
+
+    &:active {
+      background: darken($btn-primary-background, 10%);
+      color: $btn-primary-text;
+      border-color: darken($btn-primary-border, 10%);
+
+      svg path {
+        fill: $btn-primary-text;
+      }
+    }
+  }
+
+  a.c-btn--next, .c-btn--next {
+    background: $btn-primary-background;
+    color: $btn-primary-text;
+    border-color: $btn-primary-border;
+    outline: 0;
+
+    &:hover {
+      border-color: $btn-primary-border-hover;
+      background: $btn-primary-background-hover;
+      color: $btn-primary-text-hover;
+    }
+
+    &:focus {
+      &:before {
+        @include boxShadow(-4px 0 $btn-primary-text);
+      }
+
     }
 
     &:active {
