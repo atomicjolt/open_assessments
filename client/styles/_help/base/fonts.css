@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'open_sansbold';
-    src: url('./fonts/OpenSans-Bold-webfont.woff') format('woff'),
-         url('./fonts/OpenSans-Bold-webfont.ttf') format('truetype');
+    src: url('./fonts/opensans-bold-webfont.woff') format('woff'),
+         url('./fonts/opensans-bold-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 
@@ -9,8 +9,8 @@
 
 @font-face {
     font-family: 'open_sansbold_italic';
-    src: url('./fonts/OpenSans-BoldItalic-webfont.woff') format('woff'),
-         url('./fonts/OpenSans-BoldItalic-webfont.ttf') format('truetype');
+    src: url('./fonts/opensans-bolditalic-webfont.woff') format('woff'),
+         url('./fonts/opensans-bolditalic-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 
@@ -18,8 +18,8 @@
 
 @font-face {
     font-family: 'open_sansitalic';
-    src: url('./fonts/OpenSans-Italic-webfont.woff') format('woff'),
-         url('./fonts/OpenSans-Italic-webfont.ttf') format('truetype');
+    src: url('./fonts/opensans-italic-webfont.woff') format('woff'),
+         url('./fonts/opensans-italic-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 
@@ -27,8 +27,8 @@
 
 @font-face {
     font-family: 'open_sanslight';
-    src: url('./fonts/OpenSans-Light-webfont.woff') format('woff'),
-         url('./fonts/OpenSans-Light-webfont.ttf') format('truetype');
+    src: url('./fonts/opensans-light-webfont.woff') format('woff'),
+         url('./fonts/opensans-light-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 
@@ -36,8 +36,8 @@
 
 @font-face {
     font-family: 'open_sanslight_italic';
-    src: url('./fonts/OpenSans-LightItalic-webfont.woff') format('woff'),
-         url('./fonts/OpenSans-LightItalic-webfont.ttf') format('truetype');
+    src: url('./fonts/opensans-lightitalic-webfont.woff') format('woff'),
+         url('./fonts/opensans-lightitalic-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 
@@ -45,15 +45,9 @@
 
 @font-face {
     font-family: 'open_sansregular';
-    src: url('./fonts/OpenSans-Regular-webfont.woff') format('woff'),
-         url('./fonts/OpenSans-Regular-webfont.ttf') format('truetype');
+    src: url('./fonts/opensans-regular-webfont.woff') format('woff'),
+         url('./fonts/opensans-regular-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 
-}
-
-@font-face {
-  font-family: 'varela_round_regular';
-  src: url('./fonts/VarelaRound-Regular-webfont.woff') format('woff'),
-       url('./fonts/varela_round_regular.ttf') format('truetype');
 }

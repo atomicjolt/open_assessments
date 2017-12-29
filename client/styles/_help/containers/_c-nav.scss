@@ -1,0 +1,22 @@
+.toc-nav {
+  margin-left: 2em;
+  border-left: 3px solid $primary;
+  padding: 1rem 2rem 1rem 1rem;
+  top: 1rem;
+  min-width: 320px;
+  @include regular;
+  font-size: 1rem;
+
+  ol {
+    padding: 0;
+  }
+
+  li {
+    margin: 1rem 0.5rem;
+    line-height: 1.25;
+  }
+
+  a {
+    font-size: 1.25rem;
+  }
+}
