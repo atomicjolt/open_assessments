@@ -11,6 +11,21 @@
   }
 }
 
+.au-c-assessment-next{
+  display: block;
+  margin-top: 2rem;
+}
+
+.au-c-question__option-instructions{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  @include display-flex;
+}
+
+.au-c-question__option-instructions-left{
+  flex: 1;
+}
+
 .au-c-question-settings{
   display: none;
   height: 5rem;
@@ -38,7 +53,8 @@
     margin-left: 2rem;
   }
 
-.au-c-question-icons button {
+.au-c-question-icons button,
+.au-c-question-icons a {
   display: none;
 }
 
@@ -94,7 +110,8 @@
     .au-c-question-settings{
       @include display-flex;
     }
-    .au-c-question-icons button{
+    .au-c-question-icons button,
+    .au-c-question-icons a{
       display: inline-block;
     }
     .au-c-question__feedback{

@@ -49,6 +49,7 @@ describe('movable word sentece component', () => {
       activeChoice: '',
       save: () => {},
       language: 'eng',
+      instructions: 'do something'
     };
     result = shallow(<MovableWordSentence {...props} />);
   });
@@ -108,5 +109,9 @@ describe('movable word sentece component', () => {
     expect(calledFunc).toBeFalsy();
     result.find('.au-c-movable__answers').simulate('blur', { target: { value: 'Preposition' } });
     expect(calledFunc).toBeTruthy();
+  });
+
+  it('does render the passed-in instructions', () => {
+    expect(result.text()).toContain('do something');
   });
 });

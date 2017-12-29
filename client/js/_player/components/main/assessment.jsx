@@ -1,5 +1,6 @@
-import React        from 'react';
-import { connect }  from 'react-redux';
+import React           from 'react';
+import { connect }     from 'react-redux';
+import { Helmet }      from 'react-helmet';
 
 import * as AssessmentProgress    from '../../actions/assessment_progress';
 import * as CommunicationActions  from '../../actions/communications';
@@ -72,6 +73,8 @@ export class Assessment extends React.Component {
       assessmentResult: React.PropTypes.string,
       isSubmitted: React.PropTypes.bool,
       currentItemIndex: React.PropTypes.number,
+      checkedResponses: React.PropTypes.array,
+      numQuestionsChecking: React.PropTypes.number,
     }),
     assessmentViewed: React.PropTypes.func,
     settings: React.PropTypes.shape({
@@ -109,6 +112,7 @@ export class Assessment extends React.Component {
         unansweredQuestionWarning: React.PropTypes.string,
         leavingQuizPopup: React.PropTypes.string,
       }),
+      getLanguage: React.PropTypes.func
     }),
     currentItem: React.PropTypes.number,
     correctItemCount: React.PropTypes.number,
@@ -144,10 +148,19 @@ export class Assessment extends React.Component {
   componentDidMount() {
     // Trigger action to indicate the assessment was viewed
     this.props.assessmentViewed(this.props.settings, this.props.assessment);
-
     this.props.sendSize();
     this.props.scrollParentToTop();
     this.props.hideLMSNavigation();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.currentItem !==
+      nextProps.currentItem ||
+      this.props.assessmentLoaded !==
+      nextProps.assessmentLoaded
+    ) {
+      this.wrapper.focus();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -160,6 +173,10 @@ export class Assessment extends React.Component {
     if (this.props.assessmentProgress.currentItemIndex !==
       prevProps.assessmentProgress.currentItemIndex
     ) {
+      // Also set focus to the top of this component, so keyboard
+      //   navigation works smoothly.
+      this.wrapper.focus();
+
       this.props.scrollParentToTop(); // Scroll to top when we get a new question
       window.scrollTo(0, 0);
     }
@@ -185,6 +202,7 @@ export class Assessment extends React.Component {
         question={props.allQuestions[index]}
         response={props.responses[index] || []}
         currentItemIndex={index}
+        numQuestionsChecking={props.assessmentProgress.numQuestionsChecking}
         questionCount={props.questionCount}
         questionResult={props.questionResults[index] || {}}
         allQuestions={props.allQuestions}
@@ -265,16 +283,18 @@ export class Assessment extends React.Component {
   /**
    * Returns inner text for question counter
    */
-  getCounter() {
-    if (!this.props.assessmentLoaded) return '';
+  getCounter(propsArg) {
+    const props = propsArg || this.props;
 
-    const strings = this.props.localizedStrings;
-    if (this.props.questionsPerPage === 1) {
+    if (!props.assessmentLoaded) return '';
+
+    const strings = props.localizedStrings;
+    if (props.questionsPerPage === 1) {
       return (
         strings.formatString(
           strings.assessment.counterQuestion,
-          `${this.props.currentItem + 1}`,
-          `${this.props.questionCount}`
+          `${props.currentItem + 1}`,
+          `${props.questionCount}`
         )
       );
     }
@@ -288,8 +308,8 @@ export class Assessment extends React.Component {
     return (
       strings.formatString(
         strings.assessment.counterPage,
-        `${this.props.currentItem + 1}`,
-        `${this.props.questionCount}`
+        `${props.currentItem + 1}`,
+        `${props.questionCount}`
       )
     );
 
@@ -345,7 +365,13 @@ export class Assessment extends React.Component {
   }
 
   render() {
-    if (this.props.settings.assessment_kind === 'SUMMATIVE' && !__DEV__) {
+    // only show the alert window if they've attempted a question in Summative
+    const hasAttempted = this.props.assessmentProgress.checkedResponses ?
+      this.props.assessmentProgress.checkedResponses.length > 0 : true;
+
+    if (this.props.settings.assessment_kind === 'SUMMATIVE' &&
+        hasAttempted &&
+        !__DEV__) {
       window.onbeforeunload = () => this.popup();
     }
 
@@ -373,18 +399,26 @@ export class Assessment extends React.Component {
         );
       }
     }
-
     return (
       <div
         className="o-assessment-container"
         lang={this.props.settings.locale}
         dir={this.props.localizedStrings.dir}
+        ref={(wrapper) => { this.wrapper = wrapper; }}
+        tabIndex={-1}
       >
-        <div className="c-header">
+        <Helmet>
+          <html lang={this.props.localizedStrings.getLanguage()} />
+        </Helmet>
+        <header className="c-header" role="banner">
           {this.renderRemainingStatus()}
-          <div className="c-header__title">{titleText}</div>
-          <div className="c-header__question-number">{counter}</div>
-        </div>
+          <h1 className="c-header__title">{titleText}</h1>
+          <h2
+            className="c-header__question-number"
+            aria-live="polite"
+            aria-atomic
+          >{counter}</h2>
+        </header>
         {warning}
         {content}
         {nav}

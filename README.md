@@ -1,8 +1,8 @@
-#Open Assessments [![Build Status](https://travis-ci.org/atomicjolt/open_assessments.svg?branch=master)](https://travis-ci.org/atomicjolt/open_assessments) 
+# Open Assessments [![Build Status](https://travis-ci.org/CLIxIndia-Dev/OpenAssessmentsClient.svg?branch=master)](https://travis-ci.org/CLIxIndia-Dev/OpenAssessmentsClient)
 Open Assessments is a QTI client that can interpret QTI 1.x and 2.x as well as an authoring tool for generating
 QTI files. It currently works with MIT's QBank system.
 
-#Getting Started:
+# Getting Started:
 -----------------------
 
 Make sure to install git, npm and yarn before you start then:
@@ -21,17 +21,17 @@ Make sure to install git, npm and yarn before you start then:
 then visit http://localhost:8080
 
 
-#Background
+# Background
 -----------------------
 This code based has was originally developed in partnership with MIT and Atomic Jolt.
 It has since been adapted by Lumen Learning and again by MIT. It is currently use in
 production at institutions through the United States and Internationally.
 
-###QTI
+### QTI
 -----------------------
 Open Assessments supports both QTI 1.x and 2.x
 
-###Question Types
+### Question Types
 -----------------------
 The Open Assessments Client supports the following question types:
 
@@ -52,13 +52,13 @@ The Open Assessments Client supports the following question types:
 15. movable words sandbox
 16. fill the blank
 
-####edX Support
+#### edX Support
 -----------------------
 Development of edX support has been paused. Open Assessments did supports the drag and drop and multiple choice question types from edX
 and the code is still in place, but has not been used or tested in recent versions. Support is still possible but will require work.
 For more information on the edX xml structure see http://edx-open-learning-xml.readthedocs.org/en/latest/index.html
 
-####Assessment by Url
+#### Assessment by Url
 -----------------------
 Assessments can be loaded directly from a remote url - the assessment need not be loaded into http://www.openassessments.com.
 Just specify a src_url. CORS must be enabled on the server specified by src_url. Example:
@@ -93,21 +93,21 @@ The value can then be used when rendering:
 Files added to the static directory will be copied directly into the build. These files will not be renamed.
 
 
-#Tests
+# Tests
 -----------
 Karma and Jasmine are used for testing. To run tests run:
 
   `yarn test`
 
 
-#Check for updates
+# Check for updates
 -----------
 Inside the client directory run:
 
   `yarn upgrade-interactive`
 
 
-#Deploy to S3:
+# Deploy to S3:
 -----------------------
 
   1. Setup credentials. If you've already setup your Amazon credentials in ~/.aws/credentials
@@ -131,7 +131,7 @@ Inside the client directory run:
 
     `yarn release`
 
-#Production
+# Production
 -----------------------
 If you want to see what your application will look like in production run
 
@@ -140,7 +140,7 @@ If you want to see what your application will look like in production run
 This will serve files from the build/prod directory.
 
 
-#Settings - can be passed via window.DEFAULT_SETTINGS or url params
+# Settings - can be passed via window.DEFAULT_SETTINGS or url params
 -----------------------
 
     ##### General
@@ -173,6 +173,7 @@ This will serve files from the build/prod directory.
     confidence_levels            - Whether or not to show confidence controls
     locale                       - Sets player language. Languages currently supported: "en"
     audio_recorder_timeout       - Maximum allowed audio recording length, should be a value of seconds.
+    unlock_prev                  - When the previous question should be available to the user. ALWAYS (always allow the user to view past questions, but not re-submit), NEVER (never allow the user to navigate to previous questions, except for N of M questions).
 
     // User settings
     role                         - The current user's role. This will control if certain controls show up. The server is still responsible for security.
@@ -221,12 +222,18 @@ This will serve files from the build/prod directory.
     eid                          - Used by OEA to uniquely identify a User. In the MIT Clix project this isn't guaranteed to uniquely identify a user but since there are no logins this is as close as we can get.
     bank                         - The id of the QBank bank. Looks something like: "assessment.Bank%3A5751ccf64a40450c4f1c31bb%40ODL.MIT.EDU"
     assessment_offered_id        - An identifier provided by QBank that uniquely identifies the assessment to be taken. Use this id to get an assessment taken id. Looks something like "assessment.AssessmentOffered%3A576d7ee94a40456f9a434e4d%40ODL.MIT.EDU"
+    qBankHost                    - The URL for the hosted QBank instance, where requests like `/assessment/banks` can be made. Looks something like "https://qbank.example.com/api/v1"
+    assessmentPlayerUrl          - The URL location of an Open Assessments Player instance, that is used to preview the assessments when authoring. Looks like "https://content-player.example.com"
+    editableBankId               - The bankId of the "editable" assessment bank, that contains all the editable assessments. Looks like  "assessment.Bank%3A588f9225c89cd977c356078f%40ODL.MIT.EDU"
+    publishedBankId              - The bankId of the "published" assessment bank, that contains all the published assessments. Looks like  "assessment.Bank%3A588f9240c89cd977c3560781%40ODL.MIT.EDU"
+    baseEmbedUrl                 - The base URL used when generating an iframe code in the authoring tool, for a specific assessment. Should point to an instance of the Open Assessments Player. Looks like  "https://content-player.example.com/?unlock_next=ON_CORRECT"
 
-#Embed
+
+# Embed
 Open Assessments is embedded into the page via an iframe. Example:
     `<iframe id="openassessments_container" src="//www.openassessments.com/assessments/load?confidence_levels=true&src_url=http://www.openassessments.com/api/assessments/55.xml&results_end_point=http://www.openassessments.com/api&assessment_id=55&eid=ch15" frameborder="0" style="border:none;width:100%;height:100%;min-height:400px;"></iframe><script src="http://www.openassessments.com/assets/openassessments.js" type="text/javascript"></script>`
 
-#Stats
+# Stats
 -----------------------
 For assessments loaded into http://www.openassessments.com you simply need to browse to the assessment and click on the bar graph.
 Stats are available on the site, as json and as csv. Loading stats for an assessment that was loaded via a src_url is a bit trickier.
@@ -250,6 +257,7 @@ http://www.openassessments.com/assessment_results/0.json?eid=atest
 We recommend using a GUID for the eid to prevent conflicts with other assessments.
 
 # Build issues on Linux
+-----------------------
 It has been observed on Linux machines (specifically Ubuntu, but may happen on other platforms as well), that
 `yarn build` sometimes results in missing `css` classes in the build output. This is because `node-sass` was not
 installed properly, so the `.scss` files do not get compiled by `webpack`. To solve this, you need to
@@ -262,3 +270,57 @@ yarn build
 
 You can check for this problem by looking for a component class like `c-header` in `player_styles-*hash*.css`
 in `build/prod`.
+
+# Logging Endpoint Configuration
+-------------------
+The Open Assessments Player automatically logs to its configured QBank host's logging endpoint, which is controlled via the `qBankHost` setting. The player logs events like:
+
+```
+{
+  data: {
+    action: “<verb> <media type>”,
+    mediaTime: “00.00.10”,  (depends on action)
+    mediaId: “<DOM ID, if available>”, (depends on action)
+    source: “<src>”,
+    elementText: “<textContent of DOM element>”, (depends on action),
+    unit: “<something like Class 9 -- EB>”,
+    subject: “<something like English -- Lesson 1>”,
+    activity: “<div with class c-book-item--selected>”,
+    sessionId: “<configurable ID, like external_id>”
+  }
+}
+```
+
+Example data blobs:
+
+```
+{
+  data: {
+    action: pause video”,
+    mediaTime: “0”,
+    mediaId: vjs_video_3_html5_api,
+    assessmentOfferedId: “assessment.AssessmentOffered:59ef62a2c89cd962162d21db@ODL.MIT.EDU”,
+    questionId: “assessment.Item%3A59ef62a6c89cd96214bb8536%40assessment-session”
+  }
+}
+```
+
+Note that the `userId` is included in the `x-api-proxy` header, which QBank than inserts as the user whose action was logged.
+
+User actions that trigger an event in any assessment/question type:
+* User played an audio clip
+* User stopped an audio clip
+* User played a video clip (include video Id)
+* User stopped a video clip (include video Id)
+* User recorded an audio clip (pressed record and stop)
+* Clicked “next” to move on to the next question
+* Clicked “previous” to move on to the previous question for N of M only
+* Clicked “check answer”, “submit”, “upload”, “finish” etc. (Record all response submissions, including multiple submissions)
+
+For Audio Recording Tool
+* Audio file saved on “save file” or “upload”
+
+For Moveable Words
+* Connected a word block to the sentence starter, existing sentence, or another word block (log which word, what it was connected to)
+* Disconnected a word block (log which word)
+* Sentence saved on “done”, “finish” or “check answer”

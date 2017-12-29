@@ -2,7 +2,7 @@ import React              from 'react';
 import ReactDOM           from 'react-dom';
 import { createStore }    from 'redux';
 
-import TestUtils          from 'react-addons-test-utils';
+import TestUtils          from 'react-dom/test-utils';
 import { CheckUnderstanding } from './check_understanding';
 
 describe('check understanding', function() {

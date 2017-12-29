@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import wrapper from '../../constants/wrapper';
 
 // Local actions
@@ -21,8 +22,11 @@ const requests = [
   'DELETE_ASSIGNED_ASSESSMENT',
   'GET_ASSESSMENT_PREVIEW',
   'UPDATE_SINGLE_ITEM_OR_PAGE',
+  'UPDATE_N_OF_M',
+  'UPDATE_UNLOCK_PREVIOUS',
   'TOGGLE_PUBLISH_ASSESSMENT'
 ];
+
 
 export const Constants = wrapper(actions, requests);
 
@@ -175,5 +179,44 @@ export function updateSingleItemOrPage(assessmentOffered, genusTypeId) {
     apiCall      : true,
     type         : Constants.UPDATE_SINGLE_ITEM_OR_PAGE,
     body         : { genusTypeId }
+  };
+}
+
+export function updateNofM(assessment, nOfM) {
+  if (_.isNil(assessment)) throw new Error('Must provide `assessment` argument');
+  if (_.isNil(nOfM)) throw new Error('Must provide `nOfM` argument');
+  if (!('bankId' in assessment)) throw new Error('Assessment missing `bankId`');
+  if (!('id' in assessment)) throw new Error('Assessment missing `id`');
+
+  const offeredId = assessment.assessmentOffered &&
+    assessment.assessmentOffered.length > 0 ?
+    assessment.assessmentOffered[0].id : null;
+
+  return {
+    bankId: assessment.bankId,
+    assessmentId: assessment.id,
+    assessmentOfferedId: offeredId,
+    apiCall: true,
+    type: Constants.UPDATE_N_OF_M,
+    body: { nOfM }
+  };
+}
+
+export function updatePrevBtnSetting(assessment, unlockPrevious) {
+  if (_.isNil(assessment)) throw new Error('Must provide `assessment` argument');
+  if (_.isNil(unlockPrevious)) throw new Error('Must provide `unlockPrevious` argument');
+  if (!('bankId' in assessment)) throw new Error('Assessment missing `bankId`');
+  if (!('id' in assessment)) throw new Error('Assessment missing `id`');
+
+  const offeredId = assessment.assessmentOffered &&
+    assessment.assessmentOffered.length > 0 ?
+    assessment.assessmentOffered[0].id : null;
+  return {
+    bankId: assessment.bankId,
+    assessmentId: assessment.id,
+    assessmentOfferedId: offeredId,
+    apiCall: true,
+    type: Constants.UPDATE_UNLOCK_PREVIOUS,
+    body: { unlockPrevious }
   };
 }

@@ -66,4 +66,19 @@ describe('movable_fill_blank serializer', () => {
     result = movableFillBlank(item, newItemAttr);
     expect(result.question.questionString).toBeDefined();
   });
+
+  it('handles punctuation after the interaction placeholder', () => {
+    newItemAttr.question.text = 'Fill in the [_]!!';
+    newItemAttr.language = '639-2%3AENG%40ISO';
+    result = movableFillBlank(item, newItemAttr);
+    expect(result.question.questionString.text).toContain('</inlineChoiceInteraction><p class="other">!!</p>');
+  });
+
+  it('handles no punctuation after the interaction placeholder', () => {
+    newItemAttr.question.text = 'Fill in the [_]';
+    newItemAttr.language = '639-2%3AENG%40ISO';
+    result = movableFillBlank(item, newItemAttr);
+    expect(result.question.questionString.text).toContain('<p class="other">Fill</p><p class="other">in</p><p class="other">the</p>');
+    expect(result.question.questionString.text).toContain('</inlineChoiceInteraction>');
+  });
 });

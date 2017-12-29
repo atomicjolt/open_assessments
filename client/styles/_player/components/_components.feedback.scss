@@ -11,6 +11,18 @@
   }
 }
 
+.c-question-feedback__wrapper {
+  outline: 0;
+  border-left-color: $lightest-gray;
+  border-left-width: 0.5em;
+  border-left-style: solid;
+
+  &:focus { // focusing on section
+    border-left-color: $dark-gray
+  }
+}
+
+
 .c-question-feedback{
   background: $question-feedback-background;
   padding: 1.5rem 3rem 1.5rem 7rem;

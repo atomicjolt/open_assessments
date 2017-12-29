@@ -3,6 +3,7 @@ import _          from 'lodash';
 import types      from '../../../constants/question_types';
 import languages  from '../../../constants/language_types';
 import localize   from '../../locales/localize';
+import HelpLink   from './help_link';
 
 class NewItemForm extends React.Component {
   static propTypes = {
@@ -62,6 +63,9 @@ class NewItemForm extends React.Component {
 
             <div className="au-o-half">
               <div className="au-c-input">
+                <div>
+                  <HelpLink to="/help.html#authoring-question-types" />
+                </div>
                 <label htmlFor="questionType" />
                 <div className="au-c-dropdown au-c-dropdown--medium">
                   <select
@@ -71,7 +75,7 @@ class NewItemForm extends React.Component {
                     id="questionType"
                   >
                     {
-                      _.map(types, type => (
+                      _.map(_.sortBy(types), type => (
                         <option key={`new_item_${type}`} value={type}>
                           {strings[type]}
                         </option>

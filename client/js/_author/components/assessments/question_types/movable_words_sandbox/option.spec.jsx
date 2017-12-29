@@ -20,6 +20,9 @@ describe('the option component', () => {
       },
       index: 7,
       isActive: false,
+      strings: {
+        newOption: '{0}'
+      }
     };
     result = shallow(<Option {...props} />);
   });

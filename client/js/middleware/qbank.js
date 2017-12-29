@@ -324,6 +324,37 @@ function createItemInAssessment(store, bankId, assessmentId, item, itemIds, acti
 
 }
 
+function createAssessmentOffered(store, bankId, assessmentId, body) {
+  const state = store.getState();
+  let finalBody = body;
+
+  if (!finalBody) {
+    finalBody = {
+      dummyId: '123'
+    };
+  }
+  return api.post(
+    `assessment/banks/${bankId}/assessments/${assessmentId}/assessmentsoffered`,
+    state.settings.api_url,
+    state.jwt,
+    state.settings.csrf_token,
+    null,
+    finalBody
+  );
+}
+
+function updateOffered(store, bankId, offeredId, updatedInfo) {
+  const state = store.getState();
+  return api.put(
+    `assessment/banks/${bankId}/assessmentsoffered/${offeredId}`,
+    state.settings.api_url,
+    state.jwt,
+    state.settings.csrf_token,
+    null,
+    updatedInfo
+  );
+}
+
 const qbank = {
 
   [BankConstants.GET_BANKS_HIERARCHY]: (store, action) => {
@@ -376,9 +407,8 @@ const qbank = {
     url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments?isolated`,
   },
 
-  [AssessmentConstants.CREATE_ASSESSMENT_OFFERED]: {
-    method : Network.POST,
-    url    : (url, action) => `${url}/assessment/banks/${action.bankId}/assessments/${action.assessmentId}/assessmentsoffered`,
+  [AssessmentConstants.CREATE_ASSESSMENT_OFFERED]: (store, action) => {
+    createAssessmentOffered(store, action.bankId, action.assessmentId);
   },
 
   [AssessmentConstants.GET_ASSESSMENT_OFFERED]: {
@@ -582,6 +612,72 @@ const qbank = {
       actions.push(assessmentActions.editOrPublishAssessment(assessment, publishedBankId));
 
       dispatchMany(actions, store);
+    }
+  },
+
+  [AssessmentConstants.UPDATE_N_OF_M]: (store, action) => {
+    if (!action.assessmentOfferedId) {
+      // need to create the offered first
+      createAssessmentOffered(store, action.bankId, action.assessmentId, action.body)
+      .then((res) => {
+        const offered = res.body;
+        store.dispatch({
+          type: AssessmentConstants.CREATE_ASSESSMENT_OFFERED + DONE,
+          original: action,
+          payload: [offered]
+        });
+
+        const updatedAction = _.cloneDeep(action);
+        updatedAction.assessmentOfferedId = offered.id;
+        store.dispatch({
+          type: updatedAction.type + DONE,
+          original: updatedAction,
+          payload: updatedAction.nOfM
+        });
+      });
+    } else {
+      // just update the offered with N of M
+      updateOffered(store, action.bankId, action.assessmentOfferedId, action.body)
+      .then(() => {
+        store.dispatch({
+          type: action.type + DONE,
+          original: action,
+          payload: action.body.nOfM
+        });
+      });
+    }
+  },
+
+  [AssessmentConstants.UPDATE_UNLOCK_PREVIOUS]: (store, action) => {
+    if (!action.assessmentOfferedId) {
+      // need to create the offered first
+      createAssessmentOffered(store, action.bankId, action.assessmentId, action.body)
+      .then((res) => {
+        const offered = res.body;
+        store.dispatch({
+          type: AssessmentConstants.CREATE_ASSESSMENT_OFFERED + DONE,
+          original: action,
+          payload: [offered]
+        });
+
+        const updatedAction = _.cloneDeep(action);
+        updatedAction.assessmentOfferedId = offered.id;
+        store.dispatch({
+          type: updatedAction.type + DONE,
+          original: updatedAction,
+          payload: updatedAction.unlockPrevious
+        });
+      });
+    } else {
+      // just update the offered with unlockPrevious
+      updateOffered(store, action.bankId, action.assessmentOfferedId, action.body)
+      .then(() => {
+        store.dispatch({
+          type: action.type + DONE,
+          original: action,
+          payload: action.body.unlockPrevious
+        });
+      });
     }
   },
 

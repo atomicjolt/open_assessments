@@ -1,0 +1,10 @@
+.o-assessment-container {
+  outline: 0;
+  border-top-width: 6px;
+  border-top-style: solid;
+  border-top-color: hsla(212, 39%, 50%, 0);
+
+  &:focus { // focusing on section
+    border-top-color: hsla(212, 39%, 70%, 1);
+  }
+}

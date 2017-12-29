@@ -33,6 +33,7 @@ export default class SingleFeedback extends React.Component {
         <label htmlFor="feedbackCorrect">{this.props.labelText}</label>
         <Editor
           editorKey={getLanguage(this.props.language)}
+          language={this.props.language}
           textSize="smaller"
           fileIds={_.get(this.props.feedback, 'fileIds')}
           text={text}

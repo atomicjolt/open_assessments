@@ -192,7 +192,8 @@
 .c-blank-answers{
   margin: 1rem 0;
   position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
 
   .c-word.c-word--fill{
     padding: 0 0.2rem;

@@ -2,6 +2,7 @@ import React          from 'react';
 import assets         from '../../../libs/assets';
 import BanksView      from '../bank_navigation/navigation_bar_content';
 import AssessmentView from '../assessments/navigation_bar_content';
+import HelpLink       from '../assessments/help_link';
 
 export default function heading(props) {
   const logo = assets('./_author/images/CLIx-logo.png');
@@ -25,6 +26,10 @@ export default function heading(props) {
     <header className="au-c-header">
       <div className="au-c-header-top">
         <img src={logo} alt="CLI Logo" className="au-c-logo" />
+        <HelpLink
+          icon
+          to="/help.html#getting-started-as-an-author"
+        />
       </div>
       {content()}
     </header>

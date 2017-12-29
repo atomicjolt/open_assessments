@@ -29,7 +29,7 @@ export class OeaEditor extends React.Component {
     uploadMedia: React.PropTypes.func.isRequired,
     uploadedAssets: React.PropTypes.shape({}),
     fileIds: React.PropTypes.shape({}),
-    language: React.PropTypes.shape({}),
+    language: React.PropTypes.string,
     textSize: React.PropTypes.string,
     error: React.PropTypes.string,
     loadingMedia: React.PropTypes.bool,

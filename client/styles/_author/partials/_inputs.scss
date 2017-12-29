@@ -367,6 +367,10 @@
   }
 }
 
+.au-c-dropdown--side-label {
+  width: 30rem;
+}
+
 .au-c-checkbox{
 
   label{
@@ -505,6 +509,10 @@ input.au-c-file{
   }
 }
 
+.au-c-question__text .au-c-placeholder {
+  top: 1rem;
+}
+
 .au-c-placeholder{
   position: absolute;
   left: 0;
@@ -514,4 +522,8 @@ input.au-c-file{
   &.is-hidden{
     display: none;
   }
+}
+
+.au-c-fake-input-smaller{
+  height: 1.5rem;
 }

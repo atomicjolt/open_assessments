@@ -21,6 +21,8 @@ class MWSandbox extends React.Component {
     isActive: React.PropTypes.bool,
     activeChoice: React.PropTypes.string,
     language: React.PropTypes.string.isRequired,
+    instructions: React.PropTypes.shape({}),
+
   };
 
 
@@ -42,6 +44,7 @@ class MWSandbox extends React.Component {
           deleteChoice={() => this.props.deleteChoice(choice)}
           isActive={this.props.isActive && choice.id === this.props.activeChoice}
           language={this.props.language}
+          strings={this.props.localizeStrings('mwSandbox')}
         />
       );
     });
@@ -71,6 +74,7 @@ class MWSandbox extends React.Component {
           />
         </div>
         <div className="au-c-question__answers au-c-movable__answers">
+          {this.props.instructions}
           {
             this.getChoices(_.get(this.props.item, 'question.choices', {}))
           }

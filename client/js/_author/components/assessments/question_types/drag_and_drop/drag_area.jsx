@@ -42,7 +42,7 @@ class DragArea extends React.Component {
               object={object}
               zones={this.props.zones}
               setActive={() => this.setState({ activeObject: object.id })}
-              isActive={this.state.activeObject === object.id}
+              isActive
               updateObject={newAttributes => this.props.updateDropObject(object.id, newAttributes)}
               uploadMedia={this.props.uploadMedia}
               language={this.props.language}

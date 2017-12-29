@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "QTI client and authoring tool written in React.js",
   "engines": {
-    "node": "7.4.0"
+    "node": ">7.4.0"
   },
   "author": "atomicjolt",
   "license": "MIT",
@@ -28,6 +28,7 @@
     "react, qti, assessments, quizzes"
   ],
   "dependencies": {
-    "del": "^2.2.2"
+    "del": "^2.2.2",
+    "video.js": "^6.4.0"
   }
 }

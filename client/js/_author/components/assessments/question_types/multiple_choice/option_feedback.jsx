@@ -26,6 +26,7 @@ class optionFeedback extends React.Component {
         <label htmlFor="feedback1">{strings.feedback}</label>
         <Editor
           editorKey={getLanguage(this.props.language)}
+          language={this.props.language}
           textSize="smaller"
           fileIds={this.props.fileIds}
           text={languageText(this.props.feedbacks, this.props.language)}

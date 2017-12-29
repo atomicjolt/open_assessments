@@ -134,14 +134,24 @@ export const isNextUnlocked = createSelector(
  * unlocked.  This function should only be used by the isPrevUnlocked selector,
  * and is exported for testing purposes.
  */
-export function _isPrevUnlocked() {
-  return true;
+export function _isPrevUnlocked(unlockPrev) {
+  switch (unlockPrev) {
+    case 'ALWAYS':
+      return true;
+
+    case 'NEVER':
+      return false;
+
+    default:
+      return false;
+  }
 }
 
 /**
  * Determine if user should be allowed to go to previous questions or not.
  */
-export const isPrevUnlocked = createSelector(_isPrevUnlocked);
+export const isPrevUnlocked = createSelector(state => state.settings.unlock_prev,
+  _isPrevUnlocked);
 
 /**
  * Internal logic to calculate the current page of questions. This function

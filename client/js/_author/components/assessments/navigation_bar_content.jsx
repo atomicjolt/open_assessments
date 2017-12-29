@@ -4,6 +4,7 @@ import Icon             from '../bank_navigation/bank_icon';
 import BackButton       from '../common/back_button';
 import localize         from '../../locales/localize';
 import appHistory       from '../../history';
+import HelpLink         from './help_link';
 
 class NavigationBarContent extends React.Component {
   static propTypes = {
@@ -19,16 +20,19 @@ class NavigationBarContent extends React.Component {
     const strings = this.props.localizeStrings('navigationBarContent');
     if (!_.isEmpty(this.props.items)) {
       return (
-        <button
-          className="au-c-btn au-c-btn--sm au-c-btn--green"
-          onClick={() => {
-            this.props.togglePublishAssessment('navigationBarContent');
-            appHistory.push('/');
-          }}
-        >
-          <Icon type={this.props.isPublished ? 'Published' : 'Publish'} />
-          {this.props.isPublished ? strings.unpublish : strings.publish}
-        </button>
+        <div>
+          <button
+            className="au-c-btn au-c-btn--sm au-c-btn--green"
+            onClick={() => {
+              this.props.togglePublishAssessment('navigationBarContent');
+              appHistory.push('/');
+            }}
+          >
+            <Icon type={this.props.isPublished ? 'Published' : 'Publish'} />
+            {this.props.isPublished ? strings.unpublish : strings.publish}
+          </button>
+          <HelpLink to="/help.html#publishing-workflow" />
+        </div>
       );
     }
     return null;

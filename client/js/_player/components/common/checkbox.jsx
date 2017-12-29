@@ -8,11 +8,16 @@ export default class CheckBox extends React.Component {
     isHtml: React.PropTypes.bool,
     selectAnswer: React.PropTypes.func.isRequired,
     isDisabled: React.PropTypes.bool,
-    checked: React.PropTypes.bool
+    checked: React.PropTypes.bool,
+    name: React.PropTypes.string.isRequired,
+    focused: React.PropTypes.bool,
+    onFocus: React.PropTypes.func.isRequired
   }
 
   selectAnswer() {
-    this.props.selectAnswer(this.props.item.id);
+    if (!this.props.isDisabled) {
+      this.props.selectAnswer(this.props.item.id);
+    }
   }
 
   renderMaterial(material, isHtml) {
@@ -30,33 +35,56 @@ export default class CheckBox extends React.Component {
   }
 
   render() {
-    let containerStyle = '';
-
-    if (this.props.checked === true) { containerStyle = 'is-clicked'; }
+    const {
+      id, name, isDisabled, isHtml, checked, focused, onFocus
+    } = this.props;
 
     return (
-      <li className={`c-answer-container ${containerStyle}`}>
-        <label htmlFor={this.props.id}>
+      <div className="o-grid">
+        <label
+          htmlFor={id}
+          key={id}
+          className={isDisabled // eslint-disable-line no-nested-ternary
+          ? 'c-answer-container--disabled'
+          : (focused && !isDisabled // eslint-disable-line no-nested-ternary
+          ? 'c-answer-container is-focused' : (((checked && !isDisabled)
+          ? 'c-answer-container is-checked'
+          : 'c-answer-container')))
+          }
+          onKeyDown={(e) => { if (e.keyCode === 32) { this.selectAnswer(); } }}
+        >
           <div className="c-answer-container__radio">
-            <div className="c-checkbox">
+            <div
+              className={focused && !isDisabled
+              ? 'c-checkbox is-disabled'
+              : 'c-checkbox'}
+            >
               <input
                 type="checkbox"
-                checked={this.props.checked}
-                disabled={this.props.isDisabled}
-                name="answer-checkbox"
-                onChange={() => { this.selectAnswer(); }}
-                id={this.props.id}
+                className={focused && !isDisabled ? 'input-focused' : ''}
+                disabled={isDisabled}
+                name={name}
+                id={id}
+                checked={checked}
+                onChange={() => this.selectAnswer()}
+                onKeyDown={(e) => { if (e.keyCode === 32) { this.selectAnswer(); } }}
+                onFocus={() => onFocus(true)}
+                onBlur={() => onFocus(false)}
               />
-              <div className="c-checkbox__border">
+              <div
+                className={isDisabled
+                ? 'c-checkbox__border--disabled'
+                : 'c-checkbox__border'}
+              >
                 <span />
               </div>
             </div>
           </div>
           <div className="c-answer-container__content">
-            {this.renderMaterial(this.props.item.material, this.props.isHtml)}
+            {this.renderMaterial(this.props.item.material, isHtml)}
           </div>
         </label>
-      </li>
+      </div>
     );
   }
 }

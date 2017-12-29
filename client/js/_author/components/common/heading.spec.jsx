@@ -39,4 +39,9 @@ describe('Heading', () => {
 
     expect(TestUtils.findRenderedDOMComponentWithTag(result, 'h1')).toBeDefined();
   });
+
+  it('should include a help link', () => {
+    const helpLinks = TestUtils.scryRenderedDOMComponentsWithClass(result, 'help-link');
+    expect(helpLinks.length).toBe(1);
+  });
 });

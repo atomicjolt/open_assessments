@@ -49,6 +49,7 @@ describe('movable_fill_blank component', () => {
       isActive: false,
       activeChoice: '',
       language: 'eng',
+      instructions: 'do something'
     };
     result = shallow(<MovableFillBlank {...props} />);
   });
@@ -63,6 +64,16 @@ describe('movable_fill_blank component', () => {
 
   it('renders option', () => {
     expect(result.find(Option)).toBeDefined();
+  });
+
+  it('renders unchecked options', () => {
+    expect(result.find(Option).first().html()).not.toContain('checked=""');
+  });
+
+  it('renders checked options', () => {
+    props.item.question.choices.choice.isCorrect = true;
+    result = shallow(<MovableFillBlank {...props} />);
+    expect(result.find(Option).first().html()).toContain('checked=""');
   });
 
   it('renders add option', () => {
@@ -110,5 +121,9 @@ describe('movable_fill_blank component', () => {
     const add = result.find(Add);
     add.at(0).nodes[0].props.createChoice();
     expect(calledFunc).toBeTruthy();
+  });
+
+  it('does render the passed-in instructions', () => {
+    expect(result.text()).toContain('do something');
   });
 });

@@ -54,4 +54,9 @@ describe('New Assessments View', () => {
     icons = TestUtils.scryRenderedDOMComponentsWithTag(result, 'i');
     expect(icons[1].textContent).toBe('cloud_upload');
   });
+
+  it('should include a help link', () => {
+    const helpLinks = TestUtils.scryRenderedDOMComponentsWithClass(result, 'help-link');
+    expect(helpLinks.length).toBe(1);
+  });
 });

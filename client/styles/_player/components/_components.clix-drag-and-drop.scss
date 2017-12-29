@@ -51,7 +51,7 @@
 }
 
 .c-droppable-item {
-  display: inline-block;
+  display: table;
   cursor: grab;
   img{
     max-height: 25rem;

@@ -1,7 +1,7 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
-import TestUtils          from 'react-addons-test-utils';
-import { Matching }           from './matching';
+import TestUtils          from 'react-dom/test-utils';
+import { Matching }       from './matching';
 
 describe('matching', function() {
 

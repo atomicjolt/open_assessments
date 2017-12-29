@@ -44,10 +44,12 @@ export default {
     },
     audioUpload: {
       record: "Record",
-      stop: "Stop"
+      stop: "Stop",
+      recordTime: "Recording time"
     },
     fileUpload: {
-      chooseFile: "Choose a File to Upload"
+      chooseFile: "Choose a File to Upload",
+      noFile: "No file chosen"
     }
   }
 };

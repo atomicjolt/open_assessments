@@ -1,7 +1,9 @@
-import React            from 'react';
-import Editor           from '../../../common/oea_editor';
-import types            from '../../../../../constants/question_types';
-import localize         from '../../../../locales/localize';
+import React                  from 'react';
+import Editor                 from '../../../common/oea_editor';
+import types                  from '../../../../../constants/question_types';
+import { localeFromLanguage } from '../../../../../constants/language_types';
+import localize               from '../../../../locales/localize';
+import HelpLink                   from '../../help_link';
 
 class QuestionText extends React.Component {
   static propTypes = {
@@ -13,7 +15,8 @@ class QuestionText extends React.Component {
     bankId: React.PropTypes.string.isRequired,
     itemType: React.PropTypes.string,
     fileIds: React.PropTypes.shape({}),
-    language: React.PropTypes.shape({})
+    language: React.PropTypes.string,
+    isActive: React.PropTypes.bool,
   };
 
   constructor(props) {
@@ -30,7 +33,12 @@ class QuestionText extends React.Component {
   }
 
   render() {
-    const strings = this.props.localizeStrings('questionText');
+    const strings = this.props.localizeStrings();
+    strings.setLanguage(localeFromLanguage(this.props.language));
+    const questionTextStrings = strings.questionText;
+    const helpLink = this.props.isActive ?
+      <HelpLink to="/help.html#user-content-question-text" /> :
+      null;
     switch (this.props.itemType) {
       case types.movableFillBlank:
         return (
@@ -39,12 +47,13 @@ class QuestionText extends React.Component {
               {strings.instructions}
             </div>
             <div className="au-c-input au-c-fill-in-the-blank-text">
+              {helpLink}
               <label htmlFor={`fillBlankText_${this.props.itemId}`} />
               <div className="au-c-input__contain">
                 <input
                   className="au-c-text-input au-c-text-input--medium au-c-wysiwyg"
                   type="text"
-                  placeholder={strings.fitbPlaceholder}
+                  placeholder={questionTextStrings.fitbPlaceholder}
                   onBlur={e => this.props.updateItem({ question: { text: e.target.value } })}
                   onChange={e => this.setState({ text: e.target.value })}
                   value={this.state.text}
@@ -58,12 +67,13 @@ class QuestionText extends React.Component {
       default:
         return (
           <div className="au-c-input au-c-question__text">
+            {helpLink}
             <label htmlFor={`question_text_${this.props.itemId}`} />
             <Editor
               textSize="medium"
               fileIds={this.props.fileIds}
               text={this.state.text}
-              placeholder={strings.otherPlaceholder}
+              placeholder={questionTextStrings.otherPlaceholder}
               editorKey={this.props.editorKey}
               onBlur={(val, fileIds) => this.props.updateItem({ question: { text: val, fileIds } })}
               bankId={this.props.bankId}
@@ -75,4 +85,6 @@ class QuestionText extends React.Component {
   }
 }
 
-export default localize(QuestionText);
+// send narrow=false to this so that we can
+//   change the language of localization
+export default localize(QuestionText, false);

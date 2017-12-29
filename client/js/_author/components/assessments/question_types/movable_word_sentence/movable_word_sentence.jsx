@@ -26,6 +26,8 @@ class MovableWordSentence extends React.Component {
     activeChoice: React.PropTypes.string,
     language: React.PropTypes.string.isRequired,
     duplicateAnswers: React.PropTypes.arrayOf(React.PropTypes.string),
+    instructions: React.PropTypes.shape({}),
+
   };
 
   render() {
@@ -38,6 +40,7 @@ class MovableWordSentence extends React.Component {
           className="au-c-question__answers au-c-movable__answers"
           onBlur={e => this.props.blurOptions(e)} tabIndex="-1"
         >
+          {this.props.instructions}
           {
             _.map(question.choices, choice => (
               <Option

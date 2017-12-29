@@ -42,16 +42,17 @@ function imageOption(props) {
         </button>
       </div>
       <div className="au-c-input au-c-input-label--left">
-        <label htmlFor={`label_${id}`}>Label</label>
+        {/* <label htmlFor={`label_${id}`}>Label</label> */}
         <div className="au-c-input__contain">
-          <input
+          <div className="au-c-fake-input-smaller" />
+          {/* <input
             defaultValue={props.labelText}
             onBlur={e => props.updateChoice({ labelText: e.target.value }, null)}
             className="au-c-text-input au-c-text-input--smaller"
             type="text"
             id={`label_${id}`}
-          />
-          <div className="au-c-input__bottom" />
+          /> */}
+          {/* <div className="au-c-input__bottom" /> */}
         </div>
       </div>
       {

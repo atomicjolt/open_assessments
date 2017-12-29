@@ -3,6 +3,24 @@
       #MIXINS
 \*-------------------------------------*/
 
+// Border radius mixin
+// Set border radius for an element
+@mixin borderRadius($sizing) {
+  -webkit-border-radius: $sizing;
+  -moz-border-radius: $sizing;
+  -ms-border-radius: $sizing;
+  border-radius: $sizing;
+}
+
+// Box shadow mixin
+// Set box shadow for an element
+@mixin boxShadow($sizing...) {
+  -webkit-box-shadow: $sizing;
+  -moz-box-shadow: $sizing;
+  -ms-box-shadow: $sizing;
+  box-shadow: $sizing;
+}
+
 // Box sizing mixin
 // Set box sizing for an element
 @mixin boxSizing($sizing) {
@@ -70,6 +88,14 @@
   display: flex;
 }
 
+//display inline-flex mixin
+@mixin display-inline-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: inline-flex;
+}
+
 //justify content mixin
 @mixin justify-content($flex) {
   -webkit-justify-content: $flex;
@@ -80,6 +106,12 @@
 @mixin align-items($flex) {
   -webkit-align-items: $flex;
   align-items: $flex;
+}
+
+//flex-flow mixin
+@mixin flex-flow($flex...) {
+  -webkit-flex-flow: $flex;
+  flex-flow: $flex;
 }
 
 //flex mixin

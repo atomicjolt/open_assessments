@@ -1,7 +1,8 @@
 import React                   from 'react';
-import TestUtils               from 'react-addons-test-utils';
+import TestUtils               from 'react-dom/test-utils';
 import ReactDOM                from 'react-dom';
 import { Provider }            from 'react-redux';
+import { LiveAnnouncer }       from 'react-aria-live';
 
 import appHistory              from '../../history';
 import localizeStrings         from '../../selectors/localize';
@@ -22,6 +23,7 @@ var allQuestions,
   questionsPerPage,
   responses,
   settings,
+  numQuestionsChecking,
   submitAssessment;
 
 var result;
@@ -81,6 +83,7 @@ function reset(){
     questions_per_page : 1,
     assessment_kind    : "SUMMATIVE"
   };
+  numQuestionsChecking = 0;
 
   props = {
     allQuestions,
@@ -102,6 +105,7 @@ function reset(){
     secondaryActionState: {buttonState: SECONDARY_ACTION.PREV},
     sendSize: () => {},
     settings,
+    numQuestionsChecking,
     submitAssessment: () => {},
     application: {},
     videoPlay: () => {},
@@ -114,7 +118,9 @@ function reset(){
 
   result = TestUtils.renderIntoDocument(
     <Provider store={configureStore({settings})}>
-      <Assessment {...props} />
+      <LiveAnnouncer>
+        <Assessment {...props} />
+      </LiveAnnouncer>
     </Provider>
   );
   subject = ReactDOM.findDOMNode(result);
@@ -148,11 +154,24 @@ describe("assessment", function() {
     props.assessmentProgress.assessmentResult = "done";
     result = TestUtils.renderIntoDocument(
       <Provider store={configureStore({settings})}>
-        <Assessment {...props} />
+        <LiveAnnouncer>
+          <Assessment {...props} />
+        </LiveAnnouncer>
       </Provider>
     );
     subject = ReactDOM.findDOMNode(result);
 
     expect(appHistory.push).toHaveBeenCalledWith("assessment-result");
+  });
+
+  it('adds a tabIndex to the wrapping div, to make it focusable', () => {
+    const wrapper = TestUtils.findRenderedDOMComponentWithClass(result, 'o-assessment-container');
+    expect(wrapper.tabIndex).toEqual(-1);
+  });
+
+  it('sets aria attributes on the question counter heading', () => {
+    const counter = TestUtils.findRenderedDOMComponentWithClass(result, 'c-header__question-number');
+    expect(counter.getAttribute('aria-live')).toEqual('polite');
+    expect(counter.getAttribute('aria-atomic')).toEqual('true');
   });
 });
