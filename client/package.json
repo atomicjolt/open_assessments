@@ -31,7 +31,7 @@
     "redux": "3.6.0",
     "reselect": "^2.5.1",
     "superagent": "3.4.1",
-    "tinymce": "^4.5.4",
+    "tinymce": "^5.10.7",
     "uuid": "3.0.1",
     "video.js": "^5.16.0"
   },
